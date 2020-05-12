@@ -18,11 +18,9 @@ packages:
   anth_package:
     dependency: "direct main"
     description:
-      path: "."
-      ref: "0.0.1"
-      resolved-ref: "7769c50317907e7f1dfc2997ee6a482a881a3b49"
-      url: "https://tungpham6195@bitbucket.org/anth-freelance/anth_package.git"
-    source: git
+      path: "../anth_package"
+      relative: true
+    source: path
     version: "0.0.1"
   archive:
     dependency: transitive
@@ -111,11 +109,9 @@ packages:
   core_plugin:
     dependency: transitive
     description:
-      path: "."
-      ref: "v0.4.0"
-      resolved-ref: "52484ee5fc56943f44a6931e3f31995f09387a36"
-      url: "https://github.com/tungpham6195/flutter.core_plugin.git"
-    source: git
+      path: "../../../FlutterProjects/my_packages/flutter.core_plugin"
+      relative: true
+    source: path
     version: "0.4.0+00400"
   coverage:
     dependency: transitive
