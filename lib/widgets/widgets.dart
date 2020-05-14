@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:anth_package/anth_package.dart';
 import 'package:kaylee/res/colors_res.dart';
 import 'package:kaylee/res/dimens.dart';
+import 'package:kaylee/res/images.dart';
 import 'package:kaylee/res/strings.dart';
 
 class KayleeTextField extends StatelessWidget {
@@ -40,6 +41,7 @@ class NormalTextField extends StatefulWidget {
   final FocusNode nextFocusNode;
   final TextEditingController controller;
   final TextInputAction textInputAction;
+  final TextInputType textInputType;
 
   NormalTextField(
       {this.hint,
@@ -47,43 +49,79 @@ class NormalTextField extends StatefulWidget {
       this.focusNode,
       this.controller,
       this.nextFocusNode,
-      this.textInputAction = TextInputAction.done});
+      this.textInputAction = TextInputAction.done,
+      this.textInputType = TextInputType.text});
 
   @override
   _NormalTextFieldState createState() => _NormalTextFieldState();
 }
 
 class _NormalTextFieldState extends BaseState<NormalTextField> {
+  bool showPass = true;
+
   @override
   Widget build(BuildContext context) {
+    final isPassTField = widget.textInputType == TextInputType.visiblePassword;
     return Column(
       children: <Widget>[
-        _TextFieldBorderWrapper(TextField(
-          focusNode: widget.focusNode,
-          controller: widget.controller,
-          keyboardType: TextInputType.phone,
-          maxLengthEnforced: true,
-          maxLength: 10,
-          buildCounter: (BuildContext c,
-              {int currentLength, bool isFocused, int maxLength}) {
-            return null;
-          },
-          textInputAction: widget.textInputAction,
-          onSubmitted: (_) {
-            if (widget.textInputAction == TextInputAction.next) {
-              widget.nextFocusNode?.requestFocus();
-            }
-          },
-          decoration: InputDecoration(
-              focusedBorder: InputBorder.none,
-              border: InputBorder.none,
-              hintText: widget.hint,
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: Dimens.px16),
-              hintStyle: theme.textTheme.bodyText1.copyWith(
-                fontWeight: FontWeight.w400,
-              )),
-        )),
+        _TextFieldBorderWrapper(
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: Dimens.px16),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: TextField(
+                      focusNode: widget.focusNode,
+                      controller: widget.controller,
+                      keyboardType: widget.textInputType,
+                      textInputAction: widget.textInputAction,
+                      onSubmitted: (_) {
+                        if (widget.textInputAction == TextInputAction.next) {
+                          widget.nextFocusNode?.requestFocus();
+                        }
+                      },
+                      obscureText: isPassTField ? showPass : false,
+                      style: theme.textTheme.bodyText2.copyWith(
+                        fontWeight: FontWeight.w400,
+                      ),
+                      decoration: InputDecoration(
+                          focusedBorder: InputBorder.none,
+                          border: InputBorder.none,
+                          hintText: widget.hint,
+                          contentPadding:
+                              const EdgeInsets.only(bottom: Dimens.px4),
+                          hintStyle: theme.textTheme.bodyText1.copyWith(
+                            fontWeight: FontWeight.w400,
+                          )),
+                    ),
+                  ),
+                  if (isPassTField)
+                    Padding(
+                      padding: const EdgeInsets.only(left: Dimens.px16),
+                      child: GestureDetector(
+                          child: Icon(
+                            !showPass ? Icons.visibility : Icons.visibility_off,
+                            color: ColorsRes.hintText,
+                          ),
+                          onTap: () {
+                            setState(() {
+                              showPass = !showPass;
+                            });
+                          }),
+                    ),
+                  if (!widget.error.isNullOrEmpty)
+                    Padding(
+                      padding: const EdgeInsets.only(left: Dimens.px16),
+                      child: Image.asset(
+                        Images.ic_error,
+                        width: Dimens.px16,
+                        height: Dimens.px16,
+                      ),
+                    )
+                ],
+              ),
+            ),
+            showFocusBorder: !widget.error.isNullOrEmpty),
         if (!widget.error.isNullOrEmpty)
           Container(
             margin: const EdgeInsets.only(top: Dimens.px4),
@@ -119,54 +157,57 @@ class PhoneTextField extends StatelessWidget {
     final textTheme = ScreenUtils.screenTheme(context).textTheme;
     return Column(
       children: <Widget>[
-        _TextFieldBorderWrapper(
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                margin: const EdgeInsets.only(
-                    left: Dimens.px10, right: Dimens.px13),
-                child: Text("+84",
-                    style: textTheme.bodyText2.copyWith(
+        _TextFieldBorderWrapper(Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              margin:
+                  const EdgeInsets.only(left: Dimens.px10, right: Dimens.px13),
+              child: Text("+84",
+                  style: textTheme.bodyText2.copyWith(
+                    fontWeight: FontWeight.w400,
+                  )),
+            ),
+            Container(
+                color: ColorsRes.textFieldBorder,
+                width: Dimens.px1,
+                margin:
+                    const EdgeInsets.only(top: Dimens.px4, bottom: Dimens.px2)),
+            Expanded(
+              child: TextField(
+                focusNode: focusNode,
+                controller: controller,
+                keyboardType: TextInputType.phone,
+                maxLengthEnforced: true,
+                maxLength: 10,
+                buildCounter: (BuildContext c,
+                    {int currentLength, bool isFocused, int maxLength}) {
+                  return null;
+                },
+                textInputAction: textInputAction,
+                onSubmitted: (_) {
+                  if (textInputAction == TextInputAction.next) {
+                    nextFocusNode?.requestFocus();
+                  }
+                },
+                style: textTheme.bodyText2.copyWith(
+                  fontWeight: FontWeight.w400,
+                ),
+                decoration: InputDecoration(
+                    focusedBorder: InputBorder.none,
+                    border: InputBorder.none,
+                    hintText: Strings.phoneLimitHint,
+                    contentPadding: const EdgeInsets.only(
+                        left: Dimens.px14,
+                        right: Dimens.px16,
+                        bottom: Dimens.px4),
+                    hintStyle: textTheme.bodyText1.copyWith(
                       fontWeight: FontWeight.w400,
                     )),
               ),
-              Container(
-                  color: ColorsRes.textFieldBorder,
-                  width: Dimens.px1,
-                  margin: const EdgeInsets.only(
-                      top: Dimens.px4, bottom: Dimens.px2)),
-              Expanded(
-                child: TextField(
-                  focusNode: focusNode,
-                  controller: controller,
-                  keyboardType: TextInputType.phone,
-                  maxLengthEnforced: true,
-                  maxLength: 10,
-                  buildCounter: (BuildContext c,
-                      {int currentLength, bool isFocused, int maxLength}) {
-                    return null;
-                  },
-                  textInputAction: textInputAction,
-                  onSubmitted: (_) {
-                    if (textInputAction == TextInputAction.next) {
-                      nextFocusNode?.requestFocus();
-                    }
-                  },
-                  decoration: InputDecoration(
-                      focusedBorder: InputBorder.none,
-                      border: InputBorder.none,
-                      hintText: Strings.phoneLimitHint,
-                      contentPadding: const EdgeInsets.only(
-                          left: Dimens.px14, right: Dimens.px16),
-                      hintStyle: textTheme.bodyText1.copyWith(
-                        fontWeight: FontWeight.w400,
-                      )),
-                ),
-              )
-            ],
-          ),
-        ),
+            )
+          ],
+        )),
         if (!error.isNullOrEmpty)
           Container(
             margin: const EdgeInsets.only(top: Dimens.px4),
@@ -185,13 +226,9 @@ class PhoneTextField extends StatelessWidget {
 
 class _TextFieldBorderWrapper extends StatelessWidget {
   final Widget child;
+  final bool showFocusBorder;
 
-  final Color borderColor;
-  final double borderWidth;
-
-  _TextFieldBorderWrapper(this.child,
-      {this.borderColor = ColorsRes.textFieldBorder,
-      this.borderWidth = Dimens.px1});
+  _TextFieldBorderWrapper(this.child, {this.showFocusBorder});
 
   @override
   Widget build(BuildContext context) {
@@ -201,8 +238,11 @@ class _TextFieldBorderWrapper extends StatelessWidget {
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(Dimens.px5),
-          border:
-              Border.all(width: Dimens.px1, color: ColorsRes.textFieldBorder)),
+          border: Border.all(
+              width: (showFocusBorder ?? false) ? Dimens.px2 : Dimens.px1,
+              color: (showFocusBorder ?? false)
+                  ? ColorsRes.errorText
+                  : ColorsRes.textFieldBorder)),
       child: child,
     );
   }
@@ -251,15 +291,14 @@ class Go2RegisterText extends StatelessWidget {
         ),
         Container(
           margin: EdgeInsets.only(left: Dimens.px8),
-          child:  GestureDetector(
-            onTap: (){
+          child: GestureDetector(
+            onTap: () {
               //todo open SignUpScreen
 //              push(PageIntent(context, screen));
             },
             child: Container(
               color: Colors.transparent,
-              child: Text(
-                  Strings.dangKy,
+              child: Text(Strings.dangKy,
                   style: textTheme.bodyText2.copyWith(
                     color: ColorsRes.hyper,
                     fontWeight: FontWeight.w400,
