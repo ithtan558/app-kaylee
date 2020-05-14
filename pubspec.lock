@@ -112,7 +112,7 @@ packages:
       path: "../../../FlutterProjects/my_packages/flutter.core_plugin"
       relative: true
     source: path
-    version: "0.4.0+00400"
+    version: "0.4.1+00401"
   coverage:
     dependency: transitive
     description:
