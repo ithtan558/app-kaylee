@@ -1,15 +1,18 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:anth_package/anth_package.dart';
 import 'package:kaylee/res/colors_res.dart';
 import 'package:kaylee/res/dimens.dart';
 import 'package:kaylee/res/images.dart';
 import 'package:kaylee/res/strings.dart';
+import 'package:kaylee/screens/signup/signup_screen.dart';
 
 class KayleeTextField extends StatelessWidget {
   final String title;
-  final Widget textField;
+  final Widget textInput;
 
-  KayleeTextField({this.title, this.textField});
+  KayleeTextField({this.title, this.textInput});
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +27,9 @@ class KayleeTextField extends StatelessWidget {
                       fontWeight: FontWeight.w500,
                     ),
           ),
-        if (textField.isNotNull)
+        if (textInput.isNotNull)
           Container(
-            child: textField,
+            child: textInput,
             margin: EdgeInsets.only(top: Dimens.px8),
           ),
       ],
@@ -34,7 +37,80 @@ class KayleeTextField extends StatelessWidget {
   }
 }
 
-class NormalTextField extends StatefulWidget {
+class SelectionInputField extends StatefulWidget {
+  final String error;
+  final String hint;
+
+  SelectionInputField({
+    this.hint,
+    this.error,
+  });
+
+  @override
+  _SelectionInputFieldState createState() => _SelectionInputFieldState();
+}
+
+class _SelectionInputFieldState extends BaseState<SelectionInputField> {
+  final _tfController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        _TextFieldBorderWrapper(
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: Dimens.px16),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: TextField(
+                      controller: _tfController,
+                      style: theme.textTheme.bodyText2.copyWith(
+                        fontWeight: FontWeight.w400,
+                      ),
+                      enabled: false,
+                      onTap: () {},
+                      decoration: InputDecoration(
+                          disabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          border: InputBorder.none,
+                          hintText: widget.hint,
+                          contentPadding:
+                              const EdgeInsets.only(bottom: Dimens.px4),
+                          hintStyle: theme.textTheme.bodyText1.copyWith(
+                            fontWeight: FontWeight.w400,
+                          )),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: Dimens.px16),
+                    child: Image.asset(
+                      Images.ic_down,
+                      width: Dimens.px16,
+                      height: Dimens.px16,
+                    ),
+                  )
+                ],
+              ),
+            ),
+            showFocusBorder: !widget.error.isNullOrEmpty),
+        if (!widget.error.isNullOrEmpty)
+          Container(
+            margin: const EdgeInsets.only(top: Dimens.px4),
+            alignment: Alignment.centerRight,
+            child: Text(widget.error,
+                style: theme.textTheme.bodyText2.copyWith(
+                  color: Color(0xffcd2e2e),
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400,
+                )),
+          )
+      ],
+    );
+  }
+}
+
+class NormalInputField extends StatefulWidget {
   final String error;
   final String hint;
   final FocusNode focusNode;
@@ -43,7 +119,7 @@ class NormalTextField extends StatefulWidget {
   final TextInputAction textInputAction;
   final TextInputType textInputType;
 
-  NormalTextField(
+  NormalInputField(
       {this.hint,
       this.error,
       this.focusNode,
@@ -53,10 +129,10 @@ class NormalTextField extends StatefulWidget {
       this.textInputType = TextInputType.text});
 
   @override
-  _NormalTextFieldState createState() => _NormalTextFieldState();
+  _NormalInputFieldState createState() => _NormalInputFieldState();
 }
 
-class _NormalTextFieldState extends BaseState<NormalTextField> {
+class _NormalInputFieldState extends BaseState<NormalInputField> {
   bool showPass = true;
 
   @override
@@ -138,14 +214,14 @@ class _NormalTextFieldState extends BaseState<NormalTextField> {
   }
 }
 
-class PhoneTextField extends StatelessWidget {
+class PhoneInputField extends StatelessWidget {
   final String error;
   final FocusNode focusNode;
   final FocusNode nextFocusNode;
   final TextEditingController controller;
   final TextInputAction textInputAction;
 
-  PhoneTextField(
+  PhoneInputField(
       {this.error,
       this.focusNode,
       this.controller,
@@ -252,23 +328,24 @@ class KayLeeRoundedButton extends StatelessWidget {
   final double width;
   final String text;
   final void Function() onPressed;
+  final EdgeInsets margin;
 
-  KayLeeRoundedButton({this.width, this.text, this.onPressed});
+  KayLeeRoundedButton({this.width, this.text, this.onPressed, this.margin});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: Dimens.px48,
       width: width.isNotNull ? width : double.infinity,
-      margin: EdgeInsets.symmetric(horizontal: Dimens.px16),
+      margin: margin ?? const EdgeInsets.symmetric(horizontal: Dimens.px16),
       child: FlatButton(
         onPressed: onPressed,
-        shape: StadiumBorder(),
+        shape: const StadiumBorder(),
         color: ColorsRes.button,
         child: Text(text ?? '',
             style:
                 ScreenUtils.screenTheme(context).textTheme.bodyText2.copyWith(
-                      color: Color(0xffffffff),
+                      color: const Color(0xffffffff),
                       fontWeight: FontWeight.w500,
                     )),
       ),
@@ -293,8 +370,7 @@ class Go2RegisterText extends StatelessWidget {
           margin: EdgeInsets.only(left: Dimens.px8),
           child: GestureDetector(
             onTap: () {
-              //todo open SignUpScreen
-//              push(PageIntent(context, screen));
+              push(PageIntent(context, SignUpScreen));
             },
             child: Container(
               color: Colors.transparent,
@@ -306,6 +382,103 @@ class Go2RegisterText extends StatelessWidget {
             ),
           ),
         ),
+      ],
+    );
+  }
+}
+
+class KayleeAppBar extends StatelessWidget implements PreferredSizeWidget {
+  final String title;
+  final Widget leading;
+  final bool Function() onBack;
+  final List<Widget> actions;
+
+  KayleeAppBar({this.title, this.leading, this.onBack, this.actions});
+
+  @override
+  Widget build(BuildContext context) {
+    final canPop = ModalRoute.of(context)?.canPop;
+    return AppBar(
+      leading: canPop
+          ? FlatButton(
+              shape: CircleBorder(),
+              child: Icon(
+                CupertinoIcons.back,
+                color: ColorsRes.hintText,
+              ),
+              onPressed: () {
+                if (onBack == null || onBack()) {
+                  pop(PageIntent(context, null));
+                }
+              },
+            )
+          : leading,
+      automaticallyImplyLeading: false,
+      title: Text(
+        title?.toUpperCase() ?? '',
+        style: ScreenUtils.screenTheme(context).textTheme.bodyText2.copyWith(
+              fontWeight: FontWeight.w500,
+            ),
+      ),
+      elevation: 0,
+      brightness: Brightness.light,
+      centerTitle: true,
+      backgroundColor: Colors.transparent,
+      actions: actions,
+    );
+  }
+
+  @override
+  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+}
+
+class PolicyCheckBox extends StatefulWidget {
+  @override
+  _PolicyCheckBoxState createState() => _PolicyCheckBoxState();
+}
+
+class _PolicyCheckBoxState extends BaseState<PolicyCheckBox> {
+  bool isChecked = false;
+  final _onTap = TapGestureRecognizer()..onTap = () {};
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = theme.textTheme;
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        GestureDetector(
+          onTap: () {
+            setState(() {
+              isChecked = !isChecked;
+            });
+          },
+          child: Image.asset(
+            isChecked ? Images.ic_checked : Images.ic_notcheck,
+            width: Dimens.px24,
+            height: Dimens.px24,
+          ),
+        ),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.only(left: Dimens.px10),
+            child: Text.rich(TextSpan(
+                text: 'Tôi đồng ý mọi',
+                style:
+                    textTheme.bodyText2.copyWith(fontWeight: FontWeight.w400),
+                children: [
+                  TextSpan(
+                      text: ' điều khoản và quy định ',
+                      recognizer: _onTap,
+                      style: textTheme.bodyText2.copyWith(
+                          fontWeight: FontWeight.w400, color: ColorsRes.hyper)),
+                  TextSpan(
+                      text: 'khi sử dụng ứng dụng Kaylee',
+                      style: textTheme.bodyText2
+                          .copyWith(fontWeight: FontWeight.w400))
+                ])),
+          ),
+        )
       ],
     );
   }

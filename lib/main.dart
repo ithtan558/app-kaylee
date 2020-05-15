@@ -5,6 +5,7 @@ import 'package:kaylee/res/dimens.dart';
 import 'package:kaylee/res/fonts.dart';
 import 'package:kaylee/res/strings.dart';
 import 'package:kaylee/screens/signin/signin_screen.dart';
+import 'package:kaylee/screens/signup/signup_screen.dart';
 import 'package:kaylee/screens/splash_screen.dart';
 
 void main() {
@@ -48,6 +49,8 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing {
     switch (screen) {
       case SignInScreen:
         return SignInScreen.newInstance();
+      case SignUpScreen:
+        return SignUpScreen.newInstance();
       default:
         return SplashScreen.newInstance();
     }

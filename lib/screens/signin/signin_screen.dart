@@ -62,7 +62,7 @@ class _SignInScreenState extends BaseState<SignInScreen> {
                     alignment: Alignment.centerLeft,
                     child: KayleeTextField(
                       title: Strings.soDienThoai,
-                      textField: PhoneTextField(
+                      textInput: PhoneInputField(
                         textInputAction: TextInputAction.next,
                         focusNode: _phoneFNode,
                         nextFocusNode: _passFNode,
@@ -74,7 +74,7 @@ class _SignInScreenState extends BaseState<SignInScreen> {
                     alignment: Alignment.centerLeft,
                     child: KayleeTextField(
                       title: Strings.matKhau,
-                      textField: NormalTextField(
+                      textInput: NormalInputField(
                         controller: _passTController,
                         hint: Strings.passLimitHint,
                         textInputAction: TextInputAction.done,
