@@ -112,7 +112,6 @@ class _SignUpScreenState extends BaseState<SignUpScreen> {
                     textInputType: TextInputType.visiblePassword,
                     focusNode: _passFocus,
                     controller: _passTController,
-                    textInputAction: TextInputAction.done,
                   ),
                 ),
               ),
