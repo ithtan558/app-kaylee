@@ -439,7 +439,6 @@ class PolicyCheckBox extends StatefulWidget {
 
 class _PolicyCheckBoxState extends BaseState<PolicyCheckBox> {
   bool isChecked = false;
-  final _onTap = TapGestureRecognizer()..onTap = () {};
 
   @override
   Widget build(BuildContext context) {
@@ -469,7 +468,10 @@ class _PolicyCheckBoxState extends BaseState<PolicyCheckBox> {
                 children: [
                   TextSpan(
                       text: ' điều khoản và quy định ',
-                      recognizer: _onTap,
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          _showSheet();
+                        },
                       style: textTheme.bodyText2.copyWith(
                           fontWeight: FontWeight.w400, color: ColorsRes.hyper)),
                   TextSpan(
@@ -481,5 +483,72 @@ class _PolicyCheckBoxState extends BaseState<PolicyCheckBox> {
         )
       ],
     );
+  }
+
+  void _showSheet() {
+    showModalBottomSheet(
+        context: context,
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: const Radius.circular(Dimens.px5),
+                topRight: const Radius.circular(Dimens.px5))),
+        enableDrag: false,
+        backgroundColor: Colors.transparent,
+        isScrollControlled: true,
+        builder: (c) {
+          return DraggableScrollableSheet(
+            maxChildSize: 0.90,
+            builder: (c, scrollController) {
+              return Container(
+                decoration: BoxDecoration(
+                  color: const Color(0xffffffff),
+                  borderRadius: BorderRadius.circular(5),
+                  boxShadow: [
+                    const BoxShadow(
+                        color: Color(0x4c000000),
+                        offset: Offset(0, 0),
+                        blurRadius: 20,
+                        spreadRadius: 0)
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    Container(
+                        width: 37,
+                        height: 5,
+                        margin:
+                            const EdgeInsets.symmetric(vertical: Dimens.px16),
+                        decoration: BoxDecoration(
+                            color: const Color(0xffd9d9d9),
+                            borderRadius: BorderRadius.circular(3))),
+                    Text(Strings.dieuKhoanVaDieuKien,
+                        style: theme.textTheme.bodyText2.copyWith(
+                          fontWeight: FontWeight.w500,
+                        )),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: Dimens.px16),
+                        child: SingleChildScrollView(
+                          controller: scrollController,
+                          padding: const EdgeInsets.only(
+                              left: Dimens.px16,
+                              right: Dimens.px16,
+                              bottom: Dimens.px16),
+                          child: Text(
+                            Strings.policyContent,
+                            style: theme.textTheme.bodyText2.copyWith(
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              );
+            },
+          );
+        },
+        barrierColor: Color(0x7f313131));
   }
 }
