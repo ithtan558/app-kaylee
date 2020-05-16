@@ -88,6 +88,7 @@ class _SignInScreenState extends BaseState<SignInScreen> {
                     onPressed: () {
 //                    pushScreen(PageIntent(context, SignInScreen));
                     },
+                    margin: EdgeInsets.zero,
                     text: Strings.dangNhap,
                   ),
                 ),
