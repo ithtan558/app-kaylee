@@ -77,8 +77,10 @@ class _SelectionInputFieldState extends BaseState<SelectionInputField> {
                           hintText: widget.hint,
                           contentPadding:
                               const EdgeInsets.only(bottom: Dimens.px4),
-                          hintStyle: theme.textTheme.bodyText1.copyWith(
+                          hintStyle: theme.textTheme.bodyText2.copyWith(
                             fontWeight: FontWeight.w400,
+                            color: ColorsRes.hintText,
+
                           )),
                     ),
                   ),
@@ -166,8 +168,10 @@ class _NormalInputFieldState extends BaseState<NormalInputField> {
                           hintText: widget.hint,
                           contentPadding:
                               const EdgeInsets.only(bottom: Dimens.px4),
-                          hintStyle: theme.textTheme.bodyText1.copyWith(
+                          hintStyle: theme.textTheme.bodyText2.copyWith(
                             fontWeight: FontWeight.w400,
+                            color: ColorsRes.hintText,
+
                           )),
                     ),
                   ),
@@ -277,8 +281,10 @@ class PhoneInputField extends StatelessWidget {
                         left: Dimens.px14,
                         right: Dimens.px16,
                         bottom: Dimens.px4),
-                    hintStyle: textTheme.bodyText1.copyWith(
+                    hintStyle: textTheme.bodyText2.copyWith(
                       fontWeight: FontWeight.w400,
+                      color: ColorsRes.hintText,
+
                     )),
               ),
             )
