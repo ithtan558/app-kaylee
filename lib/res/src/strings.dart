@@ -45,14 +45,14 @@ class Strings {
 
   static const String dsNhaCc = 'Danh sách nhà cung cấp';
 
-  static const String qlChiNhanh='Quản lý chi nhánh';
-  static const String dsDichVu='Danh sách dịch vụ';
-  static const String dsSanPham='Danh sách sản phẩm';
-  static const String qlNhanVien='Quản lý nhân viên';
-  static const String dsKhachHang='Danh sách khách hàng';
-  static const String dsLichHen='Danh sách lịch hẹn';
-  static const String hoaHongNv='Hoa hồng nhân viên';
-  static const String doanhThuBanHang='Doanh thu bán hàng';
+  static const String qlChiNhanh = 'Quản lý\nchi nhánh';
+  static const String dsDichVu = 'Danh sách\ndịch vụ';
+  static const String dsSanPham = 'Danh sách\nsản phẩm';
+  static const String qlNhanVien = 'Quản lý\nnhân viên';
+  static const String dsKhachHang = 'Danh sách\nkhách hàng';
+  static const String dsLichHen = 'Danh sách\nlịch hẹn';
+  static const String hoaHongNv = 'Hoa hồng\nnhân viên';
+  static const String doanhThuBanHang = 'Doanh thu\nbán hàng';
 
   Strings._();
 }
