@@ -1,9 +1,9 @@
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
-import 'package:kaylee/res/dimens.dart';
-import 'package:kaylee/res/strings.dart';
+import 'package:kaylee/res/src/dimens.dart';
+import 'package:kaylee/res/src/strings.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
-import 'package:kaylee/widgets/src/opt_input_field.dart';
+import 'package:kaylee/widgets/src/otp_input_field.dart';
 
 class OtpConfirmScreen extends StatefulWidget {
   factory OtpConfirmScreen.newInstance() = OtpConfirmScreen._;

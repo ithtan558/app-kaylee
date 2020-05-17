@@ -2,10 +2,10 @@ import 'package:anth_package/anth_package.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:kaylee/res/colors_res.dart';
-import 'package:kaylee/res/dimens.dart';
-import 'package:kaylee/res/images.dart';
-import 'package:kaylee/res/strings.dart';
+import 'package:kaylee/res/src/colors_res.dart';
+import 'package:kaylee/res/src/dimens.dart';
+import 'package:kaylee/res/src/images.dart';
+import 'package:kaylee/res/src/strings.dart';
 
 class PolicyCheckBox extends StatefulWidget {
   @override
@@ -39,7 +39,7 @@ class _PolicyCheckBoxState extends BaseState<PolicyCheckBox> {
             child: Text.rich(TextSpan(
                 text: 'Tôi đồng ý mọi',
                 style:
-                textTheme.bodyText2.copyWith(fontWeight: FontWeight.w400),
+                    textTheme.bodyText2.copyWith(fontWeight: FontWeight.w400),
                 children: [
                   TextSpan(
                       text: ' điều khoản và quy định ',
@@ -65,8 +65,8 @@ class _PolicyCheckBoxState extends BaseState<PolicyCheckBox> {
         context: context,
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
-                topLeft: const Radius.circular(Dimens.px5),
-                topRight: const Radius.circular(Dimens.px5))),
+                topLeft: Radius.circular(Dimens.px5),
+                topRight: Radius.circular(Dimens.px5))),
         enableDrag: false,
         backgroundColor: Colors.transparent,
         isScrollControlled: true,
@@ -76,26 +76,26 @@ class _PolicyCheckBoxState extends BaseState<PolicyCheckBox> {
             builder: (c, scrollController) {
               return Container(
                 decoration: BoxDecoration(
-                  color: const Color(0xffffffff),
-                  borderRadius: BorderRadius.circular(5),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(Dimens.px5),
                   boxShadow: [
                     const BoxShadow(
                         color: Color(0x4c000000),
-                        offset: Offset(0, 0),
-                        blurRadius: 20,
+                        offset: Offset.zero,
+                        blurRadius: Dimens.px20,
                         spreadRadius: 0)
                   ],
                 ),
                 child: Column(
                   children: [
                     Container(
-                        width: 37,
-                        height: 5,
+                        width: scaleWidth(Dimens.px37),
+                        height: Dimens.px5,
                         margin:
-                        const EdgeInsets.symmetric(vertical: Dimens.px16),
+                            const EdgeInsets.symmetric(vertical: Dimens.px16),
                         decoration: BoxDecoration(
-                            color: const Color(0xffd9d9d9),
-                            borderRadius: BorderRadius.circular(3))),
+                            color: ColorsRes.textFieldBorder,
+                            borderRadius: BorderRadius.circular(Dimens.px3))),
                     Text(Strings.dieuKhoanVaDieuKien,
                         style: theme.textTheme.bodyText2.copyWith(
                           fontWeight: FontWeight.w500,
@@ -127,4 +127,3 @@ class _PolicyCheckBoxState extends BaseState<PolicyCheckBox> {
         barrierColor: Color(0x7f313131));
   }
 }
-

@@ -1,13 +1,16 @@
+library kayle_widgets;
+
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kaylee/res/colors_res.dart';
-import 'package:kaylee/res/dimens.dart';
-import 'package:kaylee/res/strings.dart';
+import 'package:kaylee/res/src/colors_res.dart';
+import 'package:kaylee/res/src/dimens.dart';
+import 'package:kaylee/res/src/strings.dart';
 import 'package:kaylee/screens/signup/signup_screen.dart';
 
 export 'src/hyper_link_text.dart';
 export 'src/kaylee_appbar.dart';
+export 'src/kaylee_bottom_bar.dart';
 export 'src/kaylee_rounded_button.dart';
 export 'src/kaylee_tex.dart';
 export 'src/kaylee_text_field.dart';

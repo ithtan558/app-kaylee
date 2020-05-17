@@ -1,8 +1,8 @@
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:kaylee/res/colors_res.dart';
-import 'package:kaylee/res/dimens.dart';
+import 'package:kaylee/res/src/colors_res.dart';
+import 'package:kaylee/res/src/dimens.dart';
 
 class OtpInputField extends StatefulWidget {
   @override

@@ -1,6 +1,6 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
-import 'package:kaylee/res/colors_res.dart';
+import 'package:kaylee/res/src/colors_res.dart';
 
 class HyperLinkText extends StatelessWidget {
   final String text;

@@ -1,9 +1,10 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
-import 'package:kaylee/res/colors_res.dart';
-import 'package:kaylee/res/dimens.dart';
-import 'package:kaylee/res/fonts.dart';
-import 'package:kaylee/res/strings.dart';
+import 'package:kaylee/res/src/colors_res.dart';
+import 'package:kaylee/res/src/dimens.dart';
+import 'package:kaylee/res/src/fonts.dart';
+import 'package:kaylee/res/src/strings.dart';
+import 'package:kaylee/screens/home/home_screen.dart';
 import 'package:kaylee/screens/reset_pass/otp_confirm_screeen.dart';
 import 'package:kaylee/screens/reset_pass/reset_pass_screen.dart';
 import 'package:kaylee/screens/signin/signin_screen.dart';
@@ -52,8 +53,10 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing {
         return ResetPassScreen.newInstance();
       case OtpConfirmScreen:
         return OtpConfirmScreen.newInstance();
-      default:
+      case SplashScreen:
         return SplashScreen.newInstance();
+      default:
+        return HomeScreen.newInstance();
     }
   }
 }

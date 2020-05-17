@@ -1,10 +1,10 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kaylee/res/colors_res.dart';
-import 'package:kaylee/res/dimens.dart';
-import 'package:kaylee/res/images.dart';
-import 'package:kaylee/res/strings.dart';
+import 'package:kaylee/res/src/colors_res.dart';
+import 'package:kaylee/res/src/dimens.dart';
+import 'package:kaylee/res/src/images.dart';
+import 'package:kaylee/res/src/strings.dart';
 
 class KayleeTextField extends StatelessWidget {
   final String title;

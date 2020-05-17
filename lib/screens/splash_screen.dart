@@ -1,8 +1,8 @@
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
-import 'package:kaylee/res/dimens.dart';
-import 'package:kaylee/res/images.dart';
-import 'package:kaylee/res/strings.dart';
+import 'package:kaylee/res/src/dimens.dart';
+import 'package:kaylee/res/src/images.dart';
+import 'package:kaylee/res/src/strings.dart';
 import 'package:kaylee/screens/signin/signin_screen.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 

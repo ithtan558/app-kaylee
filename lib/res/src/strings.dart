@@ -38,5 +38,21 @@ class Strings {
   static const String khongNhanDcSms = 'Không nhận được tin nhắn?';
   static const String guiLai = 'Gửi lại';
 
+  static const String trangChu = 'Trang chủ';
+  static const String thuNgan = 'Thu ngân';
+  static const String lichSuDh = 'Lịch sử ĐH';
+  static const String taiKhoan = 'Tài khoản';
+
+  static const String dsNhaCc = 'Danh sách nhà cung cấp';
+
+  static const String qlChiNhanh='Quản lý chi nhánh';
+  static const String dsDichVu='Danh sách dịch vụ';
+  static const String dsSanPham='Danh sách sản phẩm';
+  static const String qlNhanVien='Quản lý nhân viên';
+  static const String dsKhachHang='Danh sách khách hàng';
+  static const String dsLichHen='Danh sách lịch hẹn';
+  static const String hoaHongNv='Hoa hồng nhân viên';
+  static const String doanhThuBanHang='Doanh thu bán hàng';
+
   Strings._();
 }
