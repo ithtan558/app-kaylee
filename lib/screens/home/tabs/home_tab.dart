@@ -183,29 +183,29 @@ class _HomeMenu extends StatelessWidget {
                     child: Row(
                       children: [
                         _buildMenuItem(
-                            title: Strings.qlChiNhanh,
-                            icon: Images.ic_store,
-                            onTap: () {},
-                            textTheme: textTheme,
-                            context: context),
+                          title: Strings.qlChiNhanh,
+                          icon: Images.ic_store,
+                          onTap: () {},
+                          textTheme: textTheme,
+                        ),
                         _buildMenuItem(
-                            title: Strings.dsDichVu,
-                            icon: Images.ic_service_list,
-                            onTap: () {},
-                            textTheme: textTheme,
-                            context: context),
+                          title: Strings.dsDichVu,
+                          icon: Images.ic_service_list,
+                          onTap: () {},
+                          textTheme: textTheme,
+                        ),
                         _buildMenuItem(
-                            title: Strings.dsSanPham,
-                            icon: Images.ic_product,
-                            onTap: () {},
-                            textTheme: textTheme,
-                            context: context),
+                          title: Strings.dsSanPham,
+                          icon: Images.ic_product,
+                          onTap: () {},
+                          textTheme: textTheme,
+                        ),
                         _buildMenuItem(
-                            title: Strings.qlNhanVien,
-                            icon: Images.ic_person,
-                            onTap: () {},
-                            textTheme: textTheme,
-                            context: context),
+                          title: Strings.qlNhanVien,
+                          icon: Images.ic_person,
+                          onTap: () {},
+                          textTheme: textTheme,
+                        ),
                       ],
                     ),
                   ),
@@ -217,29 +217,29 @@ class _HomeMenu extends StatelessWidget {
                     child: Row(
                       children: [
                         _buildMenuItem(
-                            title: Strings.dsKhachHang,
-                            icon: Images.ic_user_list,
-                            onTap: () {},
-                            textTheme: textTheme,
-                            context: context),
+                          title: Strings.dsKhachHang,
+                          icon: Images.ic_user_list,
+                          onTap: () {},
+                          textTheme: textTheme,
+                        ),
                         _buildMenuItem(
-                            title: Strings.dsLichHen,
-                            icon: Images.ic_booking,
-                            onTap: () {},
-                            textTheme: textTheme,
-                            context: context),
+                          title: Strings.dsLichHen,
+                          icon: Images.ic_booking,
+                          onTap: () {},
+                          textTheme: textTheme,
+                        ),
                         _buildMenuItem(
-                            title: Strings.hoaHongNv,
-                            icon: Images.ic_commission,
-                            onTap: () {},
-                            textTheme: textTheme,
-                            context: context),
+                          title: Strings.hoaHongNv,
+                          icon: Images.ic_commission,
+                          onTap: () {},
+                          textTheme: textTheme,
+                        ),
                         _buildMenuItem(
-                            title: Strings.doanhThuBanHang,
-                            icon: Images.ic_revenue,
-                            onTap: () {},
-                            textTheme: textTheme,
-                            context: context),
+                          title: Strings.doanhThuBanHang,
+                          icon: Images.ic_revenue,
+                          onTap: () {},
+                          textTheme: textTheme,
+                        ),
                       ],
                     ),
                   )
@@ -251,17 +251,15 @@ class _HomeMenu extends StatelessWidget {
   }
 
   _buildMenuItem(
-      {String title,
-      String icon,
-      Function onTap,
-      TextTheme textTheme,
-      context}) {
+      {String title, String icon, Function onTap, TextTheme textTheme}) {
     return Expanded(
       child: Container(
         height: Dimens.px80,
         alignment: Alignment.center,
         child: Material(
           color: Colors.transparent,
+          clipBehavior: Clip.antiAlias,
+          borderRadius: BorderRadius.circular(Dimens.px8),
           child: InkWell(
             onTap: onTap,
             child: Column(
