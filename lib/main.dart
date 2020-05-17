@@ -4,6 +4,8 @@ import 'package:kaylee/res/colors_res.dart';
 import 'package:kaylee/res/dimens.dart';
 import 'package:kaylee/res/fonts.dart';
 import 'package:kaylee/res/strings.dart';
+import 'package:kaylee/screens/reset_pass/otp_confirm_screeen.dart';
+import 'package:kaylee/screens/reset_pass/reset_pass_screen.dart';
 import 'package:kaylee/screens/signin/signin_screen.dart';
 import 'package:kaylee/screens/signup/signup_screen.dart';
 import 'package:kaylee/screens/splash_screen.dart';
@@ -29,18 +31,13 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing {
           visualDensity: VisualDensity.adaptivePlatformDensity,
           fontFamily: Fonts.HelveticaNeue,
           textTheme: TextTheme(
-              bodyText2: theme.textTheme.bodyText2.copyWith(
-                  color: ColorsRes.text,
-                  fontFamily: Fonts.HelveticaNeue,
-                  fontStyle: FontStyle.normal,
-                  letterSpacing: 0,
-                  fontSize: Dimens.px16),
-              bodyText1: theme.textTheme.bodyText1.copyWith(
-                  color: ColorsRes.hintText,
-                  fontFamily: Fonts.HelveticaNeue,
-                  fontStyle: FontStyle.normal,
-                  letterSpacing: 0,
-                  fontSize: Dimens.px16))),
+            bodyText2: theme.textTheme.bodyText2.merge(TextStyle(
+                color: ColorsRes.text,
+                fontFamily: Fonts.HelveticaNeue,
+                fontStyle: FontStyle.normal,
+                letterSpacing: 0,
+                fontSize: Dimens.px16)),
+          )),
     );
   }
 
@@ -51,6 +48,10 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing {
         return SignInScreen.newInstance();
       case SignUpScreen:
         return SignUpScreen.newInstance();
+      case ResetPassScreen:
+        return ResetPassScreen.newInstance();
+      case OtpConfirmScreen:
+        return OtpConfirmScreen.newInstance();
       default:
         return SplashScreen.newInstance();
     }

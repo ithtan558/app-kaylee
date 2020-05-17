@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:core_plugin/core_plugin.dart';
+import 'package:flutter/material.dart';
 import 'package:kaylee/res/colors_res.dart';
 import 'package:kaylee/res/dimens.dart';
 import 'package:kaylee/res/strings.dart';
-import 'package:kaylee/widgets/widgets.dart';
+import 'package:kaylee/screens/reset_pass/reset_pass_screen.dart';
+import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class SignInScreen extends StatefulWidget {
   factory SignInScreen.newInstance() = SignInScreen._;
@@ -53,9 +54,9 @@ class _SignInScreenState extends BaseState<SignInScreen> {
                     margin: EdgeInsets.only(top: Dimens.px8),
                     alignment: Alignment.centerLeft,
                     child: Text(Strings.vuiLongDangNhap,
-                        style: theme.textTheme.bodyText1.copyWith(
+                        style: theme.textTheme.bodyText2.copyWith(
                           fontWeight: FontWeight.w400,
-                          letterSpacing: 0,
+                          color: ColorsRes.hintText,
                         ))),
                 Container(
                     margin: EdgeInsets.only(top: Dimens.px80),
@@ -86,7 +87,7 @@ class _SignInScreenState extends BaseState<SignInScreen> {
                   margin: EdgeInsets.only(top: Dimens.px16),
                   child: KayLeeRoundedButton(
                     onPressed: () {
-//                    pushScreen(PageIntent(context, SignInScreen));
+//                    pushScreen(PageIntent(context, ));
                     },
                     margin: EdgeInsets.zero,
                     text: Strings.dangNhap,
@@ -96,7 +97,7 @@ class _SignInScreenState extends BaseState<SignInScreen> {
                   margin: EdgeInsets.only(top: Dimens.px32),
                   child: GestureDetector(
                     onTap: () {
-                      pushScreen(PageIntent(context, SignInScreen));
+                      pushScreen(PageIntent(context, ResetPassScreen));
                     },
                     child: Container(
                       color: Colors.transparent,

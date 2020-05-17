@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:core_plugin/core_plugin.dart';
+import 'package:flutter/material.dart';
 import 'package:kaylee/res/dimens.dart';
 import 'package:kaylee/res/strings.dart';
-import 'package:kaylee/widgets/widgets.dart';
+import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class SignUpScreen extends StatefulWidget {
   factory SignUpScreen.newInstance() = SignUpScreen._;

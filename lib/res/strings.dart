@@ -8,7 +8,7 @@ class Strings {
   static const String email = 'Email';
   static const String emailHint = 'Nhập địa chỉ email';
 
-  Strings._();
+  static const String khoiPhucMatKhau = 'Khôi phục mật khẩu';
 
   static const String appName = 'KayLee';
 
@@ -29,4 +29,14 @@ class Strings {
       'Maecenas at tortor ultricies, lacinia dui quis, elementum dolor. In sodales efficitur quam, sed scelerisque felis sodales eu. Proin pulvinar sem eu euismod maximus. Donec eros turpis, euismod non neque ut, auctor porttitor ante. Vivamus volutpat lacus sed nibh ullamcorper facilisis. Praesent feugiat egestas finibus. Quisque ipsum nisi, lobortis vel vehicula vel, accumsan nec tellus.'
       'Proin ac nisi id mauris blandit posuere a sit amet dolor. Quisque vulputate vitae eros ut tincidunt. Integer egestas egestas nibh eu mattis. Donec et aliquet erat. Sed id commodo orci, vel fermentum nunc. Donec quis vehicula elit, quis hendrerit purus. Proin ut mi ac quam rhoncus dignissim a sed sem. Donec vitae tellus a ex aliquet vulputate mollis quis nisi.'
       'Proin pulvinar sem eu euismod maximus. Donec eros turpis, euismod non neque ut, auctor porttitor ante. Vivamus volutpat lacus sed nibh ullamcorper facilisis.';
+  static const String xacNhanOtp = 'Xác nhận OTP';
+  static const String guiOtp = 'Gửi OTP';
+  static const String lienHeChungToi = 'Liên hệ với chúng tôi';
+  static const String vuiLongNhapOtpHint =
+      'Vui lòng nhập mã OTP được gửi đến số điện thoại của bạn';
+  static const String nhapOtp = 'Nhập OTP';
+  static const String khongNhanDcSms = 'Không nhận được tin nhắn?';
+  static const String guiLai = 'Gửi lại';
+
+  Strings._();
 }
