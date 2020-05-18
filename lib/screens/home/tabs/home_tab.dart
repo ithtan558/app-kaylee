@@ -79,37 +79,43 @@ class _HomeTabState extends BaseState<HomeTab> {
       width: double.infinity,
       height: Dimens.px46,
       margin: const EdgeInsets.symmetric(horizontal: Dimens.px16),
-      decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(Dimens.px5)),
-      child: Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: Dimens.px8),
-            child: Container(
-              width: (screenSize.width - Dimens.px32) * 96 / 343,
-              child: AspectRatio(
-                  aspectRatio: 1,
-                  child: Image.network(
-                      'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Shiseido_logo.svg/1280px-Shiseido_logo.svg.png')),
-            ),
+      child: Material(
+        clipBehavior: Clip.antiAlias,
+        borderRadius: BorderRadius.circular(Dimens.px5),
+        color: Colors.white,
+        child: InkWell(
+          onTap: () {},
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: Dimens.px8),
+                child: Container(
+                  width: (screenSize.width - Dimens.px32) * 96 / 343,
+                  child: AspectRatio(
+                      aspectRatio: 1,
+                      child: Image.network(
+                          'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Shiseido_logo.svg/1280px-Shiseido_logo.svg.png')),
+                ),
+              ),
+              Container(
+                  width: 1,
+                  height: Dimens.px16,
+                  decoration: BoxDecoration(color: ColorsRes.textFieldBorder)),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
+                  child: Text("Mỹ phẩm Nhật cao cấp Shiseido",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: theme.textTheme.bodyText2.copyWith(
+                        fontSize: Dimens.px12,
+                        fontWeight: FontWeight.w400,
+                      )),
+                ),
+              )
+            ],
           ),
-          Container(
-              width: 1,
-              height: Dimens.px16,
-              decoration: BoxDecoration(color: ColorsRes.textFieldBorder)),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
-              child: Text("Mỹ phẩm Nhật cao cấp Shiseido",
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: theme.textTheme.bodyText2.copyWith(
-                    fontSize: Dimens.px12,
-                    fontWeight: FontWeight.w400,
-                  )),
-            ),
-          )
-        ],
+        ),
       ),
     );
   }
@@ -254,7 +260,7 @@ class _HomeMenu extends StatelessWidget {
       {String title, String icon, Function onTap, TextTheme textTheme}) {
     return Expanded(
       child: AspectRatio(
-        aspectRatio: 86/80,
+        aspectRatio: 86 / 80,
         child: Container(
           alignment: Alignment.center,
           child: Material(
