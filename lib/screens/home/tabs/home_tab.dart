@@ -62,7 +62,7 @@ class _HomeTabState extends BaseState<HomeTab> {
                 return _buildBrandItem();
               }
             },
-            itemCount: 1 + 1 + 5,
+            itemCount: 1 + 1 + 15,
             separatorBuilder: (BuildContext context, int index) {
               return Container(
                 height: index >= 2 ? Dimens.px16 : 0,
@@ -75,6 +75,7 @@ class _HomeTabState extends BaseState<HomeTab> {
   }
 
   Widget _buildBrandItem() {
+    final imageRatio = 96 / 30;
     return Container(
       width: double.infinity,
       height: Dimens.px46,
@@ -92,7 +93,7 @@ class _HomeTabState extends BaseState<HomeTab> {
                 child: Container(
                   width: (screenSize.width - Dimens.px32) * 96 / 343,
                   child: AspectRatio(
-                      aspectRatio: 1,
+                      aspectRatio: imageRatio,
                       child: Image.network(
                           'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Shiseido_logo.svg/1280px-Shiseido_logo.svg.png')),
                 ),
@@ -251,6 +252,11 @@ class _HomeMenu extends StatelessWidget {
                   )
                 ],
               )),
+          Positioned(
+            child: _NotificationIcon(),
+            right: 0,
+            top: Dimens.px24,
+          )
         ]),
       ),
     );
@@ -296,6 +302,59 @@ class _HomeMenu extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _NotificationIcon extends StatefulWidget {
+  @override
+  __NotificationIconState createState() => __NotificationIconState();
+}
+
+class __NotificationIconState extends State<_NotificationIcon> {
+  int notifyCount = 99;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: <Widget>[
+        Container(
+          width: 56,
+          height: 56,
+          child: FlatButton(
+            onPressed: () {
+//        push(PageIntent(context, NotificationScreen));
+            },
+            shape: CircleBorder(),
+            child: Image.asset(
+              Images.ic_notification,
+              width: Dimens.px24,
+              height: Dimens.px24,
+            ),
+          ),
+        ),
+        if (notifyCount > 0)
+          Positioned(
+            right: Dimens.px12,
+            top: Dimens.px8,
+            child: Container(
+              width: Dimens.px17,
+              height: Dimens.px17,
+              decoration: BoxDecoration(
+                  color: ColorsRes.notifyCircle, shape: BoxShape.circle),
+              alignment: Alignment.center,
+              child: Text('${notifyCount > 99 ? 99 : notifyCount}',
+                  style: ScreenUtils.screenTheme(context)
+                      .textTheme
+                      .bodyText2
+                      .copyWith(
+                        color: Colors.white,
+                        fontSize: Dimens.px12,
+                        fontWeight: FontWeight.w400,
+                      )),
+            ),
+          )
+      ],
     );
   }
 }

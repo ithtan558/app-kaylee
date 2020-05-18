@@ -10,4 +10,5 @@ class ColorsRes {
   static const Color hyper = Color(0xffcf8f30);
   static const Color textFieldBorder = Color(0xffd9d9d9);
   static const Color errorText = Color(0xffcd2e2e);
+  static const Color notifyCircle = Color(0xffc8102e);
 }
