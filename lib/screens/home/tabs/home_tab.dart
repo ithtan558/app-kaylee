@@ -253,37 +253,39 @@ class _HomeMenu extends StatelessWidget {
   _buildMenuItem(
       {String title, String icon, Function onTap, TextTheme textTheme}) {
     return Expanded(
-      child: Container(
-        height: Dimens.px80,
-        alignment: Alignment.center,
-        child: Material(
-          color: Colors.transparent,
-          clipBehavior: Clip.antiAlias,
-          borderRadius: BorderRadius.circular(Dimens.px8),
-          child: InkWell(
-            onTap: onTap,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  icon,
-                  width: Dimens.px24,
-                  height: Dimens.px24,
-                ),
-                Container(
-                  padding: const EdgeInsets.only(top: Dimens.px8),
-                  alignment: Alignment.center,
-                  child: Text(title,
-                      maxLines: 2,
-                      textAlign: TextAlign.center,
-                      style: textTheme.bodyText2.copyWith(
-                        color: Colors.white,
-                        fontSize: Dimens.px12,
-                        fontWeight: FontWeight.w400,
-                      )),
-                )
-              ],
+      child: AspectRatio(
+        aspectRatio: 86/80,
+        child: Container(
+          alignment: Alignment.center,
+          child: Material(
+            color: Colors.transparent,
+            clipBehavior: Clip.antiAlias,
+            borderRadius: BorderRadius.circular(Dimens.px8),
+            child: InkWell(
+              onTap: onTap,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    icon,
+                    width: Dimens.px24,
+                    height: Dimens.px24,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.only(top: Dimens.px8),
+                    alignment: Alignment.center,
+                    child: Text(title,
+                        maxLines: 2,
+                        textAlign: TextAlign.center,
+                        style: textTheme.bodyText2.copyWith(
+                          color: Colors.white,
+                          fontSize: Dimens.px12,
+                          fontWeight: FontWeight.w400,
+                        )),
+                  )
+                ],
+              ),
             ),
           ),
         ),
