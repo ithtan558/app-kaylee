@@ -29,7 +29,6 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing {
       debugShowCheckedModeBanner: false,
       onGenerateRoute: onGenerateRoute,
       theme: ThemeData(
-          primarySwatch: Colors.blue,
           scaffoldBackgroundColor: ColorsRes.background,
           visualDensity: VisualDensity.adaptivePlatformDensity,
           fontFamily: Fonts.HelveticaNeue,

@@ -4,8 +4,9 @@ import 'package:kaylee/res/res.dart';
 
 class KayleeBottomBar extends StatefulWidget {
   final void Function(int index) onTapChanged;
+  final PageController pageController;
 
-  KayleeBottomBar({this.onTapChanged});
+  KayleeBottomBar({this.onTapChanged, this.pageController});
 
   @override
   _KayleeBottomBarState createState() => new _KayleeBottomBarState();
@@ -17,11 +18,19 @@ class _KayleeBottomBarState extends BaseState<KayleeBottomBar> {
   @override
   void initState() {
     super.initState();
+    widget.pageController?.addListener(handlePageChange);
   }
 
   @override
   void dispose() {
     super.dispose();
+    widget.pageController?.removeListener(handlePageChange);
+  }
+
+  void handlePageChange() {
+    setState(() {
+      selectedTab = widget.pageController.page.toInt();
+    });
   }
 
   @override
@@ -61,6 +70,9 @@ class _KayleeBottomBarState extends BaseState<KayleeBottomBar> {
         if (index != selectedTab)
           setState(() {
             selectedTab = index;
+            if (widget.onTapChanged != null) {
+              widget.onTapChanged(selectedTab);
+            }
           });
       },
       currentIndex: selectedTab,

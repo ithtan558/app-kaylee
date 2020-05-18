@@ -29,4 +29,6 @@ class Images {
   static const ic_booking = 'assets/ic_booking.png';
   static const ic_product = 'assets/ic_product.png';
   static const ic_notification = 'assets/ic_notification.png';
+  static const ic_filter_down = 'assets/ic_filter_down.png';
+  static const ic_filter_up = 'assets/.png';
 }

@@ -1,16 +1,17 @@
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 
-class AccountTab extends StatefulWidget {
-  factory AccountTab.newInstance() = AccountTab._;
+class CashierTab extends StatefulWidget {
+  factory CashierTab.newInstance() = CashierTab._;
 
-  AccountTab._();
+  CashierTab._();
 
   @override
-  _AccountTabState createState() => new _AccountTabState();
+  _CashierTabState createState() => new _CashierTabState();
 }
 
-class _AccountTabState extends BaseState<AccountTab> {
+class _CashierTabState extends BaseState<CashierTab> {
+
   @override
   void initState() {
     super.initState();
@@ -23,6 +24,7 @@ class _AccountTabState extends BaseState<AccountTab> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+    );
   }
 }

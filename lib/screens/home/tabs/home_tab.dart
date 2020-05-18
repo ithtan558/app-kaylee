@@ -143,10 +143,10 @@ class _HomeMenu extends StatelessWidget {
               decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Color(0xff825a1e),
+                ColorsRes.color1,
                 ColorsRes.button,
                 ColorsRes.button,
-                Color(0xff825a1e),
+                ColorsRes.color1,
               ],
               stops: [0, 0.4, 0.7, 1],
               begin: Alignment(0.50, -0.87),

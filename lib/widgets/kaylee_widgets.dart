@@ -11,6 +11,7 @@ import 'package:kaylee/screens/signup/signup_screen.dart';
 export 'src/hyper_link_text.dart';
 export 'src/kaylee_appbar.dart';
 export 'src/kaylee_bottom_bar.dart';
+export 'src/kaylee_filter_view.dart';
 export 'src/kaylee_rounded_button.dart';
 export 'src/kaylee_tex.dart';
 export 'src/kaylee_text_field.dart';
