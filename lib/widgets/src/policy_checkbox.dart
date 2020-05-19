@@ -71,59 +71,68 @@ class _PolicyCheckBoxState extends BaseState<PolicyCheckBox> {
         backgroundColor: Colors.transparent,
         isScrollControlled: true,
         builder: (c) {
-          return DraggableScrollableSheet(
-            maxChildSize: 0.90,
-            builder: (c, scrollController) {
-              return Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(Dimens.px5),
-                  boxShadow: [
-                    const BoxShadow(
-                        color: Color(0x4c000000),
-                        offset: Offset.zero,
-                        blurRadius: Dimens.px20,
-                        spreadRadius: 0)
-                  ],
-                ),
-                child: Column(
-                  children: [
-                    Container(
-                        width: scaleWidth(Dimens.px37),
-                        height: Dimens.px5,
-                        margin:
-                            const EdgeInsets.symmetric(vertical: Dimens.px16),
-                        decoration: BoxDecoration(
-                            color: ColorsRes.textFieldBorder,
-                            borderRadius: BorderRadius.circular(Dimens.px3))),
-                    Text(Strings.dieuKhoanVaDieuKien,
-                        style: theme.textTheme.bodyText2.copyWith(
-                          fontWeight: FontWeight.w500,
-                        )),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: Dimens.px16),
-                        child: SingleChildScrollView(
-                          controller: scrollController,
-                          padding: const EdgeInsets.only(
-                              left: Dimens.px16,
-                              right: Dimens.px16,
-                              bottom: Dimens.px16),
-                          child: Text(
-                            Strings.policyContent,
+          return GestureDetector(
+            onTap: () {
+              pop(PageIntent(context, null));
+            },
+            child: Container(
+              color: Colors.transparent,
+              child: DraggableScrollableSheet(
+                maxChildSize: 0.90,
+                builder: (c, scrollController) {
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(Dimens.px5),
+                      boxShadow: [
+                        const BoxShadow(
+                            color: Color(0x4c000000),
+                            offset: Offset.zero,
+                            blurRadius: Dimens.px20,
+                            spreadRadius: 0)
+                      ],
+                    ),
+                    child: Column(
+                      children: [
+                        Container(
+                            width: scaleWidth(Dimens.px37),
+                            height: Dimens.px5,
+                            margin: const EdgeInsets.symmetric(
+                                vertical: Dimens.px16),
+                            decoration: BoxDecoration(
+                                color: ColorsRes.textFieldBorder,
+                                borderRadius:
+                                    BorderRadius.circular(Dimens.px3))),
+                        Text(Strings.dieuKhoanVaDieuKien,
                             style: theme.textTheme.bodyText2.copyWith(
-                              fontWeight: FontWeight.w400,
+                              fontWeight: FontWeight.w500,
+                            )),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: Dimens.px16),
+                            child: SingleChildScrollView(
+                              controller: scrollController,
+                              padding: const EdgeInsets.only(
+                                  left: Dimens.px16,
+                                  right: Dimens.px16,
+                                  bottom: Dimens.px16),
+                              child: Text(
+                                Strings.policyContent,
+                                style: theme.textTheme.bodyText2.copyWith(
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              );
-            },
+                        )
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
           );
         },
-        barrierColor: Color(0x7f313131));
+        barrierColor: ColorsRes.dialogDimBg);
   }
 }
