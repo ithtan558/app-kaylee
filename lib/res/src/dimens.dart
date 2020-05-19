@@ -23,8 +23,10 @@ class Dimens {
   static const double px36 = 36;
   static const double px37 = 37;
   static const double px46 = 46;
-  static const double px56 = 56;
   static const double px48 = 48;
+  static const double px50 = 50;
+  static const double px61 = 61;
+  static const double px56 = 56;
   static const double px68 = 68;
   static const double px76 = 76;
   static const double px77 = 77;

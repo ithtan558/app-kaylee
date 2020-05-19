@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
@@ -13,6 +15,8 @@ class KayleeFilterView extends StatefulWidget {
 }
 
 class _KayleeFilterViewState extends BaseState<KayleeFilterView> {
+  final _filterViewController = _FilterViewController();
+
   @override
   void initState() {
     super.initState();
@@ -25,67 +29,271 @@ class _KayleeFilterViewState extends BaseState<KayleeFilterView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          SafeArea(
-            top: true,
-            child: Container(
-              height: Dimens.px32,
-              margin: const EdgeInsets.only(top: Dimens.px24),
-              padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      widget.title ?? '',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: theme.textTheme.bodyText2.copyWith(
-                        fontSize: Dimens.px26,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
+    return WillPopScope(
+      onWillPop: () async {
+        if (_filterViewController.view._filterViewAnimController.isDismissed) {
+          return true;
+        } else {
+          _filterViewController.view._filterViewAnimController.forward();
+          return false;
+        }
+      },
+      child: Scaffold(
+        body: Stack(
+          children: [
+            Positioned.fill(
+              top: Dimens.px80 - Dimens.px8,
+              child: SafeArea(
+                top: true,
+                child: widget.child ?? Container(),
+              ),
+            ),
+            _FilterView(
+              title: widget.title,
+              controller: _filterViewController,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _FilterButton extends StatefulWidget {
+  final void Function(bool state) onClick;
+  final AnimationController animController;
+
+  _FilterButton({this.onClick, this.animController});
+
+  @override
+  __FilterButtonState createState() => __FilterButtonState();
+}
+
+class __FilterButtonState extends BaseState<_FilterButton>
+    with SingleTickerProviderStateMixin {
+  bool isOpened = false;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.animController.addListener(() {
+      if (widget.animController.isDismissed) {
+        isOpened = false;
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: Dimens.px32,
+      child: Material(
+        borderRadius: BorderRadius.circular(Dimens.px5),
+        color: ColorsRes.filterButton,
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: () {
+            if (!isOpened)
+              widget.animController.forward(from: widget.animController.value);
+            else
+              widget.animController.reverse(from: widget.animController.value);
+            isOpened = !isOpened;
+            if (widget.onClick != null) {
+              widget.onClick(isOpened);
+            }
+          },
+          child: Row(
+            children: [
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: Dimens.px10),
+                child: Image.asset(
+                  Images.ic_options,
+                  width: Dimens.px16,
+                  height: Dimens.px16,
+                ),
+              ),
+              Container(
+                  width: Dimens.px1,
+                  margin: const EdgeInsets.symmetric(vertical: Dimens.px2),
+                  decoration: BoxDecoration(color: Colors.white)),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: Dimens.px4),
+                child: AnimatedBuilder(
+                  animation: widget.animController,
+                  builder: (context, child) {
+                    return Transform.rotate(
+                      angle: widget.animController.value * pi,
+                      child: child,
+                    );
+                  },
+                  child: Image.asset(
+                    Images.ic_filter_down,
+                    width: Dimens.px24,
+                    height: Dimens.px24,
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                        color: ColorsRes.filterButton,
-                        borderRadius: BorderRadius.circular(Dimens.px5)),
-                    child: Row(
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: Dimens.px10),
-                          child: Image.asset(
-                            Images.ic_filter_down,
-                            width: Dimens.px24,
-                            height: Dimens.px24,
-                          ),
-                        ),
-                        Container(
-                            width: Dimens.px1,
-                            margin: const EdgeInsets.symmetric(
-                                vertical: Dimens.px2),
-                            decoration: BoxDecoration(color: Colors.white)),
-                        Container(
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: Dimens.px4),
-                          child: Image.asset(
-                            Images.ic_filter_down,
-                            width: Dimens.px24,
-                            height: Dimens.px24,
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _FilterViewController {
+  _FilterViewState view;
+}
+
+class _FilterView extends StatefulWidget {
+  final String title;
+
+  final _FilterViewController controller;
+
+  _FilterView({this.title, this.controller});
+
+  @override
+  _FilterViewState createState() => new _FilterViewState();
+}
+
+class _FilterViewState extends BaseState<_FilterView>
+    with TickerProviderStateMixin {
+  AnimationController _filterViewAnimController;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.controller.view = this;
+    _filterViewAnimController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 100));
+  }
+
+  @override
+  void dispose() {
+    _filterViewAnimController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned.fill(
+      child: Stack(
+        children: <Widget>[
+          Positioned(
+            left: Dimens.px16,
+            top: Dimens.px24,
+            right: Dimens.px61 + Dimens.px16 * 2,
+            child: SafeArea(
+              top: true,
+              child: Text(
+                widget.title ?? '',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: theme.textTheme.bodyText2.copyWith(
+                  fontSize: Dimens.px26,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ),
           ),
-          Expanded(child: widget.child ?? Container())
+          _FilterList(
+            animController: _filterViewAnimController,
+          ),
+          Positioned(
+            child: SafeArea(
+              top: true,
+              child: _FilterButton(
+                onClick: (state) {},
+                animController: _filterViewAnimController,
+              ),
+            ),
+            top: Dimens.px24,
+            right: Dimens.px16,
+          ),
         ],
       ),
     );
+  }
+}
+
+class _FilterList extends StatefulWidget {
+  final AnimationController animController;
+
+  _FilterList({this.animController});
+
+  @override
+  _FilterListState createState() => new _FilterListState();
+}
+
+class _FilterListState extends BaseState<_FilterList> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned.fill(
+      child: AnimatedBuilder(
+        animation: widget.animController,
+        builder: (context, child) {
+          if (widget.animController.isDismissed) {
+            return Container();
+          }
+          return GestureDetector(
+            onTap: () {
+              widget.animController.reverse();
+            },
+            child: Container(
+              color: Color.lerp(Colors.transparent, ColorsRes.dialogDimBg,
+                  widget.animController.value),
+              padding: EdgeInsets.only(top: Dimens.px56 + Dimens.px8),
+              child: Transform.scale(
+                child: Opacity(
+                  child: child,
+                  opacity: widget.animController.value,
+                ),
+                scale: widget.animController.value,
+                alignment: Alignment(5 / 6, -1),
+              ),
+            ),
+          );
+        },
+        child: _buildFilterList(),
+      ),
+    );
+  }
+
+  Widget _buildFilterList() {
+    return SafeArea(
+        top: true,
+        child: Padding(
+          padding: const EdgeInsets.only(
+              right: Dimens.px8, left: Dimens.px8, bottom: Dimens.px8),
+          child: Container(
+            margin: EdgeInsets.only(top: 0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(Dimens.px5),
+              color: Colors.white,
+            ),
+          ),
+        ));
+  }
+
+  _buildFilterItem() {
+    return Container(
+        height: Dimens.px32,
+        decoration: new BoxDecoration(
+            color: Color(0xffffffff), borderRadius: BorderRadius.circular(5)));
   }
 }

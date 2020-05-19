@@ -29,11 +29,7 @@ class _HistoryTabState extends BaseState<HistoryTab> {
     return KayleeFilterView(
       title: Strings.lichSuDh,
       child: ListView.separated(
-          padding: EdgeInsets.only(
-              left: Dimens.px16,
-              right: Dimens.px16,
-              top: Dimens.px24,
-              bottom: Dimens.px16),
+          padding: EdgeInsets.all(Dimens.px16),
           itemBuilder: (c, index) {
             return _buildHistItem(isCancel: index % 2 == 0);
           },

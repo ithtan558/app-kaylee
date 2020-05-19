@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 class ColorsRes {
-  ColorsRes._();
-
   static const Color button = Color(0xff2a4b4f);
   static const Color background = Color(0xfffffbf4);
   static const Color text = Color(0xff313131);
@@ -13,4 +11,7 @@ class ColorsRes {
   static const Color notifyCircle = Color(0xffc8102e);
   static const Color color1 = Color(0xff825a1e);
   static const Color filterButton = Color(0xffd8d8d8);
+  static const Color dialogDimBg = Color(0x7f313131);
+
+  ColorsRes._();
 }
