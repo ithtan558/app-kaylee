@@ -316,7 +316,7 @@ class _FilterListState extends BaseState<_FilterList> {
                     padding: EdgeInsets.only(top: Dimens.px16),
                     itemBuilder: (c, index) {
                       if (index == 0) {
-                        return _WrapperFilter(
+                        return WrapperFilter(
                           title: 'Chọn lọc',
                           isAll: true,
                           children: <Widget>[
@@ -327,7 +327,7 @@ class _FilterListState extends BaseState<_FilterList> {
                           ],
                         );
                       }
-                      return _WrapperFilter(
+                      return WrapperFilter(
                         title: 'Theo địa điểm phục vụ',
                         children: <Widget>[
                           KayleeFilterListItem(
@@ -437,37 +437,3 @@ class _FilterViewTextFieldState extends BaseState<_FilterViewTextField> {
   }
 }
 
-class _WrapperFilter extends StatelessWidget {
-  final List<Widget> children;
-  final String title;
-  final bool isAll;
-
-  _WrapperFilter({this.children, this.title, this.isAll = false});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        if (!title.isNullOrEmpty)
-          Container(
-            margin: EdgeInsets.only(bottom: 16),
-            child: Text(title,
-                style: ScreenUtils.screenTheme(context)
-                    .textTheme
-                    .bodyText2
-                    .copyWith(
-                      fontSize: isAll ? Dimens.px16 : Dimens.px12,
-                      fontWeight: isAll ? FontWeight.w500 : FontWeight.w400,
-                    )),
-          ),
-        Wrap(
-          direction: Axis.horizontal,
-          runSpacing: Dimens.px16,
-          spacing: Dimens.px16,
-          children: <Widget>[if (!children.isNullOrEmpty) ...children],
-        ),
-      ],
-    );
-  }
-}

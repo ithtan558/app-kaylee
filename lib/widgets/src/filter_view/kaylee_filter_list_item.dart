@@ -57,3 +57,39 @@ class _KayleeFilterListItemState extends BaseState<KayleeFilterListItem> {
     );
   }
 }
+
+
+class WrapperFilter extends StatelessWidget {
+  final List<Widget> children;
+  final String title;
+  final bool isAll;
+
+  WrapperFilter({this.children, this.title, this.isAll = false});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        if (!title.isNullOrEmpty)
+          Container(
+            margin: EdgeInsets.only(bottom: 16),
+            child: Text(title,
+                style: ScreenUtils.screenTheme(context)
+                    .textTheme
+                    .bodyText2
+                    .copyWith(
+                  fontSize: isAll ? Dimens.px16 : Dimens.px12,
+                  fontWeight: isAll ? FontWeight.w500 : FontWeight.w400,
+                )),
+          ),
+        Wrap(
+          direction: Axis.horizontal,
+          runSpacing: Dimens.px16,
+          spacing: Dimens.px16,
+          children: <Widget>[if (!children.isNullOrEmpty) ...children],
+        ),
+      ],
+    );
+  }
+}
