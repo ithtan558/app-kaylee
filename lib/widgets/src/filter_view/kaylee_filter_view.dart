@@ -386,14 +386,8 @@ class _FilterViewTextFieldState extends BaseState<_FilterViewTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(Dimens.px5),
-        border: Border.all(width: Dimens.px1, color: ColorsRes.textFieldBorder),
-      ),
-      child: TextField(
+    return TextFieldBorderWrapper(
+       TextField(
         textInputAction: TextInputAction.search,
         controller: tfController,
         textAlignVertical: TextAlignVertical.center,

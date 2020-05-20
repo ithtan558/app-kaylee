@@ -55,7 +55,7 @@ class _SelectionInputFieldState extends BaseState<SelectionInputField> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        _TextFieldBorderWrapper(
+        TextFieldBorderWrapper(
             Container(
               margin: const EdgeInsets.symmetric(horizontal: Dimens.px16),
               child: Row(
@@ -140,7 +140,7 @@ class _NormalInputFieldState extends BaseState<NormalInputField> {
     final isPassTField = widget.textInputType == TextInputType.visiblePassword;
     return Column(
       children: <Widget>[
-        _TextFieldBorderWrapper(
+        TextFieldBorderWrapper(
             Container(
               margin: const EdgeInsets.symmetric(horizontal: Dimens.px16),
               child: Row(
@@ -235,7 +235,7 @@ class PhoneInputField extends StatelessWidget {
     final textTheme = ScreenUtils.screenTheme(context).textTheme;
     return Column(
       children: <Widget>[
-        _TextFieldBorderWrapper(Row(
+        TextFieldBorderWrapper(Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
@@ -304,11 +304,11 @@ class PhoneInputField extends StatelessWidget {
   }
 }
 
-class _TextFieldBorderWrapper extends StatelessWidget {
+class TextFieldBorderWrapper extends StatelessWidget {
   final Widget child;
   final bool showFocusBorder;
 
-  _TextFieldBorderWrapper(this.child, {this.showFocusBorder});
+  TextFieldBorderWrapper(this.child, {this.showFocusBorder});
 
   @override
   Widget build(BuildContext context) {
