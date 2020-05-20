@@ -43,7 +43,6 @@ class _HistoryTabState extends BaseState<HistoryTab> {
   }
 
   _buildHistItem({bool isCancel = false}) {
-    print('[TUNG] ===> $isCancel');
     return Container(
       height: Dimens.px77,
       width: double.infinity,

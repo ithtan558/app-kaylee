@@ -6,6 +6,7 @@ class Dimens {
   static const double px5 = 5;
   static const double px6 = 6;
   static const double px8 = 8;
+  static const double px9 = 9;
   static const double px10 = 10;
   static const double px12 = 12;
   static const double px13 = 13;

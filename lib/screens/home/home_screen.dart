@@ -39,6 +39,7 @@ class _HomeScreenState extends BaseState<HomeScreen> {
           pageSnapping: true,
           allowImplicitScrolling: false,
           controller: _pageController,
+          physics: NeverScrollableScrollPhysics(),
           children: [
             HomeTab.newInstance(),
             CashierTab.newInstance(),

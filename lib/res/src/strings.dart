@@ -54,5 +54,9 @@ class Strings {
   static const String hoaHongNv = 'Hoa hồng\nnhân viên';
   static const String doanhThuBanHang = 'Doanh thu\nbán hàng';
 
+  static const String timDonHang = 'Tìm đơn hàng';
+
+  static const String chonLoc = 'Chọn lọc';
+
   Strings._();
 }
