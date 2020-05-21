@@ -387,7 +387,7 @@ class _FilterViewTextFieldState extends BaseState<_FilterViewTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFieldBorderWrapper(
-       TextField(
+      TextField(
         textInputAction: TextInputAction.search,
         controller: tfController,
         textAlignVertical: TextAlignVertical.center,
@@ -398,7 +398,7 @@ class _FilterViewTextFieldState extends BaseState<_FilterViewTextField> {
             });
           }
         },
-        style:  theme.textTheme.bodyText2.copyWith(
+        style: theme.textTheme.bodyText2.copyWith(
           fontWeight: FontWeight.w400,
         ),
         decoration: InputDecoration(
@@ -430,4 +430,3 @@ class _FilterViewTextFieldState extends BaseState<_FilterViewTextField> {
     );
   }
 }
-
