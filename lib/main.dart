@@ -4,6 +4,7 @@ import 'package:kaylee/res/src/colors_res.dart';
 import 'package:kaylee/res/src/dimens.dart';
 import 'package:kaylee/res/src/fonts.dart';
 import 'package:kaylee/res/src/strings.dart';
+import 'package:kaylee/screens/history_detail/history_detail_screen.dart';
 import 'package:kaylee/screens/home/home_screen.dart';
 import 'package:kaylee/screens/notification/notification_screen.dart';
 import 'package:kaylee/screens/reset_pass/otp_confirm_screeen.dart';
@@ -58,6 +59,8 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing {
         return NotificationScreen.newInstance();
       case SplashScreen:
         return SplashScreen.newInstance();
+      case HistoryDetailScreen:
+        return HistoryDetailScreen.newInstance();
       default:
         return HomeScreen.newInstance();
     }

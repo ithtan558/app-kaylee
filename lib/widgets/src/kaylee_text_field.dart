@@ -12,6 +12,15 @@ class KayleeTextField extends StatelessWidget {
 
   KayleeTextField({this.title, this.textInput});
 
+  factory KayleeTextField.staticWidget({String title, String initText}) =>
+      KayleeTextField(
+        title: title,
+        textInput: NormalInputField(
+          initText: initText,
+          isStaticTField: true,
+        ),
+      );
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -21,9 +30,9 @@ class KayleeTextField extends StatelessWidget {
           Text(
             title,
             style:
-            ScreenUtils.screenTheme(context).textTheme.bodyText2.copyWith(
-              fontWeight: FontWeight.w500,
-            ),
+                ScreenUtils.screenTheme(context).textTheme.bodyText2.copyWith(
+                      fontWeight: FontWeight.w500,
+                    ),
           ),
         if (textInput.isNotNull)
           Container(
@@ -74,11 +83,10 @@ class _SelectionInputFieldState extends BaseState<SelectionInputField> {
                           border: InputBorder.none,
                           hintText: widget.hint,
                           contentPadding:
-                          const EdgeInsets.only(bottom: Dimens.px4),
+                              const EdgeInsets.only(bottom: Dimens.px4),
                           hintStyle: theme.textTheme.bodyText2.copyWith(
                             fontWeight: FontWeight.w400,
                             color: ColorsRes.hintText,
-
                           )),
                     ),
                   ),
@@ -113,20 +121,24 @@ class _SelectionInputFieldState extends BaseState<SelectionInputField> {
 class NormalInputField extends StatefulWidget {
   final String error;
   final String hint;
+  final String initText;
   final FocusNode focusNode;
   final FocusNode nextFocusNode;
   final TextEditingController controller;
   final TextInputAction textInputAction;
   final TextInputType textInputType;
+  final bool isStaticTField;
 
   NormalInputField(
       {this.hint,
-        this.error,
-        this.focusNode,
-        this.controller,
-        this.nextFocusNode,
-        this.textInputAction = TextInputAction.done,
-        this.textInputType = TextInputType.text});
+      this.initText,
+      this.error,
+      this.focusNode,
+      this.controller,
+      this.nextFocusNode,
+      this.textInputAction = TextInputAction.done,
+      this.textInputType = TextInputType.text,
+      this.isStaticTField = false});
 
   @override
   _NormalInputFieldState createState() => _NormalInputFieldState();
@@ -134,6 +146,21 @@ class NormalInputField extends StatefulWidget {
 
 class _NormalInputFieldState extends BaseState<NormalInputField> {
   bool showPass = true;
+  TextEditingController tfController;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.isStaticTField) {
+      tfController = TextEditingController(text: widget.initText);
+    }
+  }
+
+  @override
+  void dispose() {
+    tfController?.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -143,14 +170,18 @@ class _NormalInputFieldState extends BaseState<NormalInputField> {
         TextFieldBorderWrapper(
             Container(
               margin: const EdgeInsets.symmetric(horizontal: Dimens.px16),
+              color: Colors.transparent,
               child: Row(
                 children: <Widget>[
                   Expanded(
                     child: TextField(
                       focusNode: widget.focusNode,
-                      controller: widget.controller,
+                      controller: widget.isStaticTField
+                          ? tfController
+                          : widget.controller,
                       keyboardType: widget.textInputType,
                       textInputAction: widget.textInputAction,
+                      enabled: !widget.isStaticTField,
                       onSubmitted: (_) {
                         if (widget.textInputAction == TextInputAction.next) {
                           widget.nextFocusNode?.requestFocus();
@@ -161,15 +192,16 @@ class _NormalInputFieldState extends BaseState<NormalInputField> {
                         fontWeight: FontWeight.w400,
                       ),
                       decoration: InputDecoration(
+                          enabled: !widget.isStaticTField,
+                          enabledBorder: InputBorder.none,
                           focusedBorder: InputBorder.none,
                           border: InputBorder.none,
                           hintText: widget.hint,
                           contentPadding:
-                          const EdgeInsets.only(bottom: Dimens.px4),
+                              const EdgeInsets.only(bottom: Dimens.px4),
                           hintStyle: theme.textTheme.bodyText2.copyWith(
                             fontWeight: FontWeight.w400,
                             color: ColorsRes.hintText,
-
                           )),
                     ),
                   ),
@@ -199,6 +231,7 @@ class _NormalInputFieldState extends BaseState<NormalInputField> {
                 ],
               ),
             ),
+            bgColor: widget.isStaticTField ? Colors.transparent : null,
             showFocusBorder: !widget.error.isNullOrEmpty),
         if (!widget.error.isNullOrEmpty)
           Container(
@@ -225,10 +258,10 @@ class PhoneInputField extends StatelessWidget {
 
   PhoneInputField(
       {this.error,
-        this.focusNode,
-        this.controller,
-        this.nextFocusNode,
-        this.textInputAction = TextInputAction.done});
+      this.focusNode,
+      this.controller,
+      this.nextFocusNode,
+      this.textInputAction = TextInputAction.done});
 
   @override
   Widget build(BuildContext context) {
@@ -240,7 +273,7 @@ class PhoneInputField extends StatelessWidget {
           children: [
             Container(
               margin:
-              const EdgeInsets.only(left: Dimens.px10, right: Dimens.px13),
+                  const EdgeInsets.only(left: Dimens.px10, right: Dimens.px13),
               child: Text("+84",
                   style: textTheme.bodyText2.copyWith(
                     fontWeight: FontWeight.w400,
@@ -250,7 +283,7 @@ class PhoneInputField extends StatelessWidget {
                 color: ColorsRes.textFieldBorder,
                 width: Dimens.px1,
                 margin:
-                const EdgeInsets.only(top: Dimens.px4, bottom: Dimens.px2)),
+                    const EdgeInsets.only(top: Dimens.px4, bottom: Dimens.px2)),
             Expanded(
               child: TextField(
                 focusNode: focusNode,
@@ -282,7 +315,6 @@ class PhoneInputField extends StatelessWidget {
                     hintStyle: textTheme.bodyText2.copyWith(
                       fontWeight: FontWeight.w400,
                       color: ColorsRes.hintText,
-
                     )),
               ),
             )
@@ -307,8 +339,9 @@ class PhoneInputField extends StatelessWidget {
 class TextFieldBorderWrapper extends StatelessWidget {
   final Widget child;
   final bool showFocusBorder;
+  final Color bgColor;
 
-  TextFieldBorderWrapper(this.child, {this.showFocusBorder});
+  TextFieldBorderWrapper(this.child, {this.showFocusBorder, this.bgColor});
 
   @override
   Widget build(BuildContext context) {
@@ -316,7 +349,7 @@ class TextFieldBorderWrapper extends StatelessWidget {
       height: Dimens.px48,
       width: double.infinity,
       decoration: BoxDecoration(
-          color: Colors.white,
+          color: bgColor ?? Colors.white,
           borderRadius: BorderRadius.circular(Dimens.px5),
           border: Border.all(
               width: (showFocusBorder ?? false) ? Dimens.px2 : Dimens.px1,

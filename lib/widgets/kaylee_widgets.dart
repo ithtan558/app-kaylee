@@ -13,9 +13,11 @@ export 'src/filter_view/kaylee_filter_view.dart';
 export 'src/hyper_link_text.dart';
 export 'src/kaylee_appbar.dart';
 export 'src/kaylee_bottom_bar.dart';
+export 'src/kaylee_flat_button.dart';
 export 'src/kaylee_rounded_button.dart';
 export 'src/kaylee_tex.dart';
 export 'src/kaylee_text_field.dart';
+export 'src/label_divider_view.dart';
 export 'src/policy_checkbox.dart';
 
 class Go2RegisterText extends StatelessWidget {

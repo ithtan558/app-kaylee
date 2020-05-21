@@ -58,5 +58,11 @@ class Strings {
 
   static const String chonLoc = 'Chọn lọc';
 
+  static const String chiTietDH = 'CHI TIẾT ĐƠN HÀNG';
+
+  static const String thongTinKh = 'Thông tin khách hàng';
+
+  static const String chiNhanh = 'Chi nhánh';
+
   Strings._();
 }

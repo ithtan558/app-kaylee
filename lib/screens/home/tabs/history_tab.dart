@@ -2,6 +2,7 @@ import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/res/src/strings.dart';
+import 'package:kaylee/screens/history_detail/history_detail_screen.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class HistoryTab extends StatefulWidget {
@@ -55,7 +56,9 @@ class _HistoryTabState extends BaseState<HistoryTab> {
                 width: Dimens.px1, color: ColorsRes.textFieldBorder)),
         clipBehavior: Clip.antiAlias,
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            pushScreen(PageIntent(context, HistoryDetailScreen));
+          },
           child: Row(
             children: [
               Container(
