@@ -33,6 +33,10 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing {
           scaffoldBackgroundColor: ColorsRes.background,
           visualDensity: VisualDensity.adaptivePlatformDensity,
           fontFamily: Fonts.HelveticaNeue,
+          pageTransitionsTheme: PageTransitionsTheme(builders: {
+            TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+            TargetPlatform.iOS: CupertinoPageTransitionsBuilder()
+          }),
           textTheme: TextTheme(
             bodyText2: theme.textTheme.bodyText2
                 .copyWith(
