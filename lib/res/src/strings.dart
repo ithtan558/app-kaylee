@@ -64,5 +64,13 @@ class Strings {
 
   static const String chiNhanh = 'Chi nhánh';
 
+  static const String  suThongTin='Sửa thông tin';
+
+  static const String thongBao='Thông báo';
+  static const String huongDanSd='Hướng dẫn sử dụng';
+  static const String thongTinUngDung='Thông tin về ứng dụng';
+  static const String quanlyDonDh='Quản lý đơn đặt hàng';
+  static const String dangXuat='Đăng xuất';
+
   Strings._();
 }

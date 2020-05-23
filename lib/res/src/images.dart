@@ -31,4 +31,11 @@ class Images {
   static const ic_notification = 'assets/ic_notification.png';
   static const ic_filter_down = 'assets/ic_filter_down.png';
   static const ic_options = 'assets/ic_options.png';
+
+  static const ic_acc_about_app = 'assets/ic_acc_about_app.png';
+  static const ic_acc_guide = 'assets/ic_acc_guide.png';
+  static const ic_acc_logout = 'assets/ic_acc_logout.png';
+  static const ic_acc_notify = 'assets/ic_acc_notify.png';
+  static const ic_acc_orderlist = 'assets/ic_acc_orderlist.png';
+  static const ic_right = 'assets/ic_right.png';
 }
