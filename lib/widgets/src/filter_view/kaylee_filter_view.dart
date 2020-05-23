@@ -310,7 +310,7 @@ class _FilterListState extends BaseState<_FilterList> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _FilterViewTextField(),
+                SearchInputField(),
                 Expanded(
                   child: ListView.separated(
                     padding: EdgeInsets.only(top: Dimens.px16),
@@ -361,68 +361,5 @@ class _FilterListState extends BaseState<_FilterList> {
             ),
           ),
         ));
-  }
-}
-
-class _FilterViewTextField extends StatefulWidget {
-  @override
-  _FilterViewTextFieldState createState() => new _FilterViewTextFieldState();
-}
-
-class _FilterViewTextFieldState extends BaseState<_FilterViewTextField> {
-  final tfController = TextEditingController();
-  bool closeIsShowed = false;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    tfController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFieldBorderWrapper(
-      TextField(
-        textInputAction: TextInputAction.search,
-        controller: tfController,
-        textAlignVertical: TextAlignVertical.center,
-        onChanged: (text) {
-          if (text.isNotEmpty && !closeIsShowed) {
-            setState(() {
-              closeIsShowed = !closeIsShowed;
-            });
-          }
-        },
-        decoration: InputDecoration(
-            contentPadding: EdgeInsets.only(
-                top: Dimens.px16, bottom: Dimens.px16, left: Dimens.px16),
-            border: InputBorder.none,
-            focusedBorder: InputBorder.none,
-            errorBorder: InputBorder.none,
-            hintText: Strings.timDonHang,
-            hintStyle: theme.textTheme.bodyText2.copyWith(
-              color: ColorsRes.hintText,
-            ),
-            suffixIcon: GestureDetector(
-              onTap: () {
-                if (closeIsShowed) {
-                  setState(() {
-                    tfController.text = '';
-                    closeIsShowed = !closeIsShowed;
-                  });
-                }
-              },
-              child: Icon(
-                !closeIsShowed ? Icons.search : Icons.close,
-                color: ColorsRes.hintText,
-              ),
-            )),
-      ),
-    );
   }
 }

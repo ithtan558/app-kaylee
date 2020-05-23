@@ -43,6 +43,69 @@ class KayleeTextField extends StatelessWidget {
   }
 }
 
+class SearchInputField extends StatefulWidget {
+  @override
+  _SearchInputFieldState createState() => new _SearchInputFieldState();
+}
+
+class _SearchInputFieldState extends BaseState<SearchInputField> {
+  final tfController = TextEditingController();
+  bool closeIsShowed = false;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    tfController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFieldBorderWrapper(
+      TextField(
+        textInputAction: TextInputAction.search,
+        controller: tfController,
+        textAlignVertical: TextAlignVertical.center,
+        onChanged: (text) {
+          if (text.isNotEmpty && !closeIsShowed) {
+            setState(() {
+              closeIsShowed = !closeIsShowed;
+            });
+          }
+        },
+        decoration: InputDecoration(
+            contentPadding: EdgeInsets.only(
+                top: Dimens.px16, bottom: Dimens.px16, left: Dimens.px16),
+            border: InputBorder.none,
+            focusedBorder: InputBorder.none,
+            errorBorder: InputBorder.none,
+            hintText: Strings.timDonHang,
+            hintStyle: theme.textTheme.bodyText2.copyWith(
+              color: ColorsRes.hintText,
+            ),
+            suffixIcon: GestureDetector(
+              onTap: () {
+                if (closeIsShowed) {
+                  setState(() {
+                    tfController.text = '';
+                    closeIsShowed = !closeIsShowed;
+                  });
+                }
+              },
+              child: Icon(
+                !closeIsShowed ? Icons.search : Icons.close,
+                color: ColorsRes.hintText,
+              ),
+            )),
+      ),
+    );
+  }
+}
+
 class SelectionInputField extends StatefulWidget {
   final String error;
   final String hint;
