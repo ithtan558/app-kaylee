@@ -398,9 +398,6 @@ class _FilterViewTextFieldState extends BaseState<_FilterViewTextField> {
             });
           }
         },
-        style: theme.textTheme.bodyText2.copyWith(
-          fontWeight: FontWeight.w400,
-        ),
         decoration: InputDecoration(
             contentPadding: EdgeInsets.only(
                 top: Dimens.px16, bottom: Dimens.px16, left: Dimens.px16),
@@ -410,7 +407,6 @@ class _FilterViewTextFieldState extends BaseState<_FilterViewTextField> {
             hintText: Strings.timDonHang,
             hintStyle: theme.textTheme.bodyText2.copyWith(
               color: ColorsRes.hintText,
-              fontWeight: FontWeight.w400,
             ),
             suffixIcon: GestureDetector(
               onTap: () {

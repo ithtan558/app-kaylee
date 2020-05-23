@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:kaylee/res/src/colors_res.dart';
 import 'package:kaylee/res/src/dimens.dart';
 
-
 class KayLeeRoundedButton extends StatelessWidget {
   final double width;
   final String text;
@@ -24,11 +23,10 @@ class KayLeeRoundedButton extends StatelessWidget {
         shape: const StadiumBorder(),
         color: ColorsRes.button,
         child: Text(text ?? '',
-            style:
-            ScreenUtils.screenTheme(context).textTheme.bodyText2.copyWith(
-              color: const Color(0xffffffff),
-              fontWeight: FontWeight.w500,
-            )),
+            style: ScreenUtils.textTheme(context).bodyText2.copyWith(
+                  color: const Color(0xffffffff),
+                  fontWeight: FontWeight.w500,
+                )),
       ),
     );
   }

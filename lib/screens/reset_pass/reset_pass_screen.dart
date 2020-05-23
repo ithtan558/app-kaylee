@@ -63,9 +63,6 @@ class _ResetPassScreenState extends BaseState<ResetPassScreen> {
                 children: [
                   Text(
                     'Câu hỏi khác về đăng nhập/đăng ký?',
-                    style: theme.textTheme.bodyText2.copyWith(
-                      fontWeight: FontWeight.w400,
-                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: Dimens.px8),

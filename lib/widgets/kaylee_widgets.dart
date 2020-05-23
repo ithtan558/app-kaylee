@@ -15,7 +15,7 @@ export 'src/kaylee_appbar.dart';
 export 'src/kaylee_bottom_bar.dart';
 export 'src/kaylee_flat_button.dart';
 export 'src/kaylee_rounded_button.dart';
-export 'src/kaylee_tex.dart';
+export 'src/kaylee_text.dart';
 export 'src/kaylee_text_field.dart';
 export 'src/label_divider_view.dart';
 export 'src/policy_checkbox.dart';
@@ -23,16 +23,11 @@ export 'src/policy_checkbox.dart';
 class Go2RegisterText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final textTheme = ScreenUtils.screenTheme(context).textTheme;
+    final textTheme = ScreenUtils.textTheme(context);
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(
-          Strings.chuaCoTK,
-          style: textTheme.bodyText2.copyWith(
-            fontWeight: FontWeight.w400,
-          ),
-        ),
+        Text(Strings.chuaCoTK),
         Container(
           margin: EdgeInsets.only(left: Dimens.px8),
           child: GestureDetector(
@@ -44,7 +39,6 @@ class Go2RegisterText extends StatelessWidget {
               child: Text(Strings.dangKy,
                   style: textTheme.bodyText2.copyWith(
                     color: ColorsRes.hyper,
-                    fontWeight: FontWeight.w400,
                   )),
             ),
           ),

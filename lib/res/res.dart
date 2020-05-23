@@ -5,3 +5,4 @@ export 'src/dimens.dart';
 export 'src/fonts.dart';
 export 'src/images.dart';
 export 'src/strings.dart';
+export 'src/text_styles.dart';

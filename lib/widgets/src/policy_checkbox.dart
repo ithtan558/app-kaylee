@@ -36,24 +36,16 @@ class _PolicyCheckBoxState extends BaseState<PolicyCheckBox> {
         Expanded(
           child: Padding(
             padding: const EdgeInsets.only(left: Dimens.px10),
-            child: Text.rich(TextSpan(
-                text: 'Tôi đồng ý mọi',
-                style:
-                    textTheme.bodyText2.copyWith(fontWeight: FontWeight.w400),
-                children: [
-                  TextSpan(
-                      text: ' điều khoản và quy định ',
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          _showSheet();
-                        },
-                      style: textTheme.bodyText2.copyWith(
-                          fontWeight: FontWeight.w400, color: ColorsRes.hyper)),
-                  TextSpan(
-                      text: 'khi sử dụng ứng dụng Kaylee',
-                      style: textTheme.bodyText2
-                          .copyWith(fontWeight: FontWeight.w400))
-                ])),
+            child: Text.rich(TextSpan(text: 'Tôi đồng ý mọi', children: [
+              TextSpan(
+                  text: ' điều khoản và quy định ',
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      _showSheet();
+                    },
+                  style: textTheme.bodyText2.copyWith(color: ColorsRes.hyper)),
+              TextSpan(text: 'khi sử dụng ứng dụng Kaylee')
+            ])),
           ),
         )
       ],
@@ -118,9 +110,6 @@ class _PolicyCheckBoxState extends BaseState<PolicyCheckBox> {
                                   bottom: Dimens.px16),
                               child: Text(
                                 Strings.policyContent,
-                                style: theme.textTheme.bodyText2.copyWith(
-                                  fontWeight: FontWeight.w400,
-                                ),
                               ),
                             ),
                           ),

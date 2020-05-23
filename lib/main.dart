@@ -1,9 +1,9 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/src/colors_res.dart';
-import 'package:kaylee/res/src/dimens.dart';
 import 'package:kaylee/res/src/fonts.dart';
 import 'package:kaylee/res/src/strings.dart';
+import 'package:kaylee/res/src/text_styles.dart';
 import 'package:kaylee/screens/history_detail/history_detail_screen.dart';
 import 'package:kaylee/screens/home/home_screen.dart';
 import 'package:kaylee/screens/notification/notification_screen.dart';
@@ -34,12 +34,12 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing {
           visualDensity: VisualDensity.adaptivePlatformDensity,
           fontFamily: Fonts.HelveticaNeue,
           textTheme: TextTheme(
-            bodyText2: theme.textTheme.bodyText2.merge(TextStyle(
-                color: ColorsRes.text,
-                fontFamily: Fonts.HelveticaNeue,
-                fontStyle: FontStyle.normal,
-                letterSpacing: 0,
-                fontSize: Dimens.px16)),
+            bodyText2: theme.textTheme.bodyText2
+                .copyWith(
+                    fontFamily: Fonts.HelveticaNeue,
+                    fontStyle: FontStyle.normal,
+                    letterSpacing: 0)
+                .merge(TextStyles.normal16W400),
           )),
     );
   }

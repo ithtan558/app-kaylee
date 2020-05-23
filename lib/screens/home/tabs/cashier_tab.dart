@@ -11,7 +11,6 @@ class CashierTab extends StatefulWidget {
 }
 
 class _CashierTabState extends BaseState<CashierTab> {
-
   @override
   void initState() {
     super.initState();
@@ -24,7 +23,6 @@ class _CashierTabState extends BaseState<CashierTab> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-    );
+    return Scaffold();
   }
 }

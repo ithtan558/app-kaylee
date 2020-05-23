@@ -46,18 +46,17 @@ class _KayleeFilterListItemState extends BaseState<KayleeFilterListItem> {
           }
         },
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: Dimens.px8, vertical: Dimens.px9),
+          padding: EdgeInsets.symmetric(
+              horizontal: Dimens.px8, vertical: Dimens.px9),
           child: Text(widget.title,
               style: theme.textTheme.bodyText2.copyWith(
                 fontSize: Dimens.px12,
-                fontWeight: FontWeight.w400,
               )),
         ),
       ),
     );
   }
 }
-
 
 class WrapperFilter extends StatelessWidget {
   final List<Widget> children;
@@ -75,13 +74,10 @@ class WrapperFilter extends StatelessWidget {
           Container(
             margin: EdgeInsets.only(bottom: 16),
             child: Text(title,
-                style: ScreenUtils.screenTheme(context)
-                    .textTheme
-                    .bodyText2
-                    .copyWith(
-                  fontSize: isAll ? Dimens.px16 : Dimens.px12,
-                  fontWeight: isAll ? FontWeight.w500 : FontWeight.w400,
-                )),
+                style: ScreenUtils.textTheme(context).bodyText2.copyWith(
+                      fontSize: isAll ? Dimens.px16 : Dimens.px12,
+                      fontWeight: isAll ? FontWeight.w500 : FontWeight.w400,
+                    )),
           ),
         Wrap(
           direction: Axis.horizontal,

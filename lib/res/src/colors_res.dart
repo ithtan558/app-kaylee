@@ -12,6 +12,7 @@ class ColorsRes {
   static const Color color1 = Color(0xff825a1e);
   static const Color filterButton = Color(0xffd8d8d8);
   static const Color dialogDimBg = Color(0x7f313131);
+  static const Color labelDeivider = Color(0xffF2EEE6);
 
   ColorsRes._();
 }

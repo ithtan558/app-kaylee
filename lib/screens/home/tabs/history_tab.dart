@@ -66,12 +66,9 @@ class _HistoryTabState extends BaseState<HistoryTab> {
                 height: double.infinity,
                 color: ColorsRes.textFieldBorder,
                 alignment: Alignment.center,
-                child: Text("#001",
+                child: KayleeText("#001",
                     textAlign: TextAlign.center,
-                    style: theme.textTheme.bodyText2.copyWith(
-                      fontSize: Dimens.px16,
-                      fontWeight: FontWeight.w500,
-                    )),
+                    style: TextStyles.normal16W500),
               ),
               Expanded(
                   child: Padding(
@@ -80,17 +77,11 @@ class _HistoryTabState extends BaseState<HistoryTab> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Thu Nguyen",
-                        style: theme.textTheme.bodyText2.copyWith(
-                          fontWeight: FontWeight.w500,
-                        )),
+                    KayleeText("Thu Nguyen", style: TextStyles.normal16W500),
                     Padding(
                       padding: const EdgeInsets.only(top: Dimens.px8),
-                      child: Text("700.000đ",
-                          style: theme.textTheme.bodyText2.copyWith(
-                            color: ColorsRes.hintText,
-                            fontWeight: FontWeight.w400,
-                          )),
+                      child: KayleePriceText.normal(700000,
+                          textStyle: TextStyles.hint16W400),
                     )
                   ],
                 ),
@@ -105,12 +96,10 @@ class _HistoryTabState extends BaseState<HistoryTab> {
                   width: Dimens.px1,
                 ))),
                 alignment: Alignment.center,
-                child: Text("Hoàn thành",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: Dimens.px16,
-                      fontWeight: FontWeight.w400,
-                    )),
+                child: KayleeText(
+                  "Hoàn thành",
+                  textAlign: TextAlign.center,
+                ),
               ),
             ],
           ),

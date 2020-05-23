@@ -29,10 +29,9 @@ class KayleeTextField extends StatelessWidget {
         if (!title.isNullOrEmpty)
           Text(
             title,
-            style:
-                ScreenUtils.screenTheme(context).textTheme.bodyText2.copyWith(
-                      fontWeight: FontWeight.w500,
-                    ),
+            style: ScreenUtils.textTheme(context).bodyText2.copyWith(
+                  fontWeight: FontWeight.w500,
+                ),
           ),
         if (textInput.isNotNull)
           Container(
@@ -72,9 +71,6 @@ class _SelectionInputFieldState extends BaseState<SelectionInputField> {
                   Expanded(
                     child: TextField(
                       controller: _tfController,
-                      style: theme.textTheme.bodyText2.copyWith(
-                        fontWeight: FontWeight.w400,
-                      ),
                       enabled: false,
                       onTap: () {},
                       decoration: InputDecoration(
@@ -85,7 +81,6 @@ class _SelectionInputFieldState extends BaseState<SelectionInputField> {
                           contentPadding:
                               const EdgeInsets.only(bottom: Dimens.px4),
                           hintStyle: theme.textTheme.bodyText2.copyWith(
-                            fontWeight: FontWeight.w400,
                             color: ColorsRes.hintText,
                           )),
                     ),
@@ -108,9 +103,8 @@ class _SelectionInputFieldState extends BaseState<SelectionInputField> {
             alignment: Alignment.centerRight,
             child: Text(widget.error,
                 style: theme.textTheme.bodyText2.copyWith(
-                  color: Color(0xffcd2e2e),
+                  color: ColorsRes.errorText,
                   fontSize: 12,
-                  fontWeight: FontWeight.w400,
                 )),
           )
       ],
@@ -188,9 +182,6 @@ class _NormalInputFieldState extends BaseState<NormalInputField> {
                         }
                       },
                       obscureText: isPassTField ? showPass : false,
-                      style: theme.textTheme.bodyText2.copyWith(
-                        fontWeight: FontWeight.w400,
-                      ),
                       decoration: InputDecoration(
                           enabled: !widget.isStaticTField,
                           enabledBorder: InputBorder.none,
@@ -200,7 +191,6 @@ class _NormalInputFieldState extends BaseState<NormalInputField> {
                           contentPadding:
                               const EdgeInsets.only(bottom: Dimens.px4),
                           hintStyle: theme.textTheme.bodyText2.copyWith(
-                            fontWeight: FontWeight.w400,
                             color: ColorsRes.hintText,
                           )),
                     ),
@@ -239,9 +229,8 @@ class _NormalInputFieldState extends BaseState<NormalInputField> {
             alignment: Alignment.centerRight,
             child: Text(widget.error,
                 style: theme.textTheme.bodyText2.copyWith(
-                  color: Color(0xffcd2e2e),
+                  color: ColorsRes.errorText,
                   fontSize: 12,
-                  fontWeight: FontWeight.w400,
                 )),
           )
       ],
@@ -265,7 +254,7 @@ class PhoneInputField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = ScreenUtils.screenTheme(context).textTheme;
+    final textTheme = ScreenUtils.textTheme(context);
     return Column(
       children: <Widget>[
         TextFieldBorderWrapper(Row(
@@ -274,10 +263,7 @@ class PhoneInputField extends StatelessWidget {
             Container(
               margin:
                   const EdgeInsets.only(left: Dimens.px10, right: Dimens.px13),
-              child: Text("+84",
-                  style: textTheme.bodyText2.copyWith(
-                    fontWeight: FontWeight.w400,
-                  )),
+              child: Text('+84'),
             ),
             Container(
                 color: ColorsRes.textFieldBorder,
@@ -301,9 +287,6 @@ class PhoneInputField extends StatelessWidget {
                     nextFocusNode?.requestFocus();
                   }
                 },
-                style: textTheme.bodyText2.copyWith(
-                  fontWeight: FontWeight.w400,
-                ),
                 decoration: InputDecoration(
                     focusedBorder: InputBorder.none,
                     border: InputBorder.none,
@@ -313,7 +296,6 @@ class PhoneInputField extends StatelessWidget {
                         right: Dimens.px16,
                         bottom: Dimens.px4),
                     hintStyle: textTheme.bodyText2.copyWith(
-                      fontWeight: FontWeight.w400,
                       color: ColorsRes.hintText,
                     )),
               ),
@@ -326,9 +308,8 @@ class PhoneInputField extends StatelessWidget {
             alignment: Alignment.centerRight,
             child: Text(error,
                 style: textTheme.bodyText2.copyWith(
-                  color: Color(0xffcd2e2e),
+                  color: ColorsRes.errorText,
                   fontSize: 12,
-                  fontWeight: FontWeight.w400,
                 )),
           )
       ],

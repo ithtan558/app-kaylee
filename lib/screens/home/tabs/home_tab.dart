@@ -4,6 +4,7 @@ import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/widgets/src/kaylee_text.dart';
 
 class HomeTab extends StatefulWidget {
   factory HomeTab.newInstance() = HomeTab._;
@@ -50,12 +51,8 @@ class _HomeTabState extends BaseState<HomeTab> {
                   padding: const EdgeInsets.only(
                       top: Dimens.px24, bottom: Dimens.px16),
                   child: Center(
-                    child: Text(Strings.dsNhaCc,
-                        style: theme.textTheme.bodyText2.copyWith(
-                          color: Colors.white,
-                          fontSize: Dimens.px18,
-                          fontWeight: FontWeight.w700,
-                        )),
+                    child: KayleeText(Strings.dsNhaCc,
+                        style: TextStyles.normalWhite18W700),
                   ),
                 );
               } else {
@@ -105,13 +102,10 @@ class _HomeTabState extends BaseState<HomeTab> {
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
-                  child: Text("Mỹ phẩm Nhật cao cấp Shiseido",
+                  child: KayleeText("Mỹ phẩm Nhật cao cấp Shiseido",
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: theme.textTheme.bodyText2.copyWith(
-                        fontSize: Dimens.px12,
-                        fontWeight: FontWeight.w400,
-                      )),
+                      style: TextStyles.normal12W400),
                 ),
               )
             ],
@@ -127,7 +121,7 @@ class _HomeMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = ScreenUtils.screenTheme(context).textTheme;
+    final textTheme = ScreenUtils.textTheme(context);
     return Container(
       height: menuHeight,
       child: Material(
@@ -167,20 +161,12 @@ class _HomeMenu extends StatelessWidget {
               bottom: Dimens.px24,
               child: Column(
                 children: [
-                  Text("Hi, Huynh An",
-                      style: textTheme.bodyText2.copyWith(
-                        color: Colors.white,
-                        fontSize: Dimens.px18,
-                        fontWeight: FontWeight.w700,
-                      )),
+                  KayleeText("Hi, Huynh An",
+                      style: TextStyles.normalWhite18W700),
                   Padding(
                     padding: EdgeInsets.only(top: Dimens.px8),
-                    child: Text("Quản lý cửa hàng",
-                        style: textTheme.bodyText2.copyWith(
-                          color: Colors.white,
-                          fontSize: Dimens.px12,
-                          fontWeight: FontWeight.w400,
-                        )),
+                    child: KayleeText("Quản lý cửa hàng",
+                        style: TextStyles.normalWhite12W400),
                   ),
                   Expanded(
                     child: Container(),
@@ -287,14 +273,10 @@ class _HomeMenu extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.only(top: Dimens.px8),
                     alignment: Alignment.center,
-                    child: Text(title,
+                    child: KayleeText(title,
                         maxLines: 2,
                         textAlign: TextAlign.center,
-                        style: textTheme.bodyText2.copyWith(
-                          color: Colors.white,
-                          fontSize: Dimens.px12,
-                          fontWeight: FontWeight.w400,
-                        )),
+                        style: TextStyles.normalWhite12W400),
                   )
                 ],
               ),
@@ -343,15 +325,8 @@ class __NotificationIconState extends State<_NotificationIcon> {
               decoration: BoxDecoration(
                   color: ColorsRes.notifyCircle, shape: BoxShape.circle),
               alignment: Alignment.center,
-              child: Text('${notifyCount > 99 ? 99 : notifyCount}',
-                  style: ScreenUtils.screenTheme(context)
-                      .textTheme
-                      .bodyText2
-                      .copyWith(
-                        color: Colors.white,
-                        fontSize: Dimens.px12,
-                        fontWeight: FontWeight.w400,
-                      )),
+              child: KayleeText('${notifyCount > 99 ? 99 : notifyCount}',
+                  style: TextStyles.normalWhite12W400),
             ),
           )
       ],

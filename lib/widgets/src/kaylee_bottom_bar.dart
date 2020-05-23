@@ -64,7 +64,6 @@ class _KayleeBottomBarState extends BaseState<KayleeBottomBar> {
       ),
       unselectedLabelStyle: theme.textTheme.bodyText2.copyWith(
         fontSize: Dimens.px12,
-        fontWeight: FontWeight.w400,
       ),
       onTap: (index) {
         if (index != selectedTab)

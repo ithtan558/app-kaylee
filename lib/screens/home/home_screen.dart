@@ -34,7 +34,7 @@ class _HomeScreenState extends BaseState<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Theme(
-        data: theme.copyWith(accentColor:  ColorsRes.color1),
+        data: theme.copyWith(accentColor: ColorsRes.color1),
         child: PageView(
           pageSnapping: true,
           allowImplicitScrolling: false,

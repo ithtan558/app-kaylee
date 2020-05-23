@@ -1,6 +1,6 @@
-import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
-import 'package:kaylee/res/src/colors_res.dart';
+import 'package:kaylee/res/res.dart';
+import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class HyperLinkText extends StatelessWidget {
   final String text;
@@ -14,12 +14,7 @@ class HyperLinkText extends StatelessWidget {
       onTap: onTap,
       child: Container(
         color: Colors.transparent,
-        child: Text(text ?? '',
-            style:
-                ScreenUtils.screenTheme(context).textTheme.bodyText2.copyWith(
-                      color: ColorsRes.hyper,
-                      fontWeight: FontWeight.w400,
-                    )),
+        child: KayleeText(text ?? '', style: TextStyles.hyper16W400),
       ),
     );
   }
