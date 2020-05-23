@@ -1,6 +1,7 @@
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/screens/guide/guide_screen.dart';
 import 'package:kaylee/screens/notification/notification_screen.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
@@ -102,7 +103,9 @@ class _AccountTabState extends BaseState<AccountTab> {
             _buildMenuItem(
                 title: Strings.huongDanSd,
                 icon: Images.ic_acc_guide,
-                onClick: () {}),
+                onClick: () {
+                  pushScreen(PageIntent(context, GuideScreen));
+                }),
             _buildMenuItem(
                 title: Strings.thongTinUngDung,
                 icon: Images.ic_acc_about_app,
