@@ -112,7 +112,7 @@ class KayleeText extends StatelessWidget {
       {this.textAlign = TextAlign.start,
       this.maxLines,
       this.style,
-      this.overflow});
+      this.overflow = TextOverflow.ellipsis});
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +120,7 @@ class KayleeText extends StatelessWidget {
       text,
       textAlign: textAlign,
       maxLines: maxLines,
-      overflow: overflow ?? TextOverflow.ellipsis,
+      overflow: overflow,
       style: ScreenUtils.textTheme(context).bodyText2.merge(style),
     );
   }

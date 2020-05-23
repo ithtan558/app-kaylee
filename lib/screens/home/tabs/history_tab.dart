@@ -99,6 +99,7 @@ class _HistoryTabState extends BaseState<HistoryTab> {
                 child: KayleeText(
                   "Hoàn thành",
                   textAlign: TextAlign.center,
+                  overflow: null,
                 ),
               ),
             ],
