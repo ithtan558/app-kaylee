@@ -35,7 +35,7 @@ class _KayleeFilterViewState extends BaseState<KayleeFilterView> {
         if (_filterViewController.view._filterViewAnimController.isDismissed) {
           return true;
         } else {
-          _filterViewController.view._filterViewAnimController.forward();
+          _filterViewController.view._filterViewAnimController.reverse();
           return false;
         }
       },
