@@ -1,6 +1,5 @@
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
-import 'package:kaylee/res/src/colors_res.dart';
 import 'package:kaylee/screens/home/tabs/account_tab.dart';
 import 'package:kaylee/screens/home/tabs/cashier_tab.dart';
 import 'package:kaylee/screens/home/tabs/history_tab.dart';
@@ -33,20 +32,17 @@ class _HomeScreenState extends BaseState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Theme(
-        data: theme.copyWith(accentColor: ColorsRes.color1),
-        child: PageView(
-          pageSnapping: true,
-          allowImplicitScrolling: false,
-          controller: _pageController,
-          physics: NeverScrollableScrollPhysics(),
-          children: [
-            HomeTab.newInstance(),
-            CashierTab.newInstance(),
-            HistoryTab.newInstance(),
-            AccountTab.newInstance(),
-          ],
-        ),
+      body: PageView(
+        pageSnapping: true,
+        allowImplicitScrolling: false,
+        controller: _pageController,
+        physics: NeverScrollableScrollPhysics(),
+        children: [
+          HomeTab.newInstance(),
+          CashierTab.newInstance(),
+          HistoryTab.newInstance(),
+          AccountTab.newInstance(),
+        ],
       ),
       bottomNavigationBar: KayleeBottomBar(
         pageController: _pageController,

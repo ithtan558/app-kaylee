@@ -4,6 +4,7 @@ import 'package:kaylee/res/src/colors_res.dart';
 import 'package:kaylee/res/src/fonts.dart';
 import 'package:kaylee/res/src/strings.dart';
 import 'package:kaylee/res/src/text_styles.dart';
+import 'package:kaylee/screens/about/about_screen.dart';
 import 'package:kaylee/screens/guide/guide_screen.dart';
 import 'package:kaylee/screens/history_detail/history_detail_screen.dart';
 import 'package:kaylee/screens/home/home_screen.dart';
@@ -28,12 +29,12 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: Strings.appName,
-      debugShowCheckedModeBanner: false,
       onGenerateRoute: onGenerateRoute,
       theme: ThemeData(
           scaffoldBackgroundColor: ColorsRes.background,
           visualDensity: VisualDensity.adaptivePlatformDensity,
           fontFamily: Fonts.HelveticaNeue,
+          accentColor: ColorsRes.color1,
           pageTransitionsTheme: PageTransitionsTheme(builders: {
             TargetPlatform.android: CupertinoPageTransitionsBuilder(),
             TargetPlatform.iOS: CupertinoPageTransitionsBuilder()
@@ -68,6 +69,8 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing {
         return HistoryDetailScreen.newInstance();
       case GuideScreen:
         return GuideScreen.newInstance();
+      case AboutScreen:
+        return AboutScreen.newInstance();
       default:
         return HomeScreen.newInstance();
     }

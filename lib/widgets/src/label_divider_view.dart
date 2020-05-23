@@ -25,6 +25,19 @@ class LabelDividerView extends StatelessWidget {
         ),
       );
 
+  factory LabelDividerView.hyperLink(
+          {String title, String linkText, Function onPress}) =>
+      LabelDividerView(
+        title: title,
+        ending: Padding(
+          padding: EdgeInsets.only(right: Dimens.px16),
+          child: HyperLinkText(
+            text: linkText,
+            onTap: onPress,
+          ),
+        ),
+      );
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -36,7 +49,7 @@ class LabelDividerView extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.only(
                   left: Dimens.px16,
-                  right: ending.isNotNull ? Dimens.px8 : Dimens.px4),
+                  right: ending.isNotNull ? Dimens.px8 : Dimens.px16),
               child: Text(title ?? '',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
