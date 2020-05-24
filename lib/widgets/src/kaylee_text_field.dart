@@ -1,10 +1,12 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/res/res.dart';
 import 'package:kaylee/res/src/colors_res.dart';
 import 'package:kaylee/res/src/dimens.dart';
 import 'package:kaylee/res/src/images.dart';
 import 'package:kaylee/res/src/strings.dart';
+import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class KayleeTextField extends StatelessWidget {
   final String title;
@@ -27,17 +29,16 @@ class KayleeTextField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (!title.isNullOrEmpty)
-          Text(
-            title,
-            style: ScreenUtils.textTheme(context).bodyText2.copyWith(
-                  fontWeight: FontWeight.w500,
-                ),
-          ),
-        if (textInput.isNotNull)
           Container(
-            child: textInput,
-            margin: EdgeInsets.only(top: Dimens.px8),
+            margin: EdgeInsets.only(bottom: Dimens.px8),
+            child: Text(
+              title,
+              style: ScreenUtils.textTheme(context).bodyText2.copyWith(
+                    fontWeight: FontWeight.w500,
+                  ),
+            ),
           ),
+        if (textInput.isNotNull) textInput,
       ],
     );
   }
@@ -88,9 +89,7 @@ class _SearchInputFieldState extends BaseState<SearchInputField> {
             focusedBorder: InputBorder.none,
             errorBorder: InputBorder.none,
             hintText: widget.hint ?? '',
-            hintStyle: theme.textTheme.bodyText2.copyWith(
-              color: ColorsRes.hintText,
-            ),
+            hintStyle: TextStyles.hint16W400,
             suffixIcon: GestureDetector(
               onTap: () {
                 if (closeIsShowed) {
@@ -107,6 +106,58 @@ class _SearchInputFieldState extends BaseState<SearchInputField> {
             )),
       ),
     );
+  }
+}
+
+class ButtonInputField extends StatefulWidget {
+  final String hint;
+  final String initText;
+  final String buttonText;
+  final Function() onTap;
+
+  ButtonInputField({this.hint, this.initText, this.onTap, this.buttonText});
+
+  @override
+  _ButtonInputFieldState createState() => new _ButtonInputFieldState();
+}
+
+class _ButtonInputFieldState extends BaseState<ButtonInputField> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFieldBorderWrapper(Row(
+      children: <Widget>[
+        Expanded(
+          child: Padding(
+            padding:
+                const EdgeInsets.only(left: Dimens.px16, right: Dimens.px14),
+            child: KayleeText(
+              widget.initText ?? '',
+              maxLines: 1,
+              style: TextStyles.normal16W400,
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(
+            right: Dimens.px4,
+          ),
+          child: KayleeFlatButton(
+            title: widget.buttonText,
+            onPress: widget.onTap,
+          ),
+        )
+      ],
+    ));
   }
 }
 
@@ -144,15 +195,17 @@ class _SelectionInputFieldState extends BaseState<SelectionInputField> {
                           focusedBorder: InputBorder.none,
                           border: InputBorder.none,
                           hintText: widget.hint,
-                          contentPadding:
-                              const EdgeInsets.only(bottom: Dimens.px4),
-                          hintStyle: theme.textTheme.bodyText2.copyWith(
-                            color: ColorsRes.hintText,
-                          )),
+                          contentPadding: const EdgeInsets.only(
+                            bottom: Dimens.px4,
+                            left: Dimens.px16,
+                          ),
+                          hintStyle: TextStyles.hint16W400),
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: Dimens.px16),
+                    padding: const EdgeInsets.only(
+                      right: Dimens.px16,
+                    ),
                     child: Image.asset(
                       Images.ic_down,
                       width: Dimens.px16,
@@ -167,11 +220,12 @@ class _SelectionInputFieldState extends BaseState<SelectionInputField> {
           Container(
             margin: const EdgeInsets.only(top: Dimens.px4),
             alignment: Alignment.centerRight,
-            child: Text(widget.error,
-                style: theme.textTheme.bodyText2.copyWith(
-                  color: ColorsRes.errorText,
-                  fontSize: 12,
-                )),
+            child: KayleeText(
+              widget.error,
+              textAlign: TextAlign.end,
+              style: TextStyles.error12W400,
+              overflow: TextOverflow.visible,
+            ),
           )
       ],
     );
@@ -256,9 +310,7 @@ class _NormalInputFieldState extends BaseState<NormalInputField> {
                           hintText: widget.hint,
                           contentPadding:
                               const EdgeInsets.only(bottom: Dimens.px4),
-                          hintStyle: theme.textTheme.bodyText2.copyWith(
-                            color: ColorsRes.hintText,
-                          )),
+                          hintStyle: TextStyles.hint16W400),
                     ),
                   ),
                   if (isPassTField)
@@ -293,90 +345,126 @@ class _NormalInputFieldState extends BaseState<NormalInputField> {
           Container(
             margin: const EdgeInsets.only(top: Dimens.px4),
             alignment: Alignment.centerRight,
-            child: Text(widget.error,
-                style: theme.textTheme.bodyText2.copyWith(
-                  color: ColorsRes.errorText,
-                  fontSize: 12,
-                )),
+            child: KayleeText(
+              widget.error,
+              textAlign: TextAlign.end,
+              style: TextStyles.error12W400,
+              overflow: TextOverflow.visible,
+            ),
           )
       ],
     );
   }
 }
 
-class PhoneInputField extends StatelessWidget {
+class PhoneInputField extends StatefulWidget {
+  final String initText;
   final String error;
   final FocusNode focusNode;
   final FocusNode nextFocusNode;
   final TextEditingController controller;
   final TextInputAction textInputAction;
+  final bool isStaticTField;
+
+  factory PhoneInputField.static({String initText}) => PhoneInputField(
+        initText: initText,
+        isStaticTField: true,
+      );
 
   PhoneInputField(
       {this.error,
       this.focusNode,
       this.controller,
       this.nextFocusNode,
-      this.textInputAction = TextInputAction.done});
+      this.textInputAction = TextInputAction.done,
+      this.isStaticTField = false,
+      this.initText});
+
+  @override
+  _PhoneInputFieldState createState() => _PhoneInputFieldState();
+}
+
+class _PhoneInputFieldState extends State<PhoneInputField> {
+  TextEditingController tfController;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.isStaticTField) {
+      tfController = TextEditingController(text: widget.initText);
+    }
+  }
+
+  @override
+  void dispose() {
+    tfController?.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final textTheme = ScreenUtils.textTheme(context);
     return Column(
       children: <Widget>[
-        TextFieldBorderWrapper(Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              margin:
-                  const EdgeInsets.only(left: Dimens.px10, right: Dimens.px13),
-              child: Text('+84'),
-            ),
-            Container(
-                color: ColorsRes.textFieldBorder,
-                width: Dimens.px1,
-                margin:
-                    const EdgeInsets.only(top: Dimens.px4, bottom: Dimens.px2)),
-            Expanded(
-              child: TextField(
-                focusNode: focusNode,
-                controller: controller,
-                keyboardType: TextInputType.phone,
-                maxLengthEnforced: true,
-                maxLength: 10,
-                buildCounter: (BuildContext c,
-                    {int currentLength, bool isFocused, int maxLength}) {
-                  return null;
-                },
-                textInputAction: textInputAction,
-                onSubmitted: (_) {
-                  if (textInputAction == TextInputAction.next) {
-                    nextFocusNode?.requestFocus();
-                  }
-                },
-                decoration: InputDecoration(
-                    focusedBorder: InputBorder.none,
-                    border: InputBorder.none,
-                    hintText: Strings.phoneLimitHint,
-                    contentPadding: const EdgeInsets.only(
-                        left: Dimens.px14,
-                        right: Dimens.px16,
-                        bottom: Dimens.px4),
-                    hintStyle: textTheme.bodyText2.copyWith(
-                      color: ColorsRes.hintText,
-                    )),
+        TextFieldBorderWrapper(
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                margin: const EdgeInsets.only(
+                    left: Dimens.px10, right: Dimens.px13),
+                child: Text('+84'),
               ),
-            )
-          ],
-        )),
-        if (!error.isNullOrEmpty)
+              Container(
+                  color: ColorsRes.textFieldBorder,
+                  width: Dimens.px1,
+                  margin: const EdgeInsets.only(
+                      top: Dimens.px4, bottom: Dimens.px2)),
+              Expanded(
+                child: TextField(
+                  focusNode: widget.focusNode,
+                  controller:
+                      widget.isStaticTField ? tfController : widget.controller,
+                  keyboardType: TextInputType.phone,
+                  maxLengthEnforced: true,
+                  enabled: !widget.isStaticTField,
+                  maxLength: 10,
+                  buildCounter: (BuildContext c,
+                      {int currentLength, bool isFocused, int maxLength}) {
+                    return null;
+                  },
+                  textInputAction: widget.textInputAction,
+                  onSubmitted: (_) {
+                    if (widget.textInputAction == TextInputAction.next) {
+                      widget.nextFocusNode?.requestFocus();
+                    }
+                  },
+                  decoration: InputDecoration(
+                      focusedBorder: InputBorder.none,
+                      disabledBorder: InputBorder.none,
+                      border: InputBorder.none,
+                      hintText: Strings.phoneLimitHint,
+                      contentPadding: const EdgeInsets.only(
+                          left: Dimens.px14,
+                          right: Dimens.px16,
+                          bottom: Dimens.px4),
+                      hintStyle: TextStyles.hint16W400),
+                ),
+              )
+            ],
+          ),
+          bgColor: widget.isStaticTField ? Colors.transparent : null,
+        ),
+        if (!widget.error.isNullOrEmpty)
           Container(
             margin: const EdgeInsets.only(top: Dimens.px4),
             alignment: Alignment.centerRight,
-            child: Text(error,
-                style: textTheme.bodyText2.copyWith(
-                  color: ColorsRes.errorText,
-                  fontSize: 12,
-                )),
+            child: KayleeText(
+              widget.error,
+              textAlign: TextAlign.end,
+              style: TextStyles.error12W400,
+              overflow: TextOverflow.visible,
+            ),
           )
       ],
     );

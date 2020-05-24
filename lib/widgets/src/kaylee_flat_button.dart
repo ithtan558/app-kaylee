@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class KayleeFlatButton extends StatelessWidget {
   final Function() onPress;
@@ -50,19 +51,19 @@ class KayleeFlatButton extends StatelessWidget {
       height: Dimens.px40,
       child: FlatButton(
           onPressed: onPress,
+          padding: titlePadding ??
+              const EdgeInsets.symmetric(horizontal: Dimens.px8),
           color: background ?? ColorsRes.hyper,
-          shape: RoundedRectangleBorder(borderRadius: borderRadius),
+          shape: RoundedRectangleBorder(
+              borderRadius: borderRadius ?? BorderRadius.circular(Dimens.px5)),
           clipBehavior: Clip.antiAlias,
           child: child.isNotNull
               ? child
-              : Padding(
-                  padding: titlePadding ??
-                      EdgeInsets.symmetric(horizontal: Dimens.px14),
-                  child: Text(title ?? '',
-                      style: ScreenUtils.textTheme(context).bodyText2.copyWith(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500,
-                          )))),
+              : KayleeText(
+                title ?? '',
+                style: TextStyles.normalWhite16W500,
+                maxLines: 1,
+              )),
     );
   }
 }
@@ -102,11 +103,9 @@ class _KayleeDateFilterButtonState extends BaseState<KayleeDateFilterButton>
         Expanded(
             child: Container(
           alignment: Alignment.center,
-          child: Text(
+          child: KayleeText(
               'Tháng ${DateFormat(' ${DateFormat.NUM_MONTH * 2}/${DateFormat.YEAR * 4}').format(selectedDate)}',
-              style: theme.textTheme.bodyText2.copyWith(
-                color: Colors.white,
-              )),
+              style: TextStyles.normalWhite16W400),
         )),
         AnimatedBuilder(
           animation: animController,

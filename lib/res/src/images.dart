@@ -40,4 +40,6 @@ class Images {
   static const ic_right = 'assets/ic_right.png';
   static const ic_delete = 'assets/ic_delete.png';
   static const ic_close = 'assets/ic_close.png';
+  static const ic_camera = 'assets/ic_camera.png';
+  static const ic_image_holder = 'assets/ic_image_holder.png';
 }

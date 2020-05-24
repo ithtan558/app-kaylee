@@ -7,11 +7,8 @@ class Strings {
   static const String quocGiaHint = 'Chọn quốc gia trong danh sách';
   static const String email = 'Email';
   static const String emailHint = 'Nhập địa chỉ email';
-
   static const String khoiPhucMatKhau = 'Khôi phục mật khẩu';
-
   static const String appName = 'KayLee';
-
   static const String chuaCoTK = 'Chưa có tài khoản?';
   static const String login = 'Login';
   static const String dangKy = 'Đăng ký';
@@ -37,14 +34,11 @@ class Strings {
   static const String nhapOtp = 'Nhập OTP';
   static const String khongNhanDcSms = 'Không nhận được tin nhắn?';
   static const String guiLai = 'Gửi lại';
-
   static const String trangChu = 'Trang chủ';
   static const String thuNgan = 'Thu ngân';
   static const String lichSuDh = 'Lịch sử ĐH';
   static const String taiKhoan = 'Tài khoản';
-
   static const String dsNhaCc = 'Danh sách nhà cung cấp';
-
   static const String qlChiNhanh = 'Quản lý\nchi nhánh';
   static const String dsDichVu = 'Danh sách\ndịch vụ';
   static const String dsSanPham = 'Danh sách\nsản phẩm';
@@ -53,30 +47,36 @@ class Strings {
   static const String dsLichHen = 'Danh sách\nlịch hẹn';
   static const String hoaHongNv = 'Hoa hồng\nnhân viên';
   static const String doanhThuBanHang = 'Doanh thu\nbán hàng';
-
   static const String timDonHangHint = 'Tìm đơn hàng';
-
   static const String chonLoc = 'Chọn lọc';
-
   static const String chiTietDH = 'CHI TIẾT ĐƠN HÀNG';
-
   static const String thongTinKh = 'Thông tin khách hàng';
-
   static const String chiNhanh = 'Chi nhánh';
-
   static const String suThongTin = 'Sửa thông tin';
-
   static const String thongBao = 'Thông báo';
   static const String huongDanSd = 'Hướng dẫn sử dụng';
   static const String thongTinUngDung = 'Thông tin về ứng dụng';
   static const String quanlyDonDh = 'Quản lý đơn đặt hàng';
   static const String dangXuat = 'Đăng xuất';
-
   static const String xoaTatCa = 'Xoá tất cả';
-
   static const String timThongBaoTheoTuKhoa = 'Tìm thông báo theo từ khoá';
+  static const String xoa = 'Xoá';
+  static const String chinhSuThongTinCaNhan = 'Chỉnh sửa thông tin cá nhân';
+  static const String luu = 'Lưu';
+  static const String diaChiHienTai = 'Địa chỉ hiện tại';
+  static const String diaChiHienTaiHint = 'Số nhà, tên cư xá hoặc khu dân cư';
 
-  static const String xoa='Xoá';
+  static const String namSinh = 'Năm sinh';
+
+  static const String queQuan = 'Quê quán';
+  static const String chonTinhTpHint = 'Chọn Tỉnh/Thành phố';
+
+  static const String phuong = 'Phường';
+  static const String quan = 'Quận';
+
+  static const String doiMatKhau = 'Đổi mật khẩu';
+
+  static const String chinhSuaHinhDaiDien = 'Chỉnh sửa hình đại diện';
 
   Strings._();
 }

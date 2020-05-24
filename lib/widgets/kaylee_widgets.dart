@@ -14,6 +14,7 @@ export 'src/hyper_link_text.dart';
 export 'src/kaylee_appbar.dart';
 export 'src/kaylee_bottom_bar.dart';
 export 'src/kaylee_flat_button.dart';
+export 'src/kaylee_image_picker.dart';
 export 'src/kaylee_rounded_button.dart';
 export 'src/kaylee_text.dart';
 export 'src/kaylee_text_field.dart';
