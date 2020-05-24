@@ -51,7 +51,7 @@ class LabelDividerView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: Dimens.px48,
-      color: ColorsRes.labelDeivider,
+      color: ColorsRes.labelDivider,
       child: Row(
         children: [
           Expanded(
