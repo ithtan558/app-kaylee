@@ -63,7 +63,6 @@ class _NotificationScreenState extends BaseState<NotificationScreen> {
                           .map((e) => NotifyItem(
                                 e,
                                 onTap: () {
-                                  FocusScope.of(context).unfocus();
                                 },
                                 onDeleted: (item) {
                                   list.removeWhere(

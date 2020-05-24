@@ -39,4 +39,5 @@ class Images {
   static const ic_acc_orderlist = 'assets/ic_acc_orderlist.png';
   static const ic_right = 'assets/ic_right.png';
   static const ic_delete = 'assets/ic_delete.png';
+  static const ic_close = 'assets/ic_close.png';
 }

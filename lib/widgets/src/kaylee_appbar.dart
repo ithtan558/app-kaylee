@@ -10,27 +10,31 @@ class KayleeAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Widget leading;
   final bool Function() onBack;
   final List<Widget> actions;
+  final IconData leadingIcon;
 
-  KayleeAppBar({this.title, this.leading, this.onBack, this.actions});
+  KayleeAppBar(
+      {this.title, this.leading, this.onBack, this.actions, this.leadingIcon});
 
   @override
   Widget build(BuildContext context) {
     final canPop = ModalRoute.of(context)?.canPop;
     return AppBar(
-      leading: canPop
-          ? FlatButton(
-              shape: CircleBorder(),
-              child: Icon(
-                CupertinoIcons.back,
-                color: ColorsRes.hintText,
-              ),
-              onPressed: () {
-                if (onBack == null || onBack()) {
-                  pop(PageIntent(context, null));
-                }
-              },
-            )
-          : leading,
+      leading: leading.isNotNull
+          ? leading
+          : canPop
+              ? FlatButton(
+                  shape: CircleBorder(),
+                  child: Icon(
+                    leadingIcon ?? CupertinoIcons.back,
+                    color: ColorsRes.hintText,
+                  ),
+                  onPressed: () {
+                    if (onBack == null || onBack()) {
+                      pop(PageIntent(context, null));
+                    }
+                  },
+                )
+              : Container(),
       automaticallyImplyLeading: false,
       title: KayleeText(
         title?.toUpperCase() ?? '',

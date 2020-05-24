@@ -25,8 +25,7 @@ class KayleeDateTimeText extends StatelessWidget {
         time,
         textAlign: textAlign,
         textStyle: textStyle,
-        format:
-            '${DateFormat.DAY * 2}/${DateFormat.NUM_MONTH * 2}',
+        format: '${DateFormat.DAY * 2}/${DateFormat.NUM_MONTH * 2}',
       );
 
   @override
@@ -146,6 +145,31 @@ class KayleeText extends StatelessWidget {
   final TextStyle style;
   final int maxLines;
   final TextOverflow overflow;
+
+  factory KayleeText.hint16W400(String text,
+      {TextAlign textAlign = TextAlign.start,
+        int maxLines,
+        TextOverflow overflow}) =>
+      KayleeText(
+        text,
+        textAlign: textAlign,
+        style: TextStyles.hint16W400,
+        maxLines: maxLines,
+        overflow: overflow,
+      );
+
+
+  factory KayleeText.normal16W500(String text,
+          {TextAlign textAlign = TextAlign.start,
+          int maxLines,
+          TextOverflow overflow}) =>
+      KayleeText(
+        text,
+        textAlign: textAlign,
+        style: TextStyles.normal16W500,
+        maxLines: maxLines,
+        overflow: overflow,
+      );
 
   KayleeText(this.text,
       {this.textAlign = TextAlign.start,

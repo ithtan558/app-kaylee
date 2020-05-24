@@ -1,6 +1,7 @@
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/screens/notification/detail/notify_detail_screen.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class NotifyItem extends StatefulWidget {
@@ -62,6 +63,8 @@ class _NotifyItemState extends BaseState<NotifyItem> {
       },
       child: InkWell(
         onTap: () {
+          FocusScope.of(context).unfocus();
+          pushScreen(PageIntent(context, NotifyDetailScreen));
           if (widget.onTap.isNotNull) {
             if (!isRead) {
               setState(() {
