@@ -85,7 +85,10 @@ class _AboutScreenState extends BaseState<AboutScreen> {
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    KayleeDateTimeText.normal(0),
+                    KayleeDateTimeText.normal(
+                      0,
+                      textAlign: TextAlign.start,
+                    ),
                     Expanded(
                         child: KayleeText(
                       'iPhone 8',

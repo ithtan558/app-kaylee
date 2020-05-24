@@ -6,13 +6,27 @@ import 'package:kaylee/utils/text_utils.dart';
 class KayleeDateTimeText extends StatelessWidget {
   final int time;
   final String format;
+  final TextAlign textAlign;
+  final TextStyle textStyle;
 
-  KayleeDateTimeText(this.time, {this.format});
+  KayleeDateTimeText(this.time, {this.format, this.textAlign, this.textStyle});
 
-  factory KayleeDateTimeText.normal(int time) => KayleeDateTimeText(
+  factory KayleeDateTimeText.normal(int time, {TextAlign textAlign}) =>
+      KayleeDateTimeText(
         time,
+        textAlign: textAlign,
         format:
             '${DateFormat.HOUR24 * 2}:${DateFormat.MINUTE * 2} ${DateFormat.DAY * 2}/${DateFormat.NUM_MONTH * 2}/${DateFormat.YEAR * 4}',
+      );
+
+  factory KayleeDateTimeText.dayMonth(int time,
+          {TextAlign textAlign, TextStyle textStyle}) =>
+      KayleeDateTimeText(
+        time,
+        textAlign: textAlign,
+        textStyle: textStyle,
+        format:
+            '${DateFormat.DAY * 2}/${DateFormat.NUM_MONTH * 2}',
       );
 
   @override
@@ -22,8 +36,8 @@ class KayleeDateTimeText extends StatelessWidget {
     return KayleeText(
       dateString,
       maxLines: 1,
-      textAlign: TextAlign.start,
-      style: TextStyles.normal16W400,
+      textAlign: textAlign,
+      style: textStyle ?? TextStyles.normal16W400,
     );
   }
 }

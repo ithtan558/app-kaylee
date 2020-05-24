@@ -54,7 +54,7 @@ class Strings {
   static const String hoaHongNv = 'Hoa hồng\nnhân viên';
   static const String doanhThuBanHang = 'Doanh thu\nbán hàng';
 
-  static const String timDonHang = 'Tìm đơn hàng';
+  static const String timDonHangHint = 'Tìm đơn hàng';
 
   static const String chonLoc = 'Chọn lọc';
 
@@ -64,13 +64,19 @@ class Strings {
 
   static const String chiNhanh = 'Chi nhánh';
 
-  static const String  suThongTin='Sửa thông tin';
+  static const String suThongTin = 'Sửa thông tin';
 
-  static const String thongBao='Thông báo';
-  static const String huongDanSd='Hướng dẫn sử dụng';
-  static const String thongTinUngDung='Thông tin về ứng dụng';
-  static const String quanlyDonDh='Quản lý đơn đặt hàng';
-  static const String dangXuat='Đăng xuất';
+  static const String thongBao = 'Thông báo';
+  static const String huongDanSd = 'Hướng dẫn sử dụng';
+  static const String thongTinUngDung = 'Thông tin về ứng dụng';
+  static const String quanlyDonDh = 'Quản lý đơn đặt hàng';
+  static const String dangXuat = 'Đăng xuất';
+
+  static const String xoaTatCa = 'Xoá tất cả';
+
+  static const String timThongBaoTheoTuKhoa = 'Tìm thông báo theo từ khoá';
+
+  static const String xoa='Xoá';
 
   Strings._();
 }

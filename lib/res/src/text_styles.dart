@@ -6,6 +6,8 @@ class TextStyles {
   static final TextStyle hint = TextStyle(color: ColorsRes.hintText);
   static final TextStyle normal = TextStyle(color: ColorsRes.text);
   static final TextStyle normalWhite = TextStyle(color: Colors.white);
+  static final TextStyle button = TextStyle(color: ColorsRes.button);
+  static final TextStyle error = TextStyle(color: ColorsRes.errorText);
 
   static final TextStyle _w400 = TextStyle(fontWeight: FontWeight.w400);
   static final TextStyle _w500 = TextStyle(fontWeight: FontWeight.w500);
@@ -34,4 +36,9 @@ class TextStyles {
       normalWhite.merge(_f18.merge(_w700));
 
   static final TextStyle hint16W400 = hint.merge(_f16.merge(_w400));
+
+  static final TextStyle button16W400 = button.merge(_f16.merge(_w400));
+  static final TextStyle button16W500 = button.merge(_f16.merge(_w500));
+
+  static final TextStyle error16W500 = error.merge(_f16.merge(_w400));
 }

@@ -25,6 +25,15 @@ class LabelDividerView extends StatelessWidget {
         ),
       );
 
+  factory LabelDividerView.monthYear(int time) {
+    final dateString = 'Tháng ' +
+        DateFormat('${DateFormat.NUM_MONTH * 2}/${DateFormat.YEAR * 4}')
+            .format(DateTime.fromMillisecondsSinceEpoch((time ?? 0) * 1000));
+    return LabelDividerView(
+      title: dateString,
+    );
+  }
+
   factory LabelDividerView.hyperLink(
           {String title, String linkText, Function onPress}) =>
       LabelDividerView(
@@ -50,12 +59,10 @@ class LabelDividerView extends StatelessWidget {
               padding: EdgeInsets.only(
                   left: Dimens.px16,
                   right: ending.isNotNull ? Dimens.px8 : Dimens.px16),
-              child: Text(title ?? '',
+              child: KayleeText(title ?? '',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: ScreenUtils.textTheme(context)
-                      .bodyText2
-                      .copyWith(fontWeight: FontWeight.w500)),
+                  style: TextStyles.normal16W500),
             ),
           ),
           if (ending.isNotNull) ending

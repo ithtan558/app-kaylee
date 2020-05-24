@@ -38,4 +38,5 @@ class Images {
   static const ic_acc_notify = 'assets/ic_acc_notify.png';
   static const ic_acc_orderlist = 'assets/ic_acc_orderlist.png';
   static const ic_right = 'assets/ic_right.png';
+  static const ic_delete = 'assets/ic_delete.png';
 }

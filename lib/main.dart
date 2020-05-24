@@ -8,6 +8,7 @@ import 'package:kaylee/screens/about/about_screen.dart';
 import 'package:kaylee/screens/guide/guide_screen.dart';
 import 'package:kaylee/screens/history_detail/history_detail_screen.dart';
 import 'package:kaylee/screens/home/home_screen.dart';
+import 'package:kaylee/screens/notification/detail/notify_detail_screen.dart';
 import 'package:kaylee/screens/notification/notification_screen.dart';
 import 'package:kaylee/screens/reset_pass/otp_confirm_screeen.dart';
 import 'package:kaylee/screens/reset_pass/reset_pass_screen.dart';
@@ -71,6 +72,8 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing {
         return GuideScreen.newInstance();
       case AboutScreen:
         return AboutScreen.newInstance();
+      case NotifyDetailScreen:
+        return NotifyDetailScreen.newInstance();
       default:
         return HomeScreen.newInstance();
     }

@@ -44,6 +44,10 @@ class KayleeTextField extends StatelessWidget {
 }
 
 class SearchInputField extends StatefulWidget {
+  final String hint;
+
+  SearchInputField({this.hint});
+
   @override
   _SearchInputFieldState createState() => new _SearchInputFieldState();
 }
@@ -79,11 +83,11 @@ class _SearchInputFieldState extends BaseState<SearchInputField> {
         },
         decoration: InputDecoration(
             contentPadding: EdgeInsets.only(
-                top: Dimens.px16, bottom: Dimens.px16, left: Dimens.px16),
+                top: Dimens.px16, bottom: Dimens.px14, left: Dimens.px16),
             border: InputBorder.none,
             focusedBorder: InputBorder.none,
             errorBorder: InputBorder.none,
-            hintText: Strings.timDonHang,
+            hintText: widget.hint ?? '',
             hintStyle: theme.textTheme.bodyText2.copyWith(
               color: ColorsRes.hintText,
             ),
@@ -128,7 +132,6 @@ class _SelectionInputFieldState extends BaseState<SelectionInputField> {
       children: <Widget>[
         TextFieldBorderWrapper(
             Container(
-              margin: const EdgeInsets.symmetric(horizontal: Dimens.px16),
               child: Row(
                 children: <Widget>[
                   Expanded(

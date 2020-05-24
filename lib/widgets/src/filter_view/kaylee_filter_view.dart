@@ -310,7 +310,7 @@ class _FilterListState extends BaseState<_FilterList> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SearchInputField(),
+                SearchInputField(hint: Strings.timDonHangHint,),
                 Expanded(
                   child: ListView.separated(
                     padding: EdgeInsets.only(top: Dimens.px16),
