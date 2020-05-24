@@ -122,7 +122,7 @@ class _SignUpScreenState extends BaseState<SignUpScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: Dimens.px8),
-                child: KayLeeRoundedButton(
+                child: KayLeeRoundedButton.normal(
                     text: Strings.dangKy,
                     onPressed: () {},
                     margin: EdgeInsets.symmetric(horizontal: Dimens.px8)),

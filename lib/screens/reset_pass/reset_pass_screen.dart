@@ -50,7 +50,7 @@ class _ResetPassScreenState extends BaseState<ResetPassScreen> {
                   controller: _phoneTFController,
                 ),
               ),
-              KayLeeRoundedButton(
+              KayLeeRoundedButton.normal(
                 margin: EdgeInsets.only(top: Dimens.px16),
                 onPressed: () {
                   pushScreen(PageIntent(context, OtpConfirmScreen));

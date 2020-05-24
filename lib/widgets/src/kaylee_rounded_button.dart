@@ -1,6 +1,7 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/res/res.dart';
 import 'package:kaylee/res/src/colors_res.dart';
 import 'package:kaylee/res/src/dimens.dart';
 
@@ -9,8 +10,58 @@ class KayLeeRoundedButton extends StatelessWidget {
   final String text;
   final void Function() onPressed;
   final EdgeInsets margin;
+  final BorderSide borderSide;
+  final Color color;
 
-  KayLeeRoundedButton({this.width, this.text, this.onPressed, this.margin});
+  factory KayLeeRoundedButton.button2(
+          {String text,
+          EdgeInsets margin,
+          void Function() onPressed,
+          double width}) =>
+      KayLeeRoundedButton(
+        text: text,
+        margin: margin,
+        onPressed: onPressed,
+        width: width,
+        borderSide: BorderSide(
+          width: Dimens.px1,
+          color: ColorsRes.text,
+        ),
+        color: ColorsRes.hintText,
+      );
+
+  factory KayLeeRoundedButton.button3(
+          {String text,
+          EdgeInsets margin,
+          void Function() onPressed,
+          double width}) =>
+      KayLeeRoundedButton(
+        text: text,
+        margin: margin,
+        onPressed: onPressed,
+        width: width,
+        color: ColorsRes.button1,
+      );
+
+  factory KayLeeRoundedButton.normal(
+          {String text,
+          EdgeInsets margin,
+          void Function() onPressed,
+          double width}) =>
+      KayLeeRoundedButton(
+        text: text,
+        margin: margin,
+        onPressed: onPressed,
+        width: width,
+      );
+
+  KayLeeRoundedButton(
+      {this.width,
+      this.text,
+      this.onPressed,
+      this.margin,
+      this.borderSide,
+      this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -20,13 +71,9 @@ class KayLeeRoundedButton extends StatelessWidget {
       margin: margin ?? const EdgeInsets.symmetric(horizontal: Dimens.px16),
       child: FlatButton(
         onPressed: onPressed,
-        shape: const StadiumBorder(),
-        color: ColorsRes.button,
-        child: Text(text ?? '',
-            style: ScreenUtils.textTheme(context).bodyText2.copyWith(
-                  color: const Color(0xffffffff),
-                  fontWeight: FontWeight.w500,
-                )),
+        shape: StadiumBorder(side: borderSide ?? BorderSide.none),
+        color: color ?? ColorsRes.button,
+        child: Text(text ?? '', style: TextStyles.normalWhite16W500),
       ),
     );
   }

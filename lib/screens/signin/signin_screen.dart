@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/res/src/dimens.dart';
 import 'package:kaylee/res/src/strings.dart';
+import 'package:kaylee/screens/home/home_screen.dart';
 import 'package:kaylee/screens/reset_pass/reset_pass_screen.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
@@ -78,9 +79,9 @@ class _SignInScreenState extends BaseState<SignInScreen> {
                 )),
             Container(
               margin: EdgeInsets.only(top: Dimens.px16),
-              child: KayLeeRoundedButton(
+              child: KayLeeRoundedButton.normal(
                 onPressed: () {
-//                    pushScreen(PageIntent(context, ));
+                  pushToTop(PageIntent(context, HomeScreen));
                 },
                 margin: EdgeInsets.zero,
                 text: Strings.dangNhap,

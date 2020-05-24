@@ -49,7 +49,7 @@ class _SplashScreenState extends BaseState<SplashScreen> {
             children: [
               Container(
                 margin: EdgeInsets.symmetric(horizontal: Dimens.px16),
-                child: KayLeeRoundedButton(
+                child: KayLeeRoundedButton.normal(
                   onPressed: () {
                     pushScreen(PageIntent(context, SignInScreen));
                   },

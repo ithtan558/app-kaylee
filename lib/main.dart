@@ -77,8 +77,10 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing {
         return NotifyDetailScreen.newInstance();
       case EditProfileScreen:
         return EditProfileScreen.newInstance();
-      default:
+      case HomeScreen:
         return HomeScreen.newInstance();
+      default:
+        return SplashScreen.newInstance();
     }
   }
 }
