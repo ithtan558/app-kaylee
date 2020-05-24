@@ -133,9 +133,9 @@ class _KayleeImagePickerState extends BaseState<KayleeImagePicker> {
                         topLeft: Radius.circular(Dimens.px5),
                         topRight: Radius.circular(Dimens.px5),
                       ),
-                      boxShadow: [
-                        const BoxShadow(
-                            color: Color(0x4c000000),
+                      boxShadow: const [
+                        BoxShadow(
+                            color: ColorsRes.shadow,
                             offset: Offset.zero,
                             blurRadius: Dimens.px20,
                             spreadRadius: 0)

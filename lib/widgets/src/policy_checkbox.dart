@@ -76,9 +76,9 @@ class _PolicyCheckBoxState extends BaseState<PolicyCheckBox> {
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(Dimens.px5),
-                      boxShadow: [
-                        const BoxShadow(
-                            color: Color(0x4c000000),
+                      boxShadow: const [
+                        BoxShadow(
+                            color: ColorsRes.shadow,
                             offset: Offset.zero,
                             blurRadius: Dimens.px20,
                             spreadRadius: 0)

@@ -13,6 +13,7 @@ class ColorsRes {
   static const Color filterButton = Color(0xffd8d8d8);
   static const Color dialogDimBg = Color(0x7f313131);
   static const Color labelDivider = Color(0xffF2EEE6);
+  static const Color shadow = Color(0x4c000000);
 
   ColorsRes._();
 }
