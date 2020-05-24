@@ -65,17 +65,12 @@ class Strings {
   static const String luu = 'Lưu';
   static const String diaChiHienTai = 'Địa chỉ hiện tại';
   static const String diaChiHienTaiHint = 'Số nhà, tên cư xá hoặc khu dân cư';
-
   static const String namSinh = 'Năm sinh';
-
   static const String queQuan = 'Quê quán';
   static const String chonTinhTpHint = 'Chọn Tỉnh/Thành phố';
-
   static const String phuong = 'Phường';
   static const String quan = 'Quận';
-
   static const String doiMatKhau = 'Đổi mật khẩu';
-
   static const String chinhSuaHinhDaiDien = 'Chỉnh sửa hình đại diện';
 
   Strings._();
