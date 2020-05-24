@@ -30,32 +30,8 @@ class _NotifyItemState extends BaseState<NotifyItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Dismissible(
+    return KayleeDismissible(
       key: ValueKey(widget.index),
-      direction: DismissDirection.endToStart,
-      background: Container(),
-      secondaryBackground: Container(
-        padding: EdgeInsets.symmetric(horizontal: Dimens.px24),
-        alignment: Alignment.centerRight,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              Images.ic_delete,
-              width: Dimens.px32,
-              height: Dimens.px32,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: Dimens.px4),
-              child: KayleeText(
-                Strings.xoa,
-                maxLines: 1,
-                style: TextStyles.error16W500,
-              ),
-            )
-          ],
-        ),
-      ),
       onDismissed: (_) {
         if (widget.onDeleted != null) {
           widget.onDeleted(widget.index);
