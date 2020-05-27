@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:kaylee/res/src/dimens.dart';
 import 'package:kaylee/res/src/images.dart';
 import 'package:kaylee/res/src/strings.dart';
-import 'package:kaylee/screens/signin/signin_screen.dart';
+import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class SplashScreen extends StatefulWidget {

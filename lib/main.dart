@@ -4,18 +4,7 @@ import 'package:kaylee/res/src/colors_res.dart';
 import 'package:kaylee/res/src/fonts.dart';
 import 'package:kaylee/res/src/strings.dart';
 import 'package:kaylee/res/src/text_styles.dart';
-import 'package:kaylee/screens/about/about_screen.dart';
-import 'package:kaylee/screens/edit_profile/edit_profile_screen.dart';
-import 'package:kaylee/screens/guide/guide_screen.dart';
-import 'package:kaylee/screens/history_detail/history_detail_screen.dart';
-import 'package:kaylee/screens/home/home_screen.dart';
-import 'package:kaylee/screens/notification/detail/notify_detail_screen.dart';
-import 'package:kaylee/screens/notification/notification_screen.dart';
-import 'package:kaylee/screens/reset_pass/otp_confirm_screeen.dart';
-import 'package:kaylee/screens/reset_pass/reset_pass_screen.dart';
-import 'package:kaylee/screens/signin/signin_screen.dart';
-import 'package:kaylee/screens/signup/signup_screen.dart';
-import 'package:kaylee/screens/splash_screen.dart';
+import 'package:kaylee/screens/screens.dart';
 
 void main() {
   runApp(KayLeeApp());
@@ -77,6 +66,8 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing {
         return NotifyDetailScreen.newInstance();
       case EditProfileScreen:
         return EditProfileScreen.newInstance();
+      case ServiceListScreen:
+        return ServiceListScreen.newInstance();
       case HomeScreen:
         return HomeScreen.newInstance();
       default:

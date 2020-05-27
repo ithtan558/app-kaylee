@@ -112,7 +112,7 @@ packages:
       path: "../../../FlutterProjects/my_packages/flutter.core_plugin"
       relative: true
     source: path
-    version: "0.4.1+00401"
+    version: "0.4.2+00402"
   coverage:
     dependency: transitive
     description:
@@ -435,7 +435,7 @@ packages:
       name: path_provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.6.8"
+    version: "1.6.9"
   path_provider_macos:
     dependency: transitive
     description:
@@ -547,7 +547,7 @@ packages:
       name: shared_preferences
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.7+2"
+    version: "0.5.7+3"
   shared_preferences_macos:
     dependency: transitive
     description:
@@ -727,7 +727,7 @@ packages:
       name: url_launcher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.4.7"
+    version: "5.4.10"
   url_launcher_macos:
     dependency: transitive
     description:

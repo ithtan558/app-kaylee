@@ -114,7 +114,7 @@ class _KayleeDateFilterButtonState extends BaseState<KayleeDateFilterButton>
                 angle: pi * animController.value, child: child);
           },
           child: Image.asset(
-            Images.ic_filter_down,
+            Images.ic_triangle_down,
             color: Colors.white,
             width: Dimens.px16,
             height: Dimens.px16,

@@ -29,7 +29,7 @@ class Images {
   static const ic_booking = 'assets/ic_booking.png';
   static const ic_product = 'assets/ic_product.png';
   static const ic_notification = 'assets/ic_notification.png';
-  static const ic_filter_down = 'assets/ic_filter_down.png';
+  static const ic_triangle_down = 'assets/ic_triangle_down.png';
   static const ic_options = 'assets/ic_options.png';
 
   static const ic_acc_about_app = 'assets/ic_acc_about_app.png';
@@ -42,4 +42,5 @@ class Images {
   static const ic_close = 'assets/ic_close.png';
   static const ic_camera = 'assets/ic_camera.png';
   static const ic_image_holder = 'assets/ic_image_holder.png';
+  static const ic_filter = 'assets/ic_filter.png';
 }

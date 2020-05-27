@@ -32,10 +32,10 @@ class _KayleeFilterViewState extends BaseState<KayleeFilterView> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        if (_filterViewController.view._filterViewAnimController.isDismissed) {
+        if (_filterViewController.view.isDismissed) {
           return true;
         } else {
-          _filterViewController.view._filterViewAnimController.reverse();
+          _filterViewController.view.reverse();
           return false;
         }
       },
@@ -133,7 +133,7 @@ class __FilterButtonState extends BaseState<_FilterButton>
                     );
                   },
                   child: Image.asset(
-                    Images.ic_filter_down,
+                    Images.ic_triangle_down,
                     width: Dimens.px24,
                     height: Dimens.px24,
                   ),
@@ -166,10 +166,12 @@ class _FilterViewState extends BaseState<_FilterView>
     with TickerProviderStateMixin {
   AnimationController _filterViewAnimController;
 
+  bool get isDismissed => _filterViewAnimController.isDismissed;
+
   @override
   void initState() {
     super.initState();
-    widget.controller.view = this;
+    widget.controller?.view = this;
     _filterViewAnimController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 180));
   }
@@ -219,6 +221,10 @@ class _FilterViewState extends BaseState<_FilterView>
         ],
       ),
     );
+  }
+
+  void reverse() {
+    _filterViewAnimController.reverse(from: _filterViewAnimController.value);
   }
 }
 
@@ -307,10 +313,13 @@ class _FilterListState extends BaseState<_FilterList> {
               borderRadius: BorderRadius.circular(Dimens.px10),
               color: Colors.white,
             ),
+            clipBehavior: Clip.antiAlias,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SearchInputField(hint: Strings.timDonHangHint,),
+                SearchInputField(
+                  hint: Strings.timDonHangHint,
+                ),
                 Expanded(
                   child: ListView.separated(
                     padding: EdgeInsets.only(top: Dimens.px16),

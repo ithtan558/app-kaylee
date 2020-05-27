@@ -4,6 +4,7 @@ import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/widgets/src/kaylee_text.dart';
 
 class HomeTab extends StatefulWidget {
@@ -121,7 +122,6 @@ class _HomeMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = ScreenUtils.textTheme(context);
     return Container(
       height: menuHeight,
       child: Material(
@@ -178,26 +178,24 @@ class _HomeMenu extends StatelessWidget {
                         _buildMenuItem(
                           title: Strings.qlChiNhanh,
                           icon: Images.ic_store,
-                          onTap: () {},
-                          textTheme: textTheme,
+                          onTap: () {
+                            push(PageIntent(context, ServiceListScreen));
+                          },
                         ),
                         _buildMenuItem(
                           title: Strings.dsDichVu,
                           icon: Images.ic_service_list,
                           onTap: () {},
-                          textTheme: textTheme,
                         ),
                         _buildMenuItem(
                           title: Strings.dsSanPham,
                           icon: Images.ic_product,
                           onTap: () {},
-                          textTheme: textTheme,
                         ),
                         _buildMenuItem(
                           title: Strings.qlNhanVien,
                           icon: Images.ic_person,
                           onTap: () {},
-                          textTheme: textTheme,
                         ),
                       ],
                     ),
@@ -213,25 +211,21 @@ class _HomeMenu extends StatelessWidget {
                           title: Strings.dsKhachHang,
                           icon: Images.ic_user_list,
                           onTap: () {},
-                          textTheme: textTheme,
                         ),
                         _buildMenuItem(
                           title: Strings.dsLichHen,
                           icon: Images.ic_booking,
                           onTap: () {},
-                          textTheme: textTheme,
                         ),
                         _buildMenuItem(
                           title: Strings.hoaHongNv,
                           icon: Images.ic_commission,
                           onTap: () {},
-                          textTheme: textTheme,
                         ),
                         _buildMenuItem(
                           title: Strings.doanhThuBanHang,
                           icon: Images.ic_revenue,
                           onTap: () {},
-                          textTheme: textTheme,
                         ),
                       ],
                     ),
@@ -248,8 +242,7 @@ class _HomeMenu extends StatelessWidget {
     );
   }
 
-  _buildMenuItem(
-      {String title, String icon, Function onTap, TextTheme textTheme}) {
+  _buildMenuItem({String title, String icon, Function onTap}) {
     return Expanded(
       child: AspectRatio(
         aspectRatio: 86 / 80,

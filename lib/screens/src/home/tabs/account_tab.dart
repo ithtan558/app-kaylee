@@ -1,10 +1,10 @@
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
-import 'package:kaylee/screens/about/about_screen.dart';
-import 'package:kaylee/screens/edit_profile/edit_profile_screen.dart';
-import 'package:kaylee/screens/guide/guide_screen.dart';
-import 'package:kaylee/screens/notification/notification_screen.dart';
+import 'package:kaylee/screens/src/about/about_screen.dart';
+import 'package:kaylee/screens/src/edit_profile/edit_profile_screen.dart';
+import 'package:kaylee/screens/src/guide/guide_screen.dart';
+import 'package:kaylee/screens/src/notification/notification_screen.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class AccountTab extends StatefulWidget {

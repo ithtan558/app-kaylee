@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/res/src/dimens.dart';
 import 'package:kaylee/res/src/strings.dart';
-import 'package:kaylee/screens/home/home_screen.dart';
-import 'package:kaylee/screens/reset_pass/reset_pass_screen.dart';
+import 'package:kaylee/screens/src/home/home_screen.dart';
+import 'package:kaylee/screens/src/reset_pass/reset_pass_screen.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class SignInScreen extends StatefulWidget {
