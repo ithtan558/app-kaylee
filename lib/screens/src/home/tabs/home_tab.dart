@@ -178,14 +178,14 @@ class _HomeMenu extends StatelessWidget {
                         _buildMenuItem(
                           title: Strings.qlChiNhanh,
                           icon: Images.ic_store,
-                          onTap: () {
-                            push(PageIntent(context, ServiceListScreen));
-                          },
+                          onTap: () {},
                         ),
                         _buildMenuItem(
                           title: Strings.dsDichVu,
                           icon: Images.ic_service_list,
-                          onTap: () {},
+                          onTap: () {
+                            push(PageIntent(context, ServiceListScreen));
+                          },
                         ),
                         _buildMenuItem(
                           title: Strings.dsSanPham,
