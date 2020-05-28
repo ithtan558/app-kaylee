@@ -59,15 +59,17 @@ class _KayleeFilterPopUpViewState extends BaseState<KayleeFilterPopUpView> {
                 ),
               ),
               Expanded(
-                  child: Stack(children: [
-                widget.body ??
-                    Container(
-                      color: Colors.transparent,
-                    ),
-                _FilterList(
-                  controller: filterViewController,
-                ),
-              ]))
+                  child: Stack(
+                children: [
+                  widget.body ??
+                      Container(
+                        color: Colors.transparent,
+                      ),
+                  _FilterList(
+                    controller: filterViewController,
+                  ),
+                ],
+              ))
             ],
           ),
         ),
@@ -179,30 +181,27 @@ class _FilterListState extends BaseState<_FilterList>
       left: Dimens.px16,
       right: Dimens.px16,
       bottom: Dimens.px16,
-      child: Container(
-        color: Colors.transparent,
-        child: AnimatedBuilder(
-          animation: animController,
-          builder: (context, child) {
-            if (animController.isDismissed) {
-              return Container();
-            }
-            return GestureDetector(
-              onTap: () {
-                FocusScope.of(context).unfocus();
-              },
-              child: Transform.scale(
-                child: Opacity(
-                  child: child,
-                  opacity: animController.value,
-                ),
-                scale: animController.value,
-                alignment: Alignment.topLeft,
+      child: AnimatedBuilder(
+        animation: animController,
+        builder: (context, child) {
+          if (animController.isDismissed) {
+            return Container();
+          }
+          return GestureDetector(
+            onTap: () {
+              FocusScope.of(context).unfocus();
+            },
+            child: Transform.scale(
+              child: Opacity(
+                child: child,
+                opacity: animController.value,
               ),
-            );
-          },
-          child: _buildFilterList(),
-        ),
+              scale: animController.value,
+              alignment: Alignment.topLeft,
+            ),
+          );
+        },
+        child: _buildFilterList(),
       ),
     );
   }
