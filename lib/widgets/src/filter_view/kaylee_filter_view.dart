@@ -261,7 +261,9 @@ class _FilterListState extends BaseState<_FilterList> {
               }
               return GestureDetector(
                 onTap: () {
-                  widget.animController.reverse();
+                  if (widget.animController.isCompleted) {
+                    widget.animController.reverse();
+                  }
                 },
                 child: Container(
                   color: Color.lerp(Colors.transparent, ColorsRes.dialogDimBg,

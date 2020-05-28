@@ -29,42 +29,47 @@ class _KayleeFilterPopUpViewState extends BaseState<KayleeFilterPopUpView> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        filterViewController.view.hideFilter();
+    return WillPopScope(
+      onWillPop: () async {
+        if (filterViewController.isShowed) {
+          filterViewController.hideFilter();
+          return false;
+        }
+        return true;
       },
-      child: Scaffold(
-        appBar: widget.appBar,
-        body: Column(
-          children: [
-            Container(
-              padding: EdgeInsets.symmetric(
-                  horizontal: Dimens.px16, vertical: Dimens.px8),
-              child: Row(
-                children: [
-                  _FilterButton(
-                    onTap: (state) {
-                      if (filterViewController.view.isHidden)
-                        filterViewController.view.showFilter();
-                      else
-                        filterViewController.view.hideFilter();
-                    },
-                    filterViewController: filterViewController,
-                  )
-                ],
+      child: GestureDetector(
+        onTap: () {
+          if (filterViewController.isShowed) {
+            filterViewController.hideFilter();
+          }
+        },
+        child: Scaffold(
+          appBar: widget.appBar,
+          body: Column(
+            children: [
+              Container(
+                padding: EdgeInsets.symmetric(
+                    horizontal: Dimens.px16, vertical: Dimens.px8),
+                child: Row(
+                  children: [
+                    _FilterButton(
+                      filterViewController: filterViewController,
+                    )
+                  ],
+                ),
               ),
-            ),
-            Expanded(
-                child: Stack(children: [
-              widget.body ??
-                  Container(
-                    color: Colors.transparent,
-                  ),
-              _FilterList(
-                controller: filterViewController,
-              ),
-            ]))
-          ],
+              Expanded(
+                  child: Stack(children: [
+                widget.body ??
+                    Container(
+                      color: Colors.transparent,
+                    ),
+                _FilterList(
+                  controller: filterViewController,
+                ),
+              ]))
+            ],
+          ),
         ),
       ),
     );
@@ -72,37 +77,31 @@ class _KayleeFilterPopUpViewState extends BaseState<KayleeFilterPopUpView> {
 }
 
 class _FilterButton extends StatefulWidget {
-  final void Function(bool state) onTap;
   final _FilterViewController filterViewController;
 
-  _FilterButton({this.onTap, this.filterViewController});
+  _FilterButton({this.filterViewController});
 
   @override
-  __FilterButtonState createState() => new __FilterButtonState();
+  _FilterButtonState createState() => new _FilterButtonState();
 }
 
-class __FilterButtonState extends BaseState<_FilterButton> {
+class _FilterButtonState extends BaseState<_FilterButton> {
   bool isOpened = false;
 
   @override
   void initState() {
     super.initState();
-    widget.filterViewController?.view?.animController?.addListener(() {
-      print('[TUNG] ===> ');
-      if (widget.filterViewController.view.animController.status ==
-              AnimationStatus.reverse &&
-          isOpened) {
-        setState(() {
-          isOpened = !isOpened;
-        });
-      } else if (widget.filterViewController.view.animController.status ==
-              AnimationStatus.forward &&
-          !isOpened) {
-        setState(() {
-          isOpened = !isOpened;
-        });
-      }
-    });
+    widget.filterViewController?.button = this;
+  }
+
+  void showFilter() {
+    isOpened = !isOpened;
+    setState(() {});
+  }
+
+  void hideFilter() {
+    isOpened = !isOpened;
+    setState(() {});
   }
 
   @override
@@ -114,11 +113,10 @@ class __FilterButtonState extends BaseState<_FilterButton> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        isOpened = !isOpened;
-        if (widget.onTap != null) {
-          widget.onTap(isOpened);
-        }
-        setState(() {});
+        if (widget.filterViewController.isHidden)
+          widget.filterViewController?.showFilter();
+        else
+          widget.filterViewController?.hideFilter();
       },
       child: Container(
         width: Dimens.px32,
@@ -160,10 +158,6 @@ class _FilterListState extends BaseState<_FilterList>
     animController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 180));
   }
-
-  bool get isShowed => animController.isCompleted;
-
-  bool get isHidden => animController.isDismissed;
 
   void showFilter() {
     animController.forward(from: animController.value);
@@ -286,4 +280,19 @@ class _FilterListState extends BaseState<_FilterList>
 
 class _FilterViewController {
   _FilterListState view;
+  _FilterButtonState button;
+
+  void hideFilter() {
+    view.hideFilter();
+    button.hideFilter();
+  }
+
+  void showFilter() {
+    view.showFilter();
+    button.showFilter();
+  }
+
+  bool get isShowed => view?.animController?.isCompleted ?? false;
+
+  bool get isHidden => view?.animController?.isDismissed ?? false;
 }
