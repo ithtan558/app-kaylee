@@ -1,10 +1,10 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/base/kaylee_routing.dart';
 import 'package:kaylee/res/src/colors_res.dart';
 import 'package:kaylee/res/src/fonts.dart';
 import 'package:kaylee/res/src/strings.dart';
 import 'package:kaylee/res/src/text_styles.dart';
-import 'package:kaylee/screens/screens.dart';
 
 void main() {
   runApp(KayLeeApp());
@@ -15,7 +15,7 @@ class KayLeeApp extends StatefulWidget {
   _KayLeeAppState createState() => _KayLeeAppState();
 }
 
-class _KayLeeAppState extends BaseState<KayLeeApp> with Routing {
+class _KayLeeAppState extends BaseState<KayLeeApp> with Routing, KayleeRouting {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -39,39 +39,5 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing {
                 .merge(TextStyles.normal16W400),
           )),
     );
-  }
-
-  @override
-  Widget getRoutes(Type screen) {
-    switch (screen) {
-      case SignInScreen:
-        return SignInScreen.newInstance();
-      case SignUpScreen:
-        return SignUpScreen.newInstance();
-      case ResetPassScreen:
-        return ResetPassScreen.newInstance();
-      case OtpConfirmScreen:
-        return OtpConfirmScreen.newInstance();
-      case NotificationScreen:
-        return NotificationScreen.newInstance();
-      case SplashScreen:
-        return SplashScreen.newInstance();
-      case HistoryDetailScreen:
-        return HistoryDetailScreen.newInstance();
-      case GuideScreen:
-        return GuideScreen.newInstance();
-      case AboutScreen:
-        return AboutScreen.newInstance();
-      case NotifyDetailScreen:
-        return NotifyDetailScreen.newInstance();
-      case EditProfileScreen:
-        return EditProfileScreen.newInstance();
-      case ServiceListScreen:
-        return ServiceListScreen.newInstance();
-      case HomeScreen:
-        return HomeScreen.newInstance();
-      default:
-        return SplashScreen.newInstance();
-    }
   }
 }
