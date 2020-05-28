@@ -83,7 +83,9 @@ class _HomeTabState extends BaseState<HomeTab> {
         borderRadius: BorderRadius.circular(Dimens.px5),
         color: Colors.white,
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            push(PageIntent(context, BrandProdListScreen));
+          },
           child: Row(
             children: [
               Padding(

@@ -7,6 +7,7 @@ mixin KayleeRouting on Routing {
   Route<Bundle> onGenerateRoute(RouteSettings settings) {
     return super.onGenerateRoute(settings);
   }
+
   @override
   Widget getRoutes(Type screen) {
     switch (screen) {
@@ -34,6 +35,8 @@ mixin KayleeRouting on Routing {
         return EditProfileScreen.newInstance();
       case ServiceListScreen:
         return ServiceListScreen.newInstance();
+      case BrandProdListScreen:
+        return BrandProdListScreen.newInstance();
       case HomeScreen:
         return HomeScreen.newInstance();
       default:

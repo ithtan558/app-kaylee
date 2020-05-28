@@ -7,13 +7,19 @@ import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class KayleeAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
+  final Widget titleWidget;
   final Widget leading;
   final bool Function() onBack;
   final List<Widget> actions;
   final IconData leadingIcon;
 
   KayleeAppBar(
-      {this.title, this.leading, this.onBack, this.actions, this.leadingIcon});
+      {this.title,
+      this.titleWidget,
+      this.leading,
+      this.onBack,
+      this.actions,
+      this.leadingIcon});
 
   @override
   Widget build(BuildContext context) {
@@ -36,10 +42,11 @@ class KayleeAppBar extends StatelessWidget implements PreferredSizeWidget {
                 )
               : Container(),
       automaticallyImplyLeading: false,
-      title: KayleeText(
-        title?.toUpperCase() ?? '',
-        style: TextStyles.normal16W500,
-      ),
+      title: titleWidget ??
+          KayleeText(
+            title?.toUpperCase() ?? '',
+            style: TextStyles.normal16W500,
+          ),
       elevation: 0,
       brightness: Brightness.light,
       centerTitle: true,

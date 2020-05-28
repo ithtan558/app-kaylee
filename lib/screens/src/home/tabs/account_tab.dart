@@ -34,12 +34,12 @@ class _AccountTabState extends BaseState<AccountTab> {
         child: Column(
           children: [
             Container(
-              decoration: new BoxDecoration(
-                color: Color(0xffffffff),
-                borderRadius: BorderRadius.circular(10),
+              decoration:  BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(Dimens.px10),
                 boxShadow: [
                   BoxShadow(
-                      color: Color(0x4c000000),
+                      color: ColorsRes.shadow,
                       offset: Offset(0, 1),
                       blurRadius: 5,
                       spreadRadius: 0)
