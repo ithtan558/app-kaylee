@@ -1,6 +1,7 @@
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/screens/src/customer_list/widgets/customer_item.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class CustomerListScreen extends StatefulWidget {
@@ -28,6 +29,18 @@ class _CustomerListScreenState extends BaseState<CustomerListScreen> {
     return KayleeFilterPopUpView(
       appBar: KayleeAppBar(
         title: Strings.dsNhanVien,
+      ),
+      body: KayleeGridView(
+        itemBuilder: (context, index) {
+          return CustomerItem(
+            onTap: () {},
+          );
+        },
+        childAspectRatio: 103 / 229,
+        itemCount: 10,
+      ),
+      floatingActionButton: KayleeFloatButton(
+        onTap: () {},
       ),
     );
   }
