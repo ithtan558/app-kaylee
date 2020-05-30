@@ -22,6 +22,7 @@ export 'src/kaylee_float_button.dart';
 export 'src/kaylee_grid_view.dart';
 export 'src/kaylee_image_info_layout.dart';
 export 'src/kaylee_image_picker.dart';
+export 'src/kaylee_incr_decr_buttons.dart';
 export 'src/kaylee_inkwell.dart';
 export 'src/kaylee_prod_item.dart';
 export 'src/kaylee_rounded_button.dart';

@@ -76,5 +76,9 @@ class Strings {
   static final String dsNhanVien = 'Danh sách nhân viên';
   static final String danhSachKH = 'Danh sách khách hàng';
 
+  static final String chiTietSanPham = 'Chi tiết sản phẩm';
+
+  static final String themVaoGioHang = 'Thêm vào giỏ hàng';
+
   Strings._();
 }

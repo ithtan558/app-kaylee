@@ -98,6 +98,11 @@ class KayleePriceText extends StatelessWidget {
         showUnit: true,
       );
 
+  factory KayleePriceText.hyper16W700(dynamic price) => KayleePriceText.normal(
+        price,
+        textStyle: TextStyles.hyper16W700,
+      );
+
   factory KayleePriceText.noUnit(dynamic price, {TextStyle textStyle}) =>
       KayleePriceText(
         price,
@@ -167,6 +172,30 @@ class KayleeText extends StatelessWidget {
         text,
         textAlign: textAlign,
         style: TextStyles.normal16W500,
+        maxLines: maxLines,
+        overflow: overflow,
+      );
+
+  factory KayleeText.normalWhite16W500(String text,
+          {TextAlign textAlign = TextAlign.start,
+          int maxLines,
+          TextOverflow overflow}) =>
+      KayleeText(
+        text,
+        textAlign: textAlign,
+        style: TextStyles.normalWhite16W500,
+        maxLines: maxLines,
+        overflow: overflow,
+      );
+
+  factory KayleeText.normal16W400(String text,
+          {TextAlign textAlign = TextAlign.start,
+          int maxLines,
+          TextOverflow overflow}) =>
+      KayleeText(
+        text,
+        textAlign: textAlign,
+        style: TextStyles.normal16W400,
         maxLines: maxLines,
         overflow: overflow,
       );

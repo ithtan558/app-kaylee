@@ -1,6 +1,7 @@
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class BrandProdListScreen extends StatefulWidget {
@@ -65,7 +66,9 @@ class _BrandProdListScreenState extends BaseState<BrandProdListScreen> {
                   image:
                       'https://img.jakpost.net/c/2019/12/09/2019_12_09_83333_1575827116._large.jpg',
                   price: 600000),
-              onTap: () {},
+              onTap: () {
+                pushScreen(PageIntent(context, ProductDetailScreen));
+              },
             );
           },
           itemCount: 4,

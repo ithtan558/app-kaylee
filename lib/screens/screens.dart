@@ -9,6 +9,7 @@ export 'src/history_detail/history_detail_screen.dart';
 export 'src/home/home_screen.dart';
 export 'src/notification/detail/notify_detail_screen.dart';
 export 'src/notification/notification_screen.dart';
+export 'src/product_detail/product_detail_screen.dart';
 export 'src/reset_pass/otp_confirm_screeen.dart';
 export 'src/reset_pass/reset_pass_screen.dart';
 export 'src/service_list/service_list_screen.dart';

@@ -23,6 +23,14 @@ class KayleeTextField extends StatelessWidget {
         ),
       );
 
+  factory KayleeTextField.selection({String title, String error}) =>
+      KayleeTextField(
+        title: title,
+        textInput: SelectionInputField(
+          error: error,
+        ),
+      );
+
   @override
   Widget build(BuildContext context) {
     return Column(

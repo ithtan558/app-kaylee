@@ -20,6 +20,7 @@ class TextStyles {
 
   static final TextStyle hyper16W400 = hyper.merge(_f16.merge(_w400));
   static final TextStyle hyper16W500 = hyper.merge(_f16.merge(_w500));
+  static final TextStyle hyper16W700 = hyper.merge(_f16.merge(_w700));
   static final TextStyle hyper18W700 = hyper.merge(_f18.merge(_w700));
 
   static final TextStyle normal12W400 = normal.merge(_f12.merge(_w400));

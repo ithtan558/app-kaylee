@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/res/src/colors_res.dart';
 import 'package:kaylee/res/src/dimens.dart';
+import 'package:kaylee/widgets/src/kaylee_text.dart';
 
 class KayLeeRoundedButton extends StatelessWidget {
   final double width;
@@ -72,8 +73,14 @@ class KayLeeRoundedButton extends StatelessWidget {
       child: FlatButton(
         onPressed: onPressed,
         shape: StadiumBorder(side: borderSide ?? BorderSide.none),
+        splashColor: Colors.grey.withOpacity(0.7),
         color: color ?? ColorsRes.button,
-        child: Text(text ?? '', style: TextStyles.normalWhite16W500),
+        child: KayleeText.normalWhite16W500(
+          text ?? '',
+          maxLines: 1,
+          textAlign: TextAlign.center,
+          overflow: TextOverflow.ellipsis,
+        ),
       ),
     );
   }
