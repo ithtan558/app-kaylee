@@ -30,6 +30,48 @@ class _ServiceListScreenState extends BaseState<ServiceListScreen> {
         title: Strings.danhMucDichVu,
         actions: <Widget>[],
       ),
+      body: ListView.builder(
+        itemBuilder: (c, index) {
+          return _buildProdList();
+        },
+        itemCount: 3,
+      ),
+      floatingActionButton: KayleeFloatButton(
+        onTap: () {},
+      ),
+    );
+  }
+
+  _buildProdList() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
+          child: KayleeText.normal16W500(
+            "Chưa có danh mục (1)",
+            textAlign: TextAlign.start,
+            overflow: TextOverflow.visible,
+          ),
+        ),
+        KayleeGridView(
+          padding: EdgeInsets.all(Dimens.px16),
+          physics: NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          childAspectRatio: 103 / 195,
+          itemBuilder: (c, index) {
+            return KayleeProdItemView.canTap(
+              data: KayleeProdItemData(
+                  name: 'Tóc kiểu thôn nữ',
+                  image:
+                      'https://img.jakpost.net/c/2019/12/09/2019_12_09_83333_1575827116._large.jpg',
+                  price: 600000),
+              onTap: () {},
+            );
+          },
+          itemCount: 4,
+        )
+      ],
     );
   }
 }
