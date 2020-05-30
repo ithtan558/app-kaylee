@@ -32,7 +32,9 @@ class _StaffListScreenState extends BaseState<StaffListScreen> {
       ),
       body: KayleeGridView(
         itemBuilder: (context, index) {
-          return StaffItem();
+          return StaffItem(
+            onTap: () {},
+          );
         },
         childAspectRatio: 103 / 195,
         itemCount: 10,

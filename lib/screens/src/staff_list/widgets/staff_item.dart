@@ -3,6 +3,10 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class StaffItem extends StatelessWidget {
+  final void Function() onTap;
+
+  StaffItem({this.onTap});
+
   @override
   Widget build(BuildContext context) {
     return KayleeInkwell(
@@ -32,7 +36,7 @@ class StaffItem extends StatelessWidget {
           ],
         ),
       )),
-      onTap: (){},
+      onTap: onTap,
     );
   }
 }
