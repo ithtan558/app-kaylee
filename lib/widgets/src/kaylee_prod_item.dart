@@ -12,7 +12,7 @@ class KayleeProdItemView extends StatelessWidget {
         child: KayleeProdItem(
           data: data,
         ),
-        onTap: () {},
+        onTap: onTap,
       ));
 
   factory KayleeProdItemView.canSelect(
