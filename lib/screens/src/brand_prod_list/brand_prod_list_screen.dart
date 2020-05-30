@@ -47,8 +47,11 @@ class _BrandProdListScreenState extends BaseState<BrandProdListScreen> {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
-          child: KayleeText("Chưa có danh mục (1)",
-              style: TextStyles.normal16W500),
+          child: KayleeText.normal16W500(
+            "Chưa có danh mục (1)",
+            textAlign: TextAlign.start,
+            overflow: TextOverflow.visible,
+          ),
         ),
         GridView.builder(
           padding: EdgeInsets.all(Dimens.px16),
@@ -60,7 +63,14 @@ class _BrandProdListScreenState extends BaseState<BrandProdListScreen> {
               mainAxisSpacing: Dimens.px16,
               childAspectRatio: 103 / 195),
           itemBuilder: (c, index) {
-            return KayleeProdItem();
+            return KayleeProdItemView.canTap(
+              data: KayleeProdItemData(
+                  name: 'Tóc kiểu thôn nữ',
+                  image:
+                      'https://img.jakpost.net/c/2019/12/09/2019_12_09_83333_1575827116._large.jpg',
+                  price: 600000),
+              onTap: () {},
+            );
           },
           itemCount: 4,
         )

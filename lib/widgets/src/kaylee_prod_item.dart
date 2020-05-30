@@ -1,76 +1,206 @@
-import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
-import 'package:kaylee/widgets/src/kaylee_text.dart';
+import 'package:kaylee/widgets/kaylee_widgets.dart';
 
-class KayleeProdItem extends StatefulWidget {
+class KayleeProdItemView extends StatelessWidget {
+  final Widget child;
+
+  factory KayleeProdItemView.canTap(
+          {@required KayleeProdItemData data, void Function() onTap}) =>
+      KayleeProdItemView(
+          child: Stack(
+        fit: StackFit.expand,
+        children: <Widget>[
+          Positioned.fill(
+            child: KayleeProdItem(
+              data: data,
+            ),
+          ),
+          Positioned.fill(
+              child: Material(
+            borderRadius: BorderRadius.circular(Dimens.px10),
+            color: Colors.transparent,
+            clipBehavior: Clip.antiAlias,
+            child: InkWell(
+              onTap: onTap,
+            ),
+          ))
+        ],
+      ));
+
+  factory KayleeProdItemView.canSelect(
+          {@required KayleeProdItemData data,
+          void Function(bool selected) onSelect}) =>
+      KayleeProdItemView(
+        child: _SelectingProItemView(
+          data: data,
+          onSelect: onSelect,
+        ),
+      );
+
+  KayleeProdItemView({@required this.child});
+
   @override
-  _KayleeProdItemState createState() => new _KayleeProdItemState();
+  Widget build(BuildContext context) {
+    return child;
+  }
 }
 
-class _KayleeProdItemState extends BaseState<KayleeProdItem> {
+class _SelectingProItemView extends StatefulWidget {
+  final Function(bool selected) onSelect;
+  final KayleeProdItemData data;
+
+  _SelectingProItemView({@required this.data, this.onSelect});
+
+  @override
+  _SelectingProItemViewState createState() => _SelectingProItemViewState();
+}
+
+class _SelectingProItemViewState extends State<_SelectingProItemView>
+    with SingleTickerProviderStateMixin {
+  AnimationController animController;
+  Animation<double> scaleAnim;
+  Animation<double> opacityAnim;
+
   @override
   void initState() {
     super.initState();
+    animController = AnimationController(
+        vsync: this,
+        duration: Duration(milliseconds: 550),
+        reverseDuration: Duration(milliseconds: 100));
+    scaleAnim = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(
+        parent: animController,
+        curve: Curves.elasticOut,
+        reverseCurve: Curves.linear));
+    opacityAnim = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: animController,
+        curve: Interval(100 / animController.duration.inMilliseconds,
+            170 / animController.duration.inMilliseconds,
+            curve: Curves.easeIn),
+      ),
+    );
   }
 
   @override
   void dispose() {
+    animController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(Dimens.px10),
-        boxShadow: [
-          BoxShadow(
-              color: ColorsRes.shadow,
-              offset: Offset(0, 1),
-              blurRadius: 5,
-              spreadRadius: 0)
-        ],
-      ),
+    return GestureDetector(
+      onTap: () {
+        if (animController.isCompleted) {
+          animController.reverse();
+        } else if (animController.isDismissed) {
+          animController.forward();
+        }
+      },
       child: Container(
-        clipBehavior: Clip.antiAlias,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(Dimens.px10),
-          color: Colors.white,
-        ),
-        child: Column(
-          children: [
-            AspectRatio(
-              aspectRatio: 1,
-              child: Image.network(
-                'https://img.jakpost.net/c/2019/12/09/2019_12_09_83333_1575827116._large.jpg',
-                fit: BoxFit.cover,
-              ),
+        color: Colors.transparent,
+        child: Stack(children: [
+          Positioned.fill(
+            child: KayleeProdItem(
+              data: widget.data,
             ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  KayleeText.normal16W500(
-                    'Tóc kiểu thôn nữ',
-                    textAlign: TextAlign.center,
-                    maxLines: 2,
+          ),
+          Align(
+            alignment: Alignment.topCenter,
+            child: AnimatedBuilder(
+              animation: animController,
+              builder: (context, child) {
+                if (animController.isDismissed) return Container();
+                return Opacity(
+                  opacity: opacityAnim.value,
+                  child: Transform.scale(
+                    child: child,
+                    alignment: Alignment.center,
+                    scale: scaleAnim.value,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: Dimens.px4),
-                    child: KayleePriceText.normal(
-                      600000,
-                      textStyle: TextStyles.hyper16W400,
-                    ),
-                  )
-                ],
+                );
+              },
+              child: FractionallySizedBox(
+                widthFactor: 48 / 103,
+                heightFactor: 48 / 103,
+                child: Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  decoration: const BoxDecoration(
+                    color: ColorsRes.hyper,
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                          color: ColorsRes.shadow,
+                          offset: Offset(0, 2),
+                          blurRadius: Dimens.px10,
+                          spreadRadius: 0)
+                    ],
+                  ),
+                  child: const Icon(
+                    Icons.check,
+                    color: Colors.white,
+                    size: Dimens.px24,
+                  ),
+                ),
               ),
             ),
-          ],
-        ),
+          )
+        ]),
+      ),
+    );
+  }
+}
+
+class KayleeProdItemData {
+  final String image;
+  final String name;
+  final dynamic price;
+
+  KayleeProdItemData({this.image, this.name, this.price});
+}
+
+class KayleeProdItem extends StatelessWidget {
+  final KayleeProdItemData data;
+
+  KayleeProdItem({@required this.data});
+
+  @override
+  Widget build(BuildContext context) {
+    return KayleeCartView(
+      child: Column(
+        children: [
+          AspectRatio(
+            aspectRatio: 1,
+            child: Image.network(
+              data.image,
+              fit: BoxFit.cover,
+            ),
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                KayleeText.normal16W500(
+                  data.name,
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: Dimens.px4),
+                  child: KayleePriceText.normal(
+                    data.price,
+                    textStyle: TextStyles.hyper16W400,
+                  ),
+                )
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

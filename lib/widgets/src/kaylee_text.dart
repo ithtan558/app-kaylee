@@ -112,6 +112,7 @@ class KayleePriceText extends StatelessWidget {
     return KayleeText(
       TextUtils.formatVND(price ?? 0, unit: showUnit ? 'đ' : null),
       style: textStyle ?? TextStyles.hyper16W500,
+      maxLines: 1,
     );
   }
 }
