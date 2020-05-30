@@ -170,37 +170,30 @@ class KayleeProdItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return KayleeCartView(
-      child: Column(
-        children: [
-          AspectRatio(
-            aspectRatio: 1,
-            child: Image.network(
-              data.image,
-              fit: BoxFit.cover,
+      child: ImageInfoLayout(
+        imageView: Image.network(
+          data.image,
+          fit: BoxFit.cover,
+        ),
+        infoView: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            KayleeText.normal16W500(
+              data.name,
+              textAlign: TextAlign.center,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
             ),
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                KayleeText.normal16W500(
-                  data.name,
-                  textAlign: TextAlign.center,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: Dimens.px4),
-                  child: KayleePriceText.normal(
-                    data.price,
-                    textStyle: TextStyles.hyper16W400,
-                  ),
-                )
-              ],
-            ),
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsets.only(top: Dimens.px4),
+              child: KayleePriceText.normal(
+                data.price,
+                textStyle: TextStyles.hyper16W400,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

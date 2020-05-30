@@ -13,6 +13,7 @@ export 'src/filter_popup_view/kaylee_filter_popup_view.dart';
 export 'src/filter_view/kaylee_filter_list_item.dart';
 export 'src/filter_view/kaylee_filter_view.dart';
 export 'src/hyper_link_text.dart';
+export 'src/image_info_layout.dart';
 export 'src/kaylee_appbar.dart';
 export 'src/kaylee_bottom_bar.dart';
 export 'src/kaylee_cart_view.dart';
@@ -25,7 +26,6 @@ export 'src/kaylee_rounded_button.dart';
 export 'src/kaylee_text.dart';
 export 'src/kaylee_text_field.dart';
 export 'src/label_divider_view.dart';
-export 'src/policy_checkbox.dart';
 export 'src/policy_checkbox.dart';
 
 class Go2RegisterText extends StatelessWidget {
