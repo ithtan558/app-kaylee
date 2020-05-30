@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class ImageInfoLayout extends StatelessWidget {
+class KayleeImageInfoLayout extends StatelessWidget {
   final Widget imageView;
   final Widget infoView;
 
-  ImageInfoLayout({this.imageView, this.infoView});
+  KayleeImageInfoLayout({this.imageView, this.infoView});
 
   @override
   Widget build(BuildContext context) {

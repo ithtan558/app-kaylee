@@ -148,9 +148,9 @@ class KayleeText extends StatelessWidget {
   final TextOverflow overflow;
 
   factory KayleeText.hint16W400(String text,
-      {TextAlign textAlign = TextAlign.start,
-        int maxLines,
-        TextOverflow overflow}) =>
+          {TextAlign textAlign = TextAlign.start,
+          int maxLines,
+          TextOverflow overflow}) =>
       KayleeText(
         text,
         textAlign: textAlign,
@@ -158,7 +158,6 @@ class KayleeText extends StatelessWidget {
         maxLines: maxLines,
         overflow: overflow,
       );
-
 
   factory KayleeText.normal16W500(String text,
           {TextAlign textAlign = TextAlign.start,
@@ -168,6 +167,18 @@ class KayleeText extends StatelessWidget {
         text,
         textAlign: textAlign,
         style: TextStyles.normal16W500,
+        maxLines: maxLines,
+        overflow: overflow,
+      );
+
+  factory KayleeText.hyper16W500(String text,
+          {TextAlign textAlign = TextAlign.start,
+          int maxLines,
+          TextOverflow overflow}) =>
+      KayleeText(
+        text,
+        textAlign: textAlign,
+        style: TextStyles.hyper16W500,
         maxLines: maxLines,
         overflow: overflow,
       );

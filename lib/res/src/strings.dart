@@ -73,6 +73,8 @@ class Strings {
   static final String doiMatKhau = 'Đổi mật khẩu';
   static final String chinhSuaHinhDaiDien = 'Chỉnh sửa hình đại diện';
   static final String danhMucDichVu = 'Danh mục dịch vụ';
+  static final String dsNhanVien = 'Danh sách nhân viên';
+  static final String danhSachKH = 'Danh sách khách hàng';
 
   Strings._();
 }

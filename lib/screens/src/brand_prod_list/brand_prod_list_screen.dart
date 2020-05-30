@@ -53,15 +53,11 @@ class _BrandProdListScreenState extends BaseState<BrandProdListScreen> {
             overflow: TextOverflow.visible,
           ),
         ),
-        GridView.builder(
+        KayleeGridView(
           padding: EdgeInsets.all(Dimens.px16),
           physics: NeverScrollableScrollPhysics(),
           shrinkWrap: true,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              crossAxisSpacing: Dimens.px16,
-              mainAxisSpacing: Dimens.px16,
-              childAspectRatio: 103 / 195),
+          childAspectRatio: 103 / 195,
           itemBuilder: (c, index) {
             return KayleeProdItemView.canTap(
               data: KayleeProdItemData(

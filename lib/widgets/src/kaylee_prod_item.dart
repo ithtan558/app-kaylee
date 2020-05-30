@@ -8,24 +8,11 @@ class KayleeProdItemView extends StatelessWidget {
   factory KayleeProdItemView.canTap(
           {@required KayleeProdItemData data, void Function() onTap}) =>
       KayleeProdItemView(
-          child: Stack(
-        fit: StackFit.expand,
-        children: <Widget>[
-          Positioned.fill(
-            child: KayleeProdItem(
-              data: data,
-            ),
-          ),
-          Positioned.fill(
-              child: Material(
-            borderRadius: BorderRadius.circular(Dimens.px10),
-            color: Colors.transparent,
-            clipBehavior: Clip.antiAlias,
-            child: InkWell(
-              onTap: onTap,
-            ),
-          ))
-        ],
+          child: KayleeInkwell(
+        child: KayleeProdItem(
+          data: data,
+        ),
+        onTap: () {},
       ));
 
   factory KayleeProdItemView.canSelect(
@@ -170,7 +157,7 @@ class KayleeProdItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return KayleeCartView(
-      child: ImageInfoLayout(
+      child: KayleeImageInfoLayout(
         imageView: Image.network(
           data.image,
           fit: BoxFit.cover,

@@ -39,6 +39,10 @@ mixin KayleeRouting on Routing {
         return BrandProdListScreen.newInstance();
       case HomeScreen:
         return HomeScreen.newInstance();
+      case StaffListScreen:
+        return StaffListScreen.newInstance();
+      case CustomerListScreen:
+        return CustomerListScreen.newInstance();
       default:
         return SplashScreen.newInstance();
     }

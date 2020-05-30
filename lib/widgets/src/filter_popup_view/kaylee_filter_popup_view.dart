@@ -4,10 +4,11 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class KayleeFilterPopUpView extends StatefulWidget {
-  final PreferredSizeWidget appBar;
+  final KayleeAppBar appBar;
   final Widget body;
+  final Widget floatingActionButton;
 
-  KayleeFilterPopUpView({this.appBar, this.body});
+  KayleeFilterPopUpView({this.appBar, this.body, this.floatingActionButton});
 
   @override
   _KayleeFilterPopUpViewState createState() =>
@@ -72,6 +73,7 @@ class _KayleeFilterPopUpViewState extends BaseState<KayleeFilterPopUpView> {
               ))
             ],
           ),
+          floatingActionButton: widget.floatingActionButton,
         ),
       ),
     );

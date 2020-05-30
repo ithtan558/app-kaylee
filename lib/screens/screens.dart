@@ -2,6 +2,7 @@ library screens;
 
 export 'src/about/about_screen.dart';
 export 'src/brand_prod_list/brand_prod_list_screen.dart';
+export 'src/customer_list/customer_list_screen.dart';
 export 'src/edit_profile/edit_profile_screen.dart';
 export 'src/guide/guide_screen.dart';
 export 'src/history_detail/history_detail_screen.dart';
@@ -14,3 +15,5 @@ export 'src/service_list/service_list_screen.dart';
 export 'src/signin/signin_screen.dart';
 export 'src/signup/signup_screen.dart';
 export 'src/splash/splash_screen.dart';
+export 'src/staff_list/staff_list_screen.dart';
+
