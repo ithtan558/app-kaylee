@@ -28,7 +28,7 @@ class _CustomerListScreenState extends BaseState<CustomerListScreen> {
   Widget build(BuildContext context) {
     return KayleeFilterPopUpView(
       appBar: KayleeAppBar(
-        title: Strings.dsNhanVien,
+        title: Strings.danhSachKH,
       ),
       body: KayleeGridView(
         itemBuilder: (context, index) {
