@@ -10,50 +10,58 @@ class CustomerItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return KayleeInkwell(
-      child: KayleeCartView(
-          child: KayleeImageInfoLayout(
-        imageView: Image.network(
-          'https://s3.amazonaws.com/tinycards/image/c5b605125dd3a4685555bf56c37555ed',
-          fit: BoxFit.cover,
-        ),
-        infoView: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            KayleeText.hyper16W500(
-              'Willard Chavez',
-              maxLines: 2,
-              textAlign: TextAlign.center,
+    return Stack(
+      children: <Widget>[
+        KayleeInkwell(
+          child: KayleeCartView(
+              child: KayleeImageInfoLayout(
+            imageView: Image.network(
+              'https://s3.amazonaws.com/tinycards/image/c5b605125dd3a4685555bf56c37555ed',
+              fit: BoxFit.cover,
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: Dimens.px16),
-              child: FractionallySizedBox(
-                widthFactor: 40 / 103,
-                alignment: Alignment.center,
-                child: AspectRatio(
-                  aspectRatio: 1,
-                  child: FlatButton(
-                    padding: EdgeInsets.zero,
-                    onPressed: () {
-                      print('[TUNG] ===> FlatButton');
-                    },
-                    color: ColorsRes.button,
-                    shape: CircleBorder(),
-                    child: Center(
-                      child: Icon(
-                        CupertinoIcons.phone,
-                        color: Colors.white,
-                      ),
+            infoView: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                KayleeText.hyper16W500(
+                  'Willard Chavez',
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: Dimens.px16),
+                  child: FractionallySizedBox(
+                    widthFactor: 40 / 103,
+                    alignment: Alignment.center,
+                    child: AspectRatio(
+                      aspectRatio: 1,
+                      child: Container(),
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
-          ],
+          )),
+          onTap: onTap,
         ),
-      )),
-      onTap: onTap,
+        Positioned(
+          left: 0,
+          right: 0,
+          child: FlatButton(
+            padding: EdgeInsets.zero,
+            onPressed: () {
+              print('[TUNG] ===> FlatButton');
+            },
+            color: ColorsRes.button,
+            shape: CircleBorder(),
+            child: Icon(
+              CupertinoIcons.phone,
+              color: Colors.white,
+            ),
+          ),
+          bottom: Dimens.px16,
+        )
+      ],
     );
   }
 }

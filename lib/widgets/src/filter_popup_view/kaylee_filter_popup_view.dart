@@ -66,6 +66,11 @@ class _KayleeFilterPopUpViewState extends BaseState<KayleeFilterPopUpView> {
                       Container(
                         color: Colors.transparent,
                       ),
+                  Positioned(
+                    child: widget.floatingActionButton ?? Container(),
+                    right: Dimens.px24,
+                    bottom: Dimens.px24,
+                  ),
                   _FilterList(
                     controller: filterViewController,
                   ),
@@ -73,7 +78,6 @@ class _KayleeFilterPopUpViewState extends BaseState<KayleeFilterPopUpView> {
               ))
             ],
           ),
-          floatingActionButton: widget.floatingActionButton,
         ),
       ),
     );
