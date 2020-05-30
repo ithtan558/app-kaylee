@@ -44,7 +44,7 @@ class CustomerItem extends StatelessWidget {
                 color: ColorsRes.button,
                 child: InkWell(
                   onTap: () {},
-                  child: Icon(
+                  child: const Icon(
                     CupertinoIcons.phone,
                     color: Colors.white,
                   ),
