@@ -75,10 +75,10 @@ class Strings {
   static final String danhMucDichVu = 'Danh mục dịch vụ';
   static final String dsNhanVien = 'Danh sách nhân viên';
   static final String danhSachKH = 'Danh sách khách hàng';
-
   static final String chiTietSanPham = 'Chi tiết sản phẩm';
-
   static final String themVaoGioHang = 'Thêm vào giỏ hàng';
+  static final String gioHang = 'Giỏ hàng';
+  static final String datHang = 'Đặt hàng';
 
   Strings._();
 }

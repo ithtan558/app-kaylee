@@ -1,6 +1,7 @@
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class ProductDetailScreen extends StatefulWidget {
@@ -86,7 +87,9 @@ class _ProductDetailScreenState extends BaseState<ProductDetailScreen> {
                       child: KayLeeRoundedButton.normal(
                         text: Strings.themVaoGioHang,
                         margin: EdgeInsets.zero,
-                        onPressed: () {},
+                        onPressed: () {
+                          pushScreen(PageIntent(context, CartScreen));
+                        },
                       ),
                     ),
                   ),

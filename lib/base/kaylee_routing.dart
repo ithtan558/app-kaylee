@@ -45,6 +45,8 @@ mixin KayleeRouting on Routing {
         return CustomerListScreen.newInstance();
       case ProductDetailScreen:
         return ProductDetailScreen.newInstance();
+      case CartScreen:
+        return CartScreen.newInstance();
       default:
         return SplashScreen.newInstance();
     }
