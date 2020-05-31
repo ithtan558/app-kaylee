@@ -1,0 +1,80 @@
+import 'package:core_plugin/core_plugin.dart';
+import 'package:flutter/material.dart';
+import 'package:kaylee/res/res.dart';
+import 'package:kaylee/widgets/kaylee_widgets.dart';
+
+class ReceiverInfoScreen extends StatefulWidget {
+  factory ReceiverInfoScreen.newInstance() = ReceiverInfoScreen._;
+
+  ReceiverInfoScreen._();
+
+  @override
+  _ReceiverInfoScreenState createState() => new _ReceiverInfoScreenState();
+}
+
+class _ReceiverInfoScreenState extends BaseState<ReceiverInfoScreen> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return UnFocusWidget(
+      child: Scaffold(
+        appBar: KayleeAppBar(
+          title: Strings.thongTinNguoiNhan,
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: Dimens.px16, right: Dimens.px16, left: Dimens.px16),
+                child: KayleeTextField.normal(
+                  title: Strings.ho,
+                  hint: 'Nhập Họ và Tên',
+                ),
+              ),
+              KayleeFullAddressInput(
+                title: Strings.diaChiHienTai,
+                padding: EdgeInsets.all(Dimens.px16),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: Dimens.px16, right: Dimens.px16, bottom: Dimens.px16),
+                child: KayleeTextField.phoneInput(
+                  title: Strings.soDienThoai,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: Dimens.px16, right: Dimens.px16, bottom: Dimens.px16),
+                child: KayleeTextField.normal(
+                  title: Strings.luuY,
+                  hint: Strings.luuYHint,
+                  textInputType: TextInputType.multiline,
+                  textInputAction: TextInputAction.newline,
+                  fieldHeight: (screenSize.width - Dimens.px32) / (343 / 233),
+                  textAlign: TextAlign.start,
+                  contentPadding: EdgeInsets.symmetric(vertical: Dimens.px16),
+                  expands: true,
+                ),
+              ),
+              KayLeeRoundedButton.normal(
+                text: Strings.tiepTuc,
+                margin: EdgeInsets.all(Dimens.px8),
+                onPressed: () {},
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

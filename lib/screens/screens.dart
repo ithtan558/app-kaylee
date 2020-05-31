@@ -13,6 +13,7 @@ export 'src/notification/notification_screen.dart';
 export 'src/product_detail/product_detail_screen.dart';
 export 'src/reset_pass/otp_confirm_screeen.dart';
 export 'src/reset_pass/reset_pass_screen.dart';
+export 'src/reveiver_info/receiver_info_screen.dart';
 export 'src/service_list/service_list_screen.dart';
 export 'src/signin/signin_screen.dart';
 export 'src/signup/signup_screen.dart';

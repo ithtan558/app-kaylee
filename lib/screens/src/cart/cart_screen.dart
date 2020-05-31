@@ -1,6 +1,7 @@
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/cart/widgets/cart_prod_item.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
@@ -50,7 +51,9 @@ class _CartScreenState extends BaseState<CartScreen> {
           KayLeeRoundedButton.normal(
             text: Strings.datHang,
             margin: const EdgeInsets.all(Dimens.px8),
-            onPressed: () {},
+            onPressed: () {
+              pushScreen(PageIntent(context, ReceiverInfoScreen));
+            },
           )
         ],
       ),

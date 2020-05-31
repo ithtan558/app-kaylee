@@ -79,6 +79,11 @@ class Strings {
   static final String themVaoGioHang = 'Thêm vào giỏ hàng';
   static final String gioHang = 'Giỏ hàng';
   static final String datHang = 'Đặt hàng';
+  static final String thongTinNguoiNhan = 'Thông tin người nhận';
+  static final String tiepTuc = 'Tiếp tục';
+  static final String luuY = 'Lưu ý';
+
+  static final String luuYHint = 'Nhập ghi chú cho đơn hàng';
 
   Strings._();
 }

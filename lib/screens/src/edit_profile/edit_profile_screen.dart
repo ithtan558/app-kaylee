@@ -128,44 +128,8 @@ class _EditProfileScreenState extends BaseState<EditProfileScreen> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: Dimens.px8),
-                child: KayleeTextField(
-                  title: Strings.diaChiHienTai,
-                  textInput: NormalInputField(
-                    hint: Strings.diaChiHienTaiHint,
-                    controller: addrTfController,
-                    focusNode: addrFocus,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: Dimens.px8),
-                child: Row(
-                  children: [
-                    Expanded(
-                        child: KayleeTextField(
-                      textInput: SelectionInputField(
-                        hint: Strings.phuong,
-                      ),
-                    )),
-                    SizedBox(width: Dimens.px8),
-                    Expanded(
-                        child: KayleeTextField(
-                      textInput: SelectionInputField(
-                        hint: Strings.quan,
-                      ),
-                    )),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: Dimens.px16),
-                child: KayleeTextField(
-                  textInput: SelectionInputField(
-                    hint: Strings.chonTinhTpHint,
-                  ),
-                ),
+              KayleeFullAddressInput(
+                title: Strings.diaChiHienTai,
               ),
               KayleeTextField(
                 title: Strings.matKhau,

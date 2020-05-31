@@ -28,6 +28,7 @@ export 'src/kaylee_prod_item.dart';
 export 'src/kaylee_rounded_button.dart';
 export 'src/kaylee_text.dart';
 export 'src/kaylee_text_field.dart';
+export 'src/kaylle_full_address_input.dart';
 export 'src/label_divider_view.dart';
 export 'src/policy_checkbox.dart';
 

@@ -14,6 +14,55 @@ class KayleeTextField extends StatelessWidget {
 
   KayleeTextField({this.title, this.textInput});
 
+  /// [fieldHeight] chiều cao của text field
+  /// khi set [fieldHeight], để text field expand với chiều cao [fieldHeight], thì [expands] phải set = true
+  factory KayleeTextField.normal(
+          {String title,
+          String hint,
+          double fieldHeight,
+          FocusNode focusNode,
+          FocusNode nexFocusNode,
+          TextEditingController controller,
+          TextInputAction textInputAction,
+          TextInputType textInputType,
+          String error,
+          EdgeInsets contentPadding,
+          bool expands,
+          TextAlign textAlign}) =>
+      KayleeTextField(
+        title: title,
+        textInput: NormalInputField(
+          textInputAction: textInputAction,
+          focusNode: focusNode,
+          nextFocusNode: nexFocusNode,
+          controller: controller,
+          error: error,
+          hint: hint,
+          textInputType: textInputType,
+          fieldHeight: fieldHeight,
+          contentPadding: contentPadding,
+          expands: expands,
+          textAlign: textAlign,
+        ),
+      );
+
+  factory KayleeTextField.phoneInput(
+          {String title,
+          FocusNode focusNode,
+          FocusNode nexFocusNode,
+          TextEditingController controller,
+          String error}) =>
+      KayleeTextField(
+        title: title,
+        textInput: PhoneInputField(
+          textInputAction: TextInputAction.next,
+          focusNode: focusNode,
+          nextFocusNode: nexFocusNode,
+          controller: controller,
+          error: error,
+        ),
+      );
+
   factory KayleeTextField.staticWidget({String title, String initText}) =>
       KayleeTextField(
         title: title,
@@ -23,11 +72,13 @@ class KayleeTextField extends StatelessWidget {
         ),
       );
 
-  factory KayleeTextField.selection({String title, String error}) =>
+  factory KayleeTextField.selection(
+      {String title, String hint, String error}) =>
       KayleeTextField(
         title: title,
         textInput: SelectionInputField(
           error: error,
+          hint: hint,
         ),
       );
 
@@ -250,6 +301,10 @@ class NormalInputField extends StatefulWidget {
   final TextInputAction textInputAction;
   final TextInputType textInputType;
   final bool isStaticTField;
+  final double fieldHeight;
+  final EdgeInsets contentPadding;
+  final TextAlign textAlign;
+  final bool expands;
 
   NormalInputField(
       {this.hint,
@@ -260,7 +315,11 @@ class NormalInputField extends StatefulWidget {
       this.nextFocusNode,
       this.textInputAction = TextInputAction.done,
       this.textInputType = TextInputType.text,
-      this.isStaticTField = false});
+        this.isStaticTField = false,
+        this.fieldHeight,
+        this.contentPadding,
+        this.textAlign,
+        this.expands});
 
   @override
   _NormalInputFieldState createState() => _NormalInputFieldState();
@@ -310,13 +369,18 @@ class _NormalInputFieldState extends BaseState<NormalInputField> {
                         }
                       },
                       obscureText: isPassTField ? showPass : false,
+                      textAlign: widget.textAlign ?? TextAlign.start,
+                      textAlignVertical: TextAlignVertical.top,
+                      expands: widget.expands ?? false,
+                      maxLines: widget.expands ?? false ? null : 1,
+                      minLines: widget.expands ?? false ? null : 1,
                       decoration: InputDecoration(
                           enabled: !widget.isStaticTField,
                           enabledBorder: InputBorder.none,
                           focusedBorder: InputBorder.none,
                           border: InputBorder.none,
                           hintText: widget.hint,
-                          contentPadding:
+                          contentPadding: widget.contentPadding ??
                               const EdgeInsets.only(bottom: Dimens.px4),
                           hintStyle: TextStyles.hint16W400),
                     ),
@@ -347,6 +411,7 @@ class _NormalInputFieldState extends BaseState<NormalInputField> {
                 ],
               ),
             ),
+            fieldHeight: widget.fieldHeight,
             bgColor: widget.isStaticTField ? Colors.transparent : null,
             showFocusBorder: !widget.error.isNullOrEmpty),
         if (!widget.error.isNullOrEmpty)
@@ -411,7 +476,6 @@ class _PhoneInputFieldState extends State<PhoneInputField> {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = ScreenUtils.textTheme(context);
     return Column(
       children: <Widget>[
         TextFieldBorderWrapper(
@@ -483,13 +547,15 @@ class TextFieldBorderWrapper extends StatelessWidget {
   final Widget child;
   final bool showFocusBorder;
   final Color bgColor;
+  final double fieldHeight;
 
-  TextFieldBorderWrapper(this.child, {this.showFocusBorder, this.bgColor});
+  TextFieldBorderWrapper(this.child,
+      {this.showFocusBorder, this.bgColor, this.fieldHeight});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: Dimens.px48,
+      height: fieldHeight ?? Dimens.px48,
       width: double.infinity,
       decoration: BoxDecoration(
           color: bgColor ?? Colors.white,
