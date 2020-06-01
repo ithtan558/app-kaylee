@@ -73,7 +73,7 @@ class KayleeTextField extends StatelessWidget {
       );
 
   factory KayleeTextField.selection(
-      {String title, String hint, String error}) =>
+          {String title, String hint, String error}) =>
       KayleeTextField(
         title: title,
         textInput: SelectionInputField(
@@ -193,30 +193,32 @@ class _ButtonInputFieldState extends BaseState<ButtonInputField> {
 
   @override
   Widget build(BuildContext context) {
-    return TextFieldBorderWrapper(Row(
-      children: <Widget>[
-        Expanded(
-          child: Padding(
-            padding:
-                const EdgeInsets.only(left: Dimens.px16, right: Dimens.px14),
-            child: KayleeText(
-              widget.initText ?? '',
-              maxLines: 1,
-              style: TextStyles.normal16W400,
+    return TextFieldBorderWrapper(
+      Row(
+        children: <Widget>[
+          Expanded(
+            child: Padding(
+              padding:
+              const EdgeInsets.only(left: Dimens.px16, right: Dimens.px14),
+              child: KayleeText(
+                widget.initText ?? '',
+                maxLines: 1,
+                style: TextStyles.normal16W400,
+              ),
             ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(
-            right: Dimens.px4,
-          ),
-          child: KayleeFlatButton(
-            title: widget.buttonText,
-            onPress: widget.onTap,
-          ),
-        )
-      ],
-    ));
+          Padding(
+            padding: const EdgeInsets.only(
+              right: Dimens.px4,
+            ),
+            child: KayleeFlatButton(
+              title: widget.buttonText,
+              onPress: widget.onTap,
+            ),
+          )
+        ],
+      ),
+    );
   }
 }
 
@@ -351,7 +353,6 @@ class _NormalInputFieldState extends BaseState<NormalInputField> {
         TextFieldBorderWrapper(
             Container(
               margin: const EdgeInsets.symmetric(horizontal: Dimens.px16),
-              color: Colors.transparent,
               child: Row(
                 children: <Widget>[
                   Expanded(
