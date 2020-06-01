@@ -32,6 +32,24 @@ class _BrandProdListScreenState extends BaseState<BrandProdListScreen> {
           'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Shiseido_logo.svg/1280px-Shiseido_logo.svg.png',
           height: Dimens.px15,
         ),
+        actions: <Widget>[
+          ActionButton(
+            child: Stack(
+              alignment: Alignment.center,
+              children: <Widget>[
+                Image.asset(
+                  Images.ic_bag,
+                  width: Dimens.px24,
+                  height: Dimens.px32,
+                ),
+                Positioned(
+                  child: KayleeText.normalWhite12W400('0'),
+                  bottom: Dimens.px5,
+                )
+              ],
+            ),
+          )
+        ],
       ),
       body: ListView.builder(
         itemBuilder: (c, index) {

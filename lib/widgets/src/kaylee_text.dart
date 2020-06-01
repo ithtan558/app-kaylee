@@ -188,6 +188,18 @@ class KayleeText extends StatelessWidget {
         overflow: overflow,
       );
 
+  factory KayleeText.normalWhite12W400(String text,
+          {TextAlign textAlign = TextAlign.start,
+          int maxLines,
+          TextOverflow overflow}) =>
+      KayleeText(
+        text,
+        textAlign: textAlign,
+        style: TextStyles.normalWhite12W400,
+        maxLines: maxLines,
+        overflow: overflow,
+      );
+
   factory KayleeText.normal16W400(String text,
           {TextAlign textAlign = TextAlign.start,
           int maxLines,
