@@ -45,4 +45,5 @@ class Images {
   static const ic_filter = 'assets/ic_filter.png';
   static const ic_bag = 'assets/ic_bag.png';
   static const ic_tick = 'assets/ic_tick.png';
+  static const ic_search = 'assets/ic_search.png';
 }

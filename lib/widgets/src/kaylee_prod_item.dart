@@ -126,10 +126,16 @@ class _SelectingProItemViewState extends State<_SelectingProItemView>
                           spreadRadius: 0)
                     ],
                   ),
-                  child: const Icon(
-                    Icons.check,
-                    color: Colors.white,
-                    size: Dimens.px24,
+                  alignment: Alignment.center,
+                  child: FractionallySizedBox(
+                    widthFactor: 20 / 48,
+                    heightFactor: 16 / 48,
+                    alignment: Alignment.center,
+                    child: ImageIcon(
+                      AssetImage(Images.ic_tick),
+                      color: Colors.white,
+                      size: Dimens.px20,
+                    ),
                   ),
                 ),
               ),

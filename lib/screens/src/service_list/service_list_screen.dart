@@ -28,7 +28,26 @@ class _ServiceListScreenState extends BaseState<ServiceListScreen> {
     return KayleeFilterPopUpView(
       appBar: KayleeAppBar(
         title: Strings.danhMucDichVu,
-        actions: <Widget>[],
+        actions: <Widget>[
+          ActionButton(
+              child: SizedBox(
+            height: kToolbarHeight,
+            width: kToolbarHeight,
+            child: InkWell(
+              onTap: () {},
+              customBorder: CircleBorder(),
+              child: Center(
+                child: ImageIcon(
+                  AssetImage(
+                    Images.ic_search,
+                  ),
+                  color: ColorsRes.hintText,
+                  size: Dimens.px20,
+                ),
+              ),
+            ),
+          ))
+        ],
       ),
       body: ListView.builder(
         itemBuilder: (c, index) {
