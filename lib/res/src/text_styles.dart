@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
 
 class TextStyles {
-  static final TextStyle hyper = TextStyle(color: ColorsRes.hyper);
-  static final TextStyle hint = TextStyle(color: ColorsRes.hintText);
-  static final TextStyle normal = TextStyle(color: ColorsRes.text);
-  static final TextStyle normalWhite = TextStyle(color: Colors.white);
-  static final TextStyle button = TextStyle(color: ColorsRes.button);
-  static final TextStyle error = TextStyle(color: ColorsRes.errorText);
+  static const TextStyle hyper = TextStyle(color: ColorsRes.hyper);
+  static const TextStyle hint = TextStyle(color: ColorsRes.hintText);
+  static const TextStyle normal = TextStyle(color: ColorsRes.text);
+  static const TextStyle normalWhite = TextStyle(color: Colors.white);
+  static const TextStyle button = TextStyle(color: ColorsRes.button);
+  static const TextStyle error = TextStyle(color: ColorsRes.errorText);
 
-  static final TextStyle _w400 = TextStyle(fontWeight: FontWeight.w400);
-  static final TextStyle _w500 = TextStyle(fontWeight: FontWeight.w500);
-  static final TextStyle _w700 = TextStyle(fontWeight: FontWeight.w700);
+  static const TextStyle _w400 = TextStyle(fontWeight: FontWeight.w400);
+  static const TextStyle _w500 = TextStyle(fontWeight: FontWeight.w500);
+  static const TextStyle _w700 = TextStyle(fontWeight: FontWeight.w700);
 
-  static final TextStyle _f12 = TextStyle(fontSize: Dimens.px12);
-  static final TextStyle _f16 = TextStyle(fontSize: Dimens.px16);
-  static final TextStyle _f18 = TextStyle(fontSize: Dimens.px18);
-  static final TextStyle _f26 = TextStyle(fontSize: Dimens.px26);
+  static const TextStyle _f12 = TextStyle(fontSize: Dimens.px12);
+  static const TextStyle _f16 = TextStyle(fontSize: Dimens.px16);
+  static const TextStyle _f18 = TextStyle(fontSize: Dimens.px18);
+  static const TextStyle _f26 = TextStyle(fontSize: Dimens.px26);
 
   static final TextStyle hyper16W400 = hyper.merge(_f16.merge(_w400));
   static final TextStyle hyper16W500 = hyper.merge(_f16.merge(_w500));

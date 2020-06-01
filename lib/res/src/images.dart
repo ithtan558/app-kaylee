@@ -43,4 +43,6 @@ class Images {
   static const ic_camera = 'assets/ic_camera.png';
   static const ic_image_holder = 'assets/ic_image_holder.png';
   static const ic_filter = 'assets/ic_filter.png';
+  static const ic_bag = 'assets/ic_bag.png';
+  static const ic_tick = 'assets/ic_tick.png';
 }
