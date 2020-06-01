@@ -304,7 +304,7 @@ class __NotificationIconState extends State<_NotificationIcon> {
           height: 56,
           child: FlatButton(
             onPressed: () {
-//        push(PageIntent(context, NotificationScreen));
+              push(PageIntent(context, NotificationScreen));
             },
             shape: CircleBorder(),
             child: Image.asset(
