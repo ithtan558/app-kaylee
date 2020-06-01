@@ -2,6 +2,7 @@ import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/src/dimens.dart';
 import 'package:kaylee/res/src/strings.dart';
+import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 import 'package:kaylee/widgets/src/otp_input_field.dart';
 
@@ -51,7 +52,11 @@ class _OtpConfirmScreenState extends BaseState<OtpConfirmScreen> {
               ),
               Padding(
                   padding: const EdgeInsets.only(top: Dimens.px25),
-                  child: OtpInputField()),
+                  child: OtpInputField(
+                    onComplete: (code) {
+                      pushScreen(PageIntent(context, InputNewPassScreen));
+                    },
+                  )),
               Expanded(
                   child: Row(
                 crossAxisAlignment: CrossAxisAlignment.end,

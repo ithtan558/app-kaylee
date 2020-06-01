@@ -49,6 +49,8 @@ mixin KayleeRouting on Routing {
         return CartScreen.newInstance();
       case ReceiverInfoScreen:
         return ReceiverInfoScreen.newInstance();
+      case InputNewPassScreen:
+        return InputNewPassScreen.newInstance();
       default:
         return SplashScreen.newInstance();
     }

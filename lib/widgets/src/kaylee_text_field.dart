@@ -82,6 +82,28 @@ class KayleeTextField extends StatelessWidget {
         ),
       );
 
+  factory KayleeTextField.password({
+    String title,
+    String hint,
+    TextEditingController controller,
+    TextInputAction textInputAction,
+    FocusNode focusNode,
+    FocusNode nextFocusNode,
+    String error,
+  }) =>
+      KayleeTextField(
+        title: title ?? Strings.matKhau,
+        textInput: NormalInputField(
+          controller: controller,
+          hint: hint ?? Strings.passLimitHint,
+          textInputAction: textInputAction,
+          textInputType: TextInputType.visiblePassword,
+          focusNode: focusNode,
+          nextFocusNode: nextFocusNode,
+          error: error,
+        ),
+      );
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -199,7 +221,7 @@ class _ButtonInputFieldState extends BaseState<ButtonInputField> {
           Expanded(
             child: Padding(
               padding:
-              const EdgeInsets.only(left: Dimens.px16, right: Dimens.px14),
+                  const EdgeInsets.only(left: Dimens.px16, right: Dimens.px14),
               child: KayleeText(
                 widget.initText ?? '',
                 maxLines: 1,
@@ -328,7 +350,7 @@ class NormalInputField extends StatefulWidget {
 }
 
 class _NormalInputFieldState extends BaseState<NormalInputField> {
-  bool showPass = true;
+  bool showPass = false;
   TextEditingController tfController;
 
   @override
@@ -369,7 +391,7 @@ class _NormalInputFieldState extends BaseState<NormalInputField> {
                           widget.nextFocusNode?.requestFocus();
                         }
                       },
-                      obscureText: isPassTField ? showPass : false,
+                      obscureText: isPassTField ? !showPass : false,
                       textAlign: widget.textAlign ?? TextAlign.start,
                       textAlignVertical: TextAlignVertical.top,
                       expands: widget.expands ?? false,
@@ -391,7 +413,7 @@ class _NormalInputFieldState extends BaseState<NormalInputField> {
                       padding: const EdgeInsets.only(left: Dimens.px16),
                       child: GestureDetector(
                           child: Icon(
-                            !showPass ? Icons.visibility : Icons.visibility_off,
+                            !showPass ? Icons.visibility_off : Icons.visibility,
                             color: ColorsRes.hintText,
                           ),
                           onTap: () {

@@ -4,7 +4,13 @@ import 'package:flutter/services.dart';
 import 'package:kaylee/res/src/colors_res.dart';
 import 'package:kaylee/res/src/dimens.dart';
 
+typedef OnComplete = void Function(String otp);
+
 class OtpInputField extends StatefulWidget {
+  final OnComplete onComplete;
+
+  OtpInputField({this.onComplete});
+
   @override
   _OtpInputFieldState createState() => new _OtpInputFieldState();
 }
@@ -88,6 +94,11 @@ class _OtpInputFieldState extends BaseState<OtpInputField> {
             currentFocus: pinFocus4,
             textInputAction: TextInputAction.done,
             tfController: tfController4,
+            onComplete: () {
+              final code =
+                  '${tfController1.text}${tfController2.text}${tfController3.text}${tfController4.text}';
+              widget.onComplete(code);
+            },
           ),
         ],
       ),
@@ -100,13 +111,13 @@ class _PinTextField extends StatefulWidget {
   final FocusNode currentFocus;
   final TextInputAction textInputAction;
   final TextEditingController tfController;
+  final void Function() onComplete;
 
-  _PinTextField({
-    this.nextFocus,
+  _PinTextField({this.nextFocus,
     this.currentFocus,
     this.textInputAction = TextInputAction.next,
     this.tfController,
-  });
+    this.onComplete});
 
   @override
   _PinTextFieldState createState() => _PinTextFieldState();
@@ -136,6 +147,7 @@ class _PinTextFieldState extends BaseState<_PinTextField> {
             Container(
                 width: Dimens.px16,
                 height: Dimens.px16,
+                clipBehavior: Clip.antiAlias,
                 decoration: const BoxDecoration(
                     color: ColorsRes.hintText, shape: BoxShape.circle)),
           TextField(
@@ -149,13 +161,13 @@ class _PinTextFieldState extends BaseState<_PinTextField> {
             ),
             onChanged: (pin) {
               setState(() {});
-              print('[TUNG] ===> onChanged');
               if (pin.isEmpty) {
                 widget.currentFocus?.previousFocus();
               } else if (pin.isNotEmpty) {
-                if (!(widget.currentFocus?.nextFocus() ?? false)) {
-                  widget.currentFocus?.unfocus();
+                if (widget.onComplete.isNotNull) {
+                  widget.onComplete();
                 }
+                widget.currentFocus?.nextFocus();
               }
             },
             maxLength: 1,

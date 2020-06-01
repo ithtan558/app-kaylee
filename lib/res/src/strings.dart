@@ -82,8 +82,10 @@ class Strings {
   static final String thongTinNguoiNhan = 'Thông tin người nhận';
   static final String tiepTuc = 'Tiếp tục';
   static final String luuY = 'Lưu ý';
-
   static final String luuYHint = 'Nhập ghi chú cho đơn hàng';
+  static final String nhapMatKhauMoi = 'Nhập mật khẩu mới';
+  static final String matKhauMoi = 'Mật khẩu mới';
+  static final String xacNhan = 'Xác nhận';
 
   Strings._();
 }

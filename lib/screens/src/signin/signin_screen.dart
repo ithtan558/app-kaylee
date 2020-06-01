@@ -67,15 +67,12 @@ class _SignInScreenState extends BaseState<SignInScreen> {
             Container(
                 margin: EdgeInsets.only(top: Dimens.px16),
                 alignment: Alignment.centerLeft,
-                child: KayleeTextField(
+                child: KayleeTextField.password(
                   title: Strings.matKhau,
-                  textInput: NormalInputField(
-                    controller: _passTController,
-                    hint: Strings.passLimitHint,
-                    textInputAction: TextInputAction.done,
-                    textInputType: TextInputType.visiblePassword,
-                    focusNode: _passFNode,
-                  ),
+                  controller: _passTController,
+                  hint: Strings.passLimitHint,
+                  textInputAction: TextInputAction.done,
+                  focusNode: _passFNode,
                 )),
             Container(
               margin: EdgeInsets.only(top: Dimens.px16),
