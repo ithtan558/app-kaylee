@@ -32,7 +32,7 @@ class _CommissionListScreenState extends BaseState<CommissionListScreen> {
       ),
       body: Column(
         children: [
-          DateFilter(),
+          KayleeDateFilter(),
           Expanded(
             child: KayleeGridView(
               itemBuilder: (context, index) {

@@ -5,17 +5,18 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 import 'package:kaylee/widgets/src/kaylee_flat_button.dart';
 
-class DateFilter extends StatefulWidget {
+class KayleeDateFilter extends StatefulWidget {
   @override
-  _DateFilterState createState() => new _DateFilterState();
+  _KayleeDateFilterState createState() => new _KayleeDateFilterState();
 }
 
-class _DateFilterState extends BaseState<DateFilter> {
+class _KayleeDateFilterState extends BaseState<KayleeDateFilter> {
   PageController pageController;
 
   @override
   void initState() {
     super.initState();
+    pageController = PageController(keepPage: false, viewportFraction: 1 / 7);
   }
 
   @override
@@ -26,7 +27,6 @@ class _DateFilterState extends BaseState<DateFilter> {
 
   @override
   Widget build(BuildContext context) {
-    pageController = PageController(keepPage: false, viewportFraction: 1 / 7);
 
     return Column(
       children: [
