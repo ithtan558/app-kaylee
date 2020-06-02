@@ -1,6 +1,7 @@
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/screens/src/staff_list/widgets/staff_item.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class CommissionListScreen extends StatefulWidget {
@@ -32,7 +33,21 @@ class _CommissionListScreenState extends BaseState<CommissionListScreen> {
       body: Column(
         children: [
           DateFilter(),
+          Expanded(
+            child: KayleeGridView(
+              itemBuilder: (context, index) {
+                return StaffItem(
+                  onTap: () {},
+                );
+              },
+              childAspectRatio: 103 / 195,
+              itemCount: 10,
+            ),
+          )
         ],
+      ),
+      floatingActionButton: KayleeFloatButton(
+        onTap: () {},
       ),
     );
   }
