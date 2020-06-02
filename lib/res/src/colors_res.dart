@@ -15,6 +15,7 @@ class ColorsRes {
   static const Color dialogDimBg = Color(0x7f313131);
   static const Color labelDivider = Color(0xffF2EEE6);
   static const Color shadow = Color(0x4c000000);
+  static const Color dialogNavigate = Color(0xe5f6f6f6);
 
   ColorsRes._();
 }

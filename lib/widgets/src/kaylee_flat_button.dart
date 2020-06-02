@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:anth_package/anth_package.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
@@ -60,16 +61,18 @@ class KayleeFlatButton extends StatelessWidget {
           child: child.isNotNull
               ? child
               : KayleeText(
-                title ?? '',
-                style: TextStyles.normalWhite16W500,
-                maxLines: 1,
-              )),
+                  title ?? '',
+                  style: TextStyles.normalWhite16W500,
+                  maxLines: 1,
+                )),
     );
   }
 }
 
 class KayleeDateFilterButton extends StatefulWidget {
-  KayleeDateFilterButton();
+  final void Function() onDateSelected;
+
+  KayleeDateFilterButton({this.onDateSelected});
 
   @override
   _KayleeDateFilterButtonState createState() =>
@@ -103,9 +106,13 @@ class _KayleeDateFilterButtonState extends BaseState<KayleeDateFilterButton>
         Expanded(
             child: Container(
           alignment: Alignment.center,
-          child: KayleeText(
-              'Tháng ${DateFormat(' ${DateFormat.NUM_MONTH * 2}/${DateFormat.YEAR * 4}').format(selectedDate)}',
-              style: TextStyles.normalWhite16W400),
+              child: KayleeText.normalWhite16W400(
+                'Tháng ${DateFormat('${DateFormat.NUM_MONTH * 2}/${DateFormat
+                    .YEAR * 4}').format(selectedDate)}',
+                textAlign: TextAlign.center,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
         )),
         AnimatedBuilder(
           animation: animController,
@@ -121,13 +128,56 @@ class _KayleeDateFilterButtonState extends BaseState<KayleeDateFilterButton>
           ),
         )
       ]),
-      onPress: () {
-        if (animController.status == AnimationStatus.completed ||
-            animController.status == AnimationStatus.forward)
-          animController.reverse(from: animController.value);
-        else if (animController.status == AnimationStatus.dismissed ||
-            animController.status == AnimationStatus.reverse)
+      onPress: () async {
+        if (animController.isDismissed)
           animController.forward(from: animController.value);
+
+        await showModalBottomSheet(
+            context: context,
+            backgroundColor: Colors.transparent,
+            enableDrag: false,
+            barrierColor: ColorsRes.shadow.withOpacity(0.1),
+            builder: (context) {
+              return Container(
+                height: 215.0 + Dimens.px44,
+                decoration: BoxDecoration(
+                  color: ColorsRes.dialogNavigate,
+                  boxShadow: [
+                    BoxShadow(
+                        color: ColorsRes.shadow,
+                        offset: Offset(0, -0.5),
+                        blurRadius: 0,
+                        spreadRadius: 0)
+                  ],
+                ),
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                        height: Dimens.px44, alignment: Alignment.centerRight),
+                    Container(
+                      height: 215.0,
+                      child: KayleeMonthYearPicker(
+                        maximumDate: DateTime(
+                            DateTime
+                                .now()
+                                .year, DateTime
+                            .now()
+                            .month, 1),
+                        initialDateTime: selectedDate,
+                        onDateTimeChanged: (changed) {
+                          setState(() {
+                            selectedDate = changed;
+                          });
+                        },
+                        backgroundColor: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            });
+        if (animController.isCompleted)
+          animController.reverse(from: animController.value);
       },
     );
   }

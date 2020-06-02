@@ -51,6 +51,8 @@ mixin KayleeRouting on Routing {
         return ReceiverInfoScreen.newInstance();
       case InputNewPassScreen:
         return InputNewPassScreen.newInstance();
+      case CommissionListScreen:
+        return CommissionListScreen.newInstance();
       default:
         return SplashScreen.newInstance();
     }

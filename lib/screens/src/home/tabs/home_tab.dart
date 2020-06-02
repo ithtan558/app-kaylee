@@ -226,7 +226,9 @@ class _HomeMenu extends StatelessWidget {
                         _buildMenuItem(
                           title: Strings.hoaHongNv,
                           icon: Images.ic_commission,
-                          onTap: () {},
+                          onTap: () {
+                            push(PageIntent(context, CommissionListScreen));
+                          },
                         ),
                         _buildMenuItem(
                           title: Strings.doanhThuBanHang,
