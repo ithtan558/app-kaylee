@@ -12,11 +12,13 @@ class KayleeDateFilter extends StatefulWidget {
 
 class _KayleeDateFilterState extends BaseState<KayleeDateFilter> {
   PageController pageController;
+  DateTime selectedDate;
 
   @override
   void initState() {
     super.initState();
     pageController = PageController(keepPage: false, viewportFraction: 1 / 7);
+    selectedDate = DateTime.now();
   }
 
   @override
@@ -27,7 +29,6 @@ class _KayleeDateFilterState extends BaseState<KayleeDateFilter> {
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       children: [
         Padding(
@@ -38,7 +39,53 @@ class _KayleeDateFilterState extends BaseState<KayleeDateFilter> {
               bottom: Dimens.px3),
           child: Column(
             children: [
-              KayleeDateFilterButton(),
+              KayleeDateFilterButton(
+                selectedDate: selectedDate,
+                onTap: () async {
+                  await showModalBottomSheet(
+                      context: context,
+                      backgroundColor: Colors.transparent,
+                      enableDrag: false,
+                      barrierColor: ColorsRes.shadow.withOpacity(0.1),
+                      builder: (context) {
+                        return Container(
+                          height: 215.0 + Dimens.px44,
+                          decoration: BoxDecoration(
+                            color: ColorsRes.dialogNavigate,
+                            boxShadow: [
+                              BoxShadow(
+                                  color: ColorsRes.shadow,
+                                  offset: Offset(0, -0.5),
+                                  blurRadius: 0,
+                                  spreadRadius: 0)
+                            ],
+                          ),
+                          child: Column(
+                            children: <Widget>[
+                              Container(
+                                  height: Dimens.px44,
+                                  alignment: Alignment.centerRight),
+                              Container(
+                                height: 215.0,
+                                child: KayleeMonthYearPicker(
+                                  maximumDate: DateTime(DateTime.now().year,
+                                      DateTime.now().month, 1),
+                                  initialDateTime: selectedDate,
+                                  onDateTimeChanged: (changed) {
+                                    setState(() {
+                                      selectedDate = changed;
+                                    });
+                                  },
+                                  backgroundColor: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      });
+                  return true;
+                },
+              ),
               CustomPaint(
                 painter: _TriangleClip(),
                 size: Size(Dimens.px6, Dimens.px5),
@@ -59,6 +106,12 @@ class _KayleeDateFilterState extends BaseState<KayleeDateFilter> {
               height: Dimens.px56,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(Dimens.px5),
+                border: const Border.fromBorderSide(
+                  BorderSide(
+                    color: ColorsRes.hyper,
+                    width: Dimens.px2,
+                  ),
+                ),
                 color: Colors.white,
                 boxShadow: [
                   const BoxShadow(
@@ -88,18 +141,7 @@ class _KayleeDateFilterState extends BaseState<KayleeDateFilter> {
                 controller: pageController,
               ),
             ),
-            Container(
-                width: Dimens.px56,
-                height: Dimens.px56,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(Dimens.px5),
-                  border: const Border.fromBorderSide(
-                    BorderSide(
-                      color: ColorsRes.hyper,
-                      width: Dimens.px2,
-                    ),
-                  ),
-                )),
+
           ]),
         )
       ],

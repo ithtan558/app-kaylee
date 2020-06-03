@@ -70,9 +70,15 @@ class KayleeFlatButton extends StatelessWidget {
 }
 
 class KayleeDateFilterButton extends StatefulWidget {
-  final void Function() onDateSelected;
+  final Future<bool> Function() onTap;
+  final DateTime selectedDate;
+  final Color color;
 
-  KayleeDateFilterButton({this.onDateSelected});
+  KayleeDateFilterButton({
+    @required this.selectedDate,
+    @required this.onTap,
+    this.color,
+  });
 
   @override
   _KayleeDateFilterButtonState createState() => _KayleeDateFilterButtonState();
@@ -80,14 +86,11 @@ class KayleeDateFilterButton extends StatefulWidget {
 
 class _KayleeDateFilterButtonState extends BaseState<KayleeDateFilterButton>
     with SingleTickerProviderStateMixin {
-  DateTime selectedDate;
-
   AnimationController animController;
 
   @override
   void initState() {
     super.initState();
-    selectedDate = DateTime.now();
     animController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 150));
   }
@@ -101,17 +104,18 @@ class _KayleeDateFilterButtonState extends BaseState<KayleeDateFilterButton>
   @override
   Widget build(BuildContext context) {
     return KayleeFlatButton.filter(
+      background: widget.color,
       child: Row(children: [
         Expanded(
             child: Container(
-          alignment: Alignment.center,
-          child: KayleeText.normalWhite16W400(
-            'Tháng ${DateFormat('${DateFormat.NUM_MONTH * 2}/${DateFormat.YEAR * 4}').format(selectedDate)}',
+              alignment: Alignment.center,
+              child: KayleeText.normalWhite16W400(
+            'Tháng ${DateFormat('${DateFormat.NUM_MONTH * 2}/${DateFormat.YEAR * 4}').format(widget.selectedDate)}',
             textAlign: TextAlign.center,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-        )),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            )),
         AnimatedBuilder(
           animation: animController,
           builder: (context, child) {
@@ -129,52 +133,8 @@ class _KayleeDateFilterButtonState extends BaseState<KayleeDateFilterButton>
       onPress: () async {
         if (animController.isDismissed)
           animController.forward(from: animController.value);
-
-        await showModalBottomSheet(
-            context: context,
-            backgroundColor: Colors.transparent,
-            enableDrag: false,
-            barrierColor: ColorsRes.shadow.withOpacity(0.1),
-            builder: (context) {
-              return Container(
-                height: 215.0 + Dimens.px44,
-                decoration: BoxDecoration(
-                  color: ColorsRes.dialogNavigate,
-                  boxShadow: [
-                    BoxShadow(
-                        color: ColorsRes.shadow,
-                        offset: Offset(0, -0.5),
-                        blurRadius: 0,
-                        spreadRadius: 0)
-                  ],
-                ),
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                        height: Dimens.px44, alignment: Alignment.centerRight),
-                    Container(
-                      height: 215.0,
-                      child: KayleeMonthYearPicker(
-                        maximumDate: DateTime(
-                            DateTime
-                                .now()
-                                .year, DateTime
-                            .now()
-                            .month, 1),
-                        initialDateTime: selectedDate,
-                        onDateTimeChanged: (changed) {
-                          setState(() {
-                            selectedDate = changed;
-                          });
-                        },
-                        backgroundColor: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            });
-        if (animController.isCompleted)
+        final result = await widget.onTap();
+        if (animController.isCompleted && result)
           animController.reverse(from: animController.value);
       },
     );
