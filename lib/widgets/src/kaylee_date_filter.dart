@@ -136,16 +136,24 @@ class _KayleeDateFilterState extends BaseState<KayleeDateFilter> {
                   );
                 },
                 dragStartBehavior: DragStartBehavior.start,
-                itemCount: 31,
+                itemCount: findMaxDate(selectedDate),
                 scrollDirection: Axis.horizontal,
                 controller: pageController,
               ),
             ),
-
           ]),
         )
       ],
     );
+  }
+
+  int findMaxDate(DateTime minDate, {int max = 31}) {
+    final maxDate = DateTime(minDate.year, minDate.month, max);
+    DateTime afterParsing = DateTime.tryParse(maxDate.toString());
+    if (afterParsing.month > minDate.month) {
+      return findMaxDate(minDate, max: max - 1);
+    }
+    return afterParsing.day;
   }
 }
 
