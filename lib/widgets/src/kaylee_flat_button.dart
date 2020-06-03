@@ -75,8 +75,7 @@ class KayleeDateFilterButton extends StatefulWidget {
   KayleeDateFilterButton({this.onDateSelected});
 
   @override
-  _KayleeDateFilterButtonState createState() =>
-      new _KayleeDateFilterButtonState();
+  _KayleeDateFilterButtonState createState() => _KayleeDateFilterButtonState();
 }
 
 class _KayleeDateFilterButtonState extends BaseState<KayleeDateFilterButton>
@@ -106,13 +105,12 @@ class _KayleeDateFilterButtonState extends BaseState<KayleeDateFilterButton>
         Expanded(
             child: Container(
           alignment: Alignment.center,
-              child: KayleeText.normalWhite16W400(
-                'Tháng ${DateFormat('${DateFormat.NUM_MONTH * 2}/${DateFormat
-                    .YEAR * 4}').format(selectedDate)}',
-                textAlign: TextAlign.center,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
+          child: KayleeText.normalWhite16W400(
+            'Tháng ${DateFormat('${DateFormat.NUM_MONTH * 2}/${DateFormat.YEAR * 4}').format(selectedDate)}',
+            textAlign: TextAlign.center,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
         )),
         AnimatedBuilder(
           animation: animController,
