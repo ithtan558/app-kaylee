@@ -149,11 +149,10 @@ class _KayleeDateFilterState extends BaseState<KayleeDateFilter> {
 
   int findMaxDate(DateTime minDate, {int max = 31}) {
     final maxDate = DateTime(minDate.year, minDate.month, max);
-    DateTime afterParsing = DateTime.tryParse(maxDate.toString());
-    if (afterParsing.month > minDate.month) {
+    if (maxDate.month > minDate.month) {
       return findMaxDate(minDate, max: max - 1);
     }
-    return afterParsing.day;
+    return maxDate.day;
   }
 }
 
