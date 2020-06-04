@@ -85,7 +85,7 @@ class _AboutScreenState extends BaseState<AboutScreen> {
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    KayleeDateTimeText.normal(
+                    KayleeDateTimeText.normalFromServer(
                       0,
                       textAlign: TextAlign.start,
                     ),

@@ -67,10 +67,11 @@ class _KayleeDateFilterState extends BaseState<KayleeDateFilter> {
                                   alignment: Alignment.centerRight),
                               Container(
                                 height: 215.0,
-                                child: KayleeMonthYearPicker(
+                                child: KayleeDatePicker(
                                   maximumDate: DateTime(DateTime.now().year,
                                       DateTime.now().month, 1),
                                   initialDateTime: selectedDate,
+                                  mode: KayleeDatePickerMode.monthYear,
                                   onDateTimeChanged: (changed) {
                                     setState(() {
                                       selectedDate = changed;

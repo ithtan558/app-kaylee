@@ -76,7 +76,7 @@ class _NotifyItemState extends BaseState<NotifyItem> {
                       ),
                     ),
                   ),
-                  KayleeDateTimeText.dayMonth(
+                  KayleeDateTimeText.dayMonthFromServer(
                     0,
                     textAlign: TextAlign.end,
                     textStyle: isRead

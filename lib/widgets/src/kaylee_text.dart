@@ -1,25 +1,38 @@
 import 'package:anth_package/anth_package.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/utils/app_utils.dart';
 import 'package:kaylee/utils/text_utils.dart';
+import 'package:kaylee/widgets/src/kaylee_date_picker.dart';
 
 class KayleeDateTimeText extends StatelessWidget {
-  final int time;
+  final DateTime time;
   final String format;
   final TextAlign textAlign;
   final TextStyle textStyle;
 
   KayleeDateTimeText(this.time, {this.format, this.textAlign, this.textStyle});
 
-  factory KayleeDateTimeText.normal(int time, {TextAlign textAlign}) =>
+  factory KayleeDateTimeText.normal(DateTime time,
+          {TextAlign textAlign, TextStyle textStyle}) =>
       KayleeDateTimeText(
         time,
         textAlign: textAlign,
+        textStyle: textStyle,
         format:
             '${DateFormat.HOUR24 * 2}:${DateFormat.MINUTE * 2} ${DateFormat.DAY * 2}/${DateFormat.NUM_MONTH * 2}/${DateFormat.YEAR * 4}',
       );
 
-  factory KayleeDateTimeText.dayMonth(int time,
+  factory KayleeDateTimeText.normalFromServer(int time,
+      {TextAlign textAlign, TextStyle textStyle}) =>
+      KayleeDateTimeText.normal(
+        time.toDateTimeFromServer,
+        textAlign: textAlign,
+        textStyle: textStyle,
+      );
+
+  factory KayleeDateTimeText.dayMonth(DateTime time,
           {TextAlign textAlign, TextStyle textStyle}) =>
       KayleeDateTimeText(
         time,
@@ -28,10 +41,37 @@ class KayleeDateTimeText extends StatelessWidget {
         format: '${DateFormat.DAY * 2}/${DateFormat.NUM_MONTH * 2}',
       );
 
+  factory KayleeDateTimeText.dayMonthFromServer(int time,
+      {TextAlign textAlign, TextStyle textStyle}) =>
+      KayleeDateTimeText(
+        time.toDateTimeFromServer,
+        textAlign: textAlign,
+        textStyle: textStyle,
+        format: '${DateFormat.DAY * 2}/${DateFormat.NUM_MONTH * 2}',
+      );
+
+  factory KayleeDateTimeText.dayMonthYear(DateTime time,
+      {TextAlign textAlign, TextStyle textStyle}) =>
+      KayleeDateTimeText(
+        time,
+        textAlign: textAlign,
+        textStyle: textStyle,
+        format:
+        '${DateFormat.DAY * 2}/${DateFormat.NUM_MONTH * 2}/${DateFormat.YEAR *
+            4}',
+      );
+
+  factory KayleeDateTimeText.dayMonthYearFromServer(int time,
+      {TextAlign textAlign, TextStyle textStyle}) =>
+      KayleeDateTimeText.dayMonthYear(
+        time.toDateTimeFromServer,
+        textAlign: textAlign,
+        textStyle: textStyle,
+      );
+
   @override
   Widget build(BuildContext context) {
-    final dateString = DateFormat(format)
-        .format(DateTime.fromMillisecondsSinceEpoch((time ?? 0) * 1000));
+    final dateString = DateFormat(format).format(time ?? DateTime.now());
     return KayleeText(
       dateString,
       maxLines: 1,
@@ -236,6 +276,18 @@ class KayleeText extends StatelessWidget {
         overflow: overflow,
       );
 
+  factory KayleeText.hyper16W400(String text,
+      {TextAlign textAlign = TextAlign.start,
+        int maxLines,
+        TextOverflow overflow}) =>
+      KayleeText(
+        text,
+        textAlign: textAlign,
+        style: TextStyles.hyper16W400,
+        maxLines: maxLines,
+        overflow: overflow,
+      );
+
   KayleeText(this.text,
       {this.textAlign = TextAlign.start,
       this.maxLines,
@@ -250,6 +302,190 @@ class KayleeText extends StatelessWidget {
       maxLines: maxLines,
       overflow: overflow,
       style: ScreenUtils.textTheme(context).bodyText2.merge(style),
+    );
+  }
+}
+
+class KayleeDateText extends StatelessWidget {
+  final DateTime initDate;
+  final void Function() onTap;
+
+  KayleeDateText({@required this.initDate, this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        GestureDetector(
+          onTap: onTap,
+          child: KayleeDateTimeText.dayMonthYear(
+            initDate,
+            textStyle: TextStyles.hyper16W400
+                .copyWith(decoration: TextDecoration.underline),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: Dimens.px4),
+          child: Image.asset(
+            Images.ic_calendar,
+            width: Dimens.px16,
+            height: Dimens.px16,
+          ),
+        )
+      ],
+    );
+  }
+}
+
+class KayleeDatePickerText extends StatefulWidget {
+  final void Function(DateTime changed) onSelect;
+
+  KayleeDatePickerText({this.onSelect});
+
+  @override
+  _KayleeDatePickerTextState createState() => _KayleeDatePickerTextState();
+}
+
+class _KayleeDatePickerTextState extends BaseState<KayleeDatePickerText> {
+  DateTime selectedDate = DateTime.now();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return KayleeDateText(
+      initDate: selectedDate,
+      onTap: () {
+        showDateTimePopup(
+            context: context,
+            builder: (context) {
+              return KayleeDatePicker(
+                maximumDate: DateTime.now(),
+                initialDateTime: selectedDate,
+                onDateTimeChanged: (changed) {
+                  setState(() {
+                    selectedDate = changed;
+                  });
+
+                  if (widget.onSelect.isNotNull) {
+                    widget.onSelect(selectedDate);
+                  }
+                },
+                backgroundColor: Colors.white,
+              );
+            });
+      },
+    );
+  }
+}
+
+class KayleeDateRangePickerText extends StatefulWidget {
+  final void Function(DateTime from, DateTime to) onSelect;
+
+  KayleeDateRangePickerText({this.onSelect});
+
+  @override
+  _KayleeDateRangePickerTextState createState() =>
+      _KayleeDateRangePickerTextState();
+}
+
+class _KayleeDateRangePickerTextState
+    extends BaseState<KayleeDateRangePickerText> {
+  final now = DateTime.now();
+
+  DateTime fromDate;
+  DateTime toDate;
+
+  @override
+  void initState() {
+    super.initState();
+    fromDate = getFromDate(now);
+    toDate = getToDate(now);
+  }
+
+  DateTime getFromDate(DateTime input) {
+    return DateTime(input.year, input.month, input.day, 0, 0, 0);
+  }
+
+  DateTime getToDate(DateTime input) {
+    return DateTime(input.year, input.month, input.day, 23, 59, 59);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        KayleeText.normal16W500('Từ'),
+        Padding(
+          padding: const EdgeInsets.only(left: Dimens.px8),
+          child: KayleeDateText(
+            initDate: fromDate,
+            onTap: () async {
+              await showDateTimePopup(
+                  context: context,
+                  builder: (context) {
+                    return KayleeDatePicker(
+                      maximumDate: toDate,
+                      initialDateTime: fromDate,
+                      onDateTimeChanged: (changed) {
+                        setState(() {
+                          fromDate = getFromDate(changed);
+                        });
+
+                        if (widget.onSelect.isNotNull) {
+                          widget.onSelect(fromDate, toDate);
+                        }
+                      },
+                      backgroundColor: Colors.white,
+                    );
+                  });
+            },
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: Dimens.px16),
+          child: KayleeText.normal16W500('Đến'),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: Dimens.px8),
+          child: KayleeDateText(
+            initDate: toDate,
+            onTap: () async {
+              await showDateTimePopup(
+                  context: context,
+                  builder: (context) {
+                    return KayleeDatePicker(
+                      maximumDate: getToDate(now),
+                      minimumDate: fromDate,
+                      initialDateTime: toDate,
+                      onDateTimeChanged: (changed) {
+                        setState(() {
+                          toDate = getToDate(changed);
+                        });
+                        if (widget.onSelect.isNotNull) {
+                          widget.onSelect(fromDate, toDate);
+                        }
+                      },
+                      backgroundColor: Colors.white,
+                    );
+                  });
+            },
+          ),
+        ),
+      ],
     );
   }
 }

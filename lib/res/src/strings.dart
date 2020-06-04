@@ -87,6 +87,8 @@ class Strings {
   static const String matKhauMoi = 'Mật khẩu mới';
   static const String xacNhan = 'Xác nhận';
   static const String dsNhanVienNhanHH = 'Danh sách nhân viên nhận hh';
+  static const String doanhThuBH = 'Doanh thu bán hàng';
+  static const String doanhThu = 'Doanh thu';
 
   Strings._();
 }

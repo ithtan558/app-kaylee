@@ -233,7 +233,9 @@ class _HomeMenu extends StatelessWidget {
                         _buildMenuItem(
                           title: Strings.doanhThuBanHang,
                           icon: Images.ic_revenue,
-                          onTap: () {},
+                          onTap: () {
+                            push(PageIntent(context, RevenueScreen));
+                          },
                         ),
                       ],
                     ),

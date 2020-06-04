@@ -53,6 +53,8 @@ mixin KayleeRouting on Routing {
         return InputNewPassScreen.newInstance();
       case CommissionListScreen:
         return CommissionListScreen.newInstance();
+      case RevenueScreen:
+        return RevenueScreen.newInstance();
       default:
         return SplashScreen.newInstance();
     }

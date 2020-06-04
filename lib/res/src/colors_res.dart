@@ -11,6 +11,7 @@ class ColorsRes {
   static const Color errorText = Color(0xffcd2e2e);
   static const Color notifyCircle = Color(0xffc8102e);
   static const Color color1 = Color(0xff825a1e);
+  static const Color color2 = Color(0xfff4f4f4);
   static const Color filterButton = Color(0xffd8d8d8);
   static const Color dialogDimBg = Color(0x7f313131);
   static const Color labelDivider = Color(0xffF2EEE6);
