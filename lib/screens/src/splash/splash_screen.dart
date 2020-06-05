@@ -47,14 +47,11 @@ class _SplashScreenState extends BaseState<SplashScreen> {
           ),
           Column(
             children: [
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: Dimens.px16),
-                child: KayLeeRoundedButton.normal(
-                  onPressed: () {
-                    pushScreen(PageIntent(context, SignInScreen));
-                  },
-                  text: Strings.login,
-                ),
+              KayLeeRoundedButton.normal(
+                onPressed: () {
+                  pushScreen(PageIntent(context, SignInScreen));
+                },
+                text: Strings.login,
               ),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: Dimens.px32),
