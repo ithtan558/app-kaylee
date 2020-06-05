@@ -25,7 +25,7 @@ class KayleeDateTimeText extends StatelessWidget {
       );
 
   factory KayleeDateTimeText.normalFromServer(int time,
-      {TextAlign textAlign, TextStyle textStyle}) =>
+          {TextAlign textAlign, TextStyle textStyle}) =>
       KayleeDateTimeText.normal(
         time.toDateTimeFromServer,
         textAlign: textAlign,
@@ -130,6 +130,7 @@ class KayleePriceText extends StatelessWidget {
   final dynamic price;
   final TextStyle textStyle;
   final bool showUnit;
+  final TextAlign textAlign;
 
   factory KayleePriceText.normal(dynamic price, {TextStyle textStyle}) =>
       KayleePriceText(
@@ -138,7 +139,8 @@ class KayleePriceText extends StatelessWidget {
         showUnit: true,
       );
 
-  factory KayleePriceText.hyper16W700(dynamic price) => KayleePriceText.normal(
+  factory KayleePriceText.hyper16W700(dynamic price) =>
+      KayleePriceText.normal(
         price,
         textStyle: TextStyles.hyper16W700,
       );
@@ -150,7 +152,26 @@ class KayleePriceText extends StatelessWidget {
         showUnit: false,
       );
 
-  KayleePriceText(this.price, {this.textStyle, this.showUnit = true});
+  factory KayleePriceText.noUnitNormal26W700(dynamic price) =>
+      KayleePriceText.noUnit(
+        price,
+        textStyle: TextStyles.normal26W700,
+      );
+
+  factory KayleePriceText.noUnitNormal18W700(dynamic price) =>
+      KayleePriceText.noUnit(
+        price,
+        textStyle: TextStyles.normal18W700,
+      );
+
+  factory KayleePriceText.noUnitNormal16W400(dynamic price) =>
+      KayleePriceText.noUnit(
+        price,
+        textStyle: TextStyles.normal16W400,
+      );
+
+  KayleePriceText(this.price,
+      {this.textStyle, this.showUnit = true, this.textAlign = TextAlign.start});
 
   @override
   Widget build(BuildContext context) {
@@ -158,6 +179,7 @@ class KayleePriceText extends StatelessWidget {
       TextUtils.formatVND(price ?? 0, unit: showUnit ? 'đ' : null),
       style: textStyle ?? TextStyles.hyper16W500,
       maxLines: 1,
+      textAlign: textAlign,
     );
   }
 }
@@ -205,9 +227,9 @@ class KayleeText extends StatelessWidget {
       );
 
   factory KayleeText.normal16W500(String text,
-          {TextAlign textAlign = TextAlign.start,
-          int maxLines,
-          TextOverflow overflow}) =>
+      {TextAlign textAlign = TextAlign.start,
+        int maxLines,
+        TextOverflow overflow}) =>
       KayleeText(
         text,
         textAlign: textAlign,
@@ -216,10 +238,46 @@ class KayleeText extends StatelessWidget {
         overflow: overflow,
       );
 
+  factory KayleeText.normal26W700(String text,
+      {TextAlign textAlign = TextAlign.start,
+        int maxLines,
+        TextOverflow overflow}) =>
+      KayleeText(
+        text,
+        textAlign: textAlign,
+        style: TextStyles.normal26W700,
+        maxLines: maxLines,
+        overflow: overflow,
+      );
+
+  factory KayleeText.normal18W700(String text,
+      {TextAlign textAlign = TextAlign.start,
+        int maxLines,
+        TextOverflow overflow}) =>
+      KayleeText(
+        text,
+        textAlign: textAlign,
+        style: TextStyles.normal18W700,
+        maxLines: maxLines,
+        overflow: overflow,
+      );
+
+  factory KayleeText.normal12W400(String text,
+      {TextAlign textAlign = TextAlign.start,
+        int maxLines,
+        TextOverflow overflow}) =>
+      KayleeText(
+        text,
+        textAlign: textAlign,
+        style: TextStyles.normal12W400,
+        maxLines: maxLines,
+        overflow: overflow,
+      );
+
   factory KayleeText.normalWhite16W500(String text,
-          {TextAlign textAlign = TextAlign.start,
-          int maxLines,
-          TextOverflow overflow}) =>
+      {TextAlign textAlign = TextAlign.start,
+        int maxLines,
+        TextOverflow overflow}) =>
       KayleeText(
         text,
         textAlign: textAlign,

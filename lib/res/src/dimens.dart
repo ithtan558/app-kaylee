@@ -16,6 +16,7 @@ class Dimens {
   static const double px17 = 17;
   static const double px18 = 18;
   static const double px20 = 20;
+  static const double px21 = 21;
   static const double px23 = 23;
   static const double px24 = 24;
   static const double px25 = 25;
@@ -37,5 +38,6 @@ class Dimens {
   static const double px80 = 80;
   static const double px84 = 84;
   static const double px103 = 103;
+
   Dimens._();
 }
