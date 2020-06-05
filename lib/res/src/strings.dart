@@ -89,6 +89,7 @@ class Strings {
   static const String dsNhanVienNhanHH = 'Danh sách nhân viên nhận hh';
   static const String doanhThuBH = 'Doanh thu bán hàng';
   static const String doanhThu = 'Doanh thu';
+  static const String vnd = 'vnđ';
 
   Strings._();
 }

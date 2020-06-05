@@ -103,20 +103,21 @@ class _RevenueScreenState extends BaseState<RevenueScreen> {
             } else if (index == 2) {
               return buildBackGroundItem(
                   header: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  KayleeText.normal16W500(
-                    'So sánh doanh thu',
-                    maxLines: 1,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      KayleeText.normal16W500(
+                        'So sánh doanh thu',
+                        maxLines: 1,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: Dimens.px8),
+                        child: KayleeDateRangePickerText(
+                          onSelect: (from, to) {},
+                        ),
+                      ),
+                    ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: Dimens.px8),
-                    child: KayleeDateRangePickerText(
-                      onSelect: (from, to) {},
-                    ),
-                  ),
-                ],
-              ));
+                  child: Container());
             } else
               return buildBackGroundItem(
                   header: Row(
@@ -149,7 +150,7 @@ class _RevenueScreenState extends BaseState<RevenueScreen> {
                               Padding(
                                 padding:
                                     const EdgeInsets.only(left: Dimens.px4),
-                                child: KayleeText.hint16W400('vnđ'),
+                                child: KayleeText.hint16W400(Strings.vnd),
                               ),
                             ],
                           ),
