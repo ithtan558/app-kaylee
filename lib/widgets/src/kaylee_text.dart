@@ -42,7 +42,7 @@ class KayleeDateTimeText extends StatelessWidget {
       );
 
   factory KayleeDateTimeText.dayMonthFromServer(int time,
-      {TextAlign textAlign, TextStyle textStyle}) =>
+          {TextAlign textAlign, TextStyle textStyle}) =>
       KayleeDateTimeText(
         time.toDateTimeFromServer,
         textAlign: textAlign,
@@ -346,11 +346,23 @@ class KayleeText extends StatelessWidget {
         overflow: overflow,
       );
 
+  factory KayleeText.textFieldBorder12W400(String text,
+      {TextAlign textAlign = TextAlign.start,
+        int maxLines,
+        TextOverflow overflow}) =>
+      KayleeText(
+        text,
+        textAlign: textAlign,
+        style: TextStyles.textFieldBorder12W400,
+        maxLines: maxLines,
+        overflow: overflow,
+      );
+
   KayleeText(this.text,
       {this.textAlign = TextAlign.start,
-      this.maxLines,
-      this.style,
-      this.overflow = TextOverflow.ellipsis});
+        this.maxLines,
+        this.style,
+        this.overflow = TextOverflow.ellipsis});
 
   @override
   Widget build(BuildContext context) {

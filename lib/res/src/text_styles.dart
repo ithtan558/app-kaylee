@@ -8,6 +8,8 @@ class TextStyles {
   static const TextStyle normalWhite = TextStyle(color: Colors.white);
   static const TextStyle button = TextStyle(color: ColorsRes.button);
   static const TextStyle error = TextStyle(color: ColorsRes.errorText);
+  static const TextStyle textFieldBorder =
+      TextStyle(color: ColorsRes.textFieldBorder);
 
   static const TextStyle _w400 = TextStyle(fontWeight: FontWeight.w400);
   static const TextStyle _w500 = TextStyle(fontWeight: FontWeight.w500);
@@ -34,9 +36,9 @@ class TextStyles {
   static final TextStyle normalWhite16W400 =
       normalWhite.merge(_f16.merge(_w400));
   static final TextStyle normalWhite16W500 =
-      normalWhite.merge(_f16.merge(_w500));
+  normalWhite.merge(_f16.merge(_w500));
   static final TextStyle normalWhite18W700 =
-      normalWhite.merge(_f18.merge(_w700));
+  normalWhite.merge(_f18.merge(_w700));
 
   static final TextStyle hint16W400 = hint.merge(_f16.merge(_w400));
 
@@ -44,5 +46,8 @@ class TextStyles {
   static final TextStyle button16W500 = button.merge(_f16.merge(_w500));
 
   static final TextStyle error12W400 = error.merge(_f12.merge(_w400));
-  static final TextStyle error16W500 = error.merge(_f16.merge(_w400));
+  static final TextStyle error16W500 = error.merge(_f16.merge(_w500));
+
+  static final TextStyle textFieldBorder12W400 = textFieldBorder.merge(
+      _f12.merge(_w400));
 }

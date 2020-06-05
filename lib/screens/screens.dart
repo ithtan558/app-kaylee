@@ -1,6 +1,7 @@
 library screens;
 
 export 'src/about/about_screen.dart';
+export 'src/branch_list/branch_list_screen.dart';
 export 'src/brand_prod_list/brand_prod_list_screen.dart';
 export 'src/cart/cart_screen.dart';
 export 'src/commission_list/commission_list_screen.dart';
@@ -12,6 +13,7 @@ export 'src/home/home_screen.dart';
 export 'src/notification/detail/notify_detail_screen.dart';
 export 'src/notification/notification_screen.dart';
 export 'src/product_detail/product_detail_screen.dart';
+export 'src/product_list/prod_list_screen.dart';
 export 'src/receiver_info/receiver_info_screen.dart';
 export 'src/reset_pass/input_new_pass_screen.dart';
 export 'src/reset_pass/otp_confirm_screeen.dart';

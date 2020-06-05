@@ -180,7 +180,9 @@ class _HomeMenu extends StatelessWidget {
                         _buildMenuItem(
                           title: Strings.qlChiNhanh,
                           icon: Images.ic_store,
-                          onTap: () {},
+                          onTap: () {
+                            push(PageIntent(context, BranchListScreen));
+                          },
                         ),
                         _buildMenuItem(
                           title: Strings.dsDichVu,
@@ -192,7 +194,9 @@ class _HomeMenu extends StatelessWidget {
                         _buildMenuItem(
                           title: Strings.dsSanPham,
                           icon: Images.ic_product,
-                          onTap: () {},
+                          onTap: () {
+                            push(PageIntent(context, ProdListScreen));
+                          },
                         ),
                         _buildMenuItem(
                           title: Strings.qlNhanVien,
