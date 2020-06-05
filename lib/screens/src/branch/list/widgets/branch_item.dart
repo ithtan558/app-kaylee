@@ -20,9 +20,12 @@ class BranchItem extends StatelessWidget {
               alignment: Alignment.topCenter,
               child: Padding(
                 padding: const EdgeInsets.only(bottom: Dimens.px52),
-                child: Image.network(
-                  'https://4.bp.blogspot.com/-Ol8xX1AEVwA/V8Z4x_ILPAI/AAAAAAAAH0s/gn3uRTi6ZdYOAuQ-otFBKM3_guiu92lngCLcB/s1600/annam%25281%2529.jpg',
-                  fit: BoxFit.cover,
+                child: AspectRatio(
+                  aspectRatio: 343 / 188,
+                  child: Image.network(
+                    'https://4.bp.blogspot.com/-Ol8xX1AEVwA/V8Z4x_ILPAI/AAAAAAAAH0s/gn3uRTi6ZdYOAuQ-otFBKM3_guiu92lngCLcB/s1600/annam%25281%2529.jpg',
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),
