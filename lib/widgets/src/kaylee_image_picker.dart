@@ -211,7 +211,7 @@ Future showImagePickerDialog({BuildContext context,
         selectedExistedImage: selectedExistedImage,
         images: images,
         onSelect: (selectedImage) {
-//          pop(PageIntent(context, null));
+          pop(PageIntent(context, null));
           if (onSelect.isNotNull) {
             onSelect(selectedImage);
           }
