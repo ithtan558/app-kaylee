@@ -17,7 +17,7 @@ class KayleeCartView extends StatelessWidget {
           BoxShadow(
               color: ColorsRes.shadow,
               offset: Offset(0, 1),
-              blurRadius: 5,
+              blurRadius: Dimens.px5,
               spreadRadius: 0)
         ],
       ),
