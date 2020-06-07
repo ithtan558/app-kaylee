@@ -1,7 +1,8 @@
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
-import 'package:kaylee/screens/src/branch_list/widgets/branch_item.dart';
+import 'package:kaylee/screens/screens.dart';
+import 'package:kaylee/screens/src/branch/list/widgets/branch_item.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class BranchListScreen extends StatefulWidget {
@@ -48,7 +49,9 @@ class _BranchListScreenState extends BaseState<BranchListScreen> {
           },
           itemCount: 10),
       floatingActionButton: KayleeFloatButton(
-        onTap: () {},
+        onTap: () {
+          pushScreen(PageIntent(context, CreateNewBranchScreen));
+        },
       ),
     );
   }

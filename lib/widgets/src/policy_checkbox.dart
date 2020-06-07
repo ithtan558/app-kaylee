@@ -2,10 +2,11 @@ import 'package:anth_package/anth_package.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:kaylee/res/src/colors_res.dart';
+import 'package:kaylee/res/res.dart';
 import 'package:kaylee/res/src/dimens.dart';
 import 'package:kaylee/res/src/images.dart';
 import 'package:kaylee/res/src/strings.dart';
+import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class PolicyCheckBox extends StatefulWidget {
   @override
@@ -17,7 +18,6 @@ class _PolicyCheckBoxState extends BaseState<PolicyCheckBox> {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = theme.textTheme;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -41,87 +41,42 @@ class _PolicyCheckBoxState extends BaseState<PolicyCheckBox> {
                   text: ' điều khoản và quy định ',
                   recognizer: TapGestureRecognizer()
                     ..onTap = () {
-                      _showSheet();
+                      showKayleeBottomSheet(context,
+                          maxChildSize: 635 / 667, initialChildSize: 635 / 667,
+                          builder: (context, scrollController) {
+                        return Column(
+                          children: [
+                            KayleeText.normal16W500(
+                              Strings.dieuKhoanVaDieuKien.toUpperCase(),
+                              overflow: TextOverflow.visible,
+                              maxLines: 1,
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(top: Dimens.px16),
+                                child: SingleChildScrollView(
+                                  controller: scrollController,
+                                  padding: const EdgeInsets.only(
+                                      left: Dimens.px16,
+                                      right: Dimens.px16,
+                                      bottom: Dimens.px16),
+                                  child: KayleeText.normal16W400(
+                                    Strings.policyContent,
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        );
+                      });
                     },
-                  style: textTheme.bodyText2.copyWith(color: ColorsRes.hyper)),
+                  style: TextStyles.hyper16W400),
               TextSpan(text: 'khi sử dụng ứng dụng Kaylee')
             ])),
           ),
         )
       ],
     );
-  }
-
-  void _showSheet() {
-    showModalBottomSheet(
-        context: context,
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(Dimens.px5),
-                topRight: Radius.circular(Dimens.px5))),
-        enableDrag: false,
-        backgroundColor: Colors.transparent,
-        isScrollControlled: true,
-        builder: (c) {
-          return GestureDetector(
-            onTap: () {
-              pop(PageIntent(context, null));
-            },
-            child: Container(
-              color: Colors.transparent,
-              child: DraggableScrollableSheet(
-                maxChildSize: 0.90,
-                builder: (c, scrollController) {
-                  return Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(Dimens.px5),
-                      boxShadow: const [
-                        BoxShadow(
-                            color: ColorsRes.shadow,
-                            offset: Offset.zero,
-                            blurRadius: Dimens.px20,
-                            spreadRadius: 0)
-                      ],
-                    ),
-                    child: Column(
-                      children: [
-                        Container(
-                            width: scaleWidth(Dimens.px37),
-                            height: Dimens.px5,
-                            margin: const EdgeInsets.symmetric(
-                                vertical: Dimens.px16),
-                            decoration: BoxDecoration(
-                                color: ColorsRes.textFieldBorder,
-                                borderRadius:
-                                    BorderRadius.circular(Dimens.px3))),
-                        Text(Strings.dieuKhoanVaDieuKien,
-                            style: theme.textTheme.bodyText2.copyWith(
-                              fontWeight: FontWeight.w500,
-                            )),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: Dimens.px16),
-                            child: SingleChildScrollView(
-                              controller: scrollController,
-                              padding: const EdgeInsets.only(
-                                  left: Dimens.px16,
-                                  right: Dimens.px16,
-                                  bottom: Dimens.px16),
-                              child: Text(
-                                Strings.policyContent,
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ),
-          );
-        },
-        barrierColor: ColorsRes.dialogDimBg);
   }
 }

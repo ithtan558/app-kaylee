@@ -8,18 +8,15 @@ class Images {
   static const ic_down = 'assets/ic_down.png';
   static const ic_notcheck = 'assets/ic_notcheck.png';
   static const ic_checked = 'assets/ic_checked.png';
-
   static const ic_history_active = 'assets/ic_history_active.png';
   static const ic_home_active = 'assets/ic_home_active.png';
   static const ic_account_active = 'assets/ic_account_active.png';
   static const ic_cashier_active = 'assets/ic_cashier_active.png';
-
   static const ic_history_inactive = 'assets/ic_history_inactive.png';
   static const ic_home_inactive = 'assets/ic_home_inactive.png';
   static const ic_cashier_inactive = 'assets/ic_cashier_inactive.png';
   static const ic_account_inactive = 'assets/ic_account_inactive.png';
   static const bg_home = 'assets/bg_home.png';
-
   static const ic_service_list = 'assets/ic_service_list.png';
   static const ic_store = 'assets/ic_store.png';
   static const ic_user_list = 'assets/ic_user_list.png';
@@ -31,7 +28,6 @@ class Images {
   static const ic_notification = 'assets/ic_notification.png';
   static const ic_triangle_down = 'assets/ic_triangle_down.png';
   static const ic_options = 'assets/ic_options.png';
-
   static const ic_acc_about_app = 'assets/ic_acc_about_app.png';
   static const ic_acc_guide = 'assets/ic_acc_guide.png';
   static const ic_acc_logout = 'assets/ic_acc_logout.png';
@@ -47,5 +43,4 @@ class Images {
   static const ic_tick = 'assets/ic_tick.png';
   static const ic_search = 'assets/ic_search.png';
   static const ic_calendar = 'assets/ic_calendar.png';
-  static const ic_select_image_phone = 'assets/ic_select_image_phone.png';
 }

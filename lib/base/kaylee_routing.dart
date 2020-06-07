@@ -59,6 +59,8 @@ mixin KayleeRouting on Routing {
         return BranchListScreen.newInstance();
       case ProdListScreen:
         return ProdListScreen.newInstance();
+      case CreateNewBranchScreen:
+        return CreateNewBranchScreen.newInstance();
       default:
         return SplashScreen.newInstance();
     }

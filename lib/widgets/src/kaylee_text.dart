@@ -51,14 +51,13 @@ class KayleeDateTimeText extends StatelessWidget {
       );
 
   factory KayleeDateTimeText.dayMonthYear(DateTime time,
-      {TextAlign textAlign, TextStyle textStyle}) =>
+          {TextAlign textAlign, TextStyle textStyle}) =>
       KayleeDateTimeText(
         time,
         textAlign: textAlign,
         textStyle: textStyle,
         format:
-        '${DateFormat.DAY * 2}/${DateFormat.NUM_MONTH * 2}/${DateFormat.YEAR *
-            4}',
+            '${DateFormat.DAY * 2}/${DateFormat.NUM_MONTH * 2}/${DateFormat.YEAR * 4}',
       );
 
   factory KayleeDateTimeText.dayMonthYearFromServer(int time,
@@ -215,13 +214,25 @@ class KayleeText extends StatelessWidget {
   final TextOverflow overflow;
 
   factory KayleeText.hint16W400(String text,
-          {TextAlign textAlign = TextAlign.start,
-          int maxLines,
-          TextOverflow overflow}) =>
+      {TextAlign textAlign = TextAlign.start,
+        int maxLines,
+        TextOverflow overflow}) =>
       KayleeText(
         text,
         textAlign: textAlign,
         style: TextStyles.hint16W400,
+        maxLines: maxLines,
+        overflow: overflow,
+      );
+
+  factory KayleeText.hint16W500(String text,
+      {TextAlign textAlign = TextAlign.start,
+        int maxLines,
+        TextOverflow overflow}) =>
+      KayleeText(
+        text,
+        textAlign: textAlign,
+        style: TextStyles.hint16W500,
         maxLines: maxLines,
         overflow: overflow,
       );

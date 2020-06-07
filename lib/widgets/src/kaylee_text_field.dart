@@ -339,11 +339,11 @@ class NormalInputField extends StatefulWidget {
       this.nextFocusNode,
       this.textInputAction = TextInputAction.done,
       this.textInputType = TextInputType.text,
-        this.isStaticTField = false,
-        this.fieldHeight,
-        this.contentPadding,
-        this.textAlign,
-        this.expands});
+      this.isStaticTField = false,
+      this.fieldHeight,
+      this.contentPadding,
+      this.textAlign,
+      this.expands});
 
   @override
   _NormalInputFieldState createState() => _NormalInputFieldState();

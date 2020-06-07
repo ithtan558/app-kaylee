@@ -92,6 +92,24 @@ class Strings {
   static const String vnd = 'vnđ';
   static const String dsChiNhanh = 'Danh sách chi nhánh';
   static const String danhSachSanPham = 'Danh sách sản phẩm';
+  static const String taoChiNhanhMoi = 'Tạo chi nhánh mới';
+  static const String capNhatAnhBia = 'Cập nhật ảnh bìa';
+  static const String tenCuaHang = 'Tên cửa hàng';
+  static const String tenCuaHangHint = 'Vd. Sunset Spa';
+  static const String diaChi = 'Địa chỉ';
+  static const String gioMoCua = 'Giờ mở cửa';
+  static const String gioDongCua = 'Giờ đóng cửa';
+  static const String tao = 'Tạo';
+  static const String taiTuDienThoai = 'Tải từ\nđiện thoại';
+  static const String quyenTruyCapHinhAnh = 'Quyền truy cập hình ảnh';
+  static const String quyenTruyCapHinhAnhContent =
+      'Vui lòng thiết lập cho phép Kaylee truy cập vào Thư viện hình ảnh.';
+  static const String huy = 'Huỷ';
+  static const String caiDatNgay = 'Cài đặt ngay';
+  static const String androidStoragePermissionGuide =
+      'Vào Cài đặt > Ứng dụng > Kaylee > Quyền > Bộ nhớ';
+  static const String iOsStoragePermissionGuide =
+      'Vào Cài đặt > Kaylee > Ảnh > Đọc và Ghi';
 
   Strings._();
 }

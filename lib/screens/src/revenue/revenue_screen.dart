@@ -160,7 +160,7 @@ class _RevenueScreenState extends BaseState<RevenueScreen> {
                         return Container(
                             height: Dimens.px1,
                             decoration:
-                                BoxDecoration(color: Color(0xffdfdfe3)));
+                                BoxDecoration(color: ColorsRes.divider));
                       },
                       itemCount: 5));
           },

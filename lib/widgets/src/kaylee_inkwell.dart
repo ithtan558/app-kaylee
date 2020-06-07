@@ -4,8 +4,9 @@ import 'package:kaylee/res/res.dart';
 class KayleeInkwell extends StatelessWidget {
   final Widget child;
   final void Function() onTap;
+  final BorderRadius borderRadius;
 
-  KayleeInkwell({this.child, this.onTap});
+  KayleeInkwell({this.child, this.onTap, this.borderRadius});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class KayleeInkwell extends StatelessWidget {
         ),
         Positioned.fill(
             child: Material(
-          borderRadius: BorderRadius.circular(Dimens.px10),
+              borderRadius: borderRadius ?? BorderRadius.circular(Dimens.px10),
           color: Colors.transparent,
           clipBehavior: Clip.antiAlias,
           child: InkWell(

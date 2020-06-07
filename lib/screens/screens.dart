@@ -1,7 +1,8 @@
 library screens;
 
 export 'src/about/about_screen.dart';
-export 'src/branch_list/branch_list_screen.dart';
+export 'src/branch/create_new/create_new_branch_screen.dart';
+export 'src/branch/list/branch_list_screen.dart';
 export 'src/brand_prod_list/brand_prod_list_screen.dart';
 export 'src/cart/cart_screen.dart';
 export 'src/commission_list/commission_list_screen.dart';
