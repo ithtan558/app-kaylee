@@ -13,7 +13,7 @@ class KayleeImagePicker extends StatefulWidget {
   final String image;
   final KayleeImagePickerType type;
   final List<String> oldImages;
-  final void Function(File file) onImageSelect;
+  final void Function(File file, {String existedImage}) onImageSelect;
 
   KayleeImagePicker(
       {this.image,
@@ -40,11 +40,6 @@ class _KayleeProfileImagePickerState extends BaseState<KayleeImagePicker> {
   void initState() {
     super.initState();
     selectedExistedImage = widget.image;
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   @override
@@ -75,15 +70,15 @@ class _KayleeProfileImagePickerState extends BaseState<KayleeImagePicker> {
                   : AspectRatio(
                 aspectRatio: 1,
                 child: selectedFile.isNotNull
-                          ? Image.file(
-                              selectedFile,
-                              fit: BoxFit.cover,
-                            )
-                          : Image.network(
+                    ? Image.file(
+                  selectedFile,
+                  fit: BoxFit.cover,
+                )
+                    : Image.network(
                   selectedExistedImage ?? '',
                   fit: BoxFit.cover,
-                            ),
-                    ),
+                ),
+              ),
             ),
           ),
           Container(
@@ -110,6 +105,8 @@ class _KayleeProfileImagePickerState extends BaseState<KayleeImagePicker> {
                         selectedExistedImage = selectedImage;
                       }
                     });
+                    widget.onImageSelect(selectedFile,
+                        existedImage: selectedExistedImage);
                   },
                 );
               },
@@ -144,6 +141,15 @@ class _KayleeProfileImagePickerState extends BaseState<KayleeImagePicker> {
 }
 
 class _KayleeBannerImagePickerState extends BaseState<KayleeImagePicker> {
+  File selectedFile;
+  String selectedExistedImage;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedExistedImage = widget.image;
+  }
+
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
@@ -152,9 +158,14 @@ class _KayleeBannerImagePickerState extends BaseState<KayleeImagePicker> {
         children: [
           Positioned.fill(
             child: Container(
-              color: Colors.grey,
-              child: Image.file(
-                File(''),
+              color: ColorsRes.dialogDimBg,
+              child: selectedFile.isNotNull
+                  ? Image.file(
+                selectedFile,
+                fit: BoxFit.cover,
+              )
+                  : Image.network(
+                selectedExistedImage ?? '',
                 fit: BoxFit.cover,
               ),
             ),
@@ -167,7 +178,26 @@ class _KayleeBannerImagePickerState extends BaseState<KayleeImagePicker> {
               clipBehavior: Clip.antiAlias,
               borderRadius: BorderRadius.circular(Dimens.px10),
               child: InkWell(
-                onTap: () {},
+                onTap: () {
+                  showImagePickerDialog(
+                    context: context,
+                    images: widget.oldImages,
+                    selectedExistedImage: selectedExistedImage,
+                    onSelect: (selectedImage) {
+                      setState(() {
+                        if (selectedImage is File) {
+                          selectedFile = selectedImage;
+                          selectedExistedImage = null;
+                        } else if (selectedImage is String) {
+                          selectedFile = null;
+                          selectedExistedImage = selectedImage;
+                        }
+                      });
+                      widget.onImageSelect(selectedFile,
+                          existedImage: selectedExistedImage);
+                    },
+                  );
+                },
                 child: Padding(
                   padding: const EdgeInsets.all(Dimens.px12),
                   child: Row(
