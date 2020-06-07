@@ -63,6 +63,11 @@ class _EditProfileScreenState extends BaseState<EditProfileScreen> {
             children: [
               KayleeImagePicker(
                 image: 'https://kottke.org/plus/misc/images/ai-faces-01.jpg',
+                oldImages: [
+                  'https://us.123rf.com/450wm/subbotina/subbotina1512/subbotina151200067/49609375-beautiful-spa-model-girl-with-perfect-fresh-clean-skin.jpg?ver=6',
+                  'https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+                  'https://i.pinimg.com/originals/97/e4/2a/97e42a82fc7911961d3ca55f54d1372c.jpg',
+                ],
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: Dimens.px16),

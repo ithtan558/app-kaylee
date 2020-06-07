@@ -12,12 +12,14 @@ enum KayleeImagePickerType { profile, banner }
 class KayleeImagePicker extends StatefulWidget {
   final String image;
   final KayleeImagePickerType type;
+  final List<String> oldImages;
   final void Function(File file) onImageSelect;
 
   KayleeImagePicker(
       {this.image,
       this.type = KayleeImagePickerType.profile,
-      this.onImageSelect});
+      this.onImageSelect,
+      this.oldImages = const []});
 
   @override
   State createState() {
@@ -32,10 +34,12 @@ class KayleeImagePicker extends StatefulWidget {
 
 class _KayleeProfileImagePickerState extends BaseState<KayleeImagePicker> {
   File selectedFile;
+  String selectedExistedImage;
 
   @override
   void initState() {
     super.initState();
+    selectedExistedImage = widget.image;
   }
 
   @override
@@ -60,24 +64,24 @@ class _KayleeProfileImagePickerState extends BaseState<KayleeImagePicker> {
                 borderRadius: BorderRadius.circular(Dimens.px10),
                 side: BorderSide(color: ColorsRes.hintText),
               ),
-              child: widget.image.isNullOrEmpty && selectedFile.isNull
+              child: selectedExistedImage.isNullOrEmpty && selectedFile.isNull
                   ? Center(
-                      child: Image.asset(
-                        Images.ic_image_holder,
-                        width: Dimens.px40,
-                        height: Dimens.px40,
-                      ),
-                    )
+                child: Image.asset(
+                  Images.ic_image_holder,
+                  width: Dimens.px40,
+                  height: Dimens.px40,
+                ),
+              )
                   : AspectRatio(
-                      aspectRatio: 1,
-                      child: selectedFile.isNotNull
+                aspectRatio: 1,
+                child: selectedFile.isNotNull
                           ? Image.file(
                               selectedFile,
                               fit: BoxFit.cover,
                             )
                           : Image.network(
-                              widget.image ?? '',
-                              fit: BoxFit.cover,
+                  selectedExistedImage ?? '',
+                  fit: BoxFit.cover,
                             ),
                     ),
             ),
@@ -94,10 +98,17 @@ class _KayleeProfileImagePickerState extends BaseState<KayleeImagePicker> {
               onPressed: () {
                 showImagePickerDialog(
                   context: context,
-                  images: [],
-                  onSelect: (file) {
+                  images: widget.oldImages,
+                  selectedExistedImage: selectedExistedImage,
+                  onSelect: (selectedImage) {
                     setState(() {
-                      this.selectedFile = file;
+                      if (selectedImage is File) {
+                        selectedFile = selectedImage;
+                        selectedExistedImage = null;
+                      } else if (selectedImage is String) {
+                        selectedFile = null;
+                        selectedExistedImage = selectedImage;
+                      }
                     });
                   },
                 );
@@ -187,16 +198,60 @@ class _KayleeBannerImagePickerState extends BaseState<KayleeImagePicker> {
 }
 
 Future showImagePickerDialog({BuildContext context,
-  List<dynamic> images,
-  void Function(File file) onSelect}) async {
+  List<String> images,
+  String selectedExistedImage,
+  void Function(dynamic selectedImage) onSelect}) async {
+  await showKayleeBottomSheet(
+    context,
+    initialChildSize: 145 / 667,
+    minChildSize: 145 / 667,
+    builder: (c, scrollController) {
+      return _ImageGrid(
+        controller: scrollController,
+        selectedExistedImage: selectedExistedImage,
+        images: images,
+        onSelect: (selectedImage) {
+//          pop(PageIntent(context, null));
+          if (onSelect.isNotNull) {
+            onSelect(selectedImage);
+          }
+        },
+      );
+    },
+  );
+}
+
+class _ImageGrid extends StatefulWidget {
+  final ScrollController controller;
+  final List<String> images;
+  final String selectedExistedImage;
+  final void Function(dynamic selectedImage) onSelect;
+
+  _ImageGrid({@required this.controller,
+    this.images,
+    this.selectedExistedImage,
+    this.onSelect});
+
+  @override
+  _ImageGridState createState() => _ImageGridState();
+}
+
+class _ImageGridState extends BaseState<_ImageGrid> {
+  String selectedExistedImage;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedExistedImage = widget.selectedExistedImage;
+  }
+
   Future<void> handlePermission() async {
     if (await Permission.storage.isGranted) {
       final pickedFile =
       await ImagePicker().getImage(source: ImageSource.gallery);
       final selectedFile = File(pickedFile.path);
-      if (onSelect.isNotNull) {
-        pop(PageIntent(context, null));
-        onSelect(selectedFile);
+      if (widget.onSelect.isNotNull) {
+        widget.onSelect(selectedFile);
       }
     } else if (await Permission.storage.isDenied) {
       print('[TUNG] ===> isDenied');
@@ -213,74 +268,113 @@ Future showImagePickerDialog({BuildContext context,
     }
   }
 
-  await showKayleeBottomSheet(
-    context,
-    initialChildSize: 145 / 667,
-    minChildSize: 145 / 667,
-    builder: (c, scrollController) {
-      return GridView.builder(
-        padding: const EdgeInsets.only(
-            left: Dimens.px16, right: Dimens.px16, bottom: Dimens.px16),
-        controller: scrollController,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            childAspectRatio: 1,
-            crossAxisSpacing: Dimens.px16,
-            mainAxisSpacing: Dimens.px16),
-        itemBuilder: (c, index) {
-          if (index == 0)
-            return _BorderWrapper(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    Images.ic_image_holder,
-                    width: Dimens.px24,
-                    height: Dimens.px24,
-                    color: ColorsRes.button1,
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
+      padding: const EdgeInsets.only(
+          left: Dimens.px16, right: Dimens.px16, bottom: Dimens.px16),
+      controller: widget.controller,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+          childAspectRatio: 1,
+          crossAxisSpacing: Dimens.px16,
+          mainAxisSpacing: Dimens.px16),
+      itemBuilder: (c, index) {
+        if (index == 0)
+          return _BorderWrapper.static(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  Images.ic_image_holder,
+                  width: Dimens.px24,
+                  height: Dimens.px24,
+                  color: ColorsRes.button1,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: Dimens.px8),
+                  child: KayleeText.normal16W400(
+                    Strings.taiTuDienThoai,
+                    maxLines: 2,
+                    textAlign: TextAlign.center,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: Dimens.px8),
-                    child: KayleeText.normal16W400(
-                      Strings.taiTuDienThoai,
-                      maxLines: 2,
-                      textAlign: TextAlign.center,
-                    ),
-                  )
-                ],
-              ),
-              onTap: () async {
-                await handlePermission();
-              },
-            );
-          else
-            return _BorderWrapper();
-        },
-        itemCount: (images?.length ?? 0) + 1,
-      );
-    },
-  );
+                )
+              ],
+            ),
+            onTap: () async {
+              await handlePermission();
+            },
+          );
+        else {
+          final selectedImage = widget.images.elementAt(index - 1);
+          return _BorderWrapper.dynamic(
+            isSelected: selectedExistedImage == selectedImage,
+            child: Image.network(
+              widget.images.elementAt(index - 1),
+              fit: BoxFit.cover,
+              filterQuality: FilterQuality.low,
+            ),
+            onTap: () {
+              setState(() {
+                selectedExistedImage = selectedImage;
+              });
+              if (widget.onSelect.isNotNull) {
+                widget.onSelect(selectedExistedImage);
+              }
+            },
+          );
+        }
+      },
+      itemCount: (widget.images?.length ?? 0) + 1,
+    );
+  }
 }
 
 class _BorderWrapper extends StatelessWidget {
   final Widget child;
   final void Function() onTap;
+  final bool isStatic;
+  final bool isSelected;
 
-  _BorderWrapper({this.child, this.onTap});
+  factory _BorderWrapper.static({Widget child, void Function() onTap}) =>
+      _BorderWrapper(
+        child: child,
+        onTap: onTap,
+        isStatic: true,
+      );
+
+  factory _BorderWrapper.dynamic(
+      {Widget child, void Function() onTap, bool isSelected = false}) =>
+      _BorderWrapper(
+        child: child,
+        onTap: onTap,
+        isStatic: false,
+        isSelected: isSelected,
+      );
+
+  _BorderWrapper(
+      {this.child, this.onTap, this.isStatic = false, this.isSelected = false});
 
   @override
   Widget build(BuildContext context) {
     return KayleeInkwell(
-      child: Container(
+      child: Material(
         clipBehavior: Clip.antiAlias,
-        decoration: BoxDecoration(
-          border: Border.fromBorderSide(
-              BorderSide(color: ColorsRes.hintText, width: Dimens.px1)),
+        shape: RoundedRectangleBorder(
+          side: BorderSide(
+              color: isStatic || !isSelected
+                  ? ColorsRes.hintText
+                  : ColorsRes.hyper,
+              width: isStatic || !isSelected ? Dimens.px1 : Dimens.px2),
           borderRadius: BorderRadius.circular(Dimens.px10),
         ),
         child: child ?? Container(),
       ),
-      onTap: onTap,
+      onTap: () {
+        if (onTap.isNotNull) {
+          onTap();
+        }
+      },
     );
   }
 }
