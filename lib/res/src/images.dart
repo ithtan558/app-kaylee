@@ -47,4 +47,5 @@ class Images {
   static const ic_tick = 'assets/ic_tick.png';
   static const ic_search = 'assets/ic_search.png';
   static const ic_calendar = 'assets/ic_calendar.png';
+  static const ic_select_image_phone = 'assets/ic_select_image_phone.png';
 }
