@@ -50,34 +50,37 @@ class _KayleeProfileImagePickerState extends BaseState<KayleeImagePicker> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
-            clipBehavior: Clip.antiAlias,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(Dimens.px10),
-              border: Border.fromBorderSide(
-                BorderSide(color: ColorsRes.hintText),
-              ),
-            ),
+          SizedBox(
             width: Dimens.px103,
             height: Dimens.px103,
-            child: widget.image.isNullOrEmpty && selectedFile.isNull
-                ? Center(
-                    child: Image.asset(
-                      Images.ic_image_holder,
-                      width: Dimens.px40,
-                      height: Dimens.px40,
+            child: Material(
+              clipBehavior: Clip.antiAlias,
+              color: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(Dimens.px10),
+                side: BorderSide(color: ColorsRes.hintText),
+              ),
+              child: widget.image.isNullOrEmpty && selectedFile.isNull
+                  ? Center(
+                      child: Image.asset(
+                        Images.ic_image_holder,
+                        width: Dimens.px40,
+                        height: Dimens.px40,
+                      ),
+                    )
+                  : AspectRatio(
+                      aspectRatio: 1,
+                      child: selectedFile.isNotNull
+                          ? Image.file(
+                              selectedFile,
+                              fit: BoxFit.cover,
+                            )
+                          : Image.network(
+                              widget.image ?? '',
+                              fit: BoxFit.cover,
+                            ),
                     ),
-                  )
-                : AspectRatio(
-                    aspectRatio: 1,
-                    child: selectedFile.isNotNull
-                        ? Image.file(selectedFile)
-                        : Image.network(
-                            widget.image ?? '',
-                            fit: BoxFit.cover,
-                          ),
-                  ),
+            ),
           ),
           Container(
             height: Dimens.px56,
@@ -93,7 +96,9 @@ class _KayleeProfileImagePickerState extends BaseState<KayleeImagePicker> {
                   context: context,
                   images: [],
                   onSelect: (file) {
-                    this.selectedFile = file;
+                    setState(() {
+                      this.selectedFile = file;
+                    });
                   },
                 );
               },
@@ -190,6 +195,7 @@ Future showImagePickerDialog({BuildContext context,
       await ImagePicker().getImage(source: ImageSource.gallery);
       final selectedFile = File(pickedFile.path);
       if (onSelect.isNotNull) {
+        pop(PageIntent(context, null));
         onSelect(selectedFile);
       }
     } else if (await Permission.storage.isDenied) {
