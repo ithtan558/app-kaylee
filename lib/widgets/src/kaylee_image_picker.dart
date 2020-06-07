@@ -63,21 +63,21 @@ class _KayleeProfileImagePickerState extends BaseState<KayleeImagePicker> {
             height: Dimens.px103,
             child: widget.image.isNullOrEmpty && selectedFile.isNull
                 ? Center(
-              child: Image.asset(
-                Images.ic_image_holder,
-                width: Dimens.px40,
-                height: Dimens.px40,
-              ),
-            )
+                    child: Image.asset(
+                      Images.ic_image_holder,
+                      width: Dimens.px40,
+                      height: Dimens.px40,
+                    ),
+                  )
                 : AspectRatio(
-              aspectRatio: 1,
-              child: selectedFile.isNotNull
-                  ? Image.file(selectedFile)
-                  : Image.network(
-                widget.image ?? '',
-                fit: BoxFit.cover,
-              ),
-            ),
+                    aspectRatio: 1,
+                    child: selectedFile.isNotNull
+                        ? Image.file(selectedFile)
+                        : Image.network(
+                            widget.image ?? '',
+                            fit: BoxFit.cover,
+                          ),
+                  ),
           ),
           Container(
             height: Dimens.px56,
@@ -194,7 +194,7 @@ Future showImagePickerDialog({BuildContext context,
       }
     } else if (await Permission.storage.isDenied) {
       print('[TUNG] ===> isDenied');
-      final status = await Permission.storage.request();
+      await Permission.storage.request();
     } else if (await Permission.storage.isRestricted) {
       print('[TUNG] ===> isRestricted');
       await showKayleeGo2SettingDialog(context: context);
@@ -203,7 +203,7 @@ Future showImagePickerDialog({BuildContext context,
       await showKayleeGo2SettingDialog(context: context);
     } else if (await Permission.storage.isUndetermined) {
       print('[TUNG] ===> isUndetermined');
-      final status = await Permission.storage.request();
+      await Permission.storage.request();
     }
   }
 
