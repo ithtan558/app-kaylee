@@ -162,6 +162,8 @@ Future<void> showKayleeGo2SettingDialog({
 Future<void> showKayleeDialog(
     {@required BuildContext context,
     bool barrierDismissible = true,
+    BorderRadius borderRadius,
+    EdgeInsets margin,
     Widget child}) {
   return showGeneralDialog(
       context: context,
@@ -171,11 +173,12 @@ Future<void> showKayleeDialog(
           child: IntrinsicHeight(
             child: Container(
               clipBehavior: Clip.antiAlias,
-              margin: EdgeInsets.symmetric(
-                  horizontal: ScreenUtils.scaleWidth(context, Dimens.px24)),
+              margin:
+              margin ?? const EdgeInsets.symmetric(horizontal: Dimens.px24),
               decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(Dimens.px10)),
+                  borderRadius:
+                  BorderRadius.circular(borderRadius ?? Dimens.px10)),
               child: child ?? Container(),
             ),
           ),
@@ -186,9 +189,76 @@ Future<void> showKayleeDialog(
       transitionDuration: Duration(milliseconds: 200));
 }
 
+Future showKayleeAlertDialog({@required BuildContext context,
+  String title,
+  String content,
+  List<KayleeAlertDialogAction> actions}) {
+  return showCupertinoDialog(
+      context: context,
+      builder: (c) {
+        return CupertinoAlertDialog(
+          title: Text(
+            title ?? '',
+          ),
+          content: Text(
+            content ?? '',
+          ),
+          actions: actions ?? [],
+        );
+      });
+}
+
+class KayleeAlertDialogAction extends StatelessWidget {
+  final String title;
+  final void Function(BuildContext context) onPressed;
+  final bool isDefaultAction;
+
+  factory KayleeAlertDialogAction.huy({bool Function() onPressed}) =>
+      KayleeAlertDialogAction(
+        title: Strings.huy,
+        onPressed: (context) {
+          if (onPressed.isNotNull && onPressed() ?? false) {
+            pop(PageIntent(context, null));
+          }
+        },
+      );
+
+  factory KayleeAlertDialogAction.dongY(
+      {bool Function() onPressed, bool isDefaultAction = false}) =>
+      KayleeAlertDialogAction(
+        title: Strings.dongY,
+        onPressed: (context) {
+          if (onPressed.isNotNull && onPressed() ?? false) {
+            pop(PageIntent(context, null));
+          }
+        },
+        isDefaultAction: isDefaultAction,
+      );
+
+  KayleeAlertDialogAction(
+      {@required this.title, this.onPressed, this.isDefaultAction = false});
+
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoDialogAction(
+      child: Text(
+        title ?? '',
+      ),
+      isDefaultAction: isDefaultAction ?? false,
+      onPressed: () {
+        if (onPressed.isNotNull) {
+          onPressed(context);
+        }
+      },
+    );
+  }
+}
+
 Future showPickerPopup(
     {@required BuildContext context, @required WidgetBuilder builder}) {
-  final screenHeight = ScreenUtils.screenSize(context).height;
+  final screenHeight = ScreenUtils
+      .screenSize(context)
+      .height;
   return showCupertinoModalPopup(
       context: context,
       builder: (context) {

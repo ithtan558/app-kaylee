@@ -1,4 +1,5 @@
 import 'package:anth_package/anth_package.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
@@ -25,7 +26,29 @@ class _CreateNewBranchScreenState extends State<CreateNewBranchScreen> {
               padding: const EdgeInsets.only(right: Dimens.px16),
               child: HyperLinkText(
                 text: Strings.tao,
-                onTap: () {},
+                onTap: () {
+                  showKayleeAlertDialog(
+                      context: context,
+                      title: Strings.banDaChacChan,
+                      content: Strings.banDongYLuuLaiNhungThayDoi,
+                      actions: [
+                        KayleeAlertDialogAction.dongY(
+                          isDefaultAction: true,
+                          onPressed: () {
+                            return true;
+                          },
+                        ),
+                        KayleeAlertDialogAction(
+                          title: Strings.huy,
+                          onPressed: (c) {},
+                        ),
+                        KayleeAlertDialogAction.huy(
+                          onPressed: () {
+                            return true;
+                          },
+                        ),
+                      ]);
+                },
               ),
             )
           ],

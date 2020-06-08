@@ -121,6 +121,18 @@ class Strings {
   static const String emailTuyChonHint = 'Nhập địa chỉ email (nếu có)';
   static const String xoaKhachHang = 'Xoá khách hàng';
   static const String chinhSuaThongTinKhachHang = 'Chỉnh sửa thông tin KH';
+  static const String dongY = 'Đồng ý';
+  static const String banDaChacChan = 'Bạn đã chắc chắn?';
+  static const String banDongYLuuLaiNhungThayDoi =
+      'Bạn có đồng ý lưu lại những thay đổi mới? Nội dung cũ sẽ mất sau khi lưu.';
+  static const String banDongYXoaToanBoThongTin =
+      'Bạn có đồng ý xoá toàn bộ thông tin này và không phục hồi lại?';
+  static const String thanhToanThanhCong = 'Thanh toán thành công';
+  static const String donHangSeDuocXoaKhoiDanhSach =
+      'Đơn hàng sẽ được xoá khỏi danh sách.\nVui lòng xem lại tại lịch sử đơn hàng.';
+  static const String banSeXoaSanPham = 'Bạn sẽ xoá sản phẩm?';
+  static const String sanPhamSeBiXoaMatKhoiGioHang =
+      'Sản phẩm sẽ bị xoá mất khỏi giỏ hàng, bạn có chắc thực hiện thao tác này?';
 
   Strings._();
 }
