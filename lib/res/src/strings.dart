@@ -110,6 +110,10 @@ class Strings {
       'Vào Cài đặt > Ứng dụng > Kaylee > Quyền > Bộ nhớ';
   static const String iOsStoragePermissionGuide =
       'Vào Cài đặt > Kaylee > Ảnh > Đọc và Ghi';
+  static const String tenMienWebSiteCuaBan =
+      'Tên miền - Địa chỉ website của bạn';
+  static const String websiteHint = 'Vd. sunsetspa';
+  static const String domainHint = 'Vd: .com';
 
   Strings._();
 }
