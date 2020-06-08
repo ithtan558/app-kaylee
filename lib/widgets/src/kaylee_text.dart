@@ -2,8 +2,8 @@ import 'package:anth_package/anth_package.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
-import 'package:kaylee/utils/app_utils.dart';
 import 'package:kaylee/utils/text_utils.dart';
+import 'package:kaylee/widgets/kaylee_widgets.dart';
 import 'package:kaylee/widgets/src/kaylee_date_picker.dart';
 
 class KayleeDateTimeText extends StatelessWidget {
@@ -445,7 +445,7 @@ class _KayleeDatePickerTextState extends BaseState<KayleeDatePickerText> {
     return KayleeDateText(
       initDate: selectedDate,
       onTap: () {
-        showDateTimePopup(
+        showPickerPopup(
             context: context,
             builder: (context) {
               return KayleeDatePicker(
@@ -515,7 +515,7 @@ class _KayleeDateRangePickerTextState
           child: KayleeDateText(
             initDate: fromDate,
             onTap: () async {
-              await showDateTimePopup(
+              await showPickerPopup(
                   context: context,
                   builder: (context) {
                     return KayleeDatePicker(
@@ -545,7 +545,7 @@ class _KayleeDateRangePickerTextState
           child: KayleeDateText(
             initDate: toDate,
             onTap: () async {
-              await showDateTimePopup(
+              await showPickerPopup(
                   context: context,
                   builder: (context) {
                     return KayleeDatePicker(
