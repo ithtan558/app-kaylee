@@ -114,6 +114,13 @@ class Strings {
       'Tên miền - Địa chỉ website của bạn';
   static const String websiteHint = 'Vd. sunsetspa';
   static const String domainHint = 'Vd: .com';
+  static const String canCuocCmnd = 'Căn cước/CMND';
+  static const String canCuocCmndHint = 'Vd. 079459010628';
+  static const String chonNam = 'Chọn năm';
+  static const String emailTuyChon = 'Email (Tuỳ chọn)';
+  static const String emailTuyChonHint = 'Nhập địa chỉ email (nếu có)';
+  static const String xoaKhachHang = 'Xoá khách hàng';
+  static const String chinhSuaThongTinKhachHang = 'Chỉnh sửa thông tin KH';
 
   Strings._();
 }
