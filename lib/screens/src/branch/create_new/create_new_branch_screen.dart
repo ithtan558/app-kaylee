@@ -26,29 +26,7 @@ class _CreateNewBranchScreenState extends State<CreateNewBranchScreen> {
               padding: const EdgeInsets.only(right: Dimens.px16),
               child: HyperLinkText(
                 text: Strings.tao,
-                onTap: () {
-                  showKayleeAlertDialog(
-                      context: context,
-                      title: Strings.banDaChacChan,
-                      content: Strings.banDongYLuuLaiNhungThayDoi,
-                      actions: [
-                        KayleeAlertDialogAction.dongY(
-                          isDefaultAction: true,
-                          onPressed: () {
-                            return true;
-                          },
-                        ),
-                        KayleeAlertDialogAction(
-                          title: Strings.huy,
-                          onPressed: (c) {},
-                        ),
-                        KayleeAlertDialogAction.huy(
-                          onPressed: () {
-                            return true;
-                          },
-                        ),
-                      ]);
-                },
+                onTap: () {},
               ),
             )
           ],
