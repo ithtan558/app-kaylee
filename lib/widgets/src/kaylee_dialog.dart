@@ -83,6 +83,86 @@ Future<void> showKayleeGo2SettingDialog({
   @required BuildContext context,
   bool barrierDismissible = true,
 }) {
+  return showKayleeDialog(
+      context: context,
+      barrierDismissible: barrierDismissible,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(
+              right: Dimens.px16,
+              left: Dimens.px16,
+              bottom: Dimens.px16,
+              top: Dimens.px24,
+            ),
+            child: KayleeText.normal18W700(
+              Strings.quyenTruyCapHinhAnh,
+              textAlign: TextAlign.center,
+              maxLines: 1,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+                right: Dimens.px16, left: Dimens.px16, bottom: Dimens.px16),
+            child: KayleeText.normal16W400(
+              Strings.quyenTruyCapHinhAnhContent,
+              textAlign: TextAlign.center,
+              maxLines: 2,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+                right: Dimens.px16, left: Dimens.px16, bottom: Dimens.px16),
+            child: KayleeText.normal16W400(
+              Platform.isAndroid
+                  ? Strings.androidStoragePermissionGuide
+                  : Strings.iOsStoragePermissionGuide,
+              textAlign: TextAlign.center,
+              maxLines: 2,
+            ),
+          ),
+          Container(
+            width: double.infinity,
+            height: Dimens.px1,
+            color: ColorsRes.divider,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: Dimens.px16),
+            child: Row(
+              children: [
+                Expanded(
+                  child: KayLeeRoundedButton.button2(
+                    text: Strings.huy,
+                    onPressed: () {
+                      pop(PageIntent(context, null));
+                    },
+                    margin: const EdgeInsets.only(
+                        right: Dimens.px8, left: Dimens.px16),
+                  ),
+                ),
+                Expanded(
+                  child: KayLeeRoundedButton.normal(
+                    text: Strings.caiDatNgay,
+                    onPressed: () {
+                      pop(PageIntent(context, null));
+                      openAppSettings();
+                    },
+                    margin: const EdgeInsets.only(
+                        left: Dimens.px8, right: Dimens.px16),
+                  ),
+                )
+              ],
+            ),
+          )
+        ],
+      ));
+}
+
+Future<void> showKayleeDialog(
+    {@required BuildContext context,
+    bool barrierDismissible = true,
+    Widget child}) {
   return showGeneralDialog(
       context: context,
       barrierLabel: '',
@@ -96,81 +176,7 @@ Future<void> showKayleeGo2SettingDialog({
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(Dimens.px10)),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      right: Dimens.px16,
-                      left: Dimens.px16,
-                      bottom: Dimens.px16,
-                      top: Dimens.px24,
-                    ),
-                    child: KayleeText.normal18W700(
-                      Strings.quyenTruyCapHinhAnh,
-                      textAlign: TextAlign.center,
-                      maxLines: 1,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        right: Dimens.px16,
-                        left: Dimens.px16,
-                        bottom: Dimens.px16),
-                    child: KayleeText.normal16W400(
-                      Strings.quyenTruyCapHinhAnhContent,
-                      textAlign: TextAlign.center,
-                      maxLines: 2,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        right: Dimens.px16,
-                        left: Dimens.px16,
-                        bottom: Dimens.px16),
-                    child: KayleeText.normal16W400(
-                      Platform.isAndroid
-                          ? Strings.androidStoragePermissionGuide
-                          : Strings.iOsStoragePermissionGuide,
-                      textAlign: TextAlign.center,
-                      maxLines: 2,
-                    ),
-                  ),
-                  Container(
-                    width: double.infinity,
-                    height: Dimens.px1,
-                    color: ColorsRes.divider,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: Dimens.px16),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: KayLeeRoundedButton.button2(
-                            text: Strings.huy,
-                            onPressed: () {
-                              pop(PageIntent(context, null));
-                            },
-                            margin: const EdgeInsets.only(
-                                right: Dimens.px8, left: Dimens.px16),
-                          ),
-                        ),
-                        Expanded(
-                          child: KayLeeRoundedButton.normal(
-                            text: Strings.caiDatNgay,
-                            onPressed: () async {
-                              pop(PageIntent(context, null));
-                              final result = await openAppSettings();
-                            },
-                            margin: const EdgeInsets.only(
-                                left: Dimens.px8, right: Dimens.px16),
-                          ),
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
+              child: child ?? Container(),
             ),
           ),
         );
