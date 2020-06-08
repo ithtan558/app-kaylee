@@ -134,5 +134,7 @@ class Strings {
   static const String sanPhamSeBiXoaMatKhoiGioHang =
       'Sản phẩm sẽ bị xoá mất khỏi giỏ hàng, bạn có chắc thực hiện thao tác này?';
 
+  static const String danhMucSanPham = 'Danh mục sản phẩm';
+
   Strings._();
 }
