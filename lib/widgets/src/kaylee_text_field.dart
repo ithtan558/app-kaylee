@@ -21,7 +21,7 @@ class KayleeTextField extends StatelessWidget {
           String hint,
           double fieldHeight,
           FocusNode focusNode,
-          FocusNode nexFocusNode,
+          FocusNode nextFocusNode,
           TextEditingController controller,
           TextInputAction textInputAction,
           TextInputType textInputType,
@@ -34,7 +34,7 @@ class KayleeTextField extends StatelessWidget {
         textInput: NormalInputField(
           textInputAction: textInputAction,
           focusNode: focusNode,
-          nextFocusNode: nexFocusNode,
+          nextFocusNode: nextFocusNode,
           controller: controller,
           error: error,
           hint: hint,
@@ -46,15 +46,41 @@ class KayleeTextField extends StatelessWidget {
         ),
       );
 
-  factory KayleeTextField.website(
-          {String title,
-          FocusNode websiteFocus,
-          FocusNode domainFocus,
-          TextEditingController websiteTfController,
-          TextEditingController domainTfController,
-          TextInputAction textInputAction,
-          TextInputType textInputType,
-          String error,
+  factory KayleeTextField.multiLine({
+    String title,
+    String hint,
+    double fieldHeight = Dimens.px48,
+    FocusNode focusNode,
+    FocusNode nextFocusNode,
+    TextEditingController controller,
+    TextInputAction textInputAction,
+    String error,
+    EdgeInsets contentPadding =
+    const EdgeInsets.symmetric(vertical: Dimens.px16),
+  }) =>
+      KayleeTextField.normal(
+        title: title,
+        textInputAction: textInputAction,
+        focusNode: focusNode,
+        nextFocusNode: nextFocusNode,
+        controller: controller,
+        error: error,
+        hint: hint,
+        fieldHeight: fieldHeight,
+        contentPadding: contentPadding,
+        expands: true,
+        textInputType: TextInputType.multiline,
+        textAlign: TextAlign.start,
+      );
+
+  factory KayleeTextField.website({String title,
+    FocusNode websiteFocus,
+    FocusNode domainFocus,
+    TextEditingController websiteTfController,
+    TextEditingController domainTfController,
+    TextInputAction textInputAction,
+    TextInputType textInputType,
+    String error,
           EdgeInsets contentPadding,
           bool expands,
           TextAlign textAlign}) =>

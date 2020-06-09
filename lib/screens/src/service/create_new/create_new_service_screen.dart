@@ -1,0 +1,75 @@
+import 'package:anth_package/anth_package.dart';
+import 'package:flutter/material.dart';
+import 'package:kaylee/res/res.dart';
+import 'package:kaylee/widgets/kaylee_widgets.dart';
+
+class CreateNewServiceScreen extends StatefulWidget {
+  factory CreateNewServiceScreen.newInstance() = CreateNewServiceScreen._;
+
+  CreateNewServiceScreen._();
+
+  @override
+  _CreateNewServiceScreenState createState() => _CreateNewServiceScreenState();
+}
+
+class _CreateNewServiceScreenState extends BaseState<CreateNewServiceScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return KayleeScrollview(
+      appBar: KayleeAppBar(
+        title: Strings.taoDichVuMoi,
+        actions: <Widget>[
+          KayleeAppBarAction.hyperText(
+            title: Strings.tao,
+            onTap: () {},
+          ),
+        ],
+      ),
+      padding: const EdgeInsets.all(Dimens.px16),
+      child: Column(
+        children: [
+          KayleeImagePicker(
+            onImageSelect: (file, {existedImage}) {},
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: Dimens.px16),
+            child: KayleeTextField.normal(
+              title: Strings.tenDichVu,
+              hint: Strings.nhapTenDichVu,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: Dimens.px16),
+            child: KayleeTextField.normal(
+              title: Strings.tenTiengAnh,
+              hint: Strings.nhapTenDichVu,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: Dimens.px16),
+            child: KayleeTextField.selection(
+              title: Strings.thoiGianPhucVu,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: Dimens.px16),
+            child: KayleeTextField.selection(
+              title: Strings.loaiDichVu,
+              hint: Strings.chonLoaiDichVu,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: Dimens.px16),
+            child: KayleeTextField.multiLine(
+              title: Strings.moTa,
+              hint: Strings.nhapMoTaDichVu,
+              textInputAction: TextInputAction.newline,
+              fieldHeight: (screenSize.width - Dimens.px32) / (343 / 233),
+              contentPadding: EdgeInsets.symmetric(vertical: Dimens.px16),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

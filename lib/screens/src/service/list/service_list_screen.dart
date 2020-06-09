@@ -1,6 +1,7 @@
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class ServiceListScreen extends StatefulWidget {
@@ -56,7 +57,9 @@ class _ServiceListScreenState extends BaseState<ServiceListScreen> {
         itemCount: 3,
       ),
       floatingActionButton: KayleeFloatButton(
-        onTap: () {},
+        onTap: () {
+          pushScreen(PageIntent(context, CreateNewServiceScreen));
+        },
       ),
     );
   }

@@ -20,6 +20,7 @@ export 'src/reset_pass/input_new_pass_screen.dart';
 export 'src/reset_pass/otp_confirm_screeen.dart';
 export 'src/reset_pass/reset_pass_screen.dart';
 export 'src/revenue/revenue_screen.dart';
+export 'src/service/create_new/create_new_service_screen.dart';
 export 'src/service/list/service_list_screen.dart';
 export 'src/signin/signin_screen.dart';
 export 'src/signup/signup_screen.dart';

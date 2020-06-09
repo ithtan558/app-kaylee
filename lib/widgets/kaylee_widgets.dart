@@ -30,6 +30,7 @@ export 'src/kaylee_incr_decr_buttons.dart';
 export 'src/kaylee_inkwell.dart';
 export 'src/kaylee_prod_item.dart';
 export 'src/kaylee_rounded_button.dart';
+export 'src/kaylee_scrollview.dart';
 export 'src/kaylee_text.dart';
 export 'src/kaylee_text_field.dart';
 export 'src/kaylle_full_address_input.dart';

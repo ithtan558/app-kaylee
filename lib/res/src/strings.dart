@@ -133,8 +133,17 @@ class Strings {
   static const String banSeXoaSanPham = 'Bạn sẽ xoá sản phẩm?';
   static const String sanPhamSeBiXoaMatKhoiGioHang =
       'Sản phẩm sẽ bị xoá mất khỏi giỏ hàng, bạn có chắc thực hiện thao tác này?';
-
   static const String danhMucSanPham = 'Danh mục sản phẩm';
+  static const String taoDichVuMoi = 'Tạo dịch vụ mới';
+  static const String tenDichVu = 'Tên dịch vụ';
+  static const String nhapTenDichVu = 'Nhập tên dịch vụ';
+  static const String tenTiengAnh = 'Tên tiếng anh (tuỳ chọn)';
+  static const String nhapTenTiengAnh = 'Nhập tên tiếng anh của dịch vụ';
+  static const String thoiGianPhucVu = 'Thời gian phục vụ';
+  static const String loaiDichVu = 'Loại dịch vụ';
+  static const String chonLoaiDichVu = 'Chọn loại dịch vụ';
+  static const String moTa = 'Mô tả';
+  static const String nhapMoTaDichVu = 'Nhập mô tả dịch vụ';
 
   Strings._();
 }

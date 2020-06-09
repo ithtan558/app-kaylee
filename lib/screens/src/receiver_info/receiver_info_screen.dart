@@ -55,15 +55,12 @@ class _ReceiverInfoScreenState extends BaseState<ReceiverInfoScreen> {
               Padding(
                 padding: const EdgeInsets.only(
                     left: Dimens.px16, right: Dimens.px16, bottom: Dimens.px16),
-                child: KayleeTextField.normal(
+                child: KayleeTextField.multiLine(
                   title: Strings.luuY,
                   hint: Strings.luuYHint,
-                  textInputType: TextInputType.multiline,
                   textInputAction: TextInputAction.newline,
                   fieldHeight: (screenSize.width - Dimens.px32) / (343 / 233),
-                  textAlign: TextAlign.start,
                   contentPadding: EdgeInsets.symmetric(vertical: Dimens.px16),
-                  expands: true,
                 ),
               ),
               KayLeeRoundedButton.normal(
