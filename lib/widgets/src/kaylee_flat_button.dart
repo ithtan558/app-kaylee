@@ -2,12 +2,13 @@ import 'dart:math';
 
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class KayleeFlatButton extends StatelessWidget {
-  final Function() onPress;
+  final VoidCallback onPress;
   final String title;
   final Widget child;
   final Color background;
@@ -22,14 +23,24 @@ class KayleeFlatButton extends StatelessWidget {
       this.borderRadius,
       this.titlePadding});
 
-  factory KayleeFlatButton.normal({String title, Function onPress}) =>
+  factory KayleeFlatButton.normal({String title, VoidCallback onPress}) =>
       KayleeFlatButton(
         title: title,
         onPress: onPress,
         borderRadius: BorderRadius.circular(Dimens.px5),
       );
 
-  factory KayleeFlatButton.withLabelDivider({String title, Function onPress}) =>
+  factory KayleeFlatButton.withTextField(
+          {String title, VoidCallback onPress}) =>
+      KayleeFlatButton(
+        title: title,
+        onPress: onPress,
+        borderRadius: BorderRadius.circular(Dimens.px5),
+        titlePadding: EdgeInsets.symmetric(horizontal: Dimens.px14),
+      );
+
+  factory KayleeFlatButton.withLabelDivider(
+          {String title, VoidCallback onPress}) =>
       KayleeFlatButton(
         title: title,
         onPress: onPress,
@@ -38,7 +49,7 @@ class KayleeFlatButton extends StatelessWidget {
       );
 
   factory KayleeFlatButton.filter(
-          {Function onPress, Color background, Widget child}) =>
+          {VoidCallback onPress, Color background, Widget child}) =>
       KayleeFlatButton(
         onPress: onPress,
         borderRadius: BorderRadius.circular(Dimens.px10),
@@ -70,7 +81,7 @@ class KayleeFlatButton extends StatelessWidget {
 }
 
 class KayleeDateFilterButton extends StatefulWidget {
-  final Future<bool> Function() onTap;
+  final AsyncValueGetter<bool> onTap;
   final DateTime selectedDate;
   final Color color;
 
@@ -110,8 +121,10 @@ class _KayleeDateFilterButtonState extends BaseState<KayleeDateFilterButton>
             child: Container(
               alignment: Alignment.center,
               child: KayleeText.normalWhite16W400(
-            'Tháng ${DateFormat('${DateFormat.NUM_MONTH * 2}/${DateFormat.YEAR * 4}').format(widget.selectedDate)}',
-            textAlign: TextAlign.center,
+                'Tháng ${DateFormat(
+                    '${DateFormat.NUM_MONTH * 2}/${DateFormat.YEAR * 4}')
+                    .format(widget.selectedDate)}',
+                textAlign: TextAlign.center,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),

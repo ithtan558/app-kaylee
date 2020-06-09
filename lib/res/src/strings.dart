@@ -144,6 +144,9 @@ class Strings {
   static const String chonLoaiDichVu = 'Chọn loại dịch vụ';
   static const String moTa = 'Mô tả';
   static const String nhapMoTaDichVu = 'Nhập mô tả dịch vụ';
+  static const String chinhSua = 'Chỉnh sửa';
+  static const String diaDiemBanSanPham = 'Địa điểm bán sản phẩm';
+  static const String huyBo = 'Huỷ bỏ';
 
   Strings._();
 }

@@ -116,14 +116,14 @@ class _EditProfileScreenState extends BaseState<EditProfileScreen> {
                 padding: const EdgeInsets.only(bottom: Dimens.px16),
                 child: KayleeTextField(
                   title: Strings.namSinh,
-                  textInput: SelectionInputField(),
+                  textInput: PickerInputField(),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: Dimens.px16),
                 child: KayleeTextField(
                   title: Strings.queQuan,
-                  textInput: SelectionInputField(
+                  textInput: PickerInputField(
                     hint: Strings.chonTinhTpHint,
                   ),
                 ),

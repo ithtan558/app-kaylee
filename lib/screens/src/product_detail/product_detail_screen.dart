@@ -68,7 +68,7 @@ class _ProductDetailScreenState extends BaseState<ProductDetailScreen> {
             Padding(
               padding: const EdgeInsets.only(
                   top: Dimens.px16, left: Dimens.px16, right: Dimens.px16),
-              child: KayleeTextField.selection(
+              child: KayleeTextField.picker(
                 title: 'Chọn loại sản phẩm',
               ),
             ),

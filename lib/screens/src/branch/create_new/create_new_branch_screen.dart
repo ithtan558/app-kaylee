@@ -72,13 +72,13 @@ class _CreateNewBranchScreenState extends State<CreateNewBranchScreen> {
                 child: Row(
                   children: [
                     Expanded(
-                      child: KayleeTextField.selection(
+                      child: KayleeTextField.picker(
                         title: Strings.gioMoCua,
                       ),
                     ),
                     SizedBox(width: Dimens.px8),
                     Expanded(
-                      child: KayleeTextField.selection(
+                      child: KayleeTextField.picker(
                         title: Strings.gioDongCua,
                       ),
                     )

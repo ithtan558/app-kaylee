@@ -330,7 +330,7 @@ class __NotificationIconState extends State<_NotificationIcon> {
               width: Dimens.px17,
               height: Dimens.px17,
               decoration: BoxDecoration(
-                  color: ColorsRes.notifyCircle, shape: BoxShape.circle),
+                  color: ColorsRes.errorBorder, shape: BoxShape.circle),
               alignment: Alignment.center,
               child: KayleeText('${notifyCount > 99 ? 99 : notifyCount}',
                   style: TextStyles.normalWhite12W400),

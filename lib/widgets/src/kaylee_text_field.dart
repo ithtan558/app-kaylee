@@ -56,7 +56,7 @@ class KayleeTextField extends StatelessWidget {
     TextInputAction textInputAction,
     String error,
     EdgeInsets contentPadding =
-    const EdgeInsets.symmetric(vertical: Dimens.px16),
+        const EdgeInsets.symmetric(vertical: Dimens.px16),
   }) =>
       KayleeTextField.normal(
         title: title,
@@ -73,6 +73,21 @@ class KayleeTextField extends StatelessWidget {
         textAlign: TextAlign.start,
       );
 
+  factory KayleeTextField.selection({String title,
+    String content,
+    String buttonText,
+    String error,
+    VoidCallback onPress}) =>
+      KayleeTextField(
+        title: title,
+        textInput: SelectInputTextField(
+          content: content,
+          buttonText: buttonText,
+          onPress: onPress,
+          error: error,
+        ),
+      );
+
   factory KayleeTextField.website({String title,
     FocusNode websiteFocus,
     FocusNode domainFocus,
@@ -81,9 +96,9 @@ class KayleeTextField extends StatelessWidget {
     TextInputAction textInputAction,
     TextInputType textInputType,
     String error,
-          EdgeInsets contentPadding,
-          bool expands,
-          TextAlign textAlign}) =>
+    EdgeInsets contentPadding,
+    bool expands,
+    TextAlign textAlign}) =>
       KayleeTextField(
         title: title,
         textInput: WebsiteInputField(
@@ -122,11 +137,10 @@ class KayleeTextField extends StatelessWidget {
         ),
       );
 
-  factory KayleeTextField.selection(
-          {String title, String hint, String error}) =>
+  factory KayleeTextField.picker({String title, String hint, String error}) =>
       KayleeTextField(
         title: title,
-        textInput: SelectionInputField(
+        textInput: PickerInputField(
           error: error,
           hint: hint,
         ),
@@ -294,20 +308,20 @@ class _ButtonInputFieldState extends BaseState<ButtonInputField> {
   }
 }
 
-class SelectionInputField extends StatefulWidget {
+class PickerInputField extends StatefulWidget {
   final String error;
   final String hint;
 
-  SelectionInputField({
+  PickerInputField({
     this.hint,
     this.error,
   });
 
   @override
-  _SelectionInputFieldState createState() => _SelectionInputFieldState();
+  _PickerInputFieldState createState() => _PickerInputFieldState();
 }
 
-class _SelectionInputFieldState extends BaseState<SelectionInputField> {
+class _PickerInputFieldState extends BaseState<PickerInputField> {
   final _tfController = TextEditingController();
 
   @override
@@ -550,69 +564,57 @@ class _PhoneInputFieldState extends State<PhoneInputField> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        TextFieldBorderWrapper(
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                margin: const EdgeInsets.only(
-                    left: Dimens.px10, right: Dimens.px13),
-                child: Text('+84'),
-              ),
-              Container(
-                  color: ColorsRes.textFieldBorder,
-                  width: Dimens.px1,
-                  margin: const EdgeInsets.only(
-                      top: Dimens.px4, bottom: Dimens.px2)),
-              Expanded(
-                child: TextField(
-                  focusNode: widget.focusNode,
-                  controller:
-                      widget.isStaticTField ? tfController : widget.controller,
-                  keyboardType: TextInputType.phone,
-                  maxLengthEnforced: true,
-                  enabled: !widget.isStaticTField,
-                  maxLength: 10,
-                  buildCounter: (BuildContext c,
-                      {int currentLength, bool isFocused, int maxLength}) {
-                    return null;
-                  },
-                  textInputAction: widget.textInputAction,
-                  onSubmitted: (_) {
-                    if (widget.textInputAction == TextInputAction.next) {
-                      widget.nextFocusNode?.requestFocus();
-                    }
-                  },
-                  decoration: InputDecoration(
-                      focusedBorder: InputBorder.none,
-                      disabledBorder: InputBorder.none,
-                      border: InputBorder.none,
-                      hintText: Strings.phoneLimitHint,
-                      contentPadding: const EdgeInsets.only(
-                          left: Dimens.px14,
-                          right: Dimens.px16,
-                          bottom: Dimens.px4),
-                      hintStyle: TextStyles.hint16W400),
-                ),
-              )
-            ],
-          ),
-          bgColor: widget.isStaticTField ? Colors.transparent : null,
-        ),
-        if (!widget.error.isNullOrEmpty)
-          Container(
-            margin: const EdgeInsets.only(top: Dimens.px4),
-            alignment: Alignment.centerRight,
-            child: KayleeText(
-              widget.error,
-              textAlign: TextAlign.end,
-              style: TextStyles.error12W400,
-              overflow: TextOverflow.visible,
+    return _ErrorText(
+      child: TextFieldBorderWrapper(
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              margin:
+              const EdgeInsets.only(left: Dimens.px10, right: Dimens.px13),
+              child: const Text('+84'),
             ),
-          )
-      ],
+            Container(
+                color: ColorsRes.textFieldBorder,
+                width: Dimens.px1,
+                margin:
+                const EdgeInsets.only(top: Dimens.px4, bottom: Dimens.px2)),
+            Expanded(
+              child: TextField(
+                focusNode: widget.focusNode,
+                controller:
+                widget.isStaticTField ? tfController : widget.controller,
+                keyboardType: TextInputType.phone,
+                maxLengthEnforced: true,
+                enabled: !widget.isStaticTField,
+                maxLength: 10,
+                buildCounter: (BuildContext c,
+                    {int currentLength, bool isFocused, int maxLength}) {
+                  return null;
+                },
+                textInputAction: widget.textInputAction,
+                onSubmitted: (_) {
+                  if (widget.textInputAction == TextInputAction.next) {
+                    widget.nextFocusNode?.requestFocus();
+                  }
+                },
+                decoration: InputDecoration(
+                    focusedBorder: InputBorder.none,
+                    disabledBorder: InputBorder.none,
+                    border: InputBorder.none,
+                    hintText: Strings.phoneLimitHint,
+                    contentPadding: const EdgeInsets.only(
+                        left: Dimens.px14,
+                        right: Dimens.px16,
+                        bottom: Dimens.px4),
+                    hintStyle: TextStyles.hint16W400),
+              ),
+            )
+          ],
+        ),
+        bgColor: widget.isStaticTField ? Colors.transparent : null,
+      ),
+      error: widget.error,
     );
   }
 }
@@ -656,62 +658,128 @@ class _WebsiteInputFieldState extends BaseState<WebsiteInputField> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        TextFieldBorderWrapper(
-          Row(
-            children: [
-              Expanded(
-                flex: (205 * 10 / 343).round(),
-                child: FractionallySizedBox(
-                  child: TextField(
-                    keyboardType: TextInputType.url,
-                    style: TextStyles.normal16W400,
-                    textInputAction: TextInputAction.next,
-                    decoration: inputDecoration.copyWith(
-                      hintText: Strings.websiteHint,
-                    ),
-                    onSubmitted: (value) {
+    return _ErrorText(
+      child: TextFieldBorderWrapper(
+        Row(
+          children: [
+            Expanded(
+              flex: (205 * 10 / 343).round(),
+              child: FractionallySizedBox(
+                child: TextField(
+                  keyboardType: TextInputType.url,
+                  style: TextStyles.normal16W400,
+                  textInputAction: TextInputAction.next,
+                  decoration: inputDecoration.copyWith(
+                    hintText: Strings.websiteHint,
+                  ),
+                  onSubmitted: (value) {
+                    FocusScope.of(context).nextFocus();
+                  },
+                ),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: Dimens.px4),
+              width: Dimens.px1,
+              color: ColorsRes.textFieldBorder,
+            ),
+            Expanded(
+              flex: (137 * 10 / 343).round(),
+              child: FractionallySizedBox(
+                child: TextField(
+                  keyboardType: TextInputType.url,
+                  textInputAction: widget.textInputAction,
+                  style: TextStyles.normal16W400,
+                  decoration: inputDecoration.copyWith(
+                    hintText: Strings.domainHint,
+                  ),
+                  onSubmitted: (value) {
+                    if (widget.textInputAction == TextInputAction.next) {
                       FocusScope.of(context).nextFocus();
-                    },
-                  ),
+                    }
+                  },
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: Dimens.px4),
-                width: Dimens.px1,
-                color: ColorsRes.textFieldBorder,
-              ),
-              Expanded(
-                flex: (137 * 10 / 343).round(),
-                child: FractionallySizedBox(
-                  child: TextField(
-                    keyboardType: TextInputType.url,
-                    textInputAction: widget.textInputAction,
-                    style: TextStyles.normal16W400,
-                    decoration: inputDecoration.copyWith(
-                      hintText: Strings.domainHint,
-                    ),
-                    onSubmitted: (value) {
-                      if (widget.textInputAction == TextInputAction.next) {
-                        FocusScope.of(context).nextFocus();
-                      }
-                    },
-                  ),
-                ),
-              ),
-            ],
-          ),
-          showFocusBorder: !widget.error.isNullOrEmpty,
+            ),
+          ],
         ),
-        if (!widget.error.isNullOrEmpty)
+        showFocusBorder: !widget.error.isNullOrEmpty,
+      ),
+      error: widget.error,
+    );
+  }
+}
+
+class SelectInputTextField extends StatefulWidget {
+  final String error;
+  final String content;
+  final String buttonText;
+  final VoidCallback onPress;
+
+  SelectInputTextField(
+      {this.error, this.content, this.onPress, this.buttonText});
+
+  @override
+  _SelectInputTextFieldState createState() => _SelectInputTextFieldState();
+}
+
+class _SelectInputTextFieldState extends BaseState<SelectInputTextField> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _ErrorText(
+      child: TextFieldBorderWrapper(Padding(
+        padding: const EdgeInsets.only(
+            left: Dimens.px16,
+            right: Dimens.px4,
+            bottom: Dimens.px4,
+            top: Dimens.px4),
+        child: Row(
+          children: [
+            Expanded(
+                child: KayleeText.normal16W400(
+                  widget.content ?? '',
+                  maxLines: 1,
+                )),
+            KayleeFlatButton.withTextField(
+              title: widget.buttonText,
+              onPress: widget.onPress,
+            )
+          ],
+        ),
+      )),
+      error: widget.error,
+    );
+  }
+}
+
+class _ErrorText extends StatelessWidget {
+  final String error;
+  final Widget child;
+
+  _ErrorText({this.child, this.error});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        if (child.isNotNull) child,
+        if (!error.isNullOrEmpty)
           Container(
             margin: const EdgeInsets.only(top: Dimens.px4),
             alignment: Alignment.centerRight,
-            child: KayleeText(
-              widget.error,
+            child: KayleeText.hyper16W400(
+              error,
               textAlign: TextAlign.end,
-              style: TextStyles.error12W400,
               overflow: TextOverflow.visible,
             ),
           )
@@ -740,7 +808,7 @@ class TextFieldBorderWrapper extends StatelessWidget {
           border: Border.all(
               width: (showFocusBorder ?? false) ? Dimens.px2 : Dimens.px1,
               color: (showFocusBorder ?? false)
-                  ? ColorsRes.errorText
+                  ? ColorsRes.errorBorder
                   : ColorsRes.textFieldBorder)),
       child: child,
     );

@@ -1,6 +1,7 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/screens/src/branch/widgets/branch_select.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class CreateNewServiceScreen extends StatefulWidget {
@@ -49,12 +50,30 @@ class _CreateNewServiceScreenState extends BaseState<CreateNewServiceScreen> {
             Padding(
               padding: const EdgeInsets.only(bottom: Dimens.px16),
               child: KayleeTextField.selection(
+                title: Strings.diaDiemBanSanPham,
+                content: '(0) địa điểm được chọn',
+                buttonText: Strings.chinhSua,
+                onPress: () {
+                  showKayleeBottomSheet(
+                    context,
+                    initialChildSize: 356 / 667,
+                    minChildSize: 356 / 667,
+                    builder: (c, controller) {
+                      return BranchSelect(controller: controller);
+                    },
+                  );
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: Dimens.px16),
+              child: KayleeTextField.picker(
                 title: Strings.thoiGianPhucVu,
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: Dimens.px16),
-              child: KayleeTextField.selection(
+              child: KayleeTextField.picker(
                 title: Strings.loaiDichVu,
                 hint: Strings.chonLoaiDichVu,
               ),

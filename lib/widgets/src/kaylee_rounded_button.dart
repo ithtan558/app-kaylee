@@ -9,7 +9,7 @@ import 'package:kaylee/widgets/src/kaylee_text.dart';
 class KayLeeRoundedButton extends StatelessWidget {
   final double width;
   final String text;
-  final void Function() onPressed;
+  final VoidCallback onPressed;
   final EdgeInsets margin;
   final BorderSide borderSide;
   final Color color;
@@ -17,7 +17,7 @@ class KayLeeRoundedButton extends StatelessWidget {
   factory KayLeeRoundedButton.button2(
           {String text,
           EdgeInsets margin,
-          void Function() onPressed,
+          VoidCallback onPressed,
           double width}) =>
       KayLeeRoundedButton(
         text: text,
@@ -31,11 +31,10 @@ class KayLeeRoundedButton extends StatelessWidget {
         color: ColorsRes.hintText,
       );
 
-  factory KayLeeRoundedButton.button3(
-          {String text,
-          EdgeInsets margin,
-          void Function() onPressed,
-          double width}) =>
+  factory KayLeeRoundedButton.button3({String text,
+    EdgeInsets margin,
+    VoidCallback onPressed,
+    double width}) =>
       KayLeeRoundedButton(
         text: text,
         margin: margin,
@@ -44,11 +43,10 @@ class KayLeeRoundedButton extends StatelessWidget {
         color: ColorsRes.button1,
       );
 
-  factory KayLeeRoundedButton.normal(
-          {String text,
-          EdgeInsets margin,
-          void Function() onPressed,
-          double width}) =>
+  factory KayLeeRoundedButton.normal({String text,
+    EdgeInsets margin,
+    VoidCallback onPressed,
+    double width}) =>
       KayLeeRoundedButton(
         text: text,
         margin: margin,

@@ -43,14 +43,14 @@ class _KayleeFullAddressInputState extends BaseState<KayleeFullAddressInput> {
               children: [
                 Expanded(
                     child: KayleeTextField(
-                  textInput: SelectionInputField(
+                  textInput: PickerInputField(
                     hint: Strings.phuong,
                   ),
                 )),
                 SizedBox(width: Dimens.px8),
                 Expanded(
                     child: KayleeTextField(
-                  textInput: SelectionInputField(
+                      textInput: PickerInputField(
                     hint: Strings.quan,
                   ),
                 )),
@@ -58,7 +58,7 @@ class _KayleeFullAddressInputState extends BaseState<KayleeFullAddressInput> {
             ),
           ),
           KayleeTextField(
-            textInput: SelectionInputField(
+            textInput: PickerInputField(
               hint: Strings.chonTinhTpHint,
             ),
           ),

@@ -23,13 +23,19 @@ Future<T> showKayleeBottomSheet<T>(context,
       backgroundColor: Colors.transparent,
       isScrollControlled: true,
       builder: (c) {
-        return GestureDetector(
-          onTap: () {
-            pop(PageIntent(context, null));
-          },
-          child: Container(
-            color: Colors.transparent,
-            child: DraggableScrollableSheet(
+        return Stack(
+          children: <Widget>[
+            Positioned.fill(
+              child: GestureDetector(
+                onTap: () {
+                  pop(PageIntent(context, null));
+                },
+                child: Container(
+                  color: Colors.transparent,
+                ),
+              ),
+            ),
+            DraggableScrollableSheet(
               maxChildSize: maxChildSize ?? 1,
               expand: expand,
               initialChildSize: initialChildSize ?? 0.5,
@@ -67,8 +73,8 @@ Future<T> showKayleeBottomSheet<T>(context,
                   ),
                 );
               },
-            ),
-          ),
+            )
+          ],
         );
       },
       barrierColor: ColorsRes.dialogDimBg);
