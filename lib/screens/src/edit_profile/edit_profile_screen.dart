@@ -46,15 +46,10 @@ class _EditProfileScreenState extends BaseState<EditProfileScreen> {
         appBar: KayleeAppBar(
           title: Strings.chinhSuThongTinCaNhan,
           actions: [
-            Container(
-              height: double.infinity,
-              margin: EdgeInsets.only(right: Dimens.px16),
-              alignment: Alignment.centerRight,
-              child: HyperLinkText(
-                text: Strings.luu,
-                onTap: () {},
-              ),
-            )
+            KayleeAppBarAction.hyperText(
+              title: Strings.luu,
+              onTap: () {},
+            ),
           ],
         ),
         body: SingleChildScrollView(

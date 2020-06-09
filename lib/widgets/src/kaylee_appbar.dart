@@ -1,6 +1,7 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/res/res.dart';
 import 'package:kaylee/res/src/colors_res.dart';
 import 'package:kaylee/res/src/text_styles.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
@@ -57,4 +58,29 @@ class KayleeAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
+}
+
+class KayleeAppBarAction extends StatelessWidget {
+  factory KayleeAppBarAction.hyperText(
+          {@required String title, void Function() onTap}) =>
+      KayleeAppBarAction(
+        child: Container(
+          height: double.infinity,
+          margin: EdgeInsets.only(right: Dimens.px16),
+          alignment: Alignment.centerRight,
+          child: HyperLinkText(
+            text: title ?? '',
+            onTap: onTap,
+          ),
+        ),
+      );
+
+  final Widget child;
+
+  KayleeAppBarAction({this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return child ?? Container();
+  }
 }
