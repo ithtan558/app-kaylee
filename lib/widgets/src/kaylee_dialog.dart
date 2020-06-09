@@ -7,11 +7,8 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-Future<T> showKayleeBottomSheet<T>(
-    context,
-    {@required
-        Widget Function(BuildContext context, ScrollController controller)
-            builder,
+Future<T> showKayleeBottomSheet<T>(context,
+    {@required ScrollableWidgetBuilder builder,
     double maxChildSize = 1,
     bool expand = true,
     double initialChildSize = 0.5,
@@ -39,8 +36,6 @@ Future<T> showKayleeBottomSheet<T>(
               minChildSize: minChildSize ?? 0.25,
               builder: (c, scrollController) {
                 return Container(
-                  padding:
-                      EdgeInsets.only(top: MediaQuery.of(context).padding.top),
                   decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: const BorderRadius.only(
