@@ -46,6 +46,8 @@ class _KayleeProfileImagePickerState extends BaseState<KayleeImagePicker> {
   Widget build(BuildContext context) {
     return Container(
       height: Dimens.px103 + Dimens.px16 + Dimens.px56,
+      width: double.infinity,
+      alignment: Alignment.center,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
