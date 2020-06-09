@@ -73,11 +73,12 @@ class KayleeTextField extends StatelessWidget {
         textAlign: TextAlign.start,
       );
 
-  factory KayleeTextField.selection({String title,
-    String content,
-    String buttonText,
-    String error,
-    VoidCallback onPress}) =>
+  factory KayleeTextField.selection(
+          {String title,
+          String content,
+          String buttonText,
+          String error,
+          VoidCallback onPress}) =>
       KayleeTextField(
         title: title,
         textInput: SelectInputTextField(
@@ -88,17 +89,18 @@ class KayleeTextField extends StatelessWidget {
         ),
       );
 
-  factory KayleeTextField.website({String title,
-    FocusNode websiteFocus,
-    FocusNode domainFocus,
-    TextEditingController websiteTfController,
-    TextEditingController domainTfController,
-    TextInputAction textInputAction,
-    TextInputType textInputType,
-    String error,
-    EdgeInsets contentPadding,
-    bool expands,
-    TextAlign textAlign}) =>
+  factory KayleeTextField.website(
+          {String title,
+          FocusNode websiteFocus,
+          FocusNode domainFocus,
+          TextEditingController websiteTfController,
+          TextEditingController domainTfController,
+          TextInputAction textInputAction,
+          TextInputType textInputType,
+          String error,
+          EdgeInsets contentPadding,
+          bool expands,
+          TextAlign textAlign}) =>
       KayleeTextField(
         title: title,
         textInput: WebsiteInputField(
@@ -146,6 +148,21 @@ class KayleeTextField extends StatelessWidget {
         ),
       );
 
+  factory KayleeTextField.price({String title,
+    String hint,
+    String error,
+    TextEditingController controller,
+    TextInputAction textInputAction}) =>
+      KayleeTextField(
+        title: title,
+        textInput: PriceInputField(
+          error: error,
+          hint: hint,
+          controller: controller,
+          textInputAction: textInputAction,
+        ),
+      );
+
   factory KayleeTextField.password({
     String title,
     String hint,
@@ -179,12 +196,82 @@ class KayleeTextField extends StatelessWidget {
             child: Text(
               title,
               style: ScreenUtils.textTheme(context).bodyText2.copyWith(
-                    fontWeight: FontWeight.w500,
-                  ),
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ),
         if (textInput.isNotNull) textInput,
       ],
+    );
+  }
+}
+
+class PriceInputField extends StatefulWidget {
+  final String hint;
+  final String error;
+  final TextEditingController controller;
+  final TextInputAction textInputAction;
+
+  PriceInputField(
+      {this.error, this.controller, this.hint, this.textInputAction});
+
+  @override
+  _PriceInputFieldState createState() => _PriceInputFieldState();
+}
+
+class _PriceInputFieldState extends BaseState<PriceInputField> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _ErrorText(
+      child: TextFieldBorderWrapper(
+        Row(
+          children: [
+            Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
+                  child: TextField(
+                    keyboardType: TextInputType.number,
+                    textInputAction: widget.textInputAction,
+                    style: TextStyles.normal16W400,
+                    maxLines: 1,
+                    minLines: 1,
+                    controller: widget.controller,
+                    onSubmitted: (value) {
+                      if (widget.textInputAction == TextInputAction.next) {
+                        FocusScope.of(context).nextFocus();
+                      }
+                    },
+                    decoration: InputDecoration(
+                        enabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        border: InputBorder.none,
+                        hintText: widget.hint,
+                        hintStyle: TextStyles.hint16W400),
+                  ),
+                )),
+            Container(
+              width: Dimens.px1,
+              margin: const EdgeInsets.symmetric(vertical: Dimens.px4),
+              color: ColorsRes.textFieldBorder,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: Dimens.px12),
+              child: KayleeText.normal16W400(Strings.vnd),
+            )
+          ],
+        ),
+      ),
+      error: widget.error,
     );
   }
 }

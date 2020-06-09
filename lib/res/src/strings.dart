@@ -147,6 +147,7 @@ class Strings {
   static const String chinhSua = 'Chỉnh sửa';
   static const String diaDiemBanSanPham = 'Địa điểm bán sản phẩm';
   static const String huyBo = 'Huỷ bỏ';
+  static const String giaTien = 'Giá tiền';
 
   Strings._();
 }

@@ -73,6 +73,20 @@ class _CreateNewServiceScreenState extends BaseState<CreateNewServiceScreen> {
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: Dimens.px16),
+              child: KayleeTextField.price(
+                title: Strings.giaTien,
+                hint: '0',
+                textInputAction: TextInputAction.next,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: Dimens.px16),
+              child: KayleeTextField.picker(
+                title: Strings.thoiGianPhucVu,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: Dimens.px16),
               child: KayleeTextField.picker(
                 title: Strings.loaiDichVu,
                 hint: Strings.chonLoaiDichVu,
