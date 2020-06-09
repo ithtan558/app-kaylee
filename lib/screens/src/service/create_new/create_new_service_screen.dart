@@ -59,15 +59,12 @@ class _CreateNewServiceScreenState extends BaseState<CreateNewServiceScreen> {
                 hint: Strings.chonLoaiDichVu,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: Dimens.px16),
-              child: KayleeTextField.multiLine(
-                title: Strings.moTa,
-                hint: Strings.nhapMoTaDichVu,
-                textInputAction: TextInputAction.newline,
-                fieldHeight: (screenSize.width - Dimens.px32) / (343 / 233),
-                contentPadding: EdgeInsets.symmetric(vertical: Dimens.px16),
-              ),
+            KayleeTextField.multiLine(
+              title: Strings.moTa,
+              hint: Strings.nhapMoTaDichVu,
+              textInputAction: TextInputAction.newline,
+              fieldHeight: (screenSize.width - Dimens.px32) / (343 / 233),
+              contentPadding: EdgeInsets.symmetric(vertical: Dimens.px16),
             ),
           ],
         ),
