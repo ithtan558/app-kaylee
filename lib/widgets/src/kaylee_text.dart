@@ -2,7 +2,6 @@ import 'package:anth_package/anth_package.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
-import 'package:kaylee/utils/text_utils.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 import 'package:kaylee/widgets/src/kaylee_date_picker.dart';
 
@@ -61,7 +60,7 @@ class KayleeDateTimeText extends StatelessWidget {
       );
 
   factory KayleeDateTimeText.dayMonthYearFromServer(int time,
-      {TextAlign textAlign, TextStyle textStyle}) =>
+          {TextAlign textAlign, TextStyle textStyle}) =>
       KayleeDateTimeText.dayMonthYear(
         time.toDateTimeFromServer,
         textAlign: textAlign,
@@ -175,7 +174,8 @@ class KayleePriceText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return KayleeText(
-      TextUtils.formatVND(price ?? 0, unit: showUnit ? 'đ' : null),
+      CurrencyUtils.formatVNDWithCustomUnit(price ?? 0,
+          unit: showUnit ? 'đ' : null),
       style: textStyle ?? TextStyles.hyper16W500,
       maxLines: 1,
       textAlign: textAlign,
