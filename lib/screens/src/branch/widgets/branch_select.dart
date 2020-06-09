@@ -74,10 +74,12 @@ class _BranchSelectState extends BaseState<BranchSelect> {
           child: Row(
             children: [
               Expanded(
-                child: KayLeeRoundedButton.button3(
+                child: KayLeeRoundedButton.button2(
                   margin: EdgeInsets.zero,
                   text: Strings.huyBo,
-                  onPressed: () {},
+                  onPressed: () {
+                    popScreen();
+                  },
                 ),
               ),
               SizedBox(width: Dimens.px8),
@@ -85,7 +87,9 @@ class _BranchSelectState extends BaseState<BranchSelect> {
                 child: KayLeeRoundedButton.normal(
                   margin: EdgeInsets.zero,
                   text: Strings.xacNhan,
-                  onPressed: () {},
+                  onPressed: () {
+                    popScreen();
+                  },
                 ),
               ),
             ],
