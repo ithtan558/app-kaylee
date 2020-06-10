@@ -138,7 +138,7 @@ class Strings {
   static const String tenDichVu = 'Tên dịch vụ';
   static const String nhapTenDichVu = 'Nhập tên dịch vụ';
   static const String tenTiengAnh = 'Tên tiếng anh (tuỳ chọn)';
-  static const String nhapTenTiengAnh = 'Nhập tên tiếng anh của dịch vụ';
+  static const String nhapTenTiengAnhDichVu = 'Nhập tên tiếng anh của dịch vụ';
   static const String thoiGianPhucVu = 'Thời gian phục vụ';
   static const String loaiDichVu = 'Loại dịch vụ';
   static const String chonLoaiDichVu = 'Chọn loại dịch vụ';
@@ -146,8 +146,20 @@ class Strings {
   static const String nhapMoTaDichVu = 'Nhập mô tả dịch vụ';
   static const String chinhSua = 'Chỉnh sửa';
   static const String diaDiemBanSanPham = 'Địa điểm bán sản phẩm';
+  static const String diaDiemSuDungDichVu = 'Địa điểm sử dụng dịch vụ';
   static const String huyBo = 'Huỷ bỏ';
   static const String giaTien = 'Giá tiền';
+  static const String taoSanPhamMoi = 'Tạo sản phẩm mới';
+  static const String tenSanPham = 'Tên sản phẩm';
+  static const String nhapTenSanPham = 'Nhập tên sản phẩm';
+  static const String nhapTenTiengAnhSanPham =
+      'Nhập tên tiếng anh của sản phẩm';
+  static const String ngayBatDau = 'Ngày bắt đầu';
+  static const String ngayKetThuc = 'Ngày kết thúc';
+  static const String chonNgay = 'Chọn ngày';
+  static const String loaiSanPham = 'Loại sản phẩm';
+  static const String chonLoaiSanPham = 'Chọn loại sản phẩm';
+  static const String nhapMoTaSanPham = 'Nhập mô tả sản phẩm';
 
   Strings._();
 }

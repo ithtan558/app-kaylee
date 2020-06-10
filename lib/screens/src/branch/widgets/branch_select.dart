@@ -27,6 +27,8 @@ class _BranchSelectState extends BaseState<BranchSelect> {
 
   @override
   Widget build(BuildContext context) {
+    print('[TUNG] ===> build');
+
     return Column(
       children: [
         KayleeText.normal18W700(
@@ -60,8 +62,8 @@ class _BranchSelectState extends BaseState<BranchSelect> {
                   );
                 },
                 separatorBuilder: (c, _) => SizedBox(
-                      height: Dimens.px8,
-                    ),
+                  height: Dimens.px8,
+                ),
                 itemCount: 10 + 1)),
         Container(
           height: Dimens.px1,
