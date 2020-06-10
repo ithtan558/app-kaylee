@@ -165,6 +165,7 @@ class Strings {
   static const String taoNhanVienMoi = 'Tạo nhân viên mới';
   static const String chucVu = 'Chức vụ';
   static const String chucVuTaiNoiLamViec = 'Chức vụ tại nơi làm việc';
+  static const String taoKhachHangMoi = 'Tạo khách hàng mới';
 
   Strings._();
 }

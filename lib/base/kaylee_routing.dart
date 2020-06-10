@@ -67,6 +67,8 @@ mixin KayleeRouting on Routing {
         return CreateNewProdScreen.newInstance();
       case CreateNewStaffScreen:
         return CreateNewStaffScreen.newInstance();
+      case CreateNewCustomerScreen:
+        return CreateNewCustomerScreen.newInstance();
       default:
         return SplashScreen.newInstance();
     }

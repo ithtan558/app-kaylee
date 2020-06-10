@@ -1,7 +1,8 @@
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
-import 'package:kaylee/screens/src/customer_list/widgets/customer_item.dart';
+import 'package:kaylee/screens/screens.dart';
+import 'package:kaylee/screens/src/customer/list/widgets/customer_item.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class CustomerListScreen extends StatefulWidget {
@@ -40,7 +41,9 @@ class _CustomerListScreenState extends BaseState<CustomerListScreen> {
         itemCount: 10,
       ),
       floatingActionButton: KayleeFloatButton(
-        onTap: () {},
+        onTap: () {
+          pushScreen(PageIntent(context, CreateNewCustomerScreen));
+        },
       ),
     );
   }
