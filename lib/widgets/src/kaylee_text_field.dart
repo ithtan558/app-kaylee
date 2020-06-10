@@ -148,11 +148,12 @@ class KayleeTextField extends StatelessWidget {
         ),
       );
 
-  factory KayleeTextField.price({String title,
-    String hint,
-    String error,
-    TextEditingController controller,
-    TextInputAction textInputAction}) =>
+  factory KayleeTextField.price(
+          {String title,
+          String hint,
+          String error,
+          TextEditingController controller,
+          TextInputAction textInputAction}) =>
       KayleeTextField(
         title: title,
         textInput: PriceInputField(
@@ -195,7 +196,10 @@ class KayleeTextField extends StatelessWidget {
             margin: EdgeInsets.only(bottom: Dimens.px8),
             child: Text(
               title,
-              style: ScreenUtils.textTheme(context).bodyText2.copyWith(
+              style: ScreenUtils
+                  .textTheme(context)
+                  .bodyText2
+                  .copyWith(
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -539,7 +543,10 @@ class _NormalInputFieldState extends BaseState<NormalInputField> {
                       enabled: !widget.isStaticTField,
                       onSubmitted: (_) {
                         if (widget.textInputAction == TextInputAction.next) {
-                          widget.nextFocusNode?.requestFocus();
+                          if (widget.nextFocusNode.isNotNull) {
+                            widget.nextFocusNode.requestFocus();
+                          } else
+                            FocusScope.of(context).nextFocus();
                         }
                       },
                       obscureText: isPassTField ? !showPass : false,
