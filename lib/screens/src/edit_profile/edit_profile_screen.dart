@@ -69,28 +69,22 @@ class _EditProfileScreenState extends BaseState<EditProfileScreen> {
                 child: Row(
                   children: [
                     Expanded(
-                      child: KayleeTextField(
+                      child: KayleeTextField.normal(
                         title: Strings.ho,
-                        textInput: NormalInputField(
-                          hint: Strings.hoHint,
-                          controller: lastNameTfController,
-                          textInputAction: TextInputAction.next,
-                          focusNode: lastNameFocus,
-                          nextFocusNode: nameFocus,
-                        ),
+                        hint: Strings.hoHint,
+                        controller: lastNameTfController,
+                        textInputAction: TextInputAction.next,
+                        focusNode: lastNameFocus,
                       ),
                     ),
-                    SizedBox(width: Dimens.px16),
+                    SizedBox(width: Dimens.px8),
                     Expanded(
-                      child: KayleeTextField(
+                      child: KayleeTextField.normal(
                         title: Strings.ten,
-                        textInput: NormalInputField(
-                          hint: Strings.tenHint,
-                          controller: nameTfController,
-                          textInputAction: TextInputAction.next,
-                          focusNode: nameFocus,
-                          nextFocusNode: addrFocus,
-                        ),
+                        hint: Strings.tenHint,
+                        controller: nameTfController,
+                        textInputAction: TextInputAction.next,
+                        focusNode: nameFocus,
                       ),
                     ),
                   ],
@@ -128,18 +122,18 @@ class _EditProfileScreenState extends BaseState<EditProfileScreen> {
                   ),
                 ),
               ),
-              KayleeFullAddressInput(
-                title: Strings.diaChiHienTai,
-              ),
-              KayleeTextField(
-                title: Strings.matKhau,
-                textInput: ButtonInputField(
-                  initText: 'Cập nhật 19:00 12/03/2019',
-                  buttonText: Strings.doiMatKhau,
-                  onTap: () {
-                    pushScreen(PageIntent(context, ResetPassScreen));
-                  },
+              Padding(
+                padding: const EdgeInsets.only(bottom: Dimens.px16),
+                child: KayleeFullAddressInput(
+                  title: Strings.diaChiHienTai,
                 ),
+              ),
+              KayleeTextField.selection(
+                title: Strings.matKhau,
+                buttonText: Strings.doiMatKhau,
+                onPress: () {
+                  pushScreen(PageIntent(context, ResetPassScreen));
+                },
               ),
             ],
           ),

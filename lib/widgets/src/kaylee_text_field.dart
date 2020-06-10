@@ -196,12 +196,9 @@ class KayleeTextField extends StatelessWidget {
             margin: EdgeInsets.only(bottom: Dimens.px8),
             child: Text(
               title,
-              style: ScreenUtils
-                  .textTheme(context)
-                  .bodyText2
-                  .copyWith(
-                fontWeight: FontWeight.w500,
-              ),
+              style: ScreenUtils.textTheme(context).bodyText2.copyWith(
+                    fontWeight: FontWeight.w500,
+                  ),
             ),
           ),
         if (textInput.isNotNull) textInput,
@@ -340,60 +337,6 @@ class _SearchInputFieldState extends BaseState<SearchInputField> {
                 color: ColorsRes.hintText,
               ),
             )),
-      ),
-    );
-  }
-}
-
-class ButtonInputField extends StatefulWidget {
-  final String hint;
-  final String initText;
-  final String buttonText;
-  final Function() onTap;
-
-  ButtonInputField({this.hint, this.initText, this.onTap, this.buttonText});
-
-  @override
-  _ButtonInputFieldState createState() => new _ButtonInputFieldState();
-}
-
-class _ButtonInputFieldState extends BaseState<ButtonInputField> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFieldBorderWrapper(
-      Row(
-        children: <Widget>[
-          Expanded(
-            child: Padding(
-              padding:
-                  const EdgeInsets.only(left: Dimens.px16, right: Dimens.px14),
-              child: KayleeText(
-                widget.initText ?? '',
-                maxLines: 1,
-                style: TextStyles.normal16W400,
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-              right: Dimens.px4,
-            ),
-            child: KayleeFlatButton(
-              title: widget.buttonText,
-              onPress: widget.onTap,
-            ),
-          )
-        ],
       ),
     );
   }
