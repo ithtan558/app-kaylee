@@ -26,4 +26,5 @@ export 'src/service/list/service_list_screen.dart';
 export 'src/signin/signin_screen.dart';
 export 'src/signup/signup_screen.dart';
 export 'src/splash/splash_screen.dart';
-export 'src/staff_list/staff_list_screen.dart';
+export 'src/staff/list/staff_list_screen.dart';
+export 'src/staff/list/staff_list_screen.dart';

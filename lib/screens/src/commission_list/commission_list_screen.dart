@@ -1,7 +1,7 @@
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
-import 'package:kaylee/screens/src/staff_list/widgets/staff_item.dart';
+import 'package:kaylee/screens/src/staff/list/widgets/staff_item.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class CommissionListScreen extends StatefulWidget {
