@@ -31,11 +31,10 @@ class _KayleeFullAddressInputState extends BaseState<KayleeFullAddressInput> {
       padding: widget.padding ?? EdgeInsets.zero,
       child: Column(
         children: [
-          KayleeTextField(
+          KayleeTextField.normal(
             title: widget.title,
-            textInput: NormalInputField(
-              hint: Strings.diaChiHienTaiHint,
-            ),
+            hint: Strings.diaChiHienTaiHint,
+            textInputAction: TextInputAction.done,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: Dimens.px8),
@@ -59,7 +58,7 @@ class _KayleeFullAddressInputState extends BaseState<KayleeFullAddressInput> {
           ),
           KayleeTextField(
             textInput: PickerInputField(
-              hint: Strings.chonTinhTpHint,
+              hint: Strings.tinhTpHint,
             ),
           ),
         ],

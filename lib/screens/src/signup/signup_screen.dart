@@ -93,14 +93,12 @@ class _SignUpScreenState extends BaseState<SignUpScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(
                     horizontal: Dimens.px16, vertical: Dimens.px16),
-                child: KayleeTextField(
+                child: KayleeTextField.phoneInput(
                   title: Strings.soDienThoai,
-                  textInput: PhoneInputField(
-                    controller: _phoneTController,
-                    focusNode: _phoneFocus,
-                    nextFocusNode: _passFocus,
-                    textInputAction: TextInputAction.next,
-                  ),
+                  controller: _phoneTController,
+                  focusNode: _phoneFocus,
+                  nextFocusNode: _passFocus,
+                  textInputAction: TextInputAction.next,
                 ),
               ),
               Padding(

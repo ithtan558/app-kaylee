@@ -115,16 +115,19 @@ class KayleeTextField extends StatelessWidget {
 
   factory KayleeTextField.phoneInput(
           {String title,
+          String hint,
           FocusNode focusNode,
-          FocusNode nexFocusNode,
+          FocusNode nextFocusNode,
           TextEditingController controller,
+          TextInputAction textInputAction,
           String error}) =>
       KayleeTextField(
-        title: title,
+        title: title ?? Strings.soDienThoai,
         textInput: PhoneInputField(
-          textInputAction: TextInputAction.next,
+          hint: hint ?? Strings.phoneLimitHint,
+          textInputAction: textInputAction,
           focusNode: focusNode,
-          nextFocusNode: nexFocusNode,
+          nextFocusNode: nextFocusNode,
           controller: controller,
           error: error,
         ),
@@ -492,6 +495,7 @@ class _NormalInputFieldState extends BaseState<NormalInputField> {
                             FocusScope.of(context).nextFocus();
                         }
                       },
+                      autofocus: false,
                       obscureText: isPassTField ? !showPass : false,
                       textAlign: widget.textAlign ?? TextAlign.start,
                       textAlignVertical: TextAlignVertical.top,
@@ -557,6 +561,7 @@ class _NormalInputFieldState extends BaseState<NormalInputField> {
 
 class PhoneInputField extends StatefulWidget {
   final String initText;
+  final String hint;
   final String error;
   final FocusNode focusNode;
   final FocusNode nextFocusNode;
@@ -564,19 +569,20 @@ class PhoneInputField extends StatefulWidget {
   final TextInputAction textInputAction;
   final bool isStaticTField;
 
-  factory PhoneInputField.static({String initText}) => PhoneInputField(
+  factory PhoneInputField.static({String initText}) =>
+      PhoneInputField(
         initText: initText,
         isStaticTField: true,
       );
 
-  PhoneInputField(
-      {this.error,
-      this.focusNode,
-      this.controller,
-      this.nextFocusNode,
-      this.textInputAction = TextInputAction.done,
-      this.isStaticTField = false,
-      this.initText});
+  PhoneInputField({this.error,
+    this.focusNode,
+    this.controller,
+    this.nextFocusNode,
+    this.textInputAction = TextInputAction.done,
+    this.isStaticTField = false,
+    this.initText,
+    this.hint});
 
   @override
   _PhoneInputFieldState createState() => _PhoneInputFieldState();
@@ -632,14 +638,17 @@ class _PhoneInputFieldState extends State<PhoneInputField> {
                 textInputAction: widget.textInputAction,
                 onSubmitted: (_) {
                   if (widget.textInputAction == TextInputAction.next) {
-                    widget.nextFocusNode?.requestFocus();
+                    if (widget.nextFocusNode.isNotNull) {
+                      widget.nextFocusNode.requestFocus();
+                    } else
+                      FocusScope.of(context).nextFocus();
                   }
                 },
                 decoration: InputDecoration(
                     focusedBorder: InputBorder.none,
                     disabledBorder: InputBorder.none,
                     border: InputBorder.none,
-                    hintText: Strings.phoneLimitHint,
+                    hintText: widget.hint,
                     contentPadding: const EdgeInsets.only(
                         left: Dimens.px14,
                         right: Dimens.px16,

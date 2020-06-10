@@ -55,14 +55,11 @@ class _SignInScreenState extends BaseState<SignInScreen> {
             Container(
                 margin: EdgeInsets.only(top: Dimens.px80),
                 alignment: Alignment.centerLeft,
-                child: KayleeTextField(
-                  title: Strings.soDienThoai,
-                  textInput: PhoneInputField(
-                    textInputAction: TextInputAction.next,
-                    focusNode: _phoneFNode,
-                    nextFocusNode: _passFNode,
-                    controller: _phoneTController,
-                  ),
+                child: KayleeTextField.phoneInput(
+                  textInputAction: TextInputAction.next,
+                  focusNode: _phoneFNode,
+                  nextFocusNode: _passFNode,
+                  controller: _phoneTController,
                 )),
             Container(
                 margin: EdgeInsets.only(top: Dimens.px16),

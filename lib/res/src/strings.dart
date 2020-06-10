@@ -68,6 +68,7 @@ class Strings {
   static const String namSinh = 'Năm sinh';
   static const String queQuan = 'Quê quán';
   static const String chonTinhTpHint = 'Chọn Tỉnh/Thành phố';
+  static const String tinhTpHint = 'Tỉnh/Thành phố';
   static const String phuong = 'Phường';
   static const String quan = 'Quận';
   static const String doiMatKhau = 'Đổi mật khẩu';
@@ -160,6 +161,10 @@ class Strings {
   static const String loaiSanPham = 'Loại sản phẩm';
   static const String chonLoaiSanPham = 'Chọn loại sản phẩm';
   static const String nhapMoTaSanPham = 'Nhập mô tả sản phẩm';
+  static const String diaDiemPhucVu = 'Địa điểm phục vụ';
+  static const String taoNhanVienMoi = 'Tạo nhân viên mới';
+  static const String chucVu = 'Chức vụ';
+  static const String chucVuTaiNoiLamViec = 'Chức vụ tại nơi làm việc';
 
   Strings._();
 }

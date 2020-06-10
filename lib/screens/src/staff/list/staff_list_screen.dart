@@ -1,6 +1,7 @@
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/staff/list/widgets/staff_item.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
@@ -40,7 +41,9 @@ class _StaffListScreenState extends BaseState<StaffListScreen> {
         itemCount: 10,
       ),
       floatingActionButton: KayleeFloatButton(
-        onTap: () {},
+        onTap: () {
+          pushScreen(PageIntent(context, CreateNewStaffScreen));
+        },
       ),
     );
   }

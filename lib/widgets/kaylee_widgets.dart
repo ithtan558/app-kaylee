@@ -23,6 +23,7 @@ export 'src/kaylee_dialog.dart';
 export 'src/kaylee_dismissible.dart';
 export 'src/kaylee_flat_button.dart';
 export 'src/kaylee_float_button.dart';
+export 'src/kaylee_full_address_input.dart';
 export 'src/kaylee_grid_view.dart';
 export 'src/kaylee_image_info_layout.dart';
 export 'src/kaylee_image_picker.dart';
@@ -33,7 +34,6 @@ export 'src/kaylee_rounded_button.dart';
 export 'src/kaylee_scrollview.dart';
 export 'src/kaylee_text.dart';
 export 'src/kaylee_text_field.dart';
-export 'src/kaylle_full_address_input.dart';
 export 'src/label_divider_view.dart';
 export 'src/policy_checkbox.dart';
 

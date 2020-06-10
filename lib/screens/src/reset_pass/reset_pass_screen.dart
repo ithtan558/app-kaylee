@@ -44,11 +44,8 @@ class _ResetPassScreenState extends BaseState<ResetPassScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              KayleeTextField(
-                title: Strings.soDienThoai,
-                textInput: PhoneInputField(
-                  controller: _phoneTFController,
-                ),
+              KayleeTextField.phoneInput(
+                controller: _phoneTFController,
               ),
               KayLeeRoundedButton.normal(
                 margin: EdgeInsets.only(top: Dimens.px16),
