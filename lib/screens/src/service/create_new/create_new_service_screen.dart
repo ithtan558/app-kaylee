@@ -50,7 +50,7 @@ class _CreateNewServiceScreenState extends BaseState<CreateNewServiceScreen> {
             Padding(
               padding: const EdgeInsets.only(bottom: Dimens.px16),
               child: KayleeTextField.selection(
-                title: Strings.diaDiemBanSanPham,
+                title: Strings.diaDiemSuDungDichVu,
                 content: '(0) địa điểm được chọn',
                 buttonText: Strings.chinhSua,
                 onPress: () {
