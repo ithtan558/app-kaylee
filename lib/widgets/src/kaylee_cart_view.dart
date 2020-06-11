@@ -3,16 +3,18 @@ import 'package:kaylee/res/res.dart';
 
 class KayleeCartView extends StatelessWidget {
   final Widget child;
+  final double itemHeight;
+  final BorderRadius borderRadius;
 
-  KayleeCartView({@required this.child});
+  KayleeCartView({@required this.child, this.itemHeight, this.borderRadius});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: double.infinity,
+      height: itemHeight,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(Dimens.px10),
+        borderRadius: borderRadius ?? BorderRadius.circular(Dimens.px10),
         boxShadow: [
           BoxShadow(
               color: ColorsRes.shadow,
@@ -24,7 +26,7 @@ class KayleeCartView extends StatelessWidget {
       child: Container(
         clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(Dimens.px10),
+          borderRadius: borderRadius ?? BorderRadius.circular(Dimens.px10),
           color: Colors.white,
         ),
         child: child,

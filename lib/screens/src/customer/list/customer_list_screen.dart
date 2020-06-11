@@ -1,3 +1,4 @@
+import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
@@ -34,7 +35,11 @@ class _CustomerListScreenState extends BaseState<CustomerListScreen> {
       body: KayleeGridView(
         itemBuilder: (context, index) {
           return CustomerItem(
-            onTap: () {},
+            onTap: () {
+              pushScreen(PageIntent(context, CreateNewCustomerScreen,
+                  bundle: Bundle(NewCustomerScreenData(
+                      openFrom: OpenFrom.customerListItem))));
+            },
           );
         },
         childAspectRatio: 103 / 229,

@@ -14,20 +14,21 @@ class CustomerItem extends StatelessWidget {
       children: <Widget>[
         KayleeInkwell(
           child: KayleeCartView(
+              itemHeight: double.infinity,
               child: KayleeImageInfoLayout(
-            imageView: Image.network(
-              'https://s3.amazonaws.com/tinycards/image/c5b605125dd3a4685555bf56c37555ed',
-              fit: BoxFit.cover,
-            ),
-            infoView: Padding(
-              padding: const EdgeInsets.only(top: Dimens.px16),
-              child: KayleeText.hyper16W500(
-                'Willard Chavez',
-                maxLines: 2,
-                textAlign: TextAlign.center,
-              ),
-            ),
-          )),
+                imageView: Image.network(
+                  'https://s3.amazonaws.com/tinycards/image/c5b605125dd3a4685555bf56c37555ed',
+                  fit: BoxFit.cover,
+                ),
+                infoView: Padding(
+                  padding: const EdgeInsets.only(top: Dimens.px16),
+                  child: KayleeText.hyper16W500(
+                    'Willard Chavez',
+                    maxLines: 2,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              )),
           onTap: onTap,
         ),
         Positioned(

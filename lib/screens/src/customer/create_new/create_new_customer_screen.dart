@@ -3,6 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
+enum OpenFrom { customerListItem, cashier }
+
+class NewCustomerScreenData {
+  OpenFrom openFrom;
+
+  NewCustomerScreenData({this.openFrom});
+}
+
 class CreateNewCustomerScreen extends StatefulWidget {
   factory CreateNewCustomerScreen.newInstance() = CreateNewCustomerScreen._;
 
@@ -14,6 +22,15 @@ class CreateNewCustomerScreen extends StatefulWidget {
 }
 
 class _CreateNewCustomerScreenState extends BaseState<CreateNewCustomerScreen> {
+  OpenFrom openFrom;
+
+  @override
+  void initState() {
+    super.initState();
+    final data = bundle.args as NewCustomerScreenData;
+    openFrom = data?.openFrom;
+  }
+
   @override
   Widget build(BuildContext context) {
     return UnFocusWidget(
@@ -22,19 +39,24 @@ class _CreateNewCustomerScreenState extends BaseState<CreateNewCustomerScreen> {
           title: Strings.taoKhachHangMoi,
           actions: <Widget>[
             KayleeAppBarAction.hyperText(
-              title: Strings.tao,
+              title: openFrom == OpenFrom.customerListItem
+                  ? Strings.luu
+                  : Strings.tao,
               onTap: () {},
             ),
           ],
         ),
-        padding: const EdgeInsets.all(Dimens.px16),
         child: Column(
           children: [
-            KayleeImagePicker(
-              onImageSelect: (file, {existedImage}) {},
-            ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: Dimens.px16),
+              child: KayleeImagePicker(
+                onImageSelect: (file, {existedImage}) {},
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                  left: Dimens.px16, right: Dimens.px16, bottom: Dimens.px16),
               child: Row(
                 children: [
                   Expanded(
@@ -56,7 +78,8 @@ class _CreateNewCustomerScreenState extends BaseState<CreateNewCustomerScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom: Dimens.px16),
+              padding: const EdgeInsets.only(
+                  left: Dimens.px16, right: Dimens.px16, bottom: Dimens.px16),
               child: Row(
                 children: [
                   Expanded(
@@ -76,30 +99,49 @@ class _CreateNewCustomerScreenState extends BaseState<CreateNewCustomerScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom: Dimens.px16),
+              padding: const EdgeInsets.only(
+                  left: Dimens.px16, right: Dimens.px16, bottom: Dimens.px16),
               child: KayleeTextField.picker(
                 title: Strings.queQuan,
                 hint: Strings.chonTinhTpHint,
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom: Dimens.px16),
+              padding: const EdgeInsets.only(
+                  left: Dimens.px16, right: Dimens.px16, bottom: Dimens.px16),
               child: KayleeFullAddressInput(
                 title: Strings.diaChiHienTai,
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom: Dimens.px16),
+              padding: const EdgeInsets.only(
+                  left: Dimens.px16, right: Dimens.px16, bottom: Dimens.px16),
               child: KayleeTextField.phoneInput(
                 textInputAction: TextInputAction.next,
               ),
             ),
-            KayleeTextField.normal(
-              title: Strings.emailTuyChon,
-              hint: Strings.emailTuyChonHint,
-              textInputType: TextInputType.emailAddress,
-              textInputAction: TextInputAction.next,
+            Padding(
+              padding: const EdgeInsets.only(
+                  left: Dimens.px16, right: Dimens.px16, bottom: Dimens.px16),
+              child: KayleeTextField.normal(
+                title: Strings.emailTuyChon,
+                hint: Strings.emailTuyChonHint,
+                textInputType: TextInputType.emailAddress,
+                textInputAction: TextInputAction.next,
+              ),
             ),
+            if (openFrom == OpenFrom.cashier)
+              KayLeeRoundedButton.normal(
+                text: Strings.taoDonHang,
+                onPressed: () {},
+                margin: const EdgeInsets.all(Dimens.px8),
+              ),
+            if (openFrom == OpenFrom.customerListItem)
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: Dimens.px16, bottom: Dimens.px32),
+                child: HyperLinkText(text: Strings.xoaKhachHang, onTap: () {}),
+              )
           ],
         ),
       ),

@@ -163,6 +163,7 @@ class KayleeProdItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return KayleeCartView(
+      itemHeight: double.infinity,
       child: KayleeImageInfoLayout(
         imageView: Image.network(
           data.image,

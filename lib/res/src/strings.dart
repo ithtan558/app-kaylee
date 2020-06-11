@@ -166,6 +166,8 @@ class Strings {
   static const String chucVu = 'Chức vụ';
   static const String chucVuTaiNoiLamViec = 'Chức vụ tại nơi làm việc';
   static const String taoKhachHangMoi = 'Tạo khách hàng mới';
+  static const String taoDonHang = 'Tạo đơn hàng';
+  static const String chiTiet = 'Chi tiết';
 
   Strings._();
 }
