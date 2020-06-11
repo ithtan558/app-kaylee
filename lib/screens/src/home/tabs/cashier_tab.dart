@@ -62,7 +62,6 @@ class _CashierTabState extends BaseState<CashierTab> {
               ),
             ),
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
                   color: ColorsRes.textFieldBorder,
@@ -78,15 +77,15 @@ class _CashierTabState extends BaseState<CashierTab> {
                     padding: const EdgeInsets.only(
                       left: Dimens.px16,
                       right: Dimens.px16,
-                      top: Dimens.px16,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         KayleeText.normal16W500('Thu Nguyen'),
                         Padding(
                           padding:
-                          const EdgeInsets.symmetric(vertical: Dimens.px8),
+                              const EdgeInsets.symmetric(vertical: Dimens.px8),
                           child: KayleeText.hint16W400(
                             'Giờ bắt đầu 18:00',
                             maxLines: 1,
