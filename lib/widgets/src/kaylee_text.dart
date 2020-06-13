@@ -198,7 +198,7 @@ class KayleePriceUnitText extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.only(left: Dimens.px8),
-          child: KayleeText('đ', style: TextStyles.hint16W400),
+          child: KayleeText.hint16W400('đ'),
         )
       ],
     );
@@ -213,9 +213,9 @@ class KayleeText extends StatelessWidget {
   final TextOverflow overflow;
 
   factory KayleeText.hint16W400(String text,
-      {TextAlign textAlign = TextAlign.start,
-        int maxLines,
-        TextOverflow overflow}) =>
+          {TextAlign textAlign = TextAlign.start,
+          int maxLines,
+          TextOverflow overflow}) =>
       KayleeText(
         text,
         textAlign: textAlign,
@@ -364,6 +364,18 @@ class KayleeText extends StatelessWidget {
         text,
         textAlign: textAlign,
         style: TextStyles.error12W400,
+        maxLines: maxLines,
+        overflow: overflow,
+      );
+
+  factory KayleeText.error16W400(String text,
+      {TextAlign textAlign = TextAlign.start,
+        int maxLines,
+        TextOverflow overflow}) =>
+      KayleeText(
+        text,
+        textAlign: textAlign,
+        style: TextStyles.error16W400,
         maxLines: maxLines,
         overflow: overflow,
       );

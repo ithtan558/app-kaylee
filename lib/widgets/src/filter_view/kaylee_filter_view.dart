@@ -8,8 +8,9 @@ import 'package:kaylee/widgets/kaylee_widgets.dart';
 class KayleeFilterView extends StatefulWidget {
   final Widget child;
   final String title;
+  final KayleeFloatButton floatingActionButton;
 
-  KayleeFilterView({this.title, this.child});
+  KayleeFilterView({this.title, this.child, this.floatingActionButton});
 
   @override
   _KayleeFilterViewState createState() => new _KayleeFilterViewState();
@@ -49,6 +50,12 @@ class _KayleeFilterViewState extends BaseState<KayleeFilterView> {
                 child: widget.child ?? Container(),
               ),
             ),
+            if (widget.floatingActionButton.isNotNull)
+              Positioned(
+                child: widget.floatingActionButton,
+                right: Dimens.px24,
+                bottom: Dimens.px24,
+              ),
             _FilterView(
               title: widget.title,
               controller: _filterViewController,

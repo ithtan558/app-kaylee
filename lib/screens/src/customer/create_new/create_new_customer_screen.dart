@@ -35,16 +35,11 @@ class _CreateNewCustomerScreenState extends BaseState<CreateNewCustomerScreen> {
   Widget build(BuildContext context) {
     return UnFocusWidget(
       child: KayleeScrollview(
-        appBar: KayleeAppBar(
+        appBar: KayleeAppBar.hyperTextAction(
           title: Strings.taoKhachHangMoi,
-          actions: <Widget>[
-            KayleeAppBarAction.hyperText(
-              title: openFrom == OpenFrom.customerListItem
-                  ? Strings.luu
-                  : Strings.tao,
-              onTap: () {},
-            ),
-          ],
+          actionTitle:
+              openFrom == OpenFrom.customerListItem ? Strings.luu : Strings.tao,
+          onActionClick: () {},
         ),
         child: Column(
           children: [

@@ -43,14 +43,10 @@ class _EditProfileScreenState extends BaseState<EditProfileScreen> {
   Widget build(BuildContext context) {
     return UnFocusWidget(
       child: Scaffold(
-        appBar: KayleeAppBar(
+        appBar: KayleeAppBar.hyperTextAction(
           title: Strings.chinhSuThongTinCaNhan,
-          actions: [
-            KayleeAppBarAction.hyperText(
-              title: Strings.luu,
-              onTap: () {},
-            ),
-          ],
+          onActionClick: () {},
+          actionTitle: Strings.luu,
         ),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(Dimens.px16),

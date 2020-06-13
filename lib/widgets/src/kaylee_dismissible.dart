@@ -1,3 +1,5 @@
+import 'package:anth_package/anth_package.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
@@ -5,8 +7,14 @@ import 'package:kaylee/widgets/kaylee_widgets.dart';
 class KayleeDismissible extends StatelessWidget {
   final Widget child;
   final void Function(DismissDirection direction) onDismissed;
+  final AsyncValueGetter<bool> confirmDismiss;
 
-  KayleeDismissible({Key key, this.child, this.onDismissed}) : super(key: key);
+  KayleeDismissible(
+      {@required Key key,
+      @required this.child,
+      this.onDismissed,
+      this.confirmDismiss})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +22,12 @@ class KayleeDismissible extends StatelessWidget {
       key: key,
       direction: DismissDirection.endToStart,
       background: Container(),
+      confirmDismiss: (direction) async {
+        if (confirmDismiss.isNotNull) {
+          return await confirmDismiss();
+        }
+        return true;
+      },
       secondaryBackground: Container(
         padding: EdgeInsets.symmetric(horizontal: Dimens.px24),
         alignment: Alignment.centerRight,
@@ -27,10 +41,9 @@ class KayleeDismissible extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.only(top: Dimens.px4),
-              child: KayleeText(
+              child: KayleeText.error16W400(
                 Strings.xoa,
                 maxLines: 1,
-                style: TextStyles.error16W500,
               ),
             )
           ],

@@ -146,6 +146,7 @@ class Strings {
   static const String moTa = 'Mô tả';
   static const String nhapMoTaDichVu = 'Nhập mô tả dịch vụ';
   static const String chinhSua = 'Chỉnh sửa';
+  static const String chinhSuaDonHang = 'Chỉnh sửa đơn hàng';
   static const String diaDiemBanSanPham = 'Địa điểm bán sản phẩm';
   static const String diaDiemSuDungDichVu = 'Địa điểm sử dụng dịch vụ';
   static const String huyBo = 'Huỷ bỏ';
@@ -168,6 +169,17 @@ class Strings {
   static const String taoKhachHangMoi = 'Tạo khách hàng mới';
   static const String taoDonHang = 'Tạo đơn hàng';
   static const String chiTiet = 'Chi tiết';
+  static const String themMuc = 'Thêm mục';
+  static const String danhSachDichVu = 'Danh sách dịch vụ';
+  static const String nhanVienThucThien = 'Nhân viên thực hiện';
+  static const String chonNhanVienTrongDs = 'Chọn nhân viên trong danh sách';
+  static const String chuSuDungDichVu = 'Chưa sử dụng dịch vụ';
+  static const String thanhToan = 'Thanh toán';
+  static const String giamGia = 'Giảm giá';
+  static const String themDichVu = 'Thêm dịch vụ';
+  static const String tongChiPhi = 'Tổng chi phí';
+  static const String thanhTien = 'Thành tiền';
+  static const String chonChiNhanhTrongDs = 'Chọn chi nhánh trong danh sách';
 
   Strings._();
 }

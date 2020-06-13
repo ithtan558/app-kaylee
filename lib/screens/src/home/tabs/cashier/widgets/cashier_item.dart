@@ -1,53 +1,18 @@
-import 'package:core_plugin/core_plugin.dart';
+import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
-class CashierTab extends StatefulWidget {
-  factory CashierTab.newInstance() = CashierTab._;
-
-  CashierTab._();
-
-  @override
-  _CashierTabState createState() => new _CashierTabState();
-}
-
-class _CashierTabState extends BaseState<CashierTab> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
+class CashierItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return KayleeFilterView(
-      title: Strings.thuNgan,
-      child: ListView.separated(
-          padding: EdgeInsets.all(Dimens.px16),
-          itemBuilder: (c, index) {
-            return _buildCashierItem();
-          },
-          separatorBuilder: (c, index) {
-            return Container(
-              height: Dimens.px16,
-            );
-          },
-          itemCount: 10),
-    );
-  }
-
-  Widget _buildCashierItem() {
     return KayleeCartView(
       borderRadius: BorderRadius.circular(Dimens.px5),
       child: Column(
         children: [
           Container(
-            height: screenSize.height * 109 / 667,
+            height: ScreenUtils.screenSize(context).height * 109 / 667,
             clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
@@ -129,7 +94,9 @@ class _CashierTabState extends BaseState<CashierTab> {
                     child: KayLeeRoundedButton.normal(
                   text: Strings.chiTiet,
                   margin: EdgeInsets.zero,
-                  onPressed: () {},
+                  onPressed: () {
+                    push(PageIntent(context, CreateNewOrderScreen));
+                  },
                 )),
               ],
             ),

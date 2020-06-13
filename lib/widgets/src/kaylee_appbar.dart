@@ -7,6 +7,29 @@ import 'package:kaylee/res/src/text_styles.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class KayleeAppBar extends StatelessWidget implements PreferredSizeWidget {
+  factory KayleeAppBar.hyperTextAction(
+          {String title,
+          Widget titleWidget,
+          Widget leading,
+          bool Function() onBack,
+          String actionTitle,
+          VoidCallback onActionClick,
+          IconData leadingIcon}) =>
+      KayleeAppBar(
+        title: title,
+        titleWidget: titleWidget,
+        leading: leading,
+        onBack: onBack,
+        actions: [
+          if (actionTitle.isNotNullAndEmpty)
+            KayleeAppBarAction.hyperText(
+              title: actionTitle,
+              onTap: onActionClick,
+            )
+        ],
+        leadingIcon: leadingIcon,
+      );
+
   final String title;
   final Widget titleWidget;
   final Widget leading;
@@ -29,19 +52,19 @@ class KayleeAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: leading.isNotNull
           ? leading
           : canPop
-              ? FlatButton(
-                  shape: CircleBorder(),
-                  child: Icon(
-                    leadingIcon ?? CupertinoIcons.back,
-                    color: ColorsRes.hintText,
-                  ),
-                  onPressed: () {
-                    if (onBack == null || onBack()) {
-                      pop(PageIntent(context, null));
-                    }
-                  },
-                )
-              : Container(),
+          ? FlatButton(
+        shape: CircleBorder(),
+        child: Icon(
+          leadingIcon ?? CupertinoIcons.back,
+          color: ColorsRes.hintText,
+        ),
+        onPressed: () {
+          if (onBack == null || onBack()) {
+            pop(PageIntent(context, null));
+          }
+        },
+      )
+          : Container(),
       automaticallyImplyLeading: false,
       title: titleWidget ??
           KayleeText(

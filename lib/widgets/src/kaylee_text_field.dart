@@ -46,6 +46,24 @@ class KayleeTextField extends StatelessWidget {
         ),
       );
 
+  factory KayleeTextField.unitSelection({
+    String title,
+    String hint,
+    FocusNode focusNode,
+    FocusNode nextFocusNode,
+    TextEditingController controller,
+    TextInputAction textInputAction,
+    String error,
+  }) =>
+      KayleeTextField(
+        title: title,
+        textInput: UnitInputField(
+          hint: hint,
+          error: error,
+          textInputAction: textInputAction,
+        ),
+      );
+
   factory KayleeTextField.multiLine({
     String title,
     String hint,
@@ -242,27 +260,27 @@ class _PriceInputFieldState extends BaseState<PriceInputField> {
           children: [
             Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
-                  child: TextField(
-                    keyboardType: TextInputType.number,
-                    textInputAction: widget.textInputAction,
-                    style: TextStyles.normal16W400,
-                    maxLines: 1,
-                    minLines: 1,
-                    controller: widget.controller,
-                    onSubmitted: (value) {
-                      if (widget.textInputAction == TextInputAction.next) {
-                        FocusScope.of(context).nextFocus();
-                      }
-                    },
-                    decoration: InputDecoration(
-                        enabledBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        border: InputBorder.none,
-                        hintText: widget.hint,
-                        hintStyle: TextStyles.hint16W400),
-                  ),
-                )),
+              padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
+              child: TextField(
+                keyboardType: TextInputType.number,
+                textInputAction: widget.textInputAction,
+                style: TextStyles.normal16W400,
+                maxLines: 1,
+                minLines: 1,
+                controller: widget.controller,
+                onSubmitted: (value) {
+                  if (widget.textInputAction == TextInputAction.next) {
+                    FocusScope.of(context).nextFocus();
+                  }
+                },
+                decoration: InputDecoration(
+                    enabledBorder: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    border: InputBorder.none,
+                    hintText: widget.hint,
+                    hintStyle: TextStyles.hint16W400),
+              ),
+            )),
             Container(
               width: Dimens.px1,
               margin: const EdgeInsets.symmetric(vertical: Dimens.px4),
@@ -802,6 +820,84 @@ class _SelectInputTextFieldState extends BaseState<SelectInputTextField> {
             )
           ],
         ),
+      )),
+      error: widget.error,
+    );
+  }
+}
+
+class UnitInputField extends StatefulWidget {
+  final String hint;
+  final String error;
+  final TextInputAction textInputAction;
+
+  UnitInputField({this.hint, this.error, this.textInputAction});
+
+  @override
+  _UnitInputFieldState createState() => _UnitInputFieldState();
+}
+
+class _UnitInputFieldState extends BaseState<UnitInputField> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _ErrorText(
+      child: TextFieldBorderWrapper(Row(
+        children: [
+          Expanded(
+            flex: (2510 / 343).round(),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
+              child: TextField(
+                style: TextStyles.normal16W400,
+                keyboardType: TextInputType.number,
+                textInputAction: widget.textInputAction,
+                onSubmitted: (value) {
+                  if (widget.textInputAction == TextInputAction.next) {
+                    FocusScope.of(context).nextFocus();
+                  }
+                },
+                decoration: InputDecoration(
+                    enabledBorder: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    border: InputBorder.none,
+                    hintText: widget.hint,
+                    hintStyle: TextStyles.hint16W400),
+              ),
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: Dimens.px4),
+            width: Dimens.px1,
+            color: ColorsRes.textFieldBorder,
+          ),
+          Expanded(
+            flex: (910 / 343).round(),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  KayleeText.normal16W400('%'),
+                  Image.asset(
+                    Images.ic_down,
+                    height: Dimens.px16,
+                    width: Dimens.px16,
+                  )
+                ],
+              ),
+            ),
+          )
+        ],
       )),
       error: widget.error,
     );

@@ -18,14 +18,10 @@ class _CreateNewProdScreenState extends BaseState<CreateNewProdScreen> {
   Widget build(BuildContext context) {
     return UnFocusWidget(
       child: KayleeScrollview(
-        appBar: KayleeAppBar(
+        appBar: KayleeAppBar.hyperTextAction(
           title: Strings.taoSanPhamMoi,
-          actions: <Widget>[
-            KayleeAppBarAction.hyperText(
-              title: Strings.tao,
-              onTap: () {},
-            ),
-          ],
+          actionTitle: Strings.tao,
+          onActionClick: () {},
         ),
         padding: const EdgeInsets.all(Dimens.px16),
         child: Column(

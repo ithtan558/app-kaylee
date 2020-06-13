@@ -50,7 +50,7 @@ class _HistoryDetailScreenState extends BaseState<HistoryDetailScreen> {
               ),
             ),
             LabelDividerView.normal(
-              title: 'Danh sách dịch vụ',
+              title: Strings.danhSachDichVu,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),

@@ -47,6 +47,7 @@ class TextStyles {
   static final TextStyle button16W500 = button.merge(_f16.merge(_w500));
 
   static final TextStyle error12W400 = error.merge(_f12.merge(_w400));
+  static final TextStyle error16W400 = error.merge(_f16.merge(_w400));
   static final TextStyle error16W500 = error.merge(_f16.merge(_w500));
 
   static final TextStyle textFieldBorder12W400 =

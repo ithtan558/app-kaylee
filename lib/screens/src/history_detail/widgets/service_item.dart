@@ -23,7 +23,7 @@ class ServiceItem extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: Dimens.px16),
             child: KayleeTextField.staticWidget(
-              title: 'Nhân viên thực hiện',
+              title: Strings.nhanVienThucThien,
               initText: 'Maria',
             ),
           ),
