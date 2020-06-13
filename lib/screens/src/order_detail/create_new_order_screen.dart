@@ -1,7 +1,7 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
-import 'package:kaylee/screens/src/order_detail/widgets/service_item.dart';
+import 'package:kaylee/screens/src/order_detail/widgets/order_item.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class CreateNewOrderScreen extends StatefulWidget {
@@ -62,7 +62,7 @@ class _CreateNewOrderScreenState extends BaseState<CreateNewOrderScreen> {
                   ),
                 );
               else if (index - 3 < services.length)
-                return ServiceItem(
+                return OrderItem(
                   index: services.elementAt(index - 3),
                   onDismissed: (item) {
                     setState(() {

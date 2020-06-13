@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
-class ServiceItem extends StatefulWidget {
+class OrderItem extends StatefulWidget {
   final int index;
   final ValueChanged onDismissed;
 
-  ServiceItem({@required this.index, this.onDismissed});
+  OrderItem({@required this.index, this.onDismissed});
 
   @override
-  _ServiceItemState createState() => _ServiceItemState();
+  _OrderItemState createState() => _OrderItemState();
 }
 
-class _ServiceItemState extends BaseState<ServiceItem> {
+class _OrderItemState extends BaseState<OrderItem> {
   @override
   Widget build(BuildContext context) {
     return KayleeDismissible(
