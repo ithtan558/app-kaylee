@@ -53,6 +53,7 @@ class _CreateNewOrderScreenState extends BaseState<CreateNewOrderScreen> {
                 onPress: () async {
                   await showKayleeDialog(
                     context: context,
+                    showShadow: true,
                     child: Padding(
                       padding: const EdgeInsets.all(Dimens.px16),
                       child: Column(
