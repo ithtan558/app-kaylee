@@ -25,7 +25,7 @@ class _CartScreenState extends BaseState<CartScreen> {
     super.dispose();
   }
 
-  final list = [for (int i = 1; i <= 4; i++) i];
+  final list = [for (int i = 0; i <= 3; i++) i];
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class _CartScreenState extends BaseState<CartScreen> {
                     return CartProdItem(
                       onRemoveItem: () {
                         setState(() {
-                          list.removeWhere((e) => e == index);
+                          list.removeWhere((e) => e == list.elementAt(index));
                         });
                       },
                     );
