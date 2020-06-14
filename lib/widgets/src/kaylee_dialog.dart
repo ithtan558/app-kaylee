@@ -203,10 +203,11 @@ Future<void> showKayleeDialog(
       transitionDuration: Duration(milliseconds: 200));
 }
 
-Future showKayleeAlertDialog({@required BuildContext context,
-  String title,
-  String content,
-  List<KayleeAlertDialogAction> actions}) {
+Future showKayleeAlertDialog(
+    {@required BuildContext context,
+    String title,
+    String content,
+    List<KayleeAlertDialogAction> actions}) {
   return showCupertinoDialog(
       context: context,
       builder: (c) {
@@ -378,6 +379,8 @@ class _KayleeAmountChangingViewState
                     current = value;
                     setState(() {});
                   },
+                  btnIconColor: Colors.white,
+                  btnBgColor: ColorsRes.button,
                 ),
               ),
             ],
@@ -418,7 +421,8 @@ class _KayleeAmountChangingViewState
                         widget.onRemoveItem();
                       }
                     } else {
-                      if (widget.onAmountChange.isNotNull) {
+                      if (widget.onAmountChange.isNotNull &&
+                          current != widget.initAmount) {
                         widget.onAmountChange(current);
                       }
                     }

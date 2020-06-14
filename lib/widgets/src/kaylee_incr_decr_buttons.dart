@@ -10,9 +10,16 @@ class KayleeIncrAndDecrButtons extends StatefulWidget {
   final int amountMin;
   final int amountMax;
   final ValueSetter<int> onAmountChange;
+  final Color btnBgColor;
+  final Color btnIconColor;
 
   KayleeIncrAndDecrButtons(
-      {this.initAmount, this.onAmountChange, this.amountMin, this.amountMax});
+      {this.initAmount,
+      this.onAmountChange,
+      this.amountMin,
+      this.amountMax,
+      this.btnBgColor,
+      this.btnIconColor});
 
   @override
   _KayleeIncrAndDecrButtonsState createState() =>
@@ -36,9 +43,10 @@ class _KayleeIncrAndDecrButtonsState
 
   @override
   Widget build(BuildContext context) {
-    final decrBtnColor = current == (widget.amountMin ?? _kDefaultAmountMin)
-        ? ColorsRes.button1
-        : ColorsRes.button;
+    final decrBtnColor = widget.btnBgColor ??
+        (current == (widget.amountMin ?? _kDefaultAmountMin)
+            ? ColorsRes.button1
+            : ColorsRes.button);
     return Row(
       children: <Widget>[
         GestureDetector(
@@ -55,14 +63,14 @@ class _KayleeIncrAndDecrButtonsState
             width: Dimens.px32,
             height: Dimens.px32,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: widget.btnBgColor ?? Colors.white,
               shape: BoxShape.circle,
               border: Border.fromBorderSide(
                   BorderSide(color: decrBtnColor, width: 1.5)),
             ),
             child: Icon(
               Icons.remove,
-              color: decrBtnColor,
+              color: widget.btnIconColor ?? decrBtnColor,
               size: Dimens.px16,
             ),
           ),
@@ -89,14 +97,14 @@ class _KayleeIncrAndDecrButtonsState
             width: Dimens.px32,
             height: Dimens.px32,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: widget.btnBgColor ?? Colors.white,
               shape: BoxShape.circle,
               border: Border.fromBorderSide(
                   BorderSide(color: ColorsRes.button, width: 1.5)),
             ),
             child: Icon(
               Icons.add,
-              color: ColorsRes.button,
+              color: widget?.btnIconColor ?? ColorsRes.button,
               size: Dimens.px16,
             ),
           ),
