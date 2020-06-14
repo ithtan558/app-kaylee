@@ -180,6 +180,7 @@ class Strings {
   static const String tongChiPhi = 'Tổng chi phí';
   static const String thanhTien = 'Thành tiền';
   static const String chonChiNhanhTrongDs = 'Chọn chi nhánh trong danh sách';
+  static const String chonMucPhuHopVoiYeuCau = 'Chọn mục phù hợp với yêu cầu';
 
   Strings._();
 }

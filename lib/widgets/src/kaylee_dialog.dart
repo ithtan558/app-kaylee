@@ -163,6 +163,7 @@ Future<void> showKayleeGo2SettingDialog({
 Future<void> showKayleeDialog(
     {@required BuildContext context,
     bool barrierDismissible = true,
+    bool showFullScreen = false,
     BorderRadius borderRadius,
     EdgeInsets margin,
     Widget child}) {
@@ -170,19 +171,18 @@ Future<void> showKayleeDialog(
       context: context,
       barrierLabel: '',
       pageBuilder: (c, anim1, anim2) {
-        return Center(
-          child: IntrinsicHeight(
-            child: Container(
-              clipBehavior: Clip.antiAlias,
-              margin:
-              margin ?? const EdgeInsets.symmetric(horizontal: Dimens.px24),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius:
-                  BorderRadius.circular(borderRadius ?? Dimens.px10)),
-              child: child ?? Container(),
-            ),
-          ),
+        final c = Container(
+          clipBehavior: Clip.antiAlias,
+          margin: margin ?? const EdgeInsets.symmetric(horizontal: Dimens.px24),
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: borderRadius ?? BorderRadius.circular(Dimens.px10)),
+          child: child ?? Container(),
+        );
+        return SafeArea(
+          top: true,
+          bottom: true,
+          child: showFullScreen ? c : Center(child: IntrinsicHeight(child: c)),
         );
       },
       barrierColor: ColorsRes.dialogDimBg,

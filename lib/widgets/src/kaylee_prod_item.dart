@@ -1,3 +1,4 @@
+import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
@@ -5,19 +6,17 @@ import 'package:kaylee/widgets/kaylee_widgets.dart';
 class KayleeProdItemView extends StatelessWidget {
   final Widget child;
 
-  factory KayleeProdItemView.canTap(
-          {@required KayleeProdItemData data, void Function() onTap}) =>
+  factory KayleeProdItemView.canTap({@required KayleeProdItemData data, void Function() onTap}) =>
       KayleeProdItemView(
           child: KayleeInkwell(
-        child: KayleeProdItem(
-          data: data,
-        ),
-        onTap: onTap,
-      ));
+            child: KayleeProdItem(
+              data: data,
+            ),
+            onTap: onTap,
+          ));
 
-  factory KayleeProdItemView.canSelect(
-          {@required KayleeProdItemData data,
-          void Function(bool selected) onSelect}) =>
+  factory KayleeProdItemView.canSelect({@required KayleeProdItemData data,
+    void Function(bool selected) onSelect}) =>
       KayleeProdItemView(
         child: _SelectingProItemView(
           data: data,
@@ -43,11 +42,12 @@ class _SelectingProItemView extends StatefulWidget {
   _SelectingProItemViewState createState() => _SelectingProItemViewState();
 }
 
-class _SelectingProItemViewState extends State<_SelectingProItemView>
+class _SelectingProItemViewState extends BaseState<_SelectingProItemView>
     with SingleTickerProviderStateMixin {
   AnimationController animController;
   Animation<double> scaleAnim;
   Animation<double> opacityAnim;
+  bool isSelected;
 
   @override
   void initState() {
@@ -84,6 +84,10 @@ class _SelectingProItemViewState extends State<_SelectingProItemView>
           animController.reverse();
         } else if (animController.isDismissed) {
           animController.forward();
+        }
+        isSelected = !isSelected;
+        if (widget.onSelect.isNotNull) {
+          widget.onSelect(isSelected);
         }
       },
       child: Container(
