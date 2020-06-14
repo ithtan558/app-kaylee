@@ -183,6 +183,8 @@ class Strings {
   static const String chonMucPhuHopVoiYeuCau = 'Chọn mục phù hợp với yêu cầu';
   static const String xoaKhoiGioHang = 'Xoá khỏi giỏ hàng';
   static const String taoDonHangMoi = 'Tạo đơn hàng mới';
+  static const String chinhSuaChiNhanh = 'Chỉnh sửa chi nhánh';
+  static const String xoaChiNhanh = 'Xoá chi nhánh';
 
   Strings._();
 }

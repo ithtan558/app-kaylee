@@ -4,6 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
+class NewBranchScreenData {
+  final BranchScreenOpenFrom openFrom;
+
+  NewBranchScreenData({this.openFrom});
+}
+
+enum BranchScreenOpenFrom { branchItem, addNewBranchBtn }
+
 class CreateNewBranchScreen extends StatefulWidget {
   factory CreateNewBranchScreen.newInstance() = CreateNewBranchScreen._;
 
@@ -13,19 +21,32 @@ class CreateNewBranchScreen extends StatefulWidget {
   _CreateNewBranchScreenState createState() => _CreateNewBranchScreenState();
 }
 
-class _CreateNewBranchScreenState extends State<CreateNewBranchScreen> {
+class _CreateNewBranchScreenState extends BaseState<CreateNewBranchScreen> {
+  BranchScreenOpenFrom openFrom;
+
+  @override
+  void initState() {
+    super.initState();
+    final data = bundle.args as NewBranchScreenData;
+    openFrom = data?.openFrom;
+  }
+
   @override
   Widget build(BuildContext context) {
     return UnFocusWidget(
       child: Scaffold(
         appBar: KayleeAppBar(
-          title: Strings.taoChiNhanhMoi,
+          title: openFrom == BranchScreenOpenFrom.branchItem
+              ? Strings.chinhSuaChiNhanh
+              : Strings.taoChiNhanhMoi,
           actions: <Widget>[
             Container(
               alignment: Alignment.centerRight,
               padding: const EdgeInsets.only(right: Dimens.px16),
               child: HyperLinkText(
-                text: Strings.tao,
+                text: openFrom == BranchScreenOpenFrom.branchItem
+                    ? Strings.luu
+                    : Strings.tao,
                 onTap: () {},
               ),
             )
@@ -84,7 +105,16 @@ class _CreateNewBranchScreenState extends State<CreateNewBranchScreen> {
                     )
                   ],
                 ),
-              )
+              ),
+              if (openFrom == BranchScreenOpenFrom.branchItem)
+                Padding(
+                  padding: const EdgeInsets.only(
+                      top: Dimens.px16, bottom: Dimens.px32),
+                  child: HyperLinkText(
+                    text: Strings.xoaChiNhanh,
+                    onTap: () {},
+                  ),
+                )
             ],
           ),
         ),

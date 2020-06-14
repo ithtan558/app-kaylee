@@ -1,3 +1,4 @@
+import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
@@ -39,7 +40,11 @@ class _BranchListScreenState extends BaseState<BranchListScreen> {
               left: Dimens.px16),
           itemBuilder: (c, index) {
             return BranchItem(
-              onTap: () {},
+              onTap: () {
+                pushScreen(PageIntent(context, CreateNewBranchScreen,
+                    bundle: Bundle(NewBranchScreenData(
+                        openFrom: BranchScreenOpenFrom.branchItem))));
+              },
             );
           },
           separatorBuilder: (c, index) {
@@ -50,7 +55,9 @@ class _BranchListScreenState extends BaseState<BranchListScreen> {
           itemCount: 10),
       floatingActionButton: KayleeFloatButton(
         onTap: () {
-          pushScreen(PageIntent(context, CreateNewBranchScreen));
+          pushScreen(PageIntent(context, CreateNewBranchScreen,
+              bundle: Bundle(NewBranchScreenData(
+                  openFrom: BranchScreenOpenFrom.addNewBranchBtn))));
         },
       ),
     );
