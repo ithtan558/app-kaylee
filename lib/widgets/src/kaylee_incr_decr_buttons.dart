@@ -25,6 +25,7 @@ class _KayleeIncrAndDecrButtonsState
 
   @override
   Widget build(BuildContext context) {
+    final decrBtnColor = current == 1 ? ColorsRes.button1 : ColorsRes.button;
     return Row(
       children: <Widget>[
         GestureDetector(
@@ -42,11 +43,11 @@ class _KayleeIncrAndDecrButtonsState
               color: Colors.white,
               shape: BoxShape.circle,
               border: Border.fromBorderSide(
-                  BorderSide(color: ColorsRes.button1, width: 1.5)),
+                  BorderSide(color: decrBtnColor, width: 1.5)),
             ),
             child: Icon(
               Icons.remove,
-              color: ColorsRes.button1,
+              color: decrBtnColor,
               size: Dimens.px16,
             ),
           ),
