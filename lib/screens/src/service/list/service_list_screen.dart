@@ -59,7 +59,9 @@ class _ServiceListScreenState extends BaseState<ServiceListScreen> {
       ),
       floatingActionButton: KayleeFloatButton(
         onTap: () {
-          pushScreen(PageIntent(context, CreateNewServiceScreen));
+          pushScreen(PageIntent(context, CreateNewServiceScreen,
+              bundle: Bundle(NewServiceScreenData(
+                  openFrom: ServiceScreenOpenFrom.addNewServiceBtn))));
         },
       ),
     );
@@ -89,7 +91,11 @@ class _ServiceListScreenState extends BaseState<ServiceListScreen> {
                   image:
                       'https://img.jakpost.net/c/2019/12/09/2019_12_09_83333_1575827116._large.jpg',
                   price: 600000),
-              onTap: () {},
+              onTap: () {
+                pushScreen(PageIntent(context, CreateNewServiceScreen,
+                    bundle: Bundle(NewServiceScreenData(
+                        openFrom: ServiceScreenOpenFrom.serviceItem))));
+              },
             );
           },
           itemCount: 4,

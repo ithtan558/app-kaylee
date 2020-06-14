@@ -4,6 +4,14 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/branch/widgets/branch_select.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
+class NewServiceScreenData {
+  final ServiceScreenOpenFrom openFrom;
+
+  NewServiceScreenData({this.openFrom});
+}
+
+enum ServiceScreenOpenFrom { serviceItem, addNewServiceBtn }
+
 class CreateNewServiceScreen extends StatefulWidget {
   factory CreateNewServiceScreen.newInstance() = CreateNewServiceScreen._;
 
@@ -14,13 +22,26 @@ class CreateNewServiceScreen extends StatefulWidget {
 }
 
 class _CreateNewServiceScreenState extends BaseState<CreateNewServiceScreen> {
+  ServiceScreenOpenFrom openFrom;
+
+  @override
+  void initState() {
+    super.initState();
+    final data = bundle.args as NewServiceScreenData;
+    openFrom = data?.openFrom;
+  }
+
   @override
   Widget build(BuildContext context) {
     return UnFocusWidget(
       child: KayleeScrollview(
         appBar: KayleeAppBar.hyperTextAction(
-          title: Strings.taoDichVuMoi,
-          actionTitle: Strings.tao,
+          title: openFrom == ServiceScreenOpenFrom.serviceItem
+              ? Strings.chinhSuaDichVu
+              : Strings.taoDichVuMoi,
+          actionTitle: openFrom == ServiceScreenOpenFrom.serviceItem
+              ? Strings.luu
+              : Strings.tao,
           onActionClick: () {},
         ),
         padding: const EdgeInsets.all(Dimens.px16),
@@ -95,6 +116,15 @@ class _CreateNewServiceScreenState extends BaseState<CreateNewServiceScreen> {
               fieldHeight: (screenSize.width - Dimens.px32) / (343 / 233),
               contentPadding: EdgeInsets.symmetric(vertical: Dimens.px16),
             ),
+            if (openFrom == ServiceScreenOpenFrom.serviceItem)
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: Dimens.px32, bottom: Dimens.px16),
+                child: HyperLinkText(
+                  text: Strings.xoaDichVu,
+                  onTap: () {},
+                ),
+              )
           ],
         ),
       ),
