@@ -4,20 +4,22 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class OrderItem extends StatefulWidget {
-  final int index;
+  final dynamic data;
   final ValueChanged onDismissed;
 
-  OrderItem({@required this.index, this.onDismissed});
+  OrderItem({@required this.data, this.onDismissed});
 
   @override
   _OrderItemState createState() => _OrderItemState();
 }
 
 class _OrderItemState extends BaseState<OrderItem> {
+  int amount = 4;
+
   @override
   Widget build(BuildContext context) {
     return KayleeDismissible(
-      key: ValueKey(widget.index),
+      key: ValueKey(widget.data),
       confirmDismiss: () async {
         final result = await showKayleeAlertDialog(
             context: context,
@@ -42,7 +44,7 @@ class _OrderItemState extends BaseState<OrderItem> {
       },
       onDismissed: (direction) {
         if (widget.onDismissed.isNotNull) {
-          widget.onDismissed(widget.index);
+          widget.onDismissed(widget.data);
         }
       },
       child: Padding(
@@ -55,30 +57,44 @@ class _OrderItemState extends BaseState<OrderItem> {
               child: Row(
                 children: [
                   Container(
-                    width: Dimens.px32,
-                    height: Dimens.px32,
-                    alignment: Alignment.center,
                     margin: const EdgeInsets.only(right: Dimens.px8),
-                    clipBehavior: Clip.antiAlias,
-                    child: KayleeText.normal16W400('x1'),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(Dimens.px5),
-                        border: Border.fromBorderSide(BorderSide(
-                            color: ColorsRes.hyper, width: Dimens.px1))),
+                    child: KayleeRoundBorder.hyper(
+                      alignment: Alignment.center,
+                      borderRadius: BorderRadius.circular(Dimens.px5),
+                      borderWidth: Dimens.px1,
+                      child: KayleeText.normal16W400('x$amount'),
+                      padding: const EdgeInsets.all(Dimens.px8),
+                      onTap: () async {
+                        await showKayleeAmountChangingDialog(
+                          context: context,
+                          title: 'Tóc kiểu thôn nữ',
+                          initAmount: amount,
+                          onAmountChange: (value) {
+                            setState(() {
+                              amount = value;
+                            });
+                          },
+                          onRemoveItem: () {
+                            if (widget.onDismissed.isNotNull) {
+                              widget.onDismissed(widget.data);
+                            }
+                          },
+                        );
+                      },
+                    ),
                   ),
                   Expanded(
                       child: KayleeText.normal16W400(
-                    "Cắt tóc",
-                    maxLines: 1,
-                  )),
+                        "Cắt tóc",
+                        maxLines: 1,
+                      )),
                   KayleePriceUnitText(90000)
                 ],
               ),
             ),
             Padding(
               padding:
-                  const EdgeInsets.only(bottom: Dimens.px16, top: Dimens.px8),
+              const EdgeInsets.only(bottom: Dimens.px16, top: Dimens.px8),
               child: KayleeTextField.picker(
                 title: Strings.nhanVienThucThien,
                 hint: Strings.chonNhanVienTrongDs,

@@ -14,7 +14,7 @@ class CreateNewOrderScreen extends StatefulWidget {
 }
 
 class _CreateNewOrderScreenState extends BaseState<CreateNewOrderScreen> {
-  final services = [for (int i = 0; i <= 5; i++) i];
+  final services = [for (int i = 0; i <= 2; i++) i];
 
   @override
   Widget build(BuildContext context) {
@@ -118,10 +118,10 @@ class _CreateNewOrderScreenState extends BaseState<CreateNewOrderScreen> {
                 );
               else if (index - 3 < services.length)
                 return OrderItem(
-                  index: services.elementAt(index - 3),
-                  onDismissed: (item) {
+                  data: services.elementAt(index - 3),
+                  onDismissed: (value) {
                     setState(() {
-                      services.removeWhere((e) => e == item);
+                      services.removeWhere((e) => e == value);
                     });
                   },
                 );

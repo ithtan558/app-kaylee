@@ -24,11 +24,10 @@ class _CartProdItemState extends BaseState<CartProdItem> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           KayleeRoundBorder.hyper(
-            width: Dimens.px32,
-            height: Dimens.px32,
             bgColor: Colors.white,
             borderWidth: Dimens.px1,
             borderRadius: BorderRadius.circular(Dimens.px5),
+            padding: const EdgeInsets.all(Dimens.px8),
             child: KayleeText.normal16W400('x$amount'),
             alignment: Alignment.center,
             onTap: () async {
