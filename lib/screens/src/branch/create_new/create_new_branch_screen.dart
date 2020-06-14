@@ -34,7 +34,7 @@ class _CreateNewBranchScreenState extends BaseState<CreateNewBranchScreen> {
   @override
   Widget build(BuildContext context) {
     return UnFocusWidget(
-      child: Scaffold(
+      child: KayleeScrollview(
         appBar: KayleeAppBar(
           title: openFrom == BranchScreenOpenFrom.branchItem
               ? Strings.chinhSuaChiNhanh
@@ -52,71 +52,69 @@ class _CreateNewBranchScreenState extends BaseState<CreateNewBranchScreen> {
             )
           ],
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              KayleeImagePicker(
-                type: KayleeImagePickerType.banner,
+        child: Column(
+          children: [
+            KayleeImagePicker(
+              type: KayleeImagePickerType.banner,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(Dimens.px16),
+              child: KayleeTextField.normal(
+                title: Strings.tenCuaHang,
+                hint: Strings.tenCuaHangHint,
               ),
-              Padding(
-                padding: const EdgeInsets.all(Dimens.px16),
-                child: KayleeTextField.normal(
-                  title: Strings.tenCuaHang,
-                  hint: Strings.tenCuaHangHint,
-                ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                  left: Dimens.px16, right: Dimens.px16, bottom: Dimens.px16),
+              child: KayleeTextField.website(
+                title: Strings.tenMienWebSiteCuaBan,
+                textInputAction: TextInputAction.next,
               ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    left: Dimens.px16, right: Dimens.px16, bottom: Dimens.px16),
-                child: KayleeTextField.website(
-                  title: Strings.tenMienWebSiteCuaBan,
-                  textInputAction: TextInputAction.next,
-                ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                  left: Dimens.px16, right: Dimens.px16, bottom: Dimens.px16),
+              child: KayleeFullAddressInput(
+                title: Strings.diaChi,
               ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    left: Dimens.px16, right: Dimens.px16, bottom: Dimens.px16),
-                child: KayleeFullAddressInput(
-                  title: Strings.diaChi,
-                ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                  left: Dimens.px16, right: Dimens.px16, bottom: Dimens.px16),
+              child: KayleeTextField.phoneInput(
+                title: Strings.soDienThoai,
               ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    left: Dimens.px16, right: Dimens.px16, bottom: Dimens.px16),
-                child: KayleeTextField.phoneInput(
-                  title: Strings.soDienThoai,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    left: Dimens.px16, right: Dimens.px16, bottom: Dimens.px16),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: KayleeTextField.picker(
-                        title: Strings.gioMoCua,
-                      ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                  left: Dimens.px16, right: Dimens.px16, bottom: Dimens.px16),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: KayleeTextField.picker(
+                      title: Strings.gioMoCua,
                     ),
-                    SizedBox(width: Dimens.px8),
-                    Expanded(
-                      child: KayleeTextField.picker(
-                        title: Strings.gioDongCua,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              if (openFrom == BranchScreenOpenFrom.branchItem)
-                Padding(
-                  padding: const EdgeInsets.only(
-                      top: Dimens.px16, bottom: Dimens.px32),
-                  child: HyperLinkText(
-                    text: Strings.xoaChiNhanh,
-                    onTap: () {},
                   ),
-                )
-            ],
-          ),
+                  SizedBox(width: Dimens.px8),
+                  Expanded(
+                    child: KayleeTextField.picker(
+                      title: Strings.gioDongCua,
+                    ),
+                  )
+                ],
+              ),
+            ),
+            if (openFrom == BranchScreenOpenFrom.branchItem)
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: Dimens.px16, bottom: Dimens.px32),
+                child: HyperLinkText(
+                  text: Strings.xoaChiNhanh,
+                  onTap: () {},
+                ),
+              )
+          ],
         ),
       ),
     );
