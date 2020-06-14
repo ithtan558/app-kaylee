@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
-enum OpenFrom { customerListItem, cashier }
+enum CustomerScreenOpenFrom { customerListItem, cashier }
 
 class NewCustomerScreenData {
-  OpenFrom openFrom;
+  CustomerScreenOpenFrom openFrom;
 
   NewCustomerScreenData({this.openFrom});
 }
@@ -22,7 +22,7 @@ class CreateNewCustomerScreen extends StatefulWidget {
 }
 
 class _CreateNewCustomerScreenState extends BaseState<CreateNewCustomerScreen> {
-  OpenFrom openFrom;
+  CustomerScreenOpenFrom openFrom;
 
   @override
   void initState() {
@@ -37,8 +37,9 @@ class _CreateNewCustomerScreenState extends BaseState<CreateNewCustomerScreen> {
       child: KayleeScrollview(
         appBar: KayleeAppBar.hyperTextAction(
           title: Strings.taoKhachHangMoi,
-          actionTitle:
-              openFrom == OpenFrom.customerListItem ? Strings.luu : Strings.tao,
+          actionTitle: openFrom == CustomerScreenOpenFrom.customerListItem
+              ? Strings.luu
+              : Strings.tao,
           onActionClick: () {},
         ),
         child: Column(
@@ -125,13 +126,13 @@ class _CreateNewCustomerScreenState extends BaseState<CreateNewCustomerScreen> {
                 textInputAction: TextInputAction.next,
               ),
             ),
-            if (openFrom == OpenFrom.cashier)
+            if (openFrom == CustomerScreenOpenFrom.cashier)
               KayLeeRoundedButton.normal(
                 text: Strings.taoDonHang,
                 onPressed: () {},
                 margin: const EdgeInsets.all(Dimens.px8),
               ),
-            if (openFrom == OpenFrom.customerListItem)
+            if (openFrom == CustomerScreenOpenFrom.customerListItem)
               Padding(
                 padding: const EdgeInsets.only(
                     top: Dimens.px16, bottom: Dimens.px32),

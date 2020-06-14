@@ -95,7 +95,9 @@ class CashierItem extends StatelessWidget {
                   text: Strings.chiTiet,
                   margin: EdgeInsets.zero,
                   onPressed: () {
-                    push(PageIntent(context, CreateNewOrderScreen));
+                    push(PageIntent(context, CreateNewOrderScreen,
+                        bundle: Bundle(NewOrderScreenData(
+                            openFrom: OrderScreenOpenFrom.detailButton))));
                   },
                 )),
               ],

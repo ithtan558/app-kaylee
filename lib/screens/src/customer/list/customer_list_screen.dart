@@ -38,7 +38,7 @@ class _CustomerListScreenState extends BaseState<CustomerListScreen> {
             onTap: () {
               pushScreen(PageIntent(context, CreateNewCustomerScreen,
                   bundle: Bundle(NewCustomerScreenData(
-                      openFrom: OpenFrom.customerListItem))));
+                      openFrom: CustomerScreenOpenFrom.customerListItem))));
             },
           );
         },

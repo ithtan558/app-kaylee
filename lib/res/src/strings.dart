@@ -181,8 +181,8 @@ class Strings {
   static const String thanhTien = 'Thành tiền';
   static const String chonChiNhanhTrongDs = 'Chọn chi nhánh trong danh sách';
   static const String chonMucPhuHopVoiYeuCau = 'Chọn mục phù hợp với yêu cầu';
-
   static const String xoaKhoiGioHang = 'Xoá khỏi giỏ hàng';
+  static const String taoDonHangMoi = 'Tạo đơn hàng mới';
 
   Strings._();
 }

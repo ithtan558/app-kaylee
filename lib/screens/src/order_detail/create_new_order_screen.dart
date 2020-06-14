@@ -4,6 +4,14 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/order_detail/widgets/order_item.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
+class NewOrderScreenData {
+  final OrderScreenOpenFrom openFrom;
+
+  NewOrderScreenData({this.openFrom});
+}
+
+enum OrderScreenOpenFrom { detailButton, addNewButton }
+
 class CreateNewOrderScreen extends StatefulWidget {
   factory CreateNewOrderScreen.newInstance() = CreateNewOrderScreen._;
 
@@ -15,14 +23,26 @@ class CreateNewOrderScreen extends StatefulWidget {
 
 class _CreateNewOrderScreenState extends BaseState<CreateNewOrderScreen> {
   final services = [for (int i = 0; i <= 2; i++) i];
+  OrderScreenOpenFrom openFrom;
+
+  @override
+  void initState() {
+    super.initState();
+    final data = bundle.args as NewOrderScreenData;
+    openFrom = data?.openFrom;
+  }
 
   @override
   Widget build(BuildContext context) {
     return UnFocusWidget(
       child: Scaffold(
         appBar: KayleeAppBar.hyperTextAction(
-          title: Strings.chinhSuaDonHang,
-          actionTitle: Strings.luu,
+          title: openFrom == OrderScreenOpenFrom.detailButton
+              ? Strings.chinhSuaDonHang
+              : Strings.taoDonHangMoi,
+          actionTitle: openFrom == OrderScreenOpenFrom.detailButton
+              ? Strings.luu
+              : Strings.tao,
           onActionClick: () {},
         ),
         body: ListView.builder(
