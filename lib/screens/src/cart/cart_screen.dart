@@ -66,7 +66,7 @@ class _CartScreenState extends BaseState<CartScreen> {
       child: Column(
         children: [
           KayleeTitlePriceText.normal(
-            title: 'Tổng chi phí',
+            title: Strings.tongChiPhi,
             price: 5950000,
           ),
           Padding(

@@ -65,7 +65,7 @@ class _HistoryDetailScreenState extends BaseState<HistoryDetailScreen> {
             Padding(
               padding: const EdgeInsets.only(top: Dimens.px16, left: Dimens.px16, right: Dimens.px16),
               child: KayleeTitlePriceText.normal(
-                title: 'Tổng chi phí',
+                title: Strings.tongChiPhi,
                 price: 190000,
               ),
             ),
