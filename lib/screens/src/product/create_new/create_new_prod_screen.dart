@@ -4,6 +4,14 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/branch/widgets/branch_select.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
+class NewProdScreenData {
+  final NewProdScreenOpenFrom openFrom;
+
+  NewProdScreenData({this.openFrom});
+}
+
+enum NewProdScreenOpenFrom { prodItem, addNewProdBtn }
+
 class CreateNewProdScreen extends StatefulWidget {
   factory CreateNewProdScreen.newInstance() = CreateNewProdScreen._;
 
@@ -14,13 +22,26 @@ class CreateNewProdScreen extends StatefulWidget {
 }
 
 class _CreateNewProdScreenState extends BaseState<CreateNewProdScreen> {
+  NewProdScreenOpenFrom openFrom;
+
+  @override
+  void initState() {
+    super.initState();
+    final data = bundle.args as NewProdScreenData;
+    openFrom = data?.openFrom;
+  }
+
   @override
   Widget build(BuildContext context) {
     return UnFocusWidget(
       child: KayleeScrollview(
         appBar: KayleeAppBar.hyperTextAction(
-          title: Strings.taoSanPhamMoi,
-          actionTitle: Strings.tao,
+          title: openFrom == NewProdScreenOpenFrom.prodItem
+              ? Strings.chinhSuaSanPham
+              : Strings.taoSanPhamMoi,
+          actionTitle: openFrom == NewProdScreenOpenFrom.prodItem
+              ? Strings.luu
+              : Strings.tao,
           onActionClick: () {},
         ),
         padding: const EdgeInsets.all(Dimens.px16),
@@ -103,6 +124,15 @@ class _CreateNewProdScreenState extends BaseState<CreateNewProdScreen> {
               fieldHeight: (screenSize.width - Dimens.px32) / (343 / 233),
               contentPadding: EdgeInsets.symmetric(vertical: Dimens.px16),
             ),
+            if (openFrom == NewProdScreenOpenFrom.prodItem)
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: Dimens.px32, bottom: Dimens.px16),
+                child: HyperLinkText(
+                  text: Strings.xoaSanPham,
+                  onTap: () {},
+                ),
+              ),
           ],
         ),
       ),

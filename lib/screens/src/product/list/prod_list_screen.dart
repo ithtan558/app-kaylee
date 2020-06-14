@@ -38,7 +38,9 @@ class _ProdListScreenState extends BaseState<ProdListScreen> {
       ),
       floatingActionButton: KayleeFloatButton(
         onTap: () {
-          pushScreen(PageIntent(context, CreateNewProdScreen));
+          pushScreen(PageIntent(context, CreateNewProdScreen,
+              bundle: Bundle(NewProdScreenData(
+                  openFrom: NewProdScreenOpenFrom.addNewProdBtn))));
         },
       ),
     );
@@ -68,7 +70,11 @@ class _ProdListScreenState extends BaseState<ProdListScreen> {
                   image:
                       'https://img.jakpost.net/c/2019/12/09/2019_12_09_83333_1575827116._large.jpg',
                   price: 600000),
-              onTap: () {},
+              onTap: () {
+                pushScreen(PageIntent(context, CreateNewProdScreen,
+                    bundle: Bundle(NewProdScreenData(
+                        openFrom: NewProdScreenOpenFrom.prodItem))));
+              },
             );
           },
           itemCount: 4,

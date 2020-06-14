@@ -187,6 +187,8 @@ class Strings {
   static const String xoaChiNhanh = 'Xoá chi nhánh';
   static const String chinhSuaDichVu = 'Chỉnh sửa dịch vụ';
   static const String xoaDichVu = 'Xoá dịch vụ';
+  static const String chinhSuaSanPham = 'Chỉnh sửa sản phẩm';
+  static const String xoaSanPham = 'Xoá sản phẩm';
 
   Strings._();
 }

@@ -124,7 +124,7 @@ class _CreateNewServiceScreenState extends BaseState<CreateNewServiceScreen> {
                   text: Strings.xoaDichVu,
                   onTap: () {},
                 ),
-              )
+              ),
           ],
         ),
       ),
