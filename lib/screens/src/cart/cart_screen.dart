@@ -25,7 +25,7 @@ class _CartScreenState extends BaseState<CartScreen> {
     super.dispose();
   }
 
-  final list = [for (int i = 0; i < 4; i++) i];
+  final list = [for (int i = 1; i <= 4; i++) i];
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class _CartScreenState extends BaseState<CartScreen> {
           Expanded(
             child: ListView.separated(
                 itemBuilder: (c, index) {
-                  if (index < list.length - 1)
+                  if (index < list.length)
                     return CartProdItem(
                       onRemoveItem: () {
                         setState(() {
@@ -53,7 +53,7 @@ class _CartScreenState extends BaseState<CartScreen> {
                     margin: const EdgeInsets.symmetric(horizontal: Dimens.px16),
                     decoration:
                         new BoxDecoration(color: ColorsRes.textFieldBorder)),
-                itemCount: 3 + 1),
+                itemCount: (list?.length ?? 0) + 1),
           ),
           KayLeeRoundedButton.normal(
             text: Strings.datHang,
