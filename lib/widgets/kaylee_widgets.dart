@@ -9,7 +9,6 @@ import 'package:kaylee/res/src/strings.dart';
 import 'package:kaylee/screens/src/signup/signup_screen.dart';
 import 'package:kaylee/widgets/src/hyper_link_text.dart';
 
-export 'src/action_button.dart';
 export 'src/filter_popup_view/kaylee_filter_popup_view.dart';
 export 'src/filter_view/kaylee_filter_list_item.dart';
 export 'src/filter_view/kaylee_filter_view.dart';

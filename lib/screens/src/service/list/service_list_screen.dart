@@ -30,24 +30,25 @@ class _ServiceListScreenState extends BaseState<ServiceListScreen> {
       appBar: KayleeAppBar(
         title: Strings.danhMucDichVu,
         actions: <Widget>[
-          ActionButton(
-              child: SizedBox(
-            height: kToolbarHeight,
-            width: kToolbarHeight,
-            child: InkWell(
+          KayleeAppBarAction.button(
               onTap: () {},
-              customBorder: CircleBorder(),
-              child: Center(
-                child: ImageIcon(
-                  AssetImage(
-                    Images.ic_search,
+              child: SizedBox(
+                height: kToolbarHeight,
+                width: kToolbarHeight,
+                child: InkWell(
+                  onTap: () {},
+                  customBorder: CircleBorder(),
+                  child: Center(
+                    child: ImageIcon(
+                      AssetImage(
+                        Images.ic_search,
+                      ),
+                      color: ColorsRes.hintText,
+                      size: Dimens.px20,
+                    ),
                   ),
-                  color: ColorsRes.hintText,
-                  size: Dimens.px20,
                 ),
-              ),
-            ),
-          ))
+              ))
         ],
       ),
       body: ListView.builder(

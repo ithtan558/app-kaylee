@@ -33,7 +33,10 @@ class _BrandProdListScreenState extends BaseState<BrandProdListScreen> {
           height: Dimens.px15,
         ),
         actions: <Widget>[
-          ActionButton(
+          KayleeAppBarAction.button(
+            onTap: () {
+              pushScreen(PageIntent(context, CartScreen));
+            },
             child: Stack(
               alignment: Alignment.center,
               children: <Widget>[

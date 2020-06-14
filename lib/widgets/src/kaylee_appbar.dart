@@ -52,19 +52,19 @@ class KayleeAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: leading.isNotNull
           ? leading
           : canPop
-          ? FlatButton(
-        shape: CircleBorder(),
-        child: Icon(
-          leadingIcon ?? CupertinoIcons.back,
-          color: ColorsRes.hintText,
-        ),
-        onPressed: () {
-          if (onBack == null || onBack()) {
-            pop(PageIntent(context, null));
-          }
-        },
-      )
-          : Container(),
+              ? FlatButton(
+                  shape: CircleBorder(),
+                  child: Icon(
+                    leadingIcon ?? CupertinoIcons.back,
+                    color: ColorsRes.hintText,
+                  ),
+                  onPressed: () {
+                    if (onBack == null || onBack()) {
+                      pop(PageIntent(context, null));
+                    }
+                  },
+                )
+              : Container(),
       automaticallyImplyLeading: false,
       title: titleWidget ??
           KayleeText(
@@ -94,6 +94,22 @@ class KayleeAppBarAction extends StatelessWidget {
           child: HyperLinkText(
             text: title ?? '',
             onTap: onTap,
+          ),
+        ),
+      );
+
+  factory KayleeAppBarAction.button(
+      {@required Widget child, void Function() onTap}) =>
+      KayleeAppBarAction(
+        child: SizedBox(
+          height: kToolbarHeight,
+          width: kToolbarHeight,
+          child: InkWell(
+            onTap: onTap,
+            customBorder: CircleBorder(),
+            child: Center(
+              child: child,
+            ),
           ),
         ),
       );
