@@ -239,7 +239,7 @@ class KayleeAlertDialogAction extends StatelessWidget {
       );
 
   factory KayleeAlertDialogAction.dongY(
-      {bool Function() onPressed, bool isDefaultAction = false}) =>
+          {bool Function() onPressed, bool isDefaultAction = false}) =>
       KayleeAlertDialogAction(
         title: Strings.dongY,
         onPressed: (context) {
@@ -422,6 +422,7 @@ class _KayleeAmountChangingViewState
                       }
                     } else {
                       if (widget.onAmountChange.isNotNull &&
+                          //chỉ khi amount trước và hiện tại khác nhau mới trả callback
                           current != widget.initAmount) {
                         widget.onAmountChange(current);
                       }
