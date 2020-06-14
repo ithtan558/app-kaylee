@@ -80,7 +80,9 @@ class _ProductDetailScreenState extends BaseState<ProductDetailScreen> {
                   bottom: Dimens.px8),
               child: Row(
                 children: [
-                  KayleeIncrAndDecrButtons(),
+                  KayleeIncrAndDecrButtons(
+                    onAmountChange: (value) {},
+                  ),
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.only(left: Dimens.px16),

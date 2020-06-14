@@ -185,12 +185,14 @@ class KayleePriceText extends StatelessWidget {
 class KayleePriceUnitText extends StatelessWidget {
   final dynamic price;
   final TextStyle textStyle;
+  final MainAxisAlignment alignment;
 
-  KayleePriceUnitText(this.price, {this.textStyle});
+  KayleePriceUnitText(this.price, {this.textStyle, this.alignment});
 
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: alignment ?? MainAxisAlignment.center,
       children: [
         KayleePriceText.noUnit(
           price,
@@ -225,9 +227,9 @@ class KayleeText extends StatelessWidget {
       );
 
   factory KayleeText.hint16W500(String text,
-      {TextAlign textAlign = TextAlign.start,
-        int maxLines,
-        TextOverflow overflow}) =>
+          {TextAlign textAlign = TextAlign.start,
+          int maxLines,
+          TextOverflow overflow}) =>
       KayleeText(
         text,
         textAlign: textAlign,

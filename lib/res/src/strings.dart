@@ -182,5 +182,7 @@ class Strings {
   static const String chonChiNhanhTrongDs = 'Chọn chi nhánh trong danh sách';
   static const String chonMucPhuHopVoiYeuCau = 'Chọn mục phù hợp với yêu cầu';
 
+  static const String xoaKhoiGioHang = 'Xoá khỏi giỏ hàng';
+
   Strings._();
 }

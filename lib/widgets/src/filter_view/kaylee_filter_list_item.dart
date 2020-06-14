@@ -1,6 +1,7 @@
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class KayleeFilterListItem extends StatefulWidget {
   final String title;
@@ -27,33 +28,24 @@ class _KayleeFilterListItemState extends BaseState<KayleeFilterListItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      clipBehavior: Clip.antiAlias,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(Dimens.px5),
-        side: BorderSide(
-          width: isSelected ? Dimens.px2 : Dimens.px1,
-          color: isSelected ? ColorsRes.hyper : ColorsRes.textFieldBorder,
-        ),
-      ),
-      child: InkWell(
-        onTap: () {
-          setState(() {
-            isSelected = !isSelected;
-          });
-          if (widget.onTap != null) {
-            widget.onTap(isSelected);
-          }
-        },
-        child: Container(
-          padding: EdgeInsets.symmetric(
-              horizontal: Dimens.px8, vertical: Dimens.px9),
-          child: Text(widget.title,
-              style: theme.textTheme.bodyText2.copyWith(
-                fontSize: Dimens.px12,
-              )),
-        ),
-      ),
+    return KayleeRoundBorder(
+      borderRadius: BorderRadius.circular(Dimens.px5),
+      borderWidth: isSelected ? Dimens.px2 : Dimens.px1,
+      borderColor: isSelected ? ColorsRes.hyper : ColorsRes.textFieldBorder,
+      onTap: () {
+        setState(() {
+          isSelected = !isSelected;
+        });
+        if (widget.onTap != null) {
+          widget.onTap(isSelected);
+        }
+      },
+      padding: const EdgeInsets.symmetric(
+          horizontal: Dimens.px8, vertical: Dimens.px9),
+      child: Text(widget.title,
+          style: theme.textTheme.bodyText2.copyWith(
+            fontSize: Dimens.px12,
+          )),
     );
   }
 }

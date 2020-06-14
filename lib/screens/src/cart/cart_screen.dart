@@ -38,7 +38,14 @@ class _CartScreenState extends BaseState<CartScreen> {
           Expanded(
             child: ListView.separated(
                 itemBuilder: (c, index) {
-                  if (index < list.length - 1) return CartProdItem();
+                  if (index < list.length - 1)
+                    return CartProdItem(
+                      onRemoveItem: () {
+                        setState(() {
+                          list.removeWhere((e) => e == index);
+                        });
+                      },
+                    );
                   return buildTotalAmountInfo();
                 },
                 separatorBuilder: (_, index) => Container(

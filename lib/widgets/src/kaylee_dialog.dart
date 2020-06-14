@@ -164,6 +164,7 @@ Future<void> showKayleeDialog(
     {@required BuildContext context,
     bool barrierDismissible = true,
     bool showFullScreen = false,
+    bool showShadow = false,
     BorderRadius borderRadius,
     EdgeInsets margin,
     Widget child}) {
@@ -172,12 +173,24 @@ Future<void> showKayleeDialog(
       barrierLabel: '',
       pageBuilder: (c, anim1, anim2) {
         final c = Container(
-          clipBehavior: Clip.antiAlias,
           margin: margin ?? const EdgeInsets.symmetric(horizontal: Dimens.px24),
           decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: borderRadius ?? BorderRadius.circular(Dimens.px10)),
-          child: child ?? Container(),
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              if (showShadow)
+                BoxShadow(
+                    color: ColorsRes.shadow,
+                    offset: Offset(0, Dimens.px10),
+                    blurRadius: Dimens.px20,
+                    spreadRadius: 0)
+            ],
+          ),
+          child: Material(
+            clipBehavior: Clip.antiAlias,
+            borderRadius: borderRadius ?? BorderRadius.circular(Dimens.px10),
+            color: Colors.white,
+            child: child ?? Container(),
+          ),
         );
         return SafeArea(
           top: true,
@@ -291,3 +304,135 @@ Future showPickerPopup(
       });
 }
 
+///change amount dialog
+Future showKayleeAmountChangingDialog({
+  @required BuildContext context,
+  String title,
+  int initAmount,
+  ValueSetter<int> onAmountChange,
+  VoidCallback onRemoveItem,
+}) {
+  return showKayleeDialog(
+      context: context,
+      borderRadius: BorderRadius.circular(Dimens.px5),
+      margin: const EdgeInsets.symmetric(horizontal: Dimens.px16),
+      child: _KayleeAmountChangingView(
+        title: title,
+        initAmount: initAmount,
+        onAmountChange: onAmountChange,
+        onRemoveItem: onRemoveItem,
+      ));
+}
+
+class _KayleeAmountChangingView extends StatefulWidget {
+  final String title;
+  final int initAmount;
+  final ValueSetter<int> onAmountChange;
+  final VoidCallback onRemoveItem;
+
+  _KayleeAmountChangingView(
+      {this.title, this.initAmount, this.onAmountChange, this.onRemoveItem});
+
+  @override
+  _KayleeAmountChangingViewState createState() =>
+      _KayleeAmountChangingViewState();
+}
+
+class _KayleeAmountChangingViewState
+    extends BaseState<_KayleeAmountChangingView> {
+  int current = 1;
+
+  @override
+  void initState() {
+    super.initState();
+    current = widget.initAmount;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(
+              left: Dimens.px16,
+              right: Dimens.px24,
+              top: Dimens.px27,
+              bottom: Dimens.px32),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              KayleeText.normal16W500(
+                widget.title,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: Dimens.px16),
+                child: KayleeIncrAndDecrButtons(
+                  initAmount: current,
+                  amountMin: 0,
+                  onAmountChange: (value) {
+                    current = value;
+                    setState(() {});
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+        Container(
+          height: Dimens.px1,
+          color: ColorsRes.divider,
+        ),
+        Row(
+          children: [
+            Expanded(
+              child: FlatButton(
+                  padding: const EdgeInsets.symmetric(vertical: Dimens.px18),
+                  shape:
+                  RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+                  onPressed: () {
+                    popScreen();
+                  },
+                  child: KayleeText.normal16W400(
+                    Strings.huyBo,
+                    maxLines: 1,
+                    textAlign: TextAlign.center,
+                  )),
+            ),
+            Container(
+              width: Dimens.px1,
+              color: ColorsRes.divider,
+            ),
+            Expanded(
+              child: FlatButton(
+                  padding: const EdgeInsets.symmetric(vertical: Dimens.px18),
+                  shape:
+                  RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+                  onPressed: () {
+                    if (current <= 0) {
+                      if (widget.onRemoveItem.isNotNull) {
+                        widget.onRemoveItem();
+                      }
+                    } else {
+                      if (widget.onAmountChange.isNotNull) {
+                        widget.onAmountChange(current);
+                      }
+                    }
+                    popScreen();
+                  },
+                  child: KayleeText.hyper16W400(
+                    current == 0 ? Strings.xoaKhoiGioHang : Strings.xacNhan,
+                    maxLines: 1,
+                    textAlign: TextAlign.center,
+                  )),
+            ),
+          ],
+        )
+      ],
+    );
+  }
+}
