@@ -4,6 +4,14 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/branch/widgets/branch_select.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
+class NewStaffScreenData {
+  final NewStaffScreenOpenFrom openFrom;
+
+  NewStaffScreenData({this.openFrom});
+}
+
+enum NewStaffScreenOpenFrom { staffItem, addNewStaffBtn }
+
 class CreateNewStaffScreen extends StatefulWidget {
   factory CreateNewStaffScreen.newInstance() = CreateNewStaffScreen._;
 
@@ -14,13 +22,26 @@ class CreateNewStaffScreen extends StatefulWidget {
 }
 
 class _CreateNewStaffScreenState extends BaseState<CreateNewStaffScreen> {
+  NewStaffScreenOpenFrom openFrom;
+
+  @override
+  void initState() {
+    super.initState();
+    final data = bundle.args as NewStaffScreenData;
+    openFrom = data?.openFrom;
+  }
+
   @override
   Widget build(BuildContext context) {
     return UnFocusWidget(
       child: KayleeScrollview(
         appBar: KayleeAppBar.hyperTextAction(
-          title: Strings.taoNhanVienMoi,
-          actionTitle: Strings.tao,
+          title: openFrom == NewStaffScreenOpenFrom.staffItem
+              ? Strings.chinhSuaNhanVien
+              : Strings.taoNhanVienMoi,
+          actionTitle: openFrom == NewStaffScreenOpenFrom.staffItem
+              ? Strings.luu
+              : Strings.tao,
           onActionClick: () {},
         ),
         padding: const EdgeInsets.all(Dimens.px16),
@@ -121,6 +142,15 @@ class _CreateNewStaffScreenState extends BaseState<CreateNewStaffScreen> {
                 );
               },
             ),
+            if (openFrom == NewStaffScreenOpenFrom.staffItem)
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: Dimens.px32, bottom: Dimens.px16),
+                child: HyperLinkText(
+                  text: Strings.xoaNhanVien,
+                  onTap: () {},
+                ),
+              ),
           ],
         ),
       ),

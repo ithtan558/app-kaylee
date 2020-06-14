@@ -34,7 +34,11 @@ class _StaffListScreenState extends BaseState<StaffListScreen> {
       body: KayleeGridView(
         itemBuilder: (context, index) {
           return StaffItem(
-            onTap: () {},
+            onTap: () {
+              pushScreen(PageIntent(context, CreateNewStaffScreen,
+                  bundle: Bundle(NewStaffScreenData(
+                      openFrom: NewStaffScreenOpenFrom.staffItem))));
+            },
           );
         },
         childAspectRatio: 103 / 195,
@@ -42,7 +46,9 @@ class _StaffListScreenState extends BaseState<StaffListScreen> {
       ),
       floatingActionButton: KayleeFloatButton(
         onTap: () {
-          pushScreen(PageIntent(context, CreateNewStaffScreen));
+          pushScreen(PageIntent(context, CreateNewStaffScreen,
+              bundle: Bundle(NewStaffScreenData(
+                  openFrom: NewStaffScreenOpenFrom.addNewStaffBtn))));
         },
       ),
     );
