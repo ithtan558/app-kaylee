@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
-enum CustomerScreenOpenFrom { customerListItem, cashier }
+enum CustomerScreenOpenFrom { customerListItem, cashier, addNewCustomerBtn }
 
 class NewCustomerScreenData {
   CustomerScreenOpenFrom openFrom;
@@ -36,7 +36,9 @@ class _CreateNewCustomerScreenState extends BaseState<CreateNewCustomerScreen> {
     return UnFocusWidget(
       child: KayleeScrollview(
         appBar: KayleeAppBar.hyperTextAction(
-          title: Strings.taoKhachHangMoi,
+          title: openFrom == CustomerScreenOpenFrom.customerListItem
+              ? Strings.chinhSuaThongTinKhachHang
+              : Strings.taoKhachHangMoi,
           actionTitle: openFrom == CustomerScreenOpenFrom.customerListItem
               ? Strings.luu
               : Strings.tao,
