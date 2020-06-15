@@ -125,7 +125,7 @@ class _HomeMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: menuHeight,
+      height: ScreenUtils.scaleHeight(context, menuHeight),
       child: Material(
         borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(Dimens.px20),
