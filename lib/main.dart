@@ -1,5 +1,6 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:kaylee/base/kaylee_routing.dart';
 import 'package:kaylee/res/src/colors_res.dart';
 import 'package:kaylee/res/src/fonts.dart';
@@ -18,6 +19,7 @@ class KayLeeApp extends StatefulWidget {
 class _KayLeeAppState extends BaseState<KayLeeApp> with Routing, KayleeRouting {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return MaterialApp(
       title: Strings.appName,
       onGenerateRoute: onGenerateRoute,
@@ -33,9 +35,9 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing, KayleeRouting {
           textTheme: TextTheme(
             bodyText2: theme.textTheme.bodyText2
                 .copyWith(
-                    fontFamily: Fonts.HelveticaNeue,
-                    fontStyle: FontStyle.normal,
-                    letterSpacing: 0)
+                fontFamily: Fonts.HelveticaNeue,
+                fontStyle: FontStyle.normal,
+                letterSpacing: 0)
                 .merge(TextStyles.normal16W400),
           )),
     );
