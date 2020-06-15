@@ -31,13 +31,12 @@ class _GuideScreenState extends BaseState<GuideScreen> {
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(Dimens.px16),
-        child: KayleeText(
+        child: KayleeText.normal16W400(
           'Mauris tristique enim elementum, rhoncus lorem nec, finibus ipsum. Integer iaculis, '
-              'neque non varius mollis, neque quam finibus enim, non mattis dolor dui eu urna. '
-              'In scelerisque magna eu euismod rutrum. Sed sit amet nisi a lorem accumsan porttitor. '
-              'Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. '
-              'Praesent gravida blandit mi non tempor. Cras sed nisl porta purus pharetra hendrerit interdum at neque.',
-          style: TextStyles.normal16W400,
+          'neque non varius mollis, neque quam finibus enim, non mattis dolor dui eu urna. '
+          'In scelerisque magna eu euismod rutrum. Sed sit amet nisi a lorem accumsan porttitor. '
+          'Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. '
+          'Praesent gravida blandit mi non tempor. Cras sed nisl porta purus pharetra hendrerit interdum at neque.',
           overflow: TextOverflow.visible,
         ),
       ),

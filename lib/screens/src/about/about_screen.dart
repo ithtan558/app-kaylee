@@ -38,14 +38,12 @@ class _AboutScreenState extends BaseState<AboutScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                KayleeText(
+                KayleeText.normal16W500(
                   'Tên ứng dụng',
-                  style: TextStyles.normal16W500,
                   textAlign: TextAlign.start,
                 ),
-                KayleeText(
+                KayleeText.normal16W400(
                   'Kaylee',
-                  style: TextStyles.normal16W400,
                   textAlign: TextAlign.end,
                 )
               ],
@@ -56,14 +54,12 @@ class _AboutScreenState extends BaseState<AboutScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                KayleeText(
+                KayleeText.normal16W500(
                   'Software Version',
-                  style: TextStyles.normal16W500,
                   textAlign: TextAlign.start,
                 ),
-                KayleeText(
+                KayleeText.normal16W400(
                   '12.4.5',
-                  style: TextStyles.normal16W400,
                   textAlign: TextAlign.end,
                 )
               ],
@@ -90,7 +86,7 @@ class _AboutScreenState extends BaseState<AboutScreen> {
                       textAlign: TextAlign.start,
                     ),
                     Expanded(
-                        child: KayleeText(
+                        child: KayleeText.normal16W400(
                       'iPhone 8',
                       textAlign: TextAlign.end,
                     )),

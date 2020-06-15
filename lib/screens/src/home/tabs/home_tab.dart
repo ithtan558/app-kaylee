@@ -52,8 +52,7 @@ class _HomeTabState extends BaseState<HomeTab> {
                   padding: const EdgeInsets.only(
                       top: Dimens.px24, bottom: Dimens.px16),
                   child: Center(
-                    child: KayleeText(Strings.dsNhaCc,
-                        style: TextStyles.normalWhite18W700),
+                    child: KayleeText.normalWhite18W700(Strings.dsNhaCc),
                   ),
                 );
               } else {
@@ -105,10 +104,10 @@ class _HomeTabState extends BaseState<HomeTab> {
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
-                  child: KayleeText("Mỹ phẩm Nhật cao cấp Shiseido",
+                  child: KayleeText.normal12W400(
+                      "Mỹ phẩm Nhật cao cấp Shiseido",
                       maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyles.normal12W400),
+                      overflow: TextOverflow.ellipsis),
                 ),
               )
             ],
@@ -163,12 +162,12 @@ class _HomeMenu extends StatelessWidget {
               bottom: Dimens.px24,
               child: Column(
                 children: [
-                  KayleeText("Hi, Huynh An",
-                      style: TextStyles.normalWhite18W700),
+                  KayleeText.normalWhite16W500("Hi, Huynh An"),
                   Padding(
                     padding: EdgeInsets.only(top: Dimens.px8),
-                    child: KayleeText("Quản lý cửa hàng",
-                        style: TextStyles.normalWhite12W400),
+                    child: KayleeText.normalWhite12W400(
+                      "Quản lý cửa hàng",
+                    ),
                   ),
                   Expanded(
                     child: Container(),
@@ -280,10 +279,11 @@ class _HomeMenu extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.only(top: Dimens.px8),
                     alignment: Alignment.center,
-                    child: KayleeText(title,
-                        maxLines: 2,
-                        textAlign: TextAlign.center,
-                        style: TextStyles.normalWhite12W400),
+                    child: KayleeText.normalWhite12W400(
+                      title,
+                      maxLines: 2,
+                      textAlign: TextAlign.center,
+                    ),
                   )
                 ],
               ),
@@ -332,8 +332,9 @@ class __NotificationIconState extends State<_NotificationIcon> {
               decoration: BoxDecoration(
                   color: ColorsRes.errorBorder, shape: BoxShape.circle),
               alignment: Alignment.center,
-              child: KayleeText('${notifyCount > 99 ? 99 : notifyCount}',
-                  style: TextStyles.normalWhite12W400),
+              child: KayleeText.normalWhite12W400(
+                '${notifyCount > 99 ? 99 : notifyCount}',
+              ),
             ),
           )
       ],

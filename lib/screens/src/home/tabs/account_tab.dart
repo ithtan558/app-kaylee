@@ -34,7 +34,7 @@ class _AccountTabState extends BaseState<AccountTab> {
         child: Column(
           children: [
             Container(
-              decoration:  BoxDecoration(
+              decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(Dimens.px10),
                 boxShadow: [
@@ -74,16 +74,16 @@ class _AccountTabState extends BaseState<AccountTab> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  KayleeText(
+                                  KayleeText.normal26W700(
                                     "David Benz",
-                                    style: TextStyles.normal26W700,
                                   ),
                                   Expanded(
                                     child: Padding(
                                       padding: const EdgeInsets.only(
                                           top: Dimens.px8),
-                                      child: KayleeText("Chủ doanh nghiệp",
-                                          style: TextStyles.hint16W400),
+                                      child: KayleeText.normal16W400(
+                                        "Chủ doanh nghiệp",
+                                      ),
                                     ),
                                   ),
                                   HyperLinkText(
@@ -159,10 +159,9 @@ class _AccountTabState extends BaseState<AccountTab> {
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.only(left: Dimens.px16),
-                    child: KayleeText(
+                    child: KayleeText.normal16W400(
                       title,
                       maxLines: 1,
-                      style: TextStyles.normal16W400,
                     ),
                   ),
                 ),

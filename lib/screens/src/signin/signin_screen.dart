@@ -45,13 +45,15 @@ class _SignInScreenState extends BaseState<SignInScreen> {
             Container(
                 margin: EdgeInsets.only(top: Dimens.px80),
                 alignment: Alignment.centerLeft,
-                child: KayleeText(Strings.dangNhap,
-                    style: TextStyles.normal26W700)),
+                child: KayleeText.normal26W700(
+                  Strings.dangNhap,
+                )),
             Container(
                 margin: EdgeInsets.only(top: Dimens.px8),
                 alignment: Alignment.centerLeft,
-                child: KayleeText(Strings.vuiLongDangNhap,
-                    style: TextStyles.hint16W400)),
+                child: KayleeText.hint16W400(
+                  Strings.vuiLongDangNhap,
+                )),
             Container(
                 margin: EdgeInsets.only(top: Dimens.px80),
                 alignment: Alignment.centerLeft,
@@ -89,8 +91,9 @@ class _SignInScreenState extends BaseState<SignInScreen> {
                 },
                 child: Container(
                   color: Colors.transparent,
-                  child: KayleeText(Strings.quenMatKhau,
-                      style: TextStyles.hyper16W400),
+                  child: KayleeText.hyper16W400(
+                    Strings.quenMatKhau,
+                  ),
                 ),
               ),
             ),

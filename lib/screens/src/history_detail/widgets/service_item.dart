@@ -12,9 +12,8 @@ class ServiceItem extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                  child: KayleeText(
+                  child: KayleeText.normal16W400(
                 "x1 Cắt tóc",
-                style: TextStyles.normal16W400,
                 maxLines: 1,
               )),
               KayleePriceUnitText(90000)

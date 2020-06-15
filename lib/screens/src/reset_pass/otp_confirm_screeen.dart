@@ -39,16 +39,15 @@ class _OtpConfirmScreenState extends BaseState<OtpConfirmScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              KayleeText(
+              KayleeText.normal16W400(
                 Strings.vuiLongNhapOtpHint,
                 textAlign: TextAlign.center,
               ),
               Padding(
                 padding: const EdgeInsets.only(top: Dimens.px32),
-                child: KayleeText(Strings.nhapOtp,
-                    style: theme.textTheme.bodyText2.copyWith(
-                      fontWeight: FontWeight.w500,
-                    )),
+                child: KayleeText.normal16W500(
+                  Strings.nhapOtp,
+                ),
               ),
               Padding(
                   padding: const EdgeInsets.only(top: Dimens.px25),

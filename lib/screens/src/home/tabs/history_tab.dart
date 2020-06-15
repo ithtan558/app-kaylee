@@ -66,9 +66,8 @@ class _HistoryTabState extends BaseState<HistoryTab> {
                 height: double.infinity,
                 color: ColorsRes.textFieldBorder,
                 alignment: Alignment.center,
-                child: KayleeText("#001",
-                    textAlign: TextAlign.center,
-                    style: TextStyles.normal16W500),
+                child: KayleeText.normal16W500("#001",
+                    textAlign: TextAlign.center),
               ),
               Expanded(
                   child: Padding(
@@ -77,7 +76,9 @@ class _HistoryTabState extends BaseState<HistoryTab> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    KayleeText("Thu Nguyen", style: TextStyles.normal16W500),
+                    KayleeText.normal16W500(
+                      "Thu Nguyen",
+                    ),
                     Padding(
                       padding: const EdgeInsets.only(top: Dimens.px8),
                       child: KayleePriceText.normal(700000,
@@ -96,10 +97,9 @@ class _HistoryTabState extends BaseState<HistoryTab> {
                   width: Dimens.px1,
                 ))),
                 alignment: Alignment.center,
-                child: KayleeText(
+                child: KayleeText.normal16W400(
                   "Hoàn thành",
                   textAlign: TextAlign.center,
-                  overflow: null,
                 ),
               ),
             ],
