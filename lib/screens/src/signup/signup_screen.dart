@@ -82,15 +82,6 @@ class _SignUpScreenState extends BaseState<SignUpScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
-                child: KayleeTextField(
-                  title: Strings.quocGia,
-                  textInput: PickerInputField(
-                    hint: Strings.quocGiaHint,
-                  ),
-                ),
-              ),
-              Padding(
                 padding: const EdgeInsets.symmetric(
                     horizontal: Dimens.px16, vertical: Dimens.px16),
                 child: KayleeTextField.phoneInput(
