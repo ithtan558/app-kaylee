@@ -7,7 +7,7 @@ class UserInfo {
   factory UserInfo.fromJson(Map<String, dynamic> json) =>
       _$UserInfoFromJson(json);
 
-  Map<String, dynamic> toJson(instance) => _$UserInfoToJson(this);
+  Map<String, dynamic> toJson() => _$UserInfoToJson(this);
 
   UserInfo({
     this.id,

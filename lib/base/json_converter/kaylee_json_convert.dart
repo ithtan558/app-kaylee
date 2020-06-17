@@ -12,6 +12,14 @@ class KayleeJsonConverter extends JsonConverterFactory {
       return UserInfo.fromJson(json) as T;
     } else if (T == VerifyPhoneResult) {
       return VerifyPhoneResult.fromJson(json) as T;
+    } else if (T == VerifyOtpBody) {
+      return VerifyOtpBody.fromJson(json) as T;
+    } else if (T == VerifyPhoneBody) {
+      return VerifyPhoneBody.fromJson(json) as T;
+    } else if (T == LoginBody) {
+      return LoginBody.fromJson(json) as T;
+    } else if (T == LoginBody) {
+      return LoginBody.fromJson(json) as T;
     }
     return json as T;
   }
@@ -25,6 +33,12 @@ class KayleeJsonConverter extends JsonConverterFactory {
     } else if (json is UserInfo) {
       return json.toJson();
     } else if (json is VerifyPhoneResult) {
+      return json.toJson();
+    } else if (json is VerifyOtpBody) {
+      return json.toJson();
+    } else if (json is VerifyPhoneBody) {
+      return json.toJson();
+    } else if (json is LoginBody) {
       return json.toJson();
     } else
       return json;

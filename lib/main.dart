@@ -1,17 +1,28 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:kaylee/base/json_converter/kaylee_json_convert.dart';
 import 'package:kaylee/base/kaylee_routing.dart';
+import 'package:kaylee/base/networks/network_module.dart';
 import 'package:kaylee/res/src/colors_res.dart';
 import 'package:kaylee/res/src/fonts.dart';
 import 'package:kaylee/res/src/strings.dart';
 import 'package:kaylee/res/src/text_styles.dart';
 
 void main() {
-  runApp(KayLeeApp());
+  JsonConverterBuilder.init(KayleeJsonConverter());
+  runApp(KayLeeApp.newInstance());
 }
 
 class KayLeeApp extends StatefulWidget {
+  static Widget newInstance() => MultiRepositoryProvider(providers: [
+        RepositoryProvider(
+          create: (_) => NetworkModule.init(),
+        ),
+      ], child: KayLeeApp._());
+
+  KayLeeApp._();
+
   @override
   _KayLeeAppState createState() => _KayLeeAppState();
 }

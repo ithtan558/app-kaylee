@@ -9,14 +9,14 @@ part of 'login_result.dart';
 LoginResult _$LoginResultFromJson(Map<String, dynamic> json) {
   return LoginResult(
     token: json['token'] as String,
-    userInfo: json['userInfo'] == null
+    userInfo: json['user_info'] == null
         ? null
-        : UserInfo.fromJson(json['userInfo'] as Map<String, dynamic>),
+        : UserInfo.fromJson(json['user_info'] as Map<String, dynamic>),
   );
 }
 
 Map<String, dynamic> _$LoginResultToJson(LoginResult instance) =>
     <String, dynamic>{
       'token': instance.token,
-      'userInfo': instance.userInfo,
+      'user_info': instance.userInfo,
     };
