@@ -239,7 +239,7 @@ class KayleeAlertDialogAction extends StatelessWidget {
       );
 
   factory KayleeAlertDialogAction.dongY(
-          {bool Function() onPressed, bool isDefaultAction = false}) =>
+          {onPressed, bool isDefaultAction = false}) =>
       KayleeAlertDialogAction(
         title: Strings.dongY,
         onPressed: (context) {

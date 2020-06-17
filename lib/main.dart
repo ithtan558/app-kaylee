@@ -16,7 +16,7 @@ void main() {
 
 class KayLeeApp extends StatefulWidget {
   static Widget newInstance() => MultiRepositoryProvider(providers: [
-        RepositoryProvider(
+        RepositoryProvider<NetworkModule>(
           create: (_) => NetworkModule.init(),
         ),
       ], child: KayLeeApp._());
