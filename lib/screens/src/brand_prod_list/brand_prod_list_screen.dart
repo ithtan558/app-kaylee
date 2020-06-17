@@ -5,7 +5,7 @@ import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class BrandProdListScreen extends StatefulWidget {
-  factory BrandProdListScreen.newInstance() = BrandProdListScreen._;
+  static Widget newInstance() => BrandProdListScreen._();
 
   BrandProdListScreen._();
 

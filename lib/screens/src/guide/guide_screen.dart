@@ -4,7 +4,7 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class GuideScreen extends StatefulWidget {
-  factory GuideScreen.newInstance() = GuideScreen._;
+  static Widget newInstance() => GuideScreen._();
 
   GuideScreen._();
 

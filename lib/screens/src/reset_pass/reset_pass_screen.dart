@@ -6,7 +6,7 @@ import 'package:kaylee/screens/src/reset_pass/otp_confirm_screeen.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class ResetPassScreen extends StatefulWidget {
-  factory ResetPassScreen.newInstance() = ResetPassScreen._;
+  static Widget newInstance() => ResetPassScreen._();
 
   ResetPassScreen._();
 

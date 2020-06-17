@@ -4,7 +4,7 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class RevenueScreen extends StatefulWidget {
-  factory RevenueScreen.newInstance() = RevenueScreen._;
+  static Widget newInstance() => RevenueScreen._();
 
   RevenueScreen._();
 

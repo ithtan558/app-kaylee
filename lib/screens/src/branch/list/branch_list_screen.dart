@@ -7,7 +7,7 @@ import 'package:kaylee/screens/src/branch/list/widgets/branch_item.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class BranchListScreen extends StatefulWidget {
-  factory BranchListScreen.newInstance() = BranchListScreen._;
+  static Widget newInstance() => BranchListScreen._();
 
   BranchListScreen._();
 

@@ -13,7 +13,7 @@ class NewProdScreenData {
 enum NewProdScreenOpenFrom { prodItem, addNewProdBtn }
 
 class CreateNewProdScreen extends StatefulWidget {
-  factory CreateNewProdScreen.newInstance() = CreateNewProdScreen._;
+  static Widget newInstance() => CreateNewProdScreen._();
 
   CreateNewProdScreen._();
 

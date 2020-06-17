@@ -7,7 +7,7 @@ import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class SplashScreen extends StatefulWidget {
-  factory SplashScreen.newInstance() = SplashScreen._;
+  static Widget newInstance() => SplashScreen._();
 
   SplashScreen._();
 

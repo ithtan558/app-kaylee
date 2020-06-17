@@ -8,7 +8,7 @@ import 'package:kaylee/screens/src/reset_pass/reset_pass_screen.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class SignInScreen extends StatefulWidget {
-  factory SignInScreen.newInstance() = SignInScreen._;
+  static Widget newInstance() => SignInScreen._();
 
   SignInScreen._();
 

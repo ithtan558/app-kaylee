@@ -13,7 +13,7 @@ class NewBranchScreenData {
 enum BranchScreenOpenFrom { branchItem, addNewBranchBtn }
 
 class CreateNewBranchScreen extends StatefulWidget {
-  factory CreateNewBranchScreen.newInstance() = CreateNewBranchScreen._;
+  static Widget newInstance() => CreateNewBranchScreen._();
 
   CreateNewBranchScreen._();
 

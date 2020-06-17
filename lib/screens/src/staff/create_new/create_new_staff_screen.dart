@@ -13,7 +13,7 @@ class NewStaffScreenData {
 enum NewStaffScreenOpenFrom { staffItem, addNewStaffBtn }
 
 class CreateNewStaffScreen extends StatefulWidget {
-  factory CreateNewStaffScreen.newInstance() = CreateNewStaffScreen._;
+  static Widget newInstance() => CreateNewStaffScreen._();
 
   CreateNewStaffScreen._();
 

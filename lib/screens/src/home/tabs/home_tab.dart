@@ -8,7 +8,7 @@ import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/widgets/src/kaylee_text.dart';
 
 class HomeTab extends StatefulWidget {
-  factory HomeTab.newInstance() = HomeTab._;
+  static Widget newInstance() => HomeTab._();
 
   HomeTab._();
 

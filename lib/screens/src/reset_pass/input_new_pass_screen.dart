@@ -4,7 +4,7 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class InputNewPassScreen extends StatefulWidget {
-  factory InputNewPassScreen.newInstance() = InputNewPassScreen._;
+  static Widget newInstance() => InputNewPassScreen._();
 
   InputNewPassScreen._();
 

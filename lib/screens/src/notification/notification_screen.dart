@@ -6,7 +6,7 @@ import 'package:kaylee/widgets/kaylee_widgets.dart';
 import 'package:sticky_headers/sticky_headers.dart';
 
 class NotificationScreen extends StatefulWidget {
-  factory NotificationScreen.newInstance() = NotificationScreen._;
+  static Widget newInstance() => NotificationScreen._();
 
   NotificationScreen._();
 

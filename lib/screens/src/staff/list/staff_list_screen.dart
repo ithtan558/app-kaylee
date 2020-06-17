@@ -6,7 +6,7 @@ import 'package:kaylee/screens/src/staff/list/widgets/staff_item.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class StaffListScreen extends StatefulWidget {
-  factory StaffListScreen.newInstance() = StaffListScreen._;
+  static Widget newInstance() => StaffListScreen._();
 
   StaffListScreen._();
 

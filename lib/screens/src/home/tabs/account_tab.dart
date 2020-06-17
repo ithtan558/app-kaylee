@@ -8,7 +8,7 @@ import 'package:kaylee/screens/src/notification/notification_screen.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class AccountTab extends StatefulWidget {
-  factory AccountTab.newInstance() = AccountTab._;
+  static Widget newInstance() => AccountTab._();
 
   AccountTab._();
 

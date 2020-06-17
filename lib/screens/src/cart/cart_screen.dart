@@ -6,7 +6,7 @@ import 'package:kaylee/screens/src/cart/widgets/cart_prod_item.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class CartScreen extends StatefulWidget {
-  factory CartScreen.newInstance() = CartScreen._;
+  static Widget newInstance() => CartScreen._();
 
   CartScreen._();
 

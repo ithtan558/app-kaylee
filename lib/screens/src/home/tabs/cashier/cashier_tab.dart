@@ -6,7 +6,7 @@ import 'package:kaylee/screens/src/home/tabs/cashier/widgets/cashier_item.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class CashierTab extends StatefulWidget {
-  factory CashierTab.newInstance() = CashierTab._;
+  static Widget newInstance() => CashierTab._();
 
   CashierTab._();
 

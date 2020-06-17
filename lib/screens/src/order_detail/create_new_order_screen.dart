@@ -13,7 +13,7 @@ class NewOrderScreenData {
 enum OrderScreenOpenFrom { detailButton, addNewButton }
 
 class CreateNewOrderScreen extends StatefulWidget {
-  factory CreateNewOrderScreen.newInstance() = CreateNewOrderScreen._;
+  static Widget newInstance() => CreateNewOrderScreen._();
 
   CreateNewOrderScreen._();
 

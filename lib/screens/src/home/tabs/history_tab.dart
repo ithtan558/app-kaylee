@@ -6,7 +6,7 @@ import 'package:kaylee/screens/src/history_detail/history_detail_screen.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class HistoryTab extends StatefulWidget {
-  factory HistoryTab.newInstance() = HistoryTab._;
+  static Widget newInstance() => HistoryTab._();
 
   HistoryTab._();
 

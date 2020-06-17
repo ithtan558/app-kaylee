@@ -4,7 +4,7 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class ReceiverInfoScreen extends StatefulWidget {
-  factory ReceiverInfoScreen.newInstance() = ReceiverInfoScreen._;
+  static Widget newInstance() => ReceiverInfoScreen._();
 
   ReceiverInfoScreen._();
 

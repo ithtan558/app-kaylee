@@ -5,7 +5,7 @@ import 'package:kaylee/screens/src/staff/list/widgets/staff_item.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class CommissionListScreen extends StatefulWidget {
-  factory CommissionListScreen.newInstance() = CommissionListScreen._;
+  static Widget newInstance() => CommissionListScreen._();
 
   CommissionListScreen._();
 

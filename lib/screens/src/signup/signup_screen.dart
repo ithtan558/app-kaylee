@@ -5,7 +5,7 @@ import 'package:kaylee/res/src/strings.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class SignUpScreen extends StatefulWidget {
-  factory SignUpScreen.newInstance() = SignUpScreen._;
+  static Widget newInstance() => SignUpScreen._();
 
   SignUpScreen._();
 

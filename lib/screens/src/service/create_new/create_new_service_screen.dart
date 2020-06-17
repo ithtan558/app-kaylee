@@ -13,7 +13,7 @@ class NewServiceScreenData {
 enum ServiceScreenOpenFrom { serviceItem, addNewServiceBtn }
 
 class CreateNewServiceScreen extends StatefulWidget {
-  factory CreateNewServiceScreen.newInstance() = CreateNewServiceScreen._;
+  static Widget newInstance() => CreateNewServiceScreen._();
 
   CreateNewServiceScreen._();
 

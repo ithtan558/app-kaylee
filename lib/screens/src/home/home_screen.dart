@@ -7,7 +7,7 @@ import 'package:kaylee/screens/src/home/tabs/home_tab.dart';
 import 'package:kaylee/widgets/src/kaylee_bottom_bar.dart';
 
 class HomeScreen extends StatefulWidget {
-  factory HomeScreen.newInstance() = HomeScreen._;
+  static Widget newInstance() => HomeScreen._();
 
   HomeScreen._();
 

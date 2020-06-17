@@ -5,7 +5,7 @@ import 'package:kaylee/screens/src/reset_pass/reset_pass_screen.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class EditProfileScreen extends StatefulWidget {
-  factory EditProfileScreen.newInstance() = EditProfileScreen._;
+  static Widget newInstance() => EditProfileScreen._();
 
   EditProfileScreen._();
 

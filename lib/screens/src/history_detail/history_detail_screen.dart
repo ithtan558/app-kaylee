@@ -5,7 +5,7 @@ import 'package:kaylee/screens/src/history_detail/widgets/service_item.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class HistoryDetailScreen extends StatefulWidget {
-  factory HistoryDetailScreen.newInstance() = HistoryDetailScreen._;
+  static Widget newInstance() => HistoryDetailScreen._();
 
   HistoryDetailScreen._();
 

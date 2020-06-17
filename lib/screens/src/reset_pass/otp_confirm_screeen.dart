@@ -7,7 +7,7 @@ import 'package:kaylee/widgets/kaylee_widgets.dart';
 import 'package:kaylee/widgets/src/otp_input_field.dart';
 
 class OtpConfirmScreen extends StatefulWidget {
-  factory OtpConfirmScreen.newInstance() = OtpConfirmScreen._;
+  static Widget newInstance() => OtpConfirmScreen._();
 
   OtpConfirmScreen._();
 

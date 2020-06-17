@@ -5,7 +5,7 @@ import 'package:kaylee/widgets/kaylee_widgets.dart';
 import 'package:kaylee/widgets/src/kaylee_appbar.dart';
 
 class AboutScreen extends StatefulWidget {
-  factory AboutScreen.newInstance() = AboutScreen._;
+  static Widget newInstance() => AboutScreen._();
 
   AboutScreen._();
 

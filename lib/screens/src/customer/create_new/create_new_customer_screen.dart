@@ -12,7 +12,7 @@ class NewCustomerScreenData {
 }
 
 class CreateNewCustomerScreen extends StatefulWidget {
-  factory CreateNewCustomerScreen.newInstance() = CreateNewCustomerScreen._;
+  static Widget newInstance() => CreateNewCustomerScreen._();
 
   CreateNewCustomerScreen._();
 

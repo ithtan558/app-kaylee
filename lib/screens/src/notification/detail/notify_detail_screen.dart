@@ -5,7 +5,7 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class NotifyDetailScreen extends StatefulWidget {
-  factory NotifyDetailScreen.newInstance() = NotifyDetailScreen._;
+  static Widget newInstance() => NotifyDetailScreen._();
 
   NotifyDetailScreen._();
 
