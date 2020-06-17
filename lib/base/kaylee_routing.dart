@@ -11,8 +11,8 @@ mixin KayleeRouting on Routing {
   @override
   Widget getRoutes(Type screen) {
     switch (screen) {
-      case SignInScreen:
-        return SignInScreen.newInstance();
+      case LoginScreen:
+        return LoginScreen.newInstance();
       case SignUpScreen:
         return SignUpScreen.newInstance();
       case ResetPassScreen:

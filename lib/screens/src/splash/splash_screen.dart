@@ -49,7 +49,7 @@ class _SplashScreenState extends BaseState<SplashScreen> {
             children: [
               KayLeeRoundedButton.normal(
                 onPressed: () {
-                  pushScreen(PageIntent(context, SignInScreen));
+                  pushScreen(PageIntent(context, LoginScreen));
                 },
                 text: Strings.login,
               ),
