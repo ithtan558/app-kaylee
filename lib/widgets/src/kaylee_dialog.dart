@@ -212,12 +212,16 @@ Future showKayleeAlertDialog(
       context: context,
       builder: (c) {
         return CupertinoAlertDialog(
-          title: Text(
-            title ?? '',
-          ),
-          content: Text(
-            content ?? '',
-          ),
+          title: title.isNotNull
+              ? Text(
+                  title,
+                )
+              : null,
+          content: content.isNotNull
+              ? Text(
+                  content,
+                )
+              : null,
           actions: actions ?? [],
         );
       });
