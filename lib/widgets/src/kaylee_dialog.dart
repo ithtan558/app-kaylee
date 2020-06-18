@@ -231,22 +231,14 @@ class KayleeAlertDialogAction extends StatelessWidget {
   factory KayleeAlertDialogAction.huy({bool Function() onPressed}) =>
       KayleeAlertDialogAction(
         title: Strings.huy,
-        onPressed: (context) {
-          if (onPressed.isNotNull && onPressed() ?? false) {
-            pop(PageIntent(context, null));
-          }
-        },
+        onPressed: (context) {},
       );
 
   factory KayleeAlertDialogAction.dongY(
-          {onPressed, bool isDefaultAction = false}) =>
+          {bool Function() onPressed, bool isDefaultAction = false}) =>
       KayleeAlertDialogAction(
         title: Strings.dongY,
-        onPressed: (context) {
-          if (onPressed.isNotNull && onPressed() ?? false) {
-            pop(PageIntent(context, null));
-          }
-        },
+        onPressed: (context) {},
         isDefaultAction: isDefaultAction,
       );
 
