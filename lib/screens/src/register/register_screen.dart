@@ -4,16 +4,16 @@ import 'package:kaylee/res/src/dimens.dart';
 import 'package:kaylee/res/src/strings.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
-class SignUpScreen extends StatefulWidget {
-  static Widget newInstance() => SignUpScreen._();
+class RegisterScreen extends StatefulWidget {
+  static Widget newInstance() => RegisterScreen._();
 
-  SignUpScreen._();
+  RegisterScreen._();
 
   @override
-  _SignUpScreenState createState() => new _SignUpScreenState();
+  _RegisterScreenState createState() => new _RegisterScreenState();
 }
 
-class _SignUpScreenState extends BaseState<SignUpScreen> {
+class _RegisterScreenState extends BaseState<RegisterScreen> {
   final _nameFocus = FocusNode();
   final _lastNameFocus = FocusNode();
   final _phoneFocus = FocusNode();

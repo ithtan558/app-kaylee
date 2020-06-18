@@ -13,8 +13,8 @@ mixin KayleeRouting on Routing {
     switch (screen) {
       case LoginScreen:
         return LoginScreen.newInstance();
-      case SignUpScreen:
-        return SignUpScreen.newInstance();
+      case RegisterScreen:
+        return RegisterScreen.newInstance();
       case ResetPassScreen:
         return ResetPassScreen.newInstance();
       case OtpConfirmScreen:

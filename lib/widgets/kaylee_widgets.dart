@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/res/src/dimens.dart';
 import 'package:kaylee/res/src/strings.dart';
-import 'package:kaylee/screens/src/signup/signup_screen.dart';
+import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/widgets/src/hyper_link_text.dart';
 
 export 'src/filter_popup_view/kaylee_filter_popup_view.dart';
@@ -49,7 +49,7 @@ class Go2RegisterText extends StatelessWidget {
           child: HyperLinkText(
             text: Strings.dangKy,
             onTap: () {
-              push(PageIntent(context, SignUpScreen));
+              push(PageIntent(context, RegisterScreen));
             },
           ),
         ),
