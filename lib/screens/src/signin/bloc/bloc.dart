@@ -17,6 +17,7 @@ class LoginScreenBloc extends BaseBloc {
     } else if (e is PassLoginScrErrorEvent) {
       yield PassLoginScrErrorState(e.message);
     } else if (e is DoSignInLoginScrEvent) {
+      yield LoadingState();
       RequestHandler<Message>(
         request: userService.login(e.body),
         onSuccess: ({message, result}) {},

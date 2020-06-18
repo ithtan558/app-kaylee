@@ -1,6 +1,7 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/base/networks/network_module.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
@@ -25,7 +26,7 @@ class LoginScreen extends StatefulWidget {
   _LoginScreenState createState() => new _LoginScreenState();
 }
 
-class _LoginScreenState extends BaseState<LoginScreen> {
+class _LoginScreenState extends KayleeState<LoginScreen> {
   final _phoneFNode = FocusNode();
   final _passFNode = FocusNode();
   final _phoneTController = TextEditingController();
@@ -54,11 +55,14 @@ class _LoginScreenState extends BaseState<LoginScreen> {
         padding: EdgeInsets.symmetric(horizontal: Dimens.px16),
         child: BlocConsumer<LoginScreenBloc, dynamic>(
           listener: (context, state) async {
-            if (state is ErrorState) {
+            if (state is LoadingState) {
+              showLoading();
+            } else if (state is ErrorState) {
+              hideLoading();
               await showKayleeAlertDialog(
                   context: context,
+                  title: null,
                   content: state.error.message,
-                  title: state.error.title,
                   actions: [
                     KayleeAlertDialogAction.dongY(
                       onPressed: () {
@@ -67,8 +71,10 @@ class _LoginScreenState extends BaseState<LoginScreen> {
                     )
                   ]);
             } else if (state is PhoneLoginScrErrorState) {
+              hideLoading();
               _phoneFNode.requestFocus();
             } else if (state is PassLoginScrErrorState) {
+              hideLoading();
               _passFNode.requestFocus();
             }
           },
