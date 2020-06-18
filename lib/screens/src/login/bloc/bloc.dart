@@ -1,6 +1,6 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:kaylee/models/models.dart';
-import 'package:kaylee/screens/src/signin/bloc/state.dart';
+import 'package:kaylee/screens/src/login/bloc/state.dart';
 import 'package:kaylee/services/services.dart';
 
 import 'event.dart';
@@ -40,7 +40,7 @@ class LoginScreenBloc extends BaseBloc {
     }
   }
 
-  void validateFields(LoginBody body) {
+  void doLogin(LoginBody body) {
     add(DoSignInLoginScrEvent(body: body));
   }
 }

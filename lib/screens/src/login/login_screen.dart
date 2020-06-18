@@ -8,9 +8,10 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/res/src/dimens.dart';
 import 'package:kaylee/res/src/strings.dart';
 import 'package:kaylee/screens/src/reset_pass/reset_pass_screen.dart';
-import 'package:kaylee/screens/src/signin/bloc/bloc.dart';
-import 'package:kaylee/screens/src/signin/bloc/state.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
+
+import 'bloc/bloc.dart';
+import 'bloc/state.dart';
 
 class LoginScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<LoginScreenBloc>(
@@ -121,7 +122,7 @@ class _LoginScreenState extends KayleeState<LoginScreen> {
                   margin: EdgeInsets.only(top: Dimens.px16),
                   child: KayLeeRoundedButton.normal(
                     onPressed: () {
-                      bloc.validateFields(LoginBody(
+                      bloc.doLogin(LoginBody(
                         account: _phoneTController.text,
                         password: _passTController.text,
                       ));
