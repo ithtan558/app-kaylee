@@ -489,90 +489,78 @@ class _NormalInputFieldState extends BaseState<NormalInputField> {
   @override
   Widget build(BuildContext context) {
     final isPassTField = widget.textInputType == TextInputType.visiblePassword;
-    return Column(
-      children: <Widget>[
-        TextFieldBorderWrapper(
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: Dimens.px16),
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: TextField(
-                      focusNode: widget.focusNode,
-                      controller: widget.isStaticTField
-                          ? tfController
-                          : widget.controller,
-                      keyboardType: widget.textInputType,
-                      textInputAction: widget.textInputAction,
-                      enabled: !widget.isStaticTField,
-                      onSubmitted: (_) {
-                        if (widget.textInputAction == TextInputAction.next) {
-                          if (widget.nextFocusNode.isNotNull) {
-                            widget.nextFocusNode.requestFocus();
-                          } else
-                            FocusScope.of(context).nextFocus();
-                        }
-                      },
-                      autofocus: false,
-                      obscureText: isPassTField ? !showPass : false,
-                      textAlign: widget.textAlign ?? TextAlign.start,
-                      textAlignVertical: TextAlignVertical.top,
-                      expands: widget.expands ?? false,
-                      maxLines: widget.expands ?? false ? null : 1,
-                      minLines: widget.expands ?? false ? null : 1,
-                      style: TextStyles.normal16W400,
-                      decoration: InputDecoration(
-                          enabled: !widget.isStaticTField,
-                          enabledBorder: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          border: InputBorder.none,
-                          hintText: widget.hint,
-                          contentPadding: widget.contentPadding ??
-                              const EdgeInsets.only(bottom: Dimens.px4),
-                          hintStyle: TextStyles.hint16W400),
-                    ),
-                  ),
-                  if (isPassTField)
-                    Padding(
-                      padding: const EdgeInsets.only(left: Dimens.px16),
-                      child: GestureDetector(
-                          child: Icon(
-                            !showPass ? Icons.visibility_off : Icons.visibility,
-                            color: ColorsRes.hintText,
-                          ),
-                          onTap: () {
-                            setState(() {
-                              showPass = !showPass;
-                            });
-                          }),
-                    ),
-                  if (!widget.error.isNullOrEmpty)
-                    Padding(
-                      padding: const EdgeInsets.only(left: Dimens.px16),
-                      child: Image.asset(
-                        Images.ic_error,
-                        width: Dimens.px16,
-                        height: Dimens.px16,
-                      ),
-                    )
-                ],
-              ),
-            ),
-            fieldHeight: widget.fieldHeight,
-            bgColor: widget.isStaticTField ? Colors.transparent : null,
-            showFocusBorder: !widget.error.isNullOrEmpty),
-        if (!widget.error.isNullOrEmpty)
+    return _ErrorText(
+      child: TextFieldBorderWrapper(
           Container(
-            margin: const EdgeInsets.only(top: Dimens.px4),
-            alignment: Alignment.centerRight,
-            child: KayleeText(
-              widget.error,
-              textAlign: TextAlign.end,
-              style: TextStyles.error12W400,
-              overflow: TextOverflow.visible,
+            margin: const EdgeInsets.symmetric(horizontal: Dimens.px16),
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: TextField(
+                    focusNode: widget.focusNode,
+                    controller: widget.isStaticTField
+                        ? tfController
+                        : widget.controller,
+                    keyboardType: widget.textInputType,
+                    textInputAction: widget.textInputAction,
+                    enabled: !widget.isStaticTField,
+                    onSubmitted: (_) {
+                      if (widget.textInputAction == TextInputAction.next) {
+                        if (widget.nextFocusNode.isNotNull) {
+                          widget.nextFocusNode.requestFocus();
+                        } else
+                          FocusScope.of(context).nextFocus();
+                      }
+                    },
+                    autofocus: false,
+                    obscureText: isPassTField ? !showPass : false,
+                    textAlign: widget.textAlign ?? TextAlign.start,
+                    textAlignVertical: TextAlignVertical.top,
+                    expands: widget.expands ?? false,
+                    maxLines: widget.expands ?? false ? null : 1,
+                    minLines: widget.expands ?? false ? null : 1,
+                    style: TextStyles.normal16W400,
+                    decoration: InputDecoration(
+                        enabled: !widget.isStaticTField,
+                        enabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        border: InputBorder.none,
+                        hintText: widget.hint,
+                        contentPadding: widget.contentPadding ??
+                            const EdgeInsets.only(bottom: Dimens.px4),
+                        hintStyle: TextStyles.hint16W400),
+                  ),
+                ),
+                if (isPassTField)
+                  Padding(
+                    padding: const EdgeInsets.only(left: Dimens.px16),
+                    child: GestureDetector(
+                        child: Icon(
+                          !showPass ? Icons.visibility_off : Icons.visibility,
+                          color: ColorsRes.hintText,
+                        ),
+                        onTap: () {
+                          setState(() {
+                            showPass = !showPass;
+                          });
+                        }),
+                  ),
+                if (!widget.error.isNullOrEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(left: Dimens.px16),
+                    child: Image.asset(
+                      Images.ic_error,
+                      width: Dimens.px16,
+                      height: Dimens.px16,
+                    ),
+                  )
+              ],
             ),
-          )
-      ],
+          ),
+          fieldHeight: widget.fieldHeight,
+          bgColor: widget.isStaticTField ? Colors.transparent : null,
+          showFocusBorder: !widget.error.isNullOrEmpty),
+      error: widget.error,
     );
   }
 }
@@ -587,20 +575,20 @@ class PhoneInputField extends StatefulWidget {
   final TextInputAction textInputAction;
   final bool isStaticTField;
 
-  factory PhoneInputField.static({String initText}) =>
-      PhoneInputField(
+  factory PhoneInputField.static({String initText}) => PhoneInputField(
         initText: initText,
         isStaticTField: true,
       );
 
-  PhoneInputField({this.error,
-    this.focusNode,
-    this.controller,
-    this.nextFocusNode,
-    this.textInputAction = TextInputAction.done,
-    this.isStaticTField = false,
-    this.initText,
-    this.hint});
+  PhoneInputField(
+      {this.error,
+      this.focusNode,
+      this.controller,
+      this.nextFocusNode,
+      this.textInputAction = TextInputAction.done,
+      this.isStaticTField = false,
+      this.initText,
+      this.hint});
 
   @override
   _PhoneInputFieldState createState() => _PhoneInputFieldState();
@@ -919,7 +907,7 @@ class _ErrorText extends StatelessWidget {
           Container(
             margin: const EdgeInsets.only(top: Dimens.px4),
             alignment: Alignment.centerRight,
-            child: KayleeText.hyper16W400(
+            child: KayleeText.error12W400(
               error,
               textAlign: TextAlign.end,
               overflow: TextOverflow.visible,
