@@ -225,20 +225,20 @@ Future showKayleeAlertDialog(
 
 class KayleeAlertDialogAction extends StatelessWidget {
   final String title;
-  final void Function(BuildContext context) onPressed;
+  final void Function() onPressed;
   final bool isDefaultAction;
 
-  factory KayleeAlertDialogAction.huy({bool Function() onPressed}) =>
+  factory KayleeAlertDialogAction.huy({void Function() onPressed}) =>
       KayleeAlertDialogAction(
         title: Strings.huy,
-        onPressed: (context) {},
+        onPressed: onPressed,
       );
 
   factory KayleeAlertDialogAction.dongY(
-          {bool Function() onPressed, bool isDefaultAction = false}) =>
+          {void Function() onPressed, bool isDefaultAction = false}) =>
       KayleeAlertDialogAction(
         title: Strings.dongY,
-        onPressed: (context) {},
+        onPressed: onPressed,
         isDefaultAction: isDefaultAction,
       );
 
@@ -254,7 +254,7 @@ class KayleeAlertDialogAction extends StatelessWidget {
       isDefaultAction: isDefaultAction ?? false,
       onPressed: () {
         if (onPressed.isNotNull) {
-          onPressed(context);
+          onPressed();
         }
       },
     );
