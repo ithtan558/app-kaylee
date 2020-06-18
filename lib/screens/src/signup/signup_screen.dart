@@ -54,28 +54,24 @@ class _SignUpScreenState extends BaseState<SignUpScreen> {
                 child: Row(
                   children: [
                     Expanded(
-                      child: KayleeTextField(
+                      child: KayleeTextField.normal(
                         title: Strings.ten,
-                        textInput: NormalInputField(
-                          hint: Strings.tenHint,
-                          focusNode: _nameFocus,
-                          controller: _nameTController,
-                          textInputAction: TextInputAction.next,
-                          nextFocusNode: _lastNameFocus,
-                        ),
+                        hint: Strings.tenHint,
+                        focusNode: _nameFocus,
+                        controller: _nameTController,
+                        textInputAction: TextInputAction.next,
+                        nextFocusNode: _lastNameFocus,
                       ),
                     ),
                     SizedBox(width: Dimens.px15),
                     Expanded(
-                      child: KayleeTextField(
+                      child: KayleeTextField.normal(
                         title: Strings.ho,
-                        textInput: NormalInputField(
-                          hint: Strings.hoHint,
-                          focusNode: _lastNameFocus,
-                          controller: _lastNameTController,
-                          textInputAction: TextInputAction.next,
-                          nextFocusNode: _phoneFocus,
-                        ),
+                        hint: Strings.hoHint,
+                        focusNode: _lastNameFocus,
+                        controller: _lastNameTController,
+                        textInputAction: TextInputAction.next,
+                        nextFocusNode: _phoneFocus,
                       ),
                     )
                   ],
@@ -94,14 +90,12 @@ class _SignUpScreenState extends BaseState<SignUpScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
-                child: KayleeTextField(
+                child: KayleeTextField.normal(
                   title: Strings.matKhau,
-                  textInput: NormalInputField(
-                    hint: Strings.passLimitHint,
-                    textInputType: TextInputType.visiblePassword,
-                    focusNode: _passFocus,
-                    controller: _passTController,
-                  ),
+                  hint: Strings.passLimitHint,
+                  textInputType: TextInputType.visiblePassword,
+                  focusNode: _passFocus,
+                  controller: _passTController,
                 ),
               ),
               Padding(
