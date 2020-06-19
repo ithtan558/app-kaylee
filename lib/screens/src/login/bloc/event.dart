@@ -1,3 +1,4 @@
+import 'package:anth_package/anth_package.dart';
 import 'package:kaylee/models/models.dart';
 
 class PhoneLoginScrErrorEvent {
@@ -16,4 +17,11 @@ class DoSignInLoginScrEvent {
   final LoginBody body;
 
   DoSignInLoginScrEvent({this.body});
+}
+
+class SuccessLoginScrEvent {
+  Message message;
+  LoginResult result;
+
+  SuccessLoginScrEvent(this.message, this.result);
 }

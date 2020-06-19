@@ -18,12 +18,14 @@ class LoginScreenBloc extends BaseBloc {
       yield PassLoginScrErrorState(e.message);
     } else if (e is DoSignInLoginScrEvent) {
       yield LoadingState();
-      RequestHandler<Message>(
+      RequestHandler<LoginResult>(
         request: userService.login(e.body),
-        onSuccess: ({message, result}) {},
+        onSuccess: ({message, result}) {
+          add(SuccessLoginScrEvent(message, result));
+        },
         onFailed: (code, {error}) {
           if (error.code.isNotNull) {
-            add(error.code == ErrorCode.PHONE_CODE
+            add(error.code == ErrorCode.ACCOUNT_CODE
                 ? PhoneLoginScrErrorEvent(error.message)
                 : PassLoginScrErrorEvent(error.message));
           } else {
@@ -37,6 +39,8 @@ class LoginScreenBloc extends BaseBloc {
       yield PhoneLoginScrErrorState(e.message);
     } else if (e is PassLoginScrErrorEvent) {
       yield PassLoginScrErrorState(e.message);
+    } else if (e is SuccessLoginScrEvent) {
+      yield SuccessLoginScrState(e.message, e.result);
     }
   }
 

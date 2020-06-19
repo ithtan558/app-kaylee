@@ -7,8 +7,10 @@ import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/res/src/dimens.dart';
 import 'package:kaylee/res/src/strings.dart';
+import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/reset_pass/reset_pass_screen.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
+import 'package:kaylee/widgets/src/kaylee_dialog.dart';
 
 import 'bloc/bloc.dart';
 import 'bloc/state.dart';
@@ -62,21 +64,34 @@ class _LoginScreenState extends KayleeState<LoginScreen> {
               hideLoading();
               await showKayleeAlertDialog(
                   context: context,
-                  title: null,
-                  content: state.error.message,
-                  actions: [
+                  view:
+                      KayleeAlertDialogView.error(error: state.error, actions: [
                     KayleeAlertDialogAction.dongY(
                       onPressed: () {
                         popScreen();
                       },
                     )
-                  ]);
+                  ]));
             } else if (state is PhoneLoginScrErrorState) {
               hideLoading();
               _phoneFNode.requestFocus();
             } else if (state is PassLoginScrErrorState) {
               hideLoading();
               _passFNode.requestFocus();
+            } else if (state is SuccessLoginScrState) {
+              hideLoading();
+              await showKayleeAlertDialog(
+                  context: context,
+                  view: KayleeAlertDialogView.message(
+                    message: state.message,
+                    actions: [
+                      KayleeAlertDialogAction.dongY(
+                        onPressed: () {
+                          pushToTop(PageIntent(context, HomeScreen));
+                        },
+                      )
+                    ],
+                  ));
             }
           },
           builder: (context, state) {
