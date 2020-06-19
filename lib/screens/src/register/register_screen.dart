@@ -3,8 +3,10 @@ import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/base/networks/network_module.dart';
+import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/res/src/strings.dart';
+import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/register/bloc/bloc.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
@@ -36,6 +38,9 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
   final phoneTController = TextEditingController();
   final emailTController = TextEditingController();
   final passTController = TextEditingController();
+
+  bool isAcceptPolicy = false;
+
   RegisterScreenBloc bloc;
 
   @override
@@ -62,8 +67,8 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
         appBar: KayleeAppBar(
           title: Strings.khoiTaoTaiKhoan,
         ),
-        child: BlocConsumer(
-          listener: (context, state) {
+        child: BlocConsumer<RegisterScreenBloc, dynamic>(
+          listener: (context, state) async {
             if (state is LoadingState) {
               showLoading();
             } else if (state is NameRegisterScrErrorState) {
@@ -81,6 +86,35 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
             } else if (state is PassRegisterScrErrorState) {
               hideLoading();
               passFocus.requestFocus();
+            } else if (state is ErrorState) {
+              hideLoading();
+              await showKayleeAlertDialog(
+                  context: context,
+                  view: KayleeAlertDialogView.error(
+                    error: state.error,
+                    actions: [
+                      KayleeAlertDialogAction.dongY(
+                        onPressed: () {
+                          popScreen();
+                        },
+                      )
+                    ],
+                  ));
+            } else if (state is SuccessRegisterScrState) {
+              hideLoading();
+              await showKayleeAlertDialog(
+                  context: context,
+                  view: KayleeAlertDialogView.message(
+                    message: state.message,
+                    actions: [
+                      KayleeAlertDialogAction.dongY(
+                        onPressed: () {
+                          popUntilScreenOrFirst(
+                              PageIntent(context, LoginScreen));
+                        },
+                      )
+                    ],
+                  ));
             }
           },
           builder: (context, state) {
@@ -90,6 +124,7 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
                   padding: const EdgeInsets.symmetric(
                       horizontal: Dimens.px16, vertical: Dimens.px16),
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(
                         child: KayleeTextField.normal(
@@ -122,8 +157,10 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: Dimens.px16, vertical: Dimens.px16),
+                  padding: const EdgeInsets.only(
+                      left: Dimens.px16,
+                      right: Dimens.px16,
+                      bottom: Dimens.px16),
                   child: KayleeTextField.phoneInput(
                     title: Strings.soDienThoai,
                     controller: phoneTController,
@@ -136,8 +173,10 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: Dimens.px16, vertical: Dimens.px16),
+                  padding: const EdgeInsets.only(
+                      left: Dimens.px16,
+                      right: Dimens.px16,
+                      bottom: Dimens.px16),
                   child: KayleeTextField.normal(
                     title: Strings.email,
                     hint: Strings.emailHint,
@@ -167,13 +206,27 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
                 Padding(
                   padding: const EdgeInsets.symmetric(
                       horizontal: Dimens.px16, vertical: Dimens.px16),
-                  child: PolicyCheckBox(),
+                  child: PolicyCheckBox(
+                    onChecked: (value) {
+                      isAcceptPolicy = value;
+                    },
+                  ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: Dimens.px8),
+                  padding: const EdgeInsets.only(
+                      top: Dimens.px14, bottom: Dimens.px8),
                   child: KayLeeRoundedButton.normal(
                       text: Strings.dangKy,
-                      onPressed: () {},
+                      onPressed: () {
+                        bloc.register(
+                            RegisterBody(
+                                firstName: nameTController.text,
+                                lastName: lastNameTController.text,
+                                phone: phoneTController.text,
+                                email: emailTController.text,
+                                password: passTController.text),
+                            isAcceptPolicy: isAcceptPolicy);
+                      },
                       margin: EdgeInsets.symmetric(horizontal: Dimens.px8)),
                 ),
               ],

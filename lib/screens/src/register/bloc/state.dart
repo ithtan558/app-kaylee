@@ -19,3 +19,9 @@ class PhoneRegisterScrErrorState extends MessageErrorState {
 class PassRegisterScrErrorState extends MessageErrorState {
   PassRegisterScrErrorState(String message) : super(message);
 }
+
+class SuccessRegisterScrState {
+  Message message;
+
+  SuccessRegisterScrState(this.message);
+}
