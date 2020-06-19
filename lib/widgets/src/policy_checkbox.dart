@@ -9,6 +9,10 @@ import 'package:kaylee/res/src/strings.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class PolicyCheckBox extends StatefulWidget {
+  final ValueSetter<bool> onChecked;
+
+  PolicyCheckBox({this.onChecked});
+
   @override
   _PolicyCheckBoxState createState() => _PolicyCheckBoxState();
 }
@@ -26,6 +30,7 @@ class _PolicyCheckBoxState extends BaseState<PolicyCheckBox> {
             setState(() {
               isChecked = !isChecked;
             });
+            if (widget.onChecked.isNotNull) widget.onChecked(isChecked);
           },
           child: Image.asset(
             isChecked ? Images.ic_checked : Images.ic_notcheck,
