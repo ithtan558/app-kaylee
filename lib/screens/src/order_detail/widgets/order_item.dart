@@ -23,23 +23,24 @@ class _OrderItemState extends BaseState<OrderItem> {
       confirmDismiss: () async {
         final result = await showKayleeAlertDialog(
             context: context,
-            title: Strings.banSeXoaSanPham,
-            content: Strings.sanPhamSeBiXoaMatKhoiGioHang,
-            actions: [
-              KayleeAlertDialogAction.dongY(
-                onPressed: () {
-                  popScreen(resultBundle: Bundle(true));
-                  return false;
-                },
-                isDefaultAction: true,
-              ),
-              KayleeAlertDialogAction.huy(
-                onPressed: () {
-                  popScreen(resultBundle: Bundle(false));
-                  return false;
-                },
-              ),
-            ]);
+            view: KayleeAlertDialogView(
+                title: Strings.banSeXoaSanPham,
+                content: Strings.sanPhamSeBiXoaMatKhoiGioHang,
+                actions: [
+                  KayleeAlertDialogAction.dongY(
+                    onPressed: () {
+                      popScreen(resultBundle: Bundle(true));
+                      return false;
+                    },
+                    isDefaultAction: true,
+                  ),
+                  KayleeAlertDialogAction.huy(
+                    onPressed: () {
+                      popScreen(resultBundle: Bundle(false));
+                      return false;
+                    },
+                  ),
+                ]));
         return (result as Bundle)?.args ?? false;
       },
       onDismissed: (direction) {
@@ -85,9 +86,9 @@ class _OrderItemState extends BaseState<OrderItem> {
                   ),
                   Expanded(
                       child: KayleeText.normal16W400(
-                        "Cắt tóc",
-                        maxLines: 1,
-                      )),
+                    "Cắt tóc",
+                    maxLines: 1,
+                  )),
                   KayleePriceUnitText(90000)
                 ],
               ),

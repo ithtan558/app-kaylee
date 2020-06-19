@@ -204,27 +204,53 @@ Future<void> showKayleeDialog(
 }
 
 Future showKayleeAlertDialog(
-    {@required BuildContext context,
-    String title,
-    String content,
-    List<KayleeAlertDialogAction> actions}) {
+    {@required BuildContext context, KayleeAlertDialogView view}) {
   return showCupertinoDialog(
       context: context,
       builder: (c) {
-        return CupertinoAlertDialog(
-          title: title.isNotNull
-              ? Text(
-                  title,
-                )
-              : null,
-          content: content.isNotNull
-              ? Text(
-                  content,
-                )
-              : null,
-          actions: actions ?? [],
-        );
+        return view ?? Container();
       });
+}
+
+class KayleeAlertDialogView extends StatelessWidget {
+  final String title;
+  final String content;
+  final List<KayleeAlertDialogAction> actions;
+
+  factory KayleeAlertDialogView.error(
+          {Error error, List<KayleeAlertDialogAction> actions}) =>
+      KayleeAlertDialogView(
+        title: error?.title,
+        content: error?.message,
+        actions: actions,
+      );
+
+  factory KayleeAlertDialogView.message(
+          {Message message, List<KayleeAlertDialogAction> actions}) =>
+      KayleeAlertDialogView(
+        title: message?.title,
+        content: message?.content,
+        actions: actions,
+      );
+
+  KayleeAlertDialogView({this.title, this.content, this.actions});
+
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoAlertDialog(
+      title: title.isNotNull
+          ? Text(
+              title,
+            )
+          : null,
+      content: content.isNotNull
+          ? Text(
+              content,
+            )
+          : null,
+      actions: actions ?? [],
+    );
+  }
 }
 
 class KayleeAlertDialogAction extends StatelessWidget {
