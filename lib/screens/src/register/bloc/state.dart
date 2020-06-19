@@ -8,6 +8,10 @@ class LastNameRegisterScrErrorState extends MessageErrorState {
   LastNameRegisterScrErrorState(String message) : super(message);
 }
 
+class EmailRegisterScrErrorState extends MessageErrorState {
+  EmailRegisterScrErrorState(String message) : super(message);
+}
+
 class PhoneRegisterScrErrorState extends MessageErrorState {
   PhoneRegisterScrErrorState(String message) : super(message);
 }
