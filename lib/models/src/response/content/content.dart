@@ -12,7 +12,7 @@ class Content {
   factory Content.fromJson(Map<String, dynamic> json) =>
       _$ContentFromJson(json);
 
-  Map<String, dynamic> toJson(instance) => _$ContentToJson(this);
+  Map<String, dynamic> toJson() => _$ContentToJson(this);
 
   Content({
     this.id,
