@@ -16,12 +16,13 @@ class _CommonService implements CommonService {
   String baseUrl;
 
   @override
-  getPolicy() async {
+  getContent(hashtag) async {
+    ArgumentError.checkNotNull(hashtag, 'hashtag');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'content/dieu-kien-va-dieu-khoan',
+        'content/$hashtag',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -29,7 +30,7 @@ class _CommonService implements CommonService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<Policy>.fromJson(_result.data);
+    final value = ResponseModel<Content>.fromJson(_result.data);
     return value;
   }
 }

@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'policy.dart';
+part of 'content.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Policy _$PolicyFromJson(Map<String, dynamic> json) {
-  return Policy(
+Content _$ContentFromJson(Map<String, dynamic> json) {
+  return Content(
     id: json['id'] as int,
     name: json['name'] as String,
     code: json['code'] as String,
@@ -17,7 +17,7 @@ Policy _$PolicyFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$PolicyToJson(Policy instance) => <String, dynamic>{
+Map<String, dynamic> _$ContentToJson(Content instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'code': instance.code,

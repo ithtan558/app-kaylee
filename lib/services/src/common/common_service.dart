@@ -7,6 +7,6 @@ part 'common_service.g.dart';
 abstract class CommonService {
   factory CommonService(Dio dio) = _CommonService;
 
-  @GET('content/dieu-kien-va-dieu-khoan')
-  Future<ResponseModel<Policy>> getPolicy();
+  @GET('content/{hashtag}')
+  Future<ResponseModel<Content>> getContent(@Path() hashtag);
 }

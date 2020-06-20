@@ -1,15 +1,20 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'policy.g.dart';
+part 'content.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class Policy {
-  factory Policy.fromJson(Map<String, dynamic> json) => _$PolicyFromJson(json);
+class Content {
+  static const POLICY_HASHTAG = 'dieu-kien-va-dieu-khoan';
 
-  Map<String, dynamic> toJson(instance) => _$PolicyToJson(this);
+  static const CONTACT_US_HASHTAG = 'lien-he-voi-chung-toi';
 
-  Policy({
+  factory Content.fromJson(Map<String, dynamic> json) =>
+      _$ContentFromJson(json);
+
+  Map<String, dynamic> toJson(instance) => _$ContentToJson(this);
+
+  Content({
     this.id,
     this.name,
     this.code,
