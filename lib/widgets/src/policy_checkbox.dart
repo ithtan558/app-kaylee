@@ -71,8 +71,7 @@ class _PolicyView extends StatefulWidget {
   static Widget newInstance({ScrollController scrollController}) =>
       BlocProvider(
         create: (context) => _PolicyViewBloc(
-            RepositoryProvider.of<NetworkModule>(context)
-                .provideCommonService()),
+            context.repository<NetworkModule>().provideCommonService()),
         child: _PolicyView._(
           scrollController: scrollController,
         ),
@@ -92,7 +91,7 @@ class _PolicyViewState extends BaseState<_PolicyView> {
   @override
   void initState() {
     super.initState();
-    bloc = BlocProvider.of<_PolicyViewBloc>(context);
+    bloc = context.bloc<_PolicyViewBloc>();
     bloc.loadPolicy();
   }
 

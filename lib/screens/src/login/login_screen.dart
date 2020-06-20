@@ -19,8 +19,8 @@ import 'bloc/state.dart';
 class LoginScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<LoginScreenBloc>(
         create: (context) => LoginScreenBloc(
-            userService: RepositoryProvider.of<NetworkModule>(context)
-                .provideUserService()),
+            userService:
+                context.repository<NetworkModule>().provideUserService()),
         child: LoginScreen._(),
       );
 

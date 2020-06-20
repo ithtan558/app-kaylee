@@ -15,8 +15,8 @@ import 'bloc/state.dart';
 class RegisterScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<RegisterScreenBloc>(
         create: (context) => RegisterScreenBloc(
-            userService: RepositoryProvider.of<NetworkModule>(context)
-                .provideUserService()),
+            userService:
+                context.repository<NetworkModule>().provideUserService()),
         child: RegisterScreen._(),
       );
 
@@ -46,7 +46,7 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
   @override
   void initState() {
     super.initState();
-    bloc = BlocProvider.of<RegisterScreenBloc>(context);
+    bloc = context.bloc<RegisterScreenBloc>();
   }
 
   @override
