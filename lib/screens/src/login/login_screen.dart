@@ -3,6 +3,7 @@ import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/base/networks/network_module.dart';
+import 'package:kaylee/base/user/user_module.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/res/src/dimens.dart';
@@ -87,6 +88,8 @@ class _LoginScreenState extends KayleeState<LoginScreen> {
                     actions: [
                       KayleeAlertDialogAction.dongY(
                         onPressed: () {
+                          RepositoryProvider.of<UserModule>(context)
+                              .updateUserInfo(state.result);
                           pushToTop(PageIntent(context, HomeScreen));
                         },
                       )
