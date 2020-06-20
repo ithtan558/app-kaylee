@@ -20,6 +20,8 @@ class KayleeJsonConverter extends JsonConverterFactory {
       return LoginBody.fromJson(json) as T;
     } else if (T == LoginBody) {
       return LoginBody.fromJson(json) as T;
+    } else if (T == Content) {
+      return Content.fromJson(json) as T;
     }
     return json as T;
   }
@@ -39,6 +41,8 @@ class KayleeJsonConverter extends JsonConverterFactory {
     } else if (json is VerifyPhoneBody) {
       return json.toJson();
     } else if (json is LoginBody) {
+      return json.toJson();
+    } else if (json is Content) {
       return json.toJson();
     } else
       return json;
