@@ -1,13 +1,15 @@
-import 'package:core_plugin/core_plugin.dart';
+import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
-import 'package:kaylee/res/src/dimens.dart';
+import 'package:kaylee/base/user/user_module.dart';
+import 'package:kaylee/res/res.dart';
 import 'package:kaylee/res/src/images.dart';
-import 'package:kaylee/res/src/strings.dart';
 import 'package:kaylee/screens/screens.dart';
+import 'package:kaylee/screens/src/splash/bloc/bloc.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class SplashScreen extends StatefulWidget {
-  static Widget newInstance() => SplashScreen._();
+  static Widget newInstance() =>
+      BlocProvider(create: (_) => SplashScreenBloc(), child: SplashScreen._());
 
   SplashScreen._();
 
@@ -17,49 +19,72 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends BaseState<SplashScreen> {
   final logoRatio = 211 / 95;
+  SplashScreenBloc bloc;
 
   @override
   void initState() {
     super.initState();
+    bloc = BlocProvider.of<SplashScreenBloc>(context);
+    bloc.config();
   }
 
   @override
   void dispose() {
+    bloc.close();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-            width: ScreenUtils.scaleWidth(context, 211),
-            margin: EdgeInsets.only(top: ScreenUtils.scaleHeight(context, 236)),
-            child: AspectRatio(
-              aspectRatio: logoRatio,
-              child: Image.asset(
-                Images.logo,
+      body: Center(
+        child: Column(
+          children: [
+            Expanded(
+              child: Container(
+                width: ScreenUtils.scaleWidth(context, 211),
+                height: double.infinity,
+                alignment: Alignment.center,
+                child: AspectRatio(
+                  aspectRatio: logoRatio,
+                  child: Image.asset(Images.logo),
+                ),
               ),
             ),
-          ),
-          Column(
-            children: [
-              KayLeeRoundedButton.normal(
-                onPressed: () {
-                  pushScreen(PageIntent(context, LoginScreen));
-                },
-                text: Strings.login,
-              ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: Dimens.px32),
-                child: Go2RegisterText(),
-              )
-            ],
-          )
-        ],
+            BlocConsumer<SplashScreenBloc, dynamic>(
+              builder: (context, state) {
+                if (state is LoadedSharedPrefSplashScrState) {
+                  final user =
+                      RepositoryProvider.of<UserModule>(context).getUserInfo();
+                  if (user?.token.isNullOrEmpty ?? false)
+                    return Column(
+                      children: [
+                        KayLeeRoundedButton.normal(
+                          onPressed: () {
+                            pushScreen(PageIntent(context, LoginScreen));
+                          },
+                          text: Strings.login,
+                        ),
+                        Container(
+                          margin:
+                              const EdgeInsets.symmetric(vertical: Dimens.px32),
+                          child: Go2RegisterText(),
+                        )
+                      ],
+                    );
+                  else
+                    bloc.pushToHomeScreen();
+                }
+                return Container();
+              },
+              listener: (context, state) {
+                if (state is GoToHomeScreenSplashScrState) {
+                  pushScreen(PageIntent(context, HomeScreen));
+                }
+              },
+            )
+          ],
+        ),
       ),
     );
   }
