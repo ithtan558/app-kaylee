@@ -13,7 +13,7 @@ abstract class UserService {
   @POST('login')
   Future<ResponseModel<LoginResult>> login(@Body() LoginBody body);
 
-  @POST('forgot/verify-otp')
+  @POST('forgot/verify-phone-and-send-otp')
   Future<ResponseModel<VerifyPhoneResult>> verifyPhone(
       @Body() VerifyPhoneBody body);
 

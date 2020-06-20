@@ -62,7 +62,7 @@ class _UserService implements UserService {
     final _data = <String, dynamic>{};
     _data.addAll(body?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'forgot/verify-otp',
+        'forgot/verify-phone-and-send-otp',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
