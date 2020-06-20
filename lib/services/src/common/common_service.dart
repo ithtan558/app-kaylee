@@ -8,5 +8,5 @@ abstract class CommonService {
   factory CommonService(Dio dio) = _CommonService;
 
   @GET('content/{hashtag}')
-  Future<ResponseModel<Content>> getContent(@Path() hashtag);
+  Future<ResponseModel<Content>> getContent(@Path() String hashtag);
 }
