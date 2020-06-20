@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:kaylee/base/json_converter/kaylee_json_convert.dart';
 import 'package:kaylee/base/kaylee_routing.dart';
 import 'package:kaylee/base/networks/network_module.dart';
+import 'package:kaylee/base/user/user_module.dart';
 import 'package:kaylee/res/src/colors_res.dart';
 import 'package:kaylee/res/src/fonts.dart';
 import 'package:kaylee/res/src/strings.dart';
@@ -18,6 +19,9 @@ class KayLeeApp extends StatefulWidget {
   static Widget newInstance() => MultiRepositoryProvider(providers: [
         RepositoryProvider<NetworkModule>(
           create: (_) => NetworkModule.init(),
+        ),
+        RepositoryProvider<UserModule>(
+          create: (_) => UserModule.init(),
         ),
       ], child: KayLeeApp._());
 
