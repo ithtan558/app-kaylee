@@ -1,7 +1,7 @@
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
-import 'package:kaylee/screens/src/reset_pass/reset_pass_screen.dart';
+import 'package:kaylee/screens/src/reset_pass/reset/reset_pass_screen.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class EditProfileScreen extends StatefulWidget {
