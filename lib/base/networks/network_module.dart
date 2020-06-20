@@ -9,4 +9,6 @@ abstract class NetworkModule extends Network {
   factory NetworkModule.init() => NetworkModuleImpl(Constant.BASE_URL);
 
   UserService provideUserService();
+
+  CommonService provideCommonService();
 }
