@@ -1,5 +1,6 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:kaylee/models/models.dart';
+import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/register/bloc/event.dart';
 import 'package:kaylee/screens/src/register/bloc/state.dart';
 import 'package:kaylee/services/services.dart';
@@ -56,7 +57,7 @@ class RegisterScreenBloc extends BaseBloc {
       add(DoSignUpRegisterScrEvent(body));
     } else {
       errorEvent(ErrorType.FAILED,
-          error: Error(message: 'Chấp nhận "Điều khoản và quy định"'));
+          error: Error(message: Strings.vuiLongChapNhanDieuKhoan));
     }
   }
 }

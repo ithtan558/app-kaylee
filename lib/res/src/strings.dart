@@ -192,6 +192,8 @@ class Strings {
   static const String chinhSuaNhanVien = 'Chỉnh sửa thông tin NV';
   static const String xoaNhanVien = 'Xoá nhân viên';
   static const String batBuoc = 'Bắt buộc';
+  static const String vuiLongChapNhanDieuKhoan =
+      'Vui lòng đồng ý với điều khoản và quy định';
 
   Strings._();
 }
