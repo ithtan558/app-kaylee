@@ -16,7 +16,7 @@ class OtpVerifyBloc extends BaseBloc {
       RequestHandler(
         request: userService?.verifyOtp(e.body),
         onSuccess: ({message, result}) {
-          add(SuccessOtpConfirmScrEvent(message));
+          add(SuccessOtpConfirmScrEvent(message, result));
         },
         onFailed: (code, {error}) {
           if (error.code.isNotNull) {
@@ -27,7 +27,7 @@ class OtpVerifyBloc extends BaseBloc {
         },
       );
     } else if (e is SuccessOtpConfirmScrEvent) {
-      yield SuccessOtpConfirmScrState(e.message);
+      yield SuccessOtpConfirmScrState(e.message, e.result);
     } else if (e is InputErrorOtpConfirmScrEvent) {
       yield InputErrorOtpConfirmScrState(e.message);
     }
@@ -49,8 +49,9 @@ class DoVerifyOtpConfirmScrEvent {
 
 class SuccessOtpConfirmScrEvent {
   final Message message;
+  final VerifyOtpResult result;
 
-  SuccessOtpConfirmScrEvent(this.message);
+  SuccessOtpConfirmScrEvent(this.message, this.result);
 }
 
 class InputErrorOtpConfirmScrEvent extends MessageErrorEvent {
@@ -59,8 +60,9 @@ class InputErrorOtpConfirmScrEvent extends MessageErrorEvent {
 
 class SuccessOtpConfirmScrState {
   final Message message;
+  final VerifyOtpResult result;
 
-  SuccessOtpConfirmScrState(this.message);
+  SuccessOtpConfirmScrState(this.message, this.result);
 }
 
 class InputErrorOtpConfirmScrState extends MessageErrorState {
