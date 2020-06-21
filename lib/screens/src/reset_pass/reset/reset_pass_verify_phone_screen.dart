@@ -81,7 +81,7 @@ class _ResetPassVerifyPhoneScreenState
             } else if (state is SuccessResetPassScrState) {
               hideLoading();
               pushScreen(PageIntent(context, ResetPassVerifyOtpScreen,
-                  bundle: Bundle(OtpConfirmScreenDate(
+                  bundle: Bundle(OtpConfirmScreenData(
                     phone: _phoneTFController.text,
                     result: state.result,
                   ))));
