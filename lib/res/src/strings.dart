@@ -194,6 +194,8 @@ class Strings {
   static const String batBuoc = 'Bắt buộc';
   static const String vuiLongChapNhanDieuKhoan =
       'Vui lòng đồng ý với điều khoản và quy định';
+  static const String cauHoiKhacVeDangNhapDangKy =
+      'Câu hỏi khác về đăng nhập/đăng ký?';
 
   Strings._();
 }
