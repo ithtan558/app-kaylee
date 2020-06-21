@@ -1,5 +1,6 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:kaylee/models/models.dart';
+import 'package:kaylee/models/src/request/update_pass/update_pass_body.dart';
 
 part 'user_service.g.dart';
 
@@ -19,4 +20,7 @@ abstract class UserService {
 
   @POST('forgot/verify-otp')
   Future<ResponseModel<VerifyOtpResult>> verifyOtp(@Body() VerifyOtpBody body);
+
+  @POST('forgot/update-password')
+  Future<ResponseModel> updatePass(@Body() UpdatePassBody body);
 }

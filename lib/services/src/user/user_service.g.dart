@@ -93,4 +93,24 @@ class _UserService implements UserService {
     final value = ResponseModel<VerifyOtpResult>.fromJson(_result.data);
     return value;
   }
+
+  @override
+  updatePass(body) async {
+    ArgumentError.checkNotNull(body, 'body');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body?.toJson() ?? <String, dynamic>{});
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        'forgot/update-password',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    return value;
+  }
 }
