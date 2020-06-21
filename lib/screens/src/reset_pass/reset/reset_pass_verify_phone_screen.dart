@@ -5,23 +5,15 @@ import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/base/networks/network_module.dart';
 import 'package:kaylee/res/src/dimens.dart';
 import 'package:kaylee/res/src/strings.dart';
-import 'package:kaylee/screens/src/reset_pass/blocs/contact_us_bloc.dart';
 import 'package:kaylee/screens/src/reset_pass/blocs/send_otp_bloc.dart';
 import 'package:kaylee/screens/src/reset_pass/otp/reset_pass_verify_otp_screeen.dart';
+import 'package:kaylee/screens/src/reset_pass/widgets/contact_us_text.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class ResetPassVerifyPhoneScreen extends StatefulWidget {
-  static Widget newInstance() => MultiBlocProvider(
-        providers: [
-          BlocProvider<SendOtpBloc>(
-            create: (context) => SendOtpBloc(
-                context.repository<NetworkModule>().provideUserService()),
-          ),
-          BlocProvider<ContactUsBloc>(
-            create: (context) => ContactUsBloc(
-                context.repository<NetworkModule>().provideCommonService()),
-          ),
-        ],
+  static Widget newInstance() => BlocProvider<SendOtpBloc>(
+        create: (context) => SendOtpBloc(
+            context.repository<NetworkModule>().provideUserService()),
         child: ResetPassVerifyPhoneScreen._(),
       );
 
@@ -37,13 +29,11 @@ class _ResetPassVerifyPhoneScreenState
   final _phoneTFController = TextEditingController();
   final phoneFocus = FocusNode();
   SendOtpBloc sendOtpBloc;
-  ContactUsBloc contactUsBloc;
 
   @override
   void initState() {
     super.initState();
     sendOtpBloc = context.bloc<SendOtpBloc>();
-    contactUsBloc = context.bloc<ContactUsBloc>();
   }
 
   @override
@@ -51,70 +41,41 @@ class _ResetPassVerifyPhoneScreenState
     phoneFocus.dispose();
     _phoneTFController.dispose();
     sendOtpBloc.close();
-    contactUsBloc.close();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocListener(
-      listeners: [
-        BlocListener<SendOtpBloc, dynamic>(
-          listener: (context, state) {
-            if (state is ErrorState) {
-              hideLoading();
-              showKayleeAlertDialog(
-                  context: context,
-                  view: KayleeAlertDialogView.error(
-                    error: state.error,
-                    actions: [
-                      KayleeAlertDialogAction.dongY(
-                        onPressed: () {
-                          popScreen();
-                        },
-                      ),
-                    ],
-                  ));
-            } else if (state is LoadingState) {
-              phoneFocus.unfocus();
-              showLoading();
-            } else if (state is SuccessSendOtpState) {
-              hideLoading();
-              pushScreen(PageIntent(context, ResetPassVerifyOtpScreen,
-                  bundle: Bundle(OtpConfirmScreenData(
-                    phone: _phoneTFController.text,
-                    result: state.result,
-                  ))));
-            } else if (state is PhoneErrorSendOtpState) {
-              hideLoading();
-            }
-          },
-        ),
-        BlocListener<ContactUsBloc, dynamic>(
-          listener: (context, state) {
-            if (state is ErrorState) {
-              hideLoading();
-              showKayleeAlertDialog(
-                  context: context,
-                  view: KayleeAlertDialogView.error(
-                    error: state.error,
-                    actions: [
-                      KayleeAlertDialogAction.dongY(
-                        onPressed: () {
-                          popScreen();
-                        },
-                      ),
-                    ],
-                  ));
-            } else if (state is LoadingState) {
-              showLoading();
-            } else if (state is SuccessLoadContactUsState) {
-              hideLoading();
-              makeCall(state.content.content);
-            }
-          },
-        )
-      ],
+    return BlocListener<SendOtpBloc, dynamic>(
+      listener: (context, state) {
+        if (state is ErrorState) {
+          hideLoading();
+          showKayleeAlertDialog(
+              context: context,
+              view: KayleeAlertDialogView.error(
+                error: state.error,
+                actions: [
+                  KayleeAlertDialogAction.dongY(
+                    onPressed: () {
+                      popScreen();
+                    },
+                  ),
+                ],
+              ));
+        } else if (state is LoadingState) {
+          phoneFocus.unfocus();
+          showLoading();
+        } else if (state is SuccessSendOtpState) {
+          hideLoading();
+          pushScreen(PageIntent(context, ResetPassVerifyOtpScreen,
+              bundle: Bundle(OtpConfirmScreenData(
+                phone: _phoneTFController.text,
+                result: state.result,
+              ))));
+        } else if (state is PhoneErrorSendOtpState) {
+          hideLoading();
+        }
+      },
       child: UnFocusWidget(
         child: Scaffold(
           appBar: KayleeAppBar(
@@ -144,24 +105,7 @@ class _ResetPassVerifyPhoneScreenState
                   },
                   text: Strings.guiOtp,
                 ),
-                Expanded(
-                    child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      'Câu hỏi khác về đăng nhập/đăng ký?',
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: Dimens.px8),
-                      child: HyperLinkText(
-                        text: Strings.lienHeChungToi,
-                        onTap: () {
-                          contactUsBloc.getContact();
-                        },
-                      ),
-                    ),
-                  ],
-                ))
+                Expanded(child: ContactUsText.newInstance())
               ],
             ),
           ),
