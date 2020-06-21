@@ -3,7 +3,6 @@ import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/base/networks/network_module.dart';
-import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/res/src/strings.dart';
 import 'package:kaylee/screens/screens.dart';
@@ -219,12 +218,11 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
                       text: Strings.dangKy,
                       onPressed: () {
                         bloc.register(
-                            RegisterBody(
-                                firstName: nameTController.text,
-                                lastName: lastNameTController.text,
-                                phone: phoneTController.text,
-                                email: emailTController.text,
-                                password: passTController.text),
+                            firstName: nameTController.text,
+                            lastName: lastNameTController.text,
+                            phone: phoneTController.text,
+                            email: emailTController.text,
+                            password: passTController.text,
                             isAcceptPolicy: isAcceptPolicy);
                       },
                       margin: EdgeInsets.symmetric(horizontal: Dimens.px8)),

@@ -52,9 +52,21 @@ class RegisterScreenBloc extends BaseBloc {
     }
   }
 
-  void register(RegisterBody body, {bool isAcceptPolicy = false}) {
+  void register(
+      {String firstName,
+      String lastName,
+      String phone,
+      String email,
+      String password,
+      bool isAcceptPolicy = false}) {
     if (isAcceptPolicy) {
-      add(DoSignUpRegisterScrEvent(body));
+      add(DoSignUpRegisterScrEvent(RegisterBody(
+        firstName: firstName,
+        lastName: lastName,
+        phone: phone,
+        email: email,
+        password: password,
+      )));
     } else {
       errorEvent(ErrorType.FAILED,
           error: Error(message: Strings.vuiLongChapNhanDieuKhoan));
