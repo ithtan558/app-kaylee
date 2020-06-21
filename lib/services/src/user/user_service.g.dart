@@ -90,7 +90,7 @@ class _UserService implements UserService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    final value = ResponseModel<VerifyOtpResult>.fromJson(_result.data);
     return value;
   }
 }

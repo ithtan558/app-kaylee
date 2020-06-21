@@ -18,5 +18,5 @@ abstract class UserService {
       @Body() VerifyPhoneBody body);
 
   @POST('forgot/verify-otp')
-  Future<ResponseModel> verifyOtp(@Body() VerifyOtpBody body);
+  Future<ResponseModel<VerifyOtpResult>> verifyOtp(@Body() VerifyOtpBody body);
 }
