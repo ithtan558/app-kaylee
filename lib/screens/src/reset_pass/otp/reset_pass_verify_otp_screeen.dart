@@ -108,7 +108,7 @@ class _ResetPassVerifyOtpScreenState
               );
             } else if (state is LoadingState) {
               showLoading();
-            } else if (state is SuccessResetPassScrState) {
+            } else if (state is SuccessSendOtpState) {
               hideLoading();
               showKayleeAlertMessageYesDialog(
                 context: context,
@@ -117,7 +117,7 @@ class _ResetPassVerifyOtpScreenState
                   popScreen();
                 },
               );
-            } else if (state is PhoneErrorResetPassState) {
+            } else if (state is PhoneErrorSendOtpState) {
               hideLoading();
             }
           },

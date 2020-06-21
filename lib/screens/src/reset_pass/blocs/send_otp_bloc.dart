@@ -11,12 +11,12 @@ class SendOtpBloc extends BaseBloc {
   Stream mapEventToState(e) async* {
     if (e is ErrorEvent) {
       yield* errorState(e);
-    } else if (e is VerifyPhoneResetPassScrEvent) {
+    } else if (e is VerifyPhoneSendOtpEvent) {
       yield LoadingState();
       RequestHandler(
         request: userService?.verifyPhone(VerifyPhoneBody(phone: e.phone)),
         onSuccess: ({message, result}) {
-          add(SuccessResetPassScrEvent(result, message));
+          add(SuccessSendOtpEvent(result, message));
         },
         onFailed: (code, {error}) {
           if (error.code.isNotNull) {
@@ -26,42 +26,42 @@ class SendOtpBloc extends BaseBloc {
           }
         },
       );
-    } else if (e is SuccessResetPassScrEvent) {
-      yield SuccessResetPassScrState(e.result, e.message);
+    } else if (e is SuccessSendOtpEvent) {
+      yield SuccessSendOtpState(e.result, e.message);
     } else if (e is PhoneErrorResetPassScrEvent) {
-      yield PhoneErrorResetPassState(e.message);
+      yield PhoneErrorSendOtpState(e.message);
     }
   }
 
   void verifyPhone({String phone}) {
-    add(VerifyPhoneResetPassScrEvent(phone));
+    add(VerifyPhoneSendOtpEvent(phone));
   }
 }
 
-class VerifyPhoneResetPassScrEvent {
+class VerifyPhoneSendOtpEvent {
   final String phone;
 
-  VerifyPhoneResetPassScrEvent(this.phone);
+  VerifyPhoneSendOtpEvent(this.phone);
 }
 
-class SuccessResetPassScrEvent {
+class SuccessSendOtpEvent {
   final VerifyPhoneResult result;
   final Message message;
 
-  SuccessResetPassScrEvent(this.result, this.message);
+  SuccessSendOtpEvent(this.result, this.message);
 }
 
 class PhoneErrorResetPassScrEvent extends MessageErrorEvent {
   PhoneErrorResetPassScrEvent(String message) : super(message);
 }
 
-class SuccessResetPassScrState {
+class SuccessSendOtpState {
   final VerifyPhoneResult result;
   final Message message;
 
-  SuccessResetPassScrState(this.result, this.message);
+  SuccessSendOtpState(this.result, this.message);
 }
 
-class PhoneErrorResetPassState extends MessageErrorState {
-  PhoneErrorResetPassState(String message) : super(message);
+class PhoneErrorSendOtpState extends MessageErrorState {
+  PhoneErrorSendOtpState(String message) : super(message);
 }
