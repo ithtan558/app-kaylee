@@ -12,6 +12,7 @@ class OtpVerifyBloc extends BaseBloc {
     if (e is ErrorEvent) {
       yield* errorState(e);
     } else if (e is DoVerifyOtpConfirmScrEvent) {
+      yield LoadingState();
       RequestHandler(
         request: userService?.verifyOtp(e.body),
         onSuccess: ({message, result}) {
