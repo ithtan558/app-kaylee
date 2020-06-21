@@ -3,16 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
-class InputNewPassScreen extends StatefulWidget {
-  static Widget newInstance() => InputNewPassScreen._();
+class ResetPassNewPassScreen extends StatefulWidget {
+  static Widget newInstance() => ResetPassNewPassScreen._();
 
-  InputNewPassScreen._();
+  ResetPassNewPassScreen._();
 
   @override
-  _InputNewPassScreenState createState() => new _InputNewPassScreenState();
+  _ResetPassNewPassScreenState createState() =>
+      new _ResetPassNewPassScreenState();
 }
 
-class _InputNewPassScreenState extends BaseState<InputNewPassScreen> {
+class _ResetPassNewPassScreenState extends BaseState<ResetPassNewPassScreen> {
   @override
   void initState() {
     super.initState();
