@@ -81,7 +81,10 @@ class _ResetPassVerifyPhoneScreenState
             } else if (state is SuccessResetPassScrState) {
               hideLoading();
               pushScreen(PageIntent(context, ResetPassVerifyOtpScreen,
-                  bundle: Bundle(state.result)));
+                  bundle: Bundle(OtpConfirmScreenDate(
+                    phone: _phoneTFController.text,
+                    result: state.result,
+                  ))));
             } else if (state is PhoneErrorResetPassState) {
               hideLoading();
             }
@@ -138,7 +141,7 @@ class _ResetPassVerifyPhoneScreenState
                 KayLeeRoundedButton.normal(
                   margin: EdgeInsets.only(top: Dimens.px16),
                   onPressed: () {
-                    sendOtpBloc.verifyPhone(_phoneTFController.text);
+                    sendOtpBloc.verifyPhone(phone: _phoneTFController.text);
                   },
                   text: Strings.guiOtp,
                 ),
