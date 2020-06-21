@@ -16,7 +16,7 @@ class SendOtpBloc extends BaseBloc {
       RequestHandler(
         request: userService?.verifyPhone(VerifyPhoneBody(phone: e.phone)),
         onSuccess: ({message, result}) {
-          add(SuccessResetPassScrEvent(result));
+          add(SuccessResetPassScrEvent(result, message));
         },
         onFailed: (code, {error}) {
           if (error.code.isNotNull) {
@@ -27,7 +27,7 @@ class SendOtpBloc extends BaseBloc {
         },
       );
     } else if (e is SuccessResetPassScrEvent) {
-      yield SuccessResetPassScrState(e.result);
+      yield SuccessResetPassScrState(e.result, e.message);
     } else if (e is PhoneErrorResetPassScrEvent) {
       yield PhoneErrorResetPassState(e.message);
     }
@@ -46,8 +46,9 @@ class VerifyPhoneResetPassScrEvent {
 
 class SuccessResetPassScrEvent {
   final VerifyPhoneResult result;
+  final Message message;
 
-  SuccessResetPassScrEvent(this.result);
+  SuccessResetPassScrEvent(this.result, this.message);
 }
 
 class PhoneErrorResetPassScrEvent extends MessageErrorEvent {
@@ -56,8 +57,9 @@ class PhoneErrorResetPassScrEvent extends MessageErrorEvent {
 
 class SuccessResetPassScrState {
   final VerifyPhoneResult result;
+  final Message message;
 
-  SuccessResetPassScrState(this.result);
+  SuccessResetPassScrState(this.result, this.message);
 }
 
 class PhoneErrorResetPassState extends MessageErrorState {
