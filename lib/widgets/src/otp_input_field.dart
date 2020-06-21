@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kaylee/res/src/colors_res.dart';
 import 'package:kaylee/res/src/dimens.dart';
-
-typedef OnComplete = void Function(String otp);
+import 'package:kaylee/widgets/kaylee_widgets.dart';
 
 class OtpInputField extends StatefulWidget {
-  final OnComplete onComplete;
+  final ValueSetter<String> onComplete;
+  final String error;
 
-  OtpInputField({this.onComplete});
+  OtpInputField({this.onComplete, this.error});
 
   @override
   _OtpInputFieldState createState() => new _OtpInputFieldState();
@@ -70,38 +70,44 @@ class _OtpInputFieldState extends BaseState<OtpInputField> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.transparent,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          _PinTextField(
-            currentFocus: pinFocus1,
-            nextFocus: pinFocus2,
-            tfController: tfController1,
+    return Column(
+      children: <Widget>[
+        Container(
+          color: Colors.transparent,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _PinTextField(
+                currentFocus: pinFocus1,
+                nextFocus: pinFocus2,
+                tfController: tfController1,
+              ),
+              _PinTextField(
+                currentFocus: pinFocus2,
+                nextFocus: pinFocus3,
+                tfController: tfController2,
+              ),
+              _PinTextField(
+                currentFocus: pinFocus3,
+                nextFocus: pinFocus4,
+                tfController: tfController3,
+              ),
+              _PinTextField(
+                currentFocus: pinFocus4,
+                textInputAction: TextInputAction.done,
+                tfController: tfController4,
+                onComplete: () {
+                  final code =
+                      '${tfController1.text}${tfController2.text}${tfController3.text}${tfController4.text}';
+                  widget.onComplete(code);
+                },
+              ),
+            ],
           ),
-          _PinTextField(
-            currentFocus: pinFocus2,
-            nextFocus: pinFocus3,
-            tfController: tfController2,
-          ),
-          _PinTextField(
-            currentFocus: pinFocus3,
-            nextFocus: pinFocus4,
-            tfController: tfController3,
-          ),
-          _PinTextField(
-            currentFocus: pinFocus4,
-            textInputAction: TextInputAction.done,
-            tfController: tfController4,
-            onComplete: () {
-              final code =
-                  '${tfController1.text}${tfController2.text}${tfController3.text}${tfController4.text}';
-              widget.onComplete(code);
-            },
-          ),
-        ],
-      ),
+        ),
+        if (widget.error.isNotNullAndEmpty)
+          KayleeText.error12W400(widget.error),
+      ],
     );
   }
 }
@@ -181,7 +187,7 @@ class _PinTextFieldState extends BaseState<_PinTextField> {
             },
             decoration: InputDecoration(
               border: InputBorder.none,
-              contentPadding: EdgeInsets.zero,
+              contentPadding: EdgeInsets.only(bottom: -8),
             ),
           ),
         ],
