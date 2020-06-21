@@ -31,16 +31,23 @@ class ResetPassNewPassScreen extends StatefulWidget {
 
 class _ResetPassNewPassScreenState extends KayleeState<ResetPassNewPassScreen> {
   UpdatePassBloc updatePassBloc;
+  NewPassScreenData data;
+  final TextEditingController newPassTFController = TextEditingController();
+  FocusNode newPassFocus;
 
   @override
   void initState() {
     super.initState();
     updatePassBloc = context.bloc<UpdatePassBloc>();
+    data = bundle.args as NewPassScreenData;
+    newPassFocus = FocusNode();
   }
 
   @override
   void dispose() {
     updatePassBloc.close();
+    newPassTFController.dispose();
+    newPassFocus.dispose();
     super.dispose();
   }
 
@@ -48,58 +55,72 @@ class _ResetPassNewPassScreenState extends KayleeState<ResetPassNewPassScreen> {
   Widget build(BuildContext context) {
     return UnFocusWidget(
         child: Scaffold(
-          appBar: KayleeAppBar(
-            title: Strings.nhapMatKhauMoi,
-          ),
-          body: Padding(
-            padding: const EdgeInsets.only(
-                top: Dimens.px16,
-                bottom: Dimens.px32,
-                left: Dimens.px16,
-                right: Dimens.px16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                BlocConsumer<UpdatePassBloc, dynamic>(
-                  listener: (context, state) {
-                    if (state is ErrorState) {
-                      hideLoading();
-                      showKayleeAlertErrorYesDialog(
-                        context: context,
-                        error: state.error,
-                        onPressed: () {
-                          popScreen();
-                        },
-                      );
-                    } else if (state is PassErrorUpdatePassState) {
-                      hideLoading();
-                    } else if (state is LoadingState) {
-                      showLoading();
-                    } else if (state is SuccessSendNewPassUpdatePassState) {
-                      hideLoading();
-                    }
-                  },
-                  builder: (context, state) {
-                    return KayleeTextField.password(
-                      title: Strings.matKhauMoi,
-                      textInputAction: TextInputAction.done,
-                      hint: Strings.passLimitHint,
-                      error:
+      appBar: KayleeAppBar(
+        title: Strings.nhapMatKhauMoi,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.only(
+            top: Dimens.px16,
+            bottom: Dimens.px32,
+            left: Dimens.px16,
+            right: Dimens.px16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            BlocConsumer<UpdatePassBloc, dynamic>(
+              listener: (context, state) {
+                if (state is ErrorState) {
+                  hideLoading();
+                  showKayleeAlertErrorYesDialog(
+                    context: context,
+                    error: state.error,
+                    onPressed: () {
+                      popScreen();
+                    },
+                  );
+                } else if (state is PassErrorUpdatePassState) {
+                  hideLoading();
+                } else if (state is LoadingState) {
+                  showLoading();
+                } else if (state is SuccessSendNewPassUpdatePassState) {
+                  hideLoading();
+                  showKayleeAlertMessageYesDialog(
+                    context: context,
+                    message: state.message,
+                    onPressed: () {
+                      popScreen();
+                    },
+                    onDismiss: () {},
+                  );
+                }
+              },
+              builder: (context, state) {
+                return KayleeTextField.password(
+                  title: Strings.matKhauMoi,
+                  textInputAction: TextInputAction.done,
+                  controller: newPassTFController,
+                  focusNode: newPassFocus,
+                  hint: Strings.passLimitHint,
+                  error:
                       state is PassErrorUpdatePassState ? state.message : null,
-                    );
-                  },
-                ),
-                KayLeeRoundedButton.normal(
-                  margin: EdgeInsets.only(top: Dimens.px16),
-                  onPressed: () {
-//                pushScreen(PageIntent(context, ));
-                  },
-                  text: Strings.xacNhan,
-                ),
-                Expanded(child: ContactUsText.newInstance())
-              ],
+                );
+              },
             ),
-          ),
-        ));
+            KayLeeRoundedButton.normal(
+              margin: EdgeInsets.only(top: Dimens.px16),
+              onPressed: () {
+                newPassFocus.unfocus();
+                updatePassBloc.updatePass(
+                    userId: data?.result?.userId,
+                    resetPassToken: data?.result?.tokenResetPassword,
+                    newPass: newPassTFController.text);
+              },
+              text: Strings.xacNhan,
+            ),
+            Expanded(child: ContactUsText.newInstance())
+          ],
+        ),
+      ),
+    ));
   }
 }
