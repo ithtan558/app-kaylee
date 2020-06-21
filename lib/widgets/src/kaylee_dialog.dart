@@ -204,44 +204,52 @@ Future<void> showKayleeDialog(
 }
 
 Future showKayleeAlertDialog(
-    {@required BuildContext context, KayleeAlertDialogView view}) {
+    {@required BuildContext context,
+    KayleeAlertDialogView view,
+    VoidCallback onDismiss}) {
   return showCupertinoDialog(
       context: context,
       builder: (c) {
         return view ?? Container();
-      });
+      }).then((value) {
+    if (onDismiss.isNotNull) {
+      onDismiss();
+    }
+  });
 }
 
-Future showKayleeAlertMessageYesDialog(
-    {@required BuildContext context, Message message, VoidCallback onPressed}) {
-  return showCupertinoDialog(
+Future showKayleeAlertMessageYesDialog({@required BuildContext context,
+  Message message,
+  VoidCallback onPressed,
+  VoidCallback onDismiss}) {
+  return showKayleeAlertDialog(
       context: context,
-      builder: (c) {
-        return KayleeAlertDialogView.message(
-          message: message,
-          actions: [
-            KayleeAlertDialogAction.dongY(
-              onPressed: onPressed,
-            )
-          ],
-        );
-      });
+      view: KayleeAlertDialogView.message(
+        message: message,
+        actions: [
+          KayleeAlertDialogAction.dongY(
+            onPressed: onPressed,
+          )
+        ],
+      ),
+      onDismiss: onDismiss);
 }
 
-Future showKayleeAlertErrorYesDialog(
-    {@required BuildContext context, Error error, VoidCallback onPressed}) {
-  return showCupertinoDialog(
+Future showKayleeAlertErrorYesDialog({@required BuildContext context,
+  Error error,
+  VoidCallback onPressed,
+  VoidCallback onDismiss}) {
+  return showKayleeAlertDialog(
       context: context,
-      builder: (c) {
-        return KayleeAlertDialogView.error(
-          error: error,
-          actions: [
-            KayleeAlertDialogAction.dongY(
-              onPressed: onPressed,
-            )
-          ],
-        );
-      });
+      view: KayleeAlertDialogView.error(
+        error: error,
+        actions: [
+          KayleeAlertDialogAction.dongY(
+            onPressed: onPressed,
+          )
+        ],
+      ),
+      onDismiss: onDismiss);
 }
 
 class KayleeAlertDialogView extends StatelessWidget {
