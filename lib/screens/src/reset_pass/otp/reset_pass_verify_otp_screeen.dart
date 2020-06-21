@@ -145,7 +145,7 @@ class _ResetPassVerifyOtpScreenState
                   ),
                 ),
                 Padding(
-                    padding: const EdgeInsets.only(top: Dimens.px25),
+                    padding: const EdgeInsets.only(top: Dimens.px16),
                     child: BlocBuilder<OtpVerifyBloc, dynamic>(
                       builder: (context, state) {
                         return OtpInputField(
