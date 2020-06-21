@@ -33,7 +33,7 @@ class SendOtpBloc extends BaseBloc {
     }
   }
 
-  void verifyPhone(String phone) {
+  void verifyPhone({String phone}) {
     add(VerifyPhoneResetPassScrEvent(phone));
   }
 }
