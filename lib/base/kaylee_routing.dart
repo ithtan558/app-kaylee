@@ -15,10 +15,10 @@ mixin KayleeRouting on Routing {
         return LoginScreen.newInstance();
       case RegisterScreen:
         return RegisterScreen.newInstance();
-      case ResetPassScreen:
-        return ResetPassScreen.newInstance();
-      case OtpConfirmScreen:
-        return OtpConfirmScreen.newInstance();
+      case ResetPassVerifyPhoneScreen:
+        return ResetPassVerifyPhoneScreen.newInstance();
+      case ResetPassVerifyOtpScreen:
+        return ResetPassVerifyOtpScreen.newInstance();
       case NotificationScreen:
         return NotificationScreen.newInstance();
       case SplashScreen:
@@ -49,8 +49,8 @@ mixin KayleeRouting on Routing {
         return CartScreen.newInstance();
       case ReceiverInfoScreen:
         return ReceiverInfoScreen.newInstance();
-      case InputNewPassScreen:
-        return InputNewPassScreen.newInstance();
+      case ResetPassNewPassScreen:
+        return ResetPassNewPassScreen.newInstance();
       case CommissionListScreen:
         return CommissionListScreen.newInstance();
       case RevenueScreen:
