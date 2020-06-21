@@ -32,7 +32,7 @@ class OtpVerifyBloc extends BaseBloc {
     }
   }
 
-  void verifyOtp(int userId, String otp) {
+  void verifyOtp({int userId, String otp}) {
     add(DoVerifyOtpConfirmScrEvent(VerifyOtpBody(
       userId: userId,
       otp: otp,
