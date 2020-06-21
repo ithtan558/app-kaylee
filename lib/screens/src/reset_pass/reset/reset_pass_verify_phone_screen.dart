@@ -78,14 +78,14 @@ class _ResetPassVerifyPhoneScreenState
             } else if (state is LoadingState) {
               phoneFocus.unfocus();
               showLoading();
-            } else if (state is SuccessResetPassScrState) {
+            } else if (state is SuccessSendOtpState) {
               hideLoading();
               pushScreen(PageIntent(context, ResetPassVerifyOtpScreen,
                   bundle: Bundle(OtpConfirmScreenData(
                     phone: _phoneTFController.text,
                     result: state.result,
                   ))));
-            } else if (state is PhoneErrorResetPassState) {
+            } else if (state is PhoneErrorSendOtpState) {
               hideLoading();
             }
           },
@@ -133,9 +133,8 @@ class _ResetPassVerifyPhoneScreenState
                   return KayleeTextField.phoneInput(
                     controller: _phoneTFController,
                     focusNode: phoneFocus,
-                    error: state is PhoneErrorResetPassState
-                        ? state.message
-                        : null,
+                    error:
+                        state is PhoneErrorSendOtpState ? state.message : null,
                   );
                 }),
                 KayLeeRoundedButton.normal(
