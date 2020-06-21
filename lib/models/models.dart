@@ -8,4 +8,5 @@ export 'src/response/content/content.dart';
 export 'src/response/error_code.dart';
 export 'src/response/login/login_result.dart';
 export 'src/response/user_info/user_info.dart';
+export 'src/response/verify_otp/verify_otp_result.dart';
 export 'src/response/verify_phone/verify_phone_result.dart';

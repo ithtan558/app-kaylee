@@ -22,6 +22,8 @@ class KayleeJsonConverter extends JsonConverterFactory {
       return LoginBody.fromJson(json) as T;
     } else if (T == Content) {
       return Content.fromJson(json) as T;
+    } else if (T == VerifyOtpResult) {
+      return VerifyOtpResult.fromJson(json) as T;
     }
     return json as T;
   }
@@ -43,6 +45,8 @@ class KayleeJsonConverter extends JsonConverterFactory {
     } else if (json is LoginBody) {
       return json.toJson();
     } else if (json is Content) {
+      return json.toJson();
+    } else if (json is VerifyOtpResult) {
       return json.toJson();
     } else
       return json;
