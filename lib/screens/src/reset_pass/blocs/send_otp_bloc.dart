@@ -2,16 +2,10 @@ import 'package:anth_package/anth_package.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/services/services.dart';
 
-import 'event.dart';
-import 'state.dart';
-
-class ResetPassScreenBloc extends BaseBloc {
+class SendOtpBloc extends BaseBloc {
   UserService userService;
-  CommonService commonService;
 
-  ResetPassScreenBloc(this.userService, this.commonService);
-
-  Content _content;
+  SendOtpBloc(this.userService);
 
   @override
   Stream mapEventToState(e) async* {
@@ -35,32 +29,37 @@ class ResetPassScreenBloc extends BaseBloc {
     } else if (e is SuccessResetPassScrEvent) {
       yield SuccessResetPassScrState(e.result);
     } else if (e is PhoneErrorResetPassScrEvent) {
-      yield PhoneErrorResetPassScrState(e.message);
-    } else if (e is LoadContactResetPassScrEvent) {
-      yield LoadingState();
-      RequestHandler(
-        request: commonService?.getContent(Content.CONTACT_US_HASHTAG),
-        onSuccess: ({message, result}) {
-          _content = result;
-          add(SuccessLoadContactResetPassScrEvent(_content));
-        },
-        onFailed: (code, {error}) {
-          errorEvent(code, error: error);
-        },
-      );
-    } else if (e is SuccessLoadContactResetPassScrEvent) {
-      yield SuccessLoadContactResetPassScrState(e.content);
+      yield PhoneErrorResetPassState(e.message);
     }
   }
 
   void verifyPhone(String phone) {
     add(VerifyPhoneResetPassScrEvent(phone));
   }
+}
 
-  void getContact() {
-    if (_content.isNotNull)
-      add(SuccessLoadContactResetPassScrEvent(_content));
-    else
-      add(LoadContactResetPassScrEvent());
-  }
+class VerifyPhoneResetPassScrEvent {
+  final String phone;
+
+  VerifyPhoneResetPassScrEvent(this.phone);
+}
+
+class SuccessResetPassScrEvent {
+  final VerifyPhoneResult result;
+
+  SuccessResetPassScrEvent(this.result);
+}
+
+class PhoneErrorResetPassScrEvent extends MessageErrorEvent {
+  PhoneErrorResetPassScrEvent(String message) : super(message);
+}
+
+class SuccessResetPassScrState {
+  final VerifyPhoneResult result;
+
+  SuccessResetPassScrState(this.result);
+}
+
+class PhoneErrorResetPassState extends MessageErrorState {
+  PhoneErrorResetPassState(String message) : super(message);
 }
