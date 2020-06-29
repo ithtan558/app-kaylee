@@ -41,7 +41,8 @@ class _BranchListScreenState extends BaseState<BranchListScreen> {
           itemBuilder: (c, index) {
             return BranchItem(
               onTap: () {
-                pushScreen(PageIntent(context, CreateNewBranchScreen,
+                pushScreen(PageIntent(
+                    screen: CreateNewBranchScreen,
                     bundle: Bundle(NewBranchScreenData(
                         openFrom: BranchScreenOpenFrom.branchItem))));
               },
@@ -55,7 +56,8 @@ class _BranchListScreenState extends BaseState<BranchListScreen> {
           itemCount: 10),
       floatingActionButton: KayleeFloatButton(
         onTap: () {
-          pushScreen(PageIntent(context, CreateNewBranchScreen,
+          pushScreen(PageIntent(
+              screen: CreateNewBranchScreen,
               bundle: Bundle(NewBranchScreenData(
                   openFrom: BranchScreenOpenFrom.addNewBranchBtn))));
         },

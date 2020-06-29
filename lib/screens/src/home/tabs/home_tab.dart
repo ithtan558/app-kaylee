@@ -83,14 +83,14 @@ class _HomeTabState extends BaseState<HomeTab> {
         color: Colors.white,
         child: InkWell(
           onTap: () {
-            push(PageIntent(context, BrandProdListScreen));
+            context.push(PageIntent(screen: BrandProdListScreen));
           },
           child: Row(
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: Dimens.px8),
                 child: Container(
-                  width: (screenSize.width - Dimens.px32) * 96 / 343,
+                  width: (context.screenSize.width - Dimens.px32) * 96 / 343,
                   child: AspectRatio(
                       aspectRatio: imageRatio,
                       child: Image.network(
@@ -124,7 +124,7 @@ class _HomeMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: ScreenUtils.scaleHeight(context, menuHeight),
+      height: context.scaleHeight(menuHeight),
       child: Material(
         borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(Dimens.px20),
@@ -180,28 +180,28 @@ class _HomeMenu extends StatelessWidget {
                           title: Strings.qlChiNhanh,
                           icon: Images.ic_store,
                           onTap: () {
-                            push(PageIntent(context, BranchListScreen));
+                            context.push(PageIntent(screen: BranchListScreen));
                           },
                         ),
                         _buildMenuItem(
                           title: Strings.dsDichVu,
                           icon: Images.ic_service_list,
                           onTap: () {
-                            push(PageIntent(context, ServiceListScreen));
+                            context.push(PageIntent(screen: ServiceListScreen));
                           },
                         ),
                         _buildMenuItem(
                           title: Strings.dsSanPham,
                           icon: Images.ic_product,
                           onTap: () {
-                            push(PageIntent(context, ProdListScreen));
+                            context.push(PageIntent(screen: ProdListScreen));
                           },
                         ),
                         _buildMenuItem(
                           title: Strings.qlNhanVien,
                           icon: Images.ic_person,
                           onTap: () {
-                            push(PageIntent(context, StaffListScreen));
+                            context.push(PageIntent(screen: StaffListScreen));
                           },
                         ),
                       ],
@@ -218,7 +218,8 @@ class _HomeMenu extends StatelessWidget {
                           title: Strings.dsKhachHang,
                           icon: Images.ic_user_list,
                           onTap: () {
-                            push(PageIntent(context, CustomerListScreen));
+                            context
+                                .push(PageIntent(screen: CustomerListScreen));
                           },
                         ),
                         _buildMenuItem(
@@ -230,14 +231,15 @@ class _HomeMenu extends StatelessWidget {
                           title: Strings.hoaHongNv,
                           icon: Images.ic_commission,
                           onTap: () {
-                            push(PageIntent(context, CommissionListScreen));
+                            context
+                                .push(PageIntent(screen: CommissionListScreen));
                           },
                         ),
                         _buildMenuItem(
                           title: Strings.doanhThuBanHang,
                           icon: Images.ic_revenue,
                           onTap: () {
-                            push(PageIntent(context, RevenueScreen));
+                            context.push(PageIntent(screen: RevenueScreen));
                           },
                         ),
                       ],
@@ -312,7 +314,7 @@ class __NotificationIconState extends State<_NotificationIcon> {
           height: 56,
           child: FlatButton(
             onPressed: () {
-              push(PageIntent(context, NotificationScreen));
+              context.push(PageIntent(screen: NotificationScreen));
             },
             shape: CircleBorder(),
             child: Image.asset(

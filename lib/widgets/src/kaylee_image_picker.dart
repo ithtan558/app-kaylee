@@ -63,29 +63,29 @@ class _KayleeProfileImagePickerState extends BaseState<KayleeImagePicker> {
               ),
               child: selectedExistedImage.isNullOrEmpty && selectedFile.isNull
                   ? Center(
-                child: Image.asset(
-                  Images.ic_image_holder,
-                  width: Dimens.px40,
-                  height: Dimens.px40,
-                ),
-              )
+                      child: Image.asset(
+                        Images.ic_image_holder,
+                        width: Dimens.px40,
+                        height: Dimens.px40,
+                      ),
+                    )
                   : AspectRatio(
-                aspectRatio: 1,
-                child: selectedFile.isNotNull
-                    ? Image.file(
-                  selectedFile,
-                  fit: BoxFit.cover,
-                )
-                    : Image.network(
-                  selectedExistedImage ?? '',
-                  fit: BoxFit.cover,
-                ),
-              ),
+                      aspectRatio: 1,
+                      child: selectedFile.isNotNull
+                          ? Image.file(
+                              selectedFile,
+                              fit: BoxFit.cover,
+                            )
+                          : Image.network(
+                              selectedExistedImage ?? '',
+                              fit: BoxFit.cover,
+                            ),
+                    ),
             ),
           ),
           Container(
             height: Dimens.px56,
-            width: screenSize.width * 243 / 375,
+            width: context.screenSize.width * 243 / 375,
             child: FlatButton(
               color: ColorsRes.button.withOpacity(0.8),
               padding: EdgeInsets.all(Dimens.px12),
@@ -243,7 +243,7 @@ Future showImagePickerDialog({BuildContext context,
         selectedExistedImage: selectedExistedImage,
         images: images,
         onSelect: (selectedImage) {
-          pop(PageIntent(context, null));
+          context.pop();
           if (onSelect.isNotNull) {
             onSelect(selectedImage);
           }

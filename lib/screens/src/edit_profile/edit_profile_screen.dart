@@ -128,7 +128,7 @@ class _EditProfileScreenState extends BaseState<EditProfileScreen> {
                 title: Strings.matKhau,
                 buttonText: Strings.doiMatKhau,
                 onPress: () {
-                  pushScreen(PageIntent(context, ResetPassVerifyPhoneScreen));
+                  pushScreen(PageIntent(screen: ResetPassVerifyPhoneScreen));
                 },
               ),
             ],

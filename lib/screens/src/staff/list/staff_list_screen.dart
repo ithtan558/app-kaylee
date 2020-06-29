@@ -35,7 +35,8 @@ class _StaffListScreenState extends BaseState<StaffListScreen> {
         itemBuilder: (context, index) {
           return StaffItem(
             onTap: () {
-              pushScreen(PageIntent(context, CreateNewStaffScreen,
+              pushScreen(PageIntent(
+                  screen: CreateNewStaffScreen,
                   bundle: Bundle(NewStaffScreenData(
                       openFrom: NewStaffScreenOpenFrom.staffItem))));
             },
@@ -46,7 +47,7 @@ class _StaffListScreenState extends BaseState<StaffListScreen> {
       ),
       floatingActionButton: KayleeFloatButton(
         onTap: () {
-          pushScreen(PageIntent(context, CreateNewStaffScreen,
+          pushScreen(PageIntent(screen: CreateNewStaffScreen,
               bundle: Bundle(NewStaffScreenData(
                   openFrom: NewStaffScreenOpenFrom.addNewStaffBtn))));
         },

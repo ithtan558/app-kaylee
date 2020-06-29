@@ -60,7 +60,7 @@ class KayleeAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ),
                   onPressed: () {
                     if (onBack == null || onBack()) {
-                      pop(PageIntent(context, null));
+                      context.pop();
                     }
                   },
                 )
@@ -99,7 +99,7 @@ class KayleeAppBarAction extends StatelessWidget {
       );
 
   factory KayleeAppBarAction.button(
-      {@required Widget child, void Function() onTap}) =>
+          {@required Widget child, void Function() onTap}) =>
       KayleeAppBarAction(
         child: SizedBox(
           height: kToolbarHeight,

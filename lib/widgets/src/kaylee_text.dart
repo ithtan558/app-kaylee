@@ -419,7 +419,7 @@ class KayleeText extends StatelessWidget {
       textAlign: textAlign,
       maxLines: maxLines,
       overflow: overflow,
-      style: ScreenUtils.textTheme(context).bodyText2.merge(style),
+      style: context.textTheme.bodyText2.merge(style),
     );
   }
 }

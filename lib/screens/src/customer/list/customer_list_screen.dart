@@ -36,7 +36,8 @@ class _CustomerListScreenState extends BaseState<CustomerListScreen> {
         itemBuilder: (context, index) {
           return CustomerItem(
             onTap: () {
-              pushScreen(PageIntent(context, CreateNewCustomerScreen,
+              pushScreen(PageIntent(
+                  screen: CreateNewCustomerScreen,
                   bundle: Bundle(NewCustomerScreenData(
                       openFrom: CustomerScreenOpenFrom.customerListItem))));
             },
@@ -47,7 +48,7 @@ class _CustomerListScreenState extends BaseState<CustomerListScreen> {
       ),
       floatingActionButton: KayleeFloatButton(
         onTap: () {
-          pushScreen(PageIntent(context, CreateNewCustomerScreen));
+          pushScreen(PageIntent(screen: CreateNewCustomerScreen));
         },
       ),
     );

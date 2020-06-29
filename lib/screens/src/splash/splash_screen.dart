@@ -42,7 +42,7 @@ class _SplashScreenState extends BaseState<SplashScreen> {
           children: [
             Expanded(
               child: Container(
-                width: ScreenUtils.scaleWidth(context, 211),
+                width: context.scaleWidth(211),
                 height: double.infinity,
                 alignment: Alignment.center,
                 child: AspectRatio(
@@ -61,7 +61,7 @@ class _SplashScreenState extends BaseState<SplashScreen> {
                       children: [
                         KayLeeRoundedButton.normal(
                           onPressed: () {
-                            pushScreen(PageIntent(context, LoginScreen));
+                            pushScreen(PageIntent(screen: LoginScreen));
                           },
                           text: Strings.login,
                         ),
@@ -79,7 +79,7 @@ class _SplashScreenState extends BaseState<SplashScreen> {
               },
               listener: (context, state) {
                 if (state is GoToHomeScreenSplashScrState) {
-                  pushScreen(PageIntent(context, HomeScreen));
+                  pushScreen(PageIntent(screen: HomeScreen));
                 }
               },
             )

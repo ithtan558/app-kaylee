@@ -108,8 +108,8 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
                     actions: [
                       KayleeAlertDialogAction.dongY(
                         onPressed: () {
-                          popUntilScreenOrFirst(
-                              PageIntent(context, LoginScreen));
+                          context.popUntilScreenOrFirst(
+                              PageIntent(screen: LoginScreen));
                         },
                       )
                     ],

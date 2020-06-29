@@ -36,7 +36,7 @@ class _NotifyDetailScreenState extends BaseState<NotifyDetailScreen> {
             size: 44,
           ),
           onPressed: () {
-            pop(PageIntent(context, null));
+            context.pop();
           },
         ),
         actions: <Widget>[

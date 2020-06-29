@@ -12,7 +12,7 @@ class CashierItem extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            height: ScreenUtils.screenSize(context).height * 109 / 667,
+            height: context.screenSize.height * 109 / 667,
             clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
@@ -95,7 +95,8 @@ class CashierItem extends StatelessWidget {
                   text: Strings.chiTiet,
                   margin: EdgeInsets.zero,
                   onPressed: () {
-                    push(PageIntent(context, CreateNewOrderScreen,
+                    context.push(PageIntent(
+                        screen: CreateNewOrderScreen,
                         bundle: Bundle(NewOrderScreenData(
                             openFrom: OrderScreenOpenFrom.detailButton))));
                   },

@@ -1,6 +1,7 @@
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:kaylee/res/res.dart';
 import 'package:kaylee/res/src/colors_res.dart';
 import 'package:kaylee/res/src/dimens.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
@@ -161,10 +162,7 @@ class _PinTextFieldState extends BaseState<_PinTextField> {
             focusNode: widget.currentFocus,
             textInputAction: widget.textInputAction,
             keyboardType: TextInputType.number,
-            style: theme.textTheme.bodyText2.copyWith(
-              fontSize: Dimens.px26,
-              fontWeight: FontWeight.w700,
-            ),
+            style: TextStyles.normal26W700,
             onChanged: (pin) {
               setState(() {});
               if (pin.isEmpty) {

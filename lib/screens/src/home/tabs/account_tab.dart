@@ -90,7 +90,7 @@ class _AccountTabState extends BaseState<AccountTab> {
                                     text: Strings.suThongTin,
                                     onTap: () {
                                       pushScreen(PageIntent(
-                                          context, EditProfileScreen));
+                                          screen: EditProfileScreen));
                                     },
                                   ),
                                 ],
@@ -106,19 +106,19 @@ class _AccountTabState extends BaseState<AccountTab> {
                 title: Strings.thongBao,
                 icon: Images.ic_acc_notify,
                 onClick: () {
-                  pushScreen(PageIntent(context, NotificationScreen));
+                  pushScreen(PageIntent(screen: NotificationScreen));
                 }),
             _buildMenuItem(
                 title: Strings.huongDanSd,
                 icon: Images.ic_acc_guide,
                 onClick: () {
-                  pushScreen(PageIntent(context, GuideScreen));
+                  pushScreen(PageIntent(screen: GuideScreen));
                 }),
             _buildMenuItem(
                 title: Strings.thongTinUngDung,
                 icon: Images.ic_acc_about_app,
                 onClick: () {
-                  pushScreen(PageIntent(context, AboutScreen));
+                  pushScreen(PageIntent(screen: AboutScreen));
                 }),
             _buildMenuItem(
                 title: Strings.quanlyDonDh,

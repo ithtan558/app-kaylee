@@ -40,7 +40,7 @@ class _NotifyItemState extends BaseState<NotifyItem> {
       child: InkWell(
         onTap: () {
           FocusScope.of(context).unfocus();
-          pushScreen(PageIntent(context, NotifyDetailScreen));
+          pushScreen(PageIntent(screen: NotifyDetailScreen));
           if (widget.onTap.isNotNull) {
             if (!isRead) {
               setState(() {

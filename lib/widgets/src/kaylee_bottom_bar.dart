@@ -58,11 +58,11 @@ class _KayleeBottomBarState extends BaseState<KayleeBottomBar> {
           inActiveImage: Images.ic_account_inactive,
         ),
       ],
-      selectedLabelStyle: theme.textTheme.bodyText2.copyWith(
+      selectedLabelStyle: context.textTheme.bodyText2.copyWith(
         fontSize: Dimens.px12,
         fontWeight: FontWeight.w700,
       ),
-      unselectedLabelStyle: theme.textTheme.bodyText2.copyWith(
+      unselectedLabelStyle: context.textTheme.bodyText2.copyWith(
         fontSize: Dimens.px12,
       ),
       onTap: (index) {

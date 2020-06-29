@@ -59,7 +59,7 @@ class _CartScreenState extends BaseState<CartScreen> {
             text: Strings.datHang,
             margin: const EdgeInsets.all(Dimens.px8),
             onPressed: () {
-              pushScreen(PageIntent(context, ReceiverInfoScreen));
+              pushScreen(PageIntent(screen: ReceiverInfoScreen));
             },
           )
         ],

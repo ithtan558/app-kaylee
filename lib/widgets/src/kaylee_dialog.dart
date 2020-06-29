@@ -7,7 +7,7 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-Future<T> showKayleeBottomSheet<T>(context,
+Future<T> showKayleeBottomSheet<T>(BuildContext context,
     {@required ScrollableWidgetBuilder builder,
     double maxChildSize = 1,
     bool expand = true,
@@ -28,7 +28,7 @@ Future<T> showKayleeBottomSheet<T>(context,
             Positioned.fill(
               child: GestureDetector(
                 onTap: () {
-                  pop(PageIntent(context, null));
+                  context.pop();
                 },
                 child: Container(
                   color: Colors.transparent,
@@ -58,10 +58,10 @@ Future<T> showKayleeBottomSheet<T>(context,
                   child: Column(
                     children: [
                       Container(
-                          width: ScreenUtils.scaleWidth(context, Dimens.px37),
+                          width: context.scaleWidth(Dimens.px37),
                           height: Dimens.px5,
                           margin:
-                              const EdgeInsets.symmetric(vertical: Dimens.px16),
+                          const EdgeInsets.symmetric(vertical: Dimens.px16),
                           decoration: BoxDecoration(
                               color: ColorsRes.textFieldBorder,
                               borderRadius: BorderRadius.circular(Dimens.px3))),
@@ -136,7 +136,7 @@ Future<void> showKayleeGo2SettingDialog({
                   child: KayLeeRoundedButton.button2(
                     text: Strings.huy,
                     onPressed: () {
-                      pop(PageIntent(context, null));
+                      context.pop();
                     },
                     margin: const EdgeInsets.only(
                         right: Dimens.px8, left: Dimens.px16),
@@ -146,7 +146,7 @@ Future<void> showKayleeGo2SettingDialog({
                   child: KayLeeRoundedButton.normal(
                     text: Strings.caiDatNgay,
                     onPressed: () {
-                      pop(PageIntent(context, null));
+                      context.pop();
                       openAppSettings();
                     },
                     margin: const EdgeInsets.only(
@@ -334,9 +334,7 @@ class KayleeAlertDialogAction extends StatelessWidget {
 ///vd: show date time picker
 Future showPickerPopup(
     {@required BuildContext context, @required WidgetBuilder builder}) {
-  final screenHeight = ScreenUtils
-      .screenSize(context)
-      .height;
+  final screenHeight = context.screenSize.height;
   return showCupertinoModalPopup(
       context: context,
       builder: (context) {

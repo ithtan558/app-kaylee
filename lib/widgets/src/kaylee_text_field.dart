@@ -215,12 +215,7 @@ class KayleeTextField extends StatelessWidget {
         if (!title.isNullOrEmpty)
           Container(
             margin: EdgeInsets.only(bottom: Dimens.px8),
-            child: Text(
-              title,
-              style: ScreenUtils.textTheme(context).bodyText2.copyWith(
-                    fontWeight: FontWeight.w500,
-                  ),
-            ),
+            child: KayleeText.normal16W500(title),
           ),
         if (textInput.isNotNull) textInput,
       ],
@@ -620,14 +615,14 @@ class _PhoneInputFieldState extends State<PhoneInputField> {
           children: [
             Container(
               margin:
-              const EdgeInsets.only(left: Dimens.px10, right: Dimens.px13),
+                  const EdgeInsets.only(left: Dimens.px10, right: Dimens.px13),
               child: const Text('+84'),
             ),
             Container(
                 color: ColorsRes.textFieldBorder,
                 width: Dimens.px1,
                 margin:
-                const EdgeInsets.only(top: Dimens.px4, bottom: Dimens.px2)),
+                    const EdgeInsets.only(top: Dimens.px4, bottom: Dimens.px2)),
             Expanded(
               child: TextField(
                 focusNode: widget.focusNode,

@@ -113,7 +113,8 @@ class _CreateNewServiceScreenState extends BaseState<CreateNewServiceScreen> {
               title: Strings.moTa,
               hint: Strings.nhapMoTaDichVu,
               textInputAction: TextInputAction.newline,
-              fieldHeight: (screenSize.width - Dimens.px32) / (343 / 233),
+              fieldHeight:
+                  (context.screenSize.width - Dimens.px32) / (343 / 233),
               contentPadding: EdgeInsets.symmetric(vertical: Dimens.px16),
             ),
             if (openFrom == ServiceScreenOpenFrom.serviceItem)

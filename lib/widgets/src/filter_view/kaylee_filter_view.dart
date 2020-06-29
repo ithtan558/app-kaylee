@@ -200,14 +200,10 @@ class _FilterViewState extends BaseState<_FilterView>
             right: Dimens.px61 + Dimens.px16 * 2,
             child: SafeArea(
               top: true,
-              child: Text(
+              child: KayleeText.normal26W700(
                 widget.title ?? '',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: theme.textTheme.bodyText2.copyWith(
-                  fontSize: Dimens.px26,
-                  fontWeight: FontWeight.w700,
-                ),
               ),
             ),
           ),

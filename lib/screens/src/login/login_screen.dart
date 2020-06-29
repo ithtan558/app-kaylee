@@ -90,7 +90,7 @@ class _LoginScreenState extends KayleeState<LoginScreen> {
                         onPressed: () {
                           RepositoryProvider.of<UserModule>(context)
                               .updateUserInfo(state.result);
-                          pushToTop(PageIntent(context, HomeScreen));
+                          context.pushToTop(PageIntent(screen: HomeScreen));
                         },
                       )
                     ],
@@ -154,7 +154,7 @@ class _LoginScreenState extends KayleeState<LoginScreen> {
                   child: GestureDetector(
                     onTap: () {
                       pushScreen(
-                          PageIntent(context, ResetPassVerifyPhoneScreen));
+                          PageIntent(screen: ResetPassVerifyPhoneScreen));
                     },
                     child: Container(
                       color: Colors.transparent,

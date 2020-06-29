@@ -50,7 +50,7 @@ class _NotificationScreenState extends BaseState<NotificationScreen> {
           children: [
             Container(
               padding: const EdgeInsets.all(Dimens.px16),
-              color: theme.scaffoldBackgroundColor,
+              color: context.theme.scaffoldBackgroundColor,
               child: SearchInputField(hint: Strings.timThongBaoTheoTuKhoa),
             ),
             Expanded(

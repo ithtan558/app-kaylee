@@ -35,7 +35,7 @@ class _BrandProdListScreenState extends BaseState<BrandProdListScreen> {
         actions: <Widget>[
           KayleeAppBarAction.button(
             onTap: () {
-              pushScreen(PageIntent(context, CartScreen));
+              pushScreen(PageIntent(screen: CartScreen));
             },
             child: Stack(
               alignment: Alignment.center,
@@ -88,7 +88,7 @@ class _BrandProdListScreenState extends BaseState<BrandProdListScreen> {
                       'https://img.jakpost.net/c/2019/12/09/2019_12_09_83333_1575827116._large.jpg',
                   price: 600000),
               onTap: () {
-                pushScreen(PageIntent(context, ProductDetailScreen));
+                pushScreen(PageIntent(screen: ProductDetailScreen));
               },
             );
           },

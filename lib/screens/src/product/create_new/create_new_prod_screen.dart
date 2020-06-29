@@ -121,7 +121,8 @@ class _CreateNewProdScreenState extends BaseState<CreateNewProdScreen> {
               title: Strings.moTa,
               hint: Strings.nhapMoTaSanPham,
               textInputAction: TextInputAction.newline,
-              fieldHeight: (screenSize.width - Dimens.px32) / (343 / 233),
+              fieldHeight:
+                  (context.screenSize.width - Dimens.px32) / (343 / 233),
               contentPadding: EdgeInsets.symmetric(vertical: Dimens.px16),
             ),
             if (openFrom == NewProdScreenOpenFrom.prodItem)

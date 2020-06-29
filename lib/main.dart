@@ -39,22 +39,22 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing, KayleeRouting {
       title: Strings.appName,
       onGenerateRoute: onGenerateRoute,
       theme: ThemeData(
-          scaffoldBackgroundColor: ColorsRes.background,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-          fontFamily: Fonts.HelveticaNeue,
-          accentColor: ColorsRes.color1,
-          pageTransitionsTheme: PageTransitionsTheme(builders: {
-            TargetPlatform.android: CupertinoPageTransitionsBuilder(),
-            TargetPlatform.iOS: CupertinoPageTransitionsBuilder()
-          }),
-          textTheme: TextTheme(
-            bodyText2: theme.textTheme.bodyText2
-                .copyWith(
-                fontFamily: Fonts.HelveticaNeue,
-                fontStyle: FontStyle.normal,
-                letterSpacing: 0)
-                .merge(TextStyles.normal16W400),
-          )),
+        scaffoldBackgroundColor: ColorsRes.background,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        fontFamily: Fonts.HelveticaNeue,
+        accentColor: ColorsRes.color1,
+        pageTransitionsTheme: PageTransitionsTheme(builders: {
+          TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+          TargetPlatform.iOS: CupertinoPageTransitionsBuilder()
+        }),
+        textTheme: context.theme.textTheme
+          ..bodyText2
+              .copyWith(
+                  fontFamily: Fonts.HelveticaNeue,
+                  fontStyle: FontStyle.normal,
+                  letterSpacing: 0)
+              .merge(TextStyles.normal16W400),
+      ),
     );
   }
 }

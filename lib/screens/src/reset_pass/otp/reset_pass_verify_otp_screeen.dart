@@ -89,7 +89,7 @@ class _ResetPassVerifyOtpScreenState
                 },
                 onDismiss: () {
                   pushReplacementScreen(PageIntent(
-                      context, ResetPassNewPassScreen,
+                      screen: ResetPassNewPassScreen,
                       bundle: Bundle(NewPassScreenData(result: state.result))));
                 },
               );

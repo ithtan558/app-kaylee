@@ -42,10 +42,10 @@ class _KayleeFilterListItemState extends BaseState<KayleeFilterListItem> {
       },
       padding: const EdgeInsets.symmetric(
           horizontal: Dimens.px8, vertical: Dimens.px9),
-      child: Text(widget.title,
-          style: theme.textTheme.bodyText2.copyWith(
-            fontSize: Dimens.px12,
-          )),
+      child: KayleeText.normal12W400(
+        widget.title,
+        overflow: TextOverflow.visible,
+      ),
     );
   }
 }
@@ -66,10 +66,8 @@ class WrapperFilter extends StatelessWidget {
           Container(
             margin: EdgeInsets.only(bottom: 16),
             child: Text(title,
-                style: ScreenUtils.textTheme(context).bodyText2.copyWith(
-                      fontSize: isAll ? Dimens.px16 : Dimens.px12,
-                      fontWeight: isAll ? FontWeight.w500 : FontWeight.w400,
-                    )),
+                style:
+                    isAll ? TextStyles.normal16W500 : TextStyles.normal12W400),
           ),
         Wrap(
           direction: Axis.horizontal,

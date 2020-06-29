@@ -57,7 +57,7 @@ class _HistoryTabState extends BaseState<HistoryTab> {
         clipBehavior: Clip.antiAlias,
         child: InkWell(
           onTap: () {
-            pushScreen(PageIntent(context, HistoryDetailScreen));
+            pushScreen(PageIntent(screen: HistoryDetailScreen));
           },
           child: Row(
             children: [

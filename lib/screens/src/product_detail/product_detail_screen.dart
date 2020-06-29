@@ -90,7 +90,7 @@ class _ProductDetailScreenState extends BaseState<ProductDetailScreen> {
                         text: Strings.themVaoGioHang,
                         margin: EdgeInsets.zero,
                         onPressed: () {
-                          pushScreen(PageIntent(context, CartScreen));
+                          pushScreen(PageIntent(screen: CartScreen));
                         },
                       ),
                     ),

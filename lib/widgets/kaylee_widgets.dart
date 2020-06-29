@@ -49,7 +49,7 @@ class Go2RegisterText extends StatelessWidget {
           child: HyperLinkText(
             text: Strings.dangKy,
             onTap: () {
-              push(PageIntent(context, RegisterScreen));
+              context.push(PageIntent(screen: RegisterScreen));
             },
           ),
         ),

@@ -42,7 +42,8 @@ class _CashierTabState extends BaseState<CashierTab> {
           itemCount: 10),
       floatingActionButton: KayleeFloatButton(
         onTap: () {
-          pushScreen(PageIntent(context, CreateNewOrderScreen,
+          pushScreen(PageIntent(
+              screen: CreateNewOrderScreen,
               bundle: Bundle(NewOrderScreenData(
                   openFrom: OrderScreenOpenFrom.addNewButton))));
         },
