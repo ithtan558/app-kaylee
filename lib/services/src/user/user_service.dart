@@ -1,4 +1,5 @@
 import 'package:anth_package/anth_package.dart';
+import 'package:dio/dio.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/models/src/request/update_pass/update_pass_body.dart';
 
