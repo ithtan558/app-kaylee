@@ -21,7 +21,7 @@ packages:
       path: "../anth_package"
       relative: true
     source: path
-    version: "0.0.1"
+    version: "0.0.2"
   archive:
     dependency: transitive
     description:
@@ -49,14 +49,14 @@ packages:
       name: bloc
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.0"
+    version: "5.0.0"
   bloc_test:
     dependency: transitive
     description:
       name: bloc_test
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.1.0"
+    version: "6.0.0"
   boolean_selector:
     dependency: transitive
     description:
@@ -158,10 +158,12 @@ packages:
   core_plugin:
     dependency: transitive
     description:
-      path: "../../../FlutterProjects/my_packages/flutter.core_plugin"
-      relative: true
-    source: path
-    version: "0.4.3+00403"
+      path: "."
+      ref: "0.4.5"
+      resolved-ref: "8bde3eb7436844301e8382541080fa8fde93da7c"
+      url: "https://github.com/tungpham6195/flutter.core_plugin.git"
+    source: git
+    version: "0.4.5+00405"
   coverage:
     dependency: transitive
     description:
@@ -183,6 +185,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.16.1"
+  cubit:
+    dependency: transitive
+    description:
+      name: cubit
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.2"
+  cubit_test:
+    dependency: transitive
+    description:
+      name: cubit_test
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0"
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -250,7 +266,14 @@ packages:
       name: flutter_bloc
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.1"
+    version: "5.0.0"
+  flutter_cubit:
+    dependency: transitive
+    description:
+      name: flutter_cubit
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -269,7 +292,7 @@ packages:
     source: sdk
     version: "0.0.0"
   flutter_widget_from_html_core:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_widget_from_html_core
       url: "https://pub.dartlang.org"
@@ -296,6 +319,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.0"
+  hive:
+    dependency: transitive
+    description:
+      name: hive
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.4.1+1"
   html:
     dependency: transitive
     description:
@@ -331,6 +361,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.4"
+  hydrated_cubit:
+    dependency: transitive
+    description:
+      name: hydrated_cubit
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.2"
   image:
     dependency: transitive
     description:
@@ -339,12 +376,12 @@ packages:
     source: hosted
     version: "2.1.12"
   image_picker:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: image_picker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.7+2"
+    version: "0.6.7+3"
   image_picker_platform_interface:
     dependency: transitive
     description:
@@ -521,12 +558,12 @@ packages:
     source: hosted
     version: "1.8.0+1"
   permission_handler:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: permission_handler
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.0.1"
+    version: "5.0.1+1"
   permission_handler_platform_interface:
     dependency: transitive
     description:
@@ -582,7 +619,7 @@ packages:
       name: provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.5+1"
+    version: "4.1.3+1"
   pub_semver:
     dependency: transitive
     description:
@@ -736,7 +773,7 @@ packages:
     source: hosted
     version: "1.9.3"
   sticky_headers:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: sticky_headers
       url: "https://pub.dartlang.org"
@@ -911,5 +948,5 @@ packages:
     source: hosted
     version: "2.2.1"
 sdks:
-  dart: ">=2.7.0 <3.0.0"
-  flutter: ">=1.12.13+hotfix.5 <2.0.0"
+  dart: ">=2.8.4 <3.0.0"
+  flutter: ">=1.17.0 <2.0.0"
