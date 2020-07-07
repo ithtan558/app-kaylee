@@ -46,9 +46,6 @@ class _CommissionListScreenState extends BaseState<CommissionListScreen> {
           )
         ],
       ),
-      floatingActionButton: KayleeFloatButton(
-        onTap: () {},
-      ),
     );
   }
 }
