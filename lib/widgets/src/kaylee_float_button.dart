@@ -53,8 +53,8 @@ class _KayleeFloatButtonState extends State<KayleeFloatButton>
               boxShadow: [
                 BoxShadow(
                     color: ColorsRes.shadow.withOpacity(0.2),
-                    offset: Offset(5, 5),
-                    blurRadius: 10,
+                    offset: const Offset(Dimens.px5, Dimens.px5),
+                    blurRadius: Dimens.px10,
                     spreadRadius: 0)
               ],
             ),
