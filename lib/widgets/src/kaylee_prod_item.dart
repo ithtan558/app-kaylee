@@ -177,11 +177,15 @@ class KayleeProdItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            KayleeText.normal16W500(
-              data.name,
-              textAlign: TextAlign.center,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
+            Padding(
+              padding:
+                  const EdgeInsets.only(left: Dimens.px7, right: Dimens.px5),
+              child: KayleeText.normal16W500(
+                data.name,
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(top: Dimens.px4),
