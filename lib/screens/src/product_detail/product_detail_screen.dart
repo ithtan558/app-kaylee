@@ -57,20 +57,16 @@ class _ProductDetailScreenState extends BaseState<ProductDetailScreen> {
             ),
             Padding(
               padding: const EdgeInsets.only(
-                  top: Dimens.px8, left: Dimens.px16, right: Dimens.px16),
+                  top: Dimens.px8,
+                  left: Dimens.px16,
+                  right: Dimens.px16,
+                  bottom: Dimens.px16),
               child: KayleeText.normal16W400(
                   'Mô tả sản phẩm cung cấp cho khách hàng những thông tin mà hình ảnh hay video có '
                   'thể không thể hiện được, chẳng hạn như chất liệu, nguồn gốc hay kích cỡ. '
                   'Những thông tin này đôi khi ảnh hưởng rất lớn tới quyết định mua hàng của một người. '
                   'Nếu không hiểu sản phẩm có lợi ích gì, họ sẵn sàng rời store '
                   'của bạn để chuyển sang một store khác.'),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  top: Dimens.px16, left: Dimens.px16, right: Dimens.px16),
-              child: KayleeTextField.picker(
-                title: 'Chọn loại sản phẩm',
-              ),
             ),
             Padding(
               padding: const EdgeInsets.only(
