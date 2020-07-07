@@ -18,7 +18,7 @@ dependencies:
 
   permission_handler: ^5.0.1+1
   sticky_headers: ^0.1.8+1
-  image_picker: ^0.6.7+3
+  image_picker: ^0.6.7+4
   flutter_widget_from_html_core: ^0.4.1
 
   anth_package:
