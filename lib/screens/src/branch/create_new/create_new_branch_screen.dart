@@ -67,14 +67,6 @@ class _CreateNewBranchScreenState extends BaseState<CreateNewBranchScreen> {
             Padding(
               padding: const EdgeInsets.only(
                   left: Dimens.px16, right: Dimens.px16, bottom: Dimens.px16),
-              child: KayleeTextField.website(
-                title: Strings.tenMienWebSiteCuaBan,
-                textInputAction: TextInputAction.next,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: Dimens.px16, right: Dimens.px16, bottom: Dimens.px16),
               child: KayleeFullAddressInput(
                 title: Strings.diaChi,
               ),

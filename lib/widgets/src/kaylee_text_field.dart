@@ -107,30 +107,6 @@ class KayleeTextField extends StatelessWidget {
         ),
       );
 
-  factory KayleeTextField.website(
-          {String title,
-          FocusNode websiteFocus,
-          FocusNode domainFocus,
-          TextEditingController websiteTfController,
-          TextEditingController domainTfController,
-          TextInputAction textInputAction,
-          TextInputType textInputType,
-          String error,
-          EdgeInsets contentPadding,
-          bool expands,
-          TextAlign textAlign}) =>
-      KayleeTextField(
-        title: title,
-        textInput: WebsiteInputField(
-          websiteTfController: websiteTfController,
-          domainTfController: domainTfController,
-          websiteFocus: websiteFocus,
-          domainFocus: domainFocus,
-          error: error,
-          textInputAction: textInputAction,
-        ),
-      );
-
   factory KayleeTextField.phoneInput(
           {String title,
           String hint,
