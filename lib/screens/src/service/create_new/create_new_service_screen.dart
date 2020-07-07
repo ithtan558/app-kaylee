@@ -59,13 +59,6 @@ class _CreateNewServiceScreenState extends BaseState<CreateNewServiceScreen> {
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: Dimens.px16),
-              child: KayleeTextField.normal(
-                title: Strings.tenTiengAnh,
-                hint: Strings.nhapTenDichVu,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: Dimens.px16),
               child: KayleeTextField.selection(
                 title: Strings.diaDiemSuDungDichVu,
                 content: '(0) địa điểm được chọn',
