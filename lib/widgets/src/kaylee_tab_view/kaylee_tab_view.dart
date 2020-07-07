@@ -16,12 +16,17 @@ class KayleeTabView extends StatefulWidget {
 
 class _KayleeTabViewState extends BaseState<KayleeTabView>
     with SingleTickerProviderStateMixin {
-  TabController tabController;
+  final list = [
+    'Phụ kiện cưới',
+    'Phụ kiện cưới',
+    'Phụ kiện cưới',
+    'Phụ kiện cưới',
+    'Phụ kiện cưới',
+  ];
 
   @override
   void initState() {
     super.initState();
-    tabController = TabController(length: 5, vsync: this);
   }
 
   @override
@@ -36,56 +41,10 @@ class _KayleeTabViewState extends BaseState<KayleeTabView>
       body: Column(
         children: [
           Container(
-            padding: EdgeInsets.only(
-                left: Dimens.px16, top: Dimens.px16, bottom: Dimens.px16),
-            child: TabBar(
-              tabs: [
-                Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(Dimens.px5),
-                      color: Colors.transparent,
-                      border: Border.fromBorderSide(
-                          BorderSide(color: ColorsRes.textFieldBorder))),
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: Dimens.px8, vertical: Dimens.px11),
-                  child: KayleeText.hyper16W400(
-                    'Phụ kiện cưới',
-                    overflow: TextOverflow.visible,
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                KayleeText.hyper16W400(
-                  'Phụ kiện cưới',
-                  overflow: TextOverflow.visible,
-                  textAlign: TextAlign.center,
-                ),
-                KayleeText.hyper16W400(
-                  'Phụ kiện cưới',
-                  overflow: TextOverflow.visible,
-                  textAlign: TextAlign.center,
-                ),
-                KayleeText.hyper16W400(
-                  'Phụ kiện cưới',
-                  overflow: TextOverflow.visible,
-                  textAlign: TextAlign.center,
-                ),
-                KayleeText.hyper16W400(
-                  'Phụ kiện cưới',
-                  overflow: TextOverflow.visible,
-                  textAlign: TextAlign.center,
-                ),
-              ],
-              controller: tabController,
-              indicatorSize: TabBarIndicatorSize.label,
-              isScrollable: true,
-              labelPadding: EdgeInsets.zero,
-              indicatorPadding: const EdgeInsets.only(left: Dimens.px8),
-              indicatorWeight: 1,
-              indicator: BoxDecoration(
-                  borderRadius: BorderRadius.circular(Dimens.px5),
-                  color: Colors.transparent,
-                  border: Border.fromBorderSide(
-                      BorderSide(color: ColorsRes.hyper))),
+            margin: EdgeInsets.only(top: Dimens.px16),
+            height: Dimens.px40,
+            child: _KayleeTabBar(
+              tabs: list,
             ),
           ),
           Expanded(
@@ -103,6 +62,83 @@ class _KayleeTabViewState extends BaseState<KayleeTabView>
             ],
           ))
         ],
+      ),
+    );
+  }
+}
+
+class _KayleeTabBar extends StatefulWidget {
+  final List<String> tabs;
+  final ValueSetter<int> onChange;
+
+  _KayleeTabBar({this.tabs, this.onChange});
+
+  @override
+  _KayleeTabBarState createState() => _KayleeTabBarState();
+}
+
+class _KayleeTabBarState extends BaseState<_KayleeTabBar> {
+  int currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      scrollDirection: Axis.horizontal,
+      itemBuilder: (context, index) {
+        return buildTabItem(
+          title: widget.tabs.elementAt(index),
+          isSelected: index == currentIndex,
+          onTap: () {
+            setState(() {
+              currentIndex = index;
+            });
+            if (widget.onChange.isNotNull) {
+              widget.onChange(currentIndex);
+            }
+          },
+        );
+      },
+      separatorBuilder: (context, index) => Container(
+        width: Dimens.px16,
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
+      itemCount: widget.tabs.length,
+    );
+  }
+
+  Widget buildTabItem(
+      {String title, bool isSelected = false, VoidCallback onTap}) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(Dimens.px5),
+            border: Border.fromBorderSide(BorderSide(
+                color: isSelected ? ColorsRes.hyper : ColorsRes.textFieldBorder,
+                width: isSelected ? Dimens.px2 : Dimens.px1))),
+        padding: const EdgeInsets.symmetric(horizontal: Dimens.px8),
+        alignment: Alignment.center,
+        child: isSelected
+            ? KayleeText.hyper16W400(
+                title ?? '',
+                overflow: TextOverflow.visible,
+                textAlign: TextAlign.center,
+              )
+            : KayleeText.normal16W400(
+                title ?? '',
+                overflow: TextOverflow.visible,
+                textAlign: TextAlign.center,
+              ),
       ),
     );
   }
