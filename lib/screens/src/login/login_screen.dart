@@ -88,7 +88,8 @@ class _LoginScreenState extends KayleeState<LoginScreen> {
                     actions: [
                       KayleeAlertDialogAction.dongY(
                         onPressed: () {
-                          RepositoryProvider.of<UserModule>(context)
+                          context
+                              .repository<UserModule>()
                               .updateUserInfo(state.result);
                           context.pushToTop(PageIntent(screen: HomeScreen));
                         },
