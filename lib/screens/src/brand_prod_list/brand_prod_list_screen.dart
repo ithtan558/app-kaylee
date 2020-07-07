@@ -1,4 +1,4 @@
-import 'package:core_plugin/core_plugin.dart';
+import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
@@ -59,7 +59,10 @@ class _BrandProdListScreenState extends BaseState<BrandProdListScreen> {
         color: Colors.transparent,
         type: MaterialType.circle,
         child: GestureDetector(
-          onTap: () {},
+          onTap: () {
+            final id = 'tungpt.95';
+            launch('http://m.me/$id');
+          },
           child: Container(
             height: Dimens.px56,
             width: Dimens.px56,
