@@ -26,7 +26,7 @@ class _BrandProdListScreenState extends BaseState<BrandProdListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return KayleeFilterPopUpView(
+    return KayleeTabView(
       appBar: KayleeAppBar(
         titleWidget: Image.network(
           'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Shiseido_logo.svg/1280px-Shiseido_logo.svg.png',

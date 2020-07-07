@@ -32,6 +32,7 @@ export 'src/kaylee_prod_item.dart';
 export 'src/kaylee_round_border.dart';
 export 'src/kaylee_rounded_button.dart';
 export 'src/kaylee_scrollview.dart';
+export 'src/kaylee_tab_view/kaylee_tab_view.dart';
 export 'src/kaylee_text.dart';
 export 'src/kaylee_text_field.dart';
 export 'src/label_divider_view.dart';

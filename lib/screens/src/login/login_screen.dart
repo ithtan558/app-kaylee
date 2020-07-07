@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/base/networks/network_module.dart';
 import 'package:kaylee/base/user/user_module.dart';
-import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/res/src/dimens.dart';
 import 'package:kaylee/res/src/strings.dart';
@@ -141,10 +140,11 @@ class _LoginScreenState extends KayleeState<LoginScreen> {
                   margin: EdgeInsets.only(top: Dimens.px16),
                   child: KayLeeRoundedButton.normal(
                     onPressed: () {
-                      bloc.doLogin(LoginBody(
-                        account: _phoneTController.text,
-                        password: _passTController.text,
-                      ));
+//                      bloc.doLogin(LoginBody(
+//                        account: _phoneTController.text,
+//                        password: _passTController.text,
+//                      ));
+                      context.pushToTop(PageIntent(screen: HomeScreen));
                     },
                     margin: EdgeInsets.zero,
                     text: Strings.dangNhap,
