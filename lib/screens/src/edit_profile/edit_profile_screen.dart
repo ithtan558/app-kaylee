@@ -104,9 +104,9 @@ class _EditProfileScreenState extends BaseState<EditProfileScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: Dimens.px16),
-                child: KayleeTextField(
-                  title: Strings.namSinh,
-                  textInput: PickerInputField(),
+                child: KayleeTextField.picker(
+                  title: Strings.ngaySinh,
+                  hint: Strings.chonNgayThangNam,
                 ),
               ),
               Padding(

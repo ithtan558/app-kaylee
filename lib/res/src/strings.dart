@@ -65,7 +65,7 @@ class Strings {
   static const String luu = 'Lưu';
   static const String diaChiHienTai = 'Địa chỉ hiện tại';
   static const String diaChiHienTaiHint = 'Số nhà, tên cư xá hoặc khu dân cư';
-  static const String namSinh = 'Năm sinh';
+  static const String ngaySinh = 'Ngày sinh';
   static const String queQuan = 'Quê quán';
   static const String chonTinhTpHint = 'Chọn Tỉnh/Thành phố';
   static const String tinhTpHint = 'Tỉnh/Thành phố';
@@ -117,7 +117,7 @@ class Strings {
   static const String domainHint = 'Vd: .com';
   static const String canCuocCmnd = 'Căn cước/CMND';
   static const String canCuocCmndHint = 'Vd. 079459010628';
-  static const String chonNam = 'Chọn năm';
+  static const String chonNgayThangNam = 'Chọn ngày/tháng/năm';
   static const String emailTuyChon = 'Email (Tuỳ chọn)';
   static const String emailTuyChonHint = 'Nhập địa chỉ email (nếu có)';
   static const String xoaKhachHang = 'Xoá khách hàng';
