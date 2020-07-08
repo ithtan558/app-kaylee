@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 import 'package:kaylee/widgets/src/kaylee_appbar.dart';
+import 'package:package_info/package_info.dart';
 
 class AboutScreen extends StatefulWidget {
   static Widget newInstance() => AboutScreen._();
@@ -14,9 +15,19 @@ class AboutScreen extends StatefulWidget {
 }
 
 class _AboutScreenState extends BaseState<AboutScreen> {
+  String appName;
+  String versionName;
+
   @override
   void initState() {
     super.initState();
+    PackageInfo.fromPlatform().then((value) {
+      setState(() {
+        appName = value.appName;
+        versionName = value.version;
+      });
+      return value;
+    }).timeout(Duration(seconds: 1));
   }
 
   @override
@@ -43,7 +54,7 @@ class _AboutScreenState extends BaseState<AboutScreen> {
                   textAlign: TextAlign.start,
                 ),
                 KayleeText.normal16W400(
-                  'Kaylee',
+                  appName ?? '',
                   textAlign: TextAlign.end,
                 )
               ],
@@ -59,7 +70,7 @@ class _AboutScreenState extends BaseState<AboutScreen> {
                   textAlign: TextAlign.start,
                 ),
                 KayleeText.normal16W400(
-                  '12.4.5',
+                  versionName ?? '',
                   textAlign: TextAlign.end,
                 )
               ],
