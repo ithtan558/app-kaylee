@@ -65,37 +65,6 @@ class _AboutScreenState extends BaseState<AboutScreen> {
               ],
             ),
           ),
-          LabelDividerView.hyperLink(
-            title: 'Thông tin đăng nhập',
-            linkText: 'Xoá lịch sử',
-            onPress: () {},
-          ),
-          Expanded(
-            child: ListView.separated(
-              padding: const EdgeInsets.only(
-                  top: Dimens.px16, left: Dimens.px24, right: Dimens.px16),
-              separatorBuilder: (c, index) {
-                return SizedBox(height: Dimens.px16);
-              },
-              itemBuilder: (c, index) {
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    KayleeDateTimeText.normalFromServer(
-                      0,
-                      textAlign: TextAlign.start,
-                    ),
-                    Expanded(
-                        child: KayleeText.normal16W400(
-                      'iPhone 8',
-                      textAlign: TextAlign.end,
-                    )),
-                  ],
-                );
-              },
-              itemCount: 3,
-            ),
-          )
         ],
       ),
     );
