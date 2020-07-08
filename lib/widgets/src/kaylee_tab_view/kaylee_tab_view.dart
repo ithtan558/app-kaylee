@@ -123,6 +123,7 @@ class _KayleeTabBarState extends BaseState<_KayleeTabBar> {
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(Dimens.px5),
+            color: Colors.white,
             border: Border.fromBorderSide(BorderSide(
                 color: isSelected ? ColorsRes.hyper : ColorsRes.textFieldBorder,
                 width: isSelected ? Dimens.px2 : Dimens.px1))),
