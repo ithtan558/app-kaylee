@@ -225,7 +225,10 @@ class _HomeMenu extends StatelessWidget {
                         _buildMenuItem(
                           title: Strings.dsLichHen,
                           icon: Images.ic_booking,
-                          onTap: () {},
+                          onTap: () {
+                            context.push(
+                                PageIntent(screen: ReservationListScreen));
+                          },
                         ),
                         _buildMenuItem(
                           title: Strings.hoaHongNv,

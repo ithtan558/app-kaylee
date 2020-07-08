@@ -45,6 +45,7 @@ class Strings {
   static const String qlNhanVien = 'Quản lý\nnhân viên';
   static const String dsKhachHang = 'Danh sách\nkhách hàng';
   static const String dsLichHen = 'Danh sách\nlịch hẹn';
+  static const String dsLichHen1 = 'Danh sách lịch hẹn';
   static const String hoaHongNv = 'Hoa hồng\nnhân viên';
   static const String doanhThuBanHang = 'Doanh thu\nbán hàng';
   static const String timDonHangHint = 'Tìm đơn hàng';
@@ -196,6 +197,7 @@ class Strings {
       'Vui lòng đồng ý với điều khoản và quy định';
   static const String cauHoiKhacVeDangNhapDangKy =
       'Câu hỏi khác về đăng nhập/đăng ký?';
+  static const String daDen = 'Đã đến';
 
   Strings._();
 }
