@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
 
 class KayleeFloatButton extends StatefulWidget {
-  final void Function() onTap;
+  final VoidCallback onTap;
 
   KayleeFloatButton({this.onTap});
 
@@ -41,6 +41,7 @@ class _KayleeFloatButtonState extends State<KayleeFloatButton>
           animController.reverse(from: animController.value);
         },
         onLongPressEnd: (detail) {
+          widget.onTap?.call();
           animController.reverse(from: animController.value);
         },
         child: Stack(alignment: Alignment.center, children: [
