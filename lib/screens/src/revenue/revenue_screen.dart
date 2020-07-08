@@ -149,7 +149,7 @@ class _RevenueScreenState extends BaseState<RevenueScreen> {
                               KayleePriceText.noUnitNormal16W400(200000),
                               Padding(
                                 padding:
-                                    const EdgeInsets.only(left: Dimens.px4),
+                                const EdgeInsets.only(left: Dimens.px4),
                                 child: KayleeText.hint16W400(Strings.vnd),
                               ),
                             ],
@@ -160,11 +160,12 @@ class _RevenueScreenState extends BaseState<RevenueScreen> {
                         return Container(
                             height: Dimens.px1,
                             decoration:
-                                BoxDecoration(color: ColorsRes.divider));
+                            BoxDecoration(color: ColorsRes.divider));
                       },
                       itemCount: 5));
           },
-          separatorBuilder: (_, index) => Container(
+          separatorBuilder: (_, index) =>
+              Container(
                 height: Dimens.px16,
               ),
           itemCount: 4),
@@ -172,21 +173,9 @@ class _RevenueScreenState extends BaseState<RevenueScreen> {
   }
 
   buildBackGroundItem({Widget header, Widget child}) {
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(Dimens.px10),
-        boxShadow: [
-          const BoxShadow(
-              color: ColorsRes.shadow,
-              offset: Offset(0, 1),
-              blurRadius: Dimens.px5,
-              spreadRadius: 0)
-        ],
-      ),
+    return KayleeCartView(
+      borderRadius: BorderRadius.circular(Dimens.px10),
       child: Material(
-        borderRadius: BorderRadius.circular(Dimens.px10),
         clipBehavior: Clip.antiAlias,
         child: Column(
           children: [
