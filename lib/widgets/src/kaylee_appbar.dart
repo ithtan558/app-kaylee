@@ -114,6 +114,26 @@ class KayleeAppBarAction extends StatelessWidget {
         ),
       );
 
+  factory KayleeAppBarAction.iconButton(
+          {@required String icon, Color iconColor, void Function() onTap}) =>
+      KayleeAppBarAction(
+        child: SizedBox(
+          height: kToolbarHeight,
+          width: kToolbarHeight,
+          child: InkWell(
+            onTap: onTap,
+            customBorder: CircleBorder(),
+            child: Center(
+              child: ImageIcon(
+                AssetImage(icon),
+                color: iconColor ?? ColorsRes.hintText,
+                size: Dimens.px20,
+              ),
+            ),
+          ),
+        ),
+      );
+
   final Widget child;
 
   KayleeAppBarAction({this.child});
