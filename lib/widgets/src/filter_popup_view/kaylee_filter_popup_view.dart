@@ -55,27 +55,48 @@ class _KayleeFilterPopUpViewState extends BaseState<KayleeFilterPopUpView> {
                   children: [
                     _FilterButton(
                       filterViewController: filterViewController,
-                    )
+                    ),
+                    Expanded(
+                      child: Container(
+                        height: Dimens.px32,
+                        child: ListView.separated(
+                          itemCount: 10,
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: Dimens.px8),
+                          itemBuilder: (context, index) {
+                            return KayleeFilterListItem(
+                              title: 'Tất cả',
+                              disable: true,
+                            );
+                          },
+                          separatorBuilder: (context, index) =>
+                              SizedBox(width: Dimens.px8),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
               Expanded(
-                  child: Stack(
-                children: [
-                  widget.body ??
-                      Container(
-                        color: Colors.transparent,
-                      ),
-                  Positioned(
-                    child: widget.floatingActionButton ?? Container(),
-                    right: Dimens.px24,
-                    bottom: Dimens.px24,
-                  ),
-                  _FilterList(
-                    controller: filterViewController,
-                  ),
-                ],
-              ))
+                child: Stack(
+                  children: [
+                    widget.body ??
+                        Container(
+                          color: Colors.transparent,
+                        ),
+                    Positioned(
+                      child: widget.floatingActionButton ?? Container(),
+                      right: Dimens.px24,
+                      bottom: Dimens.px24,
+                    ),
+                    _FilterList(
+                      controller: filterViewController,
+                    ),
+                  ],
+                ),
+              )
             ],
           ),
         ),

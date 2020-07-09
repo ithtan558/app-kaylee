@@ -6,8 +6,9 @@ import 'package:kaylee/widgets/kaylee_widgets.dart';
 class KayleeFilterListItem extends StatefulWidget {
   final String title;
   final void Function(bool isSelected) onTap;
+  final bool disable;
 
-  KayleeFilterListItem({this.title, this.onTap});
+  KayleeFilterListItem({this.title, this.onTap, this.disable = false});
 
   @override
   _KayleeFilterListItemState createState() => new _KayleeFilterListItemState();
@@ -32,14 +33,16 @@ class _KayleeFilterListItemState extends BaseState<KayleeFilterListItem> {
       borderRadius: BorderRadius.circular(Dimens.px5),
       borderWidth: isSelected ? Dimens.px2 : Dimens.px1,
       borderColor: isSelected ? ColorsRes.hyper : ColorsRes.textFieldBorder,
-      onTap: () {
-        setState(() {
-          isSelected = !isSelected;
-        });
-        if (widget.onTap != null) {
-          widget.onTap(isSelected);
-        }
-      },
+      onTap: widget.disable
+          ? null
+          : () {
+              setState(() {
+                isSelected = !isSelected;
+              });
+              if (widget.onTap != null) {
+                widget.onTap(isSelected);
+              }
+            },
       padding: const EdgeInsets.symmetric(
           horizontal: Dimens.px8, vertical: Dimens.px9),
       child: KayleeText.normal12W400(
