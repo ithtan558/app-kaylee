@@ -1,6 +1,7 @@
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/reservation/reservation_list/reservation_item.dart';
 import 'package:kaylee/widgets/kaylee_widgets.dart';
 
@@ -51,7 +52,9 @@ class _ReservationListScreenState extends BaseState<ReservationListScreen> {
         ],
       ),
       floatingActionButton: KayleeFloatButton(
-        onTap: () {},
+        onTap: () {
+          pushScreen(PageIntent(screen: CreateNewReservationScreen));
+        },
       ),
     );
   }

@@ -198,6 +198,14 @@ class Strings {
   static const String cauHoiKhacVeDangNhapDangKy =
       'Câu hỏi khác về đăng nhập/đăng ký?';
   static const String daDen = 'Đã đến';
+  static const String taoLichHenMoi = 'Tạo lịch hẹn mới';
+  static const String chonChiNhanh = 'Chọn chi nhánh';
+  static const String chonChinhanhDeDatLich = 'Chọn chi nhánh để đặt lịch';
+  static const String ngayDat = 'Ngày đặt';
+  static const String gioDat = 'Giờ đặt';
+  static const String chonThoiGian = 'Chọn thời gian';
+  static const String ghiChu = 'Ghi chú';
+  static const String nhapGhiChuCuaKH = 'Nhập ghi chú của khách hàng';
 
   Strings._();
 }

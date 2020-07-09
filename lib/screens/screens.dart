@@ -21,6 +21,7 @@ export 'src/product/list/prod_list_screen.dart';
 export 'src/product_detail/product_detail_screen.dart';
 export 'src/receiver_info/receiver_info_screen.dart';
 export 'src/register/register_screen.dart';
+export 'src/reservation/create_new/create_new_reservation_screen.dart';
 export 'src/reservation/reservation_list/reservation_list_screen.dart';
 export 'src/reset_pass/new_pass/reset_pass_new_pass_screen.dart';
 export 'src/reset_pass/otp/reset_pass_verify_otp_screeen.dart';
