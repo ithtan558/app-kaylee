@@ -1,6 +1,8 @@
 import 'dart:ui';
 
+import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
+import 'package:cubit/cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kaylee/res/res.dart';
@@ -16,14 +18,28 @@ class HomeTab extends StatefulWidget {
   _HomeTabState createState() => new _HomeTabState();
 }
 
+class ScrollControllerCubit extends Cubit<double> {
+  ScrollControllerCubit() : super(0);
+
+  void addOffset(double offset) => emit(offset);
+}
+
 class _HomeTabState extends BaseState<HomeTab> {
+  final scrollController = ScrollController();
+  ScrollControllerCubit cubit = ScrollControllerCubit();
+
   @override
   void initState() {
     super.initState();
+    scrollController.addListener(() {
+      cubit.addOffset(scrollController.offset);
+    });
   }
 
   @override
   void dispose() {
+    cubit.close();
+    scrollController.dispose();
     super.dispose();
   }
 
@@ -41,75 +57,36 @@ class _HomeTabState extends BaseState<HomeTab> {
                     Images.bg_home,
                   ),
                   fit: BoxFit.fill)),
-          child: ListView.separated(
-            physics: ClampingScrollPhysics(),
-            padding: EdgeInsets.only(bottom: Dimens.px16),
-            itemBuilder: (c, index) {
-              if (index == 0) {
-                return _HomeMenu();
-              } else if (index == 1) {
-                return Padding(
-                  padding: const EdgeInsets.only(
-                      top: Dimens.px24, bottom: Dimens.px16),
-                  child: Center(
-                    child: KayleeText.normalWhite18W700(Strings.dsNhaCc),
-                  ),
-                );
-              } else {
-                return _buildBrandItem();
-              }
-            },
-            itemCount: 1 + 1 + 15,
-            separatorBuilder: (BuildContext context, int index) {
-              return Container(
-                height: index >= 2 ? Dimens.px16 : 0,
-              );
-            },
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildBrandItem() {
-    final imageRatio = 96 / 30;
-    return Container(
-      width: double.infinity,
-      height: Dimens.px46,
-      margin: const EdgeInsets.symmetric(horizontal: Dimens.px16),
-      child: Material(
-        clipBehavior: Clip.antiAlias,
-        borderRadius: BorderRadius.circular(Dimens.px5),
-        color: Colors.white,
-        child: InkWell(
-          onTap: () {
-            context.push(PageIntent(screen: BrandProdListScreen));
-          },
-          child: Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: Dimens.px8),
-                child: Container(
-                  width: (context.screenSize.width - Dimens.px32) * 96 / 343,
-                  child: AspectRatio(
-                      aspectRatio: imageRatio,
-                      child: Image.network(
-                          'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Shiseido_logo.svg/1280px-Shiseido_logo.svg.png')),
+          child: Column(
+            children: <Widget>[
+              CubitProvider<ScrollControllerCubit>.value(
+                  value: cubit, child: _HomeMenu()),
+              Expanded(
+                child: ListView.separated(
+                  controller: scrollController,
+                  physics: ClampingScrollPhysics(),
+                  padding: EdgeInsets.only(bottom: Dimens.px16),
+                  itemBuilder: (c, index) {
+                    if (index == 0) {
+                      return Padding(
+                        padding: const EdgeInsets.only(
+                            top: Dimens.px24, bottom: Dimens.px16),
+                        child: Center(
+                          child: KayleeText.normalWhite18W700(Strings.dsNhaCc),
+                        ),
+                      );
+                    } else {
+                      return _BrandItem();
+                    }
+                  },
+                  itemCount: 1 + 15,
+                  separatorBuilder: (BuildContext context, int index) {
+                    return Container(
+                      height: index >= 1 ? Dimens.px16 : 0,
+                    );
+                  },
                 ),
               ),
-              Container(
-                  width: 1,
-                  height: Dimens.px16,
-                  decoration: BoxDecoration(color: ColorsRes.textFieldBorder)),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
-                  child: KayleeText.normal12W400(
-                      "Mỹ phẩm Nhật cao cấp Shiseido",
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis),
-                ),
-              )
             ],
           ),
         ),
@@ -119,6 +96,8 @@ class _HomeTabState extends BaseState<HomeTab> {
 }
 
 class _HomeMenu extends StatefulWidget {
+  _HomeMenu();
+
   @override
   _HomeMenuState createState() => _HomeMenuState();
 }
@@ -126,10 +105,27 @@ class _HomeMenu extends StatefulWidget {
 class _HomeMenuState extends State<_HomeMenu> {
   final double menuHeight = 348;
 
+  double namePosition = Dimens.px56;
+  ScrollControllerCubit cubit;
+  double offset = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    cubit = context.cubit<ScrollControllerCubit>();
+    cubit?.listen((offset) {
+      this.offset = offset;
+      namePosition =
+          Dimens.px56 - (offset <= Dimens.px24 ? offset : Dimens.px24);
+
+      setState(() {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: context.scaleHeight(menuHeight),
+      height: context.scaleHeight(menuHeight) - offset,
       child: Material(
         borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(Dimens.px20),
@@ -163,7 +159,7 @@ class _HomeMenuState extends State<_HomeMenu> {
             ),
           )),
           Positioned.fill(
-              top: Dimens.px56,
+              top: Dimens.px56 + Dimens.px32,
               bottom: Dimens.px24,
               child: Column(
                 children: [
@@ -249,7 +245,7 @@ class _HomeMenuState extends State<_HomeMenu> {
                 ],
               )),
           Positioned(
-              top: Dimens.px56,
+              top: 56 - 24.0,
               left: 0,
               right: 0,
               child: Column(
@@ -356,6 +352,56 @@ class __NotificationIconState extends State<_NotificationIcon> {
             ),
           )
       ],
+    );
+  }
+}
+
+class _BrandItem extends StatelessWidget {
+  final imageRatio = 96 / 30;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: Dimens.px46,
+      margin: const EdgeInsets.symmetric(horizontal: Dimens.px16),
+      child: Material(
+        clipBehavior: Clip.antiAlias,
+        borderRadius: BorderRadius.circular(Dimens.px5),
+        color: Colors.white,
+        child: InkWell(
+          onTap: () {
+            context.push(PageIntent(screen: BrandProdListScreen));
+          },
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: Dimens.px8),
+                child: Container(
+                  width: (context.screenSize.width - Dimens.px32) * 96 / 343,
+                  child: AspectRatio(
+                      aspectRatio: imageRatio,
+                      child: Image.network(
+                          'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Shiseido_logo.svg/1280px-Shiseido_logo.svg.png')),
+                ),
+              ),
+              Container(
+                  width: 1,
+                  height: Dimens.px16,
+                  decoration: BoxDecoration(color: ColorsRes.textFieldBorder)),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
+                  child: KayleeText.normal12W400(
+                      "Mỹ phẩm Nhật cao cấp Shiseido",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

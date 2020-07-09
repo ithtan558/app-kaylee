@@ -188,7 +188,7 @@ packages:
     source: hosted
     version: "0.16.1"
   cubit:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: cubit
       url: "https://pub.dartlang.org"
