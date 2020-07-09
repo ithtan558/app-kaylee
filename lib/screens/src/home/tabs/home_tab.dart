@@ -118,7 +118,12 @@ class _HomeTabState extends BaseState<HomeTab> {
   }
 }
 
-class _HomeMenu extends StatelessWidget {
+class _HomeMenu extends StatefulWidget {
+  @override
+  _HomeMenuState createState() => _HomeMenuState();
+}
+
+class _HomeMenuState extends State<_HomeMenu> {
   final double menuHeight = 348;
 
   @override
@@ -162,13 +167,6 @@ class _HomeMenu extends StatelessWidget {
               bottom: Dimens.px24,
               child: Column(
                 children: [
-                  KayleeText.normalWhite16W500("Hi, Huynh An"),
-                  Padding(
-                    padding: EdgeInsets.only(top: Dimens.px8),
-                    child: KayleeText.normalWhite12W400(
-                      "Quản lý cửa hàng",
-                    ),
-                  ),
                   Expanded(
                     child: Container(),
                   ),
@@ -248,6 +246,21 @@ class _HomeMenu extends StatelessWidget {
                       ],
                     ),
                   )
+                ],
+              )),
+          Positioned(
+              top: Dimens.px56,
+              left: 0,
+              right: 0,
+              child: Column(
+                children: [
+                  KayleeText.normalWhite16W500("Hi, Huynh An"),
+                  Padding(
+                    padding: EdgeInsets.only(top: Dimens.px8),
+                    child: KayleeText.normalWhite12W400(
+                      "Quản lý cửa hàng",
+                    ),
+                  ),
                 ],
               )),
           Positioned(
