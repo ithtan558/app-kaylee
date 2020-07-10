@@ -144,16 +144,16 @@ class _HomeMenuState extends State<_HomeMenu> {
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
-      Container(
-        height: offset <= transDistance ? height : collapseMenuHeight,
-        child: Material(
-          borderRadius: const BorderRadius.only(
-            bottomLeft: Radius.circular(Dimens.px20),
-            bottomRight: Radius.circular(Dimens.px20),
-          ),
-          clipBehavior: Clip.antiAlias,
-          elevation: Dimens.px10,
-          color: Colors.transparent,
+      Material(
+        borderRadius: const BorderRadius.only(
+          bottomLeft: Radius.circular(Dimens.px20),
+          bottomRight: Radius.circular(Dimens.px20),
+        ),
+        clipBehavior: Clip.antiAlias,
+        elevation: Dimens.px10,
+        color: Colors.transparent,
+        child: Container(
+          height: offset <= transDistance ? height : collapseMenuHeight,
           child: Stack(children: [
             Container(
                 decoration: const BoxDecoration(
