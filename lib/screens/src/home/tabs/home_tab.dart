@@ -117,89 +117,148 @@ class _HomeMenuState extends State<_HomeMenu> {
       this.offset = offset;
       namePosition =
           Dimens.px56 - (offset <= Dimens.px24 ? offset : Dimens.px24);
-
       setState(() {});
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: context.scaleHeight(menuHeight) - offset,
-      child: Material(
-        borderRadius: const BorderRadius.only(
-          bottomLeft: Radius.circular(Dimens.px20),
-          bottomRight: Radius.circular(Dimens.px20),
+    final double height = menuHeight - offset;
+    final double transDistance = menuHeight - collapseMenuHeight;
+    final double collapsePercent =
+        offset / transDistance < 1 ? offset / transDistance : 1;
+    return Stack(children: [
+      Container(
+        height: offset <= transDistance ? height : collapseMenuHeight,
+        child: Material(
+          borderRadius: const BorderRadius.only(
+            bottomLeft: Radius.circular(Dimens.px20),
+            bottomRight: Radius.circular(Dimens.px20),
+          ),
+          clipBehavior: Clip.antiAlias,
+          elevation: Dimens.px10,
+          color: Colors.transparent,
+          child: Stack(children: [
+            Container(
+                decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  ColorsRes.color1,
+                  ColorsRes.button,
+                  ColorsRes.button,
+                  ColorsRes.color1,
+                ],
+                stops: [0, 0.4, 0.7, 1],
+                begin: Alignment(0.50, -0.87),
+                end: Alignment(-0.50, 0.87),
+                // angle: 210,
+                // scale: undefined,
+              ),
+            )),
+            Positioned.fill(
+                child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaY: 70, sigmaX: 100),
+              child: Container(
+                color: Colors.black.withOpacity(0.3),
+              ),
+            ))
+          ]),
         ),
-        clipBehavior: Clip.antiAlias,
-        elevation: Dimens.px10,
-        color: Colors.transparent,
-        child: Stack(children: [
-          Container(
-              decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                ColorsRes.color1,
-                ColorsRes.button,
-                ColorsRes.button,
-                ColorsRes.color1,
-              ],
-              stops: [0, 0.4, 0.7, 1],
-              begin: Alignment(0.50, -0.87),
-              end: Alignment(-0.50, 0.87),
-              // angle: 210,
-              // scale: undefined,
-            ),
+      ),
+      Positioned.fill(
+          top: Dimens.px56 + Dimens.px32 * collapsePercent,
+          bottom: Dimens.px24,
+          child: Column(
+            children: [
+              Expanded(
+                child: Container(),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: Dimens.px16),
+                child: Container(
+                  height: menuItemHeight,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    physics: collapsePercent != 1
+                        ? NeverScrollableScrollPhysics()
+                        : ClampingScrollPhysics(),
+                    children: [
+                      _buildMenuItem(
+                        title: Strings.qlChiNhanh,
+                        icon: Images.ic_store,
+                        onTap: () {
+                          context.push(PageIntent(screen: BranchListScreen));
+                        },
+                      ),
+                      _buildMenuItem(
+                        title: Strings.dsDichVu,
+                        icon: Images.ic_service_list,
+                        onTap: () {
+                          context.push(PageIntent(screen: ServiceListScreen));
+                        },
+                      ),
+                      _buildMenuItem(
+                        title: Strings.dsSanPham,
+                        icon: Images.ic_product,
+                        onTap: () {
+                          context.push(PageIntent(screen: ProdListScreen));
+                        },
+                      ),
+                      _buildMenuItem(
+                        title: Strings.qlNhanVien,
+                        icon: Images.ic_person,
+                        onTap: () {
+                          context.push(PageIntent(screen: StaffListScreen));
+                        },
+                      ),
+                      _buildMenuItem(
+                        title: Strings.dsKhachHang,
+                        icon: Images.ic_user_list,
+                        onTap: () {
+                          context.push(PageIntent(screen: CustomerListScreen));
+                        },
+                      ),
+                      _buildMenuItem(
+                        title: Strings.dsLichHen,
+                        icon: Images.ic_booking,
+                        onTap: () {
+                          context
+                              .push(PageIntent(screen: ReservationListScreen));
+                        },
+                      ),
+                      _buildMenuItem(
+                        title: Strings.hoaHongNv,
+                        icon: Images.ic_commission,
+                        onTap: () {
+                          context
+                              .push(PageIntent(screen: CommissionListScreen));
+                        },
+                      ),
+                      _buildMenuItem(
+                        title: Strings.doanhThuBanHang,
+                        icon: Images.ic_revenue,
+                        onTap: () {
+                          context.push(PageIntent(screen: RevenueScreen));
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(child: Container())
+            ],
           )),
-          Positioned.fill(
-              child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaY: 70, sigmaX: 100),
-            child: Container(
-              color: Colors.black.withOpacity(0.3),
-            ),
-          )),
-          Positioned.fill(
-              top: Dimens.px56 + Dimens.px32,
-              bottom: Dimens.px24,
+      Positioned.fill(
+          top: Dimens.px56 + Dimens.px32 + menuItemHeight,
+          bottom: Dimens.px24,
+          child: Opacity(
+            opacity: (1 - collapsePercent) >= 0 ? 1 - collapsePercent : 0,
+            child: Transform.scale(
+              scale: 1 - collapsePercent >= 0 ? 1 - collapsePercent : 1,
               child: Column(
                 children: [
                   Expanded(
                     child: Container(),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: Dimens.px16),
-                    child: Row(
-                      children: [
-                        _buildMenuItem(
-                          title: Strings.qlChiNhanh,
-                          icon: Images.ic_store,
-                          onTap: () {
-                            context.push(PageIntent(screen: BranchListScreen));
-                          },
-                        ),
-                        _buildMenuItem(
-                          title: Strings.dsDichVu,
-                          icon: Images.ic_service_list,
-                          onTap: () {
-                            context.push(PageIntent(screen: ServiceListScreen));
-                          },
-                        ),
-                        _buildMenuItem(
-                          title: Strings.dsSanPham,
-                          icon: Images.ic_product,
-                          onTap: () {
-                            context.push(PageIntent(screen: ProdListScreen));
-                          },
-                        ),
-                        _buildMenuItem(
-                          title: Strings.qlNhanVien,
-                          icon: Images.ic_person,
-                          onTap: () {
-                            context.push(PageIntent(screen: StaffListScreen));
-                          },
-                        ),
-                      ],
-                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(
@@ -243,70 +302,78 @@ class _HomeMenuState extends State<_HomeMenu> {
                     ),
                   )
                 ],
-              )),
-          Positioned(
-              top: 56 - 24.0,
-              left: 0,
-              right: 0,
-              child: Column(
-                children: [
-                  KayleeText.normalWhite16W500("Hi, Huynh An"),
-                  Padding(
-                    padding: EdgeInsets.only(top: Dimens.px8),
-                    child: KayleeText.normalWhite12W400(
-                      "Quản lý cửa hàng",
-                    ),
-                  ),
-                ],
-              )),
-          Positioned(
-            child: _NotificationIcon(),
-            right: 0,
-            top: Dimens.px24,
-          )
-        ]),
-      ),
-    );
+              ),
+            ),
+          )),
+      Positioned(
+          top: namePosition,
+          left: 0,
+          right: 0,
+          child: Column(
+            children: [
+              KayleeText.normalWhite16W500("Hi, Huynh An"),
+              Padding(
+                padding: EdgeInsets.only(top: Dimens.px8),
+                child: KayleeText.normalWhite12W400(
+                  "Quản lý cửa hàng",
+                ),
+              ),
+            ],
+          )),
+      Positioned(
+        child: _NotificationIcon(),
+        right: 0,
+        top: Dimens.px24,
+      )
+    ]);
   }
 
   _buildMenuItem({String title, String icon, Function onTap}) {
-    return Expanded(
-      child: AspectRatio(
-        aspectRatio: 86 / 80,
-        child: Container(
-          alignment: Alignment.center,
-          child: Material(
-            color: Colors.transparent,
-            clipBehavior: Clip.antiAlias,
-            borderRadius: BorderRadius.circular(Dimens.px8),
-            child: InkWell(
-              onTap: onTap,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    icon,
-                    width: Dimens.px24,
-                    height: Dimens.px24,
+    return Container(
+      width: menuItemWith,
+      height: menuItemHeight,
+      child: Container(
+        alignment: Alignment.center,
+        child: Material(
+          color: Colors.transparent,
+          clipBehavior: Clip.antiAlias,
+          borderRadius: BorderRadius.circular(Dimens.px8),
+          child: InkWell(
+            onTap: onTap,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  icon,
+                  width: Dimens.px24,
+                  height: Dimens.px24,
+                ),
+                Container(
+                  padding: const EdgeInsets.only(top: Dimens.px8),
+                  alignment: Alignment.center,
+                  child: KayleeText.normalWhite12W400(
+                    title,
+                    maxLines: 2,
+                    textAlign: TextAlign.center,
                   ),
-                  Container(
-                    padding: const EdgeInsets.only(top: Dimens.px8),
-                    alignment: Alignment.center,
-                    child: KayleeText.normalWhite12W400(
-                      title,
-                      maxLines: 2,
-                      textAlign: TextAlign.center,
-                    ),
-                  )
-                ],
-              ),
+                )
+              ],
             ),
           ),
         ),
       ),
     );
   }
+
+  double get menuItemWith => (context.screenSize.width - Dimens.px16 * 2) / 4;
+
+  double get menuItemRatio => 86 / 80;
+
+  double get menuItemHeight => menuItemWith / menuItemRatio;
+
+  double get collapseMenuHeight =>
+      Dimens.px56 + Dimens.px16 * 2 + Dimens.px32 + menuItemHeight;
 }
 
 class _NotificationIcon extends StatefulWidget {
