@@ -174,15 +174,15 @@ class _HomeMenuState extends State<_HomeMenu> {
                 child: BackdropFilter(
               filter: ImageFilter.blur(sigmaY: 70, sigmaX: 100),
               child: Container(
-                color: Colors.black.withOpacity(0.3),
+                color:
+                    Colors.black.withOpacity(collapsePercent == 1 ? 0.6 : 0.3),
               ),
             ))
           ]),
         ),
       ),
       Positioned.fill(
-          top: Dimens.px56 + Dimens.px32 * collapsePercent,
-          bottom: Dimens.px24,
+          top: Dimens.px56 + Dimens.px16 * collapsePercent,
           child: Column(
             children: [
               Expanded(
@@ -267,60 +267,63 @@ class _HomeMenuState extends State<_HomeMenu> {
       Positioned.fill(
           top: Dimens.px56 + Dimens.px32 + menuItemHeight,
           bottom: Dimens.px24,
-          child: Opacity(
-            opacity: (1 - collapsePercent) >= 0 ? 1 - collapsePercent : 0,
-            child: Transform.scale(
-              scale: 1 - collapsePercent >= 0 ? 1 - collapsePercent : 1,
-              alignment: Alignment.centerRight,
-              child: Column(
-                children: [
-                  Expanded(
-                    child: Container(),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          left: Dimens.px16,
-                          right: Dimens.px16,
-                          top: Dimens.px16),
-                      child: Row(
-                        children: [
-                          _buildMenuItem(
-                            title: Strings.dsKhachHang,
-                            icon: Images.ic_user_list,
-                            onTap: () {
-                              context
-                                  .push(PageIntent(screen: CustomerListScreen));
-                            },
-                          ),
-                          _buildMenuItem(
-                            title: Strings.dsLichHen,
-                            icon: Images.ic_booking,
-                            onTap: () {
-                              context.push(
-                                  PageIntent(screen: ReservationListScreen));
-                            },
-                          ),
-                          _buildMenuItem(
-                            title: Strings.hoaHongNv,
-                            icon: Images.ic_commission,
-                            onTap: () {
-                              context.push(
-                                  PageIntent(screen: CommissionListScreen));
-                            },
-                          ),
-                          _buildMenuItem(
-                            title: Strings.doanhThuBanHang,
-                            icon: Images.ic_revenue,
-                            onTap: () {
-                              context.push(PageIntent(screen: RevenueScreen));
-                            },
-                          ),
-                        ],
-                      ),
+          child: Container(
+            alignment: Alignment.center,
+            child: Opacity(
+              opacity: (1 - collapsePercent) >= 0 ? 1 - collapsePercent : 0,
+              child: Transform.scale(
+                scale: 1 - collapsePercent >= 0 ? 1 - collapsePercent : 1,
+                alignment: Alignment.centerRight,
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: Container(),
                     ),
-                  )
-                ],
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: Dimens.px16,
+                            right: Dimens.px16,
+                            top: Dimens.px16),
+                        child: Row(
+                          children: [
+                            _buildMenuItem(
+                              title: Strings.dsKhachHang,
+                              icon: Images.ic_user_list,
+                              onTap: () {
+                                context.push(
+                                    PageIntent(screen: CustomerListScreen));
+                              },
+                            ),
+                            _buildMenuItem(
+                              title: Strings.dsLichHen,
+                              icon: Images.ic_booking,
+                              onTap: () {
+                                context.push(
+                                    PageIntent(screen: ReservationListScreen));
+                              },
+                            ),
+                            _buildMenuItem(
+                              title: Strings.hoaHongNv,
+                              icon: Images.ic_commission,
+                              onTap: () {
+                                context.push(
+                                    PageIntent(screen: CommissionListScreen));
+                              },
+                            ),
+                            _buildMenuItem(
+                              title: Strings.doanhThuBanHang,
+                              icon: Images.ic_revenue,
+                              onTap: () {
+                                context.push(PageIntent(screen: RevenueScreen));
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           )),
@@ -351,42 +354,41 @@ class _HomeMenuState extends State<_HomeMenu> {
   }
 
   _buildMenuItem({String title, String icon, Function onTap}) {
-    return Container(
-      width: menuItemWith,
-      height: menuItemHeight,
-      child: Container(
-        alignment: Alignment.center,
-        child: Material(
-          color: Colors.transparent,
-          clipBehavior: Clip.antiAlias,
-          borderRadius: BorderRadius.circular(Dimens.px8),
-          child: InkWell(
-            onTap: onTap,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Image.asset(
-                    icon,
-                    width: Dimens.px24,
-                    height: Dimens.px24,
+    return Material(
+      color: Colors.transparent,
+      clipBehavior: Clip.antiAlias,
+      borderRadius: BorderRadius.circular(Dimens.px8),
+      child: InkWell(
+        onTap: onTap,
+        child: Container(
+          width: menuItemWith,
+          height: menuItemHeight,
+          alignment: Alignment.center,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Image.asset(
+                  icon,
+                  width: context.scaleWidth(Dimens.px24),
+                  height: context.scaleWidth(Dimens.px24),
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  alignment: Alignment.topCenter,
+                  child: Text(
+                    title,
+                    maxLines: 2,
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.fade,
+                    textScaleFactor: context.screenWidthRatio,
+                    style: TextStyles.normalWhite12W400,
                   ),
                 ),
-                Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.only(top: Dimens.px8),
-                    alignment: Alignment.center,
-                    child: KayleeText.normalWhite12W400(
-                      title,
-                      maxLines: 2,
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                )
-              ],
-            ),
+              )
+            ],
           ),
         ),
       ),
@@ -400,7 +402,7 @@ class _HomeMenuState extends State<_HomeMenu> {
   double get menuItemHeight => menuItemWith / menuItemRatio;
 
   double get collapseMenuHeight =>
-      Dimens.px56 + Dimens.px16 * 2 + Dimens.px32 + menuItemHeight;
+      Dimens.px56 + Dimens.px16 * 2 + Dimens.px16 + menuItemHeight;
 }
 
 class _NotificationIcon extends StatefulWidget {
