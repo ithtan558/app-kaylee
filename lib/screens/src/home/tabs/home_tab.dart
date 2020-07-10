@@ -121,8 +121,9 @@ class _HomeMenuState extends State<_HomeMenu> {
     cubit?.listen((offset) {
       this.offset = offset;
 
-      namePosition =
-          Dimens.px56 - (offset <= Dimens.px16 ? offset : Dimens.px16);
+      namePosition = collapsePercent > 0.6
+          ? Dimens.px56 - Dimens.px16 * (collapsePercent - 0.6) / 0.4
+          : Dimens.px56;
       height = menuHeight - offset;
       transDistance = menuHeight - collapseMenuHeight;
       collapsePercent = offset / transDistance < 1 ? offset / transDistance : 1;
