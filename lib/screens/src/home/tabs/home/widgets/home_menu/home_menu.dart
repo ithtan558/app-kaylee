@@ -140,17 +140,17 @@ class _HomeMenuState extends BaseState<HomeMenu> {
           ),
           Positioned.fill(
               child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaY: 70, sigmaX: 100),
-                child: StreamBuilder<bool>(
-                  stream: homeMenuCubit.bgController.stream,
-                  builder: (context, snapshot) {
-                    return Container(
-                      color: Colors.black
-                          .withOpacity(snapshot.data ?? false ? 0.6 : 0.3),
-                    );
-                  },
-                ),
-              ))
+            filter: ImageFilter.blur(sigmaY: 70, sigmaX: 100),
+            child: StreamBuilder<bool>(
+              stream: homeMenuCubit.bgController.stream,
+              builder: (context, snapshot) {
+                return Container(
+                  color: Colors.black
+                      .withOpacity(snapshot.data ?? false ? 0.6 : 0.3),
+                );
+              },
+            ),
+          ))
         ]),
       ),
       Positioned.fill(
