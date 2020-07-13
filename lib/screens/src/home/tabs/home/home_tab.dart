@@ -65,7 +65,7 @@ class _HomeTabState extends BaseState<HomeTab> {
               Expanded(
                 child: ListView.separated(
                   controller: scrollController,
-                  physics: ClampingScrollPhysics(),
+                  physics: BouncingScrollPhysics(),
                   padding: EdgeInsets.only(bottom: Dimens.px16),
                   itemBuilder: (c, index) {
                     if (index == 0) {

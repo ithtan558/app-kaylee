@@ -179,11 +179,7 @@ class _HomeMenuState extends BaseState<HomeMenu> {
         child: Stack(children: [
           CubitBuilder<HomeMenuCubit, HomeMenuState>(
             builder: (context, state) {
-              return Container(
-                  height: state.collapsePercent == 1
-                      ? collapseMenuHeight
-                      : state.height,
-                  child: gradientBg);
+              return Container(height: state.height, child: gradientBg);
             },
           ),
           Positioned.fill(
@@ -208,10 +204,9 @@ class _HomeMenuState extends BaseState<HomeMenu> {
               child: Container(),
             ),
             CubitBuilder<HomeMenuCubit, HomeMenuState>(
-              builder: (context, state) =>
-                  SizedBox(
-                    height: Dimens.px56 + Dimens.px16 * state.collapsePercent,
-                  ),
+              builder: (context, state) => SizedBox(
+                height: Dimens.px56 + Dimens.px16 * state.collapsePercent,
+              ),
             ),
             Container(
               padding: EdgeInsets.symmetric(horizontal: Dimens.px16),
@@ -246,13 +241,9 @@ class _HomeMenuState extends BaseState<HomeMenu> {
               child: CubitBuilder<HomeMenuCubit, HomeMenuState>(
                 builder: (context, state) {
                   return Opacity(
-                    opacity: (1 - state.collapsePercent) >= 0
-                        ? 1 - state.collapsePercent
-                        : 0,
+                    opacity: state.menuRow2CollapsePercent,
                     child: Transform.scale(
-                      scale: 1 - state.collapsePercent >= 0
-                          ? 1 - state.collapsePercent
-                          : 1,
+                      scale: state.menuRow2CollapsePercent,
                       alignment: Alignment.centerRight,
                       child: menuRow2,
                     ),
@@ -288,18 +279,22 @@ class HomeMenuState {
   double height = 0;
   double offset = 0;
   bool isCollapsed = false;
+  double menuRow2CollapsePercent = 1;
 
   HomeMenuState({this.collapsePercent = 0,
     this.height = 0,
     this.offset = 0,
-    this.isCollapsed = false});
+    this.isCollapsed = false,
+    this.menuRow2CollapsePercent = 1});
 
   HomeMenuState.copy(HomeMenuState old) {
     this
       ..collapsePercent = old?.collapsePercent ?? this.collapsePercent
       ..height = old?.height ?? this.height
       ..offset = old?.offset ?? this.offset
-      ..isCollapsed = old?.isCollapsed ?? this.isCollapsed;
+      ..isCollapsed = old?.isCollapsed ?? this.isCollapsed
+      ..menuRow2CollapsePercent =
+          old?.menuRow2CollapsePercent ?? this.menuRow2CollapsePercent;
   }
 }
 
@@ -324,13 +319,18 @@ class HomeMenuCubit extends Cubit<HomeMenuState> {
     if (!state.isCollapsed && collapsePercent == 1) {
       state.isCollapsed = true;
       bgController.add(state.isCollapsed);
-    } else if (state.isCollapsed && collapsePercent == 0) {
+    } else if (state.isCollapsed && collapsePercent < 1) {
       state.isCollapsed = false;
       bgController.add(false);
     }
     emit(HomeMenuState.copy(state
+      ..menuRow2CollapsePercent =
+      1 - state.collapsePercent >= 0 && 1 - state.collapsePercent <= 1
+          ? 1 - state.collapsePercent
+          : 1
       ..collapsePercent = collapsePercent
       ..offset = offs
-      ..height = menuHeight - offs));
+      ..height =
+      collapsePercent == 1 ? collapseMenuHeight : menuHeight - offs));
   }
 }
