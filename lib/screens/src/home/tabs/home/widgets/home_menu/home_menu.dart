@@ -254,28 +254,26 @@ class _HomeMenuState extends BaseState<HomeMenu> {
           bottom: Dimens.px24,
           child: Container(
             alignment: Alignment.center,
-            child: CubitBuilder<HomeMenuCubit, HomeMenuState>(
-              builder: (context, state) {
-                return Opacity(
-                  opacity: (1 - state.collapsePercent) >= 0
-                      ? 1 - state.collapsePercent
-                      : 0,
-                  child: Transform.scale(
-                    scale: 1 - state.collapsePercent >= 0
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  left: Dimens.px16, right: Dimens.px16, top: Dimens.px16),
+              child: CubitBuilder<HomeMenuCubit, HomeMenuState>(
+                builder: (context, state) {
+                  return Opacity(
+                    opacity: (1 - state.collapsePercent) >= 0
                         ? 1 - state.collapsePercent
-                        : 1,
-                    alignment: Alignment.centerRight,
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: Container(),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                left: Dimens.px16,
-                                right: Dimens.px16,
-                                top: Dimens.px16),
+                        : 0,
+                    child: Transform.scale(
+                      scale: 1 - state.collapsePercent >= 0
+                          ? 1 - state.collapsePercent
+                          : 1,
+                      alignment: Alignment.centerRight,
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: Container(),
+                          ),
+                          Expanded(
                             child: Row(
                               children: [
                                 HomeMenuItem(
@@ -312,13 +310,13 @@ class _HomeMenuState extends BaseState<HomeMenu> {
                                 ),
                               ],
                             ),
-                          ),
-                        )
-                      ],
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
           )),
       Positioned.fill(
