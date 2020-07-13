@@ -44,8 +44,9 @@ class HomeMenuCubit extends Cubit<HomeMenuState> {
 
   void updateHomeMenuState({double offset, double collapseMenuHeight}) {
     final double transDistance = HomeMenuCubit.menuHeight - collapseMenuHeight;
+    final offs = offset;
     final double collapsePercent =
-        offset / transDistance < 1 ? offset / transDistance : 1;
+        offs / transDistance < 1 ? offs / transDistance : 1;
     if (!isCollapsed && collapsePercent == 1) {
       isCollapsed = true;
       bgController.add(isCollapsed);
@@ -55,8 +56,8 @@ class HomeMenuCubit extends Cubit<HomeMenuState> {
     }
     emit(HomeMenuState.copy(state
       ..collapsePercent = collapsePercent
-      ..offset = offset
-      ..height = menuHeight - offset));
+      ..offset = offs
+      ..height = menuHeight - offs));
   }
 }
 
@@ -91,7 +92,6 @@ class _HomeMenuState extends BaseState<HomeMenu> {
         menuScrollController.animateTo(0,
             duration: Duration(milliseconds: 100), curve: Curves.linear);
       }
-//      setState(() {});
     });
   }
 
