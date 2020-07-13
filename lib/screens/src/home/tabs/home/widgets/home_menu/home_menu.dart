@@ -188,9 +188,12 @@ class _HomeMenuState extends BaseState<HomeMenu> {
             child: StreamBuilder<bool>(
               stream: homeMenuCubit.bgController.stream,
               builder: (context, snapshot) {
-                return Container(
-                  color: Colors.black
-                      .withOpacity(snapshot.data ?? false ? 0.6 : 0.3),
+                return AnimatedOpacity(
+                  duration: Duration(milliseconds: 250),
+                  opacity: snapshot.data ?? false ? 0.6 : 0.3,
+                  child: Container(
+                    color: Colors.black,
+                  ),
                 );
               },
             ),
@@ -281,11 +284,12 @@ class HomeMenuState {
   bool isCollapsed = false;
   double menuRow2CollapsePercent = 1;
 
-  HomeMenuState({this.collapsePercent = 0,
-    this.height = 0,
-    this.offset = 0,
-    this.isCollapsed = false,
-    this.menuRow2CollapsePercent = 1});
+  HomeMenuState(
+      {this.collapsePercent = 0,
+      this.height = 0,
+      this.offset = 0,
+      this.isCollapsed = false,
+      this.menuRow2CollapsePercent = 1});
 
   HomeMenuState.copy(HomeMenuState old) {
     this
