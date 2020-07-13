@@ -191,10 +191,7 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
-                  child: KayleeTextField.normal(
-                    title: Strings.matKhau,
-                    hint: Strings.passLimitHint,
-                    textInputType: TextInputType.visiblePassword,
+                  child: KayleeTextField.password(
                     focusNode: passFocus,
                     controller: passTController,
                     error: state is PassRegisterScrErrorState

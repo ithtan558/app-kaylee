@@ -174,7 +174,7 @@ class KayleeTextField extends StatelessWidget {
         title: title ?? Strings.matKhau,
         textInput: NormalInputField(
           controller: controller,
-          hint: hint ?? Strings.passLimitHint,
+          hint: hint ?? '',
           textInputAction: textInputAction,
           textInputType: TextInputType.visiblePassword,
           focusNode: focusNode,

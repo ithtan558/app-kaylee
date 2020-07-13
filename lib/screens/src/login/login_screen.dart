@@ -129,7 +129,6 @@ class _LoginScreenState extends KayleeState<LoginScreen> {
                     alignment: Alignment.centerLeft,
                     child: KayleeTextField.password(
                       controller: _passTController,
-                      hint: Strings.passLimitHint,
                       textInputAction: TextInputAction.done,
                       focusNode: _passFNode,
                       error: state is PassLoginScrErrorState

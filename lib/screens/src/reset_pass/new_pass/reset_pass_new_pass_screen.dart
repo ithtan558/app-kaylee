@@ -100,7 +100,6 @@ class _ResetPassNewPassScreenState extends KayleeState<ResetPassNewPassScreen> {
                   textInputAction: TextInputAction.done,
                   controller: newPassTFController,
                   focusNode: newPassFocus,
-                  hint: Strings.passLimitHint,
                   error:
                       state is PassErrorUpdatePassState ? state.message : null,
                 );
