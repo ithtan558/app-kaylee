@@ -105,20 +105,20 @@ class _HomeMenuState extends BaseState<HomeMenu> {
   Widget build(BuildContext context) {
     final gradientBg = Container(
         decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              ColorsRes.color1,
-              ColorsRes.button,
-              ColorsRes.button,
-              ColorsRes.color1,
-            ],
-            stops: [0, 0.4, 0.7, 1],
-            begin: Alignment(0.50, -0.87),
-            end: Alignment(-0.50, 0.87),
-            // angle: 210,
-            // scale: undefined,
-          ),
-        ));
+      gradient: LinearGradient(
+        colors: [
+          ColorsRes.color1,
+          ColorsRes.button,
+          ColorsRes.button,
+          ColorsRes.color1,
+        ],
+        stops: [0, 0.4, 0.7, 1],
+        begin: Alignment(0.50, -0.87),
+        end: Alignment(-0.50, 0.87),
+        // angle: 210,
+        // scale: undefined,
+      ),
+    ));
     return Stack(children: [
       Material(
         borderRadius: const BorderRadius.only(
