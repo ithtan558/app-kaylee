@@ -31,6 +31,10 @@ class _UserNameState extends BaseState<UserName> {
 
   @override
   Widget build(BuildContext context) {
+    final userName = KayleeText.normalWhite16W500("Hi, Huynh An");
+    final role = KayleeText.normalWhite12W400(
+      "Quản lý cửa hàng",
+    );
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -39,7 +43,7 @@ class _UserNameState extends BaseState<UserName> {
             builder: (context, snapshot) {
               return Padding(
                 padding: EdgeInsets.only(top: snapshot.data ?? Dimens.px56),
-                child: KayleeText.normalWhite16W500("Hi, Huynh An"),
+                child: userName,
               );
             }),
         Padding(
@@ -51,9 +55,7 @@ class _UserNameState extends BaseState<UserName> {
                   opacity: 1 -
                       (Dimens.px56 - (snapshot.data ?? Dimens.px56)) /
                           Dimens.px16,
-                  child: KayleeText.normalWhite12W400(
-                    "Quản lý cửa hàng",
-                  ),
+                  child: role,
                 );
               }),
         ),

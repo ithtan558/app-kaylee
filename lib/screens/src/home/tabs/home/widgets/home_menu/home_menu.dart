@@ -10,58 +10,6 @@ import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/home_menu_it
 import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/notification_item.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/user_name.dart';
 
-class HomeMenuState {
-  double collapsePercent = 0;
-  double height = 0;
-  double offset = 0;
-  bool isCollapsed = false;
-
-  HomeMenuState(
-      {this.collapsePercent = 0,
-      this.height = 0,
-      this.offset = 0,
-      this.isCollapsed = false});
-
-  HomeMenuState.copy(HomeMenuState old) {
-    this
-      ..collapsePercent = old?.collapsePercent ?? this.collapsePercent
-      ..height = old?.height ?? this.height
-      ..offset = old?.offset ?? this.offset
-      ..isCollapsed = old?.isCollapsed ?? this.isCollapsed;
-  }
-}
-
-class HomeMenuCubit extends Cubit<HomeMenuState> {
-  static const double menuHeight = 348;
-  final bgController = BehaviorSubject<bool>()..add(false);
-
-  HomeMenuCubit() : super(HomeMenuState(height: menuHeight));
-
-  @override
-  Future<void> close() async {
-    await bgController.close();
-    return super.close();
-  }
-
-  void updateHomeMenuState({double offset, double collapseMenuHeight}) {
-    final double transDistance = HomeMenuCubit.menuHeight - collapseMenuHeight;
-    final offs = offset;
-    final double collapsePercent =
-    offs / transDistance < 1 ? offs / transDistance : 1;
-    if (!state.isCollapsed && collapsePercent == 1) {
-      state.isCollapsed = true;
-      bgController.add(state.isCollapsed);
-    } else if (state.isCollapsed && collapsePercent == 0) {
-      state.isCollapsed = false;
-      bgController.add(false);
-    }
-    emit(HomeMenuState.copy(state
-      ..collapsePercent = collapsePercent
-      ..offset = offs
-      ..height = menuHeight - offs));
-  }
-}
-
 class HomeMenu extends StatefulWidget {
   static Widget newInstance() => CubitProvider<HomeMenuCubit>(
         create: (context) => HomeMenuCubit(),
@@ -120,6 +68,105 @@ class _HomeMenuState extends BaseState<HomeMenu> {
         // scale: undefined,
       ),
     ));
+    final menuRow1 = [
+      HomeMenuItem(
+        title: Strings.qlChiNhanh,
+        icon: Images.ic_store,
+        onTap: () {
+          context.push(PageIntent(screen: BranchListScreen));
+        },
+      ),
+      HomeMenuItem(
+        title: Strings.dsDichVu,
+        icon: Images.ic_service_list,
+        onTap: () {
+          context.push(PageIntent(screen: ServiceListScreen));
+        },
+      ),
+      HomeMenuItem(
+        title: Strings.dsSanPham,
+        icon: Images.ic_product,
+        onTap: () {
+          context.push(PageIntent(screen: ProdListScreen));
+        },
+      ),
+      HomeMenuItem(
+        title: Strings.qlNhanVien,
+        icon: Images.ic_person,
+        onTap: () {
+          context.push(PageIntent(screen: StaffListScreen));
+        },
+      ),
+      HomeMenuItem(
+        title: Strings.dsKhachHang,
+        icon: Images.ic_user_list,
+        onTap: () {
+          context.push(PageIntent(screen: CustomerListScreen));
+        },
+      ),
+      HomeMenuItem(
+        title: Strings.dsLichHen,
+        icon: Images.ic_booking,
+        onTap: () {
+          context.push(PageIntent(screen: ReservationListScreen));
+        },
+      ),
+      HomeMenuItem(
+        title: Strings.hoaHongNv,
+        icon: Images.ic_commission,
+        onTap: () {
+          context.push(PageIntent(screen: CommissionListScreen));
+        },
+      ),
+      HomeMenuItem(
+        title: Strings.doanhThuBanHang,
+        icon: Images.ic_revenue,
+        onTap: () {
+          context.push(PageIntent(screen: RevenueScreen));
+        },
+      ),
+    ];
+    final menuRow2 = Column(
+      children: [
+        Expanded(
+          child: Container(),
+        ),
+        Expanded(
+          child: Row(
+            children: [
+              HomeMenuItem(
+                title: Strings.dsKhachHang,
+                icon: Images.ic_user_list,
+                onTap: () {
+                  context.push(PageIntent(screen: CustomerListScreen));
+                },
+              ),
+              HomeMenuItem(
+                title: Strings.dsLichHen,
+                icon: Images.ic_booking,
+                onTap: () {
+                  context.push(PageIntent(screen: ReservationListScreen));
+                },
+              ),
+              HomeMenuItem(
+                title: Strings.hoaHongNv,
+                icon: Images.ic_commission,
+                onTap: () {
+                  context.push(PageIntent(screen: CommissionListScreen));
+                },
+              ),
+              HomeMenuItem(
+                title: Strings.doanhThuBanHang,
+                icon: Images.ic_revenue,
+                onTap: () {
+                  context.push(PageIntent(screen: RevenueScreen));
+                },
+              ),
+            ],
+          ),
+        )
+      ],
+    );
     return Stack(children: [
       Material(
         borderRadius: const BorderRadius.only(
@@ -179,69 +226,7 @@ class _HomeMenuState extends BaseState<HomeMenu> {
                         physics: !(snapshot.data ?? true)
                             ? NeverScrollableScrollPhysics()
                             : ClampingScrollPhysics(),
-                        children: [
-                          HomeMenuItem(
-                            title: Strings.qlChiNhanh,
-                            icon: Images.ic_store,
-                            onTap: () {
-                              context
-                                  .push(PageIntent(screen: BranchListScreen));
-                            },
-                          ),
-                          HomeMenuItem(
-                            title: Strings.dsDichVu,
-                            icon: Images.ic_service_list,
-                            onTap: () {
-                              context
-                                  .push(PageIntent(screen: ServiceListScreen));
-                            },
-                          ),
-                          HomeMenuItem(
-                            title: Strings.dsSanPham,
-                            icon: Images.ic_product,
-                            onTap: () {
-                              context.push(PageIntent(screen: ProdListScreen));
-                            },
-                          ),
-                          HomeMenuItem(
-                            title: Strings.qlNhanVien,
-                            icon: Images.ic_person,
-                            onTap: () {
-                              context.push(PageIntent(screen: StaffListScreen));
-                            },
-                          ),
-                          HomeMenuItem(
-                            title: Strings.dsKhachHang,
-                            icon: Images.ic_user_list,
-                            onTap: () {
-                              context
-                                  .push(PageIntent(screen: CustomerListScreen));
-                            },
-                          ),
-                          HomeMenuItem(
-                            title: Strings.dsLichHen,
-                            icon: Images.ic_booking,
-                            onTap: () {
-                              context.push(
-                                  PageIntent(screen: ReservationListScreen));
-                            },
-                          ),
-                          HomeMenuItem(
-                            title: Strings.hoaHongNv,
-                            icon: Images.ic_commission,
-                            onTap: () {
-                              context.push(
-                                  PageIntent(screen: CommissionListScreen));
-                            },
-                          ),
-                          HomeMenuItem(
-                            title: Strings.doanhThuBanHang,
-                            icon: Images.ic_revenue,
-                            onTap: () {
-                              context.push(PageIntent(screen: RevenueScreen));
-                            },
-                          ),
-                        ],
+                        children: menuRow1,
                       );
                     }),
               ),
@@ -269,51 +254,7 @@ class _HomeMenuState extends BaseState<HomeMenu> {
                           ? 1 - state.collapsePercent
                           : 1,
                       alignment: Alignment.centerRight,
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: Container(),
-                          ),
-                          Expanded(
-                            child: Row(
-                              children: [
-                                HomeMenuItem(
-                                  title: Strings.dsKhachHang,
-                                  icon: Images.ic_user_list,
-                                  onTap: () {
-                                    context.push(
-                                        PageIntent(screen: CustomerListScreen));
-                                  },
-                                ),
-                                HomeMenuItem(
-                                  title: Strings.dsLichHen,
-                                  icon: Images.ic_booking,
-                                  onTap: () {
-                                    context.push(PageIntent(
-                                        screen: ReservationListScreen));
-                                  },
-                                ),
-                                HomeMenuItem(
-                                  title: Strings.hoaHongNv,
-                                  icon: Images.ic_commission,
-                                  onTap: () {
-                                    context.push(PageIntent(
-                                        screen: CommissionListScreen));
-                                  },
-                                ),
-                                HomeMenuItem(
-                                  title: Strings.doanhThuBanHang,
-                                  icon: Images.ic_revenue,
-                                  onTap: () {
-                                    context.push(
-                                        PageIntent(screen: RevenueScreen));
-                                  },
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
+                      child: menuRow2,
                     ),
                   );
                 },
@@ -340,4 +281,56 @@ class _HomeMenuState extends BaseState<HomeMenu> {
 
   double get collapseMenuHeight =>
       Dimens.px56 + Dimens.px16 * 2 + Dimens.px16 + homeMenuItemHeight;
+}
+
+class HomeMenuState {
+  double collapsePercent = 0;
+  double height = 0;
+  double offset = 0;
+  bool isCollapsed = false;
+
+  HomeMenuState({this.collapsePercent = 0,
+    this.height = 0,
+    this.offset = 0,
+    this.isCollapsed = false});
+
+  HomeMenuState.copy(HomeMenuState old) {
+    this
+      ..collapsePercent = old?.collapsePercent ?? this.collapsePercent
+      ..height = old?.height ?? this.height
+      ..offset = old?.offset ?? this.offset
+      ..isCollapsed = old?.isCollapsed ?? this.isCollapsed;
+  }
+}
+
+class HomeMenuCubit extends Cubit<HomeMenuState> {
+  static const double menuHeight = 348;
+  final bgController = BehaviorSubject<bool>()
+    ..add(false);
+
+  HomeMenuCubit() : super(HomeMenuState(height: menuHeight));
+
+  @override
+  Future<void> close() async {
+    await bgController.close();
+    return super.close();
+  }
+
+  void updateHomeMenuState({double offset, double collapseMenuHeight}) {
+    final double transDistance = HomeMenuCubit.menuHeight - collapseMenuHeight;
+    final offs = offset;
+    final double collapsePercent =
+    offs / transDistance < 1 ? offs / transDistance : 1;
+    if (!state.isCollapsed && collapsePercent == 1) {
+      state.isCollapsed = true;
+      bgController.add(state.isCollapsed);
+    } else if (state.isCollapsed && collapsePercent == 0) {
+      state.isCollapsed = false;
+      bgController.add(false);
+    }
+    emit(HomeMenuState.copy(state
+      ..collapsePercent = collapsePercent
+      ..offset = offs
+      ..height = menuHeight - offs));
+  }
 }
