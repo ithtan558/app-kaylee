@@ -12,19 +12,52 @@ import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/user_name.da
 
 class HomeMenuState {
   double collapsePercent = 0;
+  double height = 0;
+  double offset = 0;
 
-  HomeMenuState({this.collapsePercent = 0});
+  HomeMenuState({
+    this.collapsePercent = 0,
+    this.height = 0,
+    this.offset = 0,
+  });
 
   HomeMenuState.copy(HomeMenuState old) {
-    this.collapsePercent = old?.collapsePercent ?? this.collapsePercent;
+    this
+      ..collapsePercent = old?.collapsePercent ?? this.collapsePercent
+      ..height = old?.height ?? this.height
+      ..offset = old?.offset ?? this.offset;
   }
 }
 
 class HomeMenuCubit extends Cubit<HomeMenuState> {
-  HomeMenuCubit() : super(HomeMenuState());
+  static const double menuHeight = 348;
+  bool isCollapsed = false;
+  final bgController = BehaviorSubject<bool>()..add(false);
 
-  void updateHomeMenuState({double collapsePercent}) =>
-      emit(HomeMenuState.copy(state..collapsePercent = collapsePercent));
+  HomeMenuCubit() : super(HomeMenuState(height: menuHeight));
+
+  @override
+  Future<void> close() async {
+    await bgController.close();
+    return super.close();
+  }
+
+  void updateHomeMenuState({double offset, double collapseMenuHeight}) {
+    final double transDistance = HomeMenuCubit.menuHeight - collapseMenuHeight;
+    final double collapsePercent =
+        offset / transDistance < 1 ? offset / transDistance : 1;
+    if (!isCollapsed && collapsePercent == 1) {
+      isCollapsed = true;
+      bgController.add(isCollapsed);
+    } else if (isCollapsed && collapsePercent == 0) {
+      isCollapsed = false;
+      bgController.add(false);
+    }
+    emit(HomeMenuState.copy(state
+      ..collapsePercent = collapsePercent
+      ..offset = offset
+      ..height = menuHeight - offset));
+  }
 }
 
 class HomeMenu extends StatefulWidget {
@@ -40,16 +73,9 @@ class HomeMenu extends StatefulWidget {
 }
 
 class _HomeMenuState extends BaseState<HomeMenu> {
-  final double menuHeight = 348;
-
-  double namePosition = Dimens.px56;
   ScrollControllerCubit cubit;
 
-  double offset = 0;
   final menuScrollController = ScrollController();
-  double collapsePercent = 0;
-  double height = 0;
-  double transDistance = 0;
   HomeMenuCubit homeMenuCubit;
 
   @override
@@ -57,19 +83,15 @@ class _HomeMenuState extends BaseState<HomeMenu> {
     super.initState();
     cubit = context.cubit<ScrollControllerCubit>();
     homeMenuCubit = context.cubit<HomeMenuCubit>();
-    height = menuHeight - offset;
     cubit?.listen((offset) {
-      this.offset = offset;
-
-      height = menuHeight - offset;
-      transDistance = menuHeight - collapseMenuHeight;
-      collapsePercent = offset / transDistance < 1 ? offset / transDistance : 1;
-      homeMenuCubit.updateHomeMenuState(collapsePercent: collapsePercent);
-      if (menuScrollController.offset > 0 && collapsePercent < 1) {
+      homeMenuCubit.updateHomeMenuState(
+          offset: offset, collapseMenuHeight: collapseMenuHeight);
+      if (menuScrollController.offset > 0 &&
+          homeMenuCubit.state.collapsePercent < 1) {
         menuScrollController.animateTo(0,
             duration: Duration(milliseconds: 100), curve: Curves.linear);
       }
-      setState(() {});
+//      setState(() {});
     });
   }
 
@@ -81,6 +103,22 @@ class _HomeMenuState extends BaseState<HomeMenu> {
 
   @override
   Widget build(BuildContext context) {
+    final gradientBg = Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              ColorsRes.color1,
+              ColorsRes.button,
+              ColorsRes.button,
+              ColorsRes.color1,
+            ],
+            stops: [0, 0.4, 0.7, 1],
+            begin: Alignment(0.50, -0.87),
+            end: Alignment(-0.50, 0.87),
+            // angle: 210,
+            // scale: undefined,
+          ),
+        ));
     return Stack(children: [
       Material(
         borderRadius: const BorderRadius.only(
@@ -90,180 +128,197 @@ class _HomeMenuState extends BaseState<HomeMenu> {
         clipBehavior: Clip.antiAlias,
         elevation: Dimens.px10,
         color: Colors.transparent,
-        child: Container(
-          height: offset <= transDistance ? height : collapseMenuHeight,
-          child: Stack(children: [
-            Container(
-                decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  ColorsRes.color1,
-                  ColorsRes.button,
-                  ColorsRes.button,
-                  ColorsRes.color1,
-                ],
-                stops: [0, 0.4, 0.7, 1],
-                begin: Alignment(0.50, -0.87),
-                end: Alignment(-0.50, 0.87),
-                // angle: 210,
-                // scale: undefined,
-              ),
-            )),
-            Positioned.fill(
-                child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaY: 70, sigmaX: 100),
-              child: Container(
-                color:
-                    Colors.black.withOpacity(collapsePercent == 1 ? 0.6 : 0.3),
-              ),
-            ))
-          ]),
-        ),
+        child: Stack(children: [
+          CubitBuilder<HomeMenuCubit, HomeMenuState>(
+            builder: (context, state) {
+              return Container(
+                  height: state.collapsePercent == 1
+                      ? collapseMenuHeight
+                      : state.height,
+                  child: gradientBg);
+            },
+          ),
+          Positioned.fill(
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaY: 70, sigmaX: 100),
+                child: StreamBuilder<bool>(
+                  stream: homeMenuCubit.bgController.stream,
+                  builder: (context, snapshot) {
+                    return Container(
+                      color: Colors.black
+                          .withOpacity(snapshot.data ?? false ? 0.6 : 0.3),
+                    );
+                  },
+                ),
+              ))
+        ]),
       ),
       Positioned.fill(
-          top: Dimens.px56 + Dimens.px16 * collapsePercent,
-          child: Column(
-            children: [
-              Expanded(
-                child: Container(),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: Dimens.px16),
-                child: Container(
-                  height: homeMenuItemHeight,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    controller: menuScrollController,
-                    physics: collapsePercent != 1
-                        ? NeverScrollableScrollPhysics()
-                        : ClampingScrollPhysics(),
-                    children: [
-                      HomeMenuItem(
-                        title: Strings.qlChiNhanh,
-                        icon: Images.ic_store,
-                        onTap: () {
-                          context.push(PageIntent(screen: BranchListScreen));
-                        },
-                      ),
-                      HomeMenuItem(
-                        title: Strings.dsDichVu,
-                        icon: Images.ic_service_list,
-                        onTap: () {
-                          context.push(PageIntent(screen: ServiceListScreen));
-                        },
-                      ),
-                      HomeMenuItem(
-                        title: Strings.dsSanPham,
-                        icon: Images.ic_product,
-                        onTap: () {
-                          context.push(PageIntent(screen: ProdListScreen));
-                        },
-                      ),
-                      HomeMenuItem(
-                        title: Strings.qlNhanVien,
-                        icon: Images.ic_person,
-                        onTap: () {
-                          context.push(PageIntent(screen: StaffListScreen));
-                        },
-                      ),
-                      HomeMenuItem(
-                        title: Strings.dsKhachHang,
-                        icon: Images.ic_user_list,
-                        onTap: () {
-                          context.push(PageIntent(screen: CustomerListScreen));
-                        },
-                      ),
-                      HomeMenuItem(
-                        title: Strings.dsLichHen,
-                        icon: Images.ic_booking,
-                        onTap: () {
-                          context
-                              .push(PageIntent(screen: ReservationListScreen));
-                        },
-                      ),
-                      HomeMenuItem(
-                        title: Strings.hoaHongNv,
-                        icon: Images.ic_commission,
-                        onTap: () {
-                          context
-                              .push(PageIntent(screen: CommissionListScreen));
-                        },
-                      ),
-                      HomeMenuItem(
-                        title: Strings.doanhThuBanHang,
-                        icon: Images.ic_revenue,
-                        onTap: () {
-                          context.push(PageIntent(screen: RevenueScreen));
-                        },
-                      ),
-                    ],
+        child: Column(
+          children: [
+            Expanded(
+              child: Container(),
+            ),
+            CubitBuilder<HomeMenuCubit, HomeMenuState>(
+              builder: (context, state) =>
+                  SizedBox(
+                    height: Dimens.px56 + Dimens.px16 * state.collapsePercent,
                   ),
-                ),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: Dimens.px16),
+              child: Container(
+                height: homeMenuItemHeight,
+                child: StreamBuilder<bool>(
+                    stream: homeMenuCubit.bgController.stream,
+                    builder: (context, snapshot) {
+                      return ListView(
+                        scrollDirection: Axis.horizontal,
+                        controller: menuScrollController,
+                        physics: !(snapshot.data ?? true)
+                            ? NeverScrollableScrollPhysics()
+                            : ClampingScrollPhysics(),
+                        children: [
+                          HomeMenuItem(
+                            title: Strings.qlChiNhanh,
+                            icon: Images.ic_store,
+                            onTap: () {
+                              context
+                                  .push(PageIntent(screen: BranchListScreen));
+                            },
+                          ),
+                          HomeMenuItem(
+                            title: Strings.dsDichVu,
+                            icon: Images.ic_service_list,
+                            onTap: () {
+                              context
+                                  .push(PageIntent(screen: ServiceListScreen));
+                            },
+                          ),
+                          HomeMenuItem(
+                            title: Strings.dsSanPham,
+                            icon: Images.ic_product,
+                            onTap: () {
+                              context.push(PageIntent(screen: ProdListScreen));
+                            },
+                          ),
+                          HomeMenuItem(
+                            title: Strings.qlNhanVien,
+                            icon: Images.ic_person,
+                            onTap: () {
+                              context.push(PageIntent(screen: StaffListScreen));
+                            },
+                          ),
+                          HomeMenuItem(
+                            title: Strings.dsKhachHang,
+                            icon: Images.ic_user_list,
+                            onTap: () {
+                              context
+                                  .push(PageIntent(screen: CustomerListScreen));
+                            },
+                          ),
+                          HomeMenuItem(
+                            title: Strings.dsLichHen,
+                            icon: Images.ic_booking,
+                            onTap: () {
+                              context.push(
+                                  PageIntent(screen: ReservationListScreen));
+                            },
+                          ),
+                          HomeMenuItem(
+                            title: Strings.hoaHongNv,
+                            icon: Images.ic_commission,
+                            onTap: () {
+                              context.push(
+                                  PageIntent(screen: CommissionListScreen));
+                            },
+                          ),
+                          HomeMenuItem(
+                            title: Strings.doanhThuBanHang,
+                            icon: Images.ic_revenue,
+                            onTap: () {
+                              context.push(PageIntent(screen: RevenueScreen));
+                            },
+                          ),
+                        ],
+                      );
+                    }),
               ),
-              Expanded(child: Container())
-            ],
-          )),
+            ),
+            Expanded(child: Container())
+          ],
+        ),
+      ),
       Positioned.fill(
           top: Dimens.px56 + Dimens.px32 + homeMenuItemHeight,
           bottom: Dimens.px24,
           child: Container(
             alignment: Alignment.center,
-            child: Opacity(
-              opacity: (1 - collapsePercent) >= 0 ? 1 - collapsePercent : 0,
-              child: Transform.scale(
-                scale: 1 - collapsePercent >= 0 ? 1 - collapsePercent : 1,
-                alignment: Alignment.centerRight,
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: Container(),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: Dimens.px16,
-                            right: Dimens.px16,
-                            top: Dimens.px16),
-                        child: Row(
-                          children: [
-                            HomeMenuItem(
-                              title: Strings.dsKhachHang,
-                              icon: Images.ic_user_list,
-                              onTap: () {
-                                context.push(
-                                    PageIntent(screen: CustomerListScreen));
-                              },
-                            ),
-                            HomeMenuItem(
-                              title: Strings.dsLichHen,
-                              icon: Images.ic_booking,
-                              onTap: () {
-                                context.push(
-                                    PageIntent(screen: ReservationListScreen));
-                              },
-                            ),
-                            HomeMenuItem(
-                              title: Strings.hoaHongNv,
-                              icon: Images.ic_commission,
-                              onTap: () {
-                                context.push(
-                                    PageIntent(screen: CommissionListScreen));
-                              },
-                            ),
-                            HomeMenuItem(
-                              title: Strings.doanhThuBanHang,
-                              icon: Images.ic_revenue,
-                              onTap: () {
-                                context.push(PageIntent(screen: RevenueScreen));
-                              },
-                            ),
-                          ],
+            child: CubitBuilder<HomeMenuCubit, HomeMenuState>(
+              builder: (context, state) {
+                return Opacity(
+                  opacity: (1 - state.collapsePercent) >= 0
+                      ? 1 - state.collapsePercent
+                      : 0,
+                  child: Transform.scale(
+                    scale: 1 - state.collapsePercent >= 0
+                        ? 1 - state.collapsePercent
+                        : 1,
+                    alignment: Alignment.centerRight,
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: Container(),
                         ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: Dimens.px16,
+                                right: Dimens.px16,
+                                top: Dimens.px16),
+                            child: Row(
+                              children: [
+                                HomeMenuItem(
+                                  title: Strings.dsKhachHang,
+                                  icon: Images.ic_user_list,
+                                  onTap: () {
+                                    context.push(
+                                        PageIntent(screen: CustomerListScreen));
+                                  },
+                                ),
+                                HomeMenuItem(
+                                  title: Strings.dsLichHen,
+                                  icon: Images.ic_booking,
+                                  onTap: () {
+                                    context.push(PageIntent(
+                                        screen: ReservationListScreen));
+                                  },
+                                ),
+                                HomeMenuItem(
+                                  title: Strings.hoaHongNv,
+                                  icon: Images.ic_commission,
+                                  onTap: () {
+                                    context.push(PageIntent(
+                                        screen: CommissionListScreen));
+                                  },
+                                ),
+                                HomeMenuItem(
+                                  title: Strings.doanhThuBanHang,
+                                  icon: Images.ic_revenue,
+                                  onTap: () {
+                                    context.push(
+                                        PageIntent(screen: RevenueScreen));
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                );
+              },
             ),
           )),
       Positioned.fill(
