@@ -1,7 +1,7 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
-import 'package:kaylee/widgets/kaylee_widgets.dart';
+import 'package:kaylee/widgets/widgets.dart';
 
 enum CustomerScreenOpenFrom { customerListItem, cashier, addNewCustomerBtn }
 

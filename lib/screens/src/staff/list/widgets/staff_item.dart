@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
-import 'package:kaylee/widgets/kaylee_widgets.dart';
+import 'package:kaylee/widgets/widgets.dart';
 
 class StaffItem extends StatelessWidget {
   final void Function() onTap;

@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
-import 'package:kaylee/widgets/kaylee_widgets.dart';
+import 'package:kaylee/widgets/widgets.dart';
 
 class KayleeFlatButton extends StatelessWidget {
   final VoidCallback onPress;

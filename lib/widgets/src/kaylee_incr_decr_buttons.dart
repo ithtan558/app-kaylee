@@ -1,7 +1,7 @@
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
-import 'package:kaylee/widgets/kaylee_widgets.dart';
+import 'package:kaylee/widgets/widgets.dart';
 
 const int _kDefaultAmountMin = 1;
 

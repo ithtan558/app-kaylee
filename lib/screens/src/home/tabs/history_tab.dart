@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/res/src/strings.dart';
 import 'package:kaylee/screens/src/history_detail/history_detail_screen.dart';
-import 'package:kaylee/widgets/kaylee_widgets.dart';
+import 'package:kaylee/widgets/widgets.dart';
 
 class HistoryTab extends StatefulWidget {
   static Widget newInstance() => HistoryTab._();

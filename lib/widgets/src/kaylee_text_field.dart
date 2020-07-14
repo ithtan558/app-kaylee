@@ -6,7 +6,7 @@ import 'package:kaylee/res/src/colors_res.dart';
 import 'package:kaylee/res/src/dimens.dart';
 import 'package:kaylee/res/src/images.dart';
 import 'package:kaylee/res/src/strings.dart';
-import 'package:kaylee/widgets/kaylee_widgets.dart';
+import 'package:kaylee/widgets/widgets.dart';
 
 class KayleeTextField extends StatelessWidget {
   final String title;

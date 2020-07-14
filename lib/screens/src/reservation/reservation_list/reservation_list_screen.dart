@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/reservation/reservation_list/reservation_item.dart';
-import 'package:kaylee/widgets/kaylee_widgets.dart';
+import 'package:kaylee/widgets/widgets.dart';
 
 class ReservationListScreen extends StatefulWidget {
   static Widget newInstance() => ReservationListScreen._();

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/home/tabs/cashier/widgets/cashier_item.dart';
-import 'package:kaylee/widgets/kaylee_widgets.dart';
+import 'package:kaylee/widgets/widgets.dart';
 
 class CashierTab extends StatefulWidget {
   static Widget newInstance() => CashierTab._();

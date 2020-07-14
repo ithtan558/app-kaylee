@@ -1,4 +1,4 @@
-library kayle_widgets;
+library widgets;
 
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/cupertino.dart';

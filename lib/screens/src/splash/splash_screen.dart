@@ -5,7 +5,7 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/res/src/images.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/splash/bloc/bloc.dart';
-import 'package:kaylee/widgets/kaylee_widgets.dart';
+import 'package:kaylee/widgets/widgets.dart';
 
 class SplashScreen extends StatefulWidget {
   static Widget newInstance() =>

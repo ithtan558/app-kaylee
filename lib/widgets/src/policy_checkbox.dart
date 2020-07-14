@@ -9,7 +9,7 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/res/src/dimens.dart';
 import 'package:kaylee/res/src/images.dart';
 import 'package:kaylee/services/services.dart';
-import 'package:kaylee/widgets/kaylee_widgets.dart';
+import 'package:kaylee/widgets/widgets.dart';
 
 class PolicyCheckBox extends StatefulWidget {
   final ValueSetter<bool> onChecked;

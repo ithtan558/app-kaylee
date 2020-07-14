@@ -7,7 +7,7 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/res/src/strings.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/register/bloc/bloc.dart';
-import 'package:kaylee/widgets/kaylee_widgets.dart';
+import 'package:kaylee/widgets/widgets.dart';
 
 import 'bloc/state.dart';
 

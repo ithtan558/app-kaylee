@@ -8,8 +8,8 @@ import 'package:kaylee/res/src/dimens.dart';
 import 'package:kaylee/res/src/strings.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/reset_pass/blocs/send_otp_bloc.dart';
-import 'package:kaylee/widgets/kaylee_widgets.dart';
 import 'package:kaylee/widgets/src/otp_input_field.dart';
+import 'package:kaylee/widgets/widgets.dart';
 
 import '../blocs/otp_verify_bloc.dart';
 

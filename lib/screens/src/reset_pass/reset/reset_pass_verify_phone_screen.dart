@@ -8,7 +8,7 @@ import 'package:kaylee/res/src/strings.dart';
 import 'package:kaylee/screens/src/reset_pass/blocs/send_otp_bloc.dart';
 import 'package:kaylee/screens/src/reset_pass/otp/reset_pass_verify_otp_screeen.dart';
 import 'package:kaylee/screens/src/reset_pass/widgets/contact_us_text.dart';
-import 'package:kaylee/widgets/kaylee_widgets.dart';
+import 'package:kaylee/widgets/widgets.dart';
 
 class ResetPassVerifyPhoneScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<SendOtpBloc>(

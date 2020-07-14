@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/branch/list/widgets/branch_item.dart';
-import 'package:kaylee/widgets/kaylee_widgets.dart';
+import 'package:kaylee/widgets/widgets.dart';
 
 class BranchListScreen extends StatefulWidget {
   static Widget newInstance() => BranchListScreen._();

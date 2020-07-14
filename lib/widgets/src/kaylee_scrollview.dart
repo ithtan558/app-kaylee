@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../kaylee_widgets.dart';
+import '../widgets.dart';
 
 class KayleeScrollview extends StatefulWidget {
   final KayleeAppBar appBar;
