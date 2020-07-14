@@ -16,7 +16,7 @@ class _UserNameState extends BaseState<UserName> {
   void initState() {
     super.initState();
     context.cubit<HomeMenuCubit>().listen((state) {
-      final namePosition = state.collapsePercent > 0.6
+      final namePosition = state.collapsePercent >= 0.6
           ? Dimens.px56 - Dimens.px16 * (state.collapsePercent - 0.6) / 0.4
           : Dimens.px56;
       positionController.add(namePosition);
