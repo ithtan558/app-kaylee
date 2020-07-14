@@ -23,7 +23,7 @@ class KayleeJsonConverter extends JsonConverterFactory {
     } else if (T == Supplier) {
       return Supplier.fromJson(json) as T;
     } else if (T == PageData) {
-      return Supplier.fromJson(json) as T;
+      return PageData.fromJson(json) as T;
     } else if (T == ProdCate) {
       return ProdCate.fromJson(json) as T;
     } else if (T == Product) {
