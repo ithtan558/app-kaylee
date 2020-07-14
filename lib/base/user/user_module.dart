@@ -6,6 +6,20 @@ import 'package:kaylee/models/models.dart';
 
 const _SHARE_REF_AUTHENTICATE = 'SHARE_REF_LOGIN_INFO';
 
+abstract class UserModule {
+  factory UserModule.init() => _UserModuleImpl._();
+
+  UserModule._();
+
+  LoginResult getUserInfo();
+
+  void forceGetUserInfo({ValueSetter<LoginResult> callback});
+
+  void updateUserInfo(LoginResult auth);
+
+  void removeUserInfo();
+}
+
 class _UserModuleImpl extends UserModule {
   LoginResult loginResult;
 
@@ -39,18 +53,4 @@ class _UserModuleImpl extends UserModule {
       callback(loginResult);
     }
   }
-}
-
-abstract class UserModule {
-  factory UserModule.init() => _UserModuleImpl._();
-
-  UserModule._();
-
-  LoginResult getUserInfo();
-
-  void forceGetUserInfo({ValueSetter<LoginResult> callback});
-
-  void updateUserInfo(LoginResult auth);
-
-  void removeUserInfo();
 }
