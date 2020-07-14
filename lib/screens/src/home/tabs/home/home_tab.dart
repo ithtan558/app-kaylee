@@ -46,6 +46,12 @@ class _HomeTabState extends BaseState<HomeTab> {
 
   @override
   Widget build(BuildContext context) {
+    final listTitle = Padding(
+      padding: const EdgeInsets.only(top: Dimens.px24, bottom: Dimens.px16),
+      child: Center(
+        child: KayleeText.normalWhite18W700(Strings.dsNhaCc),
+      ),
+    );
     return AnnotatedRegion(
       value: SystemUiOverlayStyle.light,
       child: Scaffold(
@@ -69,13 +75,7 @@ class _HomeTabState extends BaseState<HomeTab> {
                   padding: const EdgeInsets.only(bottom: Dimens.px16),
                   itemBuilder: (c, index) {
                     if (index == 0) {
-                      return Padding(
-                        padding: const EdgeInsets.only(
-                            top: Dimens.px24, bottom: Dimens.px16),
-                        child: Center(
-                          child: KayleeText.normalWhite18W700(Strings.dsNhaCc),
-                        ),
-                      );
+                      return listTitle;
                     } else {
                       return _BrandItem();
                     }
