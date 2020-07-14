@@ -331,10 +331,10 @@ class HomeMenuCubit extends Cubit<HomeMenuState> {
       ..menuRow2CollapsePercent =
           state.collapsePercent >= 0 && state.collapsePercent < 1
               ? 1 - state.collapsePercent
-          : 1
+              : 1
       ..collapsePercent = collapsePercent
       ..offset = offs
       ..height =
-      collapsePercent == 1 ? collapseMenuHeight : menuHeight - offs));
+          collapsePercent == 1 ? collapseMenuHeight : menuHeight - offs));
   }
 }
