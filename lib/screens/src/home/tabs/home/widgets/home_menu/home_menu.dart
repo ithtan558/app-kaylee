@@ -186,7 +186,7 @@ class _HomeMenuState extends BaseState<HomeMenu> {
               child: BackdropFilter(
             filter: ImageFilter.blur(sigmaY: 70, sigmaX: 100),
             child: StreamBuilder<bool>(
-              stream: homeMenuCubit.bgController.stream,
+              stream: homeMenuCubit.backGroundStateController.stream,
               builder: (context, snapshot) {
                 return AnimatedOpacity(
                   duration: Duration(milliseconds: 250),
@@ -216,7 +216,7 @@ class _HomeMenuState extends BaseState<HomeMenu> {
               child: Container(
                 height: homeMenuItemHeight,
                 child: StreamBuilder<bool>(
-                    stream: homeMenuCubit.bgController.stream,
+                    stream: homeMenuCubit.backGroundStateController.stream,
                     builder: (context, snapshot) {
                       return ListView(
                         scrollDirection: Axis.horizontal,
@@ -304,13 +304,13 @@ class HomeMenuState {
 
 class HomeMenuCubit extends Cubit<HomeMenuState> {
   static const double menuHeight = 348;
-  final bgController = BehaviorSubject<bool>()..add(false);
+  final backGroundStateController = BehaviorSubject<bool>()..add(false);
 
   HomeMenuCubit() : super(HomeMenuState(height: menuHeight));
 
   @override
   Future<void> close() async {
-    await bgController.close();
+    await backGroundStateController.close();
     return super.close();
   }
 
@@ -326,11 +326,11 @@ class HomeMenuCubit extends Cubit<HomeMenuState> {
     if (collapsePercent == 1 && !state.isCollapsed) {
       //khi appbar đã collapse và state của appbar trước đó ko phải là collapse
       state.isCollapsed = true;
-      bgController.add(state.isCollapsed);
+      backGroundStateController.add(state.isCollapsed);
     } else if (collapsePercent < 1 && state.isCollapsed) {
       //khi appbar đang scroll để expand và state của appbar trước đó là collapse
       state.isCollapsed = false;
-      bgController.add(false);
+      backGroundStateController.add(false);
     }
     emit(HomeMenuState.copy(state
       ..menuRow2CollapsePercent =
