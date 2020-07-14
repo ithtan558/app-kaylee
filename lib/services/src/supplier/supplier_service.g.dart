@@ -20,7 +20,7 @@ class _SupplierService implements SupplierService {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'page': page,
-      r'limit': limit?.toJson(),
+      r'limit': limit,
       r'sort': sort
     };
     queryParameters.removeWhere((k, v) => v == null);

@@ -11,6 +11,6 @@ abstract class SupplierService {
   @GET('supplier')
   Future<ResponseModel<Supplier>> getSuppliers(
       {@Query('page') int page = 1,
-      @Query('limit') limit = 10,
+      @Query('limit') int limit = 10,
       @Query('sort') String sort = ''});
 }
