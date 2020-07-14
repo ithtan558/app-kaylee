@@ -15,10 +15,12 @@ class _UserNameState extends BaseState<UserName> {
   @override
   void initState() {
     super.initState();
+    positionController.add(0);
     context.cubit<HomeMenuCubit>().listen((state) {
-      final namePosition = state.collapsePercent >= 0.6
-          ? Dimens.px56 - Dimens.px16 * (state.collapsePercent - 0.6) / 0.4
-          : Dimens.px56;
+      final scrollingPercent =
+          (state.collapsePercent < 0.6 ? 0 : state.collapsePercent - 0.6) / 0.4;
+      final namePosition = Dimens.px56 - Dimens.px16 * scrollingPercent;
+
       positionController.add(namePosition);
     });
   }
