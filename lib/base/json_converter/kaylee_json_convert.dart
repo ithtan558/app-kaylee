@@ -20,6 +20,14 @@ class KayleeJsonConverter extends JsonConverterFactory {
       return District.fromJson(json) as T;
     } else if (T == Ward) {
       return Ward.fromJson(json) as T;
+    } else if (T == Supplier) {
+      return Supplier.fromJson(json) as T;
+    } else if (T == PageData) {
+      return Supplier.fromJson(json) as T;
+    } else if (T == ProdCate) {
+      return ProdCate.fromJson(json) as T;
+    } else if (T == Product) {
+      return Product.fromJson(json) as T;
     }
     return json as T;
   }
@@ -41,6 +49,14 @@ class KayleeJsonConverter extends JsonConverterFactory {
     } else if (json is District) {
       return json.toJson();
     } else if (json is Ward) {
+      return json.toJson();
+    } else if (json is Supplier) {
+      return json.toJson();
+    } else if (json is PageData) {
+      return json.toJson();
+    } else if (json is ProdCate) {
+      return json.toJson();
+    } else if (json is Product) {
       return json.toJson();
     } else
       return json;
