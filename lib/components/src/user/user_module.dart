@@ -7,7 +7,7 @@ import 'package:kaylee/models/models.dart';
 const _SHARE_REF_AUTHENTICATE = 'SHARE_REF_LOGIN_INFO';
 
 abstract class UserModule {
-  factory UserModule.init() => _UserModuleImpl._();
+  factory UserModule.init() = _UserModuleImpl._;
 
   UserModule._();
 

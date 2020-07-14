@@ -1,11 +1,12 @@
 import 'package:anth_package/anth_package.dart';
-import 'package:kaylee/base/networks/constant.dart';
 import 'package:kaylee/services/services.dart';
 
 abstract class NetworkModule extends Network {
+  static const BASE_URL = 'http://api.kaylee.vn/';
+
   NetworkModule(String baseUrl) : super(baseUrl);
 
-  factory NetworkModule.init() => _NetworkModuleImpl(Constant.BASE_URL);
+  factory NetworkModule.init() => _NetworkModuleImpl(BASE_URL);
 
   UserService provideUserService();
 
