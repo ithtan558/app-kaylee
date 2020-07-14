@@ -304,8 +304,7 @@ class HomeMenuState {
 
 class HomeMenuCubit extends Cubit<HomeMenuState> {
   static const double menuHeight = 348;
-  final bgController = BehaviorSubject<bool>()
-    ..add(false);
+  final bgController = BehaviorSubject<bool>()..add(false);
 
   HomeMenuCubit() : super(HomeMenuState(height: menuHeight));
 
@@ -319,7 +318,7 @@ class HomeMenuCubit extends Cubit<HomeMenuState> {
     final double transDistance = HomeMenuCubit.menuHeight - collapseMenuHeight;
     final offs = offset;
     final double collapsePercent =
-    offs / transDistance < 1 ? offs / transDistance : 1;
+    offs < transDistance ? offs / transDistance : 1;
     if (!state.isCollapsed && collapsePercent == 1) {
       state.isCollapsed = true;
       bgController.add(state.isCollapsed);
@@ -329,7 +328,7 @@ class HomeMenuCubit extends Cubit<HomeMenuState> {
     }
     emit(HomeMenuState.copy(state
       ..menuRow2CollapsePercent =
-      1 - state.collapsePercent >= 0 && 1 - state.collapsePercent <= 1
+      state.collapsePercent >= 0 && state.collapsePercent < 1
           ? 1 - state.collapsePercent
           : 1
       ..collapsePercent = collapsePercent
