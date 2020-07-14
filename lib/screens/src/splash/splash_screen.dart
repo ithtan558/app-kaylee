@@ -56,7 +56,7 @@ class _SplashScreenState extends BaseState<SplashScreen> {
                 if (state is LoadedSharedPrefSplashScrState) {
                   final user =
                       RepositoryProvider.of<UserModule>(context).getUserInfo();
-                  if (user?.token.isNullOrEmpty ?? false)
+                  if (user?.token.isNullOrEmpty)
                     return Column(
                       children: [
                         KayLeeRoundedButton.normal(
