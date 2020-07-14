@@ -221,7 +221,7 @@ class _HomeMenuState extends BaseState<HomeMenu> {
                       return ListView(
                         scrollDirection: Axis.horizontal,
                         controller: menuScrollController,
-                        physics: !(snapshot.data ?? true)
+                        physics: !(snapshot.data ?? false)
                             ? NeverScrollableScrollPhysics()
                             : ClampingScrollPhysics(),
                         children: menuRow1,
