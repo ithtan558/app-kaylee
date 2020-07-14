@@ -304,9 +304,11 @@ class HomeMenuState {
 
 class HomeMenuCubit extends Cubit<HomeMenuState> {
   static const double menuHeight = 348;
-  final backGroundStateController = BehaviorSubject<bool>()..add(false);
+  final backGroundStateController = BehaviorSubject<bool>();
 
-  HomeMenuCubit() : super(HomeMenuState(height: menuHeight));
+  HomeMenuCubit() : super(HomeMenuState(height: menuHeight)) {
+    backGroundStateController?.add(false);
+  }
 
   @override
   Future<void> close() async {
@@ -334,12 +336,12 @@ class HomeMenuCubit extends Cubit<HomeMenuState> {
     }
     emit(HomeMenuState.copy(state
       ..menuRow2CollapsePercent =
-      state.collapsePercent >= 0 && state.collapsePercent < 1
-          ? 1 - state.collapsePercent
-          : 1
+          state.collapsePercent >= 0 && state.collapsePercent < 1
+              ? 1 - state.collapsePercent
+              : 1
       ..collapsePercent = collapsePercent
       ..offset = offs
       ..height =
-      collapsePercent == 1 ? collapseMenuHeight : menuHeight - offs));
+          collapsePercent == 1 ? collapseMenuHeight : menuHeight - offs));
   }
 }
