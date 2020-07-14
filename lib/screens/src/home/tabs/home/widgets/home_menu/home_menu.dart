@@ -315,10 +315,11 @@ class HomeMenuCubit extends Cubit<HomeMenuState> {
   }
 
   void updateHomeMenuState({double offset, double collapseMenuHeight}) {
-    final double transDistance = HomeMenuCubit.menuHeight - collapseMenuHeight;
+    final double scrollingDistance =
+        HomeMenuCubit.menuHeight - collapseMenuHeight;
     final offs = offset;
     final double collapsePercent =
-    offs < transDistance ? offs / transDistance : 1;
+        offs < scrollingDistance ? offs / scrollingDistance : 1;
     if (!state.isCollapsed && collapsePercent == 1) {
       state.isCollapsed = true;
       bgController.add(state.isCollapsed);
@@ -328,8 +329,8 @@ class HomeMenuCubit extends Cubit<HomeMenuState> {
     }
     emit(HomeMenuState.copy(state
       ..menuRow2CollapsePercent =
-      state.collapsePercent >= 0 && state.collapsePercent < 1
-          ? 1 - state.collapsePercent
+          state.collapsePercent >= 0 && state.collapsePercent < 1
+              ? 1 - state.collapsePercent
           : 1
       ..collapsePercent = collapsePercent
       ..offset = offs
