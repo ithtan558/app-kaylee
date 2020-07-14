@@ -17,5 +17,6 @@ class LoginResult {
   });
 
   String token;
+  String get requestToken => 'Bearer $token';
   UserInfo userInfo;
 }
