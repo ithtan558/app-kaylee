@@ -2,7 +2,7 @@ import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
-import 'package:kaylee/base/networks/network_module.dart';
+import 'package:kaylee/components/components.dart';
 import 'package:kaylee/res/src/dimens.dart';
 import 'package:kaylee/res/src/strings.dart';
 import 'package:kaylee/screens/src/reset_pass/blocs/send_otp_bloc.dart';

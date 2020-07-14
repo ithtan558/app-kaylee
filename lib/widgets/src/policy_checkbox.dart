@@ -3,11 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
-import 'package:kaylee/base/networks/network_module.dart';
+import 'package:kaylee/components/components.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
-import 'package:kaylee/res/src/dimens.dart';
-import 'package:kaylee/res/src/images.dart';
 import 'package:kaylee/services/services.dart';
 import 'package:kaylee/widgets/widgets.dart';
 

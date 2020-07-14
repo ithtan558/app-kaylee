@@ -3,12 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kaylee/base/json_converter/kaylee_json_convert.dart';
 import 'package:kaylee/base/kaylee_routing.dart';
-import 'package:kaylee/base/networks/network_module.dart';
-import 'package:kaylee/base/user/user_module.dart';
-import 'package:kaylee/res/src/colors_res.dart';
-import 'package:kaylee/res/src/fonts.dart';
-import 'package:kaylee/res/src/strings.dart';
-import 'package:kaylee/res/src/text_styles.dart';
+import 'package:kaylee/components/components.dart';
+import 'package:kaylee/res/res.dart';
 
 void main() {
   JsonConverterBuilder.init(KayleeJsonConverter());
