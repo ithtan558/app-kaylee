@@ -66,7 +66,7 @@ class _HomeTabState extends BaseState<HomeTab> {
                 child: ListView.separated(
                   controller: scrollController,
                   physics: BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(bottom: Dimens.px16),
+                  padding: const EdgeInsets.only(bottom: Dimens.px16),
                   itemBuilder: (c, index) {
                     if (index == 0) {
                       return Padding(
