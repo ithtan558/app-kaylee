@@ -315,15 +315,20 @@ class HomeMenuCubit extends Cubit<HomeMenuState> {
   }
 
   void updateHomeMenuState({double offset, double collapseMenuHeight}) {
+    //offset của listview
+    final offs = offset;
+    //appbar chỉ collapse tới khi offset của listview = height lúc expand - height lúc collpased
     final double scrollingDistance =
         HomeMenuCubit.menuHeight - collapseMenuHeight;
-    final offs = offset;
+    //percent collapse của appbar khi user scroll
     final double collapsePercent =
         offs < scrollingDistance ? offs / scrollingDistance : 1;
-    if (!state.isCollapsed && collapsePercent == 1) {
+    if (collapsePercent == 1 && !state.isCollapsed) {
+      //khi appbar đã collapse và state của appbar trước đó ko phải là collapse
       state.isCollapsed = true;
       bgController.add(state.isCollapsed);
-    } else if (state.isCollapsed && collapsePercent < 1) {
+    } else if (collapsePercent < 1 && state.isCollapsed) {
+      //khi appbar đang scroll để expand và state của appbar trước đó là collapse
       state.isCollapsed = false;
       bgController.add(false);
     }
@@ -331,10 +336,10 @@ class HomeMenuCubit extends Cubit<HomeMenuState> {
       ..menuRow2CollapsePercent =
           state.collapsePercent >= 0 && state.collapsePercent < 1
               ? 1 - state.collapsePercent
-              : 1
+          : 1
       ..collapsePercent = collapsePercent
       ..offset = offs
       ..height =
-          collapsePercent == 1 ? collapseMenuHeight : menuHeight - offs));
+      collapsePercent == 1 ? collapseMenuHeight : menuHeight - offs));
   }
 }
