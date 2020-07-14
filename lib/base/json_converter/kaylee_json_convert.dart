@@ -14,6 +14,12 @@ class KayleeJsonConverter extends JsonConverterFactory {
       return Content.fromJson(json) as T;
     } else if (T == VerifyOtpResult) {
       return VerifyOtpResult.fromJson(json) as T;
+    } else if (T == City) {
+      return City.fromJson(json) as T;
+    } else if (T == District) {
+      return District.fromJson(json) as T;
+    } else if (T == Ward) {
+      return Ward.fromJson(json) as T;
     }
     return json as T;
   }
@@ -29,6 +35,12 @@ class KayleeJsonConverter extends JsonConverterFactory {
     } else if (json is Content) {
       return json.toJson();
     } else if (json is VerifyOtpResult) {
+      return json.toJson();
+    } else if (json is City) {
+      return json.toJson();
+    } else if (json is District) {
+      return json.toJson();
+    } else if (json is Ward) {
       return json.toJson();
     } else
       return json;

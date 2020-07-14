@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:kaylee/models/models.dart';
 
 part 'user_info.g.dart';
 
@@ -9,33 +10,38 @@ class UserInfo {
 
   Map<String, dynamic> toJson() => _$UserInfoToJson(this);
 
-  UserInfo({
-    this.id,
-    this.clientId,
-    this.brandId,
-    this.firstName,
-    this.lastName,
-    this.name,
-    this.email,
-    this.phone,
-    this.username,
-    this.birthday,
-    this.address,
-    this.gender,
-    this.avatar,
-  });
+  UserInfo(
+      {this.id,
+      this.brandId,
+      this.firstName,
+      this.lastName,
+      this.name,
+      this.email,
+      this.phone,
+      this.username,
+      this.birthday,
+      this.address,
+      this.gender,
+      this.image,
+      this.city,
+      this.district,
+      this.wards,
+      this.roles});
 
   int id;
-  int clientId;
   int brandId;
-  dynamic firstName;
-  dynamic lastName;
-  dynamic name;
-  dynamic email;
+  String firstName;
+  String lastName;
+  String name;
+  String email;
   String phone;
   String username;
-  dynamic birthday;
-  dynamic address;
+  int birthday;
+  String address;
   int gender;
-  dynamic avatar;
+  String image;
+  City city;
+  District district;
+  Ward wards;
+  List<String> roles;
 }

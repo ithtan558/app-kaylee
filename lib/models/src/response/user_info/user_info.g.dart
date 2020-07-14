@@ -9,24 +9,32 @@ part of 'user_info.dart';
 UserInfo _$UserInfoFromJson(Map<String, dynamic> json) {
   return UserInfo(
     id: json['id'] as int,
-    clientId: json['client_id'] as int,
     brandId: json['brand_id'] as int,
-    firstName: json['first_name'],
-    lastName: json['last_name'],
-    name: json['name'],
-    email: json['email'],
+    firstName: json['first_name'] as String,
+    lastName: json['last_name'] as String,
+    name: json['name'] as String,
+    email: json['email'] as String,
     phone: json['phone'] as String,
     username: json['username'] as String,
-    birthday: json['birthday'],
-    address: json['address'],
+    birthday: json['birthday'] as int,
+    address: json['address'] as String,
     gender: json['gender'] as int,
-    avatar: json['avatar'],
+    image: json['image'] as String,
+    city: json['city'] == null
+        ? null
+        : City.fromJson(json['city'] as Map<String, dynamic>),
+    district: json['district'] == null
+        ? null
+        : District.fromJson(json['district'] as Map<String, dynamic>),
+    wards: json['wards'] == null
+        ? null
+        : Ward.fromJson(json['wards'] as Map<String, dynamic>),
+    roles: (json['roles'] as List)?.map((e) => e as String)?.toList(),
   );
 }
 
 Map<String, dynamic> _$UserInfoToJson(UserInfo instance) => <String, dynamic>{
       'id': instance.id,
-      'client_id': instance.clientId,
       'brand_id': instance.brandId,
       'first_name': instance.firstName,
       'last_name': instance.lastName,
@@ -37,5 +45,9 @@ Map<String, dynamic> _$UserInfoToJson(UserInfo instance) => <String, dynamic>{
       'birthday': instance.birthday,
       'address': instance.address,
       'gender': instance.gender,
-      'avatar': instance.avatar,
+      'image': instance.image,
+      'city': instance.city,
+      'district': instance.district,
+      'wards': instance.wards,
+      'roles': instance.roles,
     };
