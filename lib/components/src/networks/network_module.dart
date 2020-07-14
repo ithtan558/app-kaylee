@@ -3,6 +3,7 @@ import 'package:kaylee/services/services.dart';
 
 abstract class NetworkModule extends Network {
   static const BASE_URL = 'http://api.kaylee.vn/';
+  static const AUTHORIZATION = 'Authorization';
 
   NetworkModule(String baseUrl) : super(baseUrl);
 
