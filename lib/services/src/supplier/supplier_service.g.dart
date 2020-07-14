@@ -35,7 +35,7 @@ class _SupplierService implements SupplierService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<Supplier>.fromJson(_result.data);
+    final value = ResponseModel<PageData<Supplier>>.fromJson(_result.data);
     return value;
   }
 }

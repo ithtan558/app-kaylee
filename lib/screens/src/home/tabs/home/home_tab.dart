@@ -5,13 +5,20 @@ import 'package:core_plugin/core_plugin.dart';
 import 'package:cubit/cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:kaylee/components/components.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
+import 'package:kaylee/screens/src/home/tabs/home/bloc/supplier_list_bloc.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/home_menu.dart';
 import 'package:kaylee/widgets/src/kaylee_text.dart';
 
 class HomeTab extends StatefulWidget {
-  static Widget newInstance() => HomeTab._();
+  static Widget newInstance() => CubitProvider<SupplierListBloc>(
+      create: (context) => SupplierListBloc(
+          supplierService:
+              context.repository<NetworkModule>().provideSupplierService(),
+          token: context.repository<UserModule>().getUserInfo()?.requestToken),
+      child: HomeTab._());
 
   HomeTab._();
 
@@ -28,6 +35,7 @@ class ScrollControllerCubit extends Cubit<double> {
 class _HomeTabState extends BaseState<HomeTab> {
   final scrollController = ScrollController();
   ScrollControllerCubit cubit = ScrollControllerCubit();
+  SupplierListBloc supplierListBloc;
 
   @override
   void initState() {
@@ -35,6 +43,8 @@ class _HomeTabState extends BaseState<HomeTab> {
     scrollController.addListener(() {
       cubit.addOffset(scrollController.offset);
     });
+    supplierListBloc = context.cubit<SupplierListBloc>();
+    supplierListBloc.loadSuppliers();
   }
 
   @override
@@ -69,21 +79,25 @@ class _HomeTabState extends BaseState<HomeTab> {
               CubitProvider<ScrollControllerCubit>.value(
                   value: cubit, child: HomeMenu.newInstance()),
               Expanded(
-                child: ListView.separated(
-                  controller: scrollController,
-                  physics: BouncingScrollPhysics(),
-                  padding: const EdgeInsets.only(bottom: Dimens.px16),
-                  itemBuilder: (c, index) {
-                    if (index == 0) {
-                      return listTitle;
-                    } else {
-                      return _BrandItem();
-                    }
-                  },
-                  itemCount: 1 + 15,
-                  separatorBuilder: (BuildContext context, int index) {
-                    return Container(
-                      height: index >= 1 ? Dimens.px16 : 0,
+                child: CubitBuilder<SupplierListBloc, SupplierListModel>(
+                  builder: (context, state) {
+                    return ListView.separated(
+                      controller: scrollController,
+                      physics: BouncingScrollPhysics(),
+                      padding: const EdgeInsets.only(bottom: Dimens.px16),
+                      itemBuilder: (c, index) {
+                        if (index == 0) {
+                          return listTitle;
+                        } else {
+                          return _BrandItem();
+                        }
+                      },
+                      itemCount: 1 + state.suppliers.length,
+                      separatorBuilder: (BuildContext context, int index) {
+                        return Container(
+                          height: index >= 1 ? Dimens.px16 : 0,
+                        );
+                      },
                     );
                   },
                 ),
