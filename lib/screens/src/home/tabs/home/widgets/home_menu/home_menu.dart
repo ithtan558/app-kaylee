@@ -278,11 +278,11 @@ class _HomeMenuState extends BaseState<HomeMenu> {
 }
 
 class HomeMenuState {
-  double collapsePercent = 0;
-  double height = 0;
-  double offset = 0;
-  bool isCollapsed = false;
-  double menuRow2CollapsePercent = 1;
+  double collapsePercent;
+  double height;
+  double offset;
+  bool isCollapsed;
+  double menuRow2CollapsePercent;
 
   HomeMenuState(
       {this.collapsePercent = 0,
@@ -334,8 +334,8 @@ class HomeMenuCubit extends Cubit<HomeMenuState> {
     }
     emit(HomeMenuState.copy(state
       ..menuRow2CollapsePercent =
-          state.collapsePercent >= 0 && state.collapsePercent < 1
-              ? 1 - state.collapsePercent
+      state.collapsePercent >= 0 && state.collapsePercent < 1
+          ? 1 - state.collapsePercent
           : 1
       ..collapsePercent = collapsePercent
       ..offset = offs
