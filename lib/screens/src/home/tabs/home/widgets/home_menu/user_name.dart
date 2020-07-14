@@ -11,22 +11,28 @@ class UserName extends StatefulWidget {
 
 class _UserNameState extends BaseState<UserName> {
   final positionController = BehaviorSubject<double>();
+  final opacityController = BehaviorSubject<double>();
+  final marginTop = Dimens.px56;
 
   @override
   void initState() {
     super.initState();
     positionController.add(0);
+    opacityController.add(1);
     context.cubit<HomeMenuCubit>().listen((state) {
       final scrollingPercent =
           (state.collapsePercent < 0.6 ? 0 : state.collapsePercent - 0.6) / 0.4;
-      final namePosition = Dimens.px56 - Dimens.px16 * scrollingPercent;
+      final namePosition = marginTop - Dimens.px16 * scrollingPercent;
 
       positionController.add(namePosition);
+      opacityController
+          .add(1 - (marginTop - (namePosition ?? marginTop)) / Dimens.px16);
     });
   }
 
   @override
   void dispose() {
+    opacityController.close();
     positionController.close();
     super.dispose();
   }
@@ -43,20 +49,20 @@ class _UserNameState extends BaseState<UserName> {
         StreamBuilder<double>(
             stream: positionController.stream,
             builder: (context, snapshot) {
+              final top = snapshot.data ?? marginTop;
               return Padding(
-                padding: EdgeInsets.only(top: snapshot.data ?? Dimens.px56),
+                padding: EdgeInsets.only(top: top),
                 child: userName,
               );
             }),
         Padding(
           padding: EdgeInsets.only(top: Dimens.px8),
           child: StreamBuilder<double>(
-              stream: positionController.stream,
+              stream: opacityController.stream,
               builder: (context, snapshot) {
+                final opacity = snapshot.data ?? 1;
                 return Opacity(
-                  opacity: 1 -
-                      (Dimens.px56 - (snapshot.data ?? Dimens.px56)) /
-                          Dimens.px16,
+                  opacity: opacity,
                   child: role,
                 );
               }),
