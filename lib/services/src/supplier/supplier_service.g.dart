@@ -18,7 +18,11 @@ class _SupplierService implements SupplierService {
   @override
   getSuppliers({page = 1, limit = 10, sort = ''}) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'page': page,
+      r'limit': limit?.toJson(),
+      r'sort': sort
+    };
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final Response<Map<String, dynamic>> _result = await _dio.request(
