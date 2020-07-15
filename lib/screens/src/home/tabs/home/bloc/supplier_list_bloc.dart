@@ -6,14 +6,13 @@ import 'package:kaylee/services/services.dart';
 class SupplierListBloc extends Cubit<SupplierListModel> {
   final SupplierService supplierService;
 
-  SupplierListBloc({this.supplierService, String token})
-      : super(SupplierListModel.init(token: token));
+  SupplierListBloc({this.supplierService}) : super(SupplierListModel.init());
 
   void loadSuppliers({bool isLoadMore = false}) async {
 //    state.isLoading = true;
     RequestHandler(
-      request: supplierService.getSuppliers(state.token,
-          page: state.page, limit: state.limit),
+      request:
+          supplierService.getSuppliers(page: state.page, limit: state.limit),
       onSuccess: ({message, result}) {
         state.isLoading = false;
         final supp = result as List<Supplier>;
@@ -47,26 +46,23 @@ class SupplierListModel {
   int limit;
   ErrorType code;
   Error error;
-  final String token;
 
   bool get canLoadMore => suppliers.length >= page * limit;
 
-  SupplierListModel._(
-      {this.suppliers = const [],
-      this.isEnding = false,
-      this.isLoading = false,
-      this.page = 1,
-      this.limit = 10,
-      this.error,
-      this.code,
-      this.token});
+  SupplierListModel._({this.suppliers = const [],
+    this.isEnding = false,
+    this.isLoading = false,
+    this.page = 1,
+    this.limit = 10,
+    this.error,
+    this.code});
 
-  factory SupplierListModel.init({String token}) {
-    print('[TUNG] ===> token $token');
-    return SupplierListModel._(token: token);
+  factory SupplierListModel.init() {
+    return SupplierListModel._();
   }
 
-  factory SupplierListModel.copy(SupplierListModel old) => SupplierListModel._(
+  factory SupplierListModel.copy(SupplierListModel old) =>
+      SupplierListModel._(
         suppliers: old?.suppliers,
         isEnding: old?.isEnding,
         isLoading: old?.isLoading,
@@ -74,6 +70,5 @@ class SupplierListModel {
         limit: old?.limit,
         error: old?.error,
         code: old?.code,
-        token: old?.token,
       );
 }

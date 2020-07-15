@@ -16,8 +16,7 @@ class HomeTab extends StatefulWidget {
   static Widget newInstance() => CubitProvider<SupplierListBloc>(
       create: (context) => SupplierListBloc(
           supplierService:
-              context.repository<NetworkModule>().provideSupplierService(),
-          token: context.repository<UserModule>().getUserInfo()?.requestToken),
+              context.repository<NetworkModule>().provideSupplierService()),
       child: HomeTab._());
 
   HomeTab._();
