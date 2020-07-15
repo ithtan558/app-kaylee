@@ -18,9 +18,11 @@ packages:
   anth_package:
     dependency: "direct main"
     description:
-      path: "../anth_package"
-      relative: true
-    source: path
+      path: "."
+      ref: "0.0.2"
+      resolved-ref: ea01feb323113852792b64fb5f0aeb0fc8f80854
+      url: "https://tungpham6195@bitbucket.org/anth-freelance/anth_package.git"
+    source: git
     version: "0.0.2"
   archive:
     dependency: transitive
