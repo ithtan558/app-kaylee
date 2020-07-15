@@ -9,16 +9,17 @@ class SupplierListBloc extends Cubit<SupplierListModel> {
   SupplierListBloc({this.supplierService}) : super(SupplierListModel.init());
 
   void loadSuppliers({bool isLoadMore = false}) async {
-//    state.isLoading = true;
+    state.isLoading = true;
     RequestHandler(
       request:
           supplierService.getSuppliers(page: state.page, limit: state.limit),
       onSuccess: ({message, result}) {
         state.isLoading = false;
         final supp = (result as Suppliers).items;
-        print('[TUNG] ===> ${supp.length}');
         state.suppliers.addAll(supp);
         state.isEnding = supp.isEmpty || !state.canLoadMore;
+        state.code = null;
+        state.error = null;
         emit(SupplierListModel.copy(state));
       },
       onFailed: (code, {error}) {
