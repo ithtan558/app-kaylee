@@ -1,6 +1,5 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:dio/dio.dart';
-import 'package:kaylee/components/components.dart';
 import 'package:kaylee/models/models.dart';
 
 part 'supplier_service.g.dart';
@@ -11,7 +10,6 @@ abstract class SupplierService {
 
   @GET('supplier')
   Future<ResponseModel<Suppliers>> getSuppliers(
-      @Header(NetworkModule.AUTHORIZATION) token,
       {@Query('page') int page = 1,
       @Query('limit') int limit = 10,
       @Query('sort') String sort});

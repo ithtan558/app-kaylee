@@ -16,8 +16,7 @@ class _SupplierService implements SupplierService {
   String baseUrl;
 
   @override
-  getSuppliers(token, {page = 1, limit = 10, sort}) async {
-    ArgumentError.checkNotNull(token, 'token');
+  getSuppliers({page = 1, limit = 10, sort}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'page': page,
@@ -31,7 +30,7 @@ class _SupplierService implements SupplierService {
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
-            headers: <String, dynamic>{r'Authorization': token},
+            headers: <String, dynamic>{},
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
