@@ -68,14 +68,11 @@ class _SplashScreenState extends BaseState<SplashScreen> {
                         ),
                         Container(
                           margin:
-                              const EdgeInsets.symmetric(vertical: Dimens.px32),
+                          const EdgeInsets.symmetric(vertical: Dimens.px32),
                           child: Go2RegisterText(),
                         )
                       ],
                     );
-                  } else {
-                    context.cubit<AppBloc>().loggedIn(user);
-                    bloc.pushToHomeScreen();
                   }
                 }
                 return Container();
@@ -83,6 +80,11 @@ class _SplashScreenState extends BaseState<SplashScreen> {
               listener: (context, state) {
                 if (state is GoToHomeScreenSplashScrState) {
                   pushScreen(PageIntent(screen: HomeScreen));
+                } else if (state is LoadedSharedPrefSplashScrState) {
+                  final user =
+                  RepositoryProvider.of<UserModule>(context).getUserInfo();
+                  context.cubit<AppBloc>().loggedIn(user);
+                  bloc.pushToHomeScreen();
                 }
               },
             )
