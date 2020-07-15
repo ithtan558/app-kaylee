@@ -19,11 +19,11 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "0.0.2"
-      resolved-ref: ea01feb323113852792b64fb5f0aeb0fc8f80854
+      ref: "0.0.3"
+      resolved-ref: eb7d101995122eda1319bc8c1d1e7dfcc36430ca
       url: "https://tungpham6195@bitbucket.org/anth-freelance/anth_package.git"
     source: git
-    version: "0.0.2"
+    version: "0.0.3"
   archive:
     dependency: transitive
     description:
@@ -161,11 +161,11 @@ packages:
     dependency: transitive
     description:
       path: "."
-      ref: "0.4.5"
-      resolved-ref: "1bc72350a6b4572c60a7ccf5b98dcdb9bc5325e0"
+      ref: "0.4.6"
+      resolved-ref: "786b948334ebd9f1f427747e3e0a0e927140875a"
       url: "https://github.com/tungpham6195/flutter.core_plugin.git"
     source: git
-    version: "0.4.5+00405"
+    version: "0.4.6+00406"
   coverage:
     dependency: transitive
     description:
@@ -242,7 +242,7 @@ packages:
       name: equatable
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.0"
+    version: "1.2.2"
   file:
     dependency: transitive
     description:
@@ -628,7 +628,7 @@ packages:
       name: provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.3.0"
+    version: "4.3.1"
   pub_semver:
     dependency: transitive
     description:

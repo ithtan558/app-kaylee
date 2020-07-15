@@ -27,7 +27,7 @@ dependencies:
 #    path: ../anth_package
     git:
       url: https://tungpham6195@bitbucket.org/anth-freelance/anth_package.git
-      ref: 0.0.2
+      ref: 0.0.3
 
 dev_dependencies:
   flutter_test:
