@@ -15,7 +15,7 @@ class SupplierListBloc extends Cubit<SupplierListModel> {
           supplierService.getSuppliers(page: state.page, limit: state.limit),
       onSuccess: ({message, result}) {
         state.isLoading = false;
-        final supp = result as List<Supplier>;
+        final supp = (result as Suppliers).items;
         print('[TUNG] ===> ${supp.length}');
         state.suppliers.addAll(supp);
         state.isEnding = supp.isEmpty || !state.canLoadMore;
@@ -50,13 +50,15 @@ class SupplierListModel {
   bool get canLoadMore => suppliers.length >= page * limit;
 
   SupplierListModel._(
-      {this.suppliers = const [],
+      {List<Supplier> suppliers,
       this.isEnding = false,
       this.isLoading = false,
       this.page = 1,
       this.limit = 10,
       this.error,
-      this.code});
+      this.code}) {
+    this.suppliers = suppliers ?? [];
+  }
 
   factory SupplierListModel.init() {
     return SupplierListModel._();
