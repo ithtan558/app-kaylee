@@ -46,14 +46,8 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing, KayleeRouting {
       listener: (context, state) {
         if (state is LoggedInState) {
           context.repository<UserModule>().updateUserInfo(state.result);
-          final options = context
-              .repository<NetworkModule>()
-              .dio
-              .options;
-          context
-              .repository<NetworkModule>()
-              .dio
-              .options = options.merge(
+          final options = context.repository<NetworkModule>().dio.options;
+          context.repository<NetworkModule>().dio.options = options.merge(
               headers: {
                 NetworkModule.AUTHORIZATION: state.result.requestToken
               });
