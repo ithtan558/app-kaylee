@@ -18,11 +18,9 @@ packages:
   anth_package:
     dependency: "direct main"
     description:
-      path: "."
-      ref: "0.0.2"
-      resolved-ref: ea01feb323113852792b64fb5f0aeb0fc8f80854
-      url: "https://tungpham6195@bitbucket.org/anth-freelance/anth_package.git"
-    source: git
+      path: "../anth_package"
+      relative: true
+    source: path
     version: "0.0.2"
   archive:
     dependency: transitive
@@ -299,7 +297,7 @@ packages:
       name: flutter_widget_from_html_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.1"
+    version: "0.4.2"
   flutter_widgets:
     dependency: transitive
     description:
