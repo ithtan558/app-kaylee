@@ -49,20 +49,20 @@ class SupplierListModel {
 
   bool get canLoadMore => suppliers.length >= page * limit;
 
-  SupplierListModel._({this.suppliers = const [],
-    this.isEnding = false,
-    this.isLoading = false,
-    this.page = 1,
-    this.limit = 10,
-    this.error,
-    this.code});
+  SupplierListModel._(
+      {this.suppliers = const [],
+      this.isEnding = false,
+      this.isLoading = false,
+      this.page = 1,
+      this.limit = 10,
+      this.error,
+      this.code});
 
   factory SupplierListModel.init() {
     return SupplierListModel._();
   }
 
-  factory SupplierListModel.copy(SupplierListModel old) =>
-      SupplierListModel._(
+  factory SupplierListModel.copy(SupplierListModel old) => SupplierListModel._(
         suppliers: old?.suppliers,
         isEnding: old?.isEnding,
         isLoading: old?.isLoading,
