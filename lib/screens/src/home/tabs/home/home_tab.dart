@@ -12,6 +12,7 @@ import 'package:kaylee/screens/src/home/tabs/home/bloc/supplier_list_bloc.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/home_menu.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/supplier_item.dart';
 import 'package:kaylee/widgets/src/kaylee_text.dart';
+import 'package:kaylee/widgets/widgets.dart';
 
 class HomeTab extends StatefulWidget {
   static Widget newInstance() => CubitProvider<SupplierListBloc>(
@@ -79,29 +80,35 @@ class _HomeTabState extends BaseState<HomeTab> {
               CubitProvider<ScrollControllerCubit>.value(
                   value: cubit, child: HomeMenu.newInstance()),
               Expanded(
-                child: CubitBuilder<SupplierListBloc, SupplierListModel>(
-                  builder: (context, state) {
-                    return ListView.separated(
-                      controller: scrollController,
-                      physics: BouncingScrollPhysics(),
-                      padding: const EdgeInsets.only(bottom: Dimens.px16),
-                      itemBuilder: (c, index) {
-                        if (index == 0) {
-                          return listTitle;
-                        } else {
-                          return SupplierItem(
-                            supplier: state.suppliers.elementAt(index - 1),
+                child: KayleeLoadmoreHandler(
+                  loadWhen: () =>
+                      !supplierListBloc.state.isLoading &&
+                      !supplierListBloc.state.isEnding,
+                  onLoadMore: supplierListBloc.loadMore,
+                  child: CubitBuilder<SupplierListBloc, SupplierListModel>(
+                    builder: (context, state) {
+                      return ListView.separated(
+                        controller: scrollController,
+                        physics: BouncingScrollPhysics(),
+                        padding: const EdgeInsets.only(bottom: Dimens.px16),
+                        itemBuilder: (c, index) {
+                          if (index == 0) {
+                            return listTitle;
+                          } else {
+                            return SupplierItem(
+                              supplier: state.suppliers.elementAt(index - 1),
+                            );
+                          }
+                        },
+                        itemCount: 1 + state.suppliers.length,
+                        separatorBuilder: (BuildContext context, int index) {
+                          return Container(
+                            height: index >= 1 ? Dimens.px16 : 0,
                           );
-                        }
-                      },
-                      itemCount: 1 + state.suppliers.length,
-                      separatorBuilder: (BuildContext context, int index) {
-                        return Container(
-                          height: index >= 1 ? Dimens.px16 : 0,
-                        );
-                      },
-                    );
-                  },
+                        },
+                      );
+                    },
+                  ),
                 ),
               ),
             ],
