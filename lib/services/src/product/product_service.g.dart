@@ -16,11 +16,15 @@ class _ProductService implements ProductService {
   String baseUrl;
 
   @override
-  getProducts(supplier_id,
-      {sort = '', category_id = 1, page = 1, limit = 10}) async {
-    ArgumentError.checkNotNull(supplier_id, 'supplier_id');
+  getProducts({supplierId, sort, categoryId, page = 1, limit = 10}) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'supplier_id': supplierId,
+      r'sort': sort,
+      r'category_id': categoryId,
+      r'page': page,
+      r'limit': limit
+    };
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final Response<Map<String, dynamic>> _result = await _dio.request('product',
@@ -31,7 +35,7 @@ class _ProductService implements ProductService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<PageData<Product>>.fromJson(_result.data);
+    final value = ResponseModel<Products>.fromJson(_result.data);
     return value;
   }
 }

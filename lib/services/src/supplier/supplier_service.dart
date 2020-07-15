@@ -10,7 +10,7 @@ abstract class SupplierService {
   factory SupplierService(Dio dio) = _SupplierService;
 
   @GET('supplier')
-  Future<ResponseModel<PageData<Supplier>>> getSuppliers(
+  Future<ResponseModel<Suppliers>> getSuppliers(
       @Header(NetworkModule.AUTHORIZATION) token,
       {@Query('page') int page = 1,
       @Query('limit') int limit = 10,

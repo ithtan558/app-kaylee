@@ -9,6 +9,10 @@ abstract class ProductService {
   factory ProductService(Dio dio) = _ProductService;
 
   @GET('product')
-  Future<ResponseModel<PageData<Product>>> getProducts(int supplier_id,
-      {String sort = '', int category_id = 1, int page = 1, int limit = 10});
+  Future<ResponseModel<Products>> getProducts(
+      {@Query('supplier_id') int supplierId,
+      @Query('sort') String sort,
+      @Query('category_id') int categoryId,
+      @Query('page') int page = 1,
+      @Query('limit') int limit = 10});
 }
