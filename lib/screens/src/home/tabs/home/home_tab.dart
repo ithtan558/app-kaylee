@@ -10,6 +10,7 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/home/tabs/home/bloc/supplier_list_bloc.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/home_menu.dart';
+import 'package:kaylee/screens/src/home/tabs/home/widgets/supplier_item.dart';
 import 'package:kaylee/widgets/src/kaylee_text.dart';
 
 class HomeTab extends StatefulWidget {
@@ -88,7 +89,9 @@ class _HomeTabState extends BaseState<HomeTab> {
                         if (index == 0) {
                           return listTitle;
                         } else {
-                          return _BrandItem();
+                          return SupplierItem(
+                            supplier: state.suppliers.elementAt(index - 1),
+                          );
                         }
                       },
                       itemCount: 1 + state.suppliers.length,
@@ -152,56 +155,6 @@ class __NotificationIconState extends State<_NotificationIcon> {
             ),
           )
       ],
-    );
-  }
-}
-
-class _BrandItem extends StatelessWidget {
-  final imageRatio = 96 / 30;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: Dimens.px46,
-      margin: const EdgeInsets.symmetric(horizontal: Dimens.px16),
-      child: Material(
-        clipBehavior: Clip.antiAlias,
-        borderRadius: BorderRadius.circular(Dimens.px5),
-        color: Colors.white,
-        child: InkWell(
-          onTap: () {
-            context.push(PageIntent(screen: BrandProdListScreen));
-          },
-          child: Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: Dimens.px8),
-                child: Container(
-                  width: (context.screenSize.width - Dimens.px32) * 96 / 343,
-                  child: AspectRatio(
-                      aspectRatio: imageRatio,
-                      child: Image.network(
-                          'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Shiseido_logo.svg/1280px-Shiseido_logo.svg.png')),
-                ),
-              ),
-              Container(
-                  width: 1,
-                  height: Dimens.px16,
-                  decoration: BoxDecoration(color: ColorsRes.textFieldBorder)),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
-                  child: KayleeText.normal12W400(
-                      "Mỹ phẩm Nhật cao cấp Shiseido",
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis),
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
     );
   }
 }
