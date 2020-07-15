@@ -1,5 +1,6 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/components/components.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/res/src/images.dart';
@@ -56,7 +57,7 @@ class _SplashScreenState extends BaseState<SplashScreen> {
                 if (state is LoadedSharedPrefSplashScrState) {
                   final user =
                       RepositoryProvider.of<UserModule>(context).getUserInfo();
-                  if (user?.token.isNullOrEmpty)
+                  if (user?.token.isNullOrEmpty) {
                     return Column(
                       children: [
                         KayLeeRoundedButton.normal(
@@ -72,8 +73,10 @@ class _SplashScreenState extends BaseState<SplashScreen> {
                         )
                       ],
                     );
-                  else
+                  } else {
+                    context.cubit<AppBloc>().loggedIn(user);
                     bloc.pushToHomeScreen();
+                  }
                 }
                 return Container();
               },
