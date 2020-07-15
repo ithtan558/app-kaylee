@@ -34,6 +34,10 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing, KayleeRouting {
     return MaterialApp(
       title: Strings.appName,
       onGenerateRoute: onGenerateRoute,
+      builder: (context, child) => MediaQuery(
+          data: MediaQuery.of(context)
+              .copyWith(textScaleFactor: 1, boldText: false),
+          child: child),
       theme: ThemeData(
         scaffoldBackgroundColor: ColorsRes.background,
         visualDensity: VisualDensity.adaptivePlatformDensity,
