@@ -1,6 +1,7 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/components/components.dart';
 import 'package:kaylee/models/models.dart';
@@ -76,6 +77,7 @@ class _LoginScreenState extends KayleeState<LoginScreen> {
               _passFNode.requestFocus();
             } else if (state is SuccessLoginScrState) {
               hideLoading();
+              context.cubit<AppBloc>().loggedIn(state.result);
               await showKayleeAlertDialog(
                   context: context,
                   view: KayleeAlertDialogView.message(
@@ -83,9 +85,6 @@ class _LoginScreenState extends KayleeState<LoginScreen> {
                     actions: [
                       KayleeAlertDialogAction.dongY(
                         onPressed: () {
-                          context
-                              .repository<UserModule>()
-                              .updateUserInfo(state.result);
                           context.pushToTop(PageIntent(screen: HomeScreen));
                         },
                       )
