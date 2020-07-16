@@ -38,4 +38,23 @@ class _ProductService implements ProductService {
     final value = ResponseModel<Products>.fromJson(_result.data);
     return value;
   }
+
+  @override
+  getProdCategory({supplier_id}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'supplier_id': supplier_id};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        'product-category/all',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = ResponseModel<ProdCate>.fromJson(_result.data);
+    return value;
+  }
 }

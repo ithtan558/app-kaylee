@@ -15,4 +15,8 @@ abstract class ProductService {
       @Query('category_id') int categoryId,
       @Query('page') int page = 1,
       @Query('limit') int limit = 10});
+
+  @GET('product-category/all')
+  Future<ResponseModel<ProdCate>> getProdCategory(
+      {@Query('supplier_id') int supplier_id});
 }
