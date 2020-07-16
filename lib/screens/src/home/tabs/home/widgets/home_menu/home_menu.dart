@@ -7,7 +7,7 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/home/tabs/home/home_tab.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/home_menu_item.dart';
-import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/notification_item.dart';
+import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/notification_button/notification_button.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/user_name.dart';
 
 class HomeMenu extends StatefulWidget {
@@ -259,7 +259,7 @@ class _HomeMenuState extends BaseState<HomeMenu> {
         child: UserName(),
       ),
       Positioned(
-        child: NotificationIcon(),
+        child: NotificationButton(),
         right: 0,
         top: Dimens.px24,
       )
