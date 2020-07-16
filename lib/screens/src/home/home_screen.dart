@@ -1,5 +1,5 @@
-import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/screens/src/home/tabs/account_tab.dart';
 import 'package:kaylee/screens/src/home/tabs/cashier/cashier_tab.dart';
 import 'package:kaylee/screens/src/home/tabs/history_tab.dart';
@@ -15,7 +15,7 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => new _HomeScreenState();
 }
 
-class _HomeScreenState extends BaseState<HomeScreen> {
+class _HomeScreenState extends KayleeState<HomeScreen> {
   final _pageController = PageController();
 
   @override
