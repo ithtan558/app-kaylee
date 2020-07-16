@@ -14,19 +14,19 @@ class SupplierListBloc extends Cubit<SupplierListModel> {
       request:
           supplierService.getSuppliers(page: state.page, limit: state.limit),
       onSuccess: ({message, result}) {
-        state.isLoading = false;
         final supp = (result as Suppliers).items;
-        state.suppliers.addAll(supp);
-        state.isEnding = supp.isEmpty || !state.canLoadMore;
-        state.code = null;
-        state.error = null;
-        emit(SupplierListModel.copy(state));
+        emit(SupplierListModel.copy(state
+          ..isLoading = false
+          ..suppliers.addAll(supp)
+          ..isEnding = supp.isEmpty || !state.canLoadMore
+          ..code = null
+          ..error = null));
       },
       onFailed: (code, {error}) {
-        state.isLoading = false;
-        state.code = code;
-        state.error = error;
-        emit(SupplierListModel.copy(state));
+        emit(SupplierListModel.copy(state
+          ..isLoading = false
+          ..code = code
+          ..error = error));
       },
     );
   }
