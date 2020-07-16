@@ -1,10 +1,22 @@
 import 'package:anth_package/anth_package.dart' hide VoidCallback;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/res/res.dart';
 
 abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
   bool isShowLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    context.cubit<AppBloc>().listen((state) {
+      if (state is TokenExpiredState) {
+        //todo token is expired
+        //todo need to show dialog for requiring login
+      }
+    });
+  }
 
   void showLoading({bool canDismiss = false, VoidCallback onDismiss}) {
     if (!isShowLoading) {
