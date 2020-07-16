@@ -9,6 +9,7 @@ export 'src/response/content/content.dart';
 export 'src/response/district/district.dart';
 export 'src/response/error_code.dart';
 export 'src/response/login/login_result.dart';
+export 'src/response/notification/count/notification_count.dart';
 export 'src/response/page_data/page_data.dart';
 export 'src/response/prod_cate/prod_cate.dart';
 export 'src/response/product/list/products.dart';
