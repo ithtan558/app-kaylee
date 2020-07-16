@@ -10,6 +10,8 @@ class AppBloc extends Cubit {
   }
 
   void loggedOut() => emit(LoggedOutState());
+
+  void tokenExpired() => emit(TokenExpiredState());
 }
 
 class LoggedInState {
@@ -19,3 +21,5 @@ class LoggedInState {
 }
 
 class LoggedOutState {}
+
+class TokenExpiredState {}
