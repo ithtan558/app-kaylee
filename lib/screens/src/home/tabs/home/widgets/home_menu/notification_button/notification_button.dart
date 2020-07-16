@@ -4,12 +4,12 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
-class NotificationIcon extends StatefulWidget {
+class NotificationButton extends StatefulWidget {
   @override
-  _NotificationIconState createState() => _NotificationIconState();
+  _NotificationButtonState createState() => _NotificationButtonState();
 }
 
-class _NotificationIconState extends State<NotificationIcon> {
+class _NotificationButtonState extends State<NotificationButton> {
   int notifyCount = 99;
 
   @override
