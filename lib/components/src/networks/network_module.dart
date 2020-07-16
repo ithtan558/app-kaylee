@@ -16,6 +16,8 @@ abstract class NetworkModule extends Network {
   SupplierService provideSupplierService();
 
   ProductService provideProductService();
+
+  NotificationService provideNotificationService();
 }
 
 class _NetworkModuleImpl extends NetworkModule {
@@ -32,4 +34,7 @@ class _NetworkModuleImpl extends NetworkModule {
 
   @override
   ProductService provideProductService() => ProductService(dio);
+
+  @override
+  NotificationService provideNotificationService() => NotificationService(dio);
 }
