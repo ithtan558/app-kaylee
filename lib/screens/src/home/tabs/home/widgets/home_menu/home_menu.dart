@@ -277,31 +277,6 @@ class _HomeMenuState extends BaseState<HomeMenu> {
       Dimens.px56 + Dimens.px16 * 2 + Dimens.px16 + homeMenuItemHeight;
 }
 
-class HomeMenuState {
-  double collapsePercent;
-  double height;
-  double offset;
-  bool isCollapsed;
-  double menuRow2CollapsePercent;
-
-  HomeMenuState(
-      {this.collapsePercent = 0,
-      this.height = 0,
-      this.offset = 0,
-      this.isCollapsed = false,
-      this.menuRow2CollapsePercent = 1});
-
-  HomeMenuState.copy(HomeMenuState old) {
-    this
-      ..collapsePercent = old?.collapsePercent ?? this.collapsePercent
-      ..height = old?.height ?? this.height
-      ..offset = old?.offset ?? this.offset
-      ..isCollapsed = old?.isCollapsed ?? this.isCollapsed
-      ..menuRow2CollapsePercent =
-          old?.menuRow2CollapsePercent ?? this.menuRow2CollapsePercent;
-  }
-}
-
 class HomeMenuCubit extends Cubit<HomeMenuState> {
   static const double menuHeight = 348;
   final backGroundStateController = BehaviorSubject<bool>();
@@ -343,5 +318,30 @@ class HomeMenuCubit extends Cubit<HomeMenuState> {
       ..offset = offs
       ..height =
           collapsePercent == 1 ? collapseMenuHeight : menuHeight - offs));
+  }
+}
+
+class HomeMenuState {
+  double collapsePercent;
+  double height;
+  double offset;
+  bool isCollapsed;
+  double menuRow2CollapsePercent;
+
+  HomeMenuState(
+      {this.collapsePercent = 0,
+      this.height = 0,
+      this.offset = 0,
+      this.isCollapsed = false,
+      this.menuRow2CollapsePercent = 1});
+
+  HomeMenuState.copy(HomeMenuState old) {
+    this
+      ..collapsePercent = old?.collapsePercent ?? this.collapsePercent
+      ..height = old?.height ?? this.height
+      ..offset = old?.offset ?? this.offset
+      ..isCollapsed = old?.isCollapsed ?? this.isCollapsed
+      ..menuRow2CollapsePercent =
+          old?.menuRow2CollapsePercent ?? this.menuRow2CollapsePercent;
   }
 }
