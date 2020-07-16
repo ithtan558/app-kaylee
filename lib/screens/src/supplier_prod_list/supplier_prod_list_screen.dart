@@ -1,22 +1,49 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/base/kaylee_state.dart';
+import 'package:kaylee/components/components.dart';
+import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
+import 'package:kaylee/screens/src/supplier_prod_list/bloc/supplier_prod_cate_list_bloc.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
-class BrandProdListScreen extends StatefulWidget {
-  static Widget newInstance() => BrandProdListScreen._();
+class SupplierProdListScreen extends StatefulWidget {
+  static Widget newInstance() => MultiCubitProvider(providers: [
+        CubitProvider<SupplierProdCateListBloc>(
+          create: (context) => SupplierProdCateListBloc(
+              productService:
+                  context.repository<NetworkModule>().provideProductService()),
+        ),
+      ], child: SupplierProdListScreen._());
 
-  BrandProdListScreen._();
+  SupplierProdListScreen._();
 
   @override
-  _BrandProdListScreenState createState() => new _BrandProdListScreenState();
+  _SupplierProdListScreenState createState() =>
+      new _SupplierProdListScreenState();
 }
 
-class _BrandProdListScreenState extends BaseState<BrandProdListScreen> {
+class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
+  Supplier supplier;
+  SupplierProdCateListBloc cateBloc;
+
   @override
   void initState() {
     super.initState();
+    supplier = bundle.args as Supplier;
+    cateBloc = context.cubit<SupplierProdCateListBloc>()
+      ..listen((state) {
+        if (state is SuppProCateState) {
+          //todo load product of this supplier with the 1st category_id
+          hideLoading();
+        } else if (state is LoadingDialogState) {
+          showLoading();
+        } else if (state is ErrorState) {
+          hideLoading();
+        }
+      });
+    cateBloc.loadProdCate(supplierId: supplier.id);
   }
 
   @override
@@ -29,8 +56,8 @@ class _BrandProdListScreenState extends BaseState<BrandProdListScreen> {
     return KayleeTabView(
       appBar: KayleeAppBar(
         titleWidget: Image.network(
-          'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Shiseido_logo.svg/1280px-Shiseido_logo.svg.png',
-          height: Dimens.px15,
+          supplier?.image ?? '',
+          height: Dimens.px30,
         ),
         actions: <Widget>[
           KayleeAppBarAction.button(
@@ -53,6 +80,21 @@ class _BrandProdListScreenState extends BaseState<BrandProdListScreen> {
             ),
           )
         ],
+      ),
+      tabBar: CubitBuilder<SupplierProdCateListBloc, dynamic>(
+        buildWhen: (previous, current) {
+          print('[TUNG] ===> ${current.runtimeType}');
+          return current is! ErrorState && current is! LoadingDialogState;
+        },
+        builder: (context, state) {
+          return KayleeTabBar(
+            itemCount: (state as SuppProCateState).categories.length,
+            mapTitle: (index) =>
+            (state as SuppProCateState).categories
+                .elementAt(index)
+                .name,
+          );
+        },
       ),
       body: _buildProdList(),
       floatingActionButton: Material(

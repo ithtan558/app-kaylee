@@ -35,8 +35,8 @@ mixin KayleeRouting on Routing {
         return EditProfileScreen.newInstance();
       case ServiceListScreen:
         return ServiceListScreen.newInstance();
-      case BrandProdListScreen:
-        return BrandProdListScreen.newInstance();
+      case SupplierProdListScreen:
+        return SupplierProdListScreen.newInstance();
       case HomeScreen:
         return HomeScreen.newInstance();
       case StaffListScreen:

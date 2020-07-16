@@ -24,7 +24,8 @@ class SupplierItem extends StatelessWidget {
         color: Colors.white,
         child: InkWell(
           onTap: () {
-            context.push(PageIntent(screen: BrandProdListScreen));
+            context.push(PageIntent(
+                screen: SupplierProdListScreen, bundle: Bundle(supplier)));
           },
           child: Row(
             children: [

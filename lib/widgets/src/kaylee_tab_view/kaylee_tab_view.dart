@@ -7,8 +7,10 @@ class KayleeTabView extends StatefulWidget {
   final KayleeAppBar appBar;
   final Widget body;
   final Widget floatingActionButton;
+  final Widget tabBar;
 
-  KayleeTabView({this.appBar, this.body, this.floatingActionButton});
+  KayleeTabView(
+      {this.appBar, this.tabBar, this.body, this.floatingActionButton});
 
   @override
   _KayleeTabViewState createState() => _KayleeTabViewState();
@@ -16,14 +18,6 @@ class KayleeTabView extends StatefulWidget {
 
 class _KayleeTabViewState extends BaseState<KayleeTabView>
     with SingleTickerProviderStateMixin {
-  final list = [
-    'Phụ kiện cưới',
-    'Phụ kiện cưới',
-    'Phụ kiện cưới',
-    'Phụ kiện cưới',
-    'Phụ kiện cưới',
-  ];
-
   @override
   void initState() {
     super.initState();
@@ -43,9 +37,7 @@ class _KayleeTabViewState extends BaseState<KayleeTabView>
           Container(
             margin: EdgeInsets.only(top: Dimens.px16),
             height: Dimens.px40,
-            child: _KayleeTabBar(
-              tabs: list,
-            ),
+            child: widget.tabBar ?? Container(),
           ),
           Expanded(
               child: Stack(
@@ -67,17 +59,19 @@ class _KayleeTabViewState extends BaseState<KayleeTabView>
   }
 }
 
-class _KayleeTabBar extends StatefulWidget {
-  final List<String> tabs;
-  final ValueSetter<int> onChange;
+class KayleeTabBar extends StatefulWidget {
+  final ValueSetter<int> onSelected;
+  final int itemCount;
+  final String Function(int index) mapTitle;
 
-  _KayleeTabBar({this.tabs, this.onChange});
+  KayleeTabBar(
+      {@required this.itemCount, @required this.mapTitle, this.onSelected});
 
   @override
   _KayleeTabBarState createState() => _KayleeTabBarState();
 }
 
-class _KayleeTabBarState extends BaseState<_KayleeTabBar> {
+class _KayleeTabBarState extends BaseState<KayleeTabBar> {
   int currentIndex = 0;
 
   @override
@@ -96,15 +90,13 @@ class _KayleeTabBarState extends BaseState<_KayleeTabBar> {
       scrollDirection: Axis.horizontal,
       itemBuilder: (context, index) {
         return buildTabItem(
-          title: widget.tabs.elementAt(index),
+          title: widget.mapTitle?.call(index) ?? '',
           isSelected: index == currentIndex,
           onTap: () {
             setState(() {
               currentIndex = index;
             });
-            if (widget.onChange.isNotNull) {
-              widget.onChange(currentIndex);
-            }
+            widget.onSelected?.call(currentIndex);
           },
         );
       },
@@ -112,7 +104,7 @@ class _KayleeTabBarState extends BaseState<_KayleeTabBar> {
         width: Dimens.px16,
       ),
       padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
-      itemCount: widget.tabs.length,
+      itemCount: widget.itemCount,
     );
   }
 
