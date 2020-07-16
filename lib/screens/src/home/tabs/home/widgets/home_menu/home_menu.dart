@@ -258,7 +258,7 @@ class _HomeMenuState extends BaseState<HomeMenu> {
         child: UserName(),
       ),
       Positioned(
-        child: NotificationButton(),
+        child: NotificationButton.newInstance(),
         right: 0,
         top: Dimens.px24,
       )
