@@ -5,7 +5,7 @@ import 'package:cubit/cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
-import 'package:kaylee/screens/src/home/tabs/home/home_tab.dart';
+import 'package:kaylee/screens/src/home/tabs/home/bloc/scroll_offset_bloc.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/home_menu_item.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/notification_button/notification_button.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/user_name.dart';
@@ -23,17 +23,16 @@ class HomeMenu extends StatefulWidget {
 }
 
 class _HomeMenuState extends BaseState<HomeMenu> {
-  ScrollControllerCubit cubit;
-
+  ScrollOffsetBloc scrollOffsetBloc;
   final menuScrollController = ScrollController();
   HomeMenuCubit homeMenuCubit;
 
   @override
   void initState() {
     super.initState();
-    cubit = context.cubit<ScrollControllerCubit>();
+    scrollOffsetBloc = context.cubit<ScrollOffsetBloc>();
     homeMenuCubit = context.cubit<HomeMenuCubit>();
-    cubit?.listen((offset) {
+    scrollOffsetBloc?.listen((offset) {
       homeMenuCubit.updateHomeMenuState(
           offset: offset, collapseMenuHeight: collapseMenuHeight);
       if (menuScrollController.offset > 0 &&

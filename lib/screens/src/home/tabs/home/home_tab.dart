@@ -2,12 +2,12 @@ import 'dart:ui';
 
 import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
-import 'package:cubit/cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kaylee/components/components.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
+import 'package:kaylee/screens/src/home/tabs/home/bloc/scroll_offset_bloc.dart';
 import 'package:kaylee/screens/src/home/tabs/home/bloc/supplier_list_bloc.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/home_menu.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/supplier_item.dart';
@@ -15,11 +15,18 @@ import 'package:kaylee/widgets/src/kaylee_text.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class HomeTab extends StatefulWidget {
-  static Widget newInstance() => CubitProvider<SupplierListBloc>(
-      create: (context) => SupplierListBloc(
-          supplierService:
-              context.repository<NetworkModule>().provideSupplierService()),
-      child: HomeTab._());
+  static Widget newInstance() => MultiCubitProvider(
+        providers: [
+          CubitProvider<SupplierListBloc>(
+              create: (context) => SupplierListBloc(
+                  supplierService: context
+                      .repository<NetworkModule>()
+                      .provideSupplierService())),
+          CubitProvider<ScrollOffsetBloc>(
+              create: (context) => ScrollOffsetBloc()),
+        ],
+        child: HomeTab._(),
+      );
 
   HomeTab._();
 
@@ -27,22 +34,18 @@ class HomeTab extends StatefulWidget {
   _HomeTabState createState() => new _HomeTabState();
 }
 
-class ScrollControllerCubit extends Cubit<double> {
-  ScrollControllerCubit() : super(0);
-
-  void addOffset(double offset) => emit(offset);
-}
-
 class _HomeTabState extends BaseState<HomeTab> {
   final scrollController = ScrollController();
-  ScrollControllerCubit cubit = ScrollControllerCubit();
+  ScrollOffsetBloc scrollOffsetBloc;
+
   SupplierListBloc supplierListBloc;
 
   @override
   void initState() {
     super.initState();
+    scrollOffsetBloc = context.cubit<ScrollOffsetBloc>();
     scrollController.addListener(() {
-      cubit.addOffset(scrollController.offset);
+      scrollOffsetBloc.addOffset(scrollController.offset);
     });
     supplierListBloc = context.cubit<SupplierListBloc>();
     supplierListBloc.loadSuppliers();
@@ -50,7 +53,6 @@ class _HomeTabState extends BaseState<HomeTab> {
 
   @override
   void dispose() {
-    cubit.close();
     scrollController.dispose();
     super.dispose();
   }
@@ -77,12 +79,12 @@ class _HomeTabState extends BaseState<HomeTab> {
                   fit: BoxFit.fill)),
           child: Column(
             children: <Widget>[
-              CubitProvider<ScrollControllerCubit>.value(
-                  value: cubit, child: HomeMenu.newInstance()),
+              CubitProvider<ScrollOffsetBloc>.value(
+                  value: scrollOffsetBloc, child: HomeMenu.newInstance()),
               Expanded(
                 child: KayleeLoadmoreHandler(
                   loadWhen: () =>
-                      !supplierListBloc.state.isLoading &&
+                  !supplierListBloc.state.isLoading &&
                       !supplierListBloc.state.isEnding,
                   onLoadMore: supplierListBloc.loadMore,
                   child: CubitBuilder<SupplierListBloc, SupplierListModel>(
