@@ -11,6 +11,7 @@ abstract class ProductService {
   @GET('product')
   Future<ResponseModel<Products>> getProducts(
       {@Query('supplier_id') int supplierId,
+      @Query('keyword') String keyword,
       @Query('sort') String sort,
       @Query('category_id') int categoryId,
       @Query('page') int page = 1,
