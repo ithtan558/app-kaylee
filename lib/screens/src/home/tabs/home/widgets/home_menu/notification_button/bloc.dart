@@ -15,7 +15,9 @@ class NotiButtonBloc extends Cubit<int> {
       onSuccess: ({message, result}) {
         emit((result as NotificationCount).count);
       },
-      onFailed: (code, {error}) {},
+      onFailed: (code, {error}) {
+        emit(0);
+      },
     );
   }
 }
