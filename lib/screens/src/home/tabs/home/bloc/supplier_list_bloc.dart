@@ -8,7 +8,7 @@ class SupplierListBloc extends Cubit<LoadMoreModel<Supplier>> {
 
   SupplierListBloc({this.supplierService}) : super(LoadMoreModel());
 
-  void loadSuppliers({bool isLoadMore = false}) async {
+  void loadSuppliers() async {
     emit(LoadMoreModel.copy(state..loading = true));
     RequestHandler(
       request:
@@ -34,7 +34,7 @@ class SupplierListBloc extends Cubit<LoadMoreModel<Supplier>> {
   void loadMore() {
     if (state.canLoadMore) {
       state.page++;
-      loadSuppliers(isLoadMore: true);
+      loadSuppliers();
     }
   }
 }
