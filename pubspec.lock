@@ -14,15 +14,13 @@ packages:
       name: analyzer
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.39.12"
+    version: "0.39.13"
   anth_package:
     dependency: "direct main"
     description:
-      path: "."
-      ref: "0.0.3"
-      resolved-ref: eb7d101995122eda1319bc8c1d1e7dfcc36430ca
-      url: "https://tungpham6195@bitbucket.org/anth-freelance/anth_package.git"
-    source: git
+      path: "../anth_package"
+      relative: true
+    source: path
     version: "0.0.3"
   archive:
     dependency: transitive
@@ -341,7 +339,7 @@ packages:
       name: http
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.12.1"
+    version: "0.12.2"
   http2:
     dependency: transitive
     description:
@@ -745,7 +743,7 @@ packages:
       name: source_gen
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.9.5"
+    version: "0.9.6"
   source_map_stack_trace:
     dependency: transitive
     description:
@@ -822,7 +820,7 @@ packages:
       name: synchronized
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.2.0+1"
+    version: "2.2.0+2"
   term_glyph:
     dependency: transitive
     description:

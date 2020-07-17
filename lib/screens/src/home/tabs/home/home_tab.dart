@@ -84,8 +84,9 @@ class _HomeTabState extends BaseState<HomeTab> {
               Expanded(
                 child: KayleeLoadmoreHandler(
                   loadWhen: () =>
-                  !supplierListBloc.state.isLoading &&
-                      !supplierListBloc.state.isEnding,
+                      !supplierListBloc.state.loading &&
+                      !supplierListBloc.state.ended &&
+                      supplierListBloc.state.canLoadMore,
                   onLoadMore: supplierListBloc.loadMore,
                   child: CubitBuilder<SupplierListBloc, SupplierListModel>(
                     builder: (context, state) {
@@ -98,11 +99,11 @@ class _HomeTabState extends BaseState<HomeTab> {
                             return listTitle;
                           } else {
                             return SupplierItem(
-                              supplier: state.suppliers.elementAt(index - 1),
+                              supplier: state.items.elementAt(index - 1),
                             );
                           }
                         },
-                        itemCount: 1 + state.suppliers.length,
+                        itemCount: 1 + state.items.length,
                         separatorBuilder: (BuildContext context, int index) {
                           return Container(
                             height: index >= 1 ? Dimens.px16 : 0,

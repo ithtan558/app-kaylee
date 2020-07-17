@@ -24,10 +24,10 @@ dependencies:
   cubit: ^0.1.2
 
   anth_package:
-#    path: ../anth_package
-    git:
-      url: https://tungpham6195@bitbucket.org/anth-freelance/anth_package.git
-      ref: 0.0.3
+    path: ../anth_package
+#    git:
+#      url: https://tungpham6195@bitbucket.org/anth-freelance/anth_package.git
+#      ref: 0.0.3
 
 dev_dependencies:
   flutter_test:
