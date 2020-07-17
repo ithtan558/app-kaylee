@@ -4,40 +4,45 @@ import 'package:flutter/foundation.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/services/services.dart';
 
-class SupplierProdListBloc extends Cubit<SuppProListState> {
+class SupplierProdListBloc extends Cubit<LoadMoreModel<Product>> {
   final ProductService productService;
   int supplierId;
+  int cateId;
 
   SupplierProdListBloc({@required this.productService})
-      : super(SuppProListState()
-    ..loading = true);
+      : super(LoadMoreModel());
 
-  void loadProduct({@required int cateId}) {
-    emit(SuppProListState.copy(state..loading = true));
-    RequestHandler(request: productService.getProducts(
-      supplierId: supplierId,
-
-    ));
+  void loadProds() {
+    emit(LoadMoreModel.copy(state..loading = true));
+    RequestHandler(
+      request: productService.getProducts(
+        supplierId: supplierId,
+        categoryId: cateId,
+        limit: state.limit,
+        page: state.page,
+      ),
+      onSuccess: ({message, result}) {
+        final prods = (result as Products).items;
+        emit(LoadMoreModel.copy(state
+          ..loading = false
+          ..items.addAll(prods)
+          ..ended = prods.isEmpty || !state.canLoadMore
+          ..code = null
+          ..error = null));
+      },
+      onFailed: (code, {error}) {
+        emit(LoadMoreModel.copy(state
+          ..loading = false
+          ..code = code
+          ..error = error));
+      },
+    );
   }
 
   void loadMore() {
-
-  }
-}
-
-class SuppProListState extends LoadMoreModel<Product> {
-
-  SuppProListState()
-
-      :
-
-  super;
-
-  SuppProListState.copy(SuppProListState old){
-    this
-      ..items = old?.items
-      ..loading = old?.loading
-      ..error = old?.error
-      ..code = old?.code;
+    if (state.canLoadMore) {
+      state.page++;
+      loadProds();
+    }
   }
 }
