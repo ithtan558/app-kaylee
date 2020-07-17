@@ -30,7 +30,7 @@ class _ProdListScreenState extends BaseState<ProdListScreen> {
       appBar: KayleeAppBar(
         title: Strings.danhMucSanPham,
       ),
-      body: _buildProdList(),
+//      body: _buildProdList(),
       floatingActionButton: KayleeFloatButton(
         onTap: () {
           pushScreen(PageIntent(

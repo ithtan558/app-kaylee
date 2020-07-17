@@ -36,7 +36,7 @@ class _ServiceListScreenState extends BaseState<ServiceListScreen> {
           )
         ],
       ),
-      body: _buildProdList(),
+//      body: _buildProdList(),
       floatingActionButton: KayleeFloatButton(
         onTap: () {
           pushScreen(PageIntent(
