@@ -4,45 +4,29 @@ import 'package:flutter/cupertino.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/services/services.dart';
 
-class SupplierProdCateListBloc extends Cubit<SuppProCateState> {
+class SupplierProdCateListBloc extends Cubit<LoadMoreModel<ProdCate>> {
   ProductService productService;
 
   SupplierProdCateListBloc({@required this.productService})
-      : super(SuppProCateState(categories: [])..loading = true);
+      : super(LoadMoreModel());
 
   void loadProdCate({@required int supplierId}) {
-    emit(SuppProCateState.copy(state..loading = true));
+    emit(LoadMoreModel.copy(state..loading = true));
     RequestHandler(
       request: productService.getProdCategory(supplier_id: supplierId),
       onSuccess: ({message, result}) {
-        emit(SuppProCateState.copy(state
-          ..categories = result
+        emit(LoadMoreModel.copy(state
+          ..items = result
           ..loading = false
           ..code = null
           ..error = null));
       },
       onFailed: (code, {error}) {
-        emit(SuppProCateState.copy(state
+        emit(LoadMoreModel.copy(state
           ..loading = false
           ..code = code
           ..error = error));
       },
     );
-  }
-}
-
-class SuppProCateState extends BaseModelState {
-  List<ProdCate> categories;
-
-  SuppProCateState({
-    this.categories,
-  });
-
-  SuppProCateState.copy(SuppProCateState old) {
-    this
-      ..categories = old?.categories
-      ..loading = old?.loading
-      ..error = old?.error
-      ..code = old?.code;
   }
 }
