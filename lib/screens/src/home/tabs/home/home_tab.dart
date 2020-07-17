@@ -88,7 +88,7 @@ class _HomeTabState extends BaseState<HomeTab> {
                       !supplierListBloc.state.ended &&
                       supplierListBloc.state.canLoadMore,
                   onLoadMore: supplierListBloc.loadMore,
-                  child: CubitBuilder<SupplierListBloc, SupplierListModel>(
+                  child: CubitBuilder<SupplierListBloc, LoadMoreModel>(
                     builder: (context, state) {
                       return ListView.separated(
                         controller: scrollController,

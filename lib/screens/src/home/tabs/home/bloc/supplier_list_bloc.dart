@@ -3,19 +3,19 @@ import 'package:cubit/cubit.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/services/services.dart';
 
-class SupplierListBloc extends Cubit<SupplierListModel> {
+class SupplierListBloc extends Cubit<LoadMoreModel<Supplier>> {
   final SupplierService supplierService;
 
-  SupplierListBloc({this.supplierService}) : super(SupplierListModel.init());
+  SupplierListBloc({this.supplierService}) : super(LoadMoreModel());
 
   void loadSuppliers({bool isLoadMore = false}) async {
-    state.loading = true;
+    emit(LoadMoreModel.copy(state..loading = true));
     RequestHandler(
       request:
           supplierService.getSuppliers(page: state.page, limit: state.limit),
       onSuccess: ({message, result}) {
         final supp = (result as Suppliers).items;
-        emit(SupplierListModel.copy(state
+        emit(LoadMoreModel.copy(state
           ..loading = false
           ..items.addAll(supp)
           ..ended = supp.isEmpty || !state.canLoadMore
@@ -23,7 +23,7 @@ class SupplierListBloc extends Cubit<SupplierListModel> {
           ..error = null));
       },
       onFailed: (code, {error}) {
-        emit(SupplierListModel.copy(state
+        emit(LoadMoreModel.copy(state
           ..loading = false
           ..code = code
           ..error = error));
@@ -40,21 +40,6 @@ class SupplierListBloc extends Cubit<SupplierListModel> {
 }
 
 class SupplierListModel extends LoadMoreModel<Supplier> {
-  SupplierListModel._({List<Supplier> suppliers})
+  SupplierListModel({List<Supplier> suppliers})
       : super(page: 1, limit: 10, items: suppliers);
-
-  factory SupplierListModel.init() {
-    return SupplierListModel._();
-  }
-
-  SupplierListModel.copy(SupplierListModel old) {
-    this
-      ..items = old?.items
-      ..ended = old?.ended
-      ..loading = old?.loading
-      ..page = old?.page
-      ..limit = old?.limit
-      ..error = old?.error
-      ..code = old?.code;
-  }
 }
