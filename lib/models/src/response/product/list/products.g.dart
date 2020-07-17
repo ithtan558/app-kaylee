@@ -12,9 +12,10 @@ Products _$ProductsFromJson(Map<String, dynamic> json) {
     ..limit = json['limit'] as int
     ..total = json['total'] as int
     ..pages = json['pages'] as int
-    ..items = json['items'] == null
-        ? null
-        : Product.fromJson(json['items'] as Map<String, dynamic>);
+    ..items = (json['items'] as List)
+        ?.map((e) =>
+            e == null ? null : Product.fromJson(e as Map<String, dynamic>))
+        ?.toList();
 }
 
 Map<String, dynamic> _$ProductsToJson(Products instance) => <String, dynamic>{
