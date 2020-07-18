@@ -48,7 +48,9 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing, KayleeRouting {
         if (state is LoggedInState) {
           context.user.updateUserInfo(state.result);
           context.network.dio.options
-            ..headers = {NetworkModule.AUTHORIZATION: ''};
+            ..headers = {
+              NetworkModule.AUTHORIZATION: state.result.requestToken
+            };
         } else if (state is LoggedOutState) {
           context.user.removeUserInfo();
           final options = context.network.dio.options;
