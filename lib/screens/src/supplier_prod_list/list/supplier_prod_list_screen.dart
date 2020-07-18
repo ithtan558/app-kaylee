@@ -33,7 +33,7 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
   @override
   void initState() {
     super.initState();
-    supplier = bundle.args as Supplier;
+    supplier = context.bundle.args as Supplier;
     cateBloc = context.cubit<SupplierProdCateListBloc>()
       ..listen((state) {
         if (!state.loading) {

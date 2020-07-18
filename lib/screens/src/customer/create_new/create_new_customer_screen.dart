@@ -27,7 +27,7 @@ class _CreateNewCustomerScreenState extends BaseState<CreateNewCustomerScreen> {
   @override
   void initState() {
     super.initState();
-    final data = bundle.args as NewCustomerScreenData;
+    final data = context.bundle.args as NewCustomerScreenData;
     openFrom = data?.openFrom;
   }
 

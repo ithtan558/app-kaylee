@@ -32,7 +32,7 @@ class _SuppProdTabState extends KayleeState<SuppProdTab> {
     super.initState();
 
     prodsBloc = context.cubit<SupplierProdListBloc>()
-      ..supplierId = (bundle.args as Supplier).id
+      ..supplierId = (context.bundle.args as Supplier).id
       ..listen((state) {
         if (!state.loading) {
         } else if (state.loading) {

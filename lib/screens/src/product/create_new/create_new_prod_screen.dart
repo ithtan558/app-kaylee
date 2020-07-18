@@ -27,7 +27,7 @@ class _CreateNewProdScreenState extends BaseState<CreateNewProdScreen> {
   @override
   void initState() {
     super.initState();
-    final data = bundle.args as NewProdScreenData;
+    final data = context.bundle.args as NewProdScreenData;
     openFrom = data?.openFrom;
   }
 

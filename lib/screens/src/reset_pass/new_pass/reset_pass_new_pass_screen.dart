@@ -39,7 +39,7 @@ class _ResetPassNewPassScreenState extends KayleeState<ResetPassNewPassScreen> {
   void initState() {
     super.initState();
     updatePassBloc = context.bloc<UpdatePassBloc>();
-    data = bundle.args as NewPassScreenData;
+    data = context.bundle.args as NewPassScreenData;
     newPassFocus = FocusNode();
   }
 

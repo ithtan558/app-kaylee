@@ -50,7 +50,7 @@ class _ResetPassVerifyOtpScreenState
     super.initState();
     otpVerifyBloc = context.bloc<OtpVerifyBloc>();
     sendOtpBloc = context.bloc<SendOtpBloc>();
-    data = bundle.args as OtpConfirmScreenData;
+    data = context.bundle.args as OtpConfirmScreenData;
   }
 
   @override

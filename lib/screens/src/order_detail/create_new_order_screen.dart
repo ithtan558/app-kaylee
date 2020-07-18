@@ -28,7 +28,7 @@ class _CreateNewOrderScreenState extends BaseState<CreateNewOrderScreen> {
   @override
   void initState() {
     super.initState();
-    final data = bundle.args as NewOrderScreenData;
+    final data = context.bundle.args as NewOrderScreenData;
     openFrom = data?.openFrom;
   }
 

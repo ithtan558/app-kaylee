@@ -27,7 +27,7 @@ class _CreateNewStaffScreenState extends BaseState<CreateNewStaffScreen> {
   @override
   void initState() {
     super.initState();
-    final data = bundle.args as NewStaffScreenData;
+    final data = context.bundle.args as NewStaffScreenData;
     openFrom = data?.openFrom;
   }
 

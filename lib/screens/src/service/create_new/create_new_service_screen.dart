@@ -27,7 +27,7 @@ class _CreateNewServiceScreenState extends BaseState<CreateNewServiceScreen> {
   @override
   void initState() {
     super.initState();
-    final data = bundle.args as NewServiceScreenData;
+    final data = context.bundle.args as NewServiceScreenData;
     openFrom = data?.openFrom;
   }
 
