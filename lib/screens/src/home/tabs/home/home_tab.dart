@@ -85,8 +85,7 @@ class _HomeTabState extends BaseState<HomeTab> {
                 child: KayleeLoadmoreHandler(
                   loadWhen: () =>
                       !supplierListBloc.state.loading &&
-                      !supplierListBloc.state.ended &&
-                      supplierListBloc.state.canLoadMore,
+                      !supplierListBloc.state.ended,
                   onLoadMore: supplierListBloc.loadMore,
                   child: CubitBuilder<SupplierListBloc, LoadMoreModel>(
                     builder: (context, state) {

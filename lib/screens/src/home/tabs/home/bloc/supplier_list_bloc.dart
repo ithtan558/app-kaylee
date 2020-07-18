@@ -18,7 +18,6 @@ class SupplierListBloc extends Cubit<LoadMoreModel<Supplier>> {
         emit(LoadMoreModel.copy(state
           ..loading = false
           ..items.addAll(supp)
-          ..ended = supp.isEmpty || !state.canLoadMore
           ..code = null
           ..error = null));
       },
@@ -32,7 +31,7 @@ class SupplierListBloc extends Cubit<LoadMoreModel<Supplier>> {
   }
 
   void loadMore() {
-    if (state.canLoadMore) {
+    if (!state.ended) {
       state.page++;
       loadSuppliers();
     }
