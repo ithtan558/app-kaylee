@@ -34,8 +34,7 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
   void initState() {
     super.initState();
     supplier = bundle.args as Supplier;
-    cateBloc = context.cubit<SupplierProdCateListBloc>();
-    cateBloc
+    cateBloc = context.cubit<SupplierProdCateListBloc>()
       ..listen((state) {
         if (!state.loading) {
           hideLoading();
@@ -93,10 +92,7 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
           return KayleeTabBar(
             itemCount: categories?.length,
             pageController: pageController,
-            mapTitle: (index) =>
-            categories
-                .elementAt(index)
-                .name,
+            mapTitle: (index) => categories.elementAt(index).name,
           );
         },
       ),
