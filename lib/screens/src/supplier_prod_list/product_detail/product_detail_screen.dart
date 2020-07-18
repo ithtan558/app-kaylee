@@ -12,7 +12,7 @@ import 'package:kaylee/widgets/widgets.dart';
 class ProductDetailScreen extends StatefulWidget {
   static Widget newInstance() => CubitProvider<SupplierProdDetailBloc>(
       create: (context) => SupplierProdDetailBloc(
-          productService: context.network().provideProductService(),
+          productService: context.network.provideProductService(),
           product: context.bundle.args as Product),
       child: ProductDetailScreen._());
 

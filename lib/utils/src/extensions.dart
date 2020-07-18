@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:kaylee/components/components.dart';
 
 extension KayleeBuildContextExtension on BuildContext {
-  NetworkModule network() => this.repository<NetworkModule>();
+  NetworkModule get network => this.repository<NetworkModule>();
 
-  UserModule user() => this.repository<UserModule>();
+  UserModule get user => this.repository<UserModule>();
 
-  CartModule cart() => this.repository<CartModule>();
+  CartModule get cart => this.repository<CartModule>();
 }
