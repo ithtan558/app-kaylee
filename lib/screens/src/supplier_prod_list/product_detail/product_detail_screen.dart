@@ -1,11 +1,20 @@
+import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/base/kaylee_state.dart';
+import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
+import 'package:kaylee/screens/src/supplier_prod_list/product_detail/bloc/bloc.dart';
+import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class ProductDetailScreen extends StatefulWidget {
-  static Widget newInstance() => ProductDetailScreen._();
+  static Widget newInstance() => CubitProvider<SupplierProdDetailBloc>(
+      create: (context) => SupplierProdDetailBloc(
+          productService: context.network().provideProductService(),
+          product: context.bundle.args as Product),
+      child: ProductDetailScreen._());
 
   ProductDetailScreen._();
 
@@ -13,10 +22,21 @@ class ProductDetailScreen extends StatefulWidget {
   _ProductDetailScreenState createState() => new _ProductDetailScreenState();
 }
 
-class _ProductDetailScreenState extends BaseState<ProductDetailScreen> {
+class _ProductDetailScreenState extends KayleeState<ProductDetailScreen> {
+  SupplierProdDetailBloc bloc;
+
   @override
   void initState() {
     super.initState();
+    bloc = context.cubit<SupplierProdDetailBloc>()
+      ..loadProduct()
+      ..listen((state) {
+        if (state.loading) {
+          showLoading();
+        } else if (!state.loading) {
+          hideLoading();
+        }
+      });
   }
 
   @override
@@ -26,74 +46,74 @@ class _ProductDetailScreenState extends BaseState<ProductDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return KayleeScrollview(
       appBar: KayleeAppBar(
         title: Strings.chiTietSanPham,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+      child: CubitBuilder<SupplierProdDetailBloc, SingleModel<Product>>(
+        buildWhen: (previous, current) => !current.loading,
+        builder: (context, state) {
+          if (state.loading) return Container();
+          final product = state.item;
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AspectRatio(
+                aspectRatio: 1,
+                child: Image.network(
+                  product.image ?? '',
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: Dimens.px16, left: Dimens.px16, right: Dimens.px16),
+                child: KayleeText.normal16W500(
+                  product.name ?? '',
+                  maxLines: 1,
+                  textAlign: TextAlign.start,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: Dimens.px8, left: Dimens.px16, right: Dimens.px16),
+                child: KayleePriceText.hyper16W700(product.price),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: Dimens.px8,
+                    left: Dimens.px16,
+                    right: Dimens.px16,
+                    bottom: Dimens.px16),
+                child: KayleeText.normal16W400(product.description ?? ''),
+              ),
+            ],
+          );
+        },
+      ),
+      bottom: Padding(
+        padding: const EdgeInsets.only(
+            top: Dimens.px24,
+            left: Dimens.px16,
+            right: Dimens.px16,
+            bottom: Dimens.px8),
+        child: Row(
           children: [
-            AspectRatio(
-              aspectRatio: 1,
-              child: Image.network(
-                'https://stylspire.com/wp-content/uploads/2019/04/featured-vegan-natural-beauty.jpg',
-                fit: BoxFit.cover,
+            KayleeIncrAndDecrButtons(
+              onAmountChange: (value) {},
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(left: Dimens.px16),
+                child: KayLeeRoundedButton.normal(
+                  text: Strings.themVaoGioHang,
+                  margin: EdgeInsets.zero,
+                  onPressed: () {
+                    pushScreen(PageIntent(screen: CartScreen));
+                  },
+                ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  top: Dimens.px16, left: Dimens.px16, right: Dimens.px16),
-              child: KayleeText.normal16W500(
-                'TÓC KIỂU THÔN NỮ'.toUpperCase(),
-                maxLines: 1,
-                textAlign: TextAlign.start,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  top: Dimens.px8, left: Dimens.px16, right: Dimens.px16),
-              child: KayleePriceText.hyper16W700(700000),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  top: Dimens.px8,
-                  left: Dimens.px16,
-                  right: Dimens.px16,
-                  bottom: Dimens.px16),
-              child: KayleeText.normal16W400(
-                  'Mô tả sản phẩm cung cấp cho khách hàng những thông tin mà hình ảnh hay video có '
-                  'thể không thể hiện được, chẳng hạn như chất liệu, nguồn gốc hay kích cỡ. '
-                  'Những thông tin này đôi khi ảnh hưởng rất lớn tới quyết định mua hàng của một người. '
-                  'Nếu không hiểu sản phẩm có lợi ích gì, họ sẵn sàng rời store '
-                  'của bạn để chuyển sang một store khác.'),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  top: Dimens.px24,
-                  left: Dimens.px16,
-                  right: Dimens.px16,
-                  bottom: Dimens.px8),
-              child: Row(
-                children: [
-                  KayleeIncrAndDecrButtons(
-                    onAmountChange: (value) {},
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: Dimens.px16),
-                      child: KayLeeRoundedButton.normal(
-                        text: Strings.themVaoGioHang,
-                        margin: EdgeInsets.zero,
-                        onPressed: () {
-                          pushScreen(PageIntent(screen: CartScreen));
-                        },
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            )
           ],
         ),
       ),
