@@ -15,10 +15,12 @@ class Supplier {
     this.name,
     this.description,
     this.image,
+    this.facebook,
   });
 
   int id;
   String name;
   String description;
   String image;
+  String facebook;
 }
