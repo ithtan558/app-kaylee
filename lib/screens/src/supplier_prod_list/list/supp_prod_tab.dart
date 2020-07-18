@@ -67,7 +67,8 @@ class _SuppProdTabState extends KayleeState<SuppProdTab> {
                 data: KayleeProdItemData(
                     name: item.name, image: item.image, price: item.price),
                 onTap: () {
-                  pushScreen(PageIntent(screen: ProductDetailScreen));
+                  pushScreen(PageIntent(
+                      screen: ProductDetailScreen, bundle: Bundle(item)));
                 },
               );
             },
