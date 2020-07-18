@@ -1,5 +1,6 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/components/components.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
@@ -21,7 +22,7 @@ class NotificationButton extends StatefulWidget {
   _NotificationButtonState createState() => _NotificationButtonState();
 }
 
-class _NotificationButtonState extends State<NotificationButton> {
+class _NotificationButtonState extends KayleeState<NotificationButton> {
   @override
   void initState() {
     super.initState();
