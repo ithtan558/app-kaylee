@@ -14,33 +14,37 @@ class SupplierProdListBloc extends Cubit<LoadMoreModel<Product>> {
 
   void loadProds() {
     emit(LoadMoreModel.copy(state..loading = true));
-    RequestHandler(
-      request: productService.getProducts(
-        supplierId: supplierId,
-        categoryId: cateId,
-        limit: state.limit,
-        page: state.page,
-      ),
-      onSuccess: ({message, result}) {
-        final prods = (result as Products).items;
-        emit(LoadMoreModel.copy(state
-          ..loading = false
-          ..items.addAll(prods)
-          ..ended = prods.isEmpty || !state.canLoadMore
-          ..code = null
-          ..error = null));
-      },
-      onFailed: (code, {error}) {
-        emit(LoadMoreModel.copy(state
-          ..loading = false
-          ..code = code
-          ..error = error));
-      },
-    );
+    Future.delayed(Duration(seconds: 2), () {
+      RequestHandler(
+        request: productService.getProducts(
+          supplierId: supplierId,
+          categoryId: cateId,
+          limit: state.limit,
+          page: state.page,
+        ),
+        onSuccess: ({message, result}) {
+          final prods = (result as Products).items;
+          emit(LoadMoreModel.copy(state
+            ..loading = false
+            ..addAll(prods)
+            ..addAll(prods)
+            ..addAll(prods)
+            ..addAll(prods)
+            ..code = null
+            ..error = null));
+        },
+        onFailed: (code, {error}) {
+          emit(LoadMoreModel.copy(state
+            ..loading = false
+            ..code = code
+            ..error = error));
+        },
+      );
+    });
   }
 
   void loadMore() {
-    if (state.canLoadMore) {
+    if (!state.ended) {
       state.page++;
       loadProds();
     }

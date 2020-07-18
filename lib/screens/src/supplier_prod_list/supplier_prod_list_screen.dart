@@ -6,22 +6,14 @@ import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/supplier_prod_list/bloc/supplier_prod_cate_list_bloc.dart';
-import 'package:kaylee/screens/src/supplier_prod_list/bloc/supplier_prod_list_bloc.dart';
+import 'package:kaylee/screens/src/supplier_prod_list/supp_prod_tab.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class SupplierProdListScreen extends StatefulWidget {
-  static Widget newInstance() =>
-      MultiCubitProvider(providers: [
+  static Widget newInstance() => MultiCubitProvider(providers: [
         CubitProvider<SupplierProdCateListBloc>(
-          create: (context) =>
-              SupplierProdCateListBloc(
-                  productService:
-                  context.repository<NetworkModule>().provideProductService()),
-        ),
-        CubitProvider<SupplierProdListBloc>(
-          create: (context) =>
-              SupplierProdListBloc(
-                  productService:
+          create: (context) => SupplierProdCateListBloc(
+              productService:
                   context.repository<NetworkModule>().provideProductService()),
         ),
       ], child: SupplierProdListScreen._());
@@ -36,31 +28,29 @@ class SupplierProdListScreen extends StatefulWidget {
 class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
   Supplier supplier;
   SupplierProdCateListBloc cateBloc;
-  SupplierProdListBloc prodsBloc;
+  final pageController = PageController();
 
   @override
   void initState() {
     super.initState();
     supplier = bundle.args as Supplier;
-    cateBloc = context.cubit<SupplierProdCateListBloc>()
+    cateBloc = context.cubit<SupplierProdCateListBloc>();
+    cateBloc
       ..listen((state) {
-        if (state is SuppProCateState) {
-          if (!state.loading) {
-            //todo load product of this supplier with the 1st category_id
-            hideLoading();
-          } else if (state.loading) {
-            showLoading();
-          } else if (state.code.isNotNull) {
-            hideLoading();
-          }
+        if (!state.loading) {
+          hideLoading();
+        } else if (state.loading) {
+          showLoading();
+        } else if (state.code.isNotNull) {
+          hideLoading();
         }
-      });
-    prodsBloc = context.cubit<SupplierProdListBloc>();
-    cateBloc.loadProdCate(supplierId: supplier.id);
+      })
+      ..loadProdCate(supplierId: supplier.id);
   }
 
   @override
   void dispose() {
+    pageController.dispose();
     super.dispose();
   }
 
@@ -94,14 +84,15 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
           )
         ],
       ),
-      tabBar: CubitBuilder<SupplierProdCateListBloc, SuppProCateState>(
+      tabBar: CubitBuilder<SupplierProdCateListBloc, LoadMoreModel>(
         buildWhen: (previous, current) {
           return !current.loading;
         },
         builder: (context, state) {
-          final categories = state.categories;
+          final categories = state.items;
           return KayleeTabBar(
-            itemCount: categories.length,
+            itemCount: categories?.length,
+            pageController: pageController,
             mapTitle: (index) =>
             categories
                 .elementAt(index)
@@ -109,24 +100,23 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
           );
         },
       ),
-      body: KayleeLoadmoreHandler(child: KayleeGridView(
-        padding: EdgeInsets.all(Dimens.px16),
-        childAspectRatio: 103 / 195,
-        itemBuilder: (c, index) {
-          return KayleeProdItemView.canTap(
-            data: KayleeProdItemData(
-                name: 'Tóc kiểu thôn nữ',
-                image:
-                'https://img.jakpost.net/c/2019/12/09/2019_12_09_83333_1575827116._large.jpg',
-                price: 600000),
-            onTap: () {
-              pushScreen(PageIntent(screen: ProductDetailScreen));
+      pageView: CubitBuilder<SupplierProdCateListBloc, LoadMoreModel>(
+        buildWhen: (previous, current) {
+          return !current.loading;
+        },
+        builder: (context, state) {
+          final categories = state.items;
+          return KayleePageView(
+            itemBuilder: (context, index) {
+              return RepositoryProvider<ProdCate>.value(
+                  value: categories.elementAt(index),
+                  child: SuppProdTab.newInstance());
             },
+            controller: pageController,
+            itemCount: categories?.length,
           );
         },
-        itemCount: 4,
-      ), loadWhen: () => prodsBloc.state.,
-        onLoadMore: prodsBloc.loadMore,),
+      ),
       floatingActionButton: Material(
         color: Colors.transparent,
         type: MaterialType.circle,
@@ -155,6 +145,4 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
       ),
     );
   }
-
-
 }
