@@ -100,7 +100,9 @@ class _ProductDetailScreenState extends KayleeState<ProductDetailScreen> {
         child: Row(
           children: [
             KayleeIncrAndDecrButtons(
-              onAmountChange: (value) {},
+              onAmountChange: (value) {
+                bloc.state.item.quantity = value;
+              },
             ),
             Expanded(
               child: Padding(

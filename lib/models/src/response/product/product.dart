@@ -29,4 +29,6 @@ class Product {
   String description;
   List<Brand> brands;
   Category category;
+  @JsonKey(ignore: true)
+  int quantity;
 }
