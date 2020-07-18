@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/services/services.dart';
 
-class SupplierProdCateListBloc extends Cubit<LoadMoreModel<ProdCate>> {
+class SupplierProdCateListBloc extends Cubit<LoadMoreModel<Category>> {
   ProductService productService;
 
   SupplierProdCateListBloc({@required this.productService})

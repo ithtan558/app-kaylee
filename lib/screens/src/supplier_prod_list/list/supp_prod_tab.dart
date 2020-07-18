@@ -40,7 +40,7 @@ class _SuppProdTabState extends KayleeState<SuppProdTab> {
           hideLoading();
         }
       })
-      ..cateId = context.repository<ProdCate>().id
+      ..cateId = context.repository<Category>().id
       ..loadProds();
     ;
   }

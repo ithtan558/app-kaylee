@@ -104,7 +104,7 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
           final categories = state.items;
           return KayleePageView(
             itemBuilder: (context, index) {
-              return RepositoryProvider<ProdCate>.value(
+              return RepositoryProvider<Category>.value(
                   value: categories.elementAt(index),
                   child: SuppProdTab.newInstance());
             },
