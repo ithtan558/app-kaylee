@@ -5,6 +5,7 @@ export 'src/request/register/register_body.dart';
 export 'src/request/verify_otp/verify_otp_body.dart';
 export 'src/request/verify_phone/verify_phone_body.dart';
 export 'src/response/brand/brand.dart';
+export 'src/response/brand/list/brands.dart';
 export 'src/response/city/city.dart';
 export 'src/response/content/content.dart';
 export 'src/response/district/district.dart';

@@ -8,7 +8,7 @@ part 'brands.g.dart';
 class Brands extends PageData<Brand> {
   factory Brands.fromJson(Map<String, dynamic> json) => _$BrandsFromJson(json);
 
-  Map<String, dynamic> toJson(instance) => _$BrandsToJson(this);
+  Map<String, dynamic> toJson() => _$BrandsToJson(this);
 
   Brands();
 }
