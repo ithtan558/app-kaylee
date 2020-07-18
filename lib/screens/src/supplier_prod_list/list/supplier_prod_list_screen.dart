@@ -5,8 +5,8 @@ import 'package:kaylee/components/components.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
-import 'package:kaylee/screens/src/supplier_prod_list/bloc/supplier_prod_cate_list_bloc.dart';
-import 'package:kaylee/screens/src/supplier_prod_list/supp_prod_tab.dart';
+import 'package:kaylee/screens/src/supplier_prod_list/list/bloc/supplier_prod_cate_list_bloc.dart';
+import 'package:kaylee/screens/src/supplier_prod_list/list/supp_prod_tab.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class SupplierProdListScreen extends StatefulWidget {
