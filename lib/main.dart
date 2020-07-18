@@ -53,8 +53,7 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing, KayleeRouting {
             };
         } else if (state is LoggedOutState) {
           context.user.removeUserInfo();
-          final options = context.network.dio.options;
-          context.network.dio.options = options.merge(headers: {});
+          context.network.dio.options..headers = {};
         }
       },
       child: MaterialApp(
