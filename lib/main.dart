@@ -6,6 +6,7 @@ import 'package:kaylee/base/json_converter/kaylee_json_convert.dart';
 import 'package:kaylee/base/kaylee_routing.dart';
 import 'package:kaylee/components/components.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/utils/utils.dart';
 
 void main() {
   JsonConverterBuilder.init(KayleeJsonConverter());
@@ -45,16 +46,13 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing, KayleeRouting {
     return CubitListener<AppBloc, dynamic>(
       listener: (context, state) {
         if (state is LoggedInState) {
-          context.repository<UserModule>().updateUserInfo(state.result);
-          context.repository<NetworkModule>().dio.options
-            ..headers = {
-              NetworkModule.AUTHORIZATION: state.result.requestToken
-            };
+          context.user.updateUserInfo(state.result);
+          context.network.dio.options
+            ..headers = {NetworkModule.AUTHORIZATION: ''};
         } else if (state is LoggedOutState) {
-          context.repository<UserModule>().removeUserInfo();
-          final options = context.repository<NetworkModule>().dio.options;
-          context.repository<NetworkModule>().dio.options =
-              options.merge(headers: {});
+          context.user.removeUserInfo();
+          final options = context.network.dio.options;
+          context.network.dio.options = options.merge(headers: {});
         }
       },
       child: MaterialApp(
