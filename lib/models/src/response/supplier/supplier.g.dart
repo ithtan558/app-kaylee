@@ -16,8 +16,7 @@ Supplier _$SupplierFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$SupplierToJson(Supplier instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$SupplierToJson(Supplier instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'description': instance.description,
