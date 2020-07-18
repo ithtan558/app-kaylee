@@ -6,6 +6,7 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/res/src/images.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/splash/bloc/bloc.dart';
+import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -25,7 +26,7 @@ class _SplashScreenState extends BaseState<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    bloc = BlocProvider.of<SplashScreenBloc>(context);
+    bloc = context.bloc<SplashScreenBloc>();
     bloc.config();
   }
 
@@ -81,8 +82,7 @@ class _SplashScreenState extends BaseState<SplashScreen> {
                 if (state is GoToHomeScreenSplashScrState) {
                   pushScreen(PageIntent(screen: HomeScreen));
                 } else if (state is LoadedSharedPrefSplashScrState) {
-                  final user =
-                  RepositoryProvider.of<UserModule>(context).getUserInfo();
+                  final user = context.user?.getUserInfo();
                   if (user?.token.isNotNullAndEmpty) {
                     context.cubit<AppBloc>().loggedIn(user);
                     bloc.pushToHomeScreen();
