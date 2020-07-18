@@ -159,11 +159,11 @@ packages:
     dependency: transitive
     description:
       path: "."
-      ref: "0.4.6"
-      resolved-ref: "786b948334ebd9f1f427747e3e0a0e927140875a"
+      ref: "0.4.7"
+      resolved-ref: "9efd6dc297b4e4167f7ae0a74f6666018b658fba"
       url: "https://github.com/tungpham6195/flutter.core_plugin.git"
     source: git
-    version: "0.4.6+00406"
+    version: "0.4.7+00407"
   coverage:
     dependency: transitive
     description:
@@ -233,7 +233,7 @@ packages:
       name: dio_http_cache
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.7"
+    version: "0.2.8"
   equatable:
     dependency: transitive
     description:
