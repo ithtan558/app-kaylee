@@ -1,8 +1,10 @@
 import 'package:anth_package/anth_package.dart';
+import 'package:cubit/cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/base/json_converter/kaylee_json_convert.dart';
+import 'package:kaylee/base/kaylee_cubit_observer.dart';
 import 'package:kaylee/base/kaylee_routing.dart';
 import 'package:kaylee/components/components.dart';
 import 'package:kaylee/res/res.dart';
@@ -38,6 +40,15 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing, KayleeRouting {
   @override
   void initState() {
     super.initState();
+    Cubit.observer = KayleeCubitObserver(
+      transition: (currentState, nextState) {
+        if (nextState is BaseModel) {
+          if (nextState.code == ErrorType.UNAUTHORIZED) {
+            context.cubit<AppBloc>().unauthorized();
+          }
+        }
+      },
+    );
   }
 
   @override
@@ -49,7 +60,8 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing, KayleeRouting {
           context.user.updateUserInfo(state.result);
           context.network.dio.options
             ..headers = {
-              NetworkModule.AUTHORIZATION: state.result.requestToken
+//              NetworkModule.AUTHORIZATION: context.user.getUserInfo().requestToken
+              NetworkModule.AUTHORIZATION: ''
             };
         } else if (state is LoggedOutState) {
           context.user.removeUserInfo();

@@ -11,9 +11,10 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
   void initState() {
     super.initState();
     context.cubit<AppBloc>().listen((state) {
-      if (state is TokenExpiredState) {
+      if (state is UnauthorizedState) {
         //todo token is expired
         //todo need to show dialog for requiring login
+        print('[TUNG] ===> ErrorType.UNAUTHORIZED');
       }
     });
   }
