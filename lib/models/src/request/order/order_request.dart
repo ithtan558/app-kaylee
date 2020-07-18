@@ -10,18 +10,28 @@ class OrderRequest {
 
   Map<String, dynamic> toJson() => _$OrderRequestToJson(this);
 
-  OrderRequest({
-    this.cartItems,
-    this.cartEmployee,
-    this.cartSupplierInformation,
-    this.supplierId,
-  });
+  OrderRequest(
+      {this.cartItems,
+      this.cartEmployee,
+      this.cartSupplierInformation,
+      this.supplierId,
+      this.cartCustomer,
+      this.cartDiscount});
 
   List<dynamic> cartItems;
-  int cartEmployee;
+
+  ///khi order supplier
+  @JsonKey(includeIfNull: false)
   CartSuppInfo cartSupplierInformation;
+  @JsonKey(includeIfNull: false)
   int supplierId;
+
+  ///khi order từ screens thu ngân
+  @JsonKey(includeIfNull: false)
   CartCustomer cartCustomer;
+  @JsonKey(includeIfNull: false)
+  int cartEmployee;
+
   dynamic cartDiscount;
 }
 

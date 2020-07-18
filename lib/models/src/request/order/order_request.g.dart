@@ -15,22 +15,31 @@ OrderRequest _$OrderRequestFromJson(Map<String, dynamic> json) {
         : CartSuppInfo.fromJson(
             json['cart_supplier_information'] as Map<String, dynamic>),
     supplierId: json['supplier_id'] as int,
-  )
-    ..cartCustomer = json['cart_customer'] == null
+    cartCustomer: json['cart_customer'] == null
         ? null
-        : CartCustomer.fromJson(json['cart_customer'] as Map<String, dynamic>)
-    ..cartDiscount = json['cart_discount'];
+        : CartCustomer.fromJson(json['cart_customer'] as Map<String, dynamic>),
+    cartDiscount: json['cart_discount'],
+  );
 }
 
-Map<String, dynamic> _$OrderRequestToJson(OrderRequest instance) =>
-    <String, dynamic>{
-      'cart_items': instance.cartItems,
-      'cart_employee': instance.cartEmployee,
-      'cart_supplier_information': instance.cartSupplierInformation,
-      'supplier_id': instance.supplierId,
-      'cart_customer': instance.cartCustomer,
-      'cart_discount': instance.cartDiscount,
-    };
+Map<String, dynamic> _$OrderRequestToJson(OrderRequest instance) {
+  final val = <String, dynamic>{
+    'cart_items': instance.cartItems,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('cart_supplier_information', instance.cartSupplierInformation);
+  writeNotNull('supplier_id', instance.supplierId);
+  writeNotNull('cart_customer', instance.cartCustomer);
+  writeNotNull('cart_employee', instance.cartEmployee);
+  val['cart_discount'] = instance.cartDiscount;
+  return val;
+}
 
 CartSuppInfo _$CartSuppInfoFromJson(Map<String, dynamic> json) {
   return CartSuppInfo(
