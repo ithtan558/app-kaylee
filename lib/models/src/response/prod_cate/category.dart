@@ -1,16 +1,16 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'prod_cate.g.dart';
+part 'category.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class ProdCate {
-  factory ProdCate.fromJson(Map<String, dynamic> json) =>
-      _$ProdCateFromJson(json);
+class Category {
+  factory Category.fromJson(Map<String, dynamic> json) =>
+      _$CategoryFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ProdCateToJson(this);
+  Map<String, dynamic> toJson() => _$CategoryToJson(this);
 
-  ProdCate({
+  Category({
     this.id,
     this.code,
     this.name,

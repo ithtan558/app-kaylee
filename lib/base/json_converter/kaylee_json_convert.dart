@@ -24,14 +24,16 @@ class KayleeJsonConverter extends JsonConverterFactory {
       return Supplier.fromJson(json) as T;
     } else if (T == Suppliers) {
       return Suppliers.fromJson(json) as T;
-    } else if (T == ProdCate) {
-      return ProdCate.fromJson(json) as T;
+    } else if (T == Category) {
+      return Category.fromJson(json) as T;
     } else if (T == Product) {
       return Product.fromJson(json) as T;
     } else if (T == Products) {
       return Products.fromJson(json) as T;
     } else if (T == NotificationCount) {
       return NotificationCount.fromJson(json) as T;
+    } else if (T == Brand) {
+      return Brand.fromJson(json) as T;
     }
     return json as T;
   }
@@ -58,13 +60,15 @@ class KayleeJsonConverter extends JsonConverterFactory {
       return json.toJson();
     } else if (json is Suppliers) {
       return json.toJson();
-    } else if (json is ProdCate) {
+    } else if (json is Category) {
       return json.toJson();
     } else if (json is Product) {
       return json.toJson();
     } else if (json is Products) {
       return json.toJson();
     } else if (json is NotificationCount) {
+      return json.toJson();
+    } else if (json is Brand) {
       return json.toJson();
     } else
       return json;

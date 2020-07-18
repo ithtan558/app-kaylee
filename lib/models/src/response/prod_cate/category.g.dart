@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'prod_cate.dart';
+part of 'category.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ProdCate _$ProdCateFromJson(Map<String, dynamic> json) {
-  return ProdCate(
+Category _$CategoryFromJson(Map<String, dynamic> json) {
+  return Category(
     id: json['id'] as int,
     code: json['code'] as String,
     name: json['name'] as String,
@@ -16,7 +16,7 @@ ProdCate _$ProdCateFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$ProdCateToJson(ProdCate instance) => <String, dynamic>{
+Map<String, dynamic> _$CategoryToJson(Category instance) => <String, dynamic>{
       'id': instance.id,
       'code': instance.code,
       'name': instance.name,
