@@ -4,4 +4,8 @@ import 'package:kaylee/components/components.dart';
 
 extension KayleeBuildContextExtension on BuildContext {
   NetworkModule network() => this.repository<NetworkModule>();
+
+  UserModule user() => this.repository<UserModule>();
+
+  CartModule cart() => this.repository<CartModule>();
 }
