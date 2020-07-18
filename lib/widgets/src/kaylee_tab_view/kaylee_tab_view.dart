@@ -5,12 +5,12 @@ import 'package:kaylee/widgets/widgets.dart';
 
 class KayleeTabView extends StatefulWidget {
   final KayleeAppBar appBar;
-  final Widget body;
   final Widget floatingActionButton;
   final Widget tabBar;
+  final Widget pageView;
 
   KayleeTabView(
-      {this.appBar, this.tabBar, this.body, this.floatingActionButton});
+      {this.appBar, this.tabBar, this.floatingActionButton, this.pageView});
 
   @override
   _KayleeTabViewState createState() => _KayleeTabViewState();
@@ -42,10 +42,12 @@ class _KayleeTabViewState extends BaseState<KayleeTabView>
           Expanded(
               child: Stack(
             children: [
-              widget.body ??
-                  Container(
-                    color: Colors.transparent,
-                  ),
+              Positioned.fill(
+                child: widget.pageView ??
+                    Container(
+                      color: Colors.transparent,
+                    ),
+              ),
               Positioned(
                 child: widget.floatingActionButton ?? Container(),
                 right: Dimens.px24,
@@ -63,9 +65,13 @@ class KayleeTabBar extends StatefulWidget {
   final ValueSetter<int> onSelected;
   final int itemCount;
   final String Function(int index) mapTitle;
+  final PageController pageController;
 
   KayleeTabBar(
-      {@required this.itemCount, @required this.mapTitle, this.onSelected});
+      {@required this.itemCount,
+      @required this.mapTitle,
+      this.onSelected,
+      this.pageController});
 
   @override
   _KayleeTabBarState createState() => _KayleeTabBarState();
@@ -77,6 +83,11 @@ class _KayleeTabBarState extends BaseState<KayleeTabBar> {
   @override
   void initState() {
     super.initState();
+    widget.pageController?.addListener(() {
+      setState(() {
+        currentIndex = widget.pageController.page.toInt();
+      });
+    });
   }
 
   @override
@@ -96,15 +107,17 @@ class _KayleeTabBarState extends BaseState<KayleeTabBar> {
             setState(() {
               currentIndex = index;
             });
+            widget.pageController?.jumpToPage(currentIndex);
             widget.onSelected?.call(currentIndex);
           },
         );
       },
-      separatorBuilder: (context, index) => Container(
-        width: Dimens.px16,
-      ),
+      separatorBuilder: (context, index) =>
+          Container(
+            width: Dimens.px16,
+          ),
       padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
-      itemCount: widget.itemCount,
+      itemCount: widget.itemCount ?? 0,
     );
   }
 
@@ -128,11 +141,43 @@ class _KayleeTabBarState extends BaseState<KayleeTabBar> {
                 textAlign: TextAlign.center,
               )
             : KayleeText.normal16W400(
-                title ?? '',
-                overflow: TextOverflow.visible,
-                textAlign: TextAlign.center,
-              ),
+          title ?? '',
+          overflow: TextOverflow.visible,
+          textAlign: TextAlign.center,
+        ),
       ),
+    );
+  }
+}
+
+class KayleePageView extends StatefulWidget {
+  final int itemCount;
+  final IndexedWidgetBuilder itemBuilder;
+  final PageController controller;
+
+  KayleePageView({this.itemCount, @required this.itemBuilder, this.controller});
+
+  @override
+  _KayleePageViewState createState() => _KayleePageViewState();
+}
+
+class _KayleePageViewState extends BaseState<KayleePageView> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return PageView.builder(
+      itemBuilder: widget.itemBuilder,
+      controller: widget.controller,
+      itemCount: widget.itemCount ?? 0,
     );
   }
 }
