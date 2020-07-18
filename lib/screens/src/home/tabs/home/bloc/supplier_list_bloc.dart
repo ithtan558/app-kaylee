@@ -15,9 +15,10 @@ class SupplierListBloc extends Cubit<LoadMoreModel<Supplier>> {
           supplierService.getSuppliers(page: state.page, limit: state.limit),
       onSuccess: ({message, result}) {
         final supp = (result as Suppliers).items;
+
         emit(LoadMoreModel.copy(state
           ..loading = false
-          ..items.addAll(supp)
+          ..addAll(supp)
           ..code = null
           ..error = null));
       },

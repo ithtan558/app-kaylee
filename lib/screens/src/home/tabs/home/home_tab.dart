@@ -102,7 +102,7 @@ class _HomeTabState extends BaseState<HomeTab> {
                             );
                           }
                         },
-                        itemCount: 1 + state.items.length,
+                        itemCount: 1 + (state.items?.length ?? 0),
                         separatorBuilder: (BuildContext context, int index) {
                           return Container(
                             height: index >= 1 ? Dimens.px16 : 0,
