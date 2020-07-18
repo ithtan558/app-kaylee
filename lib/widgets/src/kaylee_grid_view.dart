@@ -10,6 +10,7 @@ class KayleeGridView extends StatelessWidget {
   final IndexedWidgetBuilder itemBuilder;
   final int itemCount;
   final double childAspectRatio;
+  final WidgetBuilder loadingBuilder;
 
   KayleeGridView(
       {@required this.itemBuilder,
@@ -19,10 +20,12 @@ class KayleeGridView extends StatelessWidget {
       this.crossAxisCount,
       this.mainAxisSpacing,
       this.childAspectRatio,
-      this.itemCount});
+      this.itemCount,
+      this.loadingBuilder});
 
   @override
   Widget build(BuildContext context) {
+    final length = itemLength(itemCount);
     return GridView.builder(
       padding: padding ?? EdgeInsets.all(Dimens.px16),
       physics: physics,
@@ -32,8 +35,28 @@ class KayleeGridView extends StatelessWidget {
           crossAxisSpacing: crossAxisCount ?? Dimens.px16,
           mainAxisSpacing: mainAxisSpacing ?? Dimens.px16,
           childAspectRatio: childAspectRatio ?? 1),
-      itemBuilder: itemBuilder,
-      itemCount: itemCount ?? 0,
+      itemBuilder: (context, index) {
+        if (index == length - 1) {
+          //build loading
+          return IntrinsicHeight(
+              child: loadingBuilder?.call(context) ?? Container());
+        } else if (index >= (itemCount ?? 0)) {
+          //build empty item
+          return IntrinsicHeight(
+            child: Container(
+              height: 0,
+            ),
+          );
+        } else // build main item
+          return itemBuilder?.call(context, index) ?? Container();
+      },
+      itemCount: length,
     );
+  }
+
+  int itemLength(int itemCount) {
+    itemCount ??= 0;
+    final x = itemCount % 3 == 0 ? 0 : (3 - itemCount % 3);
+    return itemCount + x + 2;
   }
 }
