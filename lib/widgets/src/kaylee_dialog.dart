@@ -339,10 +339,11 @@ class KayleeAlertDialogAction extends StatelessWidget {
 }
 
 ///vd: show date time picker
-Future showPickerPopup({@required BuildContext context,
-  @required WidgetBuilder builder,
-  VoidCallback onDone,
-  VoidCallback onDismiss}) {
+Future showPickerPopup(
+    {@required BuildContext context,
+    @required WidgetBuilder builder,
+    VoidCallback onDone,
+    VoidCallback onDismiss}) {
   final screenHeight = context.screenSize.height;
   return showCupertinoModalPopup(
       context: context,
@@ -412,6 +413,7 @@ Future showPickerPopup({@required BuildContext context,
                 ),
                 Container(
                   height: screenHeight * 214 / 667,
+                  color: Colors.white,
                   child: builder(context),
                 ),
               ],
