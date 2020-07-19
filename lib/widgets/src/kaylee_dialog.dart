@@ -237,10 +237,11 @@ Future showKayleeAlertMessageYesDialog(
 }
 
 ///show cupertino dialog với [error], chỉ có 1 action 'Đồng ý'
-Future showKayleeAlertErrorYesDialog({@required BuildContext context,
-  Error error,
-  VoidCallback onPressed,
-  VoidCallback onDismiss}) {
+Future showKayleeAlertErrorYesDialog(
+    {@required BuildContext context,
+    Error error,
+    VoidCallback onPressed,
+    VoidCallback onDismiss}) {
   return showKayleeAlertDialog(
       context: context,
       view: KayleeAlertDialogView.error(
@@ -338,34 +339,83 @@ class KayleeAlertDialogAction extends StatelessWidget {
 }
 
 ///vd: show date time picker
-Future showPickerPopup(
-    {@required BuildContext context, @required WidgetBuilder builder}) {
+Future showPickerPopup({@required BuildContext context,
+  @required WidgetBuilder builder,
+  VoidCallback onDone,
+  VoidCallback onDismiss}) {
   final screenHeight = context.screenSize.height;
   return showCupertinoModalPopup(
       context: context,
       builder: (context) {
-        return Container(
-          height: screenHeight * 258 / 667,
-          decoration: BoxDecoration(
-            color: ColorsRes.dialogNavigate,
-            boxShadow: [
-              BoxShadow(
-                  color: ColorsRes.shadow,
-                  offset: Offset(0, -0.5),
-                  blurRadius: 0,
-                  spreadRadius: 0)
-            ],
-          ),
-          child: Column(
-            children: <Widget>[
-              Container(
+        return Material(
+          child: Container(
+            height: screenHeight * 258 / 667,
+            decoration: BoxDecoration(
+              color: ColorsRes.dialogNavigate,
+              boxShadow: [
+                BoxShadow(
+                    color: ColorsRes.shadow,
+                    offset: Offset(0, -0.5),
+                    blurRadius: 0,
+                    spreadRadius: 0)
+              ],
+            ),
+            child: Column(
+              children: <Widget>[
+                Container(
                   height: screenHeight * Dimens.px44 / 667,
-                  alignment: Alignment.centerRight),
-              Container(
-                height: screenHeight * 214 / 667,
-                child: builder(context),
-              ),
-            ],
+                  padding: const EdgeInsets.symmetric(horizontal: Dimens.px8),
+                  alignment: Alignment.centerRight,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                          onTap: () {
+                            context.pop();
+                            onDismiss?.call();
+                          },
+                          child: Container(
+                            color: Colors.transparent,
+                            child: Text(
+                              Strings.huy,
+                              style: TextStyle(
+                                fontFamily: 'SFProText',
+                                color: Color(0xff6092df),
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                                fontStyle: FontStyle.normal,
+                                letterSpacing: -0.24,
+                              ),
+                            ),
+                          )),
+                      GestureDetector(
+                          onTap: () {
+                            context.pop();
+                            onDone?.call();
+                          },
+                          child: Container(
+                            color: Colors.transparent,
+                            child: Text(
+                              Strings.hoanTat,
+                              style: TextStyle(
+                                fontFamily: 'SFProText',
+                                color: Color(0xff6092df),
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                                fontStyle: FontStyle.normal,
+                                letterSpacing: -0.24,
+                              ),
+                            ),
+                          )),
+                    ],
+                  ),
+                ),
+                Container(
+                  height: screenHeight * 214 / 667,
+                  child: builder(context),
+                ),
+              ],
+            ),
           ),
         );
       });
