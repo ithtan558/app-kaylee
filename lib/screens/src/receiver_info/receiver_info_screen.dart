@@ -37,8 +37,8 @@ class _ReceiverInfoScreenState extends BaseState<ReceiverInfoScreen> {
                 padding: const EdgeInsets.only(
                     top: Dimens.px16, right: Dimens.px16, left: Dimens.px16),
                 child: KayleeTextField.normal(
-                  title: Strings.ho,
-                  hint: 'Nhập Họ và Tên',
+                  title: Strings.hoVaTen,
+                  hint: Strings.nhapHoVaTen,
                 ),
               ),
               KayleeFullAddressInput(
