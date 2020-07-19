@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/base/json_converter/kaylee_json_convert.dart';
 import 'package:kaylee/base/kaylee_cubit_observer.dart';
+import 'package:kaylee/base/kaylee_observer.dart';
 import 'package:kaylee/base/kaylee_routing.dart';
 import 'package:kaylee/components/components.dart';
 import 'package:kaylee/res/res.dart';
@@ -44,7 +45,7 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing, KayleeRouting {
       transition: (currentState, nextState) {
         if (nextState is BaseModel) {
           if (nextState.code == ErrorType.UNAUTHORIZED) {
-            context.cubit<AppBloc>().unauthorized();
+            context.cubit<AppBloc>().unauthorized(error: nextState.error);
           }
         }
       },
@@ -60,8 +61,9 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing, KayleeRouting {
           context.user.updateUserInfo(state.result);
           context.network.dio.options
             ..headers = {
-//              NetworkModule.AUTHORIZATION: context.user.getUserInfo().requestToken
-              NetworkModule.AUTHORIZATION: ''
+              NetworkModule.AUTHORIZATION:
+                  context.user.getUserInfo().requestToken
+//              NetworkModule.AUTHORIZATION: ''
             };
         } else if (state is LoggedOutState) {
           context.user.removeUserInfo();
@@ -71,10 +73,14 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing, KayleeRouting {
       child: MaterialApp(
         title: Strings.appName,
         onGenerateRoute: onGenerateRoute,
-        builder: (context, child) => MediaQuery(
-            data: MediaQuery.of(context)
-                .copyWith(textScaleFactor: 1, boldText: false),
-            child: child),
+        builder: (context, child) =>
+            MediaQuery(
+                data: MediaQuery.of(context)
+                    .copyWith(textScaleFactor: 1, boldText: false),
+                child: child),
+        navigatorObservers: [
+          KayleeObserver(),
+        ],
         theme: ThemeData(
           scaffoldBackgroundColor: ColorsRes.background,
           visualDensity: VisualDensity.adaptivePlatformDensity,
