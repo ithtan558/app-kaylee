@@ -25,6 +25,9 @@ class KayLeeApp extends StatefulWidget {
             RepositoryProvider<UserModule>(
               create: (_) => UserModule.init(),
             ),
+            RepositoryProvider<CartModule>(
+              create: (_) => CartModule.init(),
+            ),
           ],
           child: CubitProvider<AppBloc>(
             create: (context) => AppBloc(),
@@ -73,11 +76,10 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing, KayleeRouting {
       child: MaterialApp(
         title: Strings.appName,
         onGenerateRoute: onGenerateRoute,
-        builder: (context, child) =>
-            MediaQuery(
-                data: MediaQuery.of(context)
-                    .copyWith(textScaleFactor: 1, boldText: false),
-                child: child),
+        builder: (context, child) => MediaQuery(
+            data: MediaQuery.of(context)
+                .copyWith(textScaleFactor: 1, boldText: false),
+            child: child),
         navigatorObservers: [
           KayleeObserver(),
         ],
