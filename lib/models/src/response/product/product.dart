@@ -19,7 +19,8 @@ class Product {
       this.price,
       this.description,
       this.brands,
-      this.category});
+      this.category,
+      this.quantity});
 
   int id;
   String code;
@@ -29,6 +30,5 @@ class Product {
   String description;
   List<Brand> brands;
   Category category;
-  @JsonKey(ignore: true)
   int quantity;
 }
