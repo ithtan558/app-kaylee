@@ -78,19 +78,37 @@ class _CartModuleImpl extends CartModule {
       if (existedItem.isNull) {
         this._order.cartItems?.add(item);
       } else {
-        this._order.cartItems.insert(this._order.cartItems.indexOf(existedItem),
-            item..quantity += existedItem.quantity);
+        final index = this._order.cartItems.indexWhere((e) {
+          if (e is Service) {
+            return e.id == item.id;
+          }
+          return false;
+        });
+        if (index >= 0) {
+          this._order.cartItems.removeAt(index);
+          this._order.cartItems.insert(
+              index, item..quantity = item.quantity + existedItem.quantity);
+        }
       }
     } else if (item is Product) {
-      final existedItem =
+      Product existedItem =
           this._order.cartItems.whereType<Product>().singleWhere((e) {
         return e.id == item.id;
       }, orElse: () => null);
       if (existedItem.isNull) {
         this._order.cartItems?.add(item);
       } else {
-        this._order.cartItems.insert(this._order.cartItems.indexOf(existedItem),
-            item..quantity += existedItem.quantity);
+        final index = this._order.cartItems.indexWhere((e) {
+          if (e is Product) {
+            return e.id == item.id;
+          }
+          return false;
+        });
+        if (index >= 0) {
+          this._order.cartItems.removeAt(index);
+          this._order.cartItems.insert(
+              index, item..quantity = item.quantity + existedItem.quantity);
+        }
       }
     }
   }
@@ -103,19 +121,13 @@ class _CartModuleImpl extends CartModule {
       return;
     }
 
-    if (item is Service) {
-      this._order.cartItems.whereType<Service>().forEach((e) {
-        if (e.id == item?.id) {
-          e = item;
-        }
-      });
-    } else if (item is Product) {
-      this._order.cartItems.whereType<Product>().forEach((e) {
-        if (e.id == item?.id) {
-          e = item;
-        }
-      });
-    }
+    this._order.cartItems.forEach((e) {
+      if (item is Service) {
+        if (e.id == item?.id) e = item;
+      } else if (item is Product) {
+        if (e.id == item?.id) e = item;
+      }
+    });
   }
 
   @override
@@ -130,14 +142,11 @@ class _CartModuleImpl extends CartModule {
     if (_order.isNull) {
       return;
     }
-    if (item is Service) {
-      this._order.cartItems.whereType<Service>().toList().removeWhere((e) {
+    this._order.cartItems.removeWhere((e) {
+      if (item is Service)
         return e.id == item?.id;
-      });
-    } else if (item is Product) {
-      this._order.cartItems.whereType<Product>().toList().removeWhere((e) {
-        return e.id == item?.id;
-      });
-    }
+      else if (item is Product) return e.id == item?.id;
+      return false;
+    });
   }
 }
