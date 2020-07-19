@@ -75,7 +75,8 @@ class _CartScreenState extends BaseState<CartScreen> {
             text: Strings.datHang,
             margin: const EdgeInsets.all(Dimens.px8),
             onPressed: () {
-              pushScreen(PageIntent(screen: ReceiverInfoScreen));
+              if (context.cart?.getOrder()?.cartItems.isNotNullAndEmpty)
+                pushScreen(PageIntent(screen: ReceiverInfoScreen));
             },
           )
         ],
