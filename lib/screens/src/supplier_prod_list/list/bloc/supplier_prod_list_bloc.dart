@@ -26,9 +26,6 @@ class SupplierProdListBloc extends Cubit<LoadMoreModel<Product>> {
         emit(LoadMoreModel.copy(state
           ..loading = false
           ..addAll(prods)
-          ..addAll(prods)
-          ..addAll(prods)
-          ..addAll(prods)
           ..code = null
           ..error = null));
       },
