@@ -84,9 +84,14 @@ class _KayleeTabBarState extends BaseState<KayleeTabBar> {
   void initState() {
     super.initState();
     widget.pageController?.addListener(() {
-      setState(() {
-        currentIndex = widget.pageController.page.toInt();
-      });
+      if ((widget.pageController?.page ??
+                  0 - widget.pageController?.page?.toInt())
+              .abs() ==
+          0) {
+        setState(() {
+          currentIndex = widget.pageController.page.toInt();
+        });
+      }
     });
   }
 
@@ -136,10 +141,10 @@ class _KayleeTabBarState extends BaseState<KayleeTabBar> {
         alignment: Alignment.center,
         child: isSelected
             ? KayleeText.hyper16W400(
-                title ?? '',
-                overflow: TextOverflow.visible,
-                textAlign: TextAlign.center,
-              )
+          title ?? '',
+          overflow: TextOverflow.visible,
+          textAlign: TextAlign.center,
+        )
             : KayleeText.normal16W400(
           title ?? '',
           overflow: TextOverflow.visible,
