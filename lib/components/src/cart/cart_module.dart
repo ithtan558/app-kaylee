@@ -12,13 +12,13 @@ abstract class CartModule {
 
   void updateOrderInfo(OrderRequest order);
 
-  void updateProds(List<dynamic> prods);
+  void updateProds(List items);
 
-  void addProdToCart(dynamic prod);
+  void addProdToCart(dynamic item);
 
-  void updateProd(dynamic prod);
+  void updateProd(dynamic item);
 
-  void removeProd(dynamic prod);
+  void removeProd(dynamic item);
 
   OrderRequest getOrder();
 
@@ -38,11 +38,17 @@ class _CartModuleImpl extends CartModule {
     if (_order.isNull) {
       _order = OrderRequest();
     }
-    this._order;
+    this._order
+      ..cartItems = order?.cartItems
+      ..cartSuppInfo = order?.cartSuppInfo
+      ..supplierId = order?.supplierId
+      ..cartCustomer = order?.cartCustomer
+      ..cartEmployee = order?.cartEmployee
+      ..cartDiscount = order?.cartDiscount;
   }
 
   @override
-  void updateProds(List<dynamic> prods) {
+  void updateProds(List prods) {
     if (_order.isNull) {
       _order = OrderRequest();
     }
@@ -55,34 +61,60 @@ class _CartModuleImpl extends CartModule {
   }
 
   @override
-  void addProdToCart(dynamic prod) {
-    if (prod.isNull) return;
+  void addProdToCart(dynamic item) {
+    if (item == null) return;
+
     if (_order.isNull) {
       _order = OrderRequest();
     }
     if (this._order.cartItems.isNull) {
       this._order.cartItems = [];
     }
-    final existedProd = this._order.cartItems.singleWhere((item) {
-      return item.productid == prod.productid;
-    }, orElse: () => null);
-    if (existedProd.isNull) {
-      this._order.cartItems?.add(prod..quantity = 1);
-    } else {
-      existedProd.quantity += 1;
+    if (item is Service) {
+      final existedItem =
+          this._order.cartItems.whereType<Service>().singleWhere((e) {
+        return e.id == item.id;
+      }, orElse: () => null);
+      if (existedItem.isNull) {
+        this._order.cartItems?.add(item);
+      } else {
+        this._order.cartItems.insert(this._order.cartItems.indexOf(existedItem),
+            item.quantity + existedItem.quantity);
+      }
+    } else if (item is Product) {
+      final existedItem =
+          this._order.cartItems.whereType<Product>().singleWhere((e) {
+        return e.id == item.id;
+      }, orElse: () => null);
+      if (existedItem.isNull) {
+        this._order.cartItems?.add(item);
+      } else {
+        this._order.cartItems.insert(this._order.cartItems.indexOf(existedItem),
+            item.quantity + existedItem.quantity);
+      }
     }
   }
 
   @override
-  void updateProd(dynamic prod) {
+  void updateProd(dynamic item) {
+    if (item == null) return;
+
     if (_order.isNull) {
       return;
     }
-    for (dynamic item in this._order.cartItems) {
-      if (item.productid == prod?.productid) {
-        item = prod;
-        break;
-      }
+
+    if (item is Service) {
+      this._order.cartItems.whereType<Service>().forEach((e) {
+        if (e.id == item?.id) {
+          e = item;
+        }
+      });
+    } else if (item is Product) {
+      this._order.cartItems.whereType<Product>().forEach((e) {
+        if (e.id == item?.id) {
+          e = item;
+        }
+      });
     }
   }
 
@@ -92,12 +124,20 @@ class _CartModuleImpl extends CartModule {
   }
 
   @override
-  void removeProd(dynamic prod) {
+  void removeProd(dynamic item) {
+    if (item == null) return;
+
     if (_order.isNull) {
       return;
     }
-    this._order.cartItems.removeWhere((item) {
-      return item.productid == prod?.productid;
-    });
+    if (item is Service) {
+      this._order.cartItems.whereType<Service>().toList().removeWhere((e) {
+        return e.id == item?.id;
+      });
+    } else if (item is Product) {
+      this._order.cartItems.whereType<Product>().toList().removeWhere((e) {
+        return e.id == item?.id;
+      });
+    }
   }
 }
