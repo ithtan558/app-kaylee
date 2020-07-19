@@ -57,7 +57,7 @@ class _CartModuleImpl extends CartModule {
 
   @override
   bool isExist() {
-    return getOrder() != null;
+    return getOrder().isNotNull;
   }
 
   @override
