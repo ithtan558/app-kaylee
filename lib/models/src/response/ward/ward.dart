@@ -12,8 +12,12 @@ class Ward {
   Ward({
     this.id,
     this.name,
+    this.cityId,
+    this.districtId,
   });
 
   int id;
   String name;
+  int cityId;
+  int districtId;
 }
