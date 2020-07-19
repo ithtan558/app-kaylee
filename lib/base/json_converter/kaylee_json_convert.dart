@@ -36,6 +36,10 @@ class KayleeJsonConverter extends JsonConverterFactory {
       return Brand.fromJson(json) as T;
     } else if (T == Brands) {
       return Brands.fromJson(json) as T;
+    } else if (T == Service) {
+      return Service.fromJson(json) as T;
+    } else if (T == Services) {
+      return Services.fromJson(json) as T;
     }
     return json as T;
   }
@@ -73,6 +77,10 @@ class KayleeJsonConverter extends JsonConverterFactory {
     } else if (json is Brand) {
       return json.toJson();
     } else if (json is Brands) {
+      return json.toJson();
+    } else if (json is Service) {
+      return json.toJson();
+    } else if (json is Services) {
       return json.toJson();
     } else
       return json;

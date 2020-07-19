@@ -17,6 +17,8 @@ export 'src/response/page_data/page_data.dart';
 export 'src/response/prod_cate/category.dart';
 export 'src/response/product/list/products.dart';
 export 'src/response/product/product.dart';
+export 'src/response/service/list/services.dart';
+export 'src/response/service/service.dart';
 export 'src/response/supplier/list/suppliers.dart';
 export 'src/response/supplier/supplier.dart';
 export 'src/response/user_info/user_info.dart';
