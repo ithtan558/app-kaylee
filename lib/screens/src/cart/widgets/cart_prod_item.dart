@@ -1,20 +1,22 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/app_bloc.dart';
+import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class CartProdItem extends StatefulWidget {
   final VoidCallback onRemoveItem;
+  final Product product;
 
-  CartProdItem({this.onRemoveItem});
+  CartProdItem({@required this.product, this.onRemoveItem});
 
   @override
   _CartProdItemState createState() => _CartProdItemState();
 }
 
 class _CartProdItemState extends BaseState<CartProdItem> {
-  int amount = 4;
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -28,17 +30,16 @@ class _CartProdItemState extends BaseState<CartProdItem> {
             borderWidth: Dimens.px1,
             borderRadius: BorderRadius.circular(Dimens.px5),
             padding: const EdgeInsets.all(Dimens.px8),
-            child: KayleeText.normal16W400('x$amount'),
+            child: KayleeText.normal16W400('x${widget.product.quantity}'),
             alignment: Alignment.center,
             onTap: () async {
               await showKayleeAmountChangingDialog(
                 context: context,
-                title: 'Tóc kiểu thôn nữ',
-                initAmount: amount,
+                title: widget.product.name ?? '',
+                initAmount: widget.product.quantity,
                 onAmountChange: (value) {
-                  setState(() {
-                    amount = value;
-                  });
+                  context.cart.updateProd(widget.product.quantity = value);
+                  context.cubit<CartBloc>().updateCart();
                 },
                 onRemoveItem: widget.onRemoveItem,
               );
@@ -53,7 +54,7 @@ class _CartProdItemState extends BaseState<CartProdItem> {
                 top: Dimens.px8,
               ),
               child: KayleeText.normal16W400(
-                'Dầu gội Head & Shoulder 500ml - nội địa Mỹ',
+                widget.product.name ?? '',
                 textAlign: TextAlign.start,
                 overflow: TextOverflow.visible,
               ),
@@ -62,7 +63,7 @@ class _CartProdItemState extends BaseState<CartProdItem> {
           Padding(
             padding: const EdgeInsets.only(left: Dimens.px8, top: Dimens.px8),
             child: KayleePriceUnitText(
-              3000000,
+              widget.product.price * widget.product.quantity,
               alignment: MainAxisAlignment.end,
             ),
           ),
