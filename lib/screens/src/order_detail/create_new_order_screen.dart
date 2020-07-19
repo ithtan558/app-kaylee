@@ -60,7 +60,7 @@ class _CreateNewOrderScreenState extends BaseState<CreateNewOrderScreen> {
               return Padding(
                 padding: const EdgeInsets.only(
                     left: Dimens.px16, right: Dimens.px16, bottom: Dimens.px16),
-                child: KayleeTextField.picker(
+                child: KayleePickerTextField(
                   title: Strings.chiNhanh,
                   hint: Strings.chonChiNhanhTrongDs,
                 ),

@@ -2,6 +2,7 @@ import 'package:anth_package/anth_package.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/widgets/src/kaylee_picker_textfield.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class NewBranchScreenData {
@@ -84,13 +85,13 @@ class _CreateNewBranchScreenState extends BaseState<CreateNewBranchScreen> {
               child: Row(
                 children: [
                   Expanded(
-                    child: KayleeTextField.picker(
+                    child: KayleePickerTextField(
                       title: Strings.gioMoCua,
                     ),
                   ),
                   SizedBox(width: Dimens.px8),
                   Expanded(
-                    child: KayleeTextField.picker(
+                    child: KayleePickerTextField(
                       title: Strings.gioDongCua,
                     ),
                   )

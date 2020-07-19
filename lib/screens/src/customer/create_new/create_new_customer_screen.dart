@@ -78,7 +78,7 @@ class _CreateNewCustomerScreenState extends BaseState<CreateNewCustomerScreen> {
             Padding(
               padding: const EdgeInsets.only(
                   left: Dimens.px16, right: Dimens.px16, bottom: Dimens.px16),
-              child: KayleeTextField.picker(
+              child: KayleePickerTextField(
                 title: Strings.ngaySinh,
                 hint: Strings.chonNgayThangNam,
               ),
@@ -86,7 +86,7 @@ class _CreateNewCustomerScreenState extends BaseState<CreateNewCustomerScreen> {
             Padding(
               padding: const EdgeInsets.only(
                   left: Dimens.px16, right: Dimens.px16, bottom: Dimens.px16),
-              child: KayleeTextField.picker(
+              child: KayleePickerTextField(
                 title: Strings.queQuan,
                 hint: Strings.chonTinhTpHint,
               ),

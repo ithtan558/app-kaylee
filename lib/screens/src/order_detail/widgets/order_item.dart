@@ -96,7 +96,7 @@ class _OrderItemState extends BaseState<OrderItem> {
             Padding(
               padding:
               const EdgeInsets.only(bottom: Dimens.px16, top: Dimens.px8),
-              child: KayleeTextField.picker(
+              child: KayleePickerTextField(
                 title: Strings.nhanVienThucThien,
                 hint: Strings.chonNhanVienTrongDs,
               ),

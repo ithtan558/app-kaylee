@@ -77,7 +77,7 @@ class _CreateNewServiceScreenState extends BaseState<CreateNewServiceScreen> {
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: Dimens.px16),
-              child: KayleeTextField.picker(
+              child: KayleePickerTextField(
                 title: Strings.thoiGianPhucVu,
               ),
             ),
@@ -91,13 +91,13 @@ class _CreateNewServiceScreenState extends BaseState<CreateNewServiceScreen> {
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: Dimens.px16),
-              child: KayleeTextField.picker(
+              child: KayleePickerTextField(
                 title: Strings.thoiGianPhucVu,
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: Dimens.px16),
-              child: KayleeTextField.picker(
+              child: KayleePickerTextField(
                 title: Strings.loaiDichVu,
                 hint: Strings.chonLoaiDichVu,
               ),

@@ -44,7 +44,7 @@ class _CreateNewReservationScreenState
           children: [
             Padding(
               padding: const EdgeInsets.only(bottom: Dimens.px16),
-              child: KayleeTextField.picker(
+              child: KayleePickerTextField(
                 title: Strings.chonChiNhanh,
                 hint: Strings.chonChinhanhDeDatLich,
               ),
@@ -89,14 +89,14 @@ class _CreateNewReservationScreenState
               child: Row(
                 children: [
                   Expanded(
-                    child: KayleeTextField.picker(
+                    child: KayleePickerTextField(
                       title: Strings.ngayDat,
                       hint: Strings.chonNgay,
                     ),
                   ),
                   SizedBox(width: Dimens.px8),
                   Expanded(
-                    child: KayleeTextField.picker(
+                    child: KayleePickerTextField(
                       title: Strings.gioDat,
                       hint: Strings.chonThoiGian,
                     ),

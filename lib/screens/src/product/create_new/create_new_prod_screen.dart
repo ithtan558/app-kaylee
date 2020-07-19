@@ -80,14 +80,14 @@ class _CreateNewProdScreenState extends BaseState<CreateNewProdScreen> {
               child: Row(
                 children: [
                   Expanded(
-                    child: KayleeTextField.picker(
+                    child: KayleePickerTextField(
                       title: Strings.ngayBatDau,
                       hint: Strings.chonNgay,
                     ),
                   ),
                   SizedBox(width: Dimens.px8),
                   Expanded(
-                    child: KayleeTextField.picker(
+                    child: KayleePickerTextField(
                       title: Strings.ngayKetThuc,
                       hint: Strings.chonNgay,
                     ),
@@ -105,7 +105,7 @@ class _CreateNewProdScreenState extends BaseState<CreateNewProdScreen> {
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: Dimens.px16),
-              child: KayleeTextField.picker(
+              child: KayleePickerTextField(
                 title: Strings.loaiSanPham,
                 hint: Strings.chonLoaiSanPham,
               ),

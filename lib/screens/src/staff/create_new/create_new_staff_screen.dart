@@ -74,14 +74,14 @@ class _CreateNewStaffScreenState extends BaseState<CreateNewStaffScreen> {
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: Dimens.px16),
-              child: KayleeTextField.picker(
+              child: KayleePickerTextField(
                 title: Strings.ngaySinh,
                 hint: Strings.chonNgayThangNam,
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: Dimens.px16),
-              child: KayleeTextField.picker(
+              child: KayleePickerTextField(
                 title: Strings.queQuan,
                 hint: Strings.chonTinhTpHint,
               ),
