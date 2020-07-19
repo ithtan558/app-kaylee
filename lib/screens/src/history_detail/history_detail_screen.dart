@@ -63,7 +63,8 @@ class _HistoryDetailScreenState extends BaseState<HistoryDetailScreen> {
                   itemCount: 2),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: Dimens.px16, left: Dimens.px16, right: Dimens.px16),
+              padding: const EdgeInsets.only(
+                  top: Dimens.px16, left: Dimens.px16, right: Dimens.px16),
               child: KayleeTitlePriceText.normal(
                 title: Strings.tongChiPhi,
                 price: 190000,
@@ -73,7 +74,7 @@ class _HistoryDetailScreenState extends BaseState<HistoryDetailScreen> {
               padding: const EdgeInsets.only(
                   top: Dimens.px8, left: Dimens.px16, right: Dimens.px16),
               child: KayleeTitlePriceText.bold(
-                title: 'Thành tiền',
+                title: Strings.thanhTien,
                 price: 190000,
               ),
             )
