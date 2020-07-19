@@ -79,7 +79,7 @@ class _CartModuleImpl extends CartModule {
         this._order.cartItems?.add(item);
       } else {
         this._order.cartItems.insert(this._order.cartItems.indexOf(existedItem),
-            item.quantity + existedItem.quantity);
+            item..quantity += existedItem.quantity);
       }
     } else if (item is Product) {
       final existedItem =
@@ -90,7 +90,7 @@ class _CartModuleImpl extends CartModule {
         this._order.cartItems?.add(item);
       } else {
         this._order.cartItems.insert(this._order.cartItems.indexOf(existedItem),
-            item.quantity + existedItem.quantity);
+            item..quantity += existedItem.quantity);
       }
     }
   }
