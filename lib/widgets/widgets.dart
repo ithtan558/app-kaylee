@@ -29,6 +29,7 @@ export 'src/kaylee_image_picker.dart';
 export 'src/kaylee_incr_decr_buttons.dart';
 export 'src/kaylee_inkwell.dart';
 export 'src/kaylee_loadmore_handler.dart';
+export 'src/kaylee_picker_textfield.dart';
 export 'src/kaylee_prod_item.dart';
 export 'src/kaylee_round_border.dart';
 export 'src/kaylee_rounded_button.dart';

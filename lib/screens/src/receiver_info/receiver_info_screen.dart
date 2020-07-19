@@ -13,6 +13,9 @@ class ReceiverInfoScreen extends StatefulWidget {
 }
 
 class _ReceiverInfoScreenState extends BaseState<ReceiverInfoScreen> {
+  final nameController = TextEditingController();
+  final addressController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -20,6 +23,8 @@ class _ReceiverInfoScreenState extends BaseState<ReceiverInfoScreen> {
 
   @override
   void dispose() {
+    nameController.dispose();
+    addressController.dispose();
     super.dispose();
   }
 
@@ -38,6 +43,7 @@ class _ReceiverInfoScreenState extends BaseState<ReceiverInfoScreen> {
               child: KayleeTextField.normal(
                 title: Strings.hoVaTen,
                 hint: Strings.nhapHoVaTen,
+                controller: nameController,
               ),
             ),
             KayleeFullAddressInput(

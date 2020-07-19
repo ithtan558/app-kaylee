@@ -136,15 +136,6 @@ class KayleeTextField extends StatelessWidget {
         ),
       );
 
-  factory KayleeTextField.picker({String title, String hint, String error}) =>
-      KayleeTextField(
-        title: title,
-        textInput: PickerInputField(
-          error: error,
-          hint: hint,
-        ),
-      );
-
   factory KayleeTextField.price(
           {String title,
           String hint,
@@ -225,7 +216,7 @@ class _PriceInputFieldState extends BaseState<PriceInputField> {
 
   @override
   Widget build(BuildContext context) {
-    return _ErrorText(
+    return ErrorText(
       child: TextFieldBorderWrapper(
         Row(
           children: [
@@ -334,77 +325,6 @@ class _SearchInputFieldState extends BaseState<SearchInputField> {
   }
 }
 
-class PickerInputField extends StatefulWidget {
-  final String error;
-  final String hint;
-
-  PickerInputField({
-    this.hint,
-    this.error,
-  });
-
-  @override
-  _PickerInputFieldState createState() => _PickerInputFieldState();
-}
-
-class _PickerInputFieldState extends BaseState<PickerInputField> {
-  final _tfController = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        TextFieldBorderWrapper(
-            Container(
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: TextField(
-                      controller: _tfController,
-                      enabled: false,
-                      onTap: () {},
-                      decoration: InputDecoration(
-                          disabledBorder: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          border: InputBorder.none,
-                          hintText: widget.hint,
-                          contentPadding: const EdgeInsets.only(
-                            bottom: Dimens.px4,
-                            left: Dimens.px16,
-                          ),
-                          hintStyle: TextStyles.hint16W400),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      right: Dimens.px16,
-                    ),
-                    child: Image.asset(
-                      Images.ic_down,
-                      width: Dimens.px16,
-                      height: Dimens.px16,
-                    ),
-                  )
-                ],
-              ),
-            ),
-            showFocusBorder: !widget.error.isNullOrEmpty),
-        if (!widget.error.isNullOrEmpty)
-          Container(
-            margin: const EdgeInsets.only(top: Dimens.px4),
-            alignment: Alignment.centerRight,
-            child: KayleeText(
-              widget.error,
-              textAlign: TextAlign.end,
-              style: TextStyles.error12W400,
-              overflow: TextOverflow.visible,
-            ),
-          )
-      ],
-    );
-  }
-}
-
 class NormalInputField extends StatefulWidget {
   final String error;
   final String hint;
@@ -460,7 +380,7 @@ class _NormalInputFieldState extends BaseState<NormalInputField> {
   @override
   Widget build(BuildContext context) {
     final isPassTField = widget.textInputType == TextInputType.visiblePassword;
-    return _ErrorText(
+    return ErrorText(
       child: TextFieldBorderWrapper(
           Container(
             margin: const EdgeInsets.symmetric(horizontal: Dimens.px16),
@@ -584,14 +504,14 @@ class _PhoneInputFieldState extends State<PhoneInputField> {
 
   @override
   Widget build(BuildContext context) {
-    return _ErrorText(
+    return ErrorText(
       child: TextFieldBorderWrapper(
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
               margin:
-                  const EdgeInsets.only(left: Dimens.px10, right: Dimens.px13),
+              const EdgeInsets.only(left: Dimens.px10, right: Dimens.px13),
               child: const Text('+84'),
             ),
             Container(
@@ -681,7 +601,7 @@ class _WebsiteInputFieldState extends BaseState<WebsiteInputField> {
 
   @override
   Widget build(BuildContext context) {
-    return _ErrorText(
+    return ErrorText(
       child: TextFieldBorderWrapper(
         Row(
           children: [
@@ -759,7 +679,7 @@ class _SelectInputTextFieldState extends BaseState<SelectInputTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return _ErrorText(
+    return ErrorText(
       child: TextFieldBorderWrapper(Padding(
         padding: const EdgeInsets.only(
             left: Dimens.px16,
@@ -809,7 +729,7 @@ class _UnitInputFieldState extends BaseState<UnitInputField> {
 
   @override
   Widget build(BuildContext context) {
-    return _ErrorText(
+    return ErrorText(
       child: TextFieldBorderWrapper(Row(
         children: [
           Expanded(
@@ -863,11 +783,11 @@ class _UnitInputFieldState extends BaseState<UnitInputField> {
   }
 }
 
-class _ErrorText extends StatelessWidget {
+class ErrorText extends StatelessWidget {
   final String error;
   final Widget child;
 
-  _ErrorText({this.child, this.error});
+  ErrorText({this.child, this.error});
 
   @override
   Widget build(BuildContext context) {
@@ -894,9 +814,13 @@ class TextFieldBorderWrapper extends StatelessWidget {
   final bool showFocusBorder;
   final Color bgColor;
   final double fieldHeight;
+  final bool focused;
 
   TextFieldBorderWrapper(this.child,
-      {this.showFocusBorder, this.bgColor, this.fieldHeight});
+      {this.showFocusBorder,
+        this.bgColor,
+        this.fieldHeight,
+        this.focused = false});
 
   @override
   Widget build(BuildContext context) {
@@ -904,13 +828,22 @@ class TextFieldBorderWrapper extends StatelessWidget {
       height: fieldHeight ?? Dimens.px48,
       width: double.infinity,
       decoration: BoxDecoration(
-          color: bgColor ?? Colors.white,
-          borderRadius: BorderRadius.circular(Dimens.px5),
-          border: Border.all(
-              width: (showFocusBorder ?? false) ? Dimens.px2 : Dimens.px1,
-              color: (showFocusBorder ?? false)
-                  ? ColorsRes.errorBorder
-                  : ColorsRes.textFieldBorder)),
+        color: bgColor ?? Colors.white,
+        borderRadius: BorderRadius.circular(Dimens.px5),
+        border: Border.all(
+            width: (showFocusBorder ?? false) ? Dimens.px2 : Dimens.px1,
+            color: (showFocusBorder ?? false)
+                ? ColorsRes.errorBorder
+                : ColorsRes.textFieldBorder),
+        boxShadow: [
+          if (focused)
+            BoxShadow(
+                color: Color(0x4c000000),
+                offset: Offset(0, 1),
+                blurRadius: 5,
+                spreadRadius: 0)
+        ],
+      ),
       child: child,
     );
   }
