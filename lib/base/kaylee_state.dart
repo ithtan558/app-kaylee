@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/widgets/widgets.dart';
 
 abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
   bool isShowLoading = false;
@@ -15,6 +16,21 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
         //todo token is expired
         //todo need to show dialog for requiring login
         print('[TUNG] ===> ErrorType.UNAUTHORIZED');
+        showKayleeAlertDialog(
+            context: context,
+            view: KayleeAlertDialogView.error(
+              error: state.error,
+              actions: [
+                KayleeAlertDialogAction(
+                  title: Strings.dongY,
+                  onPressed: () {
+//                    print('[TUNG] ===> ModalRoute.of(context).settings.name ${ModalRoute.of(context).settings.name}');
+                    popScreen();
+                  },
+                  isDefaultAction: true,
+                )
+              ],
+            ));
       }
     });
   }
