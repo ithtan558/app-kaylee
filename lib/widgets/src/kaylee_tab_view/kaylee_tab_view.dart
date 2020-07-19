@@ -85,7 +85,7 @@ class _KayleeTabBarState extends BaseState<KayleeTabBar> {
     super.initState();
     widget.pageController?.addListener(() {
       if (((widget.pageController?.page ?? 0) -
-                  widget.pageController?.page?.toInt())
+                  (widget.pageController?.page?.toInt() ?? 0))
               .abs() ==
           0) {
         setState(() {
