@@ -24,6 +24,7 @@ class _KayleeScrollviewState extends State<KayleeScrollview> {
           Expanded(
             child: SingleChildScrollView(
               padding: widget.padding ?? EdgeInsets.zero,
+              physics: BouncingScrollPhysics(),
               child: widget.child,
             ),
           ),
