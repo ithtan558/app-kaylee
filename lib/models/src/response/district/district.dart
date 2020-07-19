@@ -12,8 +12,10 @@ class District {
   District({
     this.id,
     this.name,
+    this.cityId,
   });
 
   int id;
   String name;
+  int cityId;
 }
