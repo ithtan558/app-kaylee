@@ -19,6 +19,7 @@ class SupplierProdDetailBloc extends Cubit<SingleModel<Product>> {
         emit(SingleModel.copy(state
           ..loading = false
           ..item = result
+          ..item.quantity = 1
           ..error = null
           ..code = null));
       },
