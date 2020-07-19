@@ -208,21 +208,21 @@ Future showKayleeAlertDialog(
     KayleeAlertDialogView view,
     VoidCallback onDismiss}) {
   return showCupertinoDialog(
-      context: context,
-      builder: (c) {
-        return view ?? Container();
-      }).then((value) {
-    if (onDismiss.isNotNull) {
-      onDismiss();
-    }
+    context: context,
+    builder: (c) {
+      return view ?? Container();
+    },
+  ).then((value) {
+    onDismiss?.call();
   });
 }
 
 ///show cupertino dialog với [message], chỉ có 1 action 'Đồng ý'
-Future showKayleeAlertMessageYesDialog({@required BuildContext context,
-  Message message,
-  VoidCallback onPressed,
-  VoidCallback onDismiss}) {
+Future showKayleeAlertMessageYesDialog(
+    {@required BuildContext context,
+    Message message,
+    VoidCallback onPressed,
+    VoidCallback onDismiss}) {
   return showKayleeAlertDialog(
       context: context,
       view: KayleeAlertDialogView.message(
