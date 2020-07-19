@@ -18,7 +18,7 @@ OrderRequest _$OrderRequestFromJson(Map<String, dynamic> json) {
     cartCustomer: json['cart_customer'] == null
         ? null
         : CartCustomer.fromJson(json['cart_customer'] as Map<String, dynamic>),
-    cartDiscount: json['cart_discount'],
+    cartDiscount: json['cart_discount'] as int,
   );
 }
 
@@ -36,7 +36,7 @@ Map<String, dynamic> _$OrderRequestToJson(OrderRequest instance) {
   writeNotNull('cart_supplier_information', instance.cartSupplierInformation);
   writeNotNull('supplier_id', instance.supplierId);
   writeNotNull('cart_customer', instance.cartCustomer);
-  writeNotNull('cart_employee', instance.cartEmployee);
+  val['cart_employee'] = instance.cartEmployee;
   val['cart_discount'] = instance.cartDiscount;
   return val;
 }

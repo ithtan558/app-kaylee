@@ -1,5 +1,6 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:kaylee/models/models.dart';
 
 part 'order_request.g.dart';
 
@@ -29,10 +30,12 @@ class OrderRequest {
   ///khi order từ screens thu ngân
   @JsonKey(includeIfNull: false)
   CartCustomer cartCustomer;
-  @JsonKey(includeIfNull: false)
+
+  ///khi quản lý mua, thì nó là [UserInfo.id]
+  ///khi order cho customer, thì nó là customerId
   int cartEmployee;
 
-  dynamic cartDiscount;
+  int cartDiscount;
 }
 
 @JsonSerializable(fieldRename: FieldRename.snake)
