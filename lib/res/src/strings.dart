@@ -209,6 +209,7 @@ class Strings {
   static const String banChuaChonSanPham = 'Bạn chưa chọn sản phẩm nào.';
   static const String hoVaTen = 'Họ & Tên';
   static const String nhapHoVaTen = 'Nhập Họ và Tên';
+  static const String hoanTat = 'Hoàn tất';
 
   Strings._();
 }
