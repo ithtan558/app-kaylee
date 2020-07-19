@@ -27,3 +27,11 @@ class UnauthorizedState {
 
   UnauthorizedState({this.error});
 }
+
+class CartBloc extends Cubit<CartState> {
+  CartBloc() : super(CartState());
+
+  void updateCart() => emit(CartState());
+}
+
+class CartState {}

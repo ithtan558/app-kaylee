@@ -18,21 +18,26 @@ void main() {
 
 class KayLeeApp extends StatefulWidget {
   static Widget newInstance() => MultiRepositoryProvider(
-          providers: [
-            RepositoryProvider<NetworkModule>(
-              create: (_) => NetworkModule.init(),
-            ),
-            RepositoryProvider<UserModule>(
-              create: (_) => UserModule.init(),
-            ),
-            RepositoryProvider<CartModule>(
-              create: (_) => CartModule.init(),
-            ),
-          ],
-          child: CubitProvider<AppBloc>(
+        providers: [
+          RepositoryProvider<NetworkModule>(
+            create: (_) => NetworkModule.init(),
+          ),
+          RepositoryProvider<UserModule>(
+            create: (_) => UserModule.init(),
+          ),
+          RepositoryProvider<CartModule>(
+            create: (_) => CartModule.init(),
+          ),
+        ],
+        child: MultiCubitProvider(providers: [
+          CubitProvider<AppBloc>(
             create: (context) => AppBloc(),
-            child: KayLeeApp._(),
-          ));
+          ),
+          CubitProvider<CartBloc>(
+            create: (context) => CartBloc(),
+          ),
+        ], child: KayLeeApp._()),
+      );
 
   KayLeeApp._();
 

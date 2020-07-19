@@ -6,14 +6,15 @@ import 'package:kaylee/services/services.dart';
 
 class SupplierProdCateListBloc extends Cubit<LoadMoreModel<Category>> {
   ProductService productService;
+  Supplier supplier;
 
-  SupplierProdCateListBloc({@required this.productService})
+  SupplierProdCateListBloc({@required this.productService, this.supplier})
       : super(LoadMoreModel());
 
-  void loadProdCate({@required int supplierId}) {
+  void loadProdCate() {
     emit(LoadMoreModel.copy(state..loading = true));
     RequestHandler(
-      request: productService.getProdCategory(supplier_id: supplierId),
+      request: productService.getProdCategory(supplier_id: supplier?.id),
       onSuccess: ({message, result}) {
         emit(LoadMoreModel.copy(state
           ..items = result

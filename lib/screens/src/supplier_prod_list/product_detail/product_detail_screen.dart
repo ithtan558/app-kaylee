@@ -1,10 +1,10 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
-import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/supplier_prod_list/product_detail/bloc/bloc.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
@@ -111,7 +111,9 @@ class _ProductDetailScreenState extends KayleeState<ProductDetailScreen> {
                   text: Strings.themVaoGioHang,
                   margin: EdgeInsets.zero,
                   onPressed: () {
-                    pushScreen(PageIntent(screen: CartScreen));
+                    context.cart.addProdToCart(bloc.state.item);
+                    context.cubit<CartBloc>().updateCart();
+                    popScreen();
                   },
                 ),
               ),

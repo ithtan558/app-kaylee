@@ -1,20 +1,22 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/base/kaylee_state.dart';
-import 'package:kaylee/components/components.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/supplier_prod_list/list/bloc/supplier_prod_cate_list_bloc.dart';
 import 'package:kaylee/screens/src/supplier_prod_list/list/supp_prod_tab.dart';
+import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class SupplierProdListScreen extends StatefulWidget {
   static Widget newInstance() => MultiCubitProvider(providers: [
         CubitProvider<SupplierProdCateListBloc>(
           create: (context) => SupplierProdCateListBloc(
-              productService:
-                  context.repository<NetworkModule>().provideProductService()),
+            productService: context.network.provideProductService(),
+            supplier: context.bundle.args as Supplier,
+          ),
         ),
       ], child: SupplierProdListScreen._());
 
@@ -26,14 +28,12 @@ class SupplierProdListScreen extends StatefulWidget {
 }
 
 class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
-  Supplier supplier;
   SupplierProdCateListBloc cateBloc;
   final pageController = PageController();
 
   @override
   void initState() {
     super.initState();
-    supplier = context.bundle.args as Supplier;
     cateBloc = context.cubit<SupplierProdCateListBloc>()
       ..listen((state) {
         if (!state.loading) {
@@ -44,7 +44,7 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
           hideLoading();
         }
       })
-      ..loadProdCate(supplierId: supplier.id);
+      ..loadProdCate();
   }
 
   @override
@@ -58,7 +58,7 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
     return KayleeTabView(
       appBar: KayleeAppBar(
         titleWidget: Image.network(
-          supplier?.image ?? '',
+          cateBloc.supplier?.image ?? '',
           height: Dimens.px30,
         ),
         actions: <Widget>[
@@ -75,7 +75,17 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
                   height: Dimens.px32,
                 ),
                 Positioned(
-                  child: KayleeText.normalWhite12W400('0'),
+                  child: CubitBuilder<CartBloc, CartState>(
+                    builder: (context, state) {
+                      final amount =
+                          context.cart
+                              .getOrder()
+                              ?.cartItems
+                              ?.length ?? 0;
+                      return KayleeText.normalWhite12W400(
+                          '${amount <= 9 ? amount : '9+'}');
+                    },
+                  ),
                   bottom: Dimens.px5,
                 )
               ],
