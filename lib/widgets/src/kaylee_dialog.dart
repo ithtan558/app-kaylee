@@ -61,7 +61,7 @@ Future<T> showKayleeBottomSheet<T>(BuildContext context,
                           width: context.scaleWidth(Dimens.px37),
                           height: Dimens.px5,
                           margin:
-                          const EdgeInsets.symmetric(vertical: Dimens.px16),
+                              const EdgeInsets.symmetric(vertical: Dimens.px16),
                           decoration: BoxDecoration(
                               color: ColorsRes.textFieldBorder,
                               borderRadius: BorderRadius.circular(Dimens.px3))),
@@ -218,6 +218,7 @@ Future showKayleeAlertDialog(
   });
 }
 
+///show cupertino dialog với [message], chỉ có 1 action 'Đồng ý'
 Future showKayleeAlertMessageYesDialog({@required BuildContext context,
   Message message,
   VoidCallback onPressed,
@@ -235,6 +236,7 @@ Future showKayleeAlertMessageYesDialog({@required BuildContext context,
       onDismiss: onDismiss);
 }
 
+///show cupertino dialog với [error], chỉ có 1 action 'Đồng ý'
 Future showKayleeAlertErrorYesDialog({@required BuildContext context,
   Error error,
   VoidCallback onPressed,
@@ -252,11 +254,13 @@ Future showKayleeAlertErrorYesDialog({@required BuildContext context,
       onDismiss: onDismiss);
 }
 
+///view cupertino dialog để hiện thị trong [showKayleeAlertDialog]
 class KayleeAlertDialogView extends StatelessWidget {
   final String title;
   final String content;
   final List<KayleeAlertDialogAction> actions;
 
+  ///show cupertino dialog với [error] truyền vào
   factory KayleeAlertDialogView.error(
           {Error error, List<KayleeAlertDialogAction> actions}) =>
       KayleeAlertDialogView(
@@ -265,6 +269,7 @@ class KayleeAlertDialogView extends StatelessWidget {
         actions: actions,
       );
 
+  ///show cupertino dialog với [message] truyền vào
   factory KayleeAlertDialogView.message(
           {Message message, List<KayleeAlertDialogAction> actions}) =>
       KayleeAlertDialogView(
@@ -293,6 +298,7 @@ class KayleeAlertDialogView extends StatelessWidget {
   }
 }
 
+///action button trong [KayleeAlertDialogAction]
 class KayleeAlertDialogAction extends StatelessWidget {
   final String title;
   final void Function() onPressed;
