@@ -206,6 +206,7 @@ class Strings {
   static const String chonThoiGian = 'Chọn thời gian';
   static const String ghiChu = 'Ghi chú';
   static const String nhapGhiChuCuaKH = 'Nhập ghi chú của khách hàng';
+  static const String banChuaChonSanPham = 'Bạn chưa chọn sản phẩm nào.';
 
   Strings._();
 }
