@@ -91,6 +91,9 @@ flutter:
           weight: 500
         - asset: fonts/helveticaneuebold.ttf
           weight: 700
-
+    - family: SFProText
+      fonts:
+        - asset: fonts/SFProText-Regular.ttf
+          weight: 400
   assets:
     - assets/
