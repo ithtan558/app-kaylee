@@ -28,6 +28,10 @@ class _KayleeFullAddressInputState extends BaseState<KayleeFullAddressInput> {
   void initState() {
     super.initState();
     widget.controller?._view = this;
+    addressTFController.text = widget?.controller?.initAddress ?? '';
+    cityController.value = widget?.controller?.initCity;
+    districtController.value = widget?.controller?.initDistrict;
+    wardController.value = widget?.controller?.initWard;
   }
 
   @override
@@ -85,6 +89,14 @@ class _KayleeFullAddressInputState extends BaseState<KayleeFullAddressInput> {
 
 class KayleeFullAddressController {
   _KayleeFullAddressInputState _view;
+
+  KayleeFullAddressController(
+      {this.initAddress, this.initCity, this.initDistrict, this.initWard});
+
+  final String initAddress;
+  final City initCity;
+  final District initDistrict;
+  final Ward initWard;
 
   String get address => _view?.addressTFController?.text ?? '';
 
