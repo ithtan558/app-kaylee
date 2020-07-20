@@ -30,6 +30,9 @@ class _ReceiverInfoScreenState extends BaseState<ReceiverInfoScreen> {
     nameTfController.dispose();
     phoneTfController.dispose();
     noteTfController.dispose();
+    nameFocus.dispose();
+    phoneFocus.dispose();
+    noteFocus.dispose();
     super.dispose();
   }
 
