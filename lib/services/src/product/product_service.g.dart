@@ -16,8 +16,7 @@ class _ProductService implements ProductService {
   String baseUrl;
 
   @override
-  getProducts(
-      {supplierId, keyword, sort, categoryId, page = 1, limit = 10}) async {
+  getProducts({supplierId, keyword, sort, categoryId, page, limit}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'supplier_id': supplierId,

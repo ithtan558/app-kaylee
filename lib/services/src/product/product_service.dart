@@ -14,8 +14,8 @@ abstract class ProductService {
       @Query('keyword') String keyword,
       @Query('sort') String sort,
       @Query('category_id') int categoryId,
-      @Query('page') int page = 1,
-      @Query('limit') int limit = 10});
+      @Query('page') int page,
+      @Query('limit') int limit});
 
   @GET('product-category/all')
   Future<ResponseModel<Category>> getProdCategory(
