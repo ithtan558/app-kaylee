@@ -34,11 +34,12 @@ class _KayleeTabViewState extends BaseState<KayleeTabView>
       appBar: widget.appBar,
       body: Column(
         children: [
-          Container(
-            margin: EdgeInsets.only(top: Dimens.px16),
-            height: Dimens.px40,
-            child: widget.tabBar ?? Container(),
-          ),
+          if (widget.tabBar.isNotNull)
+            Container(
+              margin: EdgeInsets.only(top: Dimens.px16),
+              height: Dimens.px40,
+              child: widget.tabBar,
+            ),
           Expanded(
               child: Stack(
             children: [
