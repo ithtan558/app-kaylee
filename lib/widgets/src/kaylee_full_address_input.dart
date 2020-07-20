@@ -1,3 +1,4 @@
+import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/models/models.dart';
@@ -17,7 +18,11 @@ class KayleeFullAddressInput extends StatefulWidget {
 }
 
 class _KayleeFullAddressInputState extends BaseState<KayleeFullAddressInput> {
-  final tfController = TextEditingController();
+  final addressTFController = TextEditingController();
+  final cityController = PickInputController<City>();
+  final districtController = PickInputController<District>();
+  final wardController = PickInputController<Ward>();
+  final addressFocus = FocusNode();
 
   @override
   void initState() {
@@ -27,7 +32,8 @@ class _KayleeFullAddressInputState extends BaseState<KayleeFullAddressInput> {
 
   @override
   void dispose() {
-    tfController.dispose();
+    addressTFController.dispose();
+    addressFocus.dispose();
     super.dispose();
   }
 
@@ -35,36 +41,43 @@ class _KayleeFullAddressInputState extends BaseState<KayleeFullAddressInput> {
   Widget build(BuildContext context) {
     return Padding(
       padding: widget.padding ?? EdgeInsets.zero,
-      child: Column(
-        children: [
-          KayleeTextField.normal(
-            title: widget.title,
-            hint: Strings.diaChiHienTaiHint,
-            textInputAction: TextInputAction.done,
-            controller: tfController,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: Dimens.px8),
-            child: Row(
-              children: [
-                Expanded(
-                  child: KayleePickerTextField(
-                    hint: Strings.phuong,
-                  ),
-                ),
-                SizedBox(width: Dimens.px8),
-                Expanded(
-                  child: KayleePickerTextField(
-                    hint: Strings.quan,
-                  ),
-                ),
-              ],
+      child: CubitProvider<KayleePickerTextFieldBloc>(
+        create: (context) => KayleePickerTextFieldBloc(),
+        child: Column(
+          children: [
+            KayleeTextField.normal(
+              title: widget.title,
+              hint: Strings.diaChiHienTaiHint,
+              textInputAction: TextInputAction.done,
+              controller: addressTFController,
+              focusNode: addressFocus,
             ),
-          ),
-          KayleePickerTextField<City>(
-            hint: Strings.tinhTpHint,
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: Dimens.px8),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: KayleePickerTextField<Ward>(
+                      hint: Strings.phuong,
+                      controller: wardController,
+                    ),
+                  ),
+                  SizedBox(width: Dimens.px8),
+                  Expanded(
+                    child: KayleePickerTextField<District>(
+                      hint: Strings.quan,
+                      controller: districtController,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            KayleePickerTextField<City>(
+              hint: Strings.tinhTpHint,
+              controller: cityController,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -73,11 +86,13 @@ class _KayleeFullAddressInputState extends BaseState<KayleeFullAddressInput> {
 class KayleeFullAddressController {
   _KayleeFullAddressInputState _view;
 
-  String get address => _view?.tfController?.text ?? '';
+  String get address => _view?.addressTFController?.text ?? '';
 
-//  City get city => _view.city;
-//
-//  District get district => _view.district;
-//
-//  Ward get ward => _view.ward;
+  void focusAddress() => _view?.addressFocus?.requestFocus();
+
+  City get city => _view?.cityController?.value;
+
+  District get district => _view?.districtController?.value;
+
+  Ward get ward => _view?.wardController?.value;
 }

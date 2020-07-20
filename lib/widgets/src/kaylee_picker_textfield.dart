@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:anth_package/anth_package.dart';
 import 'package:cubit/cubit.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,11 +14,13 @@ class KayleePickerTextField<T> extends StatefulWidget {
   final String title;
   final String error;
   final String hint;
+  final PickInputController<T> controller;
 
   KayleePickerTextField({
     this.hint,
     this.error,
     this.title,
+    this.controller,
   });
 
   @override
@@ -27,6 +31,19 @@ class KayleePickerTextField<T> extends StatefulWidget {
 class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField> {
   final _tfController = TextEditingController();
   bool focused = false;
+  T currentValue;
+  KayleePickerTextFieldBloc bloc;
+
+  @override
+  void initState() {
+    widget?.controller?._view = this;
+    try {
+      bloc = context.cubit<KayleePickerTextFieldBloc>();
+    } catch (e, s) {
+      print('[TUNG] ===> $s');
+    }
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -42,21 +59,20 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField> {
         child: TextFieldBorderWrapper(
             GestureDetector(
               onTap: () {
-                if (T == District && context.repository<City>().id.isNotNull ||
-                    T == Ward && context.repository<Ward>().id.isNotNull ||
-                    T == City) {
-                  setState(() {
-                    focused = true;
-                  });
-                  showPickerPopup(
-                      context: context,
-                      builder: (context) {
-                        return _PickerView<T>();
-                      }).then((value) {
-                    setState(() {
-                      focused = false;
-                    });
-                  });
+                if (T == City) {
+                  showPicker();
+                } else if (T == District) {
+                  if (bloc?.state?.city?.id.isNotNull) {
+                    showPicker();
+                  } else {
+                    showAlert(content: Strings.xinVuiLongChonTinh);
+                  }
+                } else if (T == Ward) {
+                  if (bloc?.state?.district?.id.isNotNull) {
+                    showPicker();
+                  } else {
+                    showAlert(content: Strings.xinVuiLongChonQuan);
+                  }
                 }
               },
               child: Container(
@@ -83,10 +99,13 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField> {
                       padding: const EdgeInsets.only(
                         right: Dimens.px16,
                       ),
-                      child: Image.asset(
-                        Images.ic_down,
-                        width: Dimens.px16,
-                        height: Dimens.px16,
+                      child: Transform.rotate(
+                        angle: focused ? pi : 0,
+                        child: Image.asset(
+                          Images.ic_down,
+                          width: Dimens.px16,
+                          height: Dimens.px16,
+                        ),
                       ),
                     )
                   ],
@@ -99,48 +118,107 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField> {
       ),
     );
   }
+
+  void showAlert({String content}) {
+    showKayleeAlertDialog(
+        context: context,
+        view: KayleeAlertDialogView(
+          content: content,
+          actions: [
+            KayleeAlertDialogAction.dongY(
+              onPressed: () {
+                popScreen();
+              },
+            )
+          ],
+        ));
+  }
+
+  void showPicker() {
+    setState(() {
+      focused = true;
+    });
+    showPickerPopup(
+        context: context,
+        onDone: () {
+          widget.controller?.value = currentValue;
+        },
+        onDismiss: () {
+          currentValue = null;
+        },
+        builder: (context) {
+          return CubitProvider.value(
+            value: bloc,
+            child: _PickerView<T>(
+              intiValue: widget.controller?.value,
+              onSelectedItemChanged: (value) {
+                currentValue = value;
+              },
+            ),
+          );
+        }).then((value) {
+      setState(() {
+        _tfController.text = _getTitle(widget?.controller?.value);
+        bloc?.update(value: widget?.controller?.value);
+        focused = false;
+      });
+    });
+  }
+}
+
+String _getTitle(dynamic item) {
+  if (item is City || item is District || item is Ward) {
+    return item.name;
+  }
+  return '';
 }
 
 class _PickerView<T> extends StatefulWidget {
-  final City city;
-  final District district;
+  final ValueChanged onSelectedItemChanged;
+  final T intiValue;
 
-  _PickerView({this.city, this.district});
+  _PickerView({this.onSelectedItemChanged, this.intiValue});
 
   @override
   _PickerViewState<T> createState() => _PickerViewState<T>();
 }
 
 class _PickerViewState<T> extends BaseState<_PickerView> {
-  _PickerViewBloc bloc;
+  _PickerViewBloc<T> bloc;
+  KayleePickerTextFieldBloc parentBloc;
+  FixedExtentScrollController scrollController;
 
   @override
   void initState() {
     super.initState();
+    try {
+      parentBloc = context.cubit<KayleePickerTextFieldBloc>();
+    } catch (e, s) {
+      print('[TUNG] ===> $s');
+    }
+
     bloc =
         _PickerViewBloc(commonService: context.network.provideCommonService());
     if (T == City) {
       bloc.loadCity();
     } else if (T == District) {
-      if (widget.city.isNotNull) {
-        bloc.loadDistrict(widget.city.id);
-      }
+      bloc.loadDistrict(parentBloc?.state?.city?.id);
     } else if (T == Ward) {
-      if (widget.district.isNotNull) {
-        bloc.loadWard(widget.district.id);
-      }
+      bloc.loadWard(parentBloc?.state?.district?.id);
     }
   }
 
   @override
   void dispose() {
     bloc.close();
+    scrollController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return CubitBuilder<_PickerViewBloc<T>, SingleModel<List<T>>>(
+      cubit: bloc,
       builder: (context, state) {
         if (state.loading)
           return Align(
@@ -148,23 +226,46 @@ class _PickerViewState<T> extends BaseState<_PickerView> {
               radius: Dimens.px16,
             ),
           );
+        scrollController = FixedExtentScrollController(
+            initialItem: state.item
+                .indexWhere((e) => getIndex(e) == getIndex(widget.intiValue)));
         return CupertinoPicker.builder(
-          itemExtent: Dimens.px36,
-          onSelectedItemChanged: (value) {},
+          scrollController: scrollController,
+          itemExtent: Dimens.px35,
+          onSelectedItemChanged: (index) {
+            widget.onSelectedItemChanged?.call(state.item.elementAt(index));
+          },
           itemBuilder: (context, index) {
-            return Container();
+            final item = state.item.elementAt(index);
+            return Container(
+              child: Text(_getTitle(item),
+                  style: TextStyle(
+                    fontFamily: 'SFProText',
+                    color: Color(0xff000000),
+                    fontSize: 23.5,
+                    fontWeight: FontWeight.w400,
+                    fontStyle: FontStyle.normal,
+                    letterSpacing: 0.3799999952316284,
+                  )),
+            );
           },
           childCount: state.item?.length ?? 0,
         );
       },
     );
   }
+
+  int getIndex(dynamic item) {
+    if (item is City || item is District || item is Ward) {
+      return item.id;
+    }
+    return 0;
+  }
 }
 
 class PickInputController<T> {
   _KayleePickerTextFieldState _view;
-  T _value;
-//  T value = _view.PickInputController();
+  T value;
 }
 
 class _PickerViewBloc<T> extends Cubit<SingleModel<List<T>>> {
@@ -230,5 +331,33 @@ class _PickerViewBloc<T> extends Cubit<SingleModel<List<T>>> {
           ..error = error));
       },
     );
+  }
+}
+
+class KayleePickerTextFieldBloc extends Cubit<KayleePickerTextFieldState> {
+  KayleePickerTextFieldBloc() : super(KayleePickerTextFieldState());
+
+  void update({dynamic value}) {
+    if (value is City) {
+      emit(KayleePickerTextFieldState.copy(state..city = value));
+    } else if (value is District) {
+      emit(KayleePickerTextFieldState.copy(state..district = value));
+    }
+  }
+
+  void updateDistrict({District district}) =>
+      emit(KayleePickerTextFieldState.copy(state..district = district));
+}
+
+class KayleePickerTextFieldState {
+  City city;
+  District district;
+
+  KayleePickerTextFieldState({this.city, this.district});
+
+  KayleePickerTextFieldState.copy(KayleePickerTextFieldState old) {
+    this
+      ..city = old?.city
+      ..district = old?.district;
   }
 }
