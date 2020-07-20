@@ -2,10 +2,16 @@ import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
+import 'package:kaylee/screens/src/service/list/bloc/service_list_screen_bloc.dart';
+import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class ServiceListScreen extends StatefulWidget {
-  static Widget newInstance() => ServiceListScreen._();
+  static Widget newInstance() => CubitProvider<ServiceListScreenBloc>(
+      create: (context) => ServiceListScreenBloc(
+            servService: context.network.provideServService(),
+          ),
+      child: ServiceListScreen._());
 
   ServiceListScreen._();
 
@@ -36,7 +42,7 @@ class _ServiceListScreenState extends BaseState<ServiceListScreen> {
           )
         ],
       ),
-//      body: _buildProdList(),
+      pageView: _buildProdList(),
       floatingActionButton: KayleeFloatButton(
         onTap: () {
           pushScreen(PageIntent(
