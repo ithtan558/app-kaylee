@@ -11,14 +11,12 @@ import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class SupplierProdListScreen extends StatefulWidget {
-  static Widget newInstance() => MultiCubitProvider(providers: [
-        CubitProvider<SupplierProdCateListBloc>(
-          create: (context) => SupplierProdCateListBloc(
+  static Widget newInstance() => CubitProvider<SupplierProdCateListBloc>(
+      create: (context) => SupplierProdCateListBloc(
             productService: context.network.provideProductService(),
             supplier: context.bundle.args as Supplier,
           ),
-        ),
-      ], child: SupplierProdListScreen._());
+      child: SupplierProdListScreen._());
 
   SupplierProdListScreen._();
 
