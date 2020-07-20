@@ -28,7 +28,8 @@ class KayleeTextField extends StatelessWidget {
           String error,
           EdgeInsets contentPadding,
           bool expands,
-          TextAlign textAlign}) =>
+          TextAlign textAlign,
+          int maxLength}) =>
       KayleeTextField(
         title: title,
         textInput: NormalInputField(
@@ -43,6 +44,7 @@ class KayleeTextField extends StatelessWidget {
           contentPadding: contentPadding,
           expands: expands,
           textAlign: textAlign,
+          maxLength: maxLength,
         ),
       );
 
@@ -74,7 +76,8 @@ class KayleeTextField extends StatelessWidget {
     TextInputAction textInputAction,
     String error,
     EdgeInsets contentPadding =
-        const EdgeInsets.symmetric(vertical: Dimens.px16),
+    const EdgeInsets.symmetric(vertical: Dimens.px16),
+    int maxLength,
   }) =>
       KayleeTextField.normal(
         title: title,
@@ -89,6 +92,7 @@ class KayleeTextField extends StatelessWidget {
         expands: true,
         textInputType: TextInputType.multiline,
         textAlign: TextAlign.start,
+        maxLength: maxLength,
       );
 
   factory KayleeTextField.selection(
@@ -339,21 +343,22 @@ class NormalInputField extends StatefulWidget {
   final EdgeInsets contentPadding;
   final TextAlign textAlign;
   final bool expands;
+  final int maxLength;
 
-  NormalInputField(
-      {this.hint,
-      this.initText,
-      this.error,
-      this.focusNode,
-      this.controller,
-      this.nextFocusNode,
-      this.textInputAction = TextInputAction.done,
-      this.textInputType = TextInputType.text,
-      this.isStaticTField = false,
-      this.fieldHeight,
-      this.contentPadding,
-      this.textAlign,
-      this.expands});
+  NormalInputField({this.hint,
+    this.initText,
+    this.error,
+    this.focusNode,
+    this.controller,
+    this.nextFocusNode,
+    this.textInputAction = TextInputAction.done,
+    this.textInputType = TextInputType.text,
+    this.isStaticTField = false,
+    this.fieldHeight,
+    this.contentPadding,
+    this.textAlign,
+    this.expands,
+    this.maxLength});
 
   @override
   _NormalInputFieldState createState() => _NormalInputFieldState();
@@ -410,7 +415,15 @@ class _NormalInputFieldState extends BaseState<NormalInputField> {
                     expands: widget.expands ?? false,
                     maxLines: widget.expands ?? false ? null : 1,
                     minLines: widget.expands ?? false ? null : 1,
+                    maxLength: widget?.maxLength,
+                    maxLengthEnforced: widget?.maxLength.isNotNull,
                     style: TextStyles.normal16W400,
+                    buildCounter: (context,
+                        {currentLength, isFocused, maxLength}) {
+                      return null;
+                      return KayleeText.normal12W400(
+                          '$currentLength/$maxLength');
+                    },
                     decoration: InputDecoration(
                         enabled: !widget.isStaticTField,
                         enabledBorder: InputBorder.none,
