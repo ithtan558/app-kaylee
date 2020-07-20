@@ -11,12 +11,13 @@ class OrderRequest {
 
   Map<String, dynamic> toJson() => _$OrderRequestToJson(this);
 
-  OrderRequest({this.cartItems,
-    this.cartEmployee,
-    this.cartSuppInfo,
-    this.supplierId,
-    this.cartCustomer,
-    this.cartDiscount});
+  OrderRequest(
+      {this.cartItems,
+      this.cartEmployee,
+      this.cartSuppInfo,
+      this.supplierId,
+      this.cartCustomer,
+      this.cartDiscount});
 
   List<dynamic> cartItems;
 
@@ -48,8 +49,11 @@ class CartSuppInfo {
     this.name,
     this.address,
     this.wardsId,
+    this.ward,
     this.districtId,
+    this.district,
     this.cityId,
+    this.city,
     this.phone,
     this.note,
   });
@@ -57,8 +61,14 @@ class CartSuppInfo {
   String name;
   String address;
   int wardsId;
+  @JsonKey(ignore: true)
+  Ward ward;
   int districtId;
+  @JsonKey(ignore: true)
+  District district;
   int cityId;
+  @JsonKey(ignore: true)
+  City city;
   String phone;
   String note;
 }
