@@ -67,6 +67,7 @@ class _ReceiverInfoScreenState extends BaseState<ReceiverInfoScreen> {
                 fieldHeight:
                     (context.screenSize.width - Dimens.px32) / (343 / 233),
                 contentPadding: EdgeInsets.symmetric(vertical: Dimens.px16),
+                maxLength: 200,
               ),
             ),
           ],
