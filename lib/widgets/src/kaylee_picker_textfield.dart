@@ -42,6 +42,8 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField> {
     } catch (e, s) {
       print('[TUNG] ===> $s');
     }
+    _tfController.text = _getTitle(widget.controller?.value);
+    bloc?.update(value: widget.controller?.value);
     super.initState();
   }
 
