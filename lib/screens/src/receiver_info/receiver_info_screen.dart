@@ -13,8 +13,12 @@ class ReceiverInfoScreen extends StatefulWidget {
 }
 
 class _ReceiverInfoScreenState extends BaseState<ReceiverInfoScreen> {
-  final nameController = TextEditingController();
-  final addressController = TextEditingController();
+  final nameTfController = TextEditingController();
+  final phoneTfController = TextEditingController();
+  final noteTfController = TextEditingController();
+  final nameFocus = FocusNode();
+  final phoneFocus = FocusNode();
+  final noteFocus = FocusNode();
 
   @override
   void initState() {
@@ -23,8 +27,9 @@ class _ReceiverInfoScreenState extends BaseState<ReceiverInfoScreen> {
 
   @override
   void dispose() {
-    nameController.dispose();
-    addressController.dispose();
+    nameTfController.dispose();
+    phoneTfController.dispose();
+    noteTfController.dispose();
     super.dispose();
   }
 
@@ -43,7 +48,9 @@ class _ReceiverInfoScreenState extends BaseState<ReceiverInfoScreen> {
               child: KayleeTextField.normal(
                 title: Strings.hoVaTen,
                 hint: Strings.nhapHoVaTen,
-                controller: nameController,
+                controller: nameTfController,
+                focusNode: nameFocus,
+                textInputAction: TextInputAction.next,
               ),
             ),
             KayleeFullAddressInput(
@@ -55,6 +62,10 @@ class _ReceiverInfoScreenState extends BaseState<ReceiverInfoScreen> {
                   left: Dimens.px16, right: Dimens.px16, bottom: Dimens.px16),
               child: KayleeTextField.phoneInput(
                 title: Strings.soDienThoai,
+                controller: phoneTfController,
+                focusNode: phoneFocus,
+                nextFocusNode: noteFocus,
+                textInputAction: TextInputAction.next,
               ),
             ),
             Padding(
@@ -68,6 +79,7 @@ class _ReceiverInfoScreenState extends BaseState<ReceiverInfoScreen> {
                     (context.screenSize.width - Dimens.px32) / (343 / 233),
                 contentPadding: EdgeInsets.symmetric(vertical: Dimens.px16),
                 maxLength: 200,
+                focusNode: noteFocus,
               ),
             ),
           ],
