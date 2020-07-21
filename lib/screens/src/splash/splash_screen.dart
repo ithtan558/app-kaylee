@@ -80,7 +80,7 @@ class _SplashScreenState extends BaseState<SplashScreen> {
               },
               listener: (context, state) {
                 if (state is GoToHomeScreenSplashScrState) {
-                  pushScreen(PageIntent(screen: HomeScreen));
+                  context.pushToTop(PageIntent(screen: HomeScreen));
                 } else if (state is LoadedSharedPrefSplashScrState) {
                   final user = context.user?.getUserInfo();
                   if (user?.token.isNotNullAndEmpty) {
