@@ -4,6 +4,7 @@ import 'package:kaylee/models/models.dart';
 
 class AppBloc extends Cubit {
   AppBloc() : super(InitState());
+  bool showingLoginDialog = false;
 
   void loggedIn(LoginResult result) {
     emit(LoggedInState(result: result));
