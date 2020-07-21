@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:anth_package/anth_package.dart' hide VoidCallback;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,42 +11,46 @@ import 'package:kaylee/widgets/widgets.dart';
 abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
   bool isShowLoading = false;
   AppBloc appBloc;
+  StreamSubscription appBlocSub;
 
   @override
   void initState() {
     super.initState();
     appBloc = context.cubit<AppBloc>();
-    appBloc.skip(1).listen((state) {
-      if (state is UnauthorizedState) {
-        print('[TUNG] ===> ErrorType.UNAUTHORIZED');
-        if (!appBloc.isShowingLoginDialog) {
-          appBloc.isShowingLoginDialog = true;
-          showKayleeAlertDialog(
-            context: context,
-            view: KayleeAlertDialogView.error(
-              error: state.error,
-              actions: [
-                KayleeAlertDialogAction(
-                  title: Strings.dangNhap,
-                  onPressed: () {
-                    popScreen();
-                    pushScreen(PageIntent(
-                        screen: LoginScreen,
-                        bundle: Bundle(LoginScreenData(
-                          openFrom: LoginScreenOpenFrom.LOGIN_DIALOG,
-                        ))));
-                  },
-                  isDefaultAction: true,
-                )
-              ],
-            ),
-            onDismiss: () {
-              appBloc.isShowingLoginDialog = false;
-            },
-          );
-        }
+    appBlocSub = appBloc.skip(1).listen((state) {
+      if (state is UnauthorizedState && !appBloc.isShowingLoginDialog) {
+        appBloc.isShowingLoginDialog = true;
+        showKayleeAlertDialog(
+          context: context,
+          view: KayleeAlertDialogView.error(
+            error: state.error,
+            actions: [
+              KayleeAlertDialogAction(
+                title: Strings.dangNhap,
+                onPressed: () {
+                  popScreen();
+                  pushScreen(PageIntent(
+                      screen: LoginScreen,
+                      bundle: Bundle(LoginScreenData(
+                        openFrom: LoginScreenOpenFrom.LOGIN_DIALOG,
+                      ))));
+                },
+                isDefaultAction: true,
+              )
+            ],
+          ),
+          onDismiss: () {
+            appBloc.isShowingLoginDialog = false;
+          },
+        );
       }
     });
+  }
+
+  @override
+  void dispose() {
+    appBlocSub.cancel();
+    super.dispose();
   }
 
   void showLoading({bool canDismiss = false, VoidCallback onDismiss}) {
