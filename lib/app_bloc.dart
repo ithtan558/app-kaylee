@@ -7,7 +7,7 @@ class AppBloc extends Cubit {
   bool isShowingLoginDialog = false;
 
   void loggedIn(LoginResult result) {
-    emit(UnauthorizedState(error: null));
+    emit(LoggedInState(result: result));
   }
 
   void loggedOut() => emit(LoggedOutState());

@@ -13,38 +13,38 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
   @override
   void initState() {
     super.initState();
-    appBloc = context.cubit<AppBloc>()
-      ..skip(1).listen((state) {
-        if (state is UnauthorizedState) {
-          print('[TUNG] ===> ErrorType.UNAUTHORIZED');
-          if (!appBloc.isShowingLoginDialog) {
-            appBloc.isShowingLoginDialog = true;
-            showKayleeAlertDialog(
-              context: context,
-              view: KayleeAlertDialogView.error(
-                error: state.error,
-                actions: [
-                  KayleeAlertDialogAction(
-                    title: Strings.dangNhap,
-                    onPressed: () {
-                      popScreen();
-                      pushScreen(PageIntent(
-                          screen: LoginScreen,
-                          bundle: Bundle(LoginScreenData(
-                            openFrom: LoginScreenOpenFrom.LOGIN_DIALOG,
-                          ))));
-                    },
-                    isDefaultAction: true,
-                  )
-                ],
-              ),
-              onDismiss: () {
-                appBloc.isShowingLoginDialog = false;
-              },
-            );
-          }
+    appBloc = context.cubit<AppBloc>();
+    appBloc.skip(1).listen((state) {
+      if (state is UnauthorizedState) {
+        print('[TUNG] ===> ErrorType.UNAUTHORIZED');
+        if (!appBloc.isShowingLoginDialog) {
+          appBloc.isShowingLoginDialog = true;
+          showKayleeAlertDialog(
+            context: context,
+            view: KayleeAlertDialogView.error(
+              error: state.error,
+              actions: [
+                KayleeAlertDialogAction(
+                  title: Strings.dangNhap,
+                  onPressed: () {
+                    popScreen();
+                    pushScreen(PageIntent(
+                        screen: LoginScreen,
+                        bundle: Bundle(LoginScreenData(
+                          openFrom: LoginScreenOpenFrom.LOGIN_DIALOG,
+                        ))));
+                  },
+                  isDefaultAction: true,
+                )
+              ],
+            ),
+            onDismiss: () {
+              appBloc.isShowingLoginDialog = false;
+            },
+          );
         }
-      });
+      }
+    });
   }
 
   void showLoading({bool canDismiss = false, VoidCallback onDismiss}) {
