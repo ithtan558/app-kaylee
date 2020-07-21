@@ -7,14 +7,14 @@ packages:
       name: _fe_analyzer_shared
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.0.0"
+    version: "6.0.0"
   analyzer:
     dependency: transitive
     description:
       name: analyzer
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.39.13"
+    version: "0.39.14"
   anth_package:
     dependency: "direct main"
     description:
@@ -134,6 +134,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.2"
+  cli_util:
+    dependency: transitive
+    description:
+      name: cli_util
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.4"
   code_builder:
     dependency: transitive
     description:
@@ -160,7 +167,7 @@ packages:
     description:
       path: "."
       ref: "0.4.7"
-      resolved-ref: "9efd6dc297b4e4167f7ae0a74f6666018b658fba"
+      resolved-ref: "1bfdda6fa937d385a726f19c20499ec7adce78cb"
       url: "https://github.com/tungpham6195/flutter.core_plugin.git"
     source: git
     version: "0.4.7+00407"
