@@ -12,6 +12,16 @@ import 'package:kaylee/widgets/widgets.dart';
 import 'bloc/bloc.dart';
 import 'bloc/state.dart';
 
+enum LoginScreenOpenFrom {
+  LOGIN_DIALOG,
+}
+
+class LoginScreenData {
+  LoginScreenOpenFrom openFrom;
+
+  LoginScreenData({this.openFrom});
+}
+
 class LoginScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<LoginScreenBloc>(
         create: (context) => LoginScreenBloc(
@@ -32,11 +42,13 @@ class _LoginScreenState extends KayleeState<LoginScreen> {
   final _phoneTController = TextEditingController();
   final _passTController = TextEditingController();
   LoginScreenBloc bloc;
+  LoginScreenData data;
 
   @override
   void initState() {
     super.initState();
     bloc = context.bloc<LoginScreenBloc>();
+    data = context.getArguments<LoginScreenData>();
   }
 
   @override
@@ -85,7 +97,12 @@ class _LoginScreenState extends KayleeState<LoginScreen> {
                     actions: [
                       KayleeAlertDialogAction.dongY(
                         onPressed: () {
-                          context.pushToTop(PageIntent(screen: HomeScreen));
+                          if (data.openFrom ==
+                              LoginScreenOpenFrom.LOGIN_DIALOG) {
+                            popScreen();
+                          } else {
+                            context.pushToTop(PageIntent(screen: HomeScreen));
+                          }
                         },
                       )
                     ],

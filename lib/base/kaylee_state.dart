@@ -14,29 +14,34 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
   void initState() {
     super.initState();
     appBloc = context.cubit<AppBloc>()
-      ..listen((state) {
+      ..skip(1).listen((state) {
         if (state is UnauthorizedState) {
           print('[TUNG] ===> ErrorType.UNAUTHORIZED');
-          if (!appBloc.showingLoginDialog) {
-            appBloc.showingLoginDialog = true;
+          if (!appBloc.isShowingLoginDialog) {
+            appBloc.isShowingLoginDialog = true;
             showKayleeAlertDialog(
-                context: context,
-                view: KayleeAlertDialogView.error(
-                  error: state.error,
-                  actions: [
-                    KayleeAlertDialogAction(
-                      title: Strings.dangNhap,
-                      onPressed: () {
-                        pushScreen(PageIntent(screen: LoginScreen));
-                        popScreen();
-                      },
-                      isDefaultAction: true,
-                    )
-                  ],
-                ),
-                onDismiss: () {
-                  appBloc.showingLoginDialog = false;
-                });
+              context: context,
+              view: KayleeAlertDialogView.error(
+                error: state.error,
+                actions: [
+                  KayleeAlertDialogAction(
+                    title: Strings.dangNhap,
+                    onPressed: () {
+                      popScreen();
+                      pushScreen(PageIntent(
+                          screen: LoginScreen,
+                          bundle: Bundle(LoginScreenData(
+                            openFrom: LoginScreenOpenFrom.LOGIN_DIALOG,
+                          ))));
+                    },
+                    isDefaultAction: true,
+                  )
+                ],
+              ),
+              onDismiss: () {
+                appBloc.isShowingLoginDialog = false;
+              },
+            );
           }
         }
       });
