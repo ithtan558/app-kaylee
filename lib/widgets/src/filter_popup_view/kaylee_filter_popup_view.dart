@@ -210,13 +210,19 @@ class _FilterListState extends BaseState<_FilterList>
           if (animController.isDismissed) {
             return Container();
           }
-          return Transform.scale(
-            child: Opacity(
-              child: child,
-              opacity: animController.value,
+          return GestureDetector(
+            onTap: () {
+              //chỗ này để tap lên ko bị close filter
+              //ko đc bỏ
+            },
+            child: Transform.scale(
+              child: Opacity(
+                child: child,
+                opacity: animController.value,
+              ),
+              scale: animController.value,
+              alignment: Alignment.topLeft,
             ),
-            scale: animController.value,
-            alignment: Alignment.topLeft,
           );
         },
         child: _buildFilterList(),
