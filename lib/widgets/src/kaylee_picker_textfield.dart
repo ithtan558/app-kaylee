@@ -75,6 +75,10 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField> {
                   } else {
                     showAlert(content: Strings.xinVuiLongChonQuan);
                   }
+                } else if (T == StartTime) {
+                  showPicker();
+                } else if (T == EndTime) {
+                  showPicker();
                 }
               },
               child: Container(
@@ -143,7 +147,13 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField> {
     showPickerPopup(
         context: context,
         onDone: () {
-          widget.controller?.value = currentValue;
+          if (T == EndTime || T == StartTime) {
+            if (widget.controller?.value == null || currentValue != null) {
+              widget.controller?.value = currentValue;
+            }
+          } else {
+            widget.controller?.value = currentValue;
+          }
         },
         onDismiss: () {
           currentValue = null;
@@ -151,12 +161,19 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField> {
         builder: (context) {
           return CubitProvider.value(
             value: bloc,
-            child: _PickerView<T>(
-              intiValue: widget.controller?.value,
-              onSelectedItemChanged: (value) {
-                currentValue = value;
-              },
-            ),
+            child: T == StartTime || T == EndTime
+                ? _TimePickerView<T>(
+                    intiValue: widget.controller?.value,
+                    onSelectedItemChanged: (value) {
+                      currentValue = value;
+                    },
+                  )
+                : _PickerView<T>(
+                    intiValue: widget.controller?.value,
+                    onSelectedItemChanged: (value) {
+                      currentValue = value;
+                    },
+                  ),
           );
         }).then((value) {
       setState(() {
@@ -171,8 +188,55 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField> {
 String _getTitle(dynamic item) {
   if (item is City || item is District || item is Ward) {
     return item.name;
+  } else if (item is StartTime || item is EndTime) {
+    return item.time;
   }
   return '';
+}
+
+class _TimePickerView<T> extends StatefulWidget {
+  final ValueChanged onSelectedItemChanged;
+  final T intiValue;
+
+  _TimePickerView({this.onSelectedItemChanged, this.intiValue});
+
+  @override
+  _TimePickerViewState<T> createState() => _TimePickerViewState<T>();
+}
+
+class _TimePickerViewState<T> extends BaseState<_TimePickerView> {
+  DateTime initDateTime;
+
+  @override
+  void initState() {
+    super.initState();
+    try {} catch (e, s) {
+      print('[TUNG] ===> $s');
+    }
+    if (widget.intiValue is StartTime || widget.intiValue is EndTime) {
+      initDateTime = widget.intiValue.datetime;
+    } else {
+      initDateTime = DateTime(0);
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoDatePicker(
+      mode: CupertinoDatePickerMode.time,
+      initialDateTime: initDateTime,
+      onDateTimeChanged: (DateTime value) {
+        widget.onSelectedItemChanged?.call(T == StartTime
+            ? StartTime(time: DateFormat('HH:mm').format(value))
+            : EndTime(time: DateFormat('HH:mm').format(value)));
+      },
+    );
+  }
 }
 
 class _PickerView<T> extends StatefulWidget {
@@ -268,6 +332,8 @@ class _PickerViewState<T> extends BaseState<_PickerView> {
 class PickInputController<T> {
   _KayleePickerTextFieldState _view;
   T value;
+
+  PickInputController({this.value});
 }
 
 class _PickerViewBloc<T> extends Cubit<SingleModel<List<T>>> {
@@ -344,22 +410,28 @@ class KayleePickerTextFieldBloc extends Cubit<KayleePickerTextFieldState> {
       emit(KayleePickerTextFieldState.copy(state..city = value));
     } else if (value is District) {
       emit(KayleePickerTextFieldState.copy(state..district = value));
+    } else if (value is StartTime) {
+      emit(KayleePickerTextFieldState.copy(state..startTime = value));
+    } else if (value is EndTime) {
+      emit(KayleePickerTextFieldState.copy(state..endTime = value));
     }
   }
-
-  void updateDistrict({District district}) =>
-      emit(KayleePickerTextFieldState.copy(state..district = district));
 }
 
 class KayleePickerTextFieldState {
   City city;
   District district;
+  StartTime startTime;
+  EndTime endTime;
 
-  KayleePickerTextFieldState({this.city, this.district});
+  KayleePickerTextFieldState(
+      {this.city, this.district, this.startTime, this.endTime});
 
   KayleePickerTextFieldState.copy(KayleePickerTextFieldState old) {
     this
       ..city = old?.city
-      ..district = old?.district;
+      ..district = old?.district
+      ..startTime = old?.startTime
+      ..endTime = old?.endTime;
   }
 }
