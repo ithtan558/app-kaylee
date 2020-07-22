@@ -5,7 +5,7 @@ import 'package:kaylee/models/models.dart';
 part 'brands.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class Brands extends PageData<Brand> {
+class Brands extends PageData<List<Brand>> {
   factory Brands.fromJson(Map<String, dynamic> json) => _$BrandsFromJson(json);
 
   Map<String, dynamic> toJson() => _$BrandsToJson(this);
