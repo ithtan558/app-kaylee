@@ -18,4 +18,6 @@ class District {
   int id;
   String name;
   int cityId;
+  @JsonKey(ignore: true)
+  bool selected = false;
 }
