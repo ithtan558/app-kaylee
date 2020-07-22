@@ -15,8 +15,7 @@ Ward _$WardFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$WardToJson(Ward instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$WardToJson(Ward instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'city_id': instance.cityId,
