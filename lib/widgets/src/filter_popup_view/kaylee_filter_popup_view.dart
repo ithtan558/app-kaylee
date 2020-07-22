@@ -207,9 +207,6 @@ class _FilterListState extends BaseState<_FilterList>
       child: AnimatedBuilder(
         animation: animController,
         builder: (context, child) {
-          if (animController.isDismissed) {
-            return Container();
-          }
           return GestureDetector(
             onTap: () {
               //chỗ này để tap lên ko bị close filter
