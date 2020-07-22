@@ -30,8 +30,7 @@ class _BranchListScreenState extends KayleeState<BranchListScreen> {
   @override
   void initState() {
     super.initState();
-    brandListBloc = context.cubit<BrandListBloc>()
-      ..loadBrands();
+    brandListBloc = context.cubit<BrandListBloc>()..loadBrands();
   }
 
   @override
