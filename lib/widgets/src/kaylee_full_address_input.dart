@@ -93,10 +93,10 @@ class KayleeFullAddressController {
   KayleeFullAddressController(
       {this.initAddress, this.initCity, this.initDistrict, this.initWard});
 
-  final String initAddress;
-  final City initCity;
-  final District initDistrict;
-  final Ward initWard;
+  String initAddress;
+  City initCity;
+  District initDistrict;
+  Ward initWard;
 
   String get address => _view?.addressTFController?.text ?? '';
 
