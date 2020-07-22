@@ -33,4 +33,8 @@ class Brand {
   City city;
   District district;
   Ward wards;
+
+  StartTime get start => StartTime(time: this.startTime);
+
+  EndTime get end => EndTime(time: this.endTime);
 }
