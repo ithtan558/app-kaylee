@@ -7,8 +7,15 @@ class KayleeFilterPopUpView extends StatefulWidget {
   final KayleeAppBar appBar;
   final Widget body;
   final Widget floatingActionButton;
+  final Widget filterList;
+  final Widget filterTags;
 
-  KayleeFilterPopUpView({this.appBar, this.body, this.floatingActionButton});
+  KayleeFilterPopUpView(
+      {this.appBar,
+      this.body,
+      this.floatingActionButton,
+      this.filterList,
+      this.filterTags});
 
   @override
   _KayleeFilterPopUpViewState createState() =>
@@ -59,21 +66,7 @@ class _KayleeFilterPopUpViewState extends BaseState<KayleeFilterPopUpView> {
                     Expanded(
                       child: Container(
                         height: Dimens.px32,
-                        child: ListView.separated(
-                          itemCount: 10,
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: Dimens.px8),
-                          itemBuilder: (context, index) {
-                            return KayleeFilterListItem(
-                              title: 'Tất cả',
-                              disable: true,
-                            );
-                          },
-                          separatorBuilder: (context, index) =>
-                              SizedBox(width: Dimens.px8),
-                        ),
+                        child: widget.filterTags ?? Container(),
                       ),
                     ),
                   ],
@@ -93,6 +86,7 @@ class _KayleeFilterPopUpViewState extends BaseState<KayleeFilterPopUpView> {
                     ),
                     _FilterList(
                       controller: filterViewController,
+                      list: widget.filterList,
                     ),
                   ],
                 ),
@@ -170,7 +164,9 @@ class _FilterButtonState extends BaseState<_FilterButton> {
 class _FilterList extends StatefulWidget {
   final _FilterViewController controller;
 
-  _FilterList({this.controller});
+  final Widget list;
+
+  _FilterList({this.controller, this.list});
 
   @override
   _FilterListState createState() => new _FilterListState();
@@ -214,18 +210,13 @@ class _FilterListState extends BaseState<_FilterList>
           if (animController.isDismissed) {
             return Container();
           }
-          return GestureDetector(
-            onTap: () {
-              FocusScope.of(context).unfocus();
-            },
-            child: Transform.scale(
-              child: Opacity(
-                child: child,
-                opacity: animController.value,
-              ),
-              scale: animController.value,
-              alignment: Alignment.topLeft,
+          return Transform.scale(
+            child: Opacity(
+              child: child,
+              opacity: animController.value,
             ),
+            scale: animController.value,
+            alignment: Alignment.topLeft,
           );
         },
         child: _buildFilterList(),
@@ -251,54 +242,7 @@ class _FilterListState extends BaseState<_FilterList>
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(Dimens.px10),
         ),
-        child: ListView.separated(
-          padding: const EdgeInsets.only(
-              left: Dimens.px24,
-              right: Dimens.px24,
-              top: Dimens.px24,
-              bottom: Dimens.px16),
-          itemBuilder: (c, index) {
-            if (index == 0) {
-              return WrapperFilter(
-                title: 'Chọn lọc',
-                isAll: true,
-                children: <Widget>[
-                  KayleeFilterListItem(
-                    title: 'Tất cả',
-                    onTap: (isSelected) {},
-                  ),
-                ],
-              );
-            }
-            return WrapperFilter(
-              title: 'Theo địa điểm phục vụ',
-              children: <Widget>[
-                KayleeFilterListItem(
-                  title: 'Tất cả',
-                  onTap: (isSelected) {},
-                ),
-                KayleeFilterListItem(
-                  title: 'Annam Spa & Fitness',
-                  onTap: (isSelected) {},
-                ),
-                KayleeFilterListItem(
-                  title: 'Princess Spa',
-                  onTap: (isSelected) {},
-                ),
-                KayleeFilterListItem(
-                  title: 'Ánh Dương Fitness & Spa',
-                  onTap: (isSelected) {},
-                )
-              ],
-            );
-          },
-          itemCount: 4,
-          separatorBuilder: (BuildContext context, int index) {
-            return Container(
-              height: Dimens.px16,
-            );
-          },
-        ),
+        child: widget.list ?? Container(),
       ),
     );
   }
