@@ -70,16 +70,17 @@ class BranchItem extends StatelessWidget {
             ),
             Positioned.fill(
                 child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    onTap: () {
-                      context.push(PageIntent(
-                          screen: CreateNewBranchScreen,
-                          bundle: Bundle(NewBranchScreenData(
-                              openFrom: BranchScreenOpenFrom.branchItem))));
-                    },
-                  ),
-                )),
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () {
+                  context.push(PageIntent(
+                      screen: CreateNewBranchScreen,
+                      bundle: Bundle(NewBranchScreenData(
+                          openFrom: BranchScreenOpenFrom.branchItem,
+                          brand: brand))));
+                },
+              ),
+            )),
           ],
         ),
       ),
