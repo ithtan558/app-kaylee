@@ -5,6 +5,7 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/branch/list/bloc/brand_list_bloc.dart';
 import 'package:kaylee/screens/src/branch/list/widgets/branch_item.dart';
+import 'package:kaylee/screens/src/branch/list/widgets/brand_filter_list.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
@@ -51,48 +52,7 @@ class _BranchListScreenState extends KayleeState<BranchListScreen> {
         },
         separatorBuilder: (context, index) => SizedBox(width: Dimens.px8),
       ),
-      filterList: ListView.separated(
-        padding: const EdgeInsets.only(
-            left: Dimens.px24,
-            right: Dimens.px24,
-            top: Dimens.px24,
-            bottom: Dimens.px16),
-        itemBuilder: (c, index) {
-          if (index == 0) {
-            return WrapperFilter(
-              title: 'Chọn lọc',
-              isAll: true,
-            );
-          }
-          return WrapperFilter(
-            title: 'Theo địa điểm phục vụ',
-            children: <Widget>[
-              KayleeFilterListItem(
-                title: 'Tất cả',
-                onTap: (isSelected) {},
-              ),
-              KayleeFilterListItem(
-                title: 'Annam Spa & Fitness',
-                onTap: (isSelected) {},
-              ),
-              KayleeFilterListItem(
-                title: 'Princess Spa',
-                onTap: (isSelected) {},
-              ),
-              KayleeFilterListItem(
-                title: 'Ánh Dương Fitness & Spa',
-                onTap: (isSelected) {},
-              )
-            ],
-          );
-        },
-        itemCount: 4,
-        separatorBuilder: (BuildContext context, int index) {
-          return Container(
-            height: Dimens.px16,
-          );
-        },
-      ),
+      filterList: BrandFilterList.newInstance(),
       body: ListView.separated(
           padding: const EdgeInsets.only(
               bottom: Dimens.px16,

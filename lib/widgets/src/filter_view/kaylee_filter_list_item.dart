@@ -76,7 +76,7 @@ class WrapperFilter extends StatelessWidget {
           direction: Axis.horizontal,
           runSpacing: Dimens.px16,
           spacing: Dimens.px16,
-          children: [if (children.isNotNullAndEmpty) ...children],
+          children: [if (children.isNotNullAndEmpty) ...children.sublist(0, 1)],
         ),
       ],
     );
