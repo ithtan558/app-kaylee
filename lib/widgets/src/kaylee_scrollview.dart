@@ -28,7 +28,7 @@ class _KayleeScrollviewState extends State<KayleeScrollview> {
               child: widget.child,
             ),
           ),
-          widget.bottom,
+          widget.bottom ?? Container(),
         ],
       ),
     );
