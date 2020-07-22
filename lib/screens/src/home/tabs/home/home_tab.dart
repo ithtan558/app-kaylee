@@ -83,11 +83,8 @@ class _HomeTabState extends KayleeState<HomeTab> {
               CubitProvider<ScrollOffsetBloc>.value(
                   value: scrollOffsetBloc, child: HomeMenu.newInstance()),
               Expanded(
-                child: KayleeLoadmoreHandler(
-                  loadWhen: () =>
-                      !supplierListBloc.state.loading &&
-                      !supplierListBloc.state.ended,
-                  onLoadMore: supplierListBloc.loadMore,
+                child: KayleeLoadMoreHandler(
+                  controller: context.cubit<SupplierListBloc>(),
                   child: CubitBuilder<SupplierListBloc, LoadMoreModel>(
                     builder: (context, state) {
                       return ListView.separated(

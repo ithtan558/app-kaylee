@@ -1,18 +1,18 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/base/loadmore_interface.dart';
 
-class KayleeLoadmoreHandler extends StatefulWidget {
+class KayleeLoadMoreHandler extends StatefulWidget {
   final Widget child;
-  final VoidCallback onLoadMore;
-  final ValueGetter<bool> loadWhen;
+  final LoadMoreInterface controller;
 
-  KayleeLoadmoreHandler({@required this.child, this.onLoadMore, this.loadWhen});
+  KayleeLoadMoreHandler({@required this.child, this.controller});
 
   @override
-  _KayleeLoadmoreHandlerState createState() => _KayleeLoadmoreHandlerState();
+  _KayleeLoadMoreHandlerState createState() => _KayleeLoadMoreHandlerState();
 }
 
-class _KayleeLoadmoreHandlerState extends BaseState<KayleeLoadmoreHandler> {
+class _KayleeLoadMoreHandlerState extends BaseState<KayleeLoadMoreHandler> {
   @override
   Widget build(BuildContext context) {
     return NotificationListener<ScrollNotification>(
@@ -25,8 +25,8 @@ class _KayleeLoadmoreHandlerState extends BaseState<KayleeLoadmoreHandler> {
           if (notification.metrics.pixels >=
                   notification.metrics.maxScrollExtent &&
               !notification.metrics.outOfRange) {
-            if (widget.loadWhen?.call() ?? false) {
-              widget.onLoadMore?.call();
+            if (widget.controller?.loadWhen() ?? false) {
+              widget.controller?.loadMore();
             }
           }
         }

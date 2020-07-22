@@ -1,9 +1,11 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:cubit/cubit.dart';
+import 'package:kaylee/base/loadmore_interface.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/services/services.dart';
 
-class SupplierListBloc extends Cubit<LoadMoreModel<Supplier>> {
+class SupplierListBloc extends Cubit<LoadMoreModel<Supplier>>
+    implements LoadMoreInterface {
   final SupplierService supplierService;
 
   SupplierListBloc({this.supplierService}) : super(LoadMoreModel());
@@ -31,12 +33,14 @@ class SupplierListBloc extends Cubit<LoadMoreModel<Supplier>> {
     );
   }
 
+  @override
   void loadMore() {
-    if (!state.ended) {
-      state.page++;
-      loadSuppliers();
-    }
+    state.page++;
+    loadSuppliers();
   }
+
+  @override
+  bool loadWhen() => !state.loading && !state.ended;
 }
 
 class SupplierListModel extends LoadMoreModel<Supplier> {
