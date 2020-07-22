@@ -1,11 +1,14 @@
+import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class BranchItem extends StatelessWidget {
-  final void Function() onTap;
+  final Brand brand;
 
-  BranchItem({this.onTap});
+  BranchItem({this.brand});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +26,7 @@ class BranchItem extends StatelessWidget {
                 child: AspectRatio(
                   aspectRatio: 343 / 188,
                   child: Image.network(
-                    'https://4.bp.blogspot.com/-Ol8xX1AEVwA/V8Z4x_ILPAI/AAAAAAAAH0s/gn3uRTi6ZdYOAuQ-otFBKM3_guiu92lngCLcB/s1600/annam%25281%2529.jpg',
+                    brand.image ?? '',
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -46,17 +49,17 @@ class BranchItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        KayleeText.normalWhite16W500('Annam Spa & Fitness'),
+                        KayleeText.normalWhite16W500(brand.name ?? ''),
                         Padding(
                           padding:
                               const EdgeInsets.symmetric(vertical: Dimens.px4),
                           child: KayleeText.textFieldBorder12W400(
-                            '35/6A Nguyễn Đình Chiểu, P6, Q3, Tp.HCM',
+                            brand.location ?? '',
                             maxLines: 1,
                           ),
                         ),
                         KayleeText.textFieldBorder12W400(
-                          'Giờ mở cửa: 10:00 AM - 11:00 PM',
+                          'Giờ mở cửa: ${brand.startTime} - ${brand.endTime}',
                           maxLines: 1,
                         ),
                       ],
@@ -67,11 +70,16 @@ class BranchItem extends StatelessWidget {
             ),
             Positioned.fill(
                 child: Material(
-              color: Colors.transparent,
-              child: InkWell(
-                onTap: onTap,
-              ),
-            )),
+                  color: Colors.transparent,
+                  child: InkWell(
+                    onTap: () {
+                      context.push(PageIntent(
+                          screen: CreateNewBranchScreen,
+                          bundle: Bundle(NewBranchScreenData(
+                              openFrom: BranchScreenOpenFrom.branchItem))));
+                    },
+                  ),
+                )),
           ],
         ),
       ),
