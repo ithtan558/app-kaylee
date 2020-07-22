@@ -28,7 +28,7 @@ class _CreateNewBranchScreenState extends BaseState<CreateNewBranchScreen> {
   @override
   void initState() {
     super.initState();
-    final data = context.bundle.args as NewBranchScreenData;
+    final data = context.getArguments() as NewBranchScreenData;
     openFrom = data?.openFrom;
   }
 
