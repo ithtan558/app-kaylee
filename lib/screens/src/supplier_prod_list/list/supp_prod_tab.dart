@@ -51,7 +51,8 @@ class _SuppProdTabState extends KayleeState<SuppProdTab> {
 
   @override
   Widget build(BuildContext context) {
-    return KayleeLoadmoreHandler(
+    return KayleeLoadMoreHandler(
+      controller: context.cubit<SupplierProdListBloc>(),
       child: CubitBuilder<SupplierProdListBloc, LoadMoreModel<Product>>(
         buildWhen: (previous, current) {
           return !current.loading;
@@ -84,8 +85,6 @@ class _SuppProdTabState extends KayleeState<SuppProdTab> {
           );
         },
       ),
-      loadWhen: () => !prodsBloc.state.loading && !prodsBloc.state.ended,
-      onLoadMore: prodsBloc.loadMore,
     );
   }
 }

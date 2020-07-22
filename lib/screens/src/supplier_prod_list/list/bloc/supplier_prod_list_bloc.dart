@@ -1,10 +1,12 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:cubit/cubit.dart';
 import 'package:flutter/foundation.dart';
+import 'package:kaylee/base/loadmore_interface.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/services/services.dart';
 
-class SupplierProdListBloc extends Cubit<LoadMoreModel<Product>> {
+class SupplierProdListBloc extends Cubit<LoadMoreModel<Product>>
+    implements LoadMoreInterface {
   final ProductService productService;
   int supplierId;
   int cateId;
@@ -38,10 +40,12 @@ class SupplierProdListBloc extends Cubit<LoadMoreModel<Product>> {
     );
   }
 
+  @override
   void loadMore() {
-    if (!state.ended) {
-      state.page++;
-      loadProds();
-    }
+    state.page++;
+    loadProds();
   }
+
+  @override
+  bool loadWhen() => !state.loading && !state.ended;
 }
