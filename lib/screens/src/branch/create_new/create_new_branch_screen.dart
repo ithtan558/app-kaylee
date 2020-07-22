@@ -1,14 +1,16 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/src/kaylee_picker_textfield.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class NewBranchScreenData {
   final BranchScreenOpenFrom openFrom;
+  final Brand brand;
 
-  NewBranchScreenData({this.openFrom});
+  NewBranchScreenData({this.brand, this.openFrom});
 }
 
 enum BranchScreenOpenFrom { branchItem, addNewBranchBtn }
@@ -24,12 +26,41 @@ class CreateNewBranchScreen extends StatefulWidget {
 
 class _CreateNewBranchScreenState extends BaseState<CreateNewBranchScreen> {
   BranchScreenOpenFrom openFrom;
+  final startTimeController = PickInputController<StartTime>();
+  final endTimeController = PickInputController<EndTime>();
+  final nameTfController = TextEditingController();
+  final nameFocus = FocusNode();
+  final addressController = KayleeFullAddressController();
+  final phoneTfController = TextEditingController();
+  final phoneFocus = FocusNode();
+  String banner;
 
   @override
   void initState() {
     super.initState();
     final data = context.getArguments() as NewBranchScreenData;
     openFrom = data?.openFrom;
+    if (openFrom == BranchScreenOpenFrom.branchItem && data.brand.isNotNull) {
+      banner = data.brand.image;
+      nameTfController.text = data.brand.name ?? '';
+      addressController
+        ..initAddress = data.brand.location ?? ''
+        ..initCity = data.brand.city
+        ..initDistrict = data.brand.district
+        ..initWard = data.brand.wards;
+      phoneTfController.text = data.brand.phone ?? '';
+      startTimeController.value = data.brand.start;
+      endTimeController.value = data.brand.end;
+    }
+  }
+
+  @override
+  void dispose() {
+    nameTfController.dispose();
+    phoneTfController.dispose();
+    nameFocus.dispose();
+    phoneFocus.dispose();
+    super.dispose();
   }
 
   @override
@@ -63,6 +94,9 @@ class _CreateNewBranchScreenState extends BaseState<CreateNewBranchScreen> {
               child: KayleeTextField.normal(
                 title: Strings.tenCuaHang,
                 hint: Strings.tenCuaHangHint,
+                controller: nameTfController,
+                focusNode: nameFocus,
+                textInputAction: TextInputAction.next,
               ),
             ),
             Padding(
@@ -70,6 +104,7 @@ class _CreateNewBranchScreenState extends BaseState<CreateNewBranchScreen> {
                   left: Dimens.px16, right: Dimens.px16, bottom: Dimens.px16),
               child: KayleeFullAddressInput(
                 title: Strings.diaChi,
+                controller: addressController,
               ),
             ),
             Padding(
@@ -77,6 +112,8 @@ class _CreateNewBranchScreenState extends BaseState<CreateNewBranchScreen> {
                   left: Dimens.px16, right: Dimens.px16, bottom: Dimens.px16),
               child: KayleeTextField.phoneInput(
                 title: Strings.soDienThoai,
+                textInputAction: TextInputAction.done,
+                focusNode: phoneFocus,
               ),
             ),
             Padding(
@@ -85,14 +122,16 @@ class _CreateNewBranchScreenState extends BaseState<CreateNewBranchScreen> {
               child: Row(
                 children: [
                   Expanded(
-                    child: KayleePickerTextField(
+                    child: KayleePickerTextField<StartTime>(
                       title: Strings.gioMoCua,
+                      controller: startTimeController,
                     ),
                   ),
                   SizedBox(width: Dimens.px8),
                   Expanded(
-                    child: KayleePickerTextField(
+                    child: KayleePickerTextField<EndTime>(
                       title: Strings.gioDongCua,
+                      controller: endTimeController,
                     ),
                   )
                 ],
