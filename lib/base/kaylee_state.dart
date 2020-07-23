@@ -17,39 +17,12 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
   void initState() {
     super.initState();
     appBloc = context.cubit<AppBloc>();
-    appBlocSub = appBloc.skip(1).listen((state) {
-      if (state is UnauthorizedState && !appBloc.isShowingLoginDialog) {
-        appBloc.isShowingLoginDialog = true;
-        showKayleeAlertDialog(
-          context: context,
-          view: KayleeAlertDialogView.error(
-            error: state.error,
-            actions: [
-              KayleeAlertDialogAction(
-                title: Strings.dangNhap,
-                onPressed: () {
-                  popScreen();
-                  pushScreen(PageIntent(
-                      screen: LoginScreen,
-                      bundle: Bundle(LoginScreenData(
-                        openFrom: LoginScreenOpenFrom.LOGIN_DIALOG,
-                      ))));
-                },
-                isDefaultAction: true,
-              )
-            ],
-          ),
-          onDismiss: () {
-            appBloc.isShowingLoginDialog = false;
-          },
-        );
-      }
-    });
+    _listenAppBloc();
   }
 
   @override
   void dispose() {
-    appBlocSub.cancel();
+    appBlocSub?.cancel();
     super.dispose();
   }
 
@@ -79,5 +52,43 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
       isShowLoading = false;
       popScreen();
     }
+  }
+
+  void _listenAppBloc() async {
+    int length = 0;
+    try {
+      length = await appBloc.length;
+    } catch (e, s) {
+      print('[TUNG] ===> $s');
+    }
+//    print('[TUNG] ===> appBloc.length ${await appBloc.length}');
+    appBlocSub = appBloc.skip(0).listen((state) {
+      if (state is UnauthorizedState && !appBloc.isShowingLoginDialog) {
+        appBloc.isShowingLoginDialog = true;
+        showKayleeAlertDialog(
+          context: context,
+          view: KayleeAlertDialogView.error(
+            error: state.error,
+            actions: [
+              KayleeAlertDialogAction(
+                title: Strings.dangNhap,
+                onPressed: () {
+                  popScreen();
+                  pushScreen(PageIntent(
+                      screen: LoginScreen,
+                      bundle: Bundle(LoginScreenData(
+                        openFrom: LoginScreenOpenFrom.LOGIN_DIALOG,
+                      ))));
+                },
+                isDefaultAction: true,
+              )
+            ],
+          ),
+          onDismiss: () {
+            appBloc.isShowingLoginDialog = false;
+          },
+        );
+      }
+    });
   }
 }

@@ -33,22 +33,21 @@ class _ProdListScreenState extends KayleeState<ProdListScreen> {
   @override
   void initState() {
     super.initState();
-    cateBloc = context.cubit<ProdCateBloc>()
-      ..loadProdCate();
+    cateBloc = context.cubit<ProdCateBloc>()..loadProdCate();
     sub = cateBloc.listen((state) {
       if (!state.loading) {
         hideLoading();
+        if (state.code.isNotNull && state.code != ErrorType.UNAUTHORIZED) {
+          showKayleeAlertErrorYesDialog(
+            context: context,
+            error: state.error,
+            onPressed: () {
+              popScreen();
+            },
+          );
+        }
       } else if (state.loading) {
         showLoading();
-      } else if (state.code.isNotNull) {
-        hideLoading();
-        showKayleeAlertErrorYesDialog(
-          context: context,
-          error: state.error,
-          onPressed: () {
-            popScreen();
-          },
-        );
       }
     });
   }
