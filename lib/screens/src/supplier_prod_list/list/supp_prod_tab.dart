@@ -14,11 +14,11 @@ import 'package:kaylee/widgets/widgets.dart';
 
 class SuppProdTab extends StatefulWidget {
   static Widget newInstance() => CubitProvider<SupplierProdListBloc>(
-    create: (context) => SupplierProdListBloc(
-        productService:
-        context.repository<NetworkModule>().provideProductService()),
-    child: SuppProdTab._(),
-  );
+        create: (context) => SupplierProdListBloc(
+            productService:
+                context.repository<NetworkModule>().provideProductService()),
+        child: SuppProdTab._(),
+      );
 
   SuppProdTab._();
 
@@ -38,9 +38,9 @@ class _SuppProdTabState extends KayleeState<SuppProdTab> {
       ..cateId = context.repository<Category>().id
       ..loadProds();
     sub = prodsBloc.listen((state) {
-      if (!state.loading) {
-      } else if (state.loading) {
-      } else if (state.code.isNotNull) {}
+      if (state.code.isNotNull) {
+        showKayleeAlertErrorYesDialog(context: context, error: state.error);
+      }
     });
   }
 
