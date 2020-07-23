@@ -76,6 +76,7 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
 
   void hideLoading() {
     if (isShowLoading) {
+      isShowLoading = false;
       popScreen();
     }
   }
