@@ -41,7 +41,6 @@ class _SuppProdTabState extends KayleeState<SuppProdTab> {
       })
       ..cateId = context.repository<Category>().id
       ..loadProds();
-    ;
   }
 
   @override
