@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,11 +14,11 @@ import 'package:kaylee/widgets/widgets.dart';
 
 class SuppProdTab extends StatefulWidget {
   static Widget newInstance() => CubitProvider<SupplierProdListBloc>(
-        create: (context) => SupplierProdListBloc(
-            productService:
-                context.repository<NetworkModule>().provideProductService()),
-        child: SuppProdTab._(),
-      );
+    create: (context) => SupplierProdListBloc(
+        productService:
+        context.repository<NetworkModule>().provideProductService()),
+    child: SuppProdTab._(),
+  );
 
   SuppProdTab._();
 
@@ -26,25 +28,25 @@ class SuppProdTab extends StatefulWidget {
 
 class _SuppProdTabState extends KayleeState<SuppProdTab> {
   SupplierProdListBloc prodsBloc;
+  StreamSubscription sub;
 
   @override
   void initState() {
     super.initState();
     prodsBloc = context.cubit<SupplierProdListBloc>()
       ..supplierId = (context.bundle.args as Supplier).id
-      ..listen((state) {
-        if (!state.loading) {
-        } else if (state.loading) {
-        } else if (state.code.isNotNull) {
-          hideLoading();
-        }
-      })
       ..cateId = context.repository<Category>().id
       ..loadProds();
+    sub = prodsBloc.listen((state) {
+      if (!state.loading) {
+      } else if (state.loading) {
+      } else if (state.code.isNotNull) {}
+    });
   }
 
   @override
   void dispose() {
+    sub.cancel();
     super.dispose();
   }
 
