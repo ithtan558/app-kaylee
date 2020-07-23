@@ -1,11 +1,23 @@
+import 'dart:async';
+
+import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/base/kaylee_state.dart';
+import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
+import 'package:kaylee/screens/src/product/list/bloc/prod_cate_bloc.dart';
+import 'package:kaylee/screens/src/product/list/products_tab.dart';
+import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class ProdListScreen extends StatefulWidget {
-  static Widget newInstance() => ProdListScreen._();
+  static Widget newInstance() => CubitProvider<ProdCateBloc>(
+      create: (context) => ProdCateBloc(
+            productService: context.network.provideProductService(),
+          ),
+      child: ProdListScreen._());
 
   ProdListScreen._();
 
@@ -13,14 +25,38 @@ class ProdListScreen extends StatefulWidget {
   _ProdListScreenState createState() => _ProdListScreenState();
 }
 
-class _ProdListScreenState extends BaseState<ProdListScreen> {
+class _ProdListScreenState extends KayleeState<ProdListScreen> {
+  ProdCateBloc cateBloc;
+  final pageController = PageController();
+  StreamSubscription sub;
+
   @override
   void initState() {
     super.initState();
+    cateBloc = context.cubit<ProdCateBloc>()
+      ..loadProdCate();
+    sub = cateBloc.listen((state) {
+      if (!state.loading) {
+        hideLoading();
+      } else if (state.loading) {
+        showLoading();
+      } else if (state.code.isNotNull) {
+        hideLoading();
+        showKayleeAlertErrorYesDialog(
+          context: context,
+          error: state.error,
+          onPressed: () {
+            popScreen();
+          },
+        );
+      }
+    });
   }
 
   @override
   void dispose() {
+    sub.cancel();
+    pageController.dispose();
     super.dispose();
   }
 
@@ -30,7 +66,33 @@ class _ProdListScreenState extends BaseState<ProdListScreen> {
       appBar: KayleeAppBar(
         title: Strings.danhMucSanPham,
       ),
-//      body: _buildProdList(),
+      tabBar: CubitBuilder<ProdCateBloc, SingleModel<List<Category>>>(
+        builder: (context, state) {
+          final categories = state.item;
+          return KayleeTabBar(
+            itemCount: categories?.length,
+            pageController: pageController,
+            mapTitle: (index) =>
+            categories
+                .elementAt(index)
+                .name,
+          );
+        },
+      ),
+      pageView: CubitBuilder<ProdCateBloc, SingleModel<List<Category>>>(
+        builder: (context, state) {
+          final categories = state.item ?? [];
+          return KayleePageView(
+            itemBuilder: (context, index) {
+              return RepositoryProvider<Category>.value(
+                  value: categories.elementAt(index),
+                  child: ProductsTab.newInstance());
+            },
+            controller: pageController,
+            itemCount: categories?.length,
+          );
+        },
+      ),
       floatingActionButton: KayleeFloatButton(
         onTap: () {
           pushScreen(PageIntent(
@@ -39,29 +101,6 @@ class _ProdListScreenState extends BaseState<ProdListScreen> {
                   openFrom: NewProdScreenOpenFrom.addNewProdBtn))));
         },
       ),
-    );
-  }
-
-  _buildProdList() {
-    return KayleeGridView(
-      padding: EdgeInsets.all(Dimens.px16),
-      childAspectRatio: 103 / 195,
-      itemBuilder: (c, index) {
-        return KayleeProdItemView.canTap(
-          data: KayleeProdItemData(
-              name: 'Tóc kiểu thôn nữ',
-              image:
-                  'https://img.jakpost.net/c/2019/12/09/2019_12_09_83333_1575827116._large.jpg',
-              price: 600000),
-          onTap: () {
-            pushScreen(PageIntent(
-                screen: CreateNewProdScreen,
-                bundle: Bundle(NewProdScreenData(
-                    openFrom: NewProdScreenOpenFrom.prodItem))));
-          },
-        );
-      },
-      itemCount: 4,
     );
   }
 }
