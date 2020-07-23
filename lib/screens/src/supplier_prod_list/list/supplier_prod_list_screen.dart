@@ -76,10 +76,7 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
                   child: CubitBuilder<CartBloc, CartState>(
                     builder: (context, state) {
                       final amount =
-                          context.cart
-                              .getOrder()
-                              ?.cartItems
-                              ?.length ?? 0;
+                          context.cart.getOrder()?.cartItems?.length ?? 0;
                       return KayleeText.normalWhite12W400(
                           '${amount <= 9 ? amount : '9+'}');
                     },
@@ -104,7 +101,7 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
           );
         },
       ),
-      pageView: CubitBuilder<SupplierProdCateListBloc, LoadMoreModel>(
+      pageView: CubitBuilder<SupplierProdCateListBloc, LoadMoreModel<Category>>(
         buildWhen: (previous, current) {
           return !current.loading;
         },
