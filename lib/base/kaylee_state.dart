@@ -22,7 +22,7 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
 
   @override
   void dispose() {
-    appBlocSub?.cancel();
+//    appBlocSub?.cancel();
     super.dispose();
   }
 
@@ -54,15 +54,9 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
     }
   }
 
-  void _listenAppBloc() async {
-    int length = 0;
-    try {
-      length = await appBloc.length;
-    } catch (e, s) {
-      print('[TUNG] ===> $s');
-    }
-//    print('[TUNG] ===> appBloc.length ${await appBloc.length}');
-    appBlocSub = appBloc.skip(0).listen((state) {
+  void _listenAppBloc() {
+    appBlocSub = appBloc.listen((state) {
+      print('[TUNG] ===>  appBloc.skip(0) $state');
       if (state is UnauthorizedState && !appBloc.isShowingLoginDialog) {
         appBloc.isShowingLoginDialog = true;
         showKayleeAlertDialog(
