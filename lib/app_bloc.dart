@@ -13,9 +13,7 @@ class AppBloc extends Cubit {
   void loggedOut() => emit(LoggedOutState());
 
   void unauthorized({Error error}) {
-    if (state is! UnauthorizedState) {
       emit(UnauthorizedState(error: error));
-    }
   }
 }
 
