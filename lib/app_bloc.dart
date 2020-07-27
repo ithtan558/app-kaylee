@@ -5,6 +5,9 @@ import 'package:kaylee/models/models.dart';
 class AppBloc extends Cubit {
   AppBloc() : super(InitState());
   bool isShowingLoginDialog = false;
+  final _unauthorizedController = PublishSubject<UnauthorizedState>();
+
+  Stream get unauthorizedStream => _unauthorizedController.stream;
 
   void loggedIn(LoginResult result) {
     emit(LoggedInState(result: result));
@@ -13,7 +16,13 @@ class AppBloc extends Cubit {
   void loggedOut() => emit(LoggedOutState());
 
   void unauthorized({Error error}) {
-      emit(UnauthorizedState(error: error));
+    _unauthorizedController.add(UnauthorizedState(error: error));
+  }
+
+  @override
+  Future<void> close() {
+    _unauthorizedController.close();
+    return super.close();
   }
 }
 
