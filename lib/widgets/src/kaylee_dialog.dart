@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/main.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/widgets.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -206,13 +207,17 @@ Future<void> showKayleeDialog(
 Future showKayleeAlertDialog(
     {@required BuildContext context,
     KayleeAlertDialogView view,
-    VoidCallback onDismiss}) {
+    VoidCallback onDismiss,
+    RouteSettings routeSettings}) {
   return showCupertinoDialog(
-    context: context,
-    builder: (c) {
-      return view ?? Container();
-    },
-  ).then((value) {
+          context: context,
+          builder: (c) {
+            dialogContext = c;
+            return view ?? Container();
+          },
+          routeSettings: routeSettings)
+      .then((value) {
+    dialogContext = null;
     onDismiss?.call();
   });
 }
