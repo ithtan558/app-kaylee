@@ -9,7 +9,7 @@ class ServiceListScreenBloc extends Cubit<LoadMoreModel<Category>> {
 
   ServiceListScreenBloc({@required this.servService}) : super(LoadMoreModel());
 
-  void loadProdCate() {
+  void loadServiceCate() {
     emit(LoadMoreModel.copy(state..loading = true));
     RequestHandler(
       request: servService.getCategory(),
