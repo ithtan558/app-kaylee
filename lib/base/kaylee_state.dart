@@ -17,12 +17,12 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
   void initState() {
     super.initState();
     appBloc = context.cubit<AppBloc>();
-    _listenAppBloc();
+    _listenUnauthorStream();
   }
 
   @override
   void dispose() {
-//    appBlocSub?.cancel();
+    appBlocSub?.cancel();
     super.dispose();
   }
 
@@ -54,10 +54,10 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
     }
   }
 
-  void _listenAppBloc() {
-    appBlocSub = appBloc.listen((state) {
-      print('[TUNG] ===>  appBloc.skip(0) $state');
+  void _listenUnauthorStream() async {
+    appBlocSub = appBloc.unauthorizedStream.listen((state) {
       if (state is UnauthorizedState && !appBloc.isShowingLoginDialog) {
+        hideLoading();
         appBloc.isShowingLoginDialog = true;
         showKayleeAlertDialog(
           context: context,
@@ -67,7 +67,6 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
               KayleeAlertDialogAction(
                 title: Strings.dangNhap,
                 onPressed: () {
-                  popScreen();
                   pushScreen(PageIntent(
                       screen: LoginScreen,
                       bundle: Bundle(LoginScreenData(
