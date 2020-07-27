@@ -11,6 +11,8 @@ import 'package:kaylee/components/components.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/utils/utils.dart';
 
+BuildContext dialogContext;
+
 void main() {
   JsonConverterBuilder.init(KayleeJsonConverter());
   runApp(KayLeeApp.newInstance());
