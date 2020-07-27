@@ -4,24 +4,24 @@ import 'package:flutter/cupertino.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/services/services.dart';
 
-class ServiceListScreenBloc extends Cubit<LoadMoreModel<Category>> {
+class ServiceCateBloc extends Cubit<SingleModel<List<Category>>> {
   ServService servService;
 
-  ServiceListScreenBloc({@required this.servService}) : super(LoadMoreModel());
+  ServiceCateBloc({@required this.servService}) : super(SingleModel());
 
   void loadServiceCate() {
-    emit(LoadMoreModel.copy(state..loading = true));
+    emit(SingleModel.copy(state..loading = true));
     RequestHandler(
       request: servService.getCategory(),
       onSuccess: ({message, result}) {
-        emit(LoadMoreModel.copy(state
-          ..items = result
+        emit(SingleModel.copy(state
+          ..item = result
           ..loading = false
           ..code = null
           ..error = null));
       },
       onFailed: (code, {error}) {
-        emit(LoadMoreModel.copy(state
+        emit(SingleModel.copy(state
           ..loading = false
           ..code = code
           ..error = error));
