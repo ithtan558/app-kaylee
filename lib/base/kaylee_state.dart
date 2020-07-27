@@ -4,6 +4,7 @@ import 'package:anth_package/anth_package.dart' hide VoidCallback;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/app_bloc.dart';
+import 'package:kaylee/main.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/widgets/widgets.dart';
@@ -27,37 +28,51 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
   }
 
   void showLoading({bool canDismiss = false, VoidCallback onDismiss}) {
-    if (!isShowLoading) {
-      isShowLoading = true;
+    if (dialogContext.isNull ||
+        ModalRoute.of(context).settings.name != 'loading dialog' ||
+        (!ModalRoute.of(context).isFirst && !ModalRoute.of(context).isActive)) {
       showGeneralDialog(
-        context: context,
-        barrierDismissible: canDismiss,
-        pageBuilder: (BuildContext context, Animation<double> animation,
-            Animation<double> secondaryAnimation) {
-          return CupertinoActivityIndicator(
-            radius: Dimens.px16,
-          );
-        },
-        transitionDuration: Duration(milliseconds: 200),
-        barrierColor: ColorsRes.shadow,
-      ).then((value) {
-        isShowLoading = false;
+          context: context,
+          barrierDismissible: canDismiss,
+          pageBuilder: (BuildContext context, Animation<double> animation,
+              Animation<double> secondaryAnimation) {
+            print('[TUNG] ===> showLoading');
+            dialogContext = context;
+            return CupertinoActivityIndicator(
+              radius: Dimens.px16,
+            );
+          },
+          transitionDuration: Duration(milliseconds: 200),
+          barrierColor: ColorsRes.shadow,
+          routeSettings: RouteSettings(
+            name: 'loading dialog',
+          )).then((value) {
+        dialogContext = null;
         if (onDismiss.isNotNull) onDismiss();
       });
     }
   }
 
   void hideLoading() {
-    if (isShowLoading) {
-      isShowLoading = false;
-      popScreen();
+    if (dialogContext.isNotNull) {
+      final dialog = ModalRoute.of(dialogContext);
+      if (dialog.isActive && dialog.settings.name == 'loading dialog') {
+        Navigator.removeRoute(context, dialog);
+        dialogContext = null;
+      }
     }
   }
 
   void _listenUnauthorStream() async {
     appBlocSub = appBloc.unauthorizedStream.listen((state) {
       if (state is UnauthorizedState && !appBloc.isShowingLoginDialog) {
-        hideLoading();
+        if (dialogContext.isNotNull) {
+          final dialog = ModalRoute.of(dialogContext);
+          if (dialog.isFirst && dialog.isActive) {
+            Navigator.removeRoute(context, ModalRoute.of(dialogContext));
+            dialogContext = null;
+          }
+        }
         appBloc.isShowingLoginDialog = true;
         showKayleeAlertDialog(
           context: context,
