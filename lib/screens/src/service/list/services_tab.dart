@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:anth_package/anth_package.dart';
-import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
@@ -9,33 +8,34 @@ import 'package:kaylee/components/components.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
-import 'package:kaylee/screens/src/product/list/bloc/prod_tab_bloc.dart';
+import 'package:kaylee/screens/src/service/list/bloc/service_tab_bloc.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
-class ProductsTab extends StatefulWidget {
-  static Widget newInstance() => CubitProvider<ProdTabBloc>(
-        create: (context) => ProdTabBloc(
-            productService:
-                context.repository<NetworkModule>().provideProductService(),
+class ServicesTab extends StatefulWidget {
+  static Widget newInstance() => CubitProvider<ServiceTabBloc>(
+        create: (context) => ServiceTabBloc(
+            servService:
+                context.repository<NetworkModule>().provideServService(),
             cateId: context.repository<Category>().id),
-        child: ProductsTab._(),
+        child: ServicesTab._(),
       );
 
-  ProductsTab._();
+  ServicesTab._();
 
   @override
-  _ProductsTabState createState() => _ProductsTabState();
+  _ServicesTabState createState() => _ServicesTabState();
 }
 
-class _ProductsTabState extends KayleeState<ProductsTab> {
-  ProdTabBloc prodsBloc;
+class _ServicesTabState extends KayleeState<ServicesTab> {
+  ServiceTabBloc serviceTabBloc;
   StreamSubscription sub;
 
   @override
   void initState() {
     super.initState();
-    prodsBloc = context.cubit<ProdTabBloc>()..loadProds();
-    sub = prodsBloc.listen((state) {
+    serviceTabBloc = context.cubit<ServiceTabBloc>()
+      ..loadServices();
+    sub = serviceTabBloc.listen((state) {
       if (state.code.isNotNull) {
         showKayleeAlertErrorYesDialog(context: context, error: state.error);
       }
@@ -51,8 +51,8 @@ class _ProductsTabState extends KayleeState<ProductsTab> {
   @override
   Widget build(BuildContext context) {
     return KayleeLoadMoreHandler(
-      controller: context.cubit<ProdTabBloc>(),
-      child: CubitBuilder<ProdTabBloc, LoadMoreModel<Product>>(
+      controller: context.cubit<ServiceTabBloc>(),
+      child: CubitBuilder<ServiceTabBloc, LoadMoreModel<Service>>(
         buildWhen: (previous, current) {
           return !current.loading;
         },
@@ -67,9 +67,9 @@ class _ProductsTabState extends KayleeState<ProductsTab> {
                     name: item.name, image: item.image, price: item.price),
                 onTap: () {
                   pushScreen(PageIntent(
-                      screen: CreateNewProdScreen,
-                      bundle: Bundle(NewProdScreenData(
-                          openFrom: NewProdScreenOpenFrom.prodItem))));
+                      screen: CreateNewServiceScreen,
+                      bundle: Bundle(NewServiceScreenData(
+                          openFrom: ServiceScreenOpenFrom.serviceItem))));
                 },
               );
             },

@@ -1,13 +1,15 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/branch/widgets/branch_select.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class NewServiceScreenData {
   final ServiceScreenOpenFrom openFrom;
+  final Service service;
 
-  NewServiceScreenData({this.openFrom});
+  NewServiceScreenData({this.openFrom, this.service});
 }
 
 enum ServiceScreenOpenFrom { serviceItem, addNewServiceBtn }
@@ -27,7 +29,7 @@ class _CreateNewServiceScreenState extends BaseState<CreateNewServiceScreen> {
   @override
   void initState() {
     super.initState();
-    final data = context.bundle.args as NewServiceScreenData;
+    final data = context.getArguments<NewServiceScreenData>();
     openFrom = data?.openFrom;
   }
 
