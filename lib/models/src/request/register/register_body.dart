@@ -18,9 +18,14 @@ class RegisterBody {
     this.email,
   });
 
+  @JsonKey(includeIfNull: false)
   String firstName;
+  @JsonKey(includeIfNull: false)
   String lastName;
+  @JsonKey(includeIfNull: false)
   String phone;
+  @JsonKey(includeIfNull: false)
   String password;
+  @JsonKey(includeIfNull: false)
   String email;
 }
