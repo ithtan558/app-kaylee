@@ -28,13 +28,13 @@ class ProdListScreen extends StatefulWidget {
 class _ProdListScreenState extends KayleeState<ProdListScreen> {
   ProdCateBloc cateBloc;
   final pageController = PageController();
-  StreamSubscription sub;
+  StreamSubscription cateBlocSub;
 
   @override
   void initState() {
     super.initState();
     cateBloc = context.cubit<ProdCateBloc>()..loadProdCate();
-    sub = cateBloc.listen((state) {
+    cateBlocSub = cateBloc.listen((state) {
       if (!state.loading) {
         hideLoading();
         if (state.code.isNotNull && state.code != ErrorType.UNAUTHORIZED) {
@@ -54,7 +54,7 @@ class _ProdListScreenState extends KayleeState<ProdListScreen> {
 
   @override
   void dispose() {
-    sub.cancel();
+    cateBlocSub.cancel();
     pageController.dispose();
     super.dispose();
   }
