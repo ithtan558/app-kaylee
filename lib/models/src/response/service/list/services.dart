@@ -5,7 +5,7 @@ import 'package:kaylee/models/models.dart';
 part 'services.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class Services extends PageData<Service> {
+class Services extends PageData<List<Service>> {
   factory Services.fromJson(Map<String, dynamic> json) =>
       _$ServicesFromJson(json);
 
