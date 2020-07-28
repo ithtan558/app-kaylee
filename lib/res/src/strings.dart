@@ -212,6 +212,10 @@ class Strings {
   static const String hoanTat = 'Hoàn tất';
   static const String xinVuiLongChonTinh = 'Xin vui lòng chọn Tỉnh/Thành phố';
   static const String xinVuiLongChonQuan = 'Xin vui lòng chọn Quận';
+  static const String banCoDongYXoaThongTinVaKhongPhucHoiLai =
+      'Bạn có đồng ý xoá toàn bộ thông tin này và không phục hồi lại?';
+  static const String banCoDongYLuuLaiNhungThayDoi =
+      'Bạn có đồng ý lưu lại những thay đổi mới? Nội dung cũ sẽ mất sau khi lưu.';
 
   Strings._();
 }
