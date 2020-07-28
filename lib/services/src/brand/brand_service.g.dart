@@ -40,13 +40,13 @@ class _BrandService implements BrandService {
   }
 
   @override
-  getBranch({branchId}) async {
+  getBranch({brandId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'brand/$branchId',
+        'brand/$brandId',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',

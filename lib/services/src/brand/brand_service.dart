@@ -19,8 +19,8 @@ abstract class BrandService {
     @Query('district_ids') String districtIds,
   });
 
-  @GET('brand/{branchId}')
-  Future<ResponseModel<Brand>> getBranch({@Path() branchId});
+  @GET('brand/{brandId}')
+  Future<ResponseModel<Brand>> getBranch({@Path() int brandId});
 
   @POST('brand')
   Future<ResponseModel> newBranch({
