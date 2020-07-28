@@ -59,7 +59,7 @@ class BranchItem extends StatelessWidget {
                           ),
                         ),
                         KayleeText.textFieldBorder12W400(
-                          'Giờ mở cửa: ${brand.startTime} - ${brand.endTime}',
+                          'Giờ mở cửa: ${brand.start.formattedTime} - ${brand.end.formattedTime}',
                           maxLines: 1,
                         ),
                       ],
