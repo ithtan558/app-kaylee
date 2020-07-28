@@ -28,10 +28,20 @@ class _KayleeFullAddressInputState extends BaseState<KayleeFullAddressInput> {
   void initState() {
     super.initState();
     widget.controller?._view = this;
+    updateValue();
+  }
+
+  void updateValue() {
     addressTFController.text = widget?.controller?.initAddress ?? '';
     cityController.value = widget?.controller?.initCity;
     districtController.value = widget?.controller?.initDistrict;
     wardController.value = widget?.controller?.initWard;
+  }
+
+  @override
+  void didUpdateWidget(KayleeFullAddressInput oldWidget) {
+    updateValue();
+    super.didUpdateWidget(oldWidget);
   }
 
   @override

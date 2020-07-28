@@ -41,9 +41,19 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField> {
     } catch (e) {
       print('[TUNG] ===> chưa provide KayleePickerTextFieldBloc');
     }
+    updateValue();
+    super.initState();
+  }
+
+  @override
+  void didUpdateWidget(KayleePickerTextField oldWidget) {
+    updateValue();
+    super.didUpdateWidget(oldWidget);
+  }
+
+  void updateValue() {
     _tfController.text = _getTitle(widget.controller?.value);
     bloc?.update(value: widget.controller?.value);
-    super.initState();
   }
 
   @override
@@ -176,8 +186,7 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField> {
           );
         }).then((value) {
       setState(() {
-        _tfController.text = _getTitle(widget?.controller?.value);
-        bloc?.update(value: widget?.controller?.value);
+        updateValue();
         focused = false;
       });
     });
