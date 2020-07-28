@@ -1,9 +1,9 @@
-abstract class CRUDInterface {
+abstract class CRUDInterface<T> {
   void get();
 
-  void create<T>(T body);
+  void create(T body);
 
-  void update<T>(T body);
+  void update(T body);
 
   void delete();
 }
