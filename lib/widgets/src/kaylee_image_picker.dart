@@ -9,20 +9,27 @@ import 'package:permission_handler/permission_handler.dart';
 
 enum KayleeImagePickerType { profile, banner }
 
+class ImagePickerController {
+  File image;
+}
+
 class KayleeImagePicker extends StatefulWidget {
   final String image;
   final KayleeImagePickerType type;
   final List<String> oldImages;
+  final ImagePickerController controller;
 
   ///[file] image mới đc chọn từ storage
   ///[existedImage] user chọn lại hình cũ, url của image
   final void Function(File file, {String existedImage}) onImageSelect;
 
-  KayleeImagePicker(
-      {this.image,
-      this.type = KayleeImagePickerType.profile,
-      this.onImageSelect,
-      this.oldImages = const []});
+  KayleeImagePicker({
+    this.image,
+    this.type = KayleeImagePickerType.profile,
+    this.onImageSelect,
+    this.oldImages = const [],
+    this.controller,
+  });
 
   @override
   State createState() {
@@ -110,7 +117,8 @@ class _KayleeProfileImagePickerState extends BaseState<KayleeImagePicker> {
                         selectedExistedImage = selectedImage;
                       }
                     });
-                    widget.onImageSelect(selectedFile,
+                    widget.controller.image = selectedFile;
+                    widget.onImageSelect?.call(selectedFile,
                         existedImage: selectedExistedImage);
                   },
                 );
@@ -166,13 +174,13 @@ class _KayleeBannerImagePickerState extends BaseState<KayleeImagePicker> {
               color: ColorsRes.dialogDimBg,
               child: selectedFile.isNotNull
                   ? Image.file(
-                selectedFile,
-                fit: BoxFit.cover,
-              )
+                      selectedFile,
+                      fit: BoxFit.cover,
+                    )
                   : Image.network(
-                selectedExistedImage ?? '',
-                fit: BoxFit.cover,
-              ),
+                      selectedExistedImage ?? '',
+                      fit: BoxFit.cover,
+                    ),
             ),
           ),
           Positioned(
@@ -198,7 +206,8 @@ class _KayleeBannerImagePickerState extends BaseState<KayleeImagePicker> {
                           selectedExistedImage = selectedImage;
                         }
                       });
-                      widget.onImageSelect(selectedFile,
+                      widget.controller.image = selectedFile;
+                      widget.onImageSelect.call(selectedFile,
                           existedImage: selectedExistedImage);
                     },
                   );
