@@ -9,7 +9,7 @@ abstract class BrandService {
   factory BrandService(Dio dio) = _BrandService;
 
   @GET('brand')
-  Future<ResponseModel<Brands>> getBrands({
+  Future<ResponseModel<Brands>> getBranches({
     @Query('keyword') String keyword,
     @Query('page') int page,
     @Query('limit') int limit,

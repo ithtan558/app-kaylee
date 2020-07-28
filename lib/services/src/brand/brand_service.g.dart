@@ -16,7 +16,7 @@ class _BrandService implements BrandService {
   String baseUrl;
 
   @override
-  getBrands({keyword, page, limit, cityId, districtIds}) async {
+  getBranches({keyword, page, limit, cityId, districtIds}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'keyword': keyword,
