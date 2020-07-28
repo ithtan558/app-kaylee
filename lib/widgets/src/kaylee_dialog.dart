@@ -295,8 +295,11 @@ class KayleeAlertDialogView extends StatelessWidget {
             )
           : null,
       content: content.isNotNull
-          ? Text(
-              content,
+          ? Padding(
+              padding: const EdgeInsets.only(top: Dimens.px3),
+              child: Text(
+                content,
+              ),
             )
           : null,
       actions: actions ?? [],
