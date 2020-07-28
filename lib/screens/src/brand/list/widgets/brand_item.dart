@@ -5,10 +5,10 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
-class BranchItem extends StatelessWidget {
+class BrandItem extends StatelessWidget {
   final Brand brand;
 
-  BranchItem({this.brand});
+  BrandItem({this.brand});
 
   @override
   Widget build(BuildContext context) {
@@ -74,10 +74,10 @@ class BranchItem extends StatelessWidget {
               child: InkWell(
                 onTap: () {
                   context.push(PageIntent(
-                      screen: CreateNewBranchScreen,
-                      bundle: Bundle(NewBranchScreenData(
-                          openFrom: BranchScreenOpenFrom.branchItem,
-                          branch: brand))));
+                      screen: CreateNewBrandScreen,
+                      bundle: Bundle(NewBrandScreenData(
+                          openFrom: BrandScreenOpenFrom.brandItem,
+                          brand: brand))));
                 },
               ),
             )),

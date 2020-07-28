@@ -72,7 +72,7 @@ class _HomeMenuState extends BaseState<HomeMenu> {
         title: Strings.qlChiNhanh,
         icon: Images.ic_store,
         onTap: () {
-          context.push(PageIntent(screen: BranchListScreen));
+          context.push(PageIntent(screen: BrandListScreen));
         },
       ),
       HomeMenuItem(

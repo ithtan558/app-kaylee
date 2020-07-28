@@ -55,12 +55,12 @@ mixin KayleeRouting on Routing {
         return CommissionListScreen.newInstance();
       case RevenueScreen:
         return RevenueScreen.newInstance();
-      case BranchListScreen:
-        return BranchListScreen.newInstance();
+      case BrandListScreen:
+        return BrandListScreen.newInstance();
       case ProdListScreen:
         return ProdListScreen.newInstance();
-      case CreateNewBranchScreen:
-        return CreateNewBranchScreen.newInstance();
+      case CreateNewBrandScreen:
+        return CreateNewBrandScreen.newInstance();
       case CreateNewServiceScreen:
         return CreateNewServiceScreen.newInstance();
       case CreateNewProdScreen:

@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
-class BranchSelect extends StatefulWidget {
+class BrandSelect extends StatefulWidget {
   final ScrollController controller;
 
-  BranchSelect({this.controller});
+  BrandSelect({this.controller});
 
   @override
-  _BranchSelectState createState() => _BranchSelectState();
+  _BrandSelectState createState() => _BrandSelectState();
 }
 
-class _BranchSelectState extends BaseState<BranchSelect> {
+class _BrandSelectState extends BaseState<BrandSelect> {
   int selectedIndex;
 
   @override

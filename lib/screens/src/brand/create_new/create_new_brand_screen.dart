@@ -6,26 +6,26 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/src/kaylee_picker_textfield.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
-class NewBranchScreenData {
-  final BranchScreenOpenFrom openFrom;
-  final Brand branch;
+class NewBrandScreenData {
+  final BrandScreenOpenFrom openFrom;
+  final Brand brand;
 
-  NewBranchScreenData({this.branch, this.openFrom});
+  NewBrandScreenData({this.brand, this.openFrom});
 }
 
-enum BranchScreenOpenFrom { branchItem, addNewBranchBtn }
+enum BrandScreenOpenFrom { brandItem, addNewBrandBtn }
 
-class CreateNewBranchScreen extends StatefulWidget {
-  static Widget newInstance() => CreateNewBranchScreen._();
+class CreateNewBrandScreen extends StatefulWidget {
+  static Widget newInstance() => CreateNewBrandScreen._();
 
-  CreateNewBranchScreen._();
+  CreateNewBrandScreen._();
 
   @override
-  _CreateNewBranchScreenState createState() => _CreateNewBranchScreenState();
+  _CreateNewBrandScreenState createState() => _CreateNewBrandScreenState();
 }
 
-class _CreateNewBranchScreenState extends BaseState<CreateNewBranchScreen> {
-  BranchScreenOpenFrom openFrom;
+class _CreateNewBrandScreenState extends BaseState<CreateNewBrandScreen> {
+  BrandScreenOpenFrom openFrom;
   final startTimeController = PickInputController<StartTime>();
   final endTimeController = PickInputController<EndTime>();
   final nameTfController = TextEditingController();
@@ -38,19 +38,19 @@ class _CreateNewBranchScreenState extends BaseState<CreateNewBranchScreen> {
   @override
   void initState() {
     super.initState();
-    final data = context.getArguments<NewBranchScreenData>();
+    final data = context.getArguments<NewBrandScreenData>();
     openFrom = data?.openFrom;
-    if (openFrom == BranchScreenOpenFrom.branchItem && data.branch.isNotNull) {
-      banner = data.branch.image;
-      nameTfController.text = data.branch.name ?? '';
+    if (openFrom == BrandScreenOpenFrom.brandItem && data.brand.isNotNull) {
+      banner = data.brand.image;
+      nameTfController.text = data.brand.name ?? '';
       addressController
-        ..initAddress = data.branch.location ?? ''
-        ..initCity = data.branch.city
-        ..initDistrict = data.branch.district
-        ..initWard = data.branch.wards;
-      phoneTfController.text = data.branch.phone ?? '';
-      startTimeController.value = data.branch.start;
-      endTimeController.value = data.branch.end;
+        ..initAddress = data.brand.location ?? ''
+        ..initCity = data.brand.city
+        ..initDistrict = data.brand.district
+        ..initWard = data.brand.wards;
+      phoneTfController.text = data.brand.phone ?? '';
+      startTimeController.value = data.brand.start;
+      endTimeController.value = data.brand.end;
     }
   }
 
@@ -68,7 +68,7 @@ class _CreateNewBranchScreenState extends BaseState<CreateNewBranchScreen> {
     return UnFocusWidget(
       child: KayleeScrollview(
         appBar: KayleeAppBar(
-          title: openFrom == BranchScreenOpenFrom.branchItem
+          title: openFrom == BrandScreenOpenFrom.brandItem
               ? Strings.chinhSuaChiNhanh
               : Strings.taoChiNhanhMoi,
           actions: <Widget>[
@@ -76,7 +76,7 @@ class _CreateNewBranchScreenState extends BaseState<CreateNewBranchScreen> {
               alignment: Alignment.centerRight,
               padding: const EdgeInsets.only(right: Dimens.px16),
               child: HyperLinkText(
-                text: openFrom == BranchScreenOpenFrom.branchItem
+                text: openFrom == BrandScreenOpenFrom.brandItem
                     ? Strings.luu
                     : Strings.tao,
                 onTap: () {},
@@ -139,7 +139,7 @@ class _CreateNewBranchScreenState extends BaseState<CreateNewBranchScreen> {
                 ],
               ),
             ),
-            if (openFrom == BranchScreenOpenFrom.branchItem)
+            if (openFrom == BrandScreenOpenFrom.brandItem)
               Padding(
                 padding: const EdgeInsets.only(
                     top: Dimens.px16, bottom: Dimens.px32),

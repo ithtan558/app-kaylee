@@ -5,32 +5,33 @@ import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
-import 'package:kaylee/screens/src/branch/list/bloc/brand_list_bloc.dart';
-import 'package:kaylee/screens/src/branch/list/widgets/branch_item.dart';
-import 'package:kaylee/screens/src/branch/list/widgets/brand_filter_list.dart';
+import 'package:kaylee/screens/src/brand/list/bloc/brand_list_bloc.dart';
+import 'package:kaylee/screens/src/brand/list/widgets/brand_filter_list.dart';
+import 'package:kaylee/screens/src/brand/list/widgets/brand_item.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
-class BranchListScreen extends StatefulWidget {
+class BrandListScreen extends StatefulWidget {
   static Widget newInstance() => CubitProvider<BrandListBloc>(
         create: (context) =>
             BrandListBloc(brandService: context.network.provideBrandService()),
-        child: BranchListScreen._(),
+        child: BrandListScreen._(),
       );
 
-  BranchListScreen._();
+  BrandListScreen._();
 
   @override
-  _BranchListScreenState createState() => _BranchListScreenState();
+  _BrandListScreenState createState() => _BrandListScreenState();
 }
 
-class _BranchListScreenState extends KayleeState<BranchListScreen> {
+class _BrandListScreenState extends KayleeState<BrandListScreen> {
   BrandListBloc brandListBloc;
 
   @override
   void initState() {
     super.initState();
-    brandListBloc = context.cubit<BrandListBloc>()..loadBrands();
+    brandListBloc = context.cubit<BrandListBloc>()
+      ..loadBrands();
   }
 
   @override
@@ -69,7 +70,7 @@ class _BranchListScreenState extends KayleeState<BranchListScreen> {
                     left: Dimens.px16),
                 physics: BouncingScrollPhysics(),
                 itemBuilder: (c, index) {
-                  return BranchItem(
+                  return BrandItem(
                     brand: state.items.elementAt(index),
                   );
                 },
@@ -95,9 +96,9 @@ class _BranchListScreenState extends KayleeState<BranchListScreen> {
       floatingActionButton: KayleeFloatButton(
         onTap: () {
           pushScreen(PageIntent(
-              screen: CreateNewBranchScreen,
-              bundle: Bundle(NewBranchScreenData(
-                  openFrom: BranchScreenOpenFrom.addNewBranchBtn))));
+              screen: CreateNewBrandScreen,
+              bundle: Bundle(NewBrandScreenData(
+                  openFrom: BrandScreenOpenFrom.addNewBrandBtn))));
         },
       ),
     );

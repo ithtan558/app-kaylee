@@ -1,7 +1,7 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
-import 'package:kaylee/screens/src/branch/widgets/branch_select.dart';
+import 'package:kaylee/screens/src/brand/widgets/brand_select.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class NewStaffScreenData {
@@ -124,7 +124,7 @@ class _CreateNewStaffScreenState extends BaseState<CreateNewStaffScreen> {
                   initialChildSize: 356 / 667,
                   minChildSize: 356 / 667,
                   builder: (c, controller) {
-                    return BranchSelect(controller: controller);
+                    return BrandSelect(controller: controller);
                   },
                 );
               },

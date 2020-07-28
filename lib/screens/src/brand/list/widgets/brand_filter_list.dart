@@ -2,7 +2,7 @@ import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
-import 'package:kaylee/screens/src/branch/list/bloc/brand_filter_list_list_bloc.dart';
+import 'package:kaylee/screens/src/brand/list/bloc/brand_filter_list_list_bloc.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
