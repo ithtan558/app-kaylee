@@ -137,16 +137,16 @@ class _CreateNewBrandScreenState extends KayleeState<CreateNewBrandScreen> {
                           ],
                         ));
                   } else {
-                    bloc.create(Brand(
-                        name: nameTfController.text,
-                        phone: phoneTfController.text,
-                        location: addressController.address,
-                        city: addressController.city,
-                        district: addressController.district,
-                        startTime: startTimeController.value.time,
-                        endTime: endTimeController.value.time,
-                        wards: addressController.ward,
-                        imageFile: bannerPickerController.image));
+                    bloc.create(bloc.state.item = Brand()
+                      ..name = nameTfController.text
+                      ..phone = phoneTfController.text
+                      ..location = addressController.address
+                      ..city = addressController.city
+                      ..district = addressController.district
+                      ..startTime = startTimeController.value?.time
+                      ..endTime = endTimeController.value?.time
+                      ..wards = addressController.ward
+                      ..imageFile = bannerPickerController.image);
                   }
                 },
               ),
