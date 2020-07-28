@@ -38,4 +38,158 @@ class _BrandService implements BrandService {
     final value = ResponseModel<Brands>.fromJson(_result.data);
     return value;
   }
+
+  @override
+  getBranch({branchId}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        'brand/$branchId',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = ResponseModel<Brand>.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  newBranch(
+      {name,
+      phone,
+      location,
+      cityId,
+      districtId,
+      startTime,
+      endTime,
+      wardsId,
+      image}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = FormData();
+    if (name != null) {
+      _data.fields.add(MapEntry('name', name));
+    }
+    if (phone != null) {
+      _data.fields.add(MapEntry('phone', phone));
+    }
+    if (location != null) {
+      _data.fields.add(MapEntry('location', location));
+    }
+    if (cityId != null) {
+      _data.fields.add(MapEntry('city_id', cityId));
+    }
+    if (districtId != null) {
+      _data.fields.add(MapEntry('district_id', districtId.toString()));
+    }
+    if (startTime != null) {
+      _data.fields.add(MapEntry('start_time', startTime.toString()));
+    }
+    if (endTime != null) {
+      _data.fields.add(MapEntry('end_time', endTime.toString()));
+    }
+    if (wardsId != null) {
+      _data.fields.add(MapEntry('wards_id', wardsId.toString()));
+    }
+    if (image != null) {
+      _data.files.add(MapEntry(
+          'image',
+          MultipartFile.fromFileSync(image.path,
+              filename: image.path.split(Platform.pathSeparator).last)));
+    }
+    final Response<Map<String, dynamic>> _result = await _dio.request('brand',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  updateBranch(
+      {name,
+      phone,
+      location,
+      cityId,
+      districtId,
+      startTime,
+      endTime,
+      wardsId,
+      image,
+      brandId}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = FormData();
+    if (name != null) {
+      _data.fields.add(MapEntry('name', name));
+    }
+    if (phone != null) {
+      _data.fields.add(MapEntry('phone', phone));
+    }
+    if (location != null) {
+      _data.fields.add(MapEntry('location', location));
+    }
+    if (cityId != null) {
+      _data.fields.add(MapEntry('city_id', cityId));
+    }
+    if (districtId != null) {
+      _data.fields.add(MapEntry('district_id', districtId.toString()));
+    }
+    if (startTime != null) {
+      _data.fields.add(MapEntry('start_time', startTime.toString()));
+    }
+    if (endTime != null) {
+      _data.fields.add(MapEntry('end_time', endTime.toString()));
+    }
+    if (wardsId != null) {
+      _data.fields.add(MapEntry('wards_id', wardsId.toString()));
+    }
+    if (image != null) {
+      _data.files.add(MapEntry(
+          'image',
+          MultipartFile.fromFileSync(image.path,
+              filename: image.path.split(Platform.pathSeparator).last)));
+    }
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        'brand/$brandId',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  deleteBranch({brandId}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        'brand/delete/$brandId',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'DELETE',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    return value;
+  }
 }
