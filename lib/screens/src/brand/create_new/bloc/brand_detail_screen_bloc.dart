@@ -87,16 +87,18 @@ class BrandDetailScreenBloc extends Cubit<SingleModel<Brand>>
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
       request: brandService.updateBrand(
-          name: body.name,
-          phone: body.phone,
-          location: body.location,
-          cityId: body.city?.id,
-          districtId: body.district?.id,
-          startTime: body.startTime,
-          endTime: body.endTime,
-          wardsId: body.wards?.id,
-          image: body.imageFile,
-          brandId: state.item?.id),
+        name: body.name,
+        phone: body.phone,
+        location: body.location,
+        cityId: body.city?.id,
+        districtId: body.district?.id,
+        startTime: body.startTime,
+        endTime: body.endTime,
+        wardsId: body.wards?.id,
+        image: body.imageFile,
+        brandId: state.item?.id,
+        id: state.item?.id,
+      ),
       onSuccess: ({message, result}) {
         emit(SingleModel.copy(state
           ..loading = false
