@@ -1,4 +1,4 @@
-abstract class CRUDInterface<T> {
+abstract class CRUDInterface {
   void get();
 
   void create<T>(T body);
