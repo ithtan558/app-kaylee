@@ -83,16 +83,16 @@ class _BrandService implements BrandService {
       _data.fields.add(MapEntry('location', location));
     }
     if (cityId != null) {
-      _data.fields.add(MapEntry('city_id', cityId));
+      _data.fields.add(MapEntry('city_id', cityId.toString()));
     }
     if (districtId != null) {
       _data.fields.add(MapEntry('district_id', districtId.toString()));
     }
     if (startTime != null) {
-      _data.fields.add(MapEntry('start_time', startTime.toString()));
+      _data.fields.add(MapEntry('start_time', startTime));
     }
     if (endTime != null) {
-      _data.fields.add(MapEntry('end_time', endTime.toString()));
+      _data.fields.add(MapEntry('end_time', endTime));
     }
     if (wardsId != null) {
       _data.fields.add(MapEntry('wards_id', wardsId.toString()));
@@ -116,16 +116,17 @@ class _BrandService implements BrandService {
   }
 
   @override
-  updateBrand({name,
-    phone,
-    location,
-    cityId,
-    districtId,
-    startTime,
-    endTime,
-    wardsId,
-    image,
-    brandId}) async {
+  updateBrand(
+      {name,
+      phone,
+      location,
+      cityId,
+      districtId,
+      startTime,
+      endTime,
+      wardsId,
+      image,
+      brandId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
@@ -140,16 +141,16 @@ class _BrandService implements BrandService {
       _data.fields.add(MapEntry('location', location));
     }
     if (cityId != null) {
-      _data.fields.add(MapEntry('city_id', cityId));
+      _data.fields.add(MapEntry('city_id', cityId.toString()));
     }
     if (districtId != null) {
       _data.fields.add(MapEntry('district_id', districtId.toString()));
     }
     if (startTime != null) {
-      _data.fields.add(MapEntry('start_time', startTime.toString()));
+      _data.fields.add(MapEntry('start_time', startTime));
     }
     if (endTime != null) {
-      _data.fields.add(MapEntry('end_time', endTime.toString()));
+      _data.fields.add(MapEntry('end_time', endTime));
     }
     if (wardsId != null) {
       _data.fields.add(MapEntry('wards_id', wardsId.toString()));
