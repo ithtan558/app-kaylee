@@ -1,9 +1,9 @@
-import 'package:cubit/cubit.dart';
+import 'package:anth_package/anth_package.dart';
 
-class KayleeCubitObserver extends CubitObserver {
+class KayleeBlocObserver extends BlocObserver {
   final void Function(dynamic currentState, dynamic nextState) transition;
 
-  KayleeCubitObserver({this.transition});
+  KayleeBlocObserver({this.transition});
 
   @override
   void onTransition(Cubit cubit, Transition transition) {

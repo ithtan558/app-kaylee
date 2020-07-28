@@ -8,7 +8,7 @@ import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/notification
 import 'package:kaylee/widgets/widgets.dart';
 
 class NotificationButton extends StatefulWidget {
-  static Widget newInstance() => CubitProvider<NotiButtonBloc>(
+  static Widget newInstance() => BlocProvider<NotiButtonBloc>(
         create: (context) => NotiButtonBloc(
             service: context
                 .repository<NetworkModule>()
@@ -26,7 +26,7 @@ class _NotificationButtonState extends KayleeState<NotificationButton> {
   @override
   void initState() {
     super.initState();
-    context.cubit<NotiButtonBloc>().getNotificationCount();
+    context.bloc<NotiButtonBloc>().getNotificationCount();
   }
 
   @override
@@ -51,7 +51,7 @@ class _NotificationButtonState extends KayleeState<NotificationButton> {
         Positioned(
           right: Dimens.px12,
           top: Dimens.px8,
-          child: CubitBuilder<NotiButtonBloc, int>(builder: (context, state) {
+          child: BlocBuilder<NotiButtonBloc, int>(builder: (context, state) {
             return state <= 0
                 ? Container()
                 : Container(

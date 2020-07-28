@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:anth_package/anth_package.dart';
-import 'package:cubit/cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
@@ -11,8 +10,8 @@ import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/notification
 import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/user_name.dart';
 
 class HomeMenu extends StatefulWidget {
-  static Widget newInstance() => CubitProvider<HomeMenuCubit>(
-        create: (context) => HomeMenuCubit(),
+  static Widget newInstance() => BlocProvider<HomeMenuBloc>(
+        create: (context) => HomeMenuBloc(),
         child: HomeMenu._(),
       );
 
@@ -25,13 +24,13 @@ class HomeMenu extends StatefulWidget {
 class _HomeMenuState extends BaseState<HomeMenu> {
   ScrollOffsetBloc scrollOffsetBloc;
   final menuScrollController = ScrollController();
-  HomeMenuCubit homeMenuCubit;
+  HomeMenuBloc homeMenuCubit;
 
   @override
   void initState() {
     super.initState();
-    scrollOffsetBloc = context.cubit<ScrollOffsetBloc>();
-    homeMenuCubit = context.cubit<HomeMenuCubit>();
+    scrollOffsetBloc = context.bloc<ScrollOffsetBloc>();
+    homeMenuCubit = context.bloc<HomeMenuBloc>();
     scrollOffsetBloc?.listen((offset) {
       homeMenuCubit.updateHomeMenuState(
           offset: offset, collapseMenuHeight: collapseMenuHeight);
@@ -176,7 +175,7 @@ class _HomeMenuState extends BaseState<HomeMenu> {
         elevation: Dimens.px10,
         color: Colors.transparent,
         child: Stack(children: [
-          CubitBuilder<HomeMenuCubit, HomeMenuState>(
+          BlocBuilder<HomeMenuBloc, HomeMenuState>(
             builder: (context, state) {
               return Container(height: state.height, child: gradientBg);
             },
@@ -205,10 +204,11 @@ class _HomeMenuState extends BaseState<HomeMenu> {
             Expanded(
               child: Container(),
             ),
-            CubitBuilder<HomeMenuCubit, HomeMenuState>(
-              builder: (context, state) => SizedBox(
-                height: Dimens.px56 + Dimens.px16 * state.collapsePercent,
-              ),
+            BlocBuilder<HomeMenuBloc, HomeMenuState>(
+              builder: (context, state) =>
+                  SizedBox(
+                    height: Dimens.px56 + Dimens.px16 * state.collapsePercent,
+                  ),
             ),
             Container(
               padding: EdgeInsets.symmetric(horizontal: Dimens.px16),
@@ -240,7 +240,7 @@ class _HomeMenuState extends BaseState<HomeMenu> {
             child: Padding(
               padding: const EdgeInsets.only(
                   left: Dimens.px16, right: Dimens.px16, top: Dimens.px16),
-              child: CubitBuilder<HomeMenuCubit, HomeMenuState>(
+              child: BlocBuilder<HomeMenuBloc, HomeMenuState>(
                 builder: (context, state) {
                   return Opacity(
                     opacity: state.menuRow2CollapsePercent,
@@ -276,11 +276,11 @@ class _HomeMenuState extends BaseState<HomeMenu> {
       Dimens.px56 + Dimens.px16 * 2 + Dimens.px16 + homeMenuItemHeight;
 }
 
-class HomeMenuCubit extends Cubit<HomeMenuState> {
+class HomeMenuBloc extends Cubit<HomeMenuState> {
   static const double menuHeight = 348;
   final backGroundStateController = BehaviorSubject<bool>();
 
-  HomeMenuCubit() : super(HomeMenuState(height: menuHeight)) {
+  HomeMenuBloc() : super(HomeMenuState(height: menuHeight)) {
     backGroundStateController?.add(false);
   }
 
@@ -295,10 +295,10 @@ class HomeMenuCubit extends Cubit<HomeMenuState> {
     final offs = offset;
     //appbar chỉ collapse tới khi offset của listview = height lúc expand - height lúc collpased
     final double scrollingDistance =
-        HomeMenuCubit.menuHeight - collapseMenuHeight;
+        HomeMenuBloc.menuHeight - collapseMenuHeight;
     //percent collapse của appbar khi user scroll
     final double collapsePercent =
-        offs < scrollingDistance ? offs / scrollingDistance : 1;
+    offs < scrollingDistance ? offs / scrollingDistance : 1;
     if (collapsePercent == 1 && !state.isCollapsed) {
       //khi appbar đã collapse và state của appbar trước đó ko phải là collapse
       state.isCollapsed = true;

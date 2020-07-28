@@ -13,7 +13,7 @@ import 'package:kaylee/screens/src/product/list/bloc/prod_tab_bloc.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class ProductsTab extends StatefulWidget {
-  static Widget newInstance() => CubitProvider<ProdTabBloc>(
+  static Widget newInstance() => BlocProvider<ProdTabBloc>(
         create: (context) => ProdTabBloc(
             productService:
                 context.repository<NetworkModule>().provideProductService(),
@@ -34,7 +34,8 @@ class _ProductsTabState extends KayleeState<ProductsTab> {
   @override
   void initState() {
     super.initState();
-    prodsBloc = context.cubit<ProdTabBloc>()..loadProds();
+    prodsBloc = context.bloc<ProdTabBloc>()
+      ..loadProds();
     sub = prodsBloc.listen((state) {
       if (state.code.isNotNull) {
         showKayleeAlertErrorYesDialog(context: context, error: state.error);
@@ -51,8 +52,8 @@ class _ProductsTabState extends KayleeState<ProductsTab> {
   @override
   Widget build(BuildContext context) {
     return KayleeLoadMoreHandler(
-      controller: context.cubit<ProdTabBloc>(),
-      child: CubitBuilder<ProdTabBloc, LoadMoreModel<Product>>(
+      controller: context.bloc<ProdTabBloc>(),
+      child: BlocBuilder<ProdTabBloc, LoadMoreModel<Product>>(
         buildWhen: (previous, current) {
           return !current.loading;
         },

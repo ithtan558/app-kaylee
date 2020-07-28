@@ -37,7 +37,7 @@ class _CartScreenState extends BaseState<CartScreen> {
       body: Column(
         children: [
           Expanded(
-            child: CubitBuilder<CartBloc, CartState>(
+            child: BlocBuilder<CartBloc, CartState>(
               builder: (context, state) {
                 final cartItems = context.cart.getOrder()?.cartItems;
                 if (cartItems.isNullOrEmpty) {
@@ -54,7 +54,7 @@ class _CartScreenState extends BaseState<CartScreen> {
                           product: item,
                           onRemoveItem: () {
                             context.cart.removeProd(item);
-                            context.cubit<CartBloc>().updateCart();
+                            context.bloc<CartBloc>().updateCart();
                           },
                         );
                       }

@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:anth_package/anth_package.dart';
-import 'package:cubit/cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/models/models.dart';
@@ -38,7 +37,7 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField> {
   void initState() {
     widget?.controller?._view = this;
     try {
-      bloc = context.cubit<KayleePickerTextFieldBloc>();
+      bloc = context.bloc<KayleePickerTextFieldBloc>();
     } catch (e) {
       print('[TUNG] ===> chưa provide KayleePickerTextFieldBloc');
     }
@@ -159,7 +158,7 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField> {
           currentValue = null;
         },
         builder: (context) {
-          return CubitProvider.value(
+          return BlocProvider.value(
             value: bloc,
             child: T == StartTime || T == EndTime
                 ? _TimePickerView<T>(
@@ -258,7 +257,7 @@ class _PickerViewState<T> extends BaseState<_PickerView> {
   void initState() {
     super.initState();
     try {
-      parentBloc = context.cubit<KayleePickerTextFieldBloc>();
+      parentBloc = context.bloc<KayleePickerTextFieldBloc>();
     } catch (e, s) {
       print('[TUNG] ===> $s');
     }
@@ -283,7 +282,7 @@ class _PickerViewState<T> extends BaseState<_PickerView> {
 
   @override
   Widget build(BuildContext context) {
-    return CubitBuilder<_PickerViewBloc<T>, SingleModel<List<T>>>(
+    return BlocBuilder<_PickerViewBloc<T>, SingleModel<List<T>>>(
       cubit: bloc,
       builder: (context, state) {
         if (state.loading)

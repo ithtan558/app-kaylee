@@ -1,5 +1,4 @@
 import 'package:anth_package/anth_package.dart';
-import 'package:cubit/cubit.dart';
 import 'package:flutter/foundation.dart';
 import 'package:kaylee/base/loadmore_interface.dart';
 import 'package:kaylee/models/models.dart';

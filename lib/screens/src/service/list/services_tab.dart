@@ -12,7 +12,7 @@ import 'package:kaylee/screens/src/service/list/bloc/service_tab_bloc.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class ServicesTab extends StatefulWidget {
-  static Widget newInstance() => CubitProvider<ServiceTabBloc>(
+  static Widget newInstance() => BlocProvider<ServiceTabBloc>(
         create: (context) => ServiceTabBloc(
             servService:
                 context.repository<NetworkModule>().provideServService(),
@@ -33,7 +33,7 @@ class _ServicesTabState extends KayleeState<ServicesTab> {
   @override
   void initState() {
     super.initState();
-    serviceTabBloc = context.cubit<ServiceTabBloc>()
+    serviceTabBloc = context.bloc<ServiceTabBloc>()
       ..loadServices();
     sub = serviceTabBloc.listen((state) {
       if (state.code.isNotNull) {
@@ -51,8 +51,8 @@ class _ServicesTabState extends KayleeState<ServicesTab> {
   @override
   Widget build(BuildContext context) {
     return KayleeLoadMoreHandler(
-      controller: context.cubit<ServiceTabBloc>(),
-      child: CubitBuilder<ServiceTabBloc, LoadMoreModel<Service>>(
+      controller: context.bloc<ServiceTabBloc>(),
+      child: BlocBuilder<ServiceTabBloc, LoadMoreModel<Service>>(
         buildWhen: (previous, current) {
           return !current.loading;
         },

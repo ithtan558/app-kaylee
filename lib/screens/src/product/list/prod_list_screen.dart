@@ -13,7 +13,7 @@ import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class ProdListScreen extends StatefulWidget {
-  static Widget newInstance() => CubitProvider<ProdCateBloc>(
+  static Widget newInstance() => BlocProvider<ProdCateBloc>(
       create: (context) => ProdCateBloc(
             productService: context.network.provideProductService(),
           ),
@@ -33,7 +33,8 @@ class _ProdListScreenState extends KayleeState<ProdListScreen> {
   @override
   void initState() {
     super.initState();
-    cateBloc = context.cubit<ProdCateBloc>()..loadProdCate();
+    cateBloc = context.bloc<ProdCateBloc>()
+      ..loadProdCate();
     cateBlocSub = cateBloc.listen((state) {
       if (!state.loading) {
         hideLoading();
@@ -65,17 +66,20 @@ class _ProdListScreenState extends KayleeState<ProdListScreen> {
       appBar: KayleeAppBar(
         title: Strings.danhMucSanPham,
       ),
-      tabBar: CubitBuilder<ProdCateBloc, SingleModel<List<Category>>>(
+      tabBar: BlocBuilder<ProdCateBloc, SingleModel<List<Category>>>(
         builder: (context, state) {
           final categories = state.item;
           return KayleeTabBar(
             itemCount: categories?.length,
             pageController: pageController,
-            mapTitle: (index) => categories.elementAt(index).name,
+            mapTitle: (index) =>
+            categories
+                .elementAt(index)
+                .name,
           );
         },
       ),
-      pageView: CubitBuilder<ProdCateBloc, SingleModel<List<Category>>>(
+      pageView: BlocBuilder<ProdCateBloc, SingleModel<List<Category>>>(
         builder: (context, state) {
           final categories = state.item ?? [];
           return KayleePageView(

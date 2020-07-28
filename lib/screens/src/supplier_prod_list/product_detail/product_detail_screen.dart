@@ -10,7 +10,7 @@ import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class ProductDetailScreen extends StatefulWidget {
-  static Widget newInstance() => CubitProvider<SupplierProdDetailBloc>(
+  static Widget newInstance() => BlocProvider<SupplierProdDetailBloc>(
       create: (context) => SupplierProdDetailBloc(
           productService: context.network.provideProductService(),
           product: context.bundle.args as Product),
@@ -28,7 +28,7 @@ class _ProductDetailScreenState extends KayleeState<ProductDetailScreen> {
   @override
   void initState() {
     super.initState();
-    bloc = context.cubit<SupplierProdDetailBloc>()
+    bloc = context.bloc<SupplierProdDetailBloc>()
       ..loadProduct()
       ..listen((state) {
         if (state.loading) {
@@ -50,7 +50,7 @@ class _ProductDetailScreenState extends KayleeState<ProductDetailScreen> {
       appBar: KayleeAppBar(
         title: Strings.chiTietSanPham,
       ),
-      child: CubitBuilder<SupplierProdDetailBloc, SingleModel<Product>>(
+      child: BlocBuilder<SupplierProdDetailBloc, SingleModel<Product>>(
         buildWhen: (previous, current) => !current.loading,
         builder: (context, state) {
           if (state.loading) return Container();
@@ -112,7 +112,7 @@ class _ProductDetailScreenState extends KayleeState<ProductDetailScreen> {
                   margin: EdgeInsets.zero,
                   onPressed: () {
                     context.cart.addProdToCart(bloc.state.item);
-                    context.cubit<CartBloc>().updateCart();
+                    context.bloc<CartBloc>().updateCart();
                     popScreen();
                   },
                 ),

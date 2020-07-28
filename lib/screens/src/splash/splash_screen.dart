@@ -84,7 +84,7 @@ class _SplashScreenState extends BaseState<SplashScreen> {
                 } else if (state is LoadedSharedPrefSplashScrState) {
                   final user = context.user?.getUserInfo();
                   if (user?.token.isNotNullAndEmpty) {
-                    context.cubit<AppBloc>().loggedIn(user);
+                    context.bloc<AppBloc>().loggedIn(user);
                     bloc.pushToHomeScreen();
                   }
                 }

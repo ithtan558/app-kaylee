@@ -89,18 +89,18 @@ class _LoginScreenState extends KayleeState<LoginScreen> {
                   _passFNode.requestFocus();
                 } else if (state is SuccessLoginScrState) {
                   hideLoading();
-                  context.cubit<AppBloc>().loggedIn(state.result);
-                  await showKayleeAlertDialog(
-                    context: context,
-                    view: KayleeAlertDialogView.message(
-                      message: state.message,
-                      actions: [
-                        KayleeAlertDialogAction.dongY(
-                          onPressed: () {
-                            popScreen();
-                          },
-                        )
-                      ],
+              context.bloc<AppBloc>().loggedIn(state.result);
+              await showKayleeAlertDialog(
+                context: context,
+                view: KayleeAlertDialogView.message(
+                  message: state.message,
+                  actions: [
+                    KayleeAlertDialogAction.dongY(
+                      onPressed: () {
+                        popScreen();
+                      },
+                    )
+                  ],
                     ),
                     onDismiss: () {
                       if (data?.openFrom == LoginScreenOpenFrom.LOGIN_DIALOG) {

@@ -39,7 +39,7 @@ class _CartProdItemState extends BaseState<CartProdItem> {
                 initAmount: widget.product.quantity,
                 onAmountChange: (value) {
                   context.cart.updateProd(widget.product.quantity = value);
-                  context.cubit<CartBloc>().updateCart();
+                  context.bloc<CartBloc>().updateCart();
                 },
                 onRemoveItem: widget.onRemoveItem,
               );

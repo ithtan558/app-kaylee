@@ -16,14 +16,14 @@ import 'package:kaylee/widgets/src/kaylee_text.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class HomeTab extends StatefulWidget {
-  static Widget newInstance() => MultiCubitProvider(
+  static Widget newInstance() => MultiBlocProvider(
         providers: [
-          CubitProvider<SupplierListBloc>(
+          BlocProvider<SupplierListBloc>(
               create: (context) => SupplierListBloc(
                   supplierService: context
                       .repository<NetworkModule>()
                       .provideSupplierService())),
-          CubitProvider<ScrollOffsetBloc>(
+          BlocProvider<ScrollOffsetBloc>(
               create: (context) => ScrollOffsetBloc()),
         ],
         child: HomeTab._(),
@@ -44,11 +44,11 @@ class _HomeTabState extends KayleeState<HomeTab> {
   @override
   void initState() {
     super.initState();
-    scrollOffsetBloc = context.cubit<ScrollOffsetBloc>();
+    scrollOffsetBloc = context.bloc<ScrollOffsetBloc>();
     scrollController.addListener(() {
       scrollOffsetBloc.addOffset(scrollController.offset);
     });
-    supplierListBloc = context.cubit<SupplierListBloc>();
+    supplierListBloc = context.bloc<SupplierListBloc>();
     supplierListBloc.loadSuppliers();
   }
 
@@ -80,12 +80,12 @@ class _HomeTabState extends KayleeState<HomeTab> {
                   fit: BoxFit.fill)),
           child: Column(
             children: <Widget>[
-              CubitProvider<ScrollOffsetBloc>.value(
+              BlocProvider<ScrollOffsetBloc>.value(
                   value: scrollOffsetBloc, child: HomeMenu.newInstance()),
               Expanded(
                 child: KayleeLoadMoreHandler(
-                  controller: context.cubit<SupplierListBloc>(),
-                  child: CubitBuilder<SupplierListBloc, LoadMoreModel>(
+                  controller: context.bloc<SupplierListBloc>(),
+                  child: BlocBuilder<SupplierListBloc, LoadMoreModel>(
                     builder: (context, state) {
                       return ListView.separated(
                         controller: scrollController,

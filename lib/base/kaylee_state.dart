@@ -17,7 +17,7 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
   @override
   void initState() {
     super.initState();
-    appBloc = context.cubit<AppBloc>();
+    appBloc = context.bloc<AppBloc>();
     _listenUnauthorStream();
   }
 

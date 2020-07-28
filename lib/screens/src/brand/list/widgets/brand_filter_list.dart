@@ -7,12 +7,12 @@ import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class BrandFilterList extends StatefulWidget {
-  static Widget newInstance() => MultiCubitProvider(providers: [
-        CubitProvider<CityBloc>(
+  static Widget newInstance() => MultiBlocProvider(providers: [
+        BlocProvider<CityBloc>(
           create: (context) =>
               CityBloc(commonService: context.network.provideCommonService()),
         ),
-        CubitProvider<DistrictBloc>(
+        BlocProvider<DistrictBloc>(
           create: (context) => DistrictBloc(
               commonService: context.network.provideCommonService()),
         ),
@@ -32,8 +32,9 @@ class _BrandFilterListState extends State<BrandFilterList>
   @override
   void initState() {
     super.initState();
-    cityBloc = context.cubit<CityBloc>()..loadCity();
-    districtBloc = context.cubit<DistrictBloc>();
+    cityBloc = context.bloc<CityBloc>()
+      ..loadCity();
+    districtBloc = context.bloc<DistrictBloc>();
   }
 
   @override
@@ -63,32 +64,34 @@ class _BrandFilterListState extends State<BrandFilterList>
             ],
           );
         } else if (index == 1) {
-          return CubitBuilder<CityBloc, SingleModel<List<City>>>(
+          return BlocBuilder<CityBloc, SingleModel<List<City>>>(
             builder: (context, state) {
               return WrapperFilter(
                 title: 'Theo Tỉnh/Thành',
                 children: state.item
-                        .map<KayleeFilterListItem>((e) => KayleeFilterListItem(
-                              title: e.name,
-                              onTap: (isSelected) {},
-                            ))
-                        .toList() ??
+                    .map<KayleeFilterListItem>((e) =>
+                    KayleeFilterListItem(
+                      title: e.name,
+                      onTap: (isSelected) {},
+                    ))
+                    .toList() ??
                     [],
               );
             },
           );
         } else {
-          return CubitBuilder<DistrictBloc, SingleModel<List<District>>>(
+          return BlocBuilder<DistrictBloc, SingleModel<List<District>>>(
             builder: (context, state) {
               if (state.item.isEmpty) return Container();
               return WrapperFilter(
                 title: 'Theo Quận',
                 children: state.item
-                        .map<KayleeFilterListItem>((e) => KayleeFilterListItem(
-                              title: e.name,
-                              onTap: (isSelected) {},
-                            ))
-                        .toList() ??
+                    .map<KayleeFilterListItem>((e) =>
+                    KayleeFilterListItem(
+                      title: e.name,
+                      onTap: (isSelected) {},
+                    ))
+                    .toList() ??
                     [],
               );
             },

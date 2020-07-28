@@ -11,7 +11,7 @@ import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class SupplierProdListScreen extends StatefulWidget {
-  static Widget newInstance() => CubitProvider<SupplierProdCateListBloc>(
+  static Widget newInstance() => BlocProvider<SupplierProdCateListBloc>(
       create: (context) => SupplierProdCateListBloc(
             productService: context.network.provideProductService(),
             supplier: context.bundle.args as Supplier,
@@ -32,7 +32,7 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
   @override
   void initState() {
     super.initState();
-    cateBloc = context.cubit<SupplierProdCateListBloc>()
+    cateBloc = context.bloc<SupplierProdCateListBloc>()
       ..listen((state) {
         if (!state.loading) {
           hideLoading();
@@ -73,10 +73,13 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
                   height: Dimens.px32,
                 ),
                 Positioned(
-                  child: CubitBuilder<CartBloc, CartState>(
+                  child: BlocBuilder<CartBloc, CartState>(
                     builder: (context, state) {
                       final amount =
-                          context.cart.getOrder()?.cartItems?.length ?? 0;
+                          context.cart
+                              .getOrder()
+                              ?.cartItems
+                              ?.length ?? 0;
                       return KayleeText.normalWhite12W400(
                           '${amount <= 9 ? amount : '9+'}');
                     },
@@ -88,7 +91,7 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
           )
         ],
       ),
-      tabBar: CubitBuilder<SupplierProdCateListBloc, LoadMoreModel>(
+      tabBar: BlocBuilder<SupplierProdCateListBloc, LoadMoreModel>(
         buildWhen: (previous, current) {
           return !current.loading;
         },
@@ -97,11 +100,14 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
           return KayleeTabBar(
             itemCount: categories?.length,
             pageController: pageController,
-            mapTitle: (index) => categories.elementAt(index).name,
+            mapTitle: (index) =>
+            categories
+                .elementAt(index)
+                .name,
           );
         },
       ),
-      pageView: CubitBuilder<SupplierProdCateListBloc, LoadMoreModel<Category>>(
+      pageView: BlocBuilder<SupplierProdCateListBloc, LoadMoreModel<Category>>(
         buildWhen: (previous, current) {
           return !current.loading;
         },

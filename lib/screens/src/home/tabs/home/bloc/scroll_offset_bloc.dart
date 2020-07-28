@@ -1,4 +1,4 @@
-import 'package:cubit/cubit.dart';
+import 'package:anth_package/anth_package.dart';
 
 class ScrollOffsetBloc extends Cubit<double> {
   ScrollOffsetBloc() : super(0);

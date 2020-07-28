@@ -12,7 +12,7 @@ import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class BrandListScreen extends StatefulWidget {
-  static Widget newInstance() => CubitProvider<BrandListBloc>(
+  static Widget newInstance() => BlocProvider<BrandListBloc>(
         create: (context) =>
             BrandListBloc(brandService: context.network.provideBrandService()),
         child: BrandListScreen._(),
@@ -30,7 +30,7 @@ class _BrandListScreenState extends KayleeState<BrandListScreen> {
   @override
   void initState() {
     super.initState();
-    brandListBloc = context.cubit<BrandListBloc>()
+    brandListBloc = context.bloc<BrandListBloc>()
       ..loadBrands();
   }
 
@@ -60,7 +60,7 @@ class _BrandListScreenState extends KayleeState<BrandListScreen> {
       ),
       filterList: BrandFilterList.newInstance(),
       body: KayleeLoadMoreHandler(
-        child: CubitBuilder<BrandListBloc, LoadMoreModel<Brand>>(
+        child: BlocBuilder<BrandListBloc, LoadMoreModel<Brand>>(
           builder: (context, state) {
             return KayleeListView(
                 padding: const EdgeInsets.only(

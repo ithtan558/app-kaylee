@@ -1,9 +1,11 @@
+import 'dart:async';
+
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
-import 'package:kaylee/components/components.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/home_menu.dart';
+import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class UserName extends StatefulWidget {
@@ -15,14 +17,15 @@ class _UserNameState extends BaseState<UserName> {
   final positionController = BehaviorSubject<double>();
   final opacityController = BehaviorSubject<double>();
   final marginTop = Dimens.px56;
-  UserInfo userinfo;
+  UserInfo userInfo;
+  StreamSubscription homeMenuBlocSub;
 
   @override
   void initState() {
     super.initState();
-    positionController.add(0);
+    positionController.add(marginTop);
     opacityController.add(1);
-    context.cubit<HomeMenuCubit>().listen((state) {
+    homeMenuBlocSub = context.bloc<HomeMenuBloc>().listen((state) {
       final scrollingPercent =
           (state.collapsePercent < 0.6 ? 0 : state.collapsePercent - 0.6) / 0.4;
       final namePosition = marginTop - Dimens.px16 * scrollingPercent;
@@ -32,11 +35,12 @@ class _UserNameState extends BaseState<UserName> {
           .add(1 - (marginTop - (namePosition ?? marginTop)) / Dimens.px16);
     });
 
-    userinfo = context.repository<UserModule>().getUserInfo()?.userInfo;
+    userInfo = context.user.getUserInfo()?.userInfo;
   }
 
   @override
   void dispose() {
+    homeMenuBlocSub.cancel();
     opacityController.close();
     positionController.close();
     super.dispose();
@@ -44,9 +48,9 @@ class _UserNameState extends BaseState<UserName> {
 
   @override
   Widget build(BuildContext context) {
-    final userName = KayleeText.normalWhite16W500("Hi, ${userinfo?.firstName}");
+    final userName = KayleeText.normalWhite16W500('Hi, ${userInfo?.firstName}');
     final role = KayleeText.normalWhite12W400(
-      "Quản lý cửa hàng",
+      'Quản lý cửa hàng',
     );
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -55,6 +59,7 @@ class _UserNameState extends BaseState<UserName> {
             stream: positionController.stream,
             builder: (context, snapshot) {
               final top = snapshot.data ?? marginTop;
+              print('[TUNG] ===> top $top');
               return Padding(
                 padding: EdgeInsets.only(top: top),
                 child: userName,

@@ -12,7 +12,7 @@ import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class ServiceListScreen extends StatefulWidget {
-  static Widget newInstance() => CubitProvider<ServiceCateBloc>(
+  static Widget newInstance() => BlocProvider<ServiceCateBloc>(
       create: (context) => ServiceCateBloc(
             servService: context.network.provideServService(),
           ),
@@ -32,7 +32,8 @@ class _ServiceListScreenState extends KayleeState<ServiceListScreen> {
   @override
   void initState() {
     super.initState();
-    cateBloc = context.cubit<ServiceCateBloc>()..loadServiceCate();
+    cateBloc = context.bloc<ServiceCateBloc>()
+      ..loadServiceCate();
     sub = cateBloc.listen((state) {
       if (!state.loading) {
         hideLoading();
@@ -70,7 +71,7 @@ class _ServiceListScreenState extends KayleeState<ServiceListScreen> {
           )
         ],
       ),
-      tabBar: CubitBuilder<ServiceCateBloc, SingleModel<List<Category>>>(
+      tabBar: BlocBuilder<ServiceCateBloc, SingleModel<List<Category>>>(
         builder: (context, state) {
           final categories = state.item;
           return KayleeTabBar(
@@ -83,7 +84,7 @@ class _ServiceListScreenState extends KayleeState<ServiceListScreen> {
           );
         },
       ),
-      pageView: CubitBuilder<ServiceCateBloc, SingleModel<List<Category>>>(
+      pageView: BlocBuilder<ServiceCateBloc, SingleModel<List<Category>>>(
         builder: (context, state) {
           final categories = state.item ?? [];
           return KayleePageView(
