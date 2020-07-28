@@ -38,7 +38,7 @@ class _CreateNewBranchScreenState extends BaseState<CreateNewBranchScreen> {
   @override
   void initState() {
     super.initState();
-    final data = context.getArguments() as NewBranchScreenData;
+    final data = context.getArguments<NewBranchScreenData>();
     openFrom = data?.openFrom;
     if (openFrom == BranchScreenOpenFrom.branchItem && data.brand.isNotNull) {
       banner = data.brand.image;
