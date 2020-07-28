@@ -63,7 +63,6 @@ class _UserNameState extends BaseState<UserName> {
             stream: positionController.stream,
             builder: (context, snapshot) {
               final top = snapshot.data ?? marginTop;
-              print('[TUNG] ===> top $top');
               return Padding(
                 padding: EdgeInsets.only(top: top),
                 child: userName,
