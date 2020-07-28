@@ -39,8 +39,8 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField> {
     widget?.controller?._view = this;
     try {
       bloc = context.cubit<KayleePickerTextFieldBloc>();
-    } catch (e, s) {
-      print('[TUNG] ===> $s');
+    } catch (e) {
+      print('[TUNG] ===> chưa provide KayleePickerTextFieldBloc');
     }
     _tfController.text = _getTitle(widget.controller?.value);
     bloc?.update(value: widget.controller?.value);
