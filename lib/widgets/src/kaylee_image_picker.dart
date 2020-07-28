@@ -13,6 +13,9 @@ class KayleeImagePicker extends StatefulWidget {
   final String image;
   final KayleeImagePickerType type;
   final List<String> oldImages;
+
+  ///[file] image mới đc chọn từ storage
+  ///[existedImage] user chọn lại hình cũ, url của image
   final void Function(File file, {String existedImage}) onImageSelect;
 
   KayleeImagePicker(
