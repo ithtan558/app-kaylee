@@ -126,6 +126,7 @@ class _BrandService implements BrandService {
       endTime,
       wardsId,
       image,
+      id,
       brandId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -159,7 +160,12 @@ class _BrandService implements BrandService {
       _data.files.add(MapEntry(
           'image',
           MultipartFile.fromFileSync(image.path,
-              filename: image.path.split(Platform.pathSeparator).last)));
+              filename: image.path
+                  .split(Platform.pathSeparator)
+                  .last)));
+    }
+    if (id != null) {
+      _data.fields.add(MapEntry('id', id.toString()));
     }
     final Response<Map<String, dynamic>> _result = await _dio.request(
         'brand/$brandId',

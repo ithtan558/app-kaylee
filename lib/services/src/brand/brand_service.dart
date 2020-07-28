@@ -46,6 +46,7 @@ abstract class BrandService {
     @Part(name: 'end_time') String endTime,
     @Part(name: 'wards_id') int wardsId,
     @Part() File image,
+    @Part() int id,
     @Path() int brandId,
   });
 
