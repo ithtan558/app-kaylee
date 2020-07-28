@@ -16,7 +16,7 @@ class _BrandService implements BrandService {
   String baseUrl;
 
   @override
-  getBranches({keyword, page, limit, cityId, districtIds}) async {
+  getBrands({keyword, page, limit, cityId, districtIds}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'keyword': keyword,
@@ -40,7 +40,7 @@ class _BrandService implements BrandService {
   }
 
   @override
-  getBranch({brandId}) async {
+  getBrand({brandId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
@@ -59,7 +59,7 @@ class _BrandService implements BrandService {
   }
 
   @override
-  newBranch(
+  newBrand(
       {name,
       phone,
       location,
@@ -116,17 +116,16 @@ class _BrandService implements BrandService {
   }
 
   @override
-  updateBranch(
-      {name,
-      phone,
-      location,
-      cityId,
-      districtId,
-      startTime,
-      endTime,
-      wardsId,
-      image,
-      brandId}) async {
+  updateBrand({name,
+    phone,
+    location,
+    cityId,
+    districtId,
+    startTime,
+    endTime,
+    wardsId,
+    image,
+    brandId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
@@ -175,7 +174,7 @@ class _BrandService implements BrandService {
   }
 
   @override
-  deleteBranch({brandId}) async {
+  deleteBrand({brandId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);

@@ -11,7 +11,7 @@ abstract class BrandService {
   factory BrandService(Dio dio) = _BrandService;
 
   @GET('brand')
-  Future<ResponseModel<Brands>> getBranches({
+  Future<ResponseModel<Brands>> getBrands({
     @Query('keyword') String keyword,
     @Query('page') int page,
     @Query('limit') int limit,
@@ -20,10 +20,10 @@ abstract class BrandService {
   });
 
   @GET('brand/{brandId}')
-  Future<ResponseModel<Brand>> getBranch({@Path() int brandId});
+  Future<ResponseModel<Brand>> getBrand({@Path() int brandId});
 
   @POST('brand')
-  Future<ResponseModel> newBranch({
+  Future<ResponseModel> newBrand({
     @Part() String name,
     @Part() String phone,
     @Part() String location,
@@ -36,7 +36,7 @@ abstract class BrandService {
   });
 
   @POST('brand/{brandId}')
-  Future<ResponseModel> updateBranch({
+  Future<ResponseModel> updateBrand({
     @Part() String name,
     @Part() String phone,
     @Part() String location,
@@ -50,5 +50,5 @@ abstract class BrandService {
   });
 
   @DELETE('brand/delete/{brandId}')
-  Future<ResponseModel> deleteBranch({@Path() int brandId});
+  Future<ResponseModel> deleteBrand({@Path() int brandId});
 }
