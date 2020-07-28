@@ -19,7 +19,7 @@ class BrandListBloc extends Cubit<LoadMoreModel<Brand>>
     _districtIds = districtIds;
     emit(LoadMoreModel.copy(state..loading = true));
     RequestHandler(
-      request: brandService?.getBranches(
+      request: brandService?.getBrands(
         keyword: _keyword,
         cityId: _cityId,
         districtIds: _districtIds,
