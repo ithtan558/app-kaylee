@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:anth_package/anth_package.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:kaylee/models/models.dart';
@@ -21,6 +23,7 @@ class Brand {
     this.city,
     this.district,
     this.wards,
+    this.imageFile,
   });
 
   int id;
@@ -30,6 +33,8 @@ class Brand {
   String startTime;
   String endTime;
   String image;
+  @JsonKey(ignore: true)
+  File imageFile;
   City city;
   District district;
   Ward wards;
