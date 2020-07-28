@@ -77,7 +77,7 @@ class BranchItem extends StatelessWidget {
                       screen: CreateNewBranchScreen,
                       bundle: Bundle(NewBranchScreenData(
                           openFrom: BranchScreenOpenFrom.branchItem,
-                          brand: brand))));
+                          branch: brand))));
                 },
               ),
             )),

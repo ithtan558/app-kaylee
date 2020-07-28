@@ -8,9 +8,9 @@ import 'package:kaylee/widgets/widgets.dart';
 
 class NewBranchScreenData {
   final BranchScreenOpenFrom openFrom;
-  final Brand brand;
+  final Brand branch;
 
-  NewBranchScreenData({this.brand, this.openFrom});
+  NewBranchScreenData({this.branch, this.openFrom});
 }
 
 enum BranchScreenOpenFrom { branchItem, addNewBranchBtn }
@@ -40,17 +40,17 @@ class _CreateNewBranchScreenState extends BaseState<CreateNewBranchScreen> {
     super.initState();
     final data = context.getArguments<NewBranchScreenData>();
     openFrom = data?.openFrom;
-    if (openFrom == BranchScreenOpenFrom.branchItem && data.brand.isNotNull) {
-      banner = data.brand.image;
-      nameTfController.text = data.brand.name ?? '';
+    if (openFrom == BranchScreenOpenFrom.branchItem && data.branch.isNotNull) {
+      banner = data.branch.image;
+      nameTfController.text = data.branch.name ?? '';
       addressController
-        ..initAddress = data.brand.location ?? ''
-        ..initCity = data.brand.city
-        ..initDistrict = data.brand.district
-        ..initWard = data.brand.wards;
-      phoneTfController.text = data.brand.phone ?? '';
-      startTimeController.value = data.brand.start;
-      endTimeController.value = data.brand.end;
+        ..initAddress = data.branch.location ?? ''
+        ..initCity = data.branch.city
+        ..initDistrict = data.branch.district
+        ..initWard = data.branch.wards;
+      phoneTfController.text = data.branch.phone ?? '';
+      startTimeController.value = data.branch.start;
+      endTimeController.value = data.branch.end;
     }
   }
 
