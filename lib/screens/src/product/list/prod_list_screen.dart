@@ -36,8 +36,8 @@ class _ProdListScreenState extends KayleeState<ProdListScreen> {
     cateBloc = context.cubit<ProdCateBloc>()..loadProdCate();
     sub = cateBloc.listen((state) {
       if (!state.loading) {
+        hideLoading();
         if (state.code.isNotNull && state.code != ErrorType.UNAUTHORIZED) {
-          hideLoading();
           showKayleeAlertErrorYesDialog(
             context: context,
             error: state.error,
