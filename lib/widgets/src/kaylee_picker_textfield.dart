@@ -189,7 +189,7 @@ String _getTitle(dynamic item) {
   if (item is City || item is District || item is Ward) {
     return item.name;
   } else if (item is StartTime || item is EndTime) {
-    return item.time;
+    return item.formattedTime;
   }
   return '';
 }
