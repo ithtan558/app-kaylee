@@ -88,6 +88,8 @@ class _CreateNewBranchScreenState extends BaseState<CreateNewBranchScreen> {
           children: [
             KayleeImagePicker(
               type: KayleeImagePickerType.banner,
+              image: banner,
+              onImageSelect: (file, {existedImage}) {},
             ),
             Padding(
               padding: const EdgeInsets.all(Dimens.px16),
