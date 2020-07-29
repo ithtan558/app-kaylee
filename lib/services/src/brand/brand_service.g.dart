@@ -160,9 +160,7 @@ class _BrandService implements BrandService {
       _data.files.add(MapEntry(
           'image',
           MultipartFile.fromFileSync(image.path,
-              filename: image.path
-                  .split(Platform.pathSeparator)
-                  .last)));
+              filename: image.path.split(Platform.pathSeparator).last)));
     }
     if (id != null) {
       _data.fields.add(MapEntry('id', id.toString()));
