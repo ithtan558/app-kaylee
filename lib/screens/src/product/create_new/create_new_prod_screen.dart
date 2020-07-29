@@ -1,13 +1,15 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/brand/widgets/brand_select.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class NewProdScreenData {
   final NewProdScreenOpenFrom openFrom;
+  final Product product;
 
-  NewProdScreenData({this.openFrom});
+  NewProdScreenData({this.openFrom, this.product});
 }
 
 enum NewProdScreenOpenFrom { prodItem, addNewProdBtn }
