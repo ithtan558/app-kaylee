@@ -206,6 +206,7 @@ class _CreateNewBrandScreenState extends KayleeState<CreateNewBrandScreen> {
                       right: Dimens.px16,
                       bottom: Dimens.px16),
                   child: KayleeTextField.phoneInput(
+                    key: UniqueKey(),
                     textInputAction: TextInputAction.done,
                     focusNode: phoneFocus,
                     controller: phoneTfController,
