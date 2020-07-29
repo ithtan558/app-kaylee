@@ -45,4 +45,5 @@ class Images {
   static const ic_calendar = 'assets/ic_calendar.png';
   static const ic_checked_1 = 'assets/ic_checked_1.png';
   static const ic_message = 'assets/ic_message.png';
+  static const ic_search_active = 'assets/ic_search_active.png';
 }
