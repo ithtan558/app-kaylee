@@ -6,7 +6,6 @@ import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/brand/list/bloc/brand_list_bloc.dart';
-import 'package:kaylee/screens/src/brand/list/widgets/brand_filter_list.dart';
 import 'package:kaylee/screens/src/brand/list/widgets/brand_item.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
@@ -30,8 +29,7 @@ class _BrandListScreenState extends KayleeState<BrandListScreen> {
   @override
   void initState() {
     super.initState();
-    brandListBloc = context.bloc<BrandListBloc>()
-      ..loadBrands();
+    brandListBloc = context.bloc<BrandListBloc>()..loadBrands();
   }
 
   @override
@@ -41,24 +39,16 @@ class _BrandListScreenState extends KayleeState<BrandListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return KayleeFilterPopUpView(
+    return Scaffold(
       appBar: KayleeAppBar(
         title: Strings.dsChiNhanh,
+        actions: [
+          KayleeAppBarAction.iconButton(
+            icon: Images.ic_search,
+            onTap: () {},
+          )
+        ],
       ),
-      filterTags: ListView.separated(
-        itemCount: 10,
-        shrinkWrap: true,
-        scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: Dimens.px8),
-        itemBuilder: (context, index) {
-          return KayleeFilterListItem(
-            title: 'Tất cả',
-            disable: true,
-          );
-        },
-        separatorBuilder: (context, index) => SizedBox(width: Dimens.px8),
-      ),
-      filterList: BrandFilterList.newInstance(),
       body: KayleeLoadMoreHandler(
         child: BlocBuilder<BrandListBloc, LoadMoreModel<Brand>>(
           builder: (context, state) {
