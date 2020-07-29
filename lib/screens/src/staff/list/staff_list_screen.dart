@@ -27,7 +27,7 @@ class _StaffListScreenState extends BaseState<StaffListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return KayleeFilterPopUpView(
+    return Scaffold(
       appBar: KayleeAppBar(
         title: Strings.dsNhanVien,
       ),

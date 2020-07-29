@@ -27,7 +27,7 @@ class _ReservationListScreenState extends BaseState<ReservationListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return KayleeFilterPopUpView(
+    return Scaffold(
       appBar: KayleeAppBar(
         title: Strings.dsLichHen1,
         actions: <Widget>[

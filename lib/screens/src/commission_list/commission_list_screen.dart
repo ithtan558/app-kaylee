@@ -26,7 +26,7 @@ class _CommissionListScreenState extends BaseState<CommissionListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return KayleeFilterPopUpView(
+    return Scaffold(
       appBar: KayleeAppBar(
         title: Strings.dsNhanVienNhanHH,
       ),

@@ -28,7 +28,7 @@ class _CustomerListScreenState extends BaseState<CustomerListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return KayleeFilterPopUpView(
+    return Scaffold(
       appBar: KayleeAppBar(
         title: Strings.danhSachKH,
       ),
