@@ -207,7 +207,7 @@ class _KayleeBannerImagePickerState extends BaseState<KayleeImagePicker> {
                         }
                       });
                       widget.controller.image = selectedFile;
-                      widget.onImageSelect.call(selectedFile,
+                      widget.onImageSelect?.call(selectedFile,
                           existedImage: selectedExistedImage);
                     },
                   );
