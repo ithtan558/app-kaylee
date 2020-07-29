@@ -34,8 +34,7 @@ class _ProductsTabState extends KayleeState<ProductsTab> {
   @override
   void initState() {
     super.initState();
-    prodsBloc = context.bloc<ProdTabBloc>()
-      ..loadProds();
+    prodsBloc = context.bloc<ProdTabBloc>()..loadProds();
     sub = prodsBloc.listen((state) {
       if (state.code.isNotNull) {
         showKayleeAlertErrorYesDialog(context: context, error: state.error);
@@ -70,7 +69,8 @@ class _ProductsTabState extends KayleeState<ProductsTab> {
                   pushScreen(PageIntent(
                       screen: CreateNewProdScreen,
                       bundle: Bundle(NewProdScreenData(
-                          openFrom: NewProdScreenOpenFrom.prodItem))));
+                          openFrom: NewProdScreenOpenFrom.prodItem,
+                          product: item))));
                 },
               );
             },
