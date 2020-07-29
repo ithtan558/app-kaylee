@@ -1,8 +1,12 @@
+import 'dart:async';
+
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/brand/widgets/brand_select.dart';
+import 'package:kaylee/screens/src/product/create_new/bloc/prod_detail_screen_bloc.dart';
+import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class NewProdScreenData {
@@ -15,7 +19,12 @@ class NewProdScreenData {
 enum NewProdScreenOpenFrom { prodItem, addNewProdBtn }
 
 class CreateNewProdScreen extends StatefulWidget {
-  static Widget newInstance() => CreateNewProdScreen._();
+  static Widget newInstance() => BlocProvider<ProdDetailScreenBloc>(
+        create: (context) => ProdDetailScreenBloc(
+            prodService: context.network.provideProductService(),
+            product: context.getArguments<NewProdScreenData>().product),
+        child: CreateNewProdScreen._(),
+      );
 
   CreateNewProdScreen._();
 
@@ -25,12 +34,26 @@ class CreateNewProdScreen extends StatefulWidget {
 
 class _CreateNewProdScreenState extends BaseState<CreateNewProdScreen> {
   NewProdScreenOpenFrom openFrom;
+  ProdDetailScreenBloc bloc;
+  StreamSubscription prodDetailScreenBlocSub;
+  String image;
+  final bannerPickerController = ImagePickerController();
+  final nameTfController = TextEditingController();
+  final nameFocus = FocusNode();
 
   @override
   void initState() {
     super.initState();
     final data = context.bundle.args as NewProdScreenData;
     openFrom = data?.openFrom;
+  }
+
+  @override
+  void dispose() {
+    prodDetailScreenBlocSub.cancel();
+    nameTfController.dispose();
+    nameFocus.dispose();
+    super.dispose();
   }
 
   @override
@@ -50,7 +73,8 @@ class _CreateNewProdScreenState extends BaseState<CreateNewProdScreen> {
         child: Column(
           children: [
             KayleeImagePicker(
-              onImageSelect: (file, {existedImage}) {},
+
+              image: image,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: Dimens.px16),
@@ -117,7 +141,7 @@ class _CreateNewProdScreenState extends BaseState<CreateNewProdScreen> {
               hint: Strings.nhapMoTaSanPham,
               textInputAction: TextInputAction.newline,
               fieldHeight:
-                  (context.screenSize.width - Dimens.px32) / (343 / 233),
+              (context.screenSize.width - Dimens.px32) / (343 / 233),
               contentPadding: EdgeInsets.symmetric(vertical: Dimens.px16),
             ),
             if (openFrom == NewProdScreenOpenFrom.prodItem)
