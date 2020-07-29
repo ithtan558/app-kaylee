@@ -118,7 +118,7 @@ class _CreateNewBrandScreenState extends KayleeState<CreateNewBrandScreen> {
                             KayleeAlertDialogAction.dongY(
                               onPressed: () {
                                 popScreen();
-                                bloc.update(bloc.state.item
+                                bloc.state.item
                                   ..name = nameTfController.text
                                   ..phone = phoneTfController.text
                                   ..location = addressController.address
@@ -127,7 +127,8 @@ class _CreateNewBrandScreenState extends KayleeState<CreateNewBrandScreen> {
                                   ..startTime = startTimeController.value.time
                                   ..endTime = endTimeController.value.time
                                   ..wards = addressController.ward
-                                  ..imageFile = bannerPickerController.image);
+                                  ..imageFile = bannerPickerController.image;
+                                bloc.update();
                               },
                               isDefaultAction: true,
                             ),
@@ -137,16 +138,17 @@ class _CreateNewBrandScreenState extends KayleeState<CreateNewBrandScreen> {
                           ],
                         ));
                   } else {
-                    bloc.create(bloc.state.item = Brand()
-                      ..name = nameTfController.text
-                      ..phone = phoneTfController.text
-                      ..location = addressController.address
-                      ..city = addressController.city
-                      ..district = addressController.district
-                      ..startTime = startTimeController.value?.time
-                      ..endTime = endTimeController.value?.time
-                      ..wards = addressController.ward
-                      ..imageFile = bannerPickerController.image);
+                    bloc.state.item = Brand(
+                        name: nameTfController.text,
+                        phone: phoneTfController.text,
+                        location: addressController.address,
+                        city: addressController.city,
+                        district: addressController.district,
+                        startTime: startTimeController.value?.time,
+                        endTime: endTimeController.value?.time,
+                        wards: addressController.ward,
+                        imageFile: bannerPickerController.image);
+                    bloc.create();
                   }
                 },
               ),
@@ -156,7 +158,6 @@ class _CreateNewBrandScreenState extends KayleeState<CreateNewBrandScreen> {
         child: BlocBuilder<BrandDetailScreenBloc, SingleModel<Brand>>(
           buildWhen: (previous, current) => !current.loading,
           builder: (context, state) {
-            print('[TUNG] ===> state.loading ${state.loading}');
             banner = state.item?.image;
             nameTfController.text = state.item?.name ?? '';
             addressController

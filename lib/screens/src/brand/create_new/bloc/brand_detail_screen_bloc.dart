@@ -11,19 +11,19 @@ class BrandDetailScreenBloc extends Cubit<SingleModel<Brand>>
       : super(SingleModel(item: brand));
 
   @override
-  void create(Brand body) {
+  void create() {
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
       request: brandService.newBrand(
-          name: body.name,
-          phone: body.phone,
-          location: body.location,
-          cityId: body.city?.id,
-          districtId: body.district?.id,
-          startTime: body.startTime,
-          endTime: body.endTime,
-          wardsId: body.wards?.id,
-          image: body.imageFile),
+          name: state.item?.name,
+          phone: state.item?.phone,
+          location: state.item?.location,
+          cityId: state.item?.city?.id,
+          districtId: state.item?.district?.id,
+          startTime: state.item?.startTime,
+          endTime: state.item?.endTime,
+          wardsId: state.item?.wards?.id,
+          image: state.item?.imageFile),
       onSuccess: ({message, result}) {
         emit(SingleModel.copy(state
           ..loading = false
@@ -83,19 +83,19 @@ class BrandDetailScreenBloc extends Cubit<SingleModel<Brand>>
   }
 
   @override
-  void update(Brand body) {
+  void update() {
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
       request: brandService.updateBrand(
-        name: body.name,
-        phone: body.phone,
-        location: body.location,
-        cityId: body.city?.id,
-        districtId: body.district?.id,
-        startTime: body.startTime,
-        endTime: body.endTime,
-        wardsId: body.wards?.id,
-        image: body.imageFile,
+        name: state.item?.name,
+        phone: state.item?.phone,
+        location: state.item?.location,
+        cityId: state.item?.city?.id,
+        districtId: state.item?.district?.id,
+        startTime: state.item?.startTime,
+        endTime: state.item?.endTime,
+        wardsId: state.item?.wards?.id,
+        image: state.item?.imageFile,
         brandId: state.item?.id,
         id: state.item?.id,
       ),
