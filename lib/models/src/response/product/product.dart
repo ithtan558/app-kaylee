@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:anth_package/anth_package.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:kaylee/models/models.dart';
@@ -16,6 +18,7 @@ class Product {
       this.code,
       this.name,
       this.image,
+      this.imageFile,
       this.price,
       this.description,
       this.brands,
@@ -26,9 +29,13 @@ class Product {
   String code;
   String name;
   String image;
+  @JsonKey(ignore: true)
+  File imageFile;
   int price;
   String description;
   List<Brand> brands;
+
+  String get brandIds => brands?.map((e) => e.id)?.join(',');
   Category category;
   int quantity;
 }
