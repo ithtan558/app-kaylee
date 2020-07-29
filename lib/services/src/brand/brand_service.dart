@@ -23,6 +23,7 @@ abstract class BrandService {
   Future<ResponseModel<Brand>> getBrand({@Path() int brandId});
 
   @POST('brand')
+  @MultiPart()
   Future<ResponseModel> newBrand({
     @Part() String name,
     @Part() String phone,
@@ -36,6 +37,7 @@ abstract class BrandService {
   });
 
   @POST('brand/{brandId}')
+  @MultiPart()
   Future<ResponseModel> updateBrand({
     @Part() String name,
     @Part() String phone,
