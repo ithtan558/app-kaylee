@@ -159,13 +159,13 @@ class _CreateNewBrandScreenState extends KayleeState<CreateNewBrandScreen> {
           buildWhen: (previous, current) => !current.loading,
           builder: (context, state) {
             banner = state.item?.image;
-            nameTfController.text = state.item?.name ?? '';
+            nameTfController.text = state.item?.name;
             addressController
-              ..initAddress = state.item?.location ?? ''
+              ..initAddress = state.item?.location
               ..initCity = state.item?.city
               ..initDistrict = state.item?.district
               ..initWard = state.item?.wards;
-            phoneTfController.text = state.item?.phone ?? '';
+            phoneTfController.text = state.item?.phone;
             startTimeController.value = state.item?.start;
             endTimeController.value = state.item?.end;
             return Column(
