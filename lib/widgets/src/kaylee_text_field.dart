@@ -12,7 +12,7 @@ class KayleeTextField extends StatelessWidget {
   final String title;
   final Widget textInput;
 
-  KayleeTextField({this.title, this.textInput});
+  KayleeTextField({Key key, this.title, this.textInput}) : super(key: key);
 
   /// [fieldHeight] chiều cao của text field
   /// khi set [fieldHeight], để text field expand với chiều cao [fieldHeight], thì [expands] phải set = true
@@ -76,7 +76,7 @@ class KayleeTextField extends StatelessWidget {
     TextInputAction textInputAction,
     String error,
     EdgeInsets contentPadding =
-    const EdgeInsets.symmetric(vertical: Dimens.px16),
+        const EdgeInsets.symmetric(vertical: Dimens.px16),
     int maxLength,
   }) =>
       KayleeTextField.normal(
@@ -111,15 +111,16 @@ class KayleeTextField extends StatelessWidget {
         ),
       );
 
-  factory KayleeTextField.phoneInput(
-          {String title,
-          String hint,
-          FocusNode focusNode,
-          FocusNode nextFocusNode,
-          TextEditingController controller,
-          TextInputAction textInputAction,
-          String error}) =>
+  factory KayleeTextField.phoneInput({Key key,
+    String title,
+    String hint,
+    FocusNode focusNode,
+    FocusNode nextFocusNode,
+    TextEditingController controller,
+    TextInputAction textInputAction,
+    String error}) =>
       KayleeTextField(
+        key: key,
         title: title ?? Strings.soDienThoai,
         textInput: PhoneInputField(
           hint: hint ?? Strings.phoneLimitHint,
@@ -421,8 +422,6 @@ class _NormalInputFieldState extends BaseState<NormalInputField> {
                     buildCounter: (context,
                         {currentLength, isFocused, maxLength}) {
                       return null;
-                      return KayleeText.normal12W400(
-                          '$currentLength/$maxLength');
                     },
                     decoration: InputDecoration(
                         enabled: !widget.isStaticTField,
