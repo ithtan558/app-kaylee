@@ -4,7 +4,7 @@ import 'package:kaylee/models/models.dart';
 import 'package:kaylee/services/services.dart';
 
 class BrandDetailScreenBloc extends Cubit<SingleModel<Brand>>
-    implements CRUDInterface<Brand> {
+    implements CRUDInterface {
   final BrandService brandService;
 
   BrandDetailScreenBloc({this.brandService, Brand brand})
