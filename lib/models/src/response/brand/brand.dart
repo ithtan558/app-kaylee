@@ -24,7 +24,7 @@ class Brand {
       this.district,
       this.wards,
       this.imageFile,
-      this.selected});
+      this.selected = false});
 
   int id;
   String name;
@@ -44,5 +44,5 @@ class Brand {
   EndTime get end => EndTime(time: this.endTime);
 
   @JsonKey(ignore: true)
-  bool selected = false;
+  bool selected;
 }
