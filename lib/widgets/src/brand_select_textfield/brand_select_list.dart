@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/src/brand_select_textfield/bloc/brand_select_list_bloc.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
@@ -18,14 +19,25 @@ class BrandSelectList extends StatefulWidget {
 
 class _BrandSelectListState extends BaseState<BrandSelectList> {
   int selectedIndex;
+  final text = KayleeText.normal18W700(
+    'Chọn cửa hàng cần áp dụng',
+    maxLines: 1,
+    textAlign: TextAlign.center,
+  );
+  BrandSelectListBloc bloc;
 
   @override
   void initState() {
     super.initState();
+    bloc = BrandSelectListBloc(
+      service: context.network.provideBrandService(),
+      brands: widget.controller?.brands,
+    )..loadBrands();
   }
 
   @override
   void dispose() {
+    bloc.close();
     super.dispose();
   }
 
@@ -33,47 +45,33 @@ class _BrandSelectListState extends BaseState<BrandSelectList> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        KayleeText.normal18W700(
-          'Chọn cửa hàng cần áp dụng',
-          maxLines: 1,
-          textAlign: TextAlign.center,
-        ),
+        text,
         Expanded(
             child: BlocBuilder<BrandSelectListBloc, SingleModel<List<Brand>>>(
-          builder: (context, state) {
-            if (state.loading)
-              return CupertinoActivityIndicator(
-                radius: Dimens.px16,
-              );
-            return ListView.separated(
-                padding: const EdgeInsets.all(Dimens.px16),
-                controller: widget.scrollController,
-                itemBuilder: (c, index) {
-                  if (index == 0)
-                    return buildItem(
-                      title: 'Tất cả',
-                      isSelected: selectedIndex == 0,
-                      onTap: () {
-                        setState(() {
-                          selectedIndex = selectedIndex == index ? null : index;
-                        });
-                      },
-                    );
-                  return buildItem(
-                    title: 'Item 1',
-                    isSelected: selectedIndex == 0 || selectedIndex == index,
-                    onTap: () {
-                      setState(() {
-                        selectedIndex = selectedIndex == index ? null : index;
-                      });
-                    },
+              cubit: bloc,
+              builder: (context, state) {
+                if (state.loading == true)
+                  return CupertinoActivityIndicator(
+                    radius: Dimens.px16,
                   );
-                },
-                separatorBuilder: (c, _) => SizedBox(
-                      height: Dimens.px8,
-                    ),
-                itemCount: state.item.length + 1);
-          },
+                return ListView.separated(
+                    padding: const EdgeInsets.all(Dimens.px16),
+                    controller: widget.scrollController,
+                    itemBuilder: (c, index) {
+                      final item = state.item.elementAt(index);
+                      return BlocProvider<BrandSelectListBloc>.value(
+                        value: bloc,
+                        child: _BrandItem(
+                          brand: item,
+                        ),
+                      );
+                    },
+                    separatorBuilder: (c, _) =>
+                        SizedBox(
+                          height: Dimens.px8,
+                        ),
+                    itemCount: state.item.length);
+              },
         )),
         Container(
           height: Dimens.px1,
@@ -100,6 +98,7 @@ class _BrandSelectListState extends BaseState<BrandSelectList> {
                   margin: EdgeInsets.zero,
                   text: Strings.xacNhan,
                   onPressed: () {
+                    widget.controller.brands = bloc.state.item..removeAt(0);
                     popScreen();
                   },
                 ),
@@ -110,41 +109,74 @@ class _BrandSelectListState extends BaseState<BrandSelectList> {
       ],
     );
   }
+}
 
-  Widget buildItem(
-      {String title, bool isSelected = false, VoidCallback onTap}) {
-    return Material(
-      clipBehavior: Clip.antiAlias,
-      color: isSelected ? ColorsRes.hyper : ColorsRes.background,
-      borderRadius: BorderRadius.circular(Dimens.px5),
-      child: InkWell(
-        onTap: onTap,
-        child: Container(
-          height: Dimens.px40,
-          padding: const EdgeInsets.all(Dimens.px8),
-          child: Row(
-            children: [
-              Image.asset(
-                isSelected ? Images.ic_checked_1 : Images.ic_notcheck,
-                width: Dimens.px24,
-                height: Dimens.px24,
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: Dimens.px8),
-                  child: KayleeText(
-                    title ?? '',
-                    maxLines: 1,
-                    style: isSelected
-                        ? TextStyles.normalWhite16W400
-                        : TextStyles.normal16W400,
+class _BrandItem extends StatefulWidget {
+  final Brand brand;
+
+  _BrandItem({this.brand});
+
+  @override
+  _BrandItemState createState() => _BrandItemState();
+}
+
+class _BrandItemState extends BaseState<_BrandItem> {
+  BrandSelectListBloc bloc;
+
+  @override
+  void initState() {
+    super.initState();
+    bloc = context.bloc<BrandSelectListBloc>();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<BrandSelectListBloc, SingleModel<List<Brand>>>(
+      buildWhen: (previous, current) {
+        return current.item
+            .singleWhere((e) => e.id == widget.brand.id, orElse: null)
+            .isNotNull;
+      },
+      builder: (context, state) {
+        return Material(
+          clipBehavior: Clip.antiAlias,
+          color: widget.brand.selected ? ColorsRes.hyper : ColorsRes.background,
+          borderRadius: BorderRadius.circular(Dimens.px5),
+          child: InkWell(
+            onTap: () {
+              bloc.select(
+                  brand: widget.brand..selected = !widget.brand.selected);
+            },
+            child: Container(
+              height: Dimens.px40,
+              padding: const EdgeInsets.all(Dimens.px8),
+              child: Row(
+                children: [
+                  Image.asset(
+                    widget.brand.selected
+                        ? Images.ic_checked_1
+                        : Images.ic_notcheck,
+                    width: Dimens.px24,
+                    height: Dimens.px24,
                   ),
-                ),
-              )
-            ],
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: Dimens.px8),
+                      child: KayleeText(
+                        widget.brand.name ?? '',
+                        maxLines: 1,
+                        style: widget.brand.selected
+                            ? TextStyles.normalWhite16W400
+                            : TextStyles.normal16W400,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

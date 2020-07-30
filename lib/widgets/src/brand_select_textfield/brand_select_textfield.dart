@@ -1,7 +1,8 @@
+import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
-import 'package:kaylee/widgets/src/brand_select_textfield/brand_select.dart';
+import 'package:kaylee/widgets/src/brand_select_textfield/bloc/brand_select_tf_bloc.dart';
 import 'package:kaylee/widgets/src/brand_select_textfield/brand_select_list.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
@@ -17,6 +18,20 @@ class BrandSelectTextField extends StatefulWidget {
 }
 
 class _BrandSelectTextFieldState extends State<BrandSelectTextField> {
+  BrandSelectTfBloc bloc;
+
+  @override
+  void initState() {
+    super.initState();
+    bloc = BrandSelectTfBloc();
+  }
+
+  @override
+  void dispose() {
+    bloc.close();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return KayleeTextField(
@@ -31,10 +46,16 @@ class _BrandSelectTextFieldState extends State<BrandSelectTextField> {
           child: Row(
             children: [
               Expanded(
-                  child: KayleeText.normal16W400(
-                widget.content ?? '',
-                maxLines: 1,
-              )),
+                child: BlocBuilder<BrandSelectTfBloc, dynamic>(
+                  cubit: bloc,
+                  builder: (context, state) {
+                    return KayleeText.normal16W400(
+                      '(${widget.controller?.count ?? 0}) địa điểm được chọn',
+                      maxLines: 1,
+                    );
+                  },
+                ),
+              ),
               KayleeFlatButton.withTextField(
                 title: Strings.chinhSua,
                 onPress: () {
@@ -42,10 +63,15 @@ class _BrandSelectTextFieldState extends State<BrandSelectTextField> {
                     context,
                     initialChildSize: 356 / 667,
                     minChildSize: 356 / 667,
-                    builder: (c, controller) {
-                      return BrandSelectList(scrollController: controller);
+                    builder: (c, scrollController) {
+                      return BrandSelectList(
+                        scrollController: scrollController,
+                        controller: widget.controller,
+                      );
                     },
-                  ).then((value) {});
+                  ).then((value) {
+                    bloc.update();
+                  });
                 },
               )
             ],
@@ -60,5 +86,8 @@ class _BrandSelectTextFieldState extends State<BrandSelectTextField> {
 class BrandSelectTFController {
   List<Brand> brands;
 
-  String get brandIds => brands?.map((e) => e.id)?.join(',');
+  int get count => brands?.where((e) => e.selected)?.length ?? 0;
+
+  String get brandIds =>
+      brands?.where((e) => e.selected)?.map((e) => e.id)?.join(',');
 }

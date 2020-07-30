@@ -10,41 +10,67 @@ class BrandSelectListBloc extends Cubit<SingleModel<List<Brand>>> {
       : super(SingleModel(item: brands));
 
   void loadBrands() {
-    if (state.item.isNull) {
-      emit(SingleModel.copy(state..loading = true));
-      RequestHandler(
-        request: service.getAllBrands(),
-        onSuccess: ({message, result}) {
-          emit(SingleModel.copy(state
-            ..loading = false
-            ..item = result
-            ..code = null
-            ..error = null));
-        },
-        onFailed: (code, {error}) {
-          emit(SingleModel.copy(state
-            ..loading = false
-            ..code = code
-            ..error = error));
-        },
-      );
-    }
+    emit(SingleModel.copy(state..loading = true));
+    RequestHandler(
+      request: service.getAllBrands(),
+      onSuccess: ({message, result}) {
+        final brands = result as List<Brand>;
+        state.item?.forEach((old) {
+          brands.singleWhere((e) => e.id == old.id, orElse: null)?.selected =
+              old.selected;
+        });
+        final totalSelected = brands.fold<int>(
+            0,
+            (previousValue, e) =>
+                e.id != -1 && e.selected ? (previousValue + 1) : previousValue);
+        brands.insert(
+            0,
+            Brand(
+                name: 'Tất cả',
+                id: -1,
+                selected: totalSelected == brands.length));
+
+        emit(SingleModel.copy(state
+          ..loading = false
+          ..item = result
+          ..code = null
+          ..error = null));
+      },
+      onFailed: (code, {error}) {
+        emit(SingleModel.copy(state
+          ..loading = false
+          ..code = code
+          ..error = error));
+      },
+    );
   }
 
-  void select({Brand brand, bool all}) {
-    if (brand.isNotNull) {
+  void select({Brand brand}) {
+    if (brand.id == -1) {
+      //select all
       emit(SingleModel.copy(state
         ..item.forEach((e) {
-          if (e.id == brand.id) {
-            e.selected = !e.selected;
-            return;
-          }
+          e.selected = brand.selected;
+          return;
         })));
-    } else if (all.isNotNull) {
-      emit(SingleModel.copy(state
-        ..item.forEach((e) {
-          e.selected = all;
-        })));
+    } else {
+      final totalSelected = state.item.fold<int>(
+          0,
+          (previousValue, e) =>
+              e.id != -1 && e.selected ? (previousValue + 1) : previousValue);
+      final itemTotal = state.item.length - 1;
+      if (totalSelected == itemTotal && brand.selected) {
+        select(brand: state.item.first..selected = true);
+        return;
+      }
+      state.item.singleWhere((e) => e.id == brand.id).selected = brand.selected;
+      if (state.item.fold<int>(
+              0,
+              (previousValue, e) =>
+                  e.selected ? (previousValue + 1) : previousValue) ==
+          state.item.length - 1) {}
+
+      emit(SingleModel.copy(state));
     }
   }
 }
