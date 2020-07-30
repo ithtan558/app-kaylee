@@ -6,11 +6,16 @@ import 'package:kaylee/models/models.dart';
 
 part 'brand_service.g.dart';
 
+const String _brandPath = 'brand';
+
 @RestApi()
 abstract class BrandService {
   factory BrandService(Dio dio) = _BrandService;
 
-  @GET('brand')
+  @GET(_brandPath + '/all')
+  Future<ResponseModel<Brand>> getAllBrands();
+
+  @GET(_brandPath)
   Future<ResponseModel<Brands>> getBrands({
     @Query('keyword') String keyword,
     @Query('page') int page,
@@ -19,10 +24,10 @@ abstract class BrandService {
     @Query('district_ids') String districtIds,
   });
 
-  @GET('brand/{brandId}')
+  @GET(_brandPath + '/{brandId}')
   Future<ResponseModel<Brand>> getBrand({@Path() int brandId});
 
-  @POST('brand')
+  @POST(_brandPath)
   @MultiPart()
   Future<ResponseModel> newBrand({
     @Part() String name,
@@ -36,7 +41,7 @@ abstract class BrandService {
     @Part() File image,
   });
 
-  @POST('brand/{brandId}')
+  @POST(_brandPath + '/{brandId}')
   @MultiPart()
   Future<ResponseModel> updateBrand({
     @Part() String name,
@@ -52,6 +57,6 @@ abstract class BrandService {
     @Path() int brandId,
   });
 
-  @DELETE('brand/delete/{brandId}')
+  @DELETE(_brandPath + '/delete/{brandId}')
   Future<ResponseModel> deleteBrand({@Path() int brandId});
 }

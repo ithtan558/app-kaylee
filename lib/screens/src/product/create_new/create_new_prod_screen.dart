@@ -4,7 +4,6 @@ import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
-import 'package:kaylee/screens/src/brand/widgets/brand_select.dart';
 import 'package:kaylee/screens/src/product/create_new/bloc/prod_detail_screen_bloc.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
@@ -90,14 +89,7 @@ class _CreateNewProdScreenState extends BaseState<CreateNewProdScreen> {
                 content: '(0) địa điểm được chọn',
                 buttonText: Strings.chinhSua,
                 onPress: () {
-                  showKayleeBottomSheet(
-                    context,
-                    initialChildSize: 356 / 667,
-                    minChildSize: 356 / 667,
-                    builder: (c, controller) {
-                      return BrandSelect(controller: controller);
-                    },
-                  );
+
                 },
               ),
             ),

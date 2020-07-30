@@ -2,7 +2,7 @@ import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
-import 'package:kaylee/screens/src/brand/widgets/brand_select.dart';
+import 'package:kaylee/widgets/src/brand_select_textfield/brand_select_list.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class NewServiceScreenData {
@@ -71,7 +71,7 @@ class _CreateNewServiceScreenState extends BaseState<CreateNewServiceScreen> {
                     initialChildSize: 356 / 667,
                     minChildSize: 356 / 667,
                     builder: (c, controller) {
-                      return BrandSelect(controller: controller);
+                      return BrandSelectList(scrollController: controller);
                     },
                   );
                 },

@@ -9,7 +9,7 @@ import 'package:kaylee/res/src/strings.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/widgets/src/hyper_link_text.dart';
 
-export 'src/brand_select_textfield.dart';
+export 'src/brand_select_textfield/brand_select_textfield.dart';
 export 'src/filter_view/kaylee_filter_list_item.dart';
 export 'src/filter_view/kaylee_filter_view.dart';
 export 'src/hyper_link_text.dart';

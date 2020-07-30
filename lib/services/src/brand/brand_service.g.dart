@@ -16,6 +16,24 @@ class _BrandService implements BrandService {
   String baseUrl;
 
   @override
+  getAllBrands() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        'brand/all',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = ResponseModel<Brand>.fromJson(_result.data);
+    return value;
+  }
+
+  @override
   getBrands({keyword, page, limit, cityId, districtIds}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{

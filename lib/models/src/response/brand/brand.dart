@@ -12,19 +12,19 @@ class Brand {
 
   Map<String, dynamic> toJson() => _$BrandToJson(this);
 
-  Brand({
-    this.id,
-    this.name,
-    this.phone,
-    this.location,
-    this.startTime,
-    this.endTime,
-    this.image,
-    this.city,
-    this.district,
-    this.wards,
-    this.imageFile,
-  });
+  Brand(
+      {this.id,
+      this.name,
+      this.phone,
+      this.location,
+      this.startTime,
+      this.endTime,
+      this.image,
+      this.city,
+      this.district,
+      this.wards,
+      this.imageFile,
+      this.selected});
 
   int id;
   String name;
@@ -42,4 +42,7 @@ class Brand {
   StartTime get start => StartTime(time: this.startTime);
 
   EndTime get end => EndTime(time: this.endTime);
+
+  @JsonKey(ignore: true)
+  bool selected = false;
 }

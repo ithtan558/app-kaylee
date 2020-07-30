@@ -1,12 +1,16 @@
 import 'package:anth_package/anth_package.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/widgets/src/brand_select_textfield/bloc/brand_select_list_bloc.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class BrandSelectList extends StatefulWidget {
-  final ScrollController controller;
+  final ScrollController scrollController;
+  final BrandSelectTFController controller;
 
-  BrandSelectList({this.controller});
+  BrandSelectList({this.scrollController, this.controller});
 
   @override
   _BrandSelectListState createState() => _BrandSelectListState();
@@ -27,8 +31,6 @@ class _BrandSelectListState extends BaseState<BrandSelectList> {
 
   @override
   Widget build(BuildContext context) {
-    print('[TUNG] ===> build');
-
     return Column(
       children: [
         KayleeText.normal18W700(
@@ -37,9 +39,15 @@ class _BrandSelectListState extends BaseState<BrandSelectList> {
           textAlign: TextAlign.center,
         ),
         Expanded(
-            child: ListView.separated(
+            child: BlocBuilder<BrandSelectListBloc, SingleModel<List<Brand>>>(
+          builder: (context, state) {
+            if (state.loading)
+              return CupertinoActivityIndicator(
+                radius: Dimens.px16,
+              );
+            return ListView.separated(
                 padding: const EdgeInsets.all(Dimens.px16),
-                controller: widget.controller,
+                controller: widget.scrollController,
                 itemBuilder: (c, index) {
                   if (index == 0)
                     return buildItem(
@@ -62,9 +70,11 @@ class _BrandSelectListState extends BaseState<BrandSelectList> {
                   );
                 },
                 separatorBuilder: (c, _) => SizedBox(
-                  height: Dimens.px8,
-                ),
-                itemCount: 10 + 1)),
+                      height: Dimens.px8,
+                    ),
+                itemCount: state.item.length + 1);
+          },
+        )),
         Container(
           height: Dimens.px1,
           width: double.infinity,
