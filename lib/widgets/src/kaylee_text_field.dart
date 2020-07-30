@@ -111,14 +111,15 @@ class KayleeTextField extends StatelessWidget {
         ),
       );
 
-  factory KayleeTextField.phoneInput({Key key,
-    String title,
-    String hint,
-    FocusNode focusNode,
-    FocusNode nextFocusNode,
-    TextEditingController controller,
-    TextInputAction textInputAction,
-    String error}) =>
+  factory KayleeTextField.phoneInput(
+          {Key key,
+          String title,
+          String hint,
+          FocusNode focusNode,
+          FocusNode nextFocusNode,
+          TextEditingController controller,
+          TextInputAction textInputAction,
+          String error}) =>
       KayleeTextField(
         key: key,
         title: title ?? Strings.soDienThoai,
@@ -141,12 +142,13 @@ class KayleeTextField extends StatelessWidget {
         ),
       );
 
-  factory KayleeTextField.price(
-          {String title,
-          String hint,
-          String error,
-          TextEditingController controller,
-          TextInputAction textInputAction}) =>
+  factory KayleeTextField.price({String title,
+    String hint,
+    String error,
+    TextEditingController controller,
+    TextInputAction textInputAction,
+    FocusNode focusNode,
+    FocusNode nextFocusNode}) =>
       KayleeTextField(
         title: title,
         textInput: PriceInputField(
@@ -154,6 +156,8 @@ class KayleeTextField extends StatelessWidget {
           hint: hint,
           controller: controller,
           textInputAction: textInputAction,
+          focusNode: focusNode,
+          nextFocusNode: nextFocusNode,
         ),
       );
 
@@ -200,9 +204,15 @@ class PriceInputField extends StatefulWidget {
   final String error;
   final TextEditingController controller;
   final TextInputAction textInputAction;
+  final FocusNode focusNode;
+  final FocusNode nextFocusNode;
 
-  PriceInputField(
-      {this.error, this.controller, this.hint, this.textInputAction});
+  PriceInputField({this.error,
+    this.controller,
+    this.hint,
+    this.textInputAction,
+    this.focusNode,
+    this.nextFocusNode});
 
   @override
   _PriceInputFieldState createState() => _PriceInputFieldState();
@@ -232,12 +242,18 @@ class _PriceInputFieldState extends BaseState<PriceInputField> {
                 keyboardType: TextInputType.number,
                 textInputAction: widget.textInputAction,
                 style: TextStyles.normal16W400,
+                focusNode: widget.focusNode,
                 maxLines: 1,
                 minLines: 1,
                 controller: widget.controller,
                 onSubmitted: (value) {
                   if (widget.textInputAction == TextInputAction.next) {
-                    FocusScope.of(context).nextFocus();
+                    if (widget.textInputAction == TextInputAction.next) {
+                      if (widget.nextFocusNode.isNotNull) {
+                        widget.nextFocusNode.requestFocus();
+                      } else
+                        FocusScope.of(context).nextFocus();
+                    }
                   }
                 },
                 decoration: InputDecoration(
