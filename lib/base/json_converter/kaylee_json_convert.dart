@@ -24,8 +24,6 @@ class KayleeJsonConverter extends JsonConverterFactory {
       return Supplier.fromJson(json) as T;
     } else if (T == Suppliers) {
       return Suppliers.fromJson(json) as T;
-    } else if (T == Category) {
-      return Category.fromJson(json) as T;
     } else if (T == Product) {
       return Product.fromJson(json) as T;
     } else if (T == Products) {
@@ -40,6 +38,10 @@ class KayleeJsonConverter extends JsonConverterFactory {
       return Service.fromJson(json) as T;
     } else if (T == Services) {
       return Services.fromJson(json) as T;
+    } else if (T == ProdCate) {
+      return ProdCate.fromJson(json) as T;
+    } else if (T == ServiceCate) {
+      return ServiceCate.fromJson(json) as T;
     }
     return json as T;
   }
@@ -66,8 +68,6 @@ class KayleeJsonConverter extends JsonConverterFactory {
       return json.toJson();
     } else if (json is Suppliers) {
       return json.toJson();
-    } else if (json is Category) {
-      return json.toJson();
     } else if (json is Product) {
       return json.toJson();
     } else if (json is Products) {
@@ -81,6 +81,10 @@ class KayleeJsonConverter extends JsonConverterFactory {
     } else if (json is Service) {
       return json.toJson();
     } else if (json is Services) {
+      return json.toJson();
+    } else if (json is ProdCate) {
+      return json.toJson();
+    } else if (json is ServiceCate) {
       return json.toJson();
     } else
       return json;

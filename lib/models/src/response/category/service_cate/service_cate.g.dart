@@ -1,22 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'category.dart';
+part of 'service_cate.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Category _$CategoryFromJson(Map<String, dynamic> json) {
-  return Category(
-    id: json['id'] as int,
-    code: json['code'] as String,
-    name: json['name'] as String,
-    description: json['description'] as String,
-    image: json['image'] as String,
-  );
+ServiceCate _$ServiceCateFromJson(Map<String, dynamic> json) {
+  return ServiceCate()
+    ..id = json['id'] as int
+    ..code = json['code'] as String
+    ..name = json['name'] as String
+    ..description = json['description'] as String
+    ..image = json['image'] as String;
 }
 
-Map<String, dynamic> _$CategoryToJson(Category instance) => <String, dynamic>{
+Map<String, dynamic> _$ServiceCateToJson(ServiceCate instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'code': instance.code,
       'name': instance.name,

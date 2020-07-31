@@ -20,7 +20,7 @@ Product _$ProductFromJson(Map<String, dynamic> json) {
         ?.toList(),
     category: json['category'] == null
         ? null
-        : Category.fromJson(json['category'] as Map<String, dynamic>),
+        : ProdCate.fromJson(json['category'] as Map<String, dynamic>),
     quantity: json['quantity'] as int,
   );
 }

@@ -20,7 +20,7 @@ Service _$ServiceFromJson(Map<String, dynamic> json) {
         ?.toList(),
     category: json['category'] == null
         ? null
-        : Category.fromJson(json['category'] as Map<String, dynamic>),
+        : ServiceCate.fromJson(json['category'] as Map<String, dynamic>),
     quantity: json['quantity'] as int,
   );
 }

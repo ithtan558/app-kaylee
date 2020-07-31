@@ -37,6 +37,6 @@ class Product {
 
   String get selectedBrandIds =>
       brands?.where((e) => e.selected)?.map((e) => e.id)?.join(',');
-  Category category;
+  ProdCate category;
   int quantity;
 }

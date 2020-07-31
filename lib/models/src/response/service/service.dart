@@ -29,6 +29,6 @@ class Service {
   int price;
   String description;
   List<Brand> brands;
-  Category category;
+  ServiceCate category;
   int quantity;
 }

@@ -8,6 +8,8 @@ export 'src/request/verify_phone/verify_phone_body.dart';
 export 'src/response/brand/brand.dart';
 export 'src/response/brand/list/brands.dart';
 export 'src/response/category/category.dart';
+export 'src/response/category/prod_cate/prod_cate.dart';
+export 'src/response/category/service_cate/service_cate.dart';
 export 'src/response/city/city.dart';
 export 'src/response/content/content.dart';
 export 'src/response/district/district.dart';
