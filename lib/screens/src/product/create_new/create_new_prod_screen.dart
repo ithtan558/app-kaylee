@@ -212,7 +212,27 @@ class _CreateNewProdScreenState extends KayleeState<CreateNewProdScreen> {
                         top: Dimens.px32, bottom: Dimens.px16),
                     child: HyperLinkText(
                       text: Strings.xoaSanPham,
-                      onTap: () {},
+                      onTap: () {
+                        showKayleeAlertDialog(
+                            context: context,
+                            view: KayleeAlertDialogView(
+                              title: Strings.banDaChacChan,
+                              content: Strings
+                                  .banCoDongYXoaThongTinVaKhongPhucHoiLai,
+                              actions: [
+                                KayleeAlertDialogAction.dongY(
+                                  onPressed: () {
+                                    popScreen();
+                                    bloc.delete();
+                                  },
+                                  isDefaultAction: true,
+                                ),
+                                KayleeAlertDialogAction.huy(
+                                  onPressed: popScreen,
+                                ),
+                              ],
+                            ));
+                      },
                     ),
                   ),
               ],
