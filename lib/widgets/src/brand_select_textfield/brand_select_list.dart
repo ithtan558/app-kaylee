@@ -48,30 +48,27 @@ class _BrandSelectListState extends BaseState<BrandSelectList> {
         text,
         Expanded(
             child: BlocBuilder<BrandSelectListBloc, SingleModel<List<Brand>>>(
-              cubit: bloc,
-              builder: (context, state) {
-                if (state.loading == true)
-                  return CupertinoActivityIndicator(
-                    radius: Dimens.px16,
+          cubit: bloc,
+          builder: (context, state) {
+            if (state.loading == true)
+              return CupertinoActivityIndicator(
+                radius: Dimens.px16,
+              );
+            return ListView.separated(
+                padding: const EdgeInsets.all(Dimens.px16),
+                controller: widget.scrollController,
+                itemBuilder: (c, index) {
+                  final item = state.item.elementAt(index);
+                  return BlocProvider<BrandSelectListBloc>.value(
+                    value: bloc,
+                    child: _BrandItem(
+                      brand: item,
+                    ),
                   );
-                return ListView.separated(
-                    padding: const EdgeInsets.all(Dimens.px16),
-                    controller: widget.scrollController,
-                    itemBuilder: (c, index) {
-                      final item = state.item.elementAt(index);
-                      return BlocProvider<BrandSelectListBloc>.value(
-                        value: bloc,
-                        child: _BrandItem(
-                          brand: item,
-                        ),
-                      );
-                    },
-                    separatorBuilder: (c, _) =>
-                        SizedBox(
-                          height: Dimens.px8,
-                        ),
-                    itemCount: state.item.length);
-              },
+                },
+                separatorBuilder: (c, _) => SizedBox(height: Dimens.px8),
+                itemCount: state.item.length);
+          },
         )),
         Container(
           height: Dimens.px1,
@@ -98,7 +95,8 @@ class _BrandSelectListState extends BaseState<BrandSelectList> {
                   margin: EdgeInsets.zero,
                   text: Strings.xacNhan,
                   onPressed: () {
-                    widget.controller.brands = bloc.state.item..removeAt(0);
+                    widget.controller.brands =
+                        bloc.state.item.sublist(1, bloc.state.item.length);
                     popScreen();
                   },
                 ),
