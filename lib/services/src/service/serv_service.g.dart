@@ -29,7 +29,7 @@ class _ServService implements ServService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<Category>.fromJson(_result.data);
+    final value = ResponseModel<ServiceCate>.fromJson(_result.data);
     return value;
   }
 

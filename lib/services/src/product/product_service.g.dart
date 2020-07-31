@@ -41,9 +41,9 @@ class _ProductService implements ProductService {
   }
 
   @override
-  getProdCategory({supplier_id}) async {
+  getProdCategory({supplierId}) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'supplier_id': supplier_id};
+    final queryParameters = <String, dynamic>{r'supplier_id': supplierId};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final Response<Map<String, dynamic>> _result = await _dio.request(
@@ -55,7 +55,7 @@ class _ProductService implements ProductService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<Category>.fromJson(_result.data);
+    final value = ResponseModel<ProdCate>.fromJson(_result.data);
     return value;
   }
 
