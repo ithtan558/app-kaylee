@@ -13,7 +13,7 @@ class SupplierProdCateListBloc extends Cubit<LoadMoreModel<Category>> {
   void loadProdCate() {
     emit(LoadMoreModel.copy(state..loading = true));
     RequestHandler(
-      request: productService.getProdCategory(supplier_id: supplier?.id),
+      request: productService.getProdCategory(supplierId: supplier?.id),
       onSuccess: ({message, result}) {
         emit(LoadMoreModel.copy(state
           ..items = result
