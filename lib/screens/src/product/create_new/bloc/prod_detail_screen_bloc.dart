@@ -16,7 +16,7 @@ class ProdDetailScreenBloc extends Cubit<SingleModel<Product>>
     RequestHandler(
       request: prodService.newProduct(
           name: state.item?.name,
-          brandIds: state.item?.brandIds,
+          brandIds: state.item?.selectedBrandIds,
           price: state.item?.price,
           categoryId: state.item?.category?.id,
           description: state.item?.description,
@@ -88,7 +88,7 @@ class ProdDetailScreenBloc extends Cubit<SingleModel<Product>>
     RequestHandler(
       request: prodService.updateProduct(
         name: state.item?.name,
-        brandIds: state.item?.brandIds,
+        brandIds: state.item?.selectedBrandIds,
         price: state.item?.price,
         categoryId: state.item?.category?.id,
         description: state.item?.description,
