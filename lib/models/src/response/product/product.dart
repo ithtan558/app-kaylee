@@ -35,7 +35,8 @@ class Product {
   String description;
   List<Brand> brands;
 
-  String get brandIds => brands?.map((e) => e.id)?.join(',');
+  String get selectedBrandIds =>
+      brands?.where((e) => e.selected)?.map((e) => e.id)?.join(',');
   Category category;
   int quantity;
 }
