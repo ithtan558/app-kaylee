@@ -41,7 +41,7 @@ class _ProductService implements ProductService {
   }
 
   @override
-  getProdCategory({supplierId}) async {
+  getCategories({supplierId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'supplier_id': supplierId};
     queryParameters.removeWhere((k, v) => v == null);

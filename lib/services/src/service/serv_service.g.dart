@@ -16,7 +16,7 @@ class _ServService implements ServService {
   String baseUrl;
 
   @override
-  getCategory() async {
+  getCategories() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};

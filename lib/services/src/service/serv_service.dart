@@ -9,7 +9,7 @@ abstract class ServService {
   factory ServService(Dio dio) = _ServService;
 
   @GET('service-category/all')
-  Future<ResponseModel<ServiceCate>> getCategory();
+  Future<ResponseModel<ServiceCate>> getCategories();
 
   @GET('service')
   Future<ResponseModel<Services>> getServices(

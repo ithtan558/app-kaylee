@@ -20,7 +20,7 @@ abstract class ProductService {
       @Query('limit') int limit});
 
   @GET('product-category/all')
-  Future<ResponseModel<ProdCate>> getProdCategory(
+  Future<ResponseModel<ProdCate>> getCategories(
       {@Query('supplier_id') int supplierId});
 
   @GET('product/{proId}')
