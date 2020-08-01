@@ -428,7 +428,9 @@ Future showPickerPopup(
             ),
           ),
         );
-      });
+      }).then((value) {
+    onDismiss?.call();
+  });
 }
 
 ///change amount dialog
@@ -522,7 +524,7 @@ class _KayleeAmountChangingViewState
               child: FlatButton(
                   padding: const EdgeInsets.symmetric(vertical: Dimens.px18),
                   shape:
-                  RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+                      RoundedRectangleBorder(borderRadius: BorderRadius.zero),
                   onPressed: () {
                     popScreen();
                   },
