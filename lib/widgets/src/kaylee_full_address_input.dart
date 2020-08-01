@@ -55,8 +55,8 @@ class _KayleeFullAddressInputState extends BaseState<KayleeFullAddressInput> {
   Widget build(BuildContext context) {
     return Padding(
       padding: widget.padding ?? EdgeInsets.zero,
-      child: BlocProvider<KayleePickerTextFieldBloc>(
-        create: (context) => KayleePickerTextFieldBloc(),
+      child: RepositoryProvider<KayleePickerTextFieldModel>(
+        create: (context) => KayleePickerTextFieldModel(),
         child: Column(
           children: [
             KayleeTextField.normal(

@@ -31,15 +31,15 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField> {
   final _tfController = TextEditingController();
   bool focused = false;
   T currentValue;
-  KayleePickerTextFieldBloc bloc;
+  KayleePickerTextFieldModel pickerTFModel;
 
   @override
   void initState() {
     widget?.controller?._view = this;
     try {
-      bloc = context.bloc<KayleePickerTextFieldBloc>();
+      pickerTFModel = context.repository<KayleePickerTextFieldModel>();
     } catch (e) {
-      print('[TUNG] ===> chưa provide KayleePickerTextFieldBloc');
+      print('[TUNG] ===> chưa provide KayleePickerTextFieldModel');
     }
     updateValue();
     super.initState();
@@ -51,9 +51,11 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField> {
     super.didUpdateWidget(oldWidget);
   }
 
+  ///set text để hiện thị trong [KayleePickerTextField]
+  ///
   void updateValue() {
     _tfController.text = _getTitle(widget.controller?.value);
-    bloc?.update(value: widget.controller?.value);
+    pickerTFModel?.update(value: widget.controller?.value);
   }
 
   @override
@@ -73,13 +75,13 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField> {
                 if (T == City) {
                   showPicker();
                 } else if (T == District) {
-                  if (bloc?.state?.city?.id.isNotNull) {
+                  if (pickerTFModel?.city?.id.isNotNull) {
                     showPicker();
                   } else {
                     showAlert(content: Strings.xinVuiLongChonTinh);
                   }
                 } else if (T == Ward) {
-                  if (bloc?.state?.district?.id.isNotNull) {
+                  if (pickerTFModel?.district?.id.isNotNull) {
                     showPicker();
                   } else {
                     showAlert(content: Strings.xinVuiLongChonQuan);
@@ -87,6 +89,10 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField> {
                 } else if (T == StartTime) {
                   showPicker();
                 } else if (T == EndTime) {
+                  showPicker();
+                } else if (T == ProdCate) {
+                  showPicker();
+                } else if (T == ServiceCate) {
                   showPicker();
                 }
               },
@@ -166,35 +172,38 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField> {
         },
         onDismiss: () {
           currentValue = null;
+          setState(() {
+            updateValue();
+            focused = false;
+          });
         },
         builder: (context) {
-          return BlocProvider.value(
-            value: bloc,
+          return RepositoryProvider.value(
+            value: pickerTFModel,
             child: T == StartTime || T == EndTime
                 ? _TimePickerView<T>(
-                    intiValue: widget.controller?.value,
-                    onSelectedItemChanged: (value) {
-                      currentValue = value;
-                    },
-                  )
+              intiValue: widget.controller?.value,
+              onSelectedItemChanged: (value) {
+                currentValue = value;
+              },
+            )
                 : _PickerView<T>(
-                    intiValue: widget.controller?.value,
-                    onSelectedItemChanged: (value) {
-                      currentValue = value;
-                    },
-                  ),
+              intiValue: widget.controller?.value,
+              onSelectedItemChanged: (value) {
+                currentValue = value;
+              },
+            ),
           );
-        }).then((value) {
-      setState(() {
-        updateValue();
-        focused = false;
-      });
-    });
+        });
   }
 }
 
 String _getTitle(dynamic item) {
-  if (item is City || item is District || item is Ward) {
+  if (item is City ||
+      item is District ||
+      item is Ward ||
+      item is ProdCate ||
+      item is ServiceCate) {
     return item.name;
   } else if (item is StartTime || item is EndTime) {
     return item.formattedTime;
@@ -259,14 +268,14 @@ class _PickerView<T> extends StatefulWidget {
 
 class _PickerViewState<T> extends BaseState<_PickerView> {
   _PickerViewBloc<T> bloc;
-  KayleePickerTextFieldBloc parentBloc;
+  KayleePickerTextFieldModel parentBloc;
   FixedExtentScrollController scrollController;
 
   @override
   void initState() {
     super.initState();
     try {
-      parentBloc = context.bloc<KayleePickerTextFieldBloc>();
+      parentBloc = context.repository<KayleePickerTextFieldModel>();
     } catch (e, s) {
       print('[TUNG] ===> $s');
     }
@@ -276,9 +285,13 @@ class _PickerViewState<T> extends BaseState<_PickerView> {
     if (T == City) {
       bloc.loadCity();
     } else if (T == District) {
-      bloc.loadDistrict(parentBloc?.state?.city?.id);
+      bloc.loadDistrict(parentBloc?.city?.id);
     } else if (T == Ward) {
-      bloc.loadWard(parentBloc?.state?.district?.id);
+      bloc.loadWard(parentBloc?.district?.id);
+    } else if (T == ProdCate) {
+      bloc.loadWard(parentBloc?.district?.id);
+    } else if (T == ServiceCate) {
+      bloc.loadWard(parentBloc?.district?.id);
     }
   }
 
@@ -330,7 +343,11 @@ class _PickerViewState<T> extends BaseState<_PickerView> {
   }
 
   int getIndex(dynamic item) {
-    if (item is City || item is District || item is Ward) {
+    if (item is City ||
+        item is District ||
+        item is Ward ||
+        item is ProdCate ||
+        item is ServiceCate) {
       return item.id;
     }
     return 0;
@@ -346,8 +363,11 @@ class PickInputController<T> {
 
 class _PickerViewBloc<T> extends Cubit<SingleModel<List<T>>> {
   CommonService commonService;
+  ProductService productService;
+  ServService servService;
 
-  _PickerViewBloc({this.commonService}) : super(SingleModel());
+  _PickerViewBloc({this.commonService, this.productService, this.servService})
+      : super(SingleModel());
 
   void loadCity() {
     emit(SingleModel.copy(state..loading = true));
@@ -408,38 +428,86 @@ class _PickerViewBloc<T> extends Cubit<SingleModel<List<T>>> {
       },
     );
   }
-}
 
-class KayleePickerTextFieldBloc extends Cubit<KayleePickerTextFieldState> {
-  KayleePickerTextFieldBloc() : super(KayleePickerTextFieldState());
+  void loadProCate() {
+    emit(SingleModel.copy(state..loading = true));
+    RequestHandler(
+      request: productService.getCategories(),
+      onSuccess: ({message, result}) {
+        emit(SingleModel.copy(state
+          ..loading = false
+          ..item = result
+          ..code = null
+          ..error = null));
+      },
+      onFailed: (code, {error}) {
+        emit(SingleModel.copy(state
+          ..loading = false
+          ..code = code
+          ..error = error));
+      },
+    );
+  }
 
-  void update({dynamic value}) {
-    if (value is City) {
-      emit(KayleePickerTextFieldState.copy(state..city = value));
-    } else if (value is District) {
-      emit(KayleePickerTextFieldState.copy(state..district = value));
-    } else if (value is StartTime) {
-      emit(KayleePickerTextFieldState.copy(state..startTime = value));
-    } else if (value is EndTime) {
-      emit(KayleePickerTextFieldState.copy(state..endTime = value));
-    }
+  void loadServiceCate() {
+    emit(SingleModel.copy(state..loading = true));
+    RequestHandler(
+      request: servService.getCategories(),
+      onSuccess: ({message, result}) {
+        emit(SingleModel.copy(state
+          ..loading = false
+          ..item = result
+          ..code = null
+          ..error = null));
+      },
+      onFailed: (code, {error}) {
+        emit(SingleModel.copy(state
+          ..loading = false
+          ..code = code
+          ..error = error));
+      },
+    );
   }
 }
 
-class KayleePickerTextFieldState {
+class KayleePickerTextFieldModel {
   City city;
   District district;
   StartTime startTime;
   EndTime endTime;
+  ProdCate prodCate;
+  ServiceCate serviceCate;
 
-  KayleePickerTextFieldState(
-      {this.city, this.district, this.startTime, this.endTime});
-
-  KayleePickerTextFieldState.copy(KayleePickerTextFieldState old) {
+  KayleePickerTextFieldModel.copy(KayleePickerTextFieldModel old) {
     this
       ..city = old?.city
       ..district = old?.district
       ..startTime = old?.startTime
-      ..endTime = old?.endTime;
+      ..endTime = old?.endTime
+      ..prodCate = old?.prodCate
+      ..serviceCate = old?.serviceCate;
+  }
+
+  KayleePickerTextFieldModel({this.city,
+    this.district,
+    this.startTime,
+    this.endTime,
+    this.prodCate,
+    this.serviceCate});
+
+  void update({dynamic value}) {
+    if (value is City) {
+      this.city = value;
+    } else if (value is District) {
+      this.district = value;
+    } else if (value is StartTime) {
+      this.startTime = value;
+    } else if (value is EndTime) {
+      this.endTime = value;
+    } else if (value is ProdCate) {
+      this.prodCate = value;
+    } else if (value is ServiceCate) {
+      this.serviceCate = value;
+    }
   }
 }
