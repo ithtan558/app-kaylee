@@ -45,7 +45,7 @@ class _CreateNewProdScreenState extends KayleeState<CreateNewProdScreen> {
   final priceFocus = FocusNode();
   final descriptionTfController = TextEditingController();
   final descriptionFocus = FocusNode();
-  final proCateController = PickInputController<ProdCate>();
+  final prodCateController = PickInputController<ProdCate>();
 
   @override
   void initState() {
@@ -155,7 +155,7 @@ class _CreateNewProdScreenState extends KayleeState<CreateNewProdScreen> {
             nameTfController.text = state.item?.name;
             brandSelectController.brands = state.item?.brands;
             priceTfController.text = state.item?.price?.toString();
-            proCateController.value = state.item?.category;
+            prodCateController.value = state.item?.category;
             descriptionTfController.text = state.item?.description;
             return Column(
               children: [
@@ -196,7 +196,7 @@ class _CreateNewProdScreenState extends KayleeState<CreateNewProdScreen> {
                   child: KayleePickerTextField<ProdCate>(
                     title: Strings.loaiSanPham,
                     hint: Strings.chonLoaiSanPham,
-                    controller: proCateController,
+                    controller: prodCateController,
                   ),
                 ),
                 KayleeTextField.multiLine(
