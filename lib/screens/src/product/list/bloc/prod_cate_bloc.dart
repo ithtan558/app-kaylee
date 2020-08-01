@@ -11,7 +11,7 @@ class ProdCateBloc extends Cubit<SingleModel<List<Category>>> {
   void loadProdCate() {
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
-      request: productService.getProdCategory(),
+      request: productService.getCategories(),
       onSuccess: ({message, result}) {
         emit(SingleModel.copy(state
           ..item = result
