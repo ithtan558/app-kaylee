@@ -182,17 +182,17 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField> {
             value: pickerTFModel,
             child: T == StartTime || T == EndTime
                 ? _TimePickerView<T>(
-              intiValue: widget.controller?.value,
-              onSelectedItemChanged: (value) {
-                currentValue = value;
-              },
-            )
+                    intiValue: widget.controller?.value,
+                    onSelectedItemChanged: (value) {
+                      currentValue = value;
+                    },
+                  )
                 : _PickerView<T>(
-              intiValue: widget.controller?.value,
-              onSelectedItemChanged: (value) {
-                currentValue = value;
-              },
-            ),
+                    intiValue: widget.controller?.value,
+                    onSelectedItemChanged: (value) {
+                      currentValue = value;
+                    },
+                  ),
           );
         });
   }
@@ -280,8 +280,10 @@ class _PickerViewState<T> extends BaseState<_PickerView> {
       print('[TUNG] ===> $s');
     }
 
-    bloc =
-        _PickerViewBloc(commonService: context.network.provideCommonService());
+    bloc = _PickerViewBloc(
+        commonService: context.network.provideCommonService(),
+        productService: context.network.provideProductService(),
+        servService: context.network.provideServService());
     if (T == City) {
       bloc.loadCity();
     } else if (T == District) {
@@ -289,9 +291,9 @@ class _PickerViewState<T> extends BaseState<_PickerView> {
     } else if (T == Ward) {
       bloc.loadWard(parentBloc?.district?.id);
     } else if (T == ProdCate) {
-      bloc.loadWard(parentBloc?.district?.id);
+      bloc.loadProCate();
     } else if (T == ServiceCate) {
-      bloc.loadWard(parentBloc?.district?.id);
+      bloc.loadServiceCate();
     }
   }
 
@@ -314,8 +316,9 @@ class _PickerViewState<T> extends BaseState<_PickerView> {
             ),
           );
         scrollController = FixedExtentScrollController(
-            initialItem: state.item
-                .indexWhere((e) => getIndex(e) == getIndex(widget.intiValue)));
+            initialItem: state.item?.indexWhere(
+                    (e) => getIndex(e) == getIndex(widget.intiValue)) ??
+                0);
         return CupertinoPicker.builder(
           scrollController: scrollController,
           itemExtent: Dimens.px35,
