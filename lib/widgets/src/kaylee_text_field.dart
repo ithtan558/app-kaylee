@@ -17,7 +17,8 @@ class KayleeTextField extends StatelessWidget {
   /// [fieldHeight] chiều cao của text field
   /// khi set [fieldHeight], để text field expand với chiều cao [fieldHeight], thì [expands] phải set = true
   factory KayleeTextField.normal(
-          {String title,
+          {Key key,
+          String title,
           String hint,
           double fieldHeight,
           FocusNode focusNode,
@@ -31,6 +32,7 @@ class KayleeTextField extends StatelessWidget {
           TextAlign textAlign,
           int maxLength}) =>
       KayleeTextField(
+        key: key,
         title: title,
         textInput: NormalInputField(
           textInputAction: textInputAction,
@@ -67,6 +69,7 @@ class KayleeTextField extends StatelessWidget {
       );
 
   factory KayleeTextField.multiLine({
+    Key key,
     String title,
     String hint,
     double fieldHeight = Dimens.px48,
@@ -76,10 +79,11 @@ class KayleeTextField extends StatelessWidget {
     TextInputAction textInputAction,
     String error,
     EdgeInsets contentPadding =
-        const EdgeInsets.symmetric(vertical: Dimens.px16),
+    const EdgeInsets.symmetric(vertical: Dimens.px16),
     int maxLength,
   }) =>
       KayleeTextField.normal(
+        key: key,
         title: title,
         textInputAction: textInputAction,
         focusNode: focusNode,
