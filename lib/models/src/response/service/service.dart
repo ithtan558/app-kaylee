@@ -23,6 +23,7 @@ class Service {
     this.imageFile,
     this.brands,
     this.category,
+    this.quantity,
   });
 
   int id;
@@ -38,4 +39,5 @@ class Service {
   String get selectedBrandIds =>
       brands?.where((e) => e.selected)?.map((e) => e.id)?.join(',');
   ServiceCate category;
+  int quantity;
 }
