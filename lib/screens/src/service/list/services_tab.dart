@@ -33,8 +33,7 @@ class _ServicesTabState extends KayleeState<ServicesTab> {
   @override
   void initState() {
     super.initState();
-    serviceTabBloc = context.bloc<ServiceTabBloc>()
-      ..loadServices();
+    serviceTabBloc = context.bloc<ServiceTabBloc>()..loadServices();
     sub = serviceTabBloc.listen((state) {
       if (state.code.isNotNull) {
         showKayleeAlertErrorYesDialog(context: context, error: state.error);
@@ -69,7 +68,8 @@ class _ServicesTabState extends KayleeState<ServicesTab> {
                   pushScreen(PageIntent(
                       screen: CreateNewServiceScreen,
                       bundle: Bundle(NewServiceScreenData(
-                          openFrom: ServiceScreenOpenFrom.serviceItem))));
+                          openFrom: ServiceScreenOpenFrom.serviceItem,
+                          service: item))));
                 },
               );
             },
