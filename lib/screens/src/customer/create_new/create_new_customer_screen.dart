@@ -49,7 +49,6 @@ class _CreateNewCustomerScreenState extends BaseState<CreateNewCustomerScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: Dimens.px16),
               child: KayleeImagePicker(
-                onImageSelect: (file, {existedImage}) {},
               ),
             ),
             Padding(

@@ -36,7 +36,6 @@ class _CreateNewProdScreenState extends KayleeState<CreateNewProdScreen> {
   NewProdScreenOpenFrom openFrom;
   ProdDetailScreenBloc bloc;
   StreamSubscription prodDetailScreenBlocSub;
-  String image;
   final bannerPickerController = ImagePickerController();
   final nameTfController = TextEditingController();
   final nameFocus = FocusNode();
@@ -151,7 +150,7 @@ class _CreateNewProdScreenState extends KayleeState<CreateNewProdScreen> {
         child: BlocBuilder<ProdDetailScreenBloc, SingleModel<Product>>(
           buildWhen: (previous, current) => !current.loading,
           builder: (context, state) {
-            image = state.item?.image;
+            bannerPickerController?.existedImageUrl = state.item?.image;
             nameTfController.text = state.item?.name;
             brandSelectController.brands = state.item?.brands;
             priceTfController.text = state.item?.price?.toString();
@@ -160,7 +159,7 @@ class _CreateNewProdScreenState extends KayleeState<CreateNewProdScreen> {
             return Column(
               children: [
                 KayleeImagePicker(
-                  image: image,
+                  controller: bannerPickerController,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: Dimens.px16),
@@ -200,6 +199,7 @@ class _CreateNewProdScreenState extends KayleeState<CreateNewProdScreen> {
                   ),
                 ),
                 KayleeTextField.multiLine(
+                  key: UniqueKey(),
                   title: Strings.moTa,
                   hint: Strings.nhapMoTaSanPham,
                   textInputAction: TextInputAction.newline,

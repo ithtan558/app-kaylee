@@ -47,9 +47,7 @@ class _CreateNewStaffScreenState extends BaseState<CreateNewStaffScreen> {
         padding: const EdgeInsets.all(Dimens.px16),
         child: Column(
           children: [
-            KayleeImagePicker(
-              onImageSelect: (file, {existedImage}) {},
-            ),
+            KayleeImagePicker(),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: Dimens.px16),
               child: Row(

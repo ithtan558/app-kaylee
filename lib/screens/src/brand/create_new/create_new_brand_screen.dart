@@ -43,7 +43,6 @@ class _CreateNewBrandScreenState extends KayleeState<CreateNewBrandScreen> {
   final addressController = KayleeFullAddressController();
   final phoneTfController = TextEditingController();
   final phoneFocus = FocusNode();
-  String banner;
   BrandDetailScreenBloc bloc;
   StreamSubscription brandDetailScreenBlocSub;
   final bannerPickerController = ImagePickerController();
@@ -163,7 +162,7 @@ class _CreateNewBrandScreenState extends KayleeState<CreateNewBrandScreen> {
         child: BlocBuilder<BrandDetailScreenBloc, SingleModel<Brand>>(
           buildWhen: (previous, current) => !current.loading,
           builder: (context, state) {
-            banner = state.item?.image;
+            bannerPickerController.existedImageUrl = state.item?.image;
             nameTfController.text = state.item?.name;
             addressController
               ..initAddress = state.item?.location
@@ -177,7 +176,6 @@ class _CreateNewBrandScreenState extends KayleeState<CreateNewBrandScreen> {
               children: [
                 KayleeImagePicker(
                   type: KayleeImagePickerType.banner,
-                  image: banner,
                   controller: bannerPickerController,
                 ),
                 Padding(

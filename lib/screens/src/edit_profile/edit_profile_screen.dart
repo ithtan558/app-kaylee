@@ -53,7 +53,6 @@ class _EditProfileScreenState extends BaseState<EditProfileScreen> {
           child: Column(
             children: [
               KayleeImagePicker(
-                image: 'https://kottke.org/plus/misc/images/ai-faces-01.jpg',
                 oldImages: [
                   'https://us.123rf.com/450wm/subbotina/subbotina1512/subbotina151200067/49609375-beautiful-spa-model-girl-with-perfect-fresh-clean-skin.jpg?ver=6',
                   'https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',

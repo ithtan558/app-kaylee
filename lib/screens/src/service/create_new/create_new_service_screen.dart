@@ -50,7 +50,6 @@ class _CreateNewServiceScreenState extends BaseState<CreateNewServiceScreen> {
         child: Column(
           children: [
             KayleeImagePicker(
-              onImageSelect: (file, {existedImage}) {},
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: Dimens.px16),
