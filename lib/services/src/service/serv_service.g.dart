@@ -56,4 +56,138 @@ class _ServService implements ServService {
     final value = ResponseModel<Services>.fromJson(_result.data);
     return value;
   }
+
+  @override
+  newService(
+      {name, description, brandIds, time, price, image, categoryId}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = FormData();
+    if (name != null) {
+      _data.fields.add(MapEntry('name', name));
+    }
+    if (description != null) {
+      _data.fields.add(MapEntry('description', description));
+    }
+    if (brandIds != null) {
+      _data.fields.add(MapEntry('brand_ids', brandIds));
+    }
+    if (time != null) {
+      _data.fields.add(MapEntry('time', time.toString()));
+    }
+    if (price != null) {
+      _data.fields.add(MapEntry('price', price.toString()));
+    }
+    if (image != null) {
+      _data.files.add(MapEntry(
+          'image',
+          MultipartFile.fromFileSync(image.path,
+              filename: image.path.split(Platform.pathSeparator).last)));
+    }
+    if (categoryId != null) {
+      _data.fields.add(MapEntry('category_id', categoryId.toString()));
+    }
+    final Response<Map<String, dynamic>> _result = await _dio.request('service',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  updateService(
+      {name,
+      description,
+      brandIds,
+      time,
+      price,
+      image,
+      categoryId,
+      id,
+      serviceId}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = FormData();
+    if (name != null) {
+      _data.fields.add(MapEntry('name', name));
+    }
+    if (description != null) {
+      _data.fields.add(MapEntry('description', description));
+    }
+    if (brandIds != null) {
+      _data.fields.add(MapEntry('brand_ids', brandIds));
+    }
+    if (time != null) {
+      _data.fields.add(MapEntry('time', time.toString()));
+    }
+    if (price != null) {
+      _data.fields.add(MapEntry('price', price.toString()));
+    }
+    if (image != null) {
+      _data.files.add(MapEntry(
+          'image',
+          MultipartFile.fromFileSync(image.path,
+              filename: image.path.split(Platform.pathSeparator).last)));
+    }
+    if (categoryId != null) {
+      _data.fields.add(MapEntry('category_id', categoryId.toString()));
+    }
+    _data.fields.add(MapEntry('id', id));
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        'service/$serviceId',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  getService({serviceId}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        'service/$serviceId',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = ResponseModel<Service>.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  deleteService({serviceId}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        'service/delete/$serviceId}',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'DELETE',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = ResponseModel<Service>.fromJson(_result.data);
+    return value;
+  }
 }
