@@ -11,20 +11,19 @@ enum KayleeImagePickerType { profile, banner }
 
 class ImagePickerController {
   File image;
+
+  ///image url from existed things;
+  String existedImageUrl;
 }
 
 class KayleeImagePicker extends StatefulWidget {
-  final String image;
   final KayleeImagePickerType type;
   final List<String> oldImages;
   final ImagePickerController controller;
 
-  ///[file] image mới đc chọn từ storage
-  ///[existedImage] user chọn lại hình cũ, url của image
-  final void Function(File file, {String existedImage}) onImageSelect;
+  final void Function() onImageSelect;
 
   KayleeImagePicker({
-    this.image,
     this.type = KayleeImagePickerType.profile,
     this.onImageSelect,
     this.oldImages = const [],
@@ -44,12 +43,15 @@ class KayleeImagePicker extends StatefulWidget {
 
 class _KayleeProfileImagePickerState extends BaseState<KayleeImagePicker> {
   File selectedFile;
-  String selectedExistedImage;
 
   @override
   void initState() {
     super.initState();
-    selectedExistedImage = widget.image;
+  }
+
+  @override
+  void didUpdateWidget(KayleeImagePicker oldWidget) {
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -71,7 +73,8 @@ class _KayleeProfileImagePickerState extends BaseState<KayleeImagePicker> {
                 borderRadius: BorderRadius.circular(Dimens.px10),
                 side: BorderSide(color: ColorsRes.hintText),
               ),
-              child: selectedExistedImage.isNullOrEmpty && selectedFile.isNull
+              child: widget.controller?.existedImageUrl.isNullOrEmpty &&
+                      selectedFile.isNull
                   ? Center(
                       child: Image.asset(
                         Images.ic_image_holder,
@@ -87,8 +90,8 @@ class _KayleeProfileImagePickerState extends BaseState<KayleeImagePicker> {
                               fit: BoxFit.cover,
                             )
                           : Image.network(
-                              selectedExistedImage ?? '',
-                              fit: BoxFit.cover,
+                  widget.controller?.existedImageUrl ?? '',
+                  fit: BoxFit.cover,
                             ),
                     ),
             ),
@@ -106,20 +109,19 @@ class _KayleeProfileImagePickerState extends BaseState<KayleeImagePicker> {
                 showImagePickerDialog(
                   context: context,
                   images: widget.oldImages,
-                  selectedExistedImage: selectedExistedImage,
+                  selectedExistedImage: widget.controller?.existedImageUrl,
                   onSelect: (selectedImage) {
                     setState(() {
                       if (selectedImage is File) {
                         selectedFile = selectedImage;
-                        selectedExistedImage = null;
+                        widget.controller?.existedImageUrl = null;
                       } else if (selectedImage is String) {
                         selectedFile = null;
-                        selectedExistedImage = selectedImage;
+                        widget.controller?.existedImageUrl = selectedImage;
                       }
                     });
                     widget.controller.image = selectedFile;
-                    widget.onImageSelect?.call(selectedFile,
-                        existedImage: selectedExistedImage);
+                    widget.onImageSelect?.call();
                   },
                 );
               },
@@ -155,12 +157,10 @@ class _KayleeProfileImagePickerState extends BaseState<KayleeImagePicker> {
 
 class _KayleeBannerImagePickerState extends BaseState<KayleeImagePicker> {
   File selectedFile;
-  String selectedExistedImage;
 
   @override
   void initState() {
     super.initState();
-    selectedExistedImage = widget.image;
   }
 
   @override
@@ -178,8 +178,8 @@ class _KayleeBannerImagePickerState extends BaseState<KayleeImagePicker> {
                       fit: BoxFit.cover,
                     )
                   : Image.network(
-                      selectedExistedImage ?? '',
-                      fit: BoxFit.cover,
+                widget.controller?.existedImageUrl ?? '',
+                fit: BoxFit.cover,
                     ),
             ),
           ),
@@ -195,20 +195,19 @@ class _KayleeBannerImagePickerState extends BaseState<KayleeImagePicker> {
                   showImagePickerDialog(
                     context: context,
                     images: widget.oldImages,
-                    selectedExistedImage: selectedExistedImage,
+                    selectedExistedImage: widget.controller?.existedImageUrl,
                     onSelect: (selectedImage) {
                       setState(() {
                         if (selectedImage is File) {
                           selectedFile = selectedImage;
-                          selectedExistedImage = null;
+                          widget.controller?.existedImageUrl = null;
                         } else if (selectedImage is String) {
                           selectedFile = null;
-                          selectedExistedImage = selectedImage;
+                          widget.controller?.existedImageUrl = selectedImage;
                         }
                       });
                       widget.controller.image = selectedFile;
-                      widget.onImageSelect?.call(selectedFile,
-                          existedImage: selectedExistedImage);
+                      widget.onImageSelect?.call();
                     },
                   );
                 },
