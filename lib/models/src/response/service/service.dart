@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:anth_package/anth_package.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:kaylee/models/models.dart';
@@ -11,24 +13,29 @@ class Service {
 
   Map<String, dynamic> toJson() => _$ServiceToJson(this);
 
-  Service(
-      {this.id,
-      this.code,
-      this.name,
-      this.image,
-      this.price,
-      this.description,
-      this.brands,
-      this.category,
-      this.quantity});
+  Service({
+    this.id,
+    this.name,
+    this.time,
+    this.price,
+    this.description,
+    this.image,
+    this.imageFile,
+    this.brands,
+    this.category,
+  });
 
   int id;
-  String code;
   String name;
-  String image;
+  int time;
   int price;
   String description;
+  String image;
+  @JsonKey(ignore: true)
+  File imageFile;
   List<Brand> brands;
+
+  String get selectedBrandIds =>
+      brands?.where((e) => e.selected)?.map((e) => e.id)?.join(',');
   ServiceCate category;
-  int quantity;
 }

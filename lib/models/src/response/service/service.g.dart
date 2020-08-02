@@ -9,11 +9,11 @@ part of 'service.dart';
 Service _$ServiceFromJson(Map<String, dynamic> json) {
   return Service(
     id: json['id'] as int,
-    code: json['code'] as String,
     name: json['name'] as String,
-    image: json['image'] as String,
+    time: json['time'] as int,
     price: json['price'] as int,
     description: json['description'] as String,
+    image: json['image'] as String,
     brands: (json['brands'] as List)
         ?.map(
             (e) => e == null ? null : Brand.fromJson(e as Map<String, dynamic>))
@@ -21,18 +21,17 @@ Service _$ServiceFromJson(Map<String, dynamic> json) {
     category: json['category'] == null
         ? null
         : ServiceCate.fromJson(json['category'] as Map<String, dynamic>),
-    quantity: json['quantity'] as int,
   );
 }
 
-Map<String, dynamic> _$ServiceToJson(Service instance) => <String, dynamic>{
+Map<String, dynamic> _$ServiceToJson(Service instance) =>
+    <String, dynamic>{
       'id': instance.id,
-      'code': instance.code,
       'name': instance.name,
-      'image': instance.image,
+      'time': instance.time,
       'price': instance.price,
       'description': instance.description,
+      'image': instance.image,
       'brands': instance.brands,
       'category': instance.category,
-      'quantity': instance.quantity,
     };
