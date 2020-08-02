@@ -49,8 +49,7 @@ class _CreateNewServiceScreenState extends BaseState<CreateNewServiceScreen> {
         padding: const EdgeInsets.all(Dimens.px16),
         child: Column(
           children: [
-            KayleeImagePicker(
-            ),
+            KayleeImagePicker(),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: Dimens.px16),
               child: KayleeTextField.normal(
@@ -88,12 +87,6 @@ class _CreateNewServiceScreenState extends BaseState<CreateNewServiceScreen> {
                 title: Strings.giaTien,
                 hint: '0',
                 textInputAction: TextInputAction.next,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: Dimens.px16),
-              child: KayleePickerTextField(
-                title: Strings.thoiGianPhucVu,
               ),
             ),
             Padding(
