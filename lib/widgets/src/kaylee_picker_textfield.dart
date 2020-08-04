@@ -96,7 +96,7 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField> {
                   showPicker();
                 } else if (T == ServiceCate) {
                   showPicker();
-                } else if (T == ServiceDuration) {
+                } else if (T == Duration) {
                   showPicker();
                 }
               },
@@ -188,8 +188,8 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField> {
         builder: (context) {
           return RepositoryProvider.value(
             value: pickerTFModel,
-            child: T == ServiceDuration
-                ? _HourPickerView(
+            child: T == Duration
+                ? _DurationPickerView(
                     intiValue: widget.controller?.value,
                     onSelectedItemChanged: (value) {
                       currentValue = value as T;
@@ -222,178 +222,39 @@ String _getTitle(dynamic item) {
     return item.name;
   } else if (item is StartTime || item is EndTime) {
     return item.formattedTime;
-  } else if (item is ServiceDuration) {
-    final hour = item.duration.isNotNull && item.duration.inHours > 0
-        ? item.duration.inHours
+  } else if (item is Duration) {
+    final hour = item.isNotNull && item.inHours > 0 ? item.inHours : 0;
+    final minutes = item.isNotNull && item.inMinutes > 0
+        ? item.inMinutes - hour * Duration.minutesPerHour
         : 0;
-    final minutes = item.duration.isNotNull && item.duration.inMinutes > 0
-        ? item.duration.inMinutes - hour * Duration.minutesPerHour
-        : 0;
-    return '${hour > 0 ? '$hour giờ ' : ''}${minutes > 0 ? '$minutes phút' : ''}';
+    return '${hour > 0 ? '$hour giờ ' : ''}${minutes > 0
+        ? '$minutes phút'
+        : ''}';
   }
   return '';
 }
 
-class _HourPickerView extends StatefulWidget {
-  final ValueChanged<ServiceDuration> onSelectedItemChanged;
-  final ServiceDuration intiValue;
+class _DurationPickerView extends StatefulWidget {
+  final ValueChanged<Duration> onSelectedItemChanged;
+  final Duration intiValue;
 
-  _HourPickerView({this.onSelectedItemChanged, this.intiValue});
+  _DurationPickerView({this.onSelectedItemChanged, this.intiValue});
 
   @override
-  _HourPickerViewState createState() => _HourPickerViewState();
+  _DurationPickerViewState createState() => _DurationPickerViewState();
 }
 
-class _HourPickerViewState extends BaseState<_HourPickerView> {
+class _DurationPickerViewState extends BaseState<_DurationPickerView> {
   @override
   Widget build(BuildContext context) {
-    return Localizations(
-      locale: Locale('vi'),
-      delegates: [
-        KayleeLocalizationDelegate(),
-      ],
-      child: CupertinoTimerPicker(
-        mode: CupertinoTimerPickerMode.hm,
-        initialTimerDuration: widget.intiValue?.duration,
-        onTimerDurationChanged: (Duration value) {
-          widget.intiValue?.duration = value;
-          widget.onSelectedItemChanged?.call(widget.intiValue);
-        },
-      ),
+    return CupertinoTimerPicker(
+      mode: CupertinoTimerPickerMode.hm,
+      initialTimerDuration: widget.intiValue,
+      onTimerDurationChanged: (Duration value) {
+        widget.onSelectedItemChanged?.call(value);
+      },
     );
   }
-}
-
-class KayleeLocalizationDelegate
-    extends LocalizationsDelegate<CupertinoLocalizations> {
-  @override
-  bool isSupported(Locale locale) => locale.languageCode == 'vi';
-
-  @override
-  Future<CupertinoLocalizations> load(Locale locale) =>
-      SynchronousFuture(KayleeLocalizations());
-
-  @override
-  bool shouldReload(LocalizationsDelegate<CupertinoLocalizations> old) => false;
-}
-
-class KayleeLocalizations extends CupertinoLocalizations {
-  @override
-  // TODO: implement alertDialogLabel
-  String get alertDialogLabel => throw UnimplementedError();
-
-  @override
-  // TODO: implement anteMeridiemAbbreviation
-  String get anteMeridiemAbbreviation => throw UnimplementedError();
-
-  @override
-  // TODO: implement copyButtonLabel
-  String get copyButtonLabel => throw UnimplementedError();
-
-  @override
-  // TODO: implement cutButtonLabel
-  String get cutButtonLabel => throw UnimplementedError();
-
-  @override
-  // TODO: implement datePickerDateOrder
-  DatePickerDateOrder get datePickerDateOrder => throw UnimplementedError();
-
-  @override
-  // TODO: implement datePickerDateTimeOrder
-  DatePickerDateTimeOrder get datePickerDateTimeOrder =>
-      throw UnimplementedError();
-
-  @override
-  String datePickerDayOfMonth(int dayIndex) {
-    // TODO: implement datePickerDayOfMonth
-    throw UnimplementedError();
-  }
-
-  @override
-  String datePickerHour(int hour) {
-    // TODO: implement datePickerHour
-    throw UnimplementedError();
-  }
-
-  @override
-  String datePickerHourSemanticsLabel(int hour) {
-    // TODO: implement datePickerHourSemanticsLabel
-    throw UnimplementedError();
-  }
-
-  @override
-  String datePickerMediumDate(DateTime date) {
-    // TODO: implement datePickerMediumDate
-    throw UnimplementedError();
-  }
-
-  @override
-  String datePickerMinute(int minute) {
-    // TODO: implement datePickerMinute
-    throw UnimplementedError();
-  }
-
-  @override
-  String datePickerMinuteSemanticsLabel(int minute) {
-    throw UnimplementedError();
-  }
-
-  @override
-  String datePickerMonth(int monthIndex) {
-    // TODO: implement datePickerMonth
-    throw UnimplementedError();
-  }
-
-  @override
-  String datePickerYear(int yearIndex) {
-    // TODO: implement datePickerYear
-    throw UnimplementedError();
-  }
-
-  @override
-  // TODO: implement pasteButtonLabel
-  String get pasteButtonLabel => throw UnimplementedError();
-
-  @override
-  // TODO: implement postMeridiemAbbreviation
-  String get postMeridiemAbbreviation => throw UnimplementedError();
-
-  @override
-  // TODO: implement selectAllButtonLabel
-  String get selectAllButtonLabel => throw UnimplementedError();
-
-  @override
-  String timerPickerHour(int hour) {
-    // TODO: implement timerPickerHour
-    throw UnimplementedError();
-  }
-
-  @override
-  String timerPickerHourLabel(int hour) => 'giờ';
-
-  @override
-  String timerPickerMinute(int minute) {
-    // TODO: implement timerPickerMinute
-    throw UnimplementedError();
-  }
-
-  @override
-  String timerPickerMinuteLabel(int minute) => 'phút';
-
-  @override
-  String timerPickerSecond(int second) {
-    // TODO: implement timerPickerSecond
-    throw UnimplementedError();
-  }
-
-  @override
-  String timerPickerSecondLabel(int second) {
-    // TODO: implement timerPickerSecondLabel
-    throw UnimplementedError();
-  }
-
-  @override
-  String get todayLabel => throw UnimplementedError();
 }
 
 class _TimePickerView<T> extends StatefulWidget {
