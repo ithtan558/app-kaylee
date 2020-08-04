@@ -1,6 +1,8 @@
 import 'package:anth_package/anth_package.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/base/json_converter/kaylee_json_convert.dart';
 import 'package:kaylee/base/kaylee_bloc_observer.dart';
@@ -9,6 +11,7 @@ import 'package:kaylee/base/kaylee_routing.dart';
 import 'package:kaylee/components/components.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/utils/utils.dart';
+
 BuildContext dialogContext;
 
 void main() {
@@ -70,9 +73,7 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing, KayleeRouting {
           context.network.dio.options
             ..headers = {
               NetworkModule.AUTHORIZATION:
-              context.user
-                  .getUserInfo()
-                  .requestToken
+              context.user.getUserInfo().requestToken
 //              NetworkModule.AUTHORIZATION: ''
             };
         } else if (state is LoggedOutState) {
@@ -83,13 +84,22 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing, KayleeRouting {
       child: MaterialApp(
         title: Strings.appName,
         onGenerateRoute: onGenerateRoute,
-        builder: (context, child) => MediaQuery(
-            data: MediaQuery.of(context)
-                .copyWith(textScaleFactor: 1, boldText: false),
-            child: child),
+        builder: (context, child) =>
+            MediaQuery(
+                data: MediaQuery.of(context)
+                    .copyWith(textScaleFactor: 1, boldText: false),
+                child: child),
         navigatorObservers: [
           KayleeObserver(),
         ],
+        localizationsDelegates: [
+          GlobalCupertinoLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+        ],
+        supportedLocales: [
+          Locale('vi'),
+        ],
+        locale: Locale('vi'),
         theme: ThemeData(
           scaffoldBackgroundColor: ColorsRes.background,
           visualDensity: VisualDensity.adaptivePlatformDensity,
