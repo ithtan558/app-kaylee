@@ -29,6 +29,8 @@ class Service {
   int id;
   String name;
   int time;
+
+  Duration get timeInDuration => Duration(minutes: time ?? 0);
   int price;
   String description;
   String image;
