@@ -43,7 +43,7 @@ abstract class ServService {
       @Part() int price,
       @Part() File image,
       @Part(name: 'category_id') int categoryId,
-      @Part() id,
+      @Part() int id,
       @Path() int serviceId});
 
   @GET('service/{serviceId}')

@@ -139,7 +139,9 @@ class _ServService implements ServService {
     if (categoryId != null) {
       _data.fields.add(MapEntry('category_id', categoryId.toString()));
     }
-    _data.fields.add(MapEntry('id', id));
+    if (id != null) {
+      _data.fields.add(MapEntry('id', id.toString()));
+    }
     final Response<Map<String, dynamic>> _result = await _dio.request(
         'service/$serviceId',
         queryParameters: queryParameters,
