@@ -32,8 +32,7 @@ class _ServiceListScreenState extends KayleeState<ServiceListScreen> {
   @override
   void initState() {
     super.initState();
-    cateBloc = context.bloc<ServiceCateBloc>()
-      ..loadServiceCate();
+    cateBloc = context.bloc<ServiceCateBloc>();
     sub = cateBloc.listen((state) {
       if (!state.loading) {
         hideLoading();
@@ -50,6 +49,7 @@ class _ServiceListScreenState extends KayleeState<ServiceListScreen> {
         showLoading();
       }
     });
+    cateBloc.loadServiceCate();
   }
 
   @override
@@ -77,10 +77,7 @@ class _ServiceListScreenState extends KayleeState<ServiceListScreen> {
           return KayleeTabBar(
             itemCount: categories?.length,
             pageController: pageController,
-            mapTitle: (index) =>
-            categories
-                .elementAt(index)
-                .name,
+            mapTitle: (index) => categories.elementAt(index).name,
           );
         },
       ),
