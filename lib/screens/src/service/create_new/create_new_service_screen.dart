@@ -62,11 +62,14 @@ class _CreateNewServiceScreenState extends KayleeState<CreateNewServiceScreen> {
             error: state.error,
             onPressed: () {
               popScreen();
-//              switch (state.error.code) {
-//                case ErrorCode.PHONE_CODE:
-//                  phoneFocus.requestFocus();
-//                  break;
-//              }
+              switch (state.error.code) {
+                case ErrorCode.PRICE_CODE:
+                  priceFocus.requestFocus();
+                  break;
+                case ErrorCode.NAME_CODE:
+                  nameFocus.requestFocus();
+                  break;
+              }
             },
           );
         } else if (state.message.isNotNull) {
