@@ -227,9 +227,7 @@ String _getTitle(dynamic item) {
     final minutes = item.isNotNull && item.inMinutes > 0
         ? item.inMinutes - hour * Duration.minutesPerHour
         : 0;
-    return '${hour > 0 ? '$hour giờ ' : ''}${minutes > 0
-        ? '$minutes phút'
-        : ''}';
+    return '${hour > 0 ? '$hour giờ ' : ''}${minutes > 0 ? '$minutes phút' : ''}';
   }
   return '';
 }
@@ -249,7 +247,7 @@ class _DurationPickerViewState extends BaseState<_DurationPickerView> {
   Widget build(BuildContext context) {
     return CupertinoTimerPicker(
       mode: CupertinoTimerPickerMode.hm,
-      initialTimerDuration: widget.intiValue,
+      initialTimerDuration: widget.intiValue ?? Duration.zero,
       onTimerDurationChanged: (Duration value) {
         widget.onSelectedItemChanged?.call(value);
       },
