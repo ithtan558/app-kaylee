@@ -33,8 +33,7 @@ class _ProdListScreenState extends KayleeState<ProdListScreen> {
   @override
   void initState() {
     super.initState();
-    cateBloc = context.bloc<ProdCateBloc>()
-      ..loadProdCate();
+    cateBloc = context.bloc<ProdCateBloc>();
     cateBlocSub = cateBloc.listen((state) {
       if (!state.loading) {
         hideLoading();
@@ -51,6 +50,7 @@ class _ProdListScreenState extends KayleeState<ProdListScreen> {
         showLoading();
       }
     });
+    cateBloc.loadProdCate();
   }
 
   @override
@@ -72,10 +72,7 @@ class _ProdListScreenState extends KayleeState<ProdListScreen> {
           return KayleeTabBar(
             itemCount: categories?.length,
             pageController: pageController,
-            mapTitle: (index) =>
-            categories
-                .elementAt(index)
-                .name,
+            mapTitle: (index) => categories.elementAt(index).name,
           );
         },
       ),
