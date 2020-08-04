@@ -20,11 +20,11 @@ enum ServiceScreenOpenFrom { serviceItem, addNewServiceBtn }
 
 class CreateNewServiceScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<ServiceDetailScreenBloc>(
-    create: (context) => ServiceDetailScreenBloc(
-        servService: context.network.provideServService(),
-        service: context.getArguments<NewServiceScreenData>().service),
-    child: CreateNewServiceScreen._(),
-  );
+        create: (context) => ServiceDetailScreenBloc(
+            servService: context.network.provideServService(),
+            service: context.getArguments<NewServiceScreenData>().service),
+        child: CreateNewServiceScreen._(),
+      );
 
   CreateNewServiceScreen._();
 
@@ -45,7 +45,7 @@ class _CreateNewServiceScreenState extends KayleeState<CreateNewServiceScreen> {
   final descriptionTfController = TextEditingController();
   final descriptionFocus = FocusNode();
   final serviceCateController = PickInputController<ServiceCate>();
-  final timeController = PickInputController();
+  final timeController = PickInputController<ServiceDuration>();
 
   @override
   void initState() {
@@ -123,7 +123,7 @@ class _CreateNewServiceScreenState extends KayleeState<CreateNewServiceScreen> {
                             ..name = nameTfController.text
                             ..description = descriptionTfController.text
                             ..brands = brandSelectController.brands
-                            ..time = timeController.value
+                            ..time = timeController.value?.duration?.inMinutes
                             ..price = int.tryParse(priceTfController.text)
                             ..imageFile = bannerPickerController.image
                             ..category = serviceCateController.value;
@@ -142,7 +142,7 @@ class _CreateNewServiceScreenState extends KayleeState<CreateNewServiceScreen> {
                     name: nameTfController.text,
                     description: descriptionTfController.text,
                     brands: brandSelectController.brands,
-                    time: timeController.value,
+                    time: timeController.value?.duration?.inMinutes,
                     price: int.tryParse(priceTfController.text),
                     imageFile: bannerPickerController.image,
                     category: serviceCateController.value)
@@ -157,7 +157,7 @@ class _CreateNewServiceScreenState extends KayleeState<CreateNewServiceScreen> {
               bannerPickerController?.existedImageUrl = state.item?.image;
               nameTfController.text = state.item?.name;
               brandSelectController.brands = state.item?.brands;
-              timeController.value = state.item?.time;
+              timeController.value = state.item?.serviceDuration;
               priceTfController.text = state.item?.price?.toString();
               serviceCateController.value = state.item?.category;
               descriptionTfController.text = state.item?.description;
@@ -186,7 +186,7 @@ class _CreateNewServiceScreenState extends KayleeState<CreateNewServiceScreen> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: Dimens.px16),
-                    child: KayleePickerTextField(
+                    child: KayleePickerTextField<ServiceDuration>(
                       title: Strings.thoiGianPhucVu,
                       controller: timeController,
                     ),
@@ -205,6 +205,7 @@ class _CreateNewServiceScreenState extends KayleeState<CreateNewServiceScreen> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: Dimens.px16),
                     child: KayleePickerTextField<ServiceCate>(
+                      key: UniqueKey(),
                       title: Strings.loaiDichVu,
                       hint: Strings.chonLoaiDichVu,
                       controller: serviceCateController,

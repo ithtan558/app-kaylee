@@ -16,11 +16,12 @@ class KayleePickerTextField<T> extends StatefulWidget {
   final PickInputController<T> controller;
 
   KayleePickerTextField({
+    Key key,
     this.hint,
     this.error,
     this.title,
     this.controller,
-  });
+  }) : super(key: key);
 
   @override
   _KayleePickerTextFieldState<T> createState() =>
@@ -94,6 +95,8 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField> {
                   showPicker();
                 } else if (T == ServiceCate) {
                   showPicker();
+                } else if (T == ServiceDuration) {
+                  showPicker();
                 }
               },
               child: Container(
@@ -166,6 +169,10 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField> {
             if (widget.controller?.value == null || currentValue != null) {
               widget.controller?.value = currentValue;
             }
+          } else if (T == ServiceDuration) {
+            if (widget.controller?.value == null || currentValue != null) {
+              widget.controller?.value = currentValue;
+            }
           } else {
             widget.controller?.value = currentValue;
           }
@@ -180,19 +187,26 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField> {
         builder: (context) {
           return RepositoryProvider.value(
             value: pickerTFModel,
-            child: T == StartTime || T == EndTime
-                ? _TimePickerView<T>(
+            child: T == ServiceDuration
+                ? _HourPickerView(
                     intiValue: widget.controller?.value,
                     onSelectedItemChanged: (value) {
-                      currentValue = value;
+                      currentValue = value as T;
                     },
                   )
-                : _PickerView<T>(
-                    intiValue: widget.controller?.value,
-                    onSelectedItemChanged: (value) {
-                      currentValue = value;
-                    },
-                  ),
+                : T == StartTime || T == EndTime
+                    ? _TimePickerView<T>(
+                        intiValue: widget.controller?.value,
+                        onSelectedItemChanged: (value) {
+                          currentValue = value;
+                        },
+                      )
+                    : _PickerView<T>(
+                        intiValue: widget.controller?.value,
+                        onSelectedItemChanged: (value) {
+                          currentValue = value;
+                        },
+                      ),
           );
         });
   }
@@ -207,8 +221,42 @@ String _getTitle(dynamic item) {
     return item.name;
   } else if (item is StartTime || item is EndTime) {
     return item.formattedTime;
+  } else if (item is ServiceDuration) {
+    final hour = item.duration.isNotNull && item.duration.inHours > 0
+        ? item.duration.inHours
+        : 0;
+    final minutes = item.duration.isNotNull && item.duration.inMinutes > 0
+        ? item.duration.inMinutes - hour * Duration.minutesPerHour
+        : 0;
+    return '${hour > 0 ? '$hour giờ ' : ''}${minutes > 0
+        ? '$minutes phút'
+        : ''}';
   }
   return '';
+}
+
+class _HourPickerView extends StatefulWidget {
+  final ValueChanged<ServiceDuration> onSelectedItemChanged;
+  final ServiceDuration intiValue;
+
+  _HourPickerView({this.onSelectedItemChanged, this.intiValue});
+
+  @override
+  _HourPickerViewState createState() => _HourPickerViewState();
+}
+
+class _HourPickerViewState extends BaseState<_HourPickerView> {
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoTimerPicker(
+      mode: CupertinoTimerPickerMode.hm,
+      initialTimerDuration: widget.intiValue?.duration,
+      onTimerDurationChanged: (Duration value) {
+        widget.intiValue?.duration = value;
+        widget.onSelectedItemChanged?.call(widget.intiValue);
+      },
+    );
+  }
 }
 
 class _TimePickerView<T> extends StatefulWidget {
@@ -227,9 +275,6 @@ class _TimePickerViewState<T> extends BaseState<_TimePickerView> {
   @override
   void initState() {
     super.initState();
-    try {} catch (e, s) {
-      print('[TUNG] ===> $s');
-    }
     if (widget.intiValue is StartTime || widget.intiValue is EndTime) {
       initDateTime = widget.intiValue.datetime;
     } else {
