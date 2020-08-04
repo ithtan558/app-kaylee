@@ -61,11 +61,14 @@ class _CreateNewProdScreenState extends KayleeState<CreateNewProdScreen> {
             error: state.error,
             onPressed: () {
               popScreen();
-//              switch (state.error.code) {
-//                case ErrorCode.PHONE_CODE:
-//                  phoneFocus.requestFocus();
-//                  break;
-//              }
+              switch (state.error.code) {
+                case ErrorCode.NAME_CODE:
+                  nameFocus.requestFocus();
+                  break;
+                case ErrorCode.PRICE_CODE:
+                  priceFocus.requestFocus();
+                  break;
+              }
             },
           );
         } else if (state.message.isNotNull) {
