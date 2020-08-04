@@ -30,7 +30,9 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
   void showLoading({bool canDismiss = false, VoidCallback onDismiss}) {
     if (dialogContext.isNull ||
         ModalRoute.of(context).settings.name != 'loading dialog' ||
-        (!ModalRoute.of(context).isFirst && !ModalRoute.of(context).isActive)) {
+        (!ModalRoute.of(context).isFirst && !ModalRoute.of(context).isActive) &&
+            !isShowLoading) {
+      isShowLoading = true;
       showGeneralDialog(
           context: context,
           barrierDismissible: canDismiss,
@@ -48,6 +50,7 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
             name: 'loading dialog',
           )).then((value) {
         dialogContext = null;
+        isShowLoading = false;
         if (onDismiss.isNotNull) onDismiss();
       });
     }
@@ -57,9 +60,13 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
     if (dialogContext.isNotNull) {
       final dialog = ModalRoute.of(dialogContext);
       if (dialog.isActive && dialog.settings.name == 'loading dialog') {
+        print('[TUNG] ===> hideLoading');
         Navigator.removeRoute(context, dialog);
         dialogContext = null;
       }
+    } else if (isShowLoading) {
+      isShowLoading = false;
+      popScreen();
     }
   }
 
