@@ -45,7 +45,7 @@ class _CreateNewServiceScreenState extends KayleeState<CreateNewServiceScreen> {
   final descriptionTfController = TextEditingController();
   final descriptionFocus = FocusNode();
   final serviceCateController = PickInputController<ServiceCate>();
-  final timeController = PickInputController<ServiceDuration>();
+  final timeController = PickInputController<Duration>();
 
   @override
   void initState() {
@@ -123,7 +123,7 @@ class _CreateNewServiceScreenState extends KayleeState<CreateNewServiceScreen> {
                             ..name = nameTfController.text
                             ..description = descriptionTfController.text
                             ..brands = brandSelectController.brands
-                            ..time = timeController.value?.duration?.inMinutes
+                            ..time = timeController.value?.inMinutes
                             ..price = int.tryParse(priceTfController.text)
                             ..imageFile = bannerPickerController.image
                             ..category = serviceCateController.value;
@@ -142,7 +142,7 @@ class _CreateNewServiceScreenState extends KayleeState<CreateNewServiceScreen> {
                     name: nameTfController.text,
                     description: descriptionTfController.text,
                     brands: brandSelectController.brands,
-                    time: timeController.value?.duration?.inMinutes,
+                    time: timeController.value?.inMinutes,
                     price: int.tryParse(priceTfController.text),
                     imageFile: bannerPickerController.image,
                     category: serviceCateController.value)
@@ -157,7 +157,7 @@ class _CreateNewServiceScreenState extends KayleeState<CreateNewServiceScreen> {
               bannerPickerController?.existedImageUrl = state.item?.image;
               nameTfController.text = state.item?.name;
               brandSelectController.brands = state.item?.brands;
-              timeController.value = state.item?.serviceDuration;
+              timeController.value = state.item?.timeInDuration;
               priceTfController.text = state.item?.price?.toString();
               serviceCateController.value = state.item?.category;
               descriptionTfController.text = state.item?.description;
@@ -186,7 +186,7 @@ class _CreateNewServiceScreenState extends KayleeState<CreateNewServiceScreen> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: Dimens.px16),
-                    child: KayleePickerTextField<ServiceDuration>(
+                    child: KayleePickerTextField<Duration>(
                       title: Strings.thoiGianPhucVu,
                       controller: timeController,
                     ),

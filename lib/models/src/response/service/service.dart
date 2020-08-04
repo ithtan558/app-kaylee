@@ -30,8 +30,7 @@ class Service {
   String name;
   int time;
 
-  ServiceDuration get serviceDuration =>
-      ServiceDuration(duration: time.isNull ? null : Duration(minutes: time));
+  Duration get timeInDuration => time.isNull ? null : Duration(minutes: time);
   int price;
   String description;
   String image;
