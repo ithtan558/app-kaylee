@@ -3,11 +3,17 @@ import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
+import 'package:kaylee/screens/src/customer/list/bloc/customer_list_screen_bloc.dart';
 import 'package:kaylee/screens/src/customer/list/widgets/customer_item.dart';
+import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class CustomerListScreen extends StatefulWidget {
-  static Widget newInstance() => CustomerListScreen._();
+  static Widget newInstance() => BlocProvider<CustomerListScreenBloc>(
+        create: (context) => CustomerListScreenBloc(
+            customerService: context.network.provideCustomerService()),
+        child: CustomerListScreen._(),
+      );
 
   CustomerListScreen._();
 

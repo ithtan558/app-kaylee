@@ -1,12 +1,15 @@
+import 'package:anth_package/anth_package.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class CustomerItem extends StatelessWidget {
   final Function() onTap;
+  final Customer customer;
 
-  CustomerItem({this.onTap});
+  CustomerItem({this.onTap, this.customer});
 
   @override
   Widget build(BuildContext context) {
@@ -17,13 +20,13 @@ class CustomerItem extends StatelessWidget {
               itemHeight: double.infinity,
               child: KayleeImageInfoLayout(
                 imageView: Image.network(
-                  'https://s3.amazonaws.com/tinycards/image/c5b605125dd3a4685555bf56c37555ed',
+                  customer?.image ?? '',
                   fit: BoxFit.cover,
                 ),
                 infoView: Padding(
                   padding: const EdgeInsets.only(top: Dimens.px16),
                   child: KayleeText.hyper16W500(
-                    'Willard Chavez',
+                    customer?.name ?? '',
                     maxLines: 2,
                     textAlign: TextAlign.center,
                   ),
@@ -44,7 +47,9 @@ class CustomerItem extends StatelessWidget {
                 type: MaterialType.circle,
                 color: ColorsRes.button,
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    makeCall(customer.phone);
+                  },
                   child: const Icon(
                     CupertinoIcons.phone,
                     color: Colors.white,
