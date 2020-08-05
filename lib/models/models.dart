@@ -12,6 +12,8 @@ export 'src/response/category/prod_cate/prod_cate.dart';
 export 'src/response/category/service_cate/service_cate.dart';
 export 'src/response/city/city.dart';
 export 'src/response/content/content.dart';
+export 'src/response/customer/customer.dart';
+export 'src/response/customer/list/customers.dart';
 export 'src/response/district/district.dart';
 export 'src/response/employee/employee.dart';
 export 'src/response/employee/list/employees.dart';
