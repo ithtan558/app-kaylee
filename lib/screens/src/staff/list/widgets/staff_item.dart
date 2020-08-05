@@ -25,7 +25,9 @@ class StaffItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 KayleeText.hyper16W500(
-                  (employee?.lastName.isNull ? '' : employee.lastName + ' ') +
+                  (employee?.lastName.isNullOrEmpty
+                          ? ''
+                          : (employee.lastName + ' ')) +
                       (employee?.firstName ?? ''),
                   maxLines: 2,
                   textAlign: TextAlign.center,
