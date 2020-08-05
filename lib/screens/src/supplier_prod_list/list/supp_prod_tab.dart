@@ -15,8 +15,11 @@ import 'package:kaylee/widgets/widgets.dart';
 class SuppProdTab extends StatefulWidget {
   static Widget newInstance() => BlocProvider<SupplierProdListBloc>(
         create: (context) => SupplierProdListBloc(
-            productService:
-                context.repository<NetworkModule>().provideProductService()),
+          productService:
+              context.repository<NetworkModule>().provideProductService(),
+          cateId: context.repository<Category>().id,
+          supplierId: context.getArguments<Supplier>().id,
+        ),
         child: SuppProdTab._(),
       );
 
@@ -28,27 +31,23 @@ class SuppProdTab extends StatefulWidget {
 
 class _SuppProdTabState extends KayleeState<SuppProdTab> {
   SupplierProdListBloc prodsBloc;
-  StreamSubscription sub;
+  StreamSubscription prodsBlocSub;
 
   @override
   void initState() {
     super.initState();
-    prodsBloc = context.bloc<SupplierProdListBloc>()
-      ..supplierId = (context.bundle.args as Supplier).id
-      ..cateId = context
-          .repository<Category>()
-          .id
-      ..loadProds();
-    sub = prodsBloc.listen((state) {
+    prodsBloc = context.bloc<SupplierProdListBloc>();
+    prodsBlocSub = prodsBloc.listen((state) {
       if (state.code.isNotNull) {
         showKayleeAlertErrorYesDialog(context: context, error: state.error);
       }
     });
+    prodsBloc.loadProds();
   }
 
   @override
   void dispose() {
-    sub.cancel();
+    prodsBlocSub.cancel();
     super.dispose();
   }
 

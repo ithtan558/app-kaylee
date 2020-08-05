@@ -10,7 +10,8 @@ class SupplierProdListBloc extends Cubit<LoadMoreModel<Product>>
   int supplierId;
   int cateId;
 
-  SupplierProdListBloc({@required this.productService})
+  SupplierProdListBloc(
+      {@required this.productService, this.cateId, this.supplierId})
       : super(LoadMoreModel());
 
   void loadProds() {
