@@ -22,6 +22,8 @@ abstract class NetworkModule extends Network {
   ServService provideServService();
 
   BrandService provideBrandService();
+
+  EmployeeService provideEmployeeService();
 }
 
 class _NetworkModuleImpl extends NetworkModule {
@@ -47,4 +49,7 @@ class _NetworkModuleImpl extends NetworkModule {
 
   @override
   BrandService provideBrandService() => BrandService(dio);
+
+  @override
+  EmployeeService provideEmployeeService() => EmployeeService(dio);
 }
