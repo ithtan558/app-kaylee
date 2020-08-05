@@ -32,6 +32,9 @@ class Employee {
   int id;
   String firstName;
   String lastName;
+
+  String get name =>
+      (lastName.isNullOrEmpty ? '' : (lastName + ' ')) + (firstName ?? '');
   String image;
   @JsonKey(ignore: true)
   File imageFile;
