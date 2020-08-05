@@ -42,6 +42,12 @@ class KayleeJsonConverter extends JsonConverterFactory {
       return ProdCate.fromJson(json) as T;
     } else if (T == ServiceCate) {
       return ServiceCate.fromJson(json) as T;
+    } else if (T == Employee) {
+      return Employee.fromJson(json) as T;
+    } else if (T == Employees) {
+      return Employees.fromJson(json) as T;
+    } else if (T == Role) {
+      return Role.fromJson(json) as T;
     }
     return json as T;
   }
@@ -85,6 +91,12 @@ class KayleeJsonConverter extends JsonConverterFactory {
     } else if (json is ProdCate) {
       return json.toJson();
     } else if (json is ServiceCate) {
+      return json.toJson();
+    } else if (json is Employee) {
+      return json.toJson();
+    } else if (json is Employees) {
+      return json.toJson();
+    } else if (json is Role) {
       return json.toJson();
     } else
       return json;
