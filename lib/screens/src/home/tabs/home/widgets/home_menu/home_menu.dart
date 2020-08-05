@@ -66,35 +66,7 @@ class _HomeMenuState extends BaseState<HomeMenu> {
         // scale: undefined,
       ),
     ));
-    final menuRow1 = [
-      HomeMenuItem(
-        title: Strings.qlChiNhanh,
-        icon: Images.ic_store,
-        onTap: () {
-          context.push(PageIntent(screen: BrandListScreen));
-        },
-      ),
-      HomeMenuItem(
-        title: Strings.dsDichVu,
-        icon: Images.ic_service_list,
-        onTap: () {
-          context.push(PageIntent(screen: ServiceListScreen));
-        },
-      ),
-      HomeMenuItem(
-        title: Strings.dsSanPham,
-        icon: Images.ic_product,
-        onTap: () {
-          context.push(PageIntent(screen: ProdListScreen));
-        },
-      ),
-      HomeMenuItem(
-        title: Strings.qlNhanVien,
-        icon: Images.ic_person,
-        onTap: () {
-          context.push(PageIntent(screen: StaffListScreen));
-        },
-      ),
+    final row2Items = [
       HomeMenuItem(
         title: Strings.dsKhachHang,
         icon: Images.ic_user_list,
@@ -124,6 +96,37 @@ class _HomeMenuState extends BaseState<HomeMenu> {
         },
       ),
     ];
+    final menuRow1 = [
+      HomeMenuItem(
+        title: Strings.qlChiNhanh,
+        icon: Images.ic_store,
+        onTap: () {
+          context.push(PageIntent(screen: BrandListScreen));
+        },
+      ),
+      HomeMenuItem(
+        title: Strings.dsDichVu,
+        icon: Images.ic_service_list,
+        onTap: () {
+          context.push(PageIntent(screen: ServiceListScreen));
+        },
+      ),
+      HomeMenuItem(
+        title: Strings.dsSanPham,
+        icon: Images.ic_product,
+        onTap: () {
+          context.push(PageIntent(screen: ProdListScreen));
+        },
+      ),
+      HomeMenuItem(
+        title: Strings.qlNhanVien,
+        icon: Images.ic_person,
+        onTap: () {
+          context.push(PageIntent(screen: StaffListScreen));
+        },
+      ),
+      ...row2Items
+    ];
     final menuRow2 = Column(
       children: [
         Expanded(
@@ -131,36 +134,7 @@ class _HomeMenuState extends BaseState<HomeMenu> {
         ),
         Expanded(
           child: Row(
-            children: [
-              HomeMenuItem(
-                title: Strings.dsKhachHang,
-                icon: Images.ic_user_list,
-                onTap: () {
-                  context.push(PageIntent(screen: CustomerListScreen));
-                },
-              ),
-              HomeMenuItem(
-                title: Strings.dsLichHen,
-                icon: Images.ic_booking,
-                onTap: () {
-                  context.push(PageIntent(screen: ReservationListScreen));
-                },
-              ),
-              HomeMenuItem(
-                title: Strings.hoaHongNv,
-                icon: Images.ic_commission,
-                onTap: () {
-                  context.push(PageIntent(screen: CommissionListScreen));
-                },
-              ),
-              HomeMenuItem(
-                title: Strings.doanhThuBanHang,
-                icon: Images.ic_revenue,
-                onTap: () {
-                  context.push(PageIntent(screen: RevenueScreen));
-                },
-              ),
-            ],
+            children: row2Items,
           ),
         )
       ],
@@ -205,10 +179,9 @@ class _HomeMenuState extends BaseState<HomeMenu> {
               child: Container(),
             ),
             BlocBuilder<HomeMenuBloc, HomeMenuState>(
-              builder: (context, state) =>
-                  SizedBox(
-                    height: Dimens.px56 + Dimens.px16 * state.collapsePercent,
-                  ),
+              builder: (context, state) => SizedBox(
+                height: Dimens.px56 + Dimens.px16 * state.collapsePercent,
+              ),
             ),
             Container(
               padding: EdgeInsets.symmetric(horizontal: Dimens.px16),
