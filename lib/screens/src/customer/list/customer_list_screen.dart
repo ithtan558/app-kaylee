@@ -1,6 +1,10 @@
+import 'dart:async';
+
 import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/customer/list/bloc/customer_list_screen_bloc.dart';
@@ -10,10 +14,10 @@ import 'package:kaylee/widgets/widgets.dart';
 
 class CustomerListScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<CustomerListScreenBloc>(
-        create: (context) => CustomerListScreenBloc(
-            customerService: context.network.provideCustomerService()),
-        child: CustomerListScreen._(),
-      );
+    create: (context) => CustomerListScreenBloc(
+        customerService: context.network.provideCustomerService()),
+    child: CustomerListScreen._(),
+  );
 
   CustomerListScreen._();
 
@@ -22,13 +26,24 @@ class CustomerListScreen extends StatefulWidget {
 }
 
 class _CustomerListScreenState extends BaseState<CustomerListScreen> {
+  CustomerListScreenBloc customersBloc;
+  StreamSubscription customersBlocSub;
+
   @override
   void initState() {
     super.initState();
+    customersBloc = context.bloc<CustomerListScreenBloc>();
+    customersBlocSub = customersBloc.listen((state) {
+      if (state.code.isNotNull) {
+        showKayleeAlertErrorYesDialog(context: context, error: state.error);
+      }
+    });
+    customersBloc.loadCustomers();
   }
 
   @override
   void dispose() {
+    customersBlocSub.cancel();
     super.dispose();
   }
 
@@ -37,20 +52,49 @@ class _CustomerListScreenState extends BaseState<CustomerListScreen> {
     return Scaffold(
       appBar: KayleeAppBar(
         title: Strings.danhSachKH,
+        actions: [
+          KayleeAppBarAction.iconButton(
+            icon: Images.ic_search,
+            onTap: () {},
+          )
+        ],
       ),
-      body: KayleeGridView(
-        itemBuilder: (context, index) {
-          return CustomerItem(
-            onTap: () {
-              pushScreen(PageIntent(
-                  screen: CreateNewCustomerScreen,
-                  bundle: Bundle(NewCustomerScreenData(
-                      openFrom: CustomerScreenOpenFrom.customerListItem))));
-            },
-          );
-        },
-        childAspectRatio: 103 / 229,
-        itemCount: 10,
+      body: KayleeLoadMoreHandler(
+        controller: context.bloc<CustomerListScreenBloc>(),
+        child: BlocBuilder<CustomerListScreenBloc, LoadMoreModel<Customer>>(
+          buildWhen: (previous, current) {
+            return !current.loading;
+          },
+          builder: (context, state) {
+            return KayleeGridView(
+              padding: EdgeInsets.all(Dimens.px16),
+              childAspectRatio: 103 / 229,
+              itemBuilder: (c, index) {
+                final item = state.items.elementAt(index);
+                return CustomerItem(
+                  customer: item,
+                  onTap: () {
+                    pushScreen(PageIntent(
+                        screen: CreateNewCustomerScreen,
+                        bundle: Bundle(NewCustomerScreenData(
+                            openFrom:
+                                CustomerScreenOpenFrom.customerListItem))));
+                  },
+                );
+              },
+              itemCount: state.items?.length,
+              loadingBuilder: (context) {
+                if (state.ended) return Container();
+                return Align(
+                  alignment: Alignment.topCenter,
+                  child: CupertinoActivityIndicator(
+                    radius: Dimens.px16,
+                  ),
+                );
+              },
+            );
+          },
+        ),
       ),
       floatingActionButton: KayleeFloatButton(
         onTap: () {

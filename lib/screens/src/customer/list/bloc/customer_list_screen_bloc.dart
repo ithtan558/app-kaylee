@@ -4,7 +4,7 @@ import 'package:kaylee/base/loadmore_interface.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/services/services.dart';
 
-class CustomerListScreenBloc extends Cubit<LoadMoreModel<Employee>>
+class CustomerListScreenBloc extends Cubit<LoadMoreModel<Customer>>
     implements LoadMoreInterface {
   final CustomerService customerService;
   String keyword;
@@ -12,7 +12,7 @@ class CustomerListScreenBloc extends Cubit<LoadMoreModel<Employee>>
   CustomerListScreenBloc({@required this.customerService})
       : super(LoadMoreModel());
 
-  void loadEmployees() {
+  void loadCustomers() {
     emit(LoadMoreModel.copy(state..loading = true));
     RequestHandler(
       request: customerService.getCustomers(
@@ -21,10 +21,10 @@ class CustomerListScreenBloc extends Cubit<LoadMoreModel<Employee>>
         keyword: keyword,
       ),
       onSuccess: ({message, result}) {
-        final employees = (result as Employees).items;
+        final customers = (result as Customers).items;
         emit(LoadMoreModel.copy(state
           ..loading = false
-          ..addAll(employees)
+          ..addAll(customers)
           ..code = null
           ..error = null));
       },
@@ -40,7 +40,7 @@ class CustomerListScreenBloc extends Cubit<LoadMoreModel<Employee>>
   @override
   void loadMore() {
     state.page++;
-    loadEmployees();
+    loadCustomers();
   }
 
   @override
