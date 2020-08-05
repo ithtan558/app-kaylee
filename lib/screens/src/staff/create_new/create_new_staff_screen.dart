@@ -1,13 +1,15 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/src/brand_select_textfield/brand_select_list.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class NewStaffScreenData {
   final NewStaffScreenOpenFrom openFrom;
+  Employee employee;
 
-  NewStaffScreenData({this.openFrom});
+  NewStaffScreenData({this.openFrom, this.employee});
 }
 
 enum NewStaffScreenOpenFrom { staffItem, addNewStaffBtn }
