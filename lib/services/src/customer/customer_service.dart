@@ -16,6 +16,9 @@ abstract class CustomerService {
     @Query('limit') int limit,
     @Query('keyword') String keyword,
     @Query('sort') String sort,
+    @Query('type_id') int typeId,
+    @Query('city_id') int cityId,
+    @Query('district_ids') String districtIds,
   });
 
   @GET('customer/{customerId}')

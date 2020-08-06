@@ -16,13 +16,17 @@ class _EmployeeService implements EmployeeService {
   String baseUrl;
 
   @override
-  getServices({page, limit, keyword, sort}) async {
+  getServices(
+      {page, limit, keyword, sort, brandId, cityId, districtIds}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'page': page,
       r'limit': limit,
       r'keyword': keyword,
-      r'sort': sort
+      r'sort': sort,
+      r'brand_id': brandId,
+      r'city_id': cityId,
+      r'district_ids': districtIds
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};

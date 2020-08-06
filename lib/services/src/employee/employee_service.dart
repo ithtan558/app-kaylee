@@ -16,6 +16,9 @@ abstract class EmployeeService {
     @Query('limit') int limit,
     @Query('keyword') String keyword,
     @Query('sort') String sort,
+    @Query('brand_id') int brandId,
+    @Query('city_id') int cityId,
+    @Query('district_ids') String districtIds,
   });
 
   @GET('employee/{employeeId}')
