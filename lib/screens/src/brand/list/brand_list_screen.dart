@@ -50,6 +50,7 @@ class _BrandListScreenState extends KayleeState<BrandListScreen> {
 
   @override
   void dispose() {
+    brandBlocSub.cancel();
     super.dispose();
   }
 
