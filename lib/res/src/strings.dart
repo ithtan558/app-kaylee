@@ -216,6 +216,7 @@ class Strings {
       'Bạn có đồng ý xoá toàn bộ thông tin này và không phục hồi lại?';
   static const String banCoDongYLuuLaiNhungThayDoi =
       'Bạn có đồng ý lưu lại những thay đổi mới? Nội dung cũ sẽ mất sau khi lưu.';
+  static const String timKiemChonLoc = 'Tìm kiếm & Chọn lọc';
 
   Strings._();
 }
