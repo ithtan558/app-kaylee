@@ -10,19 +10,16 @@ class BrandListBloc extends Cubit<LoadMoreModel<Brand>>
   BrandListBloc({this.brandService}) : super(LoadMoreModel());
 
   String _keyword;
-  int _cityId;
-  String _districtIds;
+  City _city;
+  District _district;
 
-  void loadBrands({String keyword, int cityId, String districtIds}) {
-    _keyword = keyword;
-    _cityId = cityId;
-    _districtIds = districtIds;
+  void loadBrands() {
     emit(LoadMoreModel.copy(state..loading = true));
     RequestHandler(
       request: brandService?.getBrands(
         keyword: _keyword,
-        cityId: _cityId,
-        districtIds: _districtIds,
+        cityId: _city?.id,
+        districtIds: _district?.id?.toString(),
         limit: state.limit,
         page: state.page,
       ),
@@ -43,14 +40,18 @@ class BrandListBloc extends Cubit<LoadMoreModel<Brand>>
     );
   }
 
+  void loadFilter({String keyword, City city, District district}) {
+    this
+      .._keyword = keyword
+      .._city = city
+      .._district = district;
+    loadBrands();
+  }
+
   @override
   void loadMore() {
     state.page++;
-    loadBrands(
-      keyword: _keyword,
-      cityId: _cityId,
-      districtIds: _districtIds,
-    );
+    loadBrands();
   }
 
   @override

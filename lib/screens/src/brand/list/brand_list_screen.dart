@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,10 +14,10 @@ import 'package:kaylee/widgets/widgets.dart';
 
 class BrandListScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<BrandListBloc>(
-        create: (context) =>
-            BrandListBloc(brandService: context.network.provideBrandService()),
-        child: BrandListScreen._(),
-      );
+    create: (context) =>
+        BrandListBloc(brandService: context.network.provideBrandService()),
+    child: BrandListScreen._(),
+  );
 
   BrandListScreen._();
 
@@ -25,11 +27,25 @@ class BrandListScreen extends StatefulWidget {
 
 class _BrandListScreenState extends KayleeState<BrandListScreen> {
   BrandListBloc brandListBloc;
+  StreamSubscription brandBlocSub;
 
   @override
   void initState() {
     super.initState();
     brandListBloc = context.bloc<BrandListBloc>()..loadBrands();
+    brandBlocSub = brandListBloc.listen((state) {
+      if (!state.loading) {
+        if (state.code != ErrorType.UNAUTHORIZED) {
+          showKayleeAlertErrorYesDialog(
+            context: context,
+            error: state.error,
+            onPressed: () {
+              popScreen();
+            },
+          );
+        }
+      }
+    });
   }
 
   @override
