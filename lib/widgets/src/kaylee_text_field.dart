@@ -79,7 +79,7 @@ class KayleeTextField extends StatelessWidget {
     TextInputAction textInputAction,
     String error,
     EdgeInsets contentPadding =
-    const EdgeInsets.symmetric(vertical: Dimens.px16),
+        const EdgeInsets.symmetric(vertical: Dimens.px16),
     int maxLength,
   }) =>
       KayleeTextField.normal(
@@ -287,15 +287,15 @@ class _PriceInputFieldState extends BaseState<PriceInputField> {
 
 class SearchInputField extends StatefulWidget {
   final String hint;
+  final TextEditingController controller;
 
-  SearchInputField({this.hint});
+  SearchInputField({this.hint, this.controller});
 
   @override
   _SearchInputFieldState createState() => new _SearchInputFieldState();
 }
 
 class _SearchInputFieldState extends BaseState<SearchInputField> {
-  final tfController = TextEditingController();
   bool closeIsShowed = false;
 
   @override
@@ -305,7 +305,6 @@ class _SearchInputFieldState extends BaseState<SearchInputField> {
 
   @override
   void dispose() {
-    tfController.dispose();
     super.dispose();
   }
 
@@ -314,7 +313,7 @@ class _SearchInputFieldState extends BaseState<SearchInputField> {
     return TextFieldBorderWrapper(
       TextField(
         textInputAction: TextInputAction.search,
-        controller: tfController,
+        controller: widget.controller,
         textAlignVertical: TextAlignVertical.center,
         onChanged: (text) {
           if (text.isNotEmpty && !closeIsShowed) {
@@ -335,7 +334,7 @@ class _SearchInputFieldState extends BaseState<SearchInputField> {
               onTap: () {
                 if (closeIsShowed) {
                   setState(() {
-                    tfController.text = '';
+                    widget.controller?.text = '';
                     closeIsShowed = !closeIsShowed;
                   });
                 }
