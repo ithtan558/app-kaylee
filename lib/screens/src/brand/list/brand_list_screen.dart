@@ -14,10 +14,10 @@ import 'package:kaylee/widgets/widgets.dart';
 
 class BrandListScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<BrandListBloc>(
-    create: (context) =>
-        BrandListBloc(brandService: context.network.provideBrandService()),
-    child: BrandListScreen._(),
-  );
+        create: (context) =>
+            BrandListBloc(brandService: context.network.provideBrandService()),
+        child: BrandListScreen._(),
+      );
 
   BrandListScreen._();
 
@@ -60,10 +60,9 @@ class _BrandListScreenState extends KayleeState<BrandListScreen> {
       appBar: KayleeAppBar(
         title: Strings.dsChiNhanh,
         actions: [
-          KayleeAppBarAction.iconButton(
-            icon: Images.ic_search,
-            onTap: () {},
-          )
+          FilterButton(
+            controller: brandListBloc,
+          ),
         ],
       ),
       body: KayleeLoadMoreHandler(

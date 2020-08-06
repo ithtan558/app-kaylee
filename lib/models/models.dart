@@ -1,5 +1,6 @@
 library models;
 
+export 'src/filter.dart';
 export 'src/request/login/login_body.dart';
 export 'src/request/order/order_request.dart';
 export 'src/request/register/register_body.dart';

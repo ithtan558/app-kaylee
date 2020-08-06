@@ -1,12 +1,22 @@
 import 'package:core_plugin/core_plugin.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/base/kaylee_filter_interface.dart';
+import 'package:kaylee/models/models.dart';
+import 'package:kaylee/res/res.dart';
+import 'package:kaylee/screens/screens.dart';
+import 'package:kaylee/widgets/widgets.dart';
 
-class FilterButton<Filter> extends StatefulWidget {
+class FilterButton<T extends Filter> extends StatefulWidget {
+  final KayleeFilterInterface<T> controller;
+
+  FilterButton({this.controller});
+
   @override
-  _FilterButtonState<Filter> createState() => _FilterButtonState<Filter>();
+  _FilterButtonState<T> createState() => _FilterButtonState<T>();
 }
 
-class _FilterButtonState<Filter> extends BaseState<FilterButton<Filter>> {
+class _FilterButtonState<T extends Filter> extends BaseState<FilterButton<T>> {
   @override
   void initState() {
     super.initState();
@@ -19,6 +29,29 @@ class _FilterButtonState<Filter> extends BaseState<FilterButton<Filter>> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return KayleeAppBarAction.iconButton(
+      icon: widget.controller?.isEmptyFilter ?? true
+          ? Images.ic_search
+          : Images.ic_search_active,
+      iconColor:
+          (widget.controller?.isEmptyFilter ?? true) ? null : ColorsRes.hyper,
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => FilterScreen<T>(
+              controller: widget.controller,
+            ),
+          ),
+        ).then((value) {
+          setState(() {});
+        });
+      },
+    );
+  }
+
+  @override
+  void onPopResult(Type returnScreen, Bundle resultBundle) {
+    super.onPopResult(returnScreen, resultBundle);
   }
 }

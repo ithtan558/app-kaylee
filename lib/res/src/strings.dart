@@ -217,6 +217,9 @@ class Strings {
   static const String banCoDongYLuuLaiNhungThayDoi =
       'Bạn có đồng ý lưu lại những thay đổi mới? Nội dung cũ sẽ mất sau khi lưu.';
   static const String timKiemChonLoc = 'Tìm kiếm & Chọn lọc';
+  static const String apDung = 'Áp dụng';
+  static const String timKiem = 'Tìm kiếm';
+  static const String timKiemTheoTuKhoa = 'Tìm kiếm theo từ khoá';
 
   Strings._();
 }
