@@ -35,7 +35,7 @@ class _BrandListScreenState extends KayleeState<BrandListScreen> {
     brandListBloc = context.bloc<BrandListBloc>()..loadBrands();
     brandBlocSub = brandListBloc.listen((state) {
       if (!state.loading) {
-        if (state.code != ErrorType.UNAUTHORIZED) {
+        if (state.code.isNotNull && state.code != ErrorType.UNAUTHORIZED) {
           showKayleeAlertErrorYesDialog(
             context: context,
             error: state.error,
