@@ -45,14 +45,6 @@ class BrandListBloc extends Cubit<LoadMoreModel<Brand>>
   }
 
   @override
-  void loadFilter() {
-    state
-      ..items = null
-      ..page = 1;
-    loadBrands();
-  }
-
-  @override
   void loadMore() {
     state.page++;
     loadBrands();
@@ -60,6 +52,14 @@ class BrandListBloc extends Cubit<LoadMoreModel<Brand>>
 
   @override
   bool loadWhen() => !state.loading && !state.ended;
+
+  @override
+  void loadFilter() {
+    state
+      ..items = null
+      ..page = 1;
+    loadBrands();
+  }
 
   @override
   BrandFilter getFilter() {
