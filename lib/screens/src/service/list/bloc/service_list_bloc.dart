@@ -11,17 +11,7 @@ class ServiceListBloc extends Cubit<LoadMoreModel<Service>>
 
   ServiceListBloc({@required this.servService}) : super(LoadMoreModel());
 
-  void loadServices({int cateId}) {
-    if (cateId.isNotNull) {
-      ///user đổi category
-
-      this.cateId = cateId;
-
-      //reset page và item về ban đầu
-      state
-        ..page = 1
-        ..items = null;
-    }
+  void loadServices() {
     emit(LoadMoreModel.copy(state..loading = true));
     RequestHandler(
       request: servService.getServices(
@@ -44,6 +34,19 @@ class ServiceListBloc extends Cubit<LoadMoreModel<Service>>
           ..error = error));
       },
     );
+  }
+
+  void changeTab({int cateId}) {
+    if (cateId.isNotNull) {
+      ///user đổi category
+      this.cateId = cateId;
+
+      //reset page và item về ban đầu
+      state
+        ..page = 1
+        ..items = null;
+      loadServices();
+    }
   }
 
   @override

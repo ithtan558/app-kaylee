@@ -48,7 +48,7 @@ class _ServiceListScreenState extends KayleeState<ServiceListScreen> {
       if (!state.loading) {
         hideLoading();
         if (state.item.isNotNullAndEmpty) {
-          serviceListBloc.loadServices(cateId: state.item.first.id);
+          serviceListBloc.changeTab(cateId: state.item.first.id);
         } else if (state.code.isNotNull &&
             state.code != ErrorType.UNAUTHORIZED) {
           showKayleeAlertErrorYesDialog(
@@ -100,15 +100,10 @@ class _ServiceListScreenState extends KayleeState<ServiceListScreen> {
           final categories = state.item;
           return KayleeTabBar(
             itemCount: categories?.length,
-            mapTitle: (index) =>
-            categories
-                .elementAt(index)
-                .name,
+            mapTitle: (index) => categories.elementAt(index).name,
             onSelected: (value) {
-              serviceListBloc.loadServices(
-                  cateId: cateBloc.state.item
-                      .elementAt(value)
-                      .id);
+              serviceListBloc.changeTab(
+                  cateId: cateBloc.state.item.elementAt(value).id);
             },
           );
         },
