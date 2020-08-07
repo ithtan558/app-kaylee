@@ -217,4 +217,22 @@ class _CustomerService implements CustomerService {
     final value = ResponseModel<dynamic>.fromJson(_result.data);
     return value;
   }
+
+  @override
+  getCustomerType() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        'customer-type/all',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = ResponseModel<CustomerType>.fromJson(_result.data);
+    return value;
+  }
 }

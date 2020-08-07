@@ -60,4 +60,7 @@ abstract class CustomerService {
 
   @DELETE('customer/delete/{customerId}')
   Future<ResponseModel> deleteCustomer({@Path() int customerId});
+
+  @GET('customer-type/all')
+  Future<ResponseModel<CustomerType>> getCustomerType();
 }
