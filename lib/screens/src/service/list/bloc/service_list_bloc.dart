@@ -25,7 +25,7 @@ class ServiceListBloc extends Cubit<LoadMoreModel<Service>>
     emit(LoadMoreModel.copy(state..loading = true));
     RequestHandler(
       request: servService.getServices(
-        categoryId: cateId,
+        categoryId: this.cateId,
         limit: state.limit,
         page: state.page,
       ),

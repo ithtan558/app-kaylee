@@ -24,7 +24,7 @@ class ProdListBloc extends Cubit<LoadMoreModel<Product>>
     emit(LoadMoreModel.copy(state..loading = true));
     RequestHandler(
       request: productService.getProducts(
-        categoryId: cateId,
+        categoryId: this.cateId,
         limit: state.limit,
         page: state.page,
       ),
