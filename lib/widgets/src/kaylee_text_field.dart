@@ -300,8 +300,10 @@ class SearchInputField extends StatefulWidget {
   final String hint;
   final SearchInputFieldController controller;
   final FocusNode focusNode;
+  final ValueChanged<String> onChanged;
 
-  SearchInputField({this.hint, this.controller, this.focusNode});
+  SearchInputField(
+      {this.hint, this.controller, this.focusNode, this.onChanged});
 
   @override
   _SearchInputFieldState createState() => new _SearchInputFieldState();
@@ -345,6 +347,7 @@ class _SearchInputFieldState extends BaseState<SearchInputField> {
         textAlignVertical: TextAlignVertical.center,
         onChanged: (text) {
           widget?.controller?.keyword = text;
+          widget.onChanged?.call(text);
           if (text.isNotEmpty && !closeIsShowed) {
             setState(() {
               closeIsShowed = !closeIsShowed;
@@ -389,20 +392,21 @@ class NormalInputField extends StatefulWidget {
   final bool expands;
   final int maxLength;
 
-  NormalInputField({this.hint,
-    this.initText,
-    this.error,
-    this.focusNode,
-    this.controller,
-    this.nextFocusNode,
-    this.textInputAction = TextInputAction.done,
-    this.textInputType = TextInputType.text,
-    this.isStaticTField = false,
-    this.fieldHeight,
-    this.contentPadding,
-    this.textAlign,
-    this.expands,
-    this.maxLength});
+  NormalInputField(
+      {this.hint,
+      this.initText,
+      this.error,
+      this.focusNode,
+      this.controller,
+      this.nextFocusNode,
+      this.textInputAction = TextInputAction.done,
+      this.textInputType = TextInputType.text,
+      this.isStaticTField = false,
+      this.fieldHeight,
+      this.contentPadding,
+      this.textAlign,
+      this.expands,
+      this.maxLength});
 
   @override
   _NormalInputFieldState createState() => _NormalInputFieldState();
