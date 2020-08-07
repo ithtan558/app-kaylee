@@ -58,10 +58,12 @@ class CustomerListScreenBloc extends Cubit<LoadMoreModel<Customer>>
 
   @override
   void loadFilter() {
-    state
-      ..items = null
-      ..page = 1;
-    loadCustomers();
+    if (loadFilterWhen) {
+      state
+        ..items = null
+        ..page = 1;
+      loadCustomers();
+    }
   }
 
   @override
@@ -82,4 +84,7 @@ class CustomerListScreenBloc extends Cubit<LoadMoreModel<Customer>>
     if (isEmptyFilter) _filter = CustomerFilter();
     return _filter;
   }
+
+  @override
+  bool get loadFilterWhen => !isEmptyFilter || state.items.isNullOrEmpty;
 }
