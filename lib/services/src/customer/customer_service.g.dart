@@ -16,13 +16,17 @@ class _CustomerService implements CustomerService {
   String baseUrl;
 
   @override
-  getCustomers({page, limit, keyword, sort}) async {
+  getCustomers(
+      {page, limit, keyword, sort, typeId, cityId, districtIds}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'page': page,
       r'limit': limit,
       r'keyword': keyword,
-      r'sort': sort
+      r'sort': sort,
+      r'type_id': typeId,
+      r'city_id': cityId,
+      r'district_ids': districtIds
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
