@@ -49,7 +49,7 @@ class _ProdListScreenState extends KayleeState<ProdListScreen> {
       if (!state.loading) {
         hideLoading();
         if (state.item.isNotNullAndEmpty) {
-          prodsListBloc.loadProds(cateId: state.item.first.id);
+          prodsListBloc.changeTab(cateId: state.item.first.id);
         } else if (state.code.isNotNull &&
             state.code != ErrorType.UNAUTHORIZED) {
           showKayleeAlertErrorYesDialog(
@@ -84,6 +84,11 @@ class _ProdListScreenState extends KayleeState<ProdListScreen> {
     return KayleeTabView(
       appBar: KayleeAppBar(
         title: Strings.danhMucSanPham,
+        actions: <Widget>[
+          FilterButton<ProductFilter>(
+            controller: prodsListBloc,
+          )
+        ],
       ),
       tabBar: BlocBuilder<ProdCateBloc, SingleModel<List<Category>>>(
         buildWhen: (previous, current) {
@@ -93,15 +98,10 @@ class _ProdListScreenState extends KayleeState<ProdListScreen> {
           final categories = state.item;
           return KayleeTabBar(
             itemCount: categories?.length,
-            mapTitle: (index) =>
-            categories
-                .elementAt(index)
-                .name,
+            mapTitle: (index) => categories.elementAt(index).name,
             onSelected: (value) {
-              prodsListBloc.loadProds(
-                  cateId: cateBloc.state.item
-                      .elementAt(value)
-                      .id);
+              prodsListBloc.changeTab(
+                  cateId: cateBloc.state.item.elementAt(value).id);
             },
           );
         },
