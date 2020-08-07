@@ -34,14 +34,25 @@ class _ServService implements ServService {
   }
 
   @override
-  getServices({keyword, page, limit, sort, categoryId}) async {
+  getServices(
+      {keyword,
+      page,
+      limit,
+      sort,
+      categoryId,
+      brandIds,
+      startPrice,
+      endPrice}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'keyword': keyword,
       r'page': page,
       r'limit': limit,
       r'sort': sort,
-      r'category_id': categoryId
+      r'category_id': categoryId,
+      r'brand_ids': brandIds,
+      r'start_price': startPrice,
+      r'end_price': endPrice
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};

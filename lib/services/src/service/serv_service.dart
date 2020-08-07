@@ -14,12 +14,16 @@ abstract class ServService {
   Future<ResponseModel<ServiceCate>> getCategories();
 
   @GET('service')
-  Future<ResponseModel<Services>> getServices(
-      {@Query('keyword') String keyword,
-      @Query('page') int page,
-      @Query('limit') int limit,
-      @Query('sort') String sort,
-      @Query('category_id') int categoryId});
+  Future<ResponseModel<Services>> getServices({
+    @Query('keyword') String keyword,
+    @Query('page') int page,
+    @Query('limit') int limit,
+    @Query('sort') String sort,
+    @Query('category_id') int categoryId,
+    @Query('brand_ids') String brandIds,
+    @Query('start_price') int startPrice,
+    @Query('end_price') int endPrice,
+  });
 
   @POST('service')
   @MultiPart()
