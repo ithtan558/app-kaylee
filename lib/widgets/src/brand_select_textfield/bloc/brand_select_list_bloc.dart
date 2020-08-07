@@ -63,7 +63,6 @@ class BrandSelectListBloc extends Cubit<SingleModel<List<Brand>>> {
       if (totalSelected == itemTotal && brand.selected) {
         //set item 'Tất cả'với select=true
         state.item.first..selected = true;
-        return;
       } else if (state.item.first.selected) {
         //chỉ set lại item đầu = false khi nó đã được select
         state..item.first.selected = false;
