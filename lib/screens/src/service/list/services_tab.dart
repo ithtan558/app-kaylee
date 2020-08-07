@@ -8,12 +8,12 @@ import 'package:kaylee/components/components.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
-import 'package:kaylee/screens/src/service/list/bloc/service_tab_bloc.dart';
+import 'package:kaylee/screens/src/service/list/bloc/service_list_bloc.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class ServicesTab extends StatefulWidget {
-  static Widget newInstance() => BlocProvider<ServiceTabBloc>(
-        create: (context) => ServiceTabBloc(
+  static Widget newInstance() => BlocProvider<ServiceListBloc>(
+        create: (context) => ServiceListBloc(
             servService:
                 context.repository<NetworkModule>().provideServService(),
             cateId: context.repository<Category>().id),
@@ -27,13 +27,14 @@ class ServicesTab extends StatefulWidget {
 }
 
 class _ServicesTabState extends KayleeState<ServicesTab> {
-  ServiceTabBloc serviceTabBloc;
+  ServiceListBloc serviceTabBloc;
   StreamSubscription sub;
 
   @override
   void initState() {
     super.initState();
-    serviceTabBloc = context.bloc<ServiceTabBloc>()..loadServices();
+    serviceTabBloc = context.bloc<ServiceListBloc>()
+      ..loadServices();
     sub = serviceTabBloc.listen((state) {
       if (state.code.isNotNull) {
         showKayleeAlertErrorYesDialog(context: context, error: state.error);
@@ -50,8 +51,8 @@ class _ServicesTabState extends KayleeState<ServicesTab> {
   @override
   Widget build(BuildContext context) {
     return KayleeLoadMoreHandler(
-      controller: context.bloc<ServiceTabBloc>(),
-      child: BlocBuilder<ServiceTabBloc, LoadMoreModel<Service>>(
+      controller: context.bloc<ServiceListBloc>(),
+      child: BlocBuilder<ServiceListBloc, LoadMoreModel<Service>>(
         buildWhen: (previous, current) {
           return !current.loading;
         },

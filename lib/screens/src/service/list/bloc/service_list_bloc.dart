@@ -4,12 +4,12 @@ import 'package:kaylee/base/loadmore_interface.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/services/services.dart';
 
-class ServiceTabBloc extends Cubit<LoadMoreModel<Service>>
+class ServiceListBloc extends Cubit<LoadMoreModel<Service>>
     implements LoadMoreInterface {
   final ServService servService;
   int cateId;
 
-  ServiceTabBloc({@required this.servService, this.cateId})
+  ServiceListBloc({@required this.servService, this.cateId})
       : super(LoadMoreModel());
 
   void loadServices() {
