@@ -1,13 +1,22 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/foundation.dart';
+import 'package:kaylee/base/kaylee_filter_interface.dart';
 import 'package:kaylee/base/loadmore_interface.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/services/services.dart';
 
+class ServiceFilter extends Filter {
+  int startPrice;
+  int endPrice;
+  ServiceCate category;
+  Brand brand;
+}
+
 class ServiceListBloc extends Cubit<LoadMoreModel<Service>>
-    implements LoadMoreInterface {
+    implements LoadMoreInterface, KayleeFilterInterface<ServiceFilter> {
   final ServService servService;
   int cateId;
+  ServiceFilter _filter;
 
   ServiceListBloc({@required this.servService}) : super(LoadMoreModel());
 
@@ -18,6 +27,10 @@ class ServiceListBloc extends Cubit<LoadMoreModel<Service>>
         categoryId: this.cateId,
         limit: state.limit,
         page: state.page,
+        keyword: getFilter()?.keyword,
+        brandIds: getFilter()?.brand?.id?.toString(),
+        startPrice: getFilter()?.startPrice,
+        endPrice: getFilter()?.endPrice,
       ),
       onSuccess: ({message, result}) {
         final services = (result as Services).items;
@@ -57,4 +70,34 @@ class ServiceListBloc extends Cubit<LoadMoreModel<Service>>
 
   @override
   bool loadWhen() => !state.loading && !state.ended;
+
+  @override
+  ServiceFilter getFilter() => _filter;
+
+  @override
+  bool get isEmptyFilter => _filter == null;
+
+  @override
+  void loadFilter() {
+    if (loadFilterWhen) {
+      state
+        ..items = null
+        ..page = 1;
+      loadServices();
+    }
+  }
+
+  @override
+  bool get loadFilterWhen => !isEmptyFilter || state.items.isNullOrEmpty;
+
+  @override
+  void resetFilter() {
+    _filter = null;
+  }
+
+  @override
+  ServiceFilter updateFilter() {
+    if (isEmptyFilter) _filter = ServiceFilter();
+    return _filter;
+  }
 }

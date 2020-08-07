@@ -86,9 +86,8 @@ class _ServiceListScreenState extends KayleeState<ServiceListScreen> {
       appBar: KayleeAppBar(
         title: Strings.danhMucDichVu,
         actions: <Widget>[
-          KayleeAppBarAction.iconButton(
-            onTap: () {},
-            icon: Images.ic_search,
+          FilterButton<ServiceFilter>(
+            controller: serviceListBloc,
           )
         ],
       ),
