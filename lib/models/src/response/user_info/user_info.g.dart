@@ -16,7 +16,7 @@ UserInfo _$UserInfoFromJson(Map<String, dynamic> json) {
     email: json['email'] as String,
     phone: json['phone'] as String,
     username: json['username'] as String,
-    birthday: json['birthday'] as int,
+    birthday: json['birthday'] as String,
     address: json['address'] as String,
     gender: json['gender'] as int,
     image: json['image'] as String,

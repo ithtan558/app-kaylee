@@ -36,7 +36,7 @@ class UserInfo {
   String email;
   String phone;
   String username;
-  int birthday;
+  String birthday;
   String address;
   int gender;
   String image;
