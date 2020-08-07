@@ -55,9 +55,8 @@ class _StaffListScreenState extends KayleeState<StaffListScreen> {
       appBar: KayleeAppBar(
         title: Strings.dsNhanVien,
         actions: [
-          KayleeAppBarAction.iconButton(
-            icon: Images.ic_search,
-            onTap: () {},
+          FilterButton<StaffFilter>(
+            controller: staffsBloc,
           )
         ],
       ),

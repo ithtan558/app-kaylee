@@ -56,6 +56,7 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField> {
   ///set text để hiện thị trong [KayleePickerTextField]
   ///
   void updateValue() {
+    currentValue = widget.controller?.value;
     _tfController.text = _getTitle(widget.controller?.value);
     pickerTFModel?.update(value: widget.controller?.value);
   }
@@ -88,15 +89,7 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField> {
                   } else {
                     showAlert(content: Strings.xinVuiLongChonQuan);
                   }
-                } else if (T == StartTime) {
-                  showPicker();
-                } else if (T == EndTime) {
-                  showPicker();
-                } else if (T == ProdCate) {
-                  showPicker();
-                } else if (T == ServiceCate) {
-                  showPicker();
-                } else if (T == Duration) {
+                } else {
                   showPicker();
                 }
               },
@@ -166,15 +159,7 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField> {
     showPickerPopup(
         context: context,
         onDone: () {
-          if (T == EndTime || T == StartTime) {
-            if (widget.controller?.value == null || currentValue != null) {
-              widget.controller?.value = currentValue;
-            }
-          } else if (T == ServiceDuration) {
-            if (widget.controller?.value == null || currentValue != null) {
-              widget.controller?.value = currentValue;
-            }
-          } else {
+          if (currentValue != null) {
             widget.controller?.value = currentValue;
           }
         },
@@ -218,7 +203,8 @@ String _getTitle(dynamic item) {
       item is District ||
       item is Ward ||
       item is ProdCate ||
-      item is ServiceCate) {
+      item is ServiceCate ||
+      item is Brand) {
     return item.name;
   } else if (item is StartTime || item is EndTime) {
     return item.formattedTime;
@@ -243,11 +229,24 @@ class _DurationPickerView extends StatefulWidget {
 }
 
 class _DurationPickerViewState extends BaseState<_DurationPickerView> {
+  Duration initDuration;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.intiValue.isNull) {
+      initDuration = Duration.zero;
+      widget.onSelectedItemChanged?.call(initDuration);
+    } else {
+      initDuration = widget.intiValue;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return CupertinoTimerPicker(
       mode: CupertinoTimerPickerMode.hm,
-      initialTimerDuration: widget.intiValue ?? Duration.zero,
+      initialTimerDuration: initDuration,
       onTimerDurationChanged: (Duration value) {
         widget.onSelectedItemChanged?.call(value);
       },
@@ -275,6 +274,9 @@ class _TimePickerViewState<T> extends BaseState<_TimePickerView> {
       initDateTime = widget.intiValue.datetime;
     } else {
       initDateTime = DateTime(0);
+      widget.onSelectedItemChanged?.call(T == StartTime
+          ? StartTime(time: DateFormat('HH:mm').format(initDateTime))
+          : EndTime(time: DateFormat('HH:mm').format(initDateTime)));
     }
   }
 
@@ -311,6 +313,7 @@ class _PickerViewState<T> extends BaseState<_PickerView> {
   _PickerViewBloc<T> bloc;
   KayleePickerTextFieldModel parentBloc;
   FixedExtentScrollController scrollController;
+  final types = [City, District, Ward, ProdCate, ServiceCate, Brand];
 
   @override
   void initState() {
@@ -322,9 +325,11 @@ class _PickerViewState<T> extends BaseState<_PickerView> {
     }
 
     bloc = _PickerViewBloc(
-        commonService: context.network.provideCommonService(),
-        productService: context.network.provideProductService(),
-        servService: context.network.provideServService());
+      commonService: context.network.provideCommonService(),
+      productService: context.network.provideProductService(),
+      servService: context.network.provideServService(),
+      brandService: context.network.provideBrandService(),
+    );
     if (T == City) {
       bloc.loadCity();
     } else if (T == District) {
@@ -335,6 +340,8 @@ class _PickerViewState<T> extends BaseState<_PickerView> {
       bloc.loadProCate();
     } else if (T == ServiceCate) {
       bloc.loadServiceCate();
+    } else if (T == Brand) {
+      bloc.loadBrands();
     }
   }
 
@@ -387,11 +394,7 @@ class _PickerViewState<T> extends BaseState<_PickerView> {
   }
 
   int getIndex(dynamic item) {
-    if (item is City ||
-        item is District ||
-        item is Ward ||
-        item is ProdCate ||
-        item is ServiceCate) {
+    if (item != null && types.contains(T)) {
       return item.id;
     }
     return 0;
@@ -409,8 +412,12 @@ class _PickerViewBloc<T> extends Cubit<SingleModel<List<T>>> {
   CommonService commonService;
   ProductService productService;
   ServService servService;
+  BrandService brandService;
 
-  _PickerViewBloc({this.commonService, this.productService, this.servService})
+  _PickerViewBloc({this.commonService,
+    this.productService,
+    this.servService,
+    this.brandService})
       : super(SingleModel());
 
   void loadCity() {
@@ -512,8 +519,29 @@ class _PickerViewBloc<T> extends Cubit<SingleModel<List<T>>> {
       },
     );
   }
+
+  void loadBrands() {
+    emit(SingleModel.copy(state..loading = true));
+    RequestHandler(
+      request: brandService.getAllBrands(),
+      onSuccess: ({message, result}) {
+        emit(SingleModel.copy(state
+          ..loading = false
+          ..item = result
+          ..code = null
+          ..error = null));
+      },
+      onFailed: (code, {error}) {
+        emit(SingleModel.copy(state
+          ..loading = false
+          ..code = code
+          ..error = error));
+      },
+    );
+  }
 }
 
+//dùng cho những field cần phải pick trước (ex: select tỉnh phải select city trước)
 class KayleePickerTextFieldModel {
   City city;
   District district;
@@ -521,6 +549,7 @@ class KayleePickerTextFieldModel {
   EndTime endTime;
   ProdCate prodCate;
   ServiceCate serviceCate;
+  Brand brand;
 
   KayleePickerTextFieldModel.copy(KayleePickerTextFieldModel old) {
     this
@@ -529,15 +558,19 @@ class KayleePickerTextFieldModel {
       ..startTime = old?.startTime
       ..endTime = old?.endTime
       ..prodCate = old?.prodCate
-      ..serviceCate = old?.serviceCate;
+      ..serviceCate = old?.serviceCate
+      ..brand = old?.brand;
   }
 
-  KayleePickerTextFieldModel({this.city,
+  KayleePickerTextFieldModel({
+    this.city,
     this.district,
     this.startTime,
     this.endTime,
     this.prodCate,
-    this.serviceCate});
+    this.serviceCate,
+    this.brand,
+  });
 
   void update({dynamic value}) {
     if (value is City) {
@@ -552,6 +585,8 @@ class KayleePickerTextFieldModel {
       this.prodCate = value;
     } else if (value is ServiceCate) {
       this.serviceCate = value;
+    } else if (value is Brand) {
+      this.brand = value;
     }
   }
 }
