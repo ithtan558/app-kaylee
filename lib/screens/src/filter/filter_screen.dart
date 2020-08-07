@@ -55,7 +55,6 @@ class _FilterScreenState<T extends Filter> extends BaseState<FilterScreen<T>> {
                 searchFocus.unfocus();
                 searchTfController.clear();
                 widget.controller.resetFilter();
-                widget.controller.loadFilter();
               },
             )
           ],
@@ -97,12 +96,13 @@ class _FilterScreenState<T extends Filter> extends BaseState<FilterScreen<T>> {
           margin: const EdgeInsets.only(
               bottom: Dimens.px16, left: Dimens.px16, right: Dimens.px16),
           onPressed: () {
+            ///nếu keyword not empty
+            ///thì set keyword cho filter
+            if (searchTfController.keyword.isNotNullAndEmpty) {
+              widget.controller?.updateFilter()?.keyword =
+                  searchTfController.keyword;
+            }
             action?.onApply();
-            widget.controller
-                ?.updateFilter()
-                ?.keyword =
-                searchTfController.keyword;
-            widget.controller?.loadFilter();
             popScreen();
           },
         ),
@@ -146,12 +146,16 @@ class _BrandFilterViewState extends BaseState<BrandFilterView>
 
   @override
   void onApply() {
-    widget.controller
-        ?.updateFilter()
-        ?.city = cityController.value;
-    widget.controller
-        ?.updateFilter()
-        ?.district = districtController.value;
+    if (cityController.value != null) {
+      widget.controller
+          ?.updateFilter()
+          ?.city = cityController.value;
+    }
+    if (districtController.value != null) {
+      widget.controller
+          ?.updateFilter()
+          ?.district = districtController.value;
+    }
   }
 
   @override
@@ -172,11 +176,6 @@ class _BrandFilterViewState extends BaseState<BrandFilterView>
     districtController.value = widget.controller
         ?.getFilter()
         ?.district;
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   @override
@@ -224,15 +223,21 @@ class _StaffFilterViewState extends BaseState<StaffFilterView>
 
   @override
   void onApply() {
-    widget.controller
-        ?.updateFilter()
-        ?.brand = brandController.value;
-    widget.controller
-        ?.updateFilter()
-        ?.city = cityController.value;
-    widget.controller
-        ?.updateFilter()
-        ?.district = districtController.value;
+    if (brandController.value != null) {
+      widget.controller
+          ?.updateFilter()
+          ?.brand = brandController.value;
+    }
+    if (cityController.value != null) {
+      widget.controller
+          ?.updateFilter()
+          ?.city = cityController.value;
+    }
+    if (districtController.value != null) {
+      widget.controller
+          ?.updateFilter()
+          ?.district = districtController.value;
+    }
   }
 
   @override
@@ -257,11 +262,6 @@ class _StaffFilterViewState extends BaseState<StaffFilterView>
     districtController.value = widget.controller
         ?.getFilter()
         ?.district;
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   @override
@@ -317,15 +317,21 @@ class _CustomerFilterViewState extends BaseState<CustomerFilterView>
 
   @override
   void onApply() {
-    widget.controller
-        ?.updateFilter()
-        ?.type = typeController.value;
-    widget.controller
-        ?.updateFilter()
-        ?.city = cityController.value;
-    widget.controller
-        ?.updateFilter()
-        ?.district = districtController.value;
+    if (typeController.value != null) {
+      widget.controller
+          ?.updateFilter()
+          ?.type = typeController.value;
+    }
+    if (cityController.value != null) {
+      widget.controller
+          ?.updateFilter()
+          ?.city = cityController.value;
+    }
+    if (districtController.value != null) {
+      widget.controller
+          ?.updateFilter()
+          ?.district = districtController.value;
+    }
   }
 
   @override
@@ -350,11 +356,6 @@ class _CustomerFilterViewState extends BaseState<CustomerFilterView>
     districtController.value = widget.controller
         ?.getFilter()
         ?.district;
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   @override
