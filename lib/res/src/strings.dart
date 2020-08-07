@@ -221,6 +221,7 @@ class Strings {
   static const String timKiem = 'Tìm kiếm';
   static const String timKiemTheoTuKhoa = 'Tìm kiếm theo từ khoá';
   static const String cuaHangApDung = 'Cửa hàng áp dụng';
+  static const String phanLoai = 'Phân loại';
 
   Strings._();
 }
