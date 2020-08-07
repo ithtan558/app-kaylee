@@ -55,10 +55,13 @@ class BrandListBloc extends Cubit<LoadMoreModel<Brand>>
 
   @override
   void loadFilter() {
-    state
-      ..items = null
-      ..page = 1;
-    loadBrands();
+    ///nếu có filter hoặc list item hiện tại đang empty
+    if (!isEmptyFilter || state.items.isNullOrEmpty) {
+      state
+        ..items = null
+        ..page = 1;
+      loadBrands();
+    }
   }
 
   @override

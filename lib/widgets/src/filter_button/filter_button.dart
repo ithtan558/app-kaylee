@@ -44,11 +44,7 @@ class _FilterButtonState<T extends Filter> extends BaseState<FilterButton<T>> {
             ),
           ),
         ).then((value) {
-          ///nếu có filter
-          if (widget?.controller?.isEmptyFilter != true) {
-            ///mới load lại data với filter
-            widget.controller?.loadFilter();
-          }
+          widget.controller?.loadFilter();
           setState(() {});
         });
       },
