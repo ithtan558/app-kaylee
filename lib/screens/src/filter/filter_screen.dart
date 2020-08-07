@@ -5,6 +5,7 @@ import 'package:kaylee/base/kaylee_filter_interface.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/brand/list/bloc/brand_list_bloc.dart';
+import 'package:kaylee/screens/src/customer/list/bloc/customer_list_screen_bloc.dart';
 import 'package:kaylee/screens/src/staff/list/bloc/staff_list_screen_bloc.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
@@ -100,6 +101,10 @@ class _FilterScreenState<T extends Filter> extends BaseState<FilterScreen<T>> {
       case StaffFilter:
         return StaffFilterView(
           controller: controller as KayleeFilterInterface<StaffFilter>,
+        );
+      case CustomerFilter:
+        return CustomerFilterView(
+          controller: controller as KayleeFilterInterface<CustomerFilter>,
         );
       default:
         return Container();
@@ -216,6 +221,78 @@ class _StaffFilterViewState extends BaseState<StaffFilterView>
             child: KayleePickerTextField<Brand>(
               title: Strings.cuaHangApDung,
               controller: brandController,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+                left: Dimens.px16, right: Dimens.px16, bottom: Dimens.px16),
+            child: KayleePickerTextField<City>(
+              title: Strings.tinhTpHint,
+              controller: cityController,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+                left: Dimens.px16, right: Dimens.px16, bottom: Dimens.px16),
+            child: KayleePickerTextField<District>(
+              title: Strings.quan,
+              controller: districtController,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class CustomerFilterView extends StatefulWidget {
+  final KayleeFilterInterface<CustomerFilter> controller;
+
+  CustomerFilterView({this.controller});
+
+  @override
+  _CustomerFilterViewState createState() => _CustomerFilterViewState();
+}
+
+class _CustomerFilterViewState extends BaseState<CustomerFilterView>
+    implements KayleeFilterAction {
+  final typeController = PickInputController<CustomerType>();
+  final cityController = PickInputController<City>();
+  final districtController = PickInputController<District>();
+
+  @override
+  void onApply() {
+    widget.controller?.updateFilter()?.type = typeController.value;
+    widget.controller?.updateFilter()?.city = cityController.value;
+    widget.controller?.updateFilter()?.district = districtController.value;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    context.repository<_FilterScreenState>().action = this;
+    typeController.value = widget.controller?.getFilter()?.type;
+    cityController.value = widget.controller?.getFilter()?.city;
+    districtController.value = widget.controller?.getFilter()?.district;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return RepositoryProvider<KayleePickerTextFieldModel>(
+      create: (context) => KayleePickerTextFieldModel(),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(
+                horizontal: Dimens.px16, vertical: Dimens.px16),
+            child: KayleePickerTextField<CustomerType>(
+              title: Strings.phanLoai,
+              controller: typeController,
             ),
           ),
           Padding(

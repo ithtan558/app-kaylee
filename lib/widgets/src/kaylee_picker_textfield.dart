@@ -10,6 +10,16 @@ import 'package:kaylee/services/services.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
+const types = <Type>[
+  City,
+  District,
+  Ward,
+  ProdCate,
+  ServiceCate,
+  Brand,
+  CustomerType
+];
+
 class KayleePickerTextField<T> extends StatefulWidget {
   final String title;
   final String error;
@@ -37,6 +47,7 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField> {
 
   @override
   void initState() {
+    super.initState();
     widget?.controller?._view = this;
     try {
       pickerTFModel = context.repository<KayleePickerTextFieldModel>();
@@ -44,7 +55,6 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField> {
       print('[TUNG] ===> chưa provide KayleePickerTextFieldModel');
     }
     updateValue();
-    super.initState();
   }
 
   @override
@@ -57,7 +67,7 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField> {
   ///
   void updateValue() {
     currentValue = widget.controller?.value;
-    _tfController.text = _getTitle(widget.controller?.value);
+    _tfController.text = _getTitle<T>(widget.controller?.value);
     pickerTFModel?.update(value: widget.controller?.value);
   }
 
@@ -198,13 +208,8 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField> {
   }
 }
 
-String _getTitle(dynamic item) {
-  if (item is City ||
-      item is District ||
-      item is Ward ||
-      item is ProdCate ||
-      item is ServiceCate ||
-      item is Brand) {
+String _getTitle<T>(dynamic item) {
+  if (item != null && types.contains(T)) {
     return item.name;
   } else if (item is StartTime || item is EndTime) {
     return item.formattedTime;
@@ -313,7 +318,6 @@ class _PickerViewState<T> extends BaseState<_PickerView> {
   _PickerViewBloc<T> bloc;
   KayleePickerTextFieldModel parentBloc;
   FixedExtentScrollController scrollController;
-  final types = [City, District, Ward, ProdCate, ServiceCate, Brand];
 
   @override
   void initState() {
@@ -329,6 +333,7 @@ class _PickerViewState<T> extends BaseState<_PickerView> {
       productService: context.network.provideProductService(),
       servService: context.network.provideServService(),
       brandService: context.network.provideBrandService(),
+      customerService: context.network.provideCustomerService(),
     );
     if (T == City) {
       bloc.loadCity();
@@ -342,6 +347,8 @@ class _PickerViewState<T> extends BaseState<_PickerView> {
       bloc.loadServiceCate();
     } else if (T == Brand) {
       bloc.loadBrands();
+    } else if (T == CustomerType) {
+      bloc.loadCustomerType();
     }
   }
 
@@ -376,7 +383,7 @@ class _PickerViewState<T> extends BaseState<_PickerView> {
           itemBuilder: (context, index) {
             final item = state.item.elementAt(index);
             return Container(
-              child: Text(_getTitle(item),
+              child: Text(_getTitle<T>(item),
                   style: TextStyle(
                     fontFamily: 'SFProText',
                     color: Color(0xff000000),
@@ -413,12 +420,15 @@ class _PickerViewBloc<T> extends Cubit<SingleModel<List<T>>> {
   ProductService productService;
   ServService servService;
   BrandService brandService;
+  CustomerService customerService;
 
-  _PickerViewBloc({this.commonService,
+  _PickerViewBloc({
+    this.commonService,
     this.productService,
     this.servService,
-    this.brandService})
-      : super(SingleModel());
+    this.brandService,
+    this.customerService,
+  }) : super(SingleModel());
 
   void loadCity() {
     emit(SingleModel.copy(state..loading = true));
@@ -539,6 +549,26 @@ class _PickerViewBloc<T> extends Cubit<SingleModel<List<T>>> {
       },
     );
   }
+
+  void loadCustomerType() {
+    emit(SingleModel.copy(state..loading = true));
+    RequestHandler(
+      request: customerService.getCustomerType(),
+      onSuccess: ({message, result}) {
+        emit(SingleModel.copy(state
+          ..loading = false
+          ..item = result
+          ..code = null
+          ..error = null));
+      },
+      onFailed: (code, {error}) {
+        emit(SingleModel.copy(state
+          ..loading = false
+          ..code = code
+          ..error = error));
+      },
+    );
+  }
 }
 
 //dùng cho những field cần phải pick trước (ex: select tỉnh phải select city trước)
@@ -550,6 +580,7 @@ class KayleePickerTextFieldModel {
   ProdCate prodCate;
   ServiceCate serviceCate;
   Brand brand;
+  CustomerType customerType;
 
   KayleePickerTextFieldModel.copy(KayleePickerTextFieldModel old) {
     this
@@ -559,7 +590,8 @@ class KayleePickerTextFieldModel {
       ..endTime = old?.endTime
       ..prodCate = old?.prodCate
       ..serviceCate = old?.serviceCate
-      ..brand = old?.brand;
+      ..brand = old?.brand
+      ..customerType = old?.customerType;
   }
 
   KayleePickerTextFieldModel({
@@ -570,6 +602,7 @@ class KayleePickerTextFieldModel {
     this.prodCate,
     this.serviceCate,
     this.brand,
+    this.customerType,
   });
 
   void update({dynamic value}) {
@@ -587,6 +620,8 @@ class KayleePickerTextFieldModel {
       this.serviceCate = value;
     } else if (value is Brand) {
       this.brand = value;
+    } else if (value is CustomerType) {
+      this.customerType = value;
     }
   }
 }

@@ -14,10 +14,10 @@ import 'package:kaylee/widgets/widgets.dart';
 
 class CustomerListScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<CustomerListScreenBloc>(
-    create: (context) => CustomerListScreenBloc(
-        customerService: context.network.provideCustomerService()),
-    child: CustomerListScreen._(),
-  );
+        create: (context) => CustomerListScreenBloc(
+            customerService: context.network.provideCustomerService()),
+        child: CustomerListScreen._(),
+      );
 
   CustomerListScreen._();
 
@@ -53,9 +53,8 @@ class _CustomerListScreenState extends BaseState<CustomerListScreen> {
       appBar: KayleeAppBar(
         title: Strings.danhSachKH,
         actions: [
-          KayleeAppBarAction.iconButton(
-            icon: Images.ic_search,
-            onTap: () {},
+          FilterButton<CustomerFilter>(
+            controller: customersBloc,
           )
         ],
       ),

@@ -1,13 +1,20 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/foundation.dart';
+import 'package:kaylee/base/kaylee_filter_interface.dart';
 import 'package:kaylee/base/loadmore_interface.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/services/services.dart';
 
+class CustomerFilter extends Filter {
+  City city;
+  District district;
+  CustomerType type;
+}
+
 class CustomerListScreenBloc extends Cubit<LoadMoreModel<Customer>>
-    implements LoadMoreInterface {
+    implements LoadMoreInterface, KayleeFilterInterface<CustomerFilter> {
   final CustomerService customerService;
-  String keyword;
+  CustomerFilter _filter;
 
   CustomerListScreenBloc({@required this.customerService})
       : super(LoadMoreModel());
@@ -18,7 +25,10 @@ class CustomerListScreenBloc extends Cubit<LoadMoreModel<Customer>>
       request: customerService.getCustomers(
         limit: state.limit,
         page: state.page,
-        keyword: keyword,
+        keyword: _filter?.keyword,
+        cityId: _filter?.city?.id,
+        districtIds: _filter?.district?.id?.toString(),
+        typeId: _filter?.type?.id,
       ),
       onSuccess: ({message, result}) {
         final customers = (result as Customers).items;
@@ -45,4 +55,31 @@ class CustomerListScreenBloc extends Cubit<LoadMoreModel<Customer>>
 
   @override
   bool loadWhen() => !state.loading && !state.ended;
+
+  @override
+  void loadFilter() {
+    state
+      ..items = null
+      ..page = 1;
+    loadCustomers();
+  }
+
+  @override
+  CustomerFilter getFilter() {
+    return _filter;
+  }
+
+  @override
+  void resetFilter() {
+    _filter = null;
+  }
+
+  @override
+  bool get isEmptyFilter => _filter == null;
+
+  @override
+  CustomerFilter updateFilter() {
+    if (isEmptyFilter) _filter = CustomerFilter();
+    return _filter;
+  }
 }
