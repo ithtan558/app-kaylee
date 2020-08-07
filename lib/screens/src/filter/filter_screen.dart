@@ -11,6 +11,8 @@ import 'package:kaylee/widgets/widgets.dart';
 
 abstract class KayleeFilterAction {
   void onApply();
+
+  void onReset();
 }
 
 class FilterScreen<T extends Filter> extends StatefulWidget {
@@ -23,18 +25,19 @@ class FilterScreen<T extends Filter> extends StatefulWidget {
 }
 
 class _FilterScreenState<T extends Filter> extends BaseState<FilterScreen<T>> {
-  final searchTfController = TextEditingController();
+  final searchTfController = SearchInputFieldController();
+  final searchFocus = FocusNode();
   KayleeFilterAction action;
 
   @override
   void initState() {
     super.initState();
-    searchTfController.text = widget.controller?.getFilter()?.keyword;
+    searchTfController.keyword = widget.controller?.getFilter()?.keyword;
   }
 
   @override
   void dispose() {
-    searchTfController.dispose();
+    searchFocus.dispose();
     super.dispose();
   }
 
@@ -44,6 +47,18 @@ class _FilterScreenState<T extends Filter> extends BaseState<FilterScreen<T>> {
       child: KayleeScrollview(
         appBar: KayleeAppBar(
           title: Strings.timKiemChonLoc,
+          actions: <Widget>[
+            KayleeAppBarAction.hyperText(
+              title: Strings.xoa,
+              onTap: () {
+                action?.onReset();
+                searchFocus.unfocus();
+                searchTfController.clear();
+                widget.controller.resetFilter();
+                widget.controller.loadFilter();
+              },
+            )
+          ],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,6 +73,7 @@ class _FilterScreenState<T extends Filter> extends BaseState<FilterScreen<T>> {
                   left: Dimens.px16, right: Dimens.px16, top: Dimens.px8),
               child: SearchInputField(
                 hint: Strings.timKiemTheoTuKhoa,
+                focusNode: searchFocus,
                 controller: searchTfController,
               ),
             ),
@@ -82,8 +98,10 @@ class _FilterScreenState<T extends Filter> extends BaseState<FilterScreen<T>> {
               bottom: Dimens.px16, left: Dimens.px16, right: Dimens.px16),
           onPressed: () {
             action?.onApply();
-            widget.controller?.updateFilter()?.keyword =
-                searchTfController.text;
+            widget.controller
+                ?.updateFilter()
+                ?.keyword =
+                searchTfController.keyword;
             widget.controller?.loadFilter();
             popScreen();
           },
@@ -128,16 +146,32 @@ class _BrandFilterViewState extends BaseState<BrandFilterView>
 
   @override
   void onApply() {
-    widget.controller?.updateFilter()?.city = cityController.value;
-    widget.controller?.updateFilter()?.district = districtController.value;
+    widget.controller
+        ?.updateFilter()
+        ?.city = cityController.value;
+    widget.controller
+        ?.updateFilter()
+        ?.district = districtController.value;
+  }
+
+  @override
+  void onReset() {
+    cityController.clear();
+    districtController.clear();
   }
 
   @override
   void initState() {
     super.initState();
-    context.repository<_FilterScreenState>().action = this;
-    cityController.value = widget.controller?.getFilter()?.city;
-    districtController.value = widget.controller?.getFilter()?.district;
+    context
+        .repository<_FilterScreenState>()
+        .action = this;
+    cityController.value = widget.controller
+        ?.getFilter()
+        ?.city;
+    districtController.value = widget.controller
+        ?.getFilter()
+        ?.district;
   }
 
   @override
@@ -190,18 +224,39 @@ class _StaffFilterViewState extends BaseState<StaffFilterView>
 
   @override
   void onApply() {
-    widget.controller?.updateFilter()?.brand = brandController.value;
-    widget.controller?.updateFilter()?.city = cityController.value;
-    widget.controller?.updateFilter()?.district = districtController.value;
+    widget.controller
+        ?.updateFilter()
+        ?.brand = brandController.value;
+    widget.controller
+        ?.updateFilter()
+        ?.city = cityController.value;
+    widget.controller
+        ?.updateFilter()
+        ?.district = districtController.value;
+  }
+
+  @override
+  void onReset() {
+    brandController.clear();
+    cityController.clear();
+    districtController.clear();
   }
 
   @override
   void initState() {
     super.initState();
-    context.repository<_FilterScreenState>().action = this;
-    brandController.value = widget.controller?.getFilter()?.brand;
-    cityController.value = widget.controller?.getFilter()?.city;
-    districtController.value = widget.controller?.getFilter()?.district;
+    context
+        .repository<_FilterScreenState>()
+        .action = this;
+    brandController.value = widget.controller
+        ?.getFilter()
+        ?.brand;
+    cityController.value = widget.controller
+        ?.getFilter()
+        ?.city;
+    districtController.value = widget.controller
+        ?.getFilter()
+        ?.district;
   }
 
   @override
@@ -262,18 +317,39 @@ class _CustomerFilterViewState extends BaseState<CustomerFilterView>
 
   @override
   void onApply() {
-    widget.controller?.updateFilter()?.type = typeController.value;
-    widget.controller?.updateFilter()?.city = cityController.value;
-    widget.controller?.updateFilter()?.district = districtController.value;
+    widget.controller
+        ?.updateFilter()
+        ?.type = typeController.value;
+    widget.controller
+        ?.updateFilter()
+        ?.city = cityController.value;
+    widget.controller
+        ?.updateFilter()
+        ?.district = districtController.value;
+  }
+
+  @override
+  void onReset() {
+    typeController.clear();
+    cityController.clear();
+    districtController.clear();
   }
 
   @override
   void initState() {
     super.initState();
-    context.repository<_FilterScreenState>().action = this;
-    typeController.value = widget.controller?.getFilter()?.type;
-    cityController.value = widget.controller?.getFilter()?.city;
-    districtController.value = widget.controller?.getFilter()?.district;
+    context
+        .repository<_FilterScreenState>()
+        .action = this;
+    typeController.value = widget.controller
+        ?.getFilter()
+        ?.type;
+    cityController.value = widget.controller
+        ?.getFilter()
+        ?.city;
+    districtController.value = widget.controller
+        ?.getFilter()
+        ?.district;
   }
 
   @override

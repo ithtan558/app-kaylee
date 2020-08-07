@@ -212,12 +212,13 @@ class PriceInputField extends StatefulWidget {
   final FocusNode focusNode;
   final FocusNode nextFocusNode;
 
-  PriceInputField({this.error,
-    this.controller,
-    this.hint,
-    this.textInputAction,
-    this.focusNode,
-    this.nextFocusNode});
+  PriceInputField(
+      {this.error,
+      this.controller,
+      this.hint,
+      this.textInputAction,
+      this.focusNode,
+      this.nextFocusNode});
 
   @override
   _PriceInputFieldState createState() => _PriceInputFieldState();
@@ -286,9 +287,18 @@ class _PriceInputFieldState extends BaseState<PriceInputField> {
   }
 }
 
+class SearchInputFieldController {
+  _SearchInputFieldState view;
+  String keyword;
+
+  void clear() {
+    view.clear();
+  }
+}
+
 class SearchInputField extends StatefulWidget {
   final String hint;
-  final TextEditingController controller;
+  final SearchInputFieldController controller;
   final FocusNode focusNode;
 
   SearchInputField({this.hint, this.controller, this.focusNode});
@@ -298,15 +308,30 @@ class SearchInputField extends StatefulWidget {
 }
 
 class _SearchInputFieldState extends BaseState<SearchInputField> {
+  final tfController = TextEditingController();
   bool closeIsShowed = false;
 
   @override
   void initState() {
     super.initState();
+    widget.controller.view = this;
+    tfController.text = widget.controller?.keyword;
+    closeIsShowed = widget?.controller?.keyword.isNotNullAndEmpty;
+  }
+
+  void clear() {
+    if (closeIsShowed) {
+      setState(() {
+        tfController?.clear();
+        widget.controller?.keyword = tfController.text;
+        closeIsShowed = !closeIsShowed;
+      });
+    }
   }
 
   @override
   void dispose() {
+    tfController.dispose();
     super.dispose();
   }
 
@@ -316,9 +341,10 @@ class _SearchInputFieldState extends BaseState<SearchInputField> {
       TextField(
         focusNode: widget.focusNode,
         textInputAction: TextInputAction.search,
-        controller: widget.controller,
+        controller: tfController,
         textAlignVertical: TextAlignVertical.center,
         onChanged: (text) {
+          widget?.controller?.keyword = text;
           if (text.isNotEmpty && !closeIsShowed) {
             setState(() {
               closeIsShowed = !closeIsShowed;
@@ -335,12 +361,7 @@ class _SearchInputFieldState extends BaseState<SearchInputField> {
             hintStyle: TextStyles.hint16W400,
             suffixIcon: GestureDetector(
               onTap: () {
-                if (closeIsShowed) {
-                  setState(() {
-                    widget.controller?.text = '';
-                    closeIsShowed = !closeIsShowed;
-                  });
-                }
+                clear();
               },
               child: Icon(
                 !closeIsShowed ? Icons.search : Icons.close,

@@ -20,6 +20,10 @@ const types = <Type>[
   CustomerType
 ];
 
+abstract class KayleePickerTextFieldView {
+  void clear();
+}
+
 class KayleePickerTextField<T> extends StatefulWidget {
   final String title;
   final String error;
@@ -39,7 +43,8 @@ class KayleePickerTextField<T> extends StatefulWidget {
       _KayleePickerTextFieldState<T>();
 }
 
-class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField> {
+class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField>
+    implements KayleePickerTextFieldView {
   final _tfController = TextEditingController();
   bool focused = false;
   T currentValue;
@@ -205,6 +210,13 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField> {
                       ),
           );
         });
+  }
+
+  @override
+  void clear() {
+    widget.controller?.value = null;
+    updateValue();
+    setState(() {});
   }
 }
 
@@ -409,10 +421,14 @@ class _PickerViewState<T> extends BaseState<_PickerView> {
 }
 
 class PickInputController<T> {
-  _KayleePickerTextFieldState _view;
+  KayleePickerTextFieldView _view;
   T value;
 
   PickInputController({this.value});
+
+  void clear() {
+    _view?.clear();
+  }
 }
 
 class _PickerViewBloc<T> extends Cubit<SingleModel<List<T>>> {
