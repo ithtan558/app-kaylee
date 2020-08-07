@@ -66,13 +66,12 @@ class KayleeTabBar extends StatefulWidget {
   final ValueSetter<int> onSelected;
   final int itemCount;
   final String Function(int index) mapTitle;
-  final PageController pageController;
 
-  KayleeTabBar(
-      {@required this.itemCount,
-      @required this.mapTitle,
-      this.onSelected,
-      this.pageController});
+  KayleeTabBar({
+    @required this.itemCount,
+    @required this.mapTitle,
+    this.onSelected,
+  });
 
   @override
   _KayleeTabBarState createState() => _KayleeTabBarState();
@@ -84,16 +83,6 @@ class _KayleeTabBarState extends BaseState<KayleeTabBar> {
   @override
   void initState() {
     super.initState();
-    widget.pageController?.addListener(() {
-      if (((widget.pageController?.page ?? 0) -
-                  (widget.pageController?.page?.toInt() ?? 0))
-              .abs() ==
-          0) {
-        setState(() {
-          currentIndex = widget.pageController.page.toInt();
-        });
-      }
-    });
   }
 
   @override
@@ -113,15 +102,13 @@ class _KayleeTabBarState extends BaseState<KayleeTabBar> {
             setState(() {
               currentIndex = index;
             });
-            widget.pageController?.jumpToPage(currentIndex);
             widget.onSelected?.call(currentIndex);
           },
         );
       },
-      separatorBuilder: (context, index) =>
-          Container(
-            width: Dimens.px16,
-          ),
+      separatorBuilder: (context, index) => Container(
+        width: Dimens.px16,
+      ),
       padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
       itemCount: widget.itemCount ?? 0,
     );

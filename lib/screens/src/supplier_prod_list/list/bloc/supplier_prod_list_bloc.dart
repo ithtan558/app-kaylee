@@ -10,16 +10,24 @@ class SupplierProdListBloc extends Cubit<LoadMoreModel<Product>>
   int supplierId;
   int cateId;
 
-  SupplierProdListBloc(
-      {@required this.productService, this.cateId, this.supplierId})
+  SupplierProdListBloc({@required this.productService, this.supplierId})
       : super(LoadMoreModel());
 
-  void loadProds() {
+  void loadProds({int cateId}) {
+    if (cateId.isNotNull) {
+      ///user đổi category
+      this.cateId = cateId;
+
+      ///reset page và item về ban đầu
+      state
+        ..page = 1
+        ..items = null;
+    }
     emit(LoadMoreModel.copy(state..loading = true));
     RequestHandler(
       request: productService.getProducts(
         supplierId: supplierId,
-        categoryId: cateId,
+        categoryId: this.cateId,
         limit: state.limit,
         page: state.page,
       ),

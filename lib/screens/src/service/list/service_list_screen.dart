@@ -1,22 +1,30 @@
 import 'dart:async';
 
 import 'package:anth_package/anth_package.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/service/list/bloc/service_cate_bloc.dart';
-import 'package:kaylee/screens/src/service/list/services_tab.dart';
+import 'package:kaylee/screens/src/service/list/bloc/service_list_bloc.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class ServiceListScreen extends StatefulWidget {
-  static Widget newInstance() => BlocProvider<ServiceCateBloc>(
-      create: (context) => ServiceCateBloc(
+  static Widget newInstance() => MultiBlocProvider(providers: [
+        BlocProvider<ServiceCateBloc>(
+          create: (context) => ServiceCateBloc(
             servService: context.network.provideServService(),
           ),
-      child: ServiceListScreen._());
+        ),
+        BlocProvider<ServiceListBloc>(
+          create: (context) => ServiceListBloc(
+            servService: context.network.provideServService(),
+          ),
+        ),
+      ], child: ServiceListScreen._());
 
   ServiceListScreen._();
 
@@ -26,17 +34,23 @@ class ServiceListScreen extends StatefulWidget {
 
 class _ServiceListScreenState extends KayleeState<ServiceListScreen> {
   ServiceCateBloc cateBloc;
-  final pageController = PageController();
   StreamSubscription sub;
+  StreamSubscription serviceListBlocSub;
+  ServiceListBloc serviceListBloc;
 
   @override
   void initState() {
     super.initState();
     cateBloc = context.bloc<ServiceCateBloc>();
+    serviceListBloc = context.bloc<ServiceListBloc>();
+
     sub = cateBloc.listen((state) {
       if (!state.loading) {
         hideLoading();
-        if (state.code.isNotNull && state.code != ErrorType.UNAUTHORIZED) {
+        if (state.item.isNotNullAndEmpty) {
+          serviceListBloc.loadServices(cateId: state.item.first.id);
+        } else if (state.code.isNotNull &&
+            state.code != ErrorType.UNAUTHORIZED) {
           showKayleeAlertErrorYesDialog(
             context: context,
             error: state.error,
@@ -49,13 +63,20 @@ class _ServiceListScreenState extends KayleeState<ServiceListScreen> {
         showLoading();
       }
     });
+
+    serviceListBlocSub = serviceListBloc.listen((state) {
+      if (state.code.isNotNull && state.code != ErrorType.UNAUTHORIZED) {
+        showKayleeAlertErrorYesDialog(context: context, error: state.error);
+      }
+    });
+
     cateBloc.loadServiceCate();
   }
 
   @override
   void dispose() {
     sub.cancel();
-    pageController.dispose();
+    serviceListBlocSub.cancel();
     super.dispose();
   }
 
@@ -72,28 +93,60 @@ class _ServiceListScreenState extends KayleeState<ServiceListScreen> {
         ],
       ),
       tabBar: BlocBuilder<ServiceCateBloc, SingleModel<List<Category>>>(
+        buildWhen: (previous, current) {
+          return !current.loading;
+        },
         builder: (context, state) {
           final categories = state.item;
           return KayleeTabBar(
             itemCount: categories?.length,
-            pageController: pageController,
-            mapTitle: (index) => categories.elementAt(index).name,
+            mapTitle: (index) =>
+            categories
+                .elementAt(index)
+                .name,
+            onSelected: (value) {
+              serviceListBloc.loadServices(
+                  cateId: cateBloc.state.item
+                      .elementAt(value)
+                      .id);
+            },
           );
         },
       ),
-      pageView: BlocBuilder<ServiceCateBloc, SingleModel<List<Category>>>(
-        builder: (context, state) {
-          final categories = state.item ?? [];
-          return KayleePageView(
-            itemBuilder: (context, index) {
-              return RepositoryProvider<Category>.value(
-                  value: categories.elementAt(index),
-                  child: ServicesTab.newInstance());
-            },
-            controller: pageController,
-            itemCount: categories?.length,
-          );
-        },
+      pageView: KayleeLoadMoreHandler(
+        controller: serviceListBloc,
+        child: BlocBuilder<ServiceListBloc, LoadMoreModel<Service>>(
+          builder: (context, state) {
+            return KayleeGridView(
+              padding: EdgeInsets.all(Dimens.px16),
+              childAspectRatio: 103 / 195,
+              itemBuilder: (c, index) {
+                final item = state.items.elementAt(index);
+                return KayleeProdItemView.canTap(
+                  data: KayleeProdItemData(
+                      name: item.name, image: item.image, price: item.price),
+                  onTap: () {
+                    pushScreen(PageIntent(
+                        screen: CreateNewServiceScreen,
+                        bundle: Bundle(NewServiceScreenData(
+                            openFrom: ServiceScreenOpenFrom.serviceItem,
+                            service: item))));
+                  },
+                );
+              },
+              itemCount: state.items?.length,
+              loadingBuilder: (context) {
+                if (state.ended) return Container();
+                return Align(
+                  alignment: Alignment.topCenter,
+                  child: CupertinoActivityIndicator(
+                    radius: Dimens.px16,
+                  ),
+                );
+              },
+            );
+          },
+        ),
       ),
       floatingActionButton: KayleeFloatButton(
         onTap: () {

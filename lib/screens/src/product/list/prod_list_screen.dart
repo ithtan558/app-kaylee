@@ -2,22 +2,30 @@ import 'dart:async';
 
 import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/product/list/bloc/prod_cate_bloc.dart';
-import 'package:kaylee/screens/src/product/list/products_tab.dart';
+import 'package:kaylee/screens/src/product/list/bloc/prod_list_bloc.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class ProdListScreen extends StatefulWidget {
-  static Widget newInstance() => BlocProvider<ProdCateBloc>(
-      create: (context) => ProdCateBloc(
+  static Widget newInstance() => MultiBlocProvider(providers: [
+        BlocProvider<ProdCateBloc>(
+          create: (context) => ProdCateBloc(
             productService: context.network.provideProductService(),
           ),
-      child: ProdListScreen._());
+        ),
+        BlocProvider<ProdListBloc>(
+          create: (context) => ProdListBloc(
+            productService: context.network.provideProductService(),
+          ),
+        ),
+      ], child: ProdListScreen._());
 
   ProdListScreen._();
 
@@ -27,17 +35,23 @@ class ProdListScreen extends StatefulWidget {
 
 class _ProdListScreenState extends KayleeState<ProdListScreen> {
   ProdCateBloc cateBloc;
-  final pageController = PageController();
   StreamSubscription cateBlocSub;
+  ProdListBloc prodsListBloc;
+  StreamSubscription prodListBlocSub;
 
   @override
   void initState() {
     super.initState();
     cateBloc = context.bloc<ProdCateBloc>();
+    prodsListBloc = context.bloc<ProdListBloc>();
+
     cateBlocSub = cateBloc.listen((state) {
       if (!state.loading) {
         hideLoading();
-        if (state.code.isNotNull && state.code != ErrorType.UNAUTHORIZED) {
+        if (state.item.isNotNullAndEmpty) {
+          prodsListBloc.loadProds(cateId: state.item.first.id);
+        } else if (state.code.isNotNull &&
+            state.code != ErrorType.UNAUTHORIZED) {
           showKayleeAlertErrorYesDialog(
             context: context,
             error: state.error,
@@ -50,13 +64,18 @@ class _ProdListScreenState extends KayleeState<ProdListScreen> {
         showLoading();
       }
     });
+    prodListBlocSub = prodsListBloc.listen((state) {
+      if (state.code.isNotNull && state.code != ErrorType.UNAUTHORIZED) {
+        showKayleeAlertErrorYesDialog(context: context, error: state.error);
+      }
+    });
     cateBloc.loadProdCate();
   }
 
   @override
   void dispose() {
     cateBlocSub.cancel();
-    pageController.dispose();
+    prodListBlocSub.cancel();
     super.dispose();
   }
 
@@ -67,28 +86,60 @@ class _ProdListScreenState extends KayleeState<ProdListScreen> {
         title: Strings.danhMucSanPham,
       ),
       tabBar: BlocBuilder<ProdCateBloc, SingleModel<List<Category>>>(
+        buildWhen: (previous, current) {
+          return !current.loading;
+        },
         builder: (context, state) {
           final categories = state.item;
           return KayleeTabBar(
             itemCount: categories?.length,
-            pageController: pageController,
-            mapTitle: (index) => categories.elementAt(index).name,
+            mapTitle: (index) =>
+            categories
+                .elementAt(index)
+                .name,
+            onSelected: (value) {
+              prodsListBloc.loadProds(
+                  cateId: cateBloc.state.item
+                      .elementAt(value)
+                      .id);
+            },
           );
         },
       ),
-      pageView: BlocBuilder<ProdCateBloc, SingleModel<List<Category>>>(
-        builder: (context, state) {
-          final categories = state.item ?? [];
-          return KayleePageView(
-            itemBuilder: (context, index) {
-              return RepositoryProvider<Category>.value(
-                  value: categories.elementAt(index),
-                  child: ProductsTab.newInstance());
-            },
-            controller: pageController,
-            itemCount: categories?.length,
-          );
-        },
+      pageView: KayleeLoadMoreHandler(
+        controller: context.bloc<ProdListBloc>(),
+        child: BlocBuilder<ProdListBloc, LoadMoreModel<Product>>(
+          builder: (context, state) {
+            return KayleeGridView(
+              padding: EdgeInsets.all(Dimens.px16),
+              childAspectRatio: 103 / 195,
+              itemBuilder: (c, index) {
+                final item = state.items.elementAt(index);
+                return KayleeProdItemView.canTap(
+                  data: KayleeProdItemData(
+                      name: item.name, image: item.image, price: item.price),
+                  onTap: () {
+                    pushScreen(PageIntent(
+                        screen: CreateNewProdScreen,
+                        bundle: Bundle(NewProdScreenData(
+                            openFrom: NewProdScreenOpenFrom.prodItem,
+                            product: item))));
+                  },
+                );
+              },
+              itemCount: state.items?.length,
+              loadingBuilder: (context) {
+                if (state.ended) return Container();
+                return Align(
+                  alignment: Alignment.topCenter,
+                  child: CupertinoActivityIndicator(
+                    radius: Dimens.px16,
+                  ),
+                );
+              },
+            );
+          },
+        ),
       ),
       floatingActionButton: KayleeFloatButton(
         onTap: () {

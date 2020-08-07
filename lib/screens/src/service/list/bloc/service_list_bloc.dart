@@ -9,10 +9,19 @@ class ServiceListBloc extends Cubit<LoadMoreModel<Service>>
   final ServService servService;
   int cateId;
 
-  ServiceListBloc({@required this.servService, this.cateId})
-      : super(LoadMoreModel());
+  ServiceListBloc({@required this.servService}) : super(LoadMoreModel());
 
-  void loadServices() {
+  void loadServices({int cateId}) {
+    if (cateId.isNotNull) {
+      ///user đổi category
+
+      this.cateId = cateId;
+
+      //reset page và item về ban đầu
+      state
+        ..page = 1
+        ..items = null;
+    }
     emit(LoadMoreModel.copy(state..loading = true));
     RequestHandler(
       request: servService.getServices(

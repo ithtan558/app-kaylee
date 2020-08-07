@@ -4,15 +4,23 @@ import 'package:kaylee/base/loadmore_interface.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/services/services.dart';
 
-class ProdTabBloc extends Cubit<LoadMoreModel<Product>>
+class ProdListBloc extends Cubit<LoadMoreModel<Product>>
     implements LoadMoreInterface {
   final ProductService productService;
   int cateId;
 
-  ProdTabBloc({@required this.productService, this.cateId})
-      : super(LoadMoreModel());
+  ProdListBloc({@required this.productService}) : super(LoadMoreModel());
 
-  void loadProds() {
+  void loadProds({int cateId}) {
+    if (cateId.isNotNull) {
+      ///user đổi category
+      this.cateId = cateId;
+
+      ///reset page và item về ban đầu
+      state
+        ..page = 1
+        ..items = null;
+    }
     emit(LoadMoreModel.copy(state..loading = true));
     RequestHandler(
       request: productService.getProducts(

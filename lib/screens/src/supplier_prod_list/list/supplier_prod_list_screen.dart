@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:anth_package/anth_package.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/base/kaylee_state.dart';
@@ -6,17 +9,25 @@ import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/supplier_prod_list/list/bloc/supplier_prod_cate_list_bloc.dart';
-import 'package:kaylee/screens/src/supplier_prod_list/list/supp_prod_tab.dart';
+import 'package:kaylee/screens/src/supplier_prod_list/list/bloc/supplier_prod_list_bloc.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class SupplierProdListScreen extends StatefulWidget {
-  static Widget newInstance() => BlocProvider<SupplierProdCateListBloc>(
-      create: (context) => SupplierProdCateListBloc(
+  static Widget newInstance() => MultiBlocProvider(providers: [
+        BlocProvider<SupplierProdCateListBloc>(
+          create: (context) => SupplierProdCateListBloc(
             productService: context.network.provideProductService(),
-            supplier: context.bundle.args as Supplier,
+            supplier: context.getArguments<Supplier>(),
           ),
-      child: SupplierProdListScreen._());
+        ),
+        BlocProvider<SupplierProdListBloc>(
+          create: (context) => SupplierProdListBloc(
+            productService: context.network.provideProductService(),
+            supplierId: context.getArguments<Supplier>().id,
+          ),
+        ),
+      ], child: SupplierProdListScreen._());
 
   SupplierProdListScreen._();
 
@@ -27,27 +38,54 @@ class SupplierProdListScreen extends StatefulWidget {
 
 class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
   SupplierProdCateListBloc cateBloc;
-  final pageController = PageController();
+  SupplierProdListBloc prodsBloc;
+  StreamSubscription cateBlocSub;
+  StreamSubscription prodsBlocSub;
 
   @override
   void initState() {
     super.initState();
-    cateBloc = context.bloc<SupplierProdCateListBloc>()
-      ..listen((state) {
-        if (!state.loading) {
-          hideLoading();
-        } else if (state.loading) {
-          showLoading();
-        } else if (state.code.isNotNull) {
-          hideLoading();
+    cateBloc = context.bloc<SupplierProdCateListBloc>();
+    prodsBloc = context.bloc<SupplierProdListBloc>();
+
+    cateBlocSub = cateBloc.listen((state) {
+      if (!state.loading) {
+        hideLoading();
+        if (state.items.isNotNullAndEmpty) {
+          prodsBloc.loadProds(cateId: state.items.first.id);
+        } else if (state.code.isNotNull &&
+            state.code != ErrorType.UNAUTHORIZED) {
+          showKayleeAlertErrorYesDialog(
+            context: context,
+            error: state.error,
+            onPressed: () {
+              popScreen();
+            },
+          );
         }
-      })
-      ..loadProdCate();
+      } else if (state.loading) {
+        showLoading();
+      }
+    });
+
+    prodsBlocSub = prodsBloc.listen((state) {
+      if (state.code.isNotNull && state.code != ErrorType.UNAUTHORIZED) {
+        showKayleeAlertErrorYesDialog(
+            context: context,
+            error: state.error,
+            onPressed: () {
+              popScreen();
+            });
+      }
+    });
+
+    cateBloc.loadProdCate();
   }
 
   @override
   void dispose() {
-    pageController.dispose();
+    prodsBlocSub.cancel();
+    cateBlocSub.cancel();
     super.dispose();
   }
 
@@ -91,7 +129,7 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
           )
         ],
       ),
-      tabBar: BlocBuilder<SupplierProdCateListBloc, LoadMoreModel>(
+      tabBar: BlocBuilder<SupplierProdCateListBloc, LoadMoreModel<ProdCate>>(
         buildWhen: (previous, current) {
           return !current.loading;
         },
@@ -99,30 +137,49 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
           final categories = state.items;
           return KayleeTabBar(
             itemCount: categories?.length,
-            pageController: pageController,
             mapTitle: (index) =>
             categories
                 .elementAt(index)
                 .name,
+            onSelected: (value) {
+              prodsBloc.loadProds(cateId: state.items
+                  .elementAt(value)
+                  .id);
+            },
           );
         },
       ),
-      pageView: BlocBuilder<SupplierProdCateListBloc, LoadMoreModel<Category>>(
-        buildWhen: (previous, current) {
-          return !current.loading;
-        },
-        builder: (context, state) {
-          final categories = state.items;
-          return KayleePageView(
-            itemBuilder: (context, index) {
-              return RepositoryProvider<Category>.value(
-                  value: categories.elementAt(index),
-                  child: SuppProdTab.newInstance());
-            },
-            controller: pageController,
-            itemCount: categories?.length,
-          );
-        },
+      pageView: KayleeLoadMoreHandler(
+        controller: prodsBloc,
+        child: BlocBuilder<SupplierProdListBloc, LoadMoreModel<Product>>(
+          builder: (context, state) {
+            return KayleeGridView(
+              padding: EdgeInsets.all(Dimens.px16),
+              childAspectRatio: 103 / 195,
+              itemBuilder: (c, index) {
+                final item = state.items.elementAt(index);
+                return KayleeProdItemView.canTap(
+                  data: KayleeProdItemData(
+                      name: item.name, image: item.image, price: item.price),
+                  onTap: () {
+                    pushScreen(PageIntent(
+                        screen: ProductDetailScreen, bundle: Bundle(item)));
+                  },
+                );
+              },
+              itemCount: state.items?.length,
+              loadingBuilder: (context) {
+                if (state.ended) return Container();
+                return Align(
+                  alignment: Alignment.topCenter,
+                  child: CupertinoActivityIndicator(
+                    radius: Dimens.px16,
+                  ),
+                );
+              },
+            );
+          },
+        ),
       ),
       floatingActionButton: Material(
         color: Colors.transparent,
