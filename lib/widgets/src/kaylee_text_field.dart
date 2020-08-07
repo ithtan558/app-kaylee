@@ -146,13 +146,14 @@ class KayleeTextField extends StatelessWidget {
         ),
       );
 
-  factory KayleeTextField.price({String title,
-    String hint,
-    String error,
-    TextEditingController controller,
-    TextInputAction textInputAction,
-    FocusNode focusNode,
-    FocusNode nextFocusNode}) =>
+  factory KayleeTextField.price(
+          {String title,
+          String hint,
+          String error,
+          TextEditingController controller,
+          TextInputAction textInputAction,
+          FocusNode focusNode,
+          FocusNode nextFocusNode}) =>
       KayleeTextField(
         title: title,
         textInput: PriceInputField(
@@ -288,8 +289,9 @@ class _PriceInputFieldState extends BaseState<PriceInputField> {
 class SearchInputField extends StatefulWidget {
   final String hint;
   final TextEditingController controller;
+  final FocusNode focusNode;
 
-  SearchInputField({this.hint, this.controller});
+  SearchInputField({this.hint, this.controller, this.focusNode});
 
   @override
   _SearchInputFieldState createState() => new _SearchInputFieldState();
@@ -312,6 +314,7 @@ class _SearchInputFieldState extends BaseState<SearchInputField> {
   Widget build(BuildContext context) {
     return TextFieldBorderWrapper(
       TextField(
+        focusNode: widget.focusNode,
         textInputAction: TextInputAction.search,
         controller: widget.controller,
         textAlignVertical: TextAlignVertical.center,
