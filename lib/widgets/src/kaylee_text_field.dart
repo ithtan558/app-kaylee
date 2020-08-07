@@ -584,13 +584,7 @@ class _PhoneInputFieldState extends State<PhoneInputField> {
                 controller:
                     widget.isStaticTField ? tfController : widget.controller,
                 keyboardType: TextInputType.phone,
-                maxLengthEnforced: true,
                 enabled: !widget.isStaticTField,
-                maxLength: 11,
-                buildCounter: (BuildContext c,
-                    {int currentLength, bool isFocused, int maxLength}) {
-                  return null;
-                },
                 textInputAction: widget.textInputAction,
                 onSubmitted: (_) {
                   if (widget.textInputAction == TextInputAction.next) {
