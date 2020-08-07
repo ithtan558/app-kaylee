@@ -52,6 +52,8 @@ class KayleeJsonConverter extends JsonConverterFactory {
       return Customer.fromJson(json) as T;
     } else if (T == Customers) {
       return Customers.fromJson(json) as T;
+    } else if (T == CustomerType) {
+      return CustomerType.fromJson(json) as T;
     }
     return json as T;
   }
@@ -105,6 +107,8 @@ class KayleeJsonConverter extends JsonConverterFactory {
     } else if (json is Customer) {
       return json.toJson();
     } else if (json is Customers) {
+      return json.toJson();
+    } else if (json is CustomerType) {
       return json.toJson();
     } else
       return json;
