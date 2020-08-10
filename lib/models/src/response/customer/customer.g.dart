@@ -27,10 +27,11 @@ Customer _$CustomerFromJson(Map<String, dynamic> json) {
     hometownCity: json['hometown_city'] == null
         ? null
         : City.fromJson(json['hometown_city'] as Map<String, dynamic>),
-  );
+  )..address = json['address'] as String;
 }
 
-Map<String, dynamic> _$CustomerToJson(Customer instance) => <String, dynamic>{
+Map<String, dynamic> _$CustomerToJson(Customer instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'first_name': instance.firstName,
       'last_name': instance.lastName,
@@ -38,6 +39,7 @@ Map<String, dynamic> _$CustomerToJson(Customer instance) => <String, dynamic>{
       'image': instance.image,
       'birthday': instance.birthday,
       'email': instance.email,
+      'address': instance.address,
       'city': instance.city,
       'district': instance.district,
       'wards': instance.wards,

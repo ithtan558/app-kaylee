@@ -39,10 +39,19 @@ class Customer {
   @JsonKey(ignore: true)
   File imageFile;
 
-  int birthday;
+  String birthday;
 
-  DateTime get birthDayInDateTime => birthday?.toDateTimeFromServer;
+  DateTime get birthDayInDateTime {
+    DateTime date;
+    if (birthday.isNullOrEmpty) return null;
+    try {
+      date = DateTime.parse(birthday);
+    } catch (e) {}
+    return date;
+  }
+
   String email;
+  String address;
   City city;
   District district;
   Ward wards;
