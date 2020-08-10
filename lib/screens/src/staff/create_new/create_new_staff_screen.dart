@@ -69,13 +69,13 @@ class _CreateNewStaffScreenState extends KayleeState<CreateNewStaffScreen> {
               switch (state.error.code) {
                 case ErrorCode.FIRST_NAME_CODE:
                   firstNameFocus.requestFocus();
-                  return;
+                  break;
                 case ErrorCode.LAST_NAME_CODE:
                   lastNameFocus.requestFocus();
-                  return;
+                  break;
                 case ErrorCode.PHONE_CODE:
                   phoneFocus.requestFocus();
-                  return;
+                  break;
               }
             },
           );
