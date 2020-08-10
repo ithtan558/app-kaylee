@@ -29,15 +29,15 @@ abstract class CustomerService {
   Future<ResponseModel<Customer>> newCustomer({
     @Part(name: 'first_name') String firstName,
     @Part(name: 'last_name') String lastName,
-    @Part() int birthday,
+    @Part() String birthday,
     @Part(name: 'hometown_city_id') int hometownCityId,
-    @Part() int address,
+    @Part() String address,
     @Part(name: 'city_id') int cityId,
     @Part(name: 'district_id') int districtId,
     @Part(name: 'wards_id') int wardsId,
     @Part() String phone,
     @Part() File image,
-    @Part() String email,
+//    @Part() String email,
   });
 
   @POST('customer/{customerId}')
@@ -45,15 +45,15 @@ abstract class CustomerService {
   Future<ResponseModel<Customer>> updateCustomer({
     @Part(name: 'first_name') String firstName,
     @Part(name: 'last_name') String lastName,
-    @Part() int birthday,
+    @Part() String birthday,
     @Part(name: 'hometown_city_id') int hometownCityId,
-    @Part() int address,
+    @Part() String address,
     @Part(name: 'city_id') int cityId,
     @Part(name: 'district_id') int districtId,
     @Part(name: 'wards_id') int wardsId,
     @Part() String phone,
     @Part() File image,
-    @Part() String email,
+//    @Part() String email,
     @Part() int id,
     @Path() int customerId,
   });

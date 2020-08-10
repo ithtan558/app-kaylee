@@ -73,8 +73,7 @@ class _CustomerService implements CustomerService {
       districtId,
       wardsId,
       phone,
-      image,
-      email}) async {
+      image}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
@@ -111,9 +110,6 @@ class _CustomerService implements CustomerService {
           'image',
           MultipartFile.fromFileSync(image.path,
               filename: image.path.split(Platform.pathSeparator).last)));
-    }
-    if (email != null) {
-      _data.fields.add(MapEntry('email', email));
     }
     final Response<Map<String, dynamic>> _result = await _dio.request(
         'customer',
@@ -140,7 +136,6 @@ class _CustomerService implements CustomerService {
       wardsId,
       phone,
       image,
-      email,
       id,
       customerId}) async {
     const _extra = <String, dynamic>{};
@@ -154,7 +149,7 @@ class _CustomerService implements CustomerService {
       _data.fields.add(MapEntry('last_name', lastName));
     }
     if (birthday != null) {
-      _data.fields.add(MapEntry('birthday', birthday.toString()));
+      _data.fields.add(MapEntry('birthday', birthday));
     }
     if (hometownCityId != null) {
       _data.fields.add(MapEntry('hometown_city_id', hometownCityId.toString()));
@@ -179,9 +174,6 @@ class _CustomerService implements CustomerService {
           'image',
           MultipartFile.fromFileSync(image.path,
               filename: image.path.split(Platform.pathSeparator).last)));
-    }
-    if (email != null) {
-      _data.fields.add(MapEntry('email', email));
     }
     if (id != null) {
       _data.fields.add(MapEntry('id', id.toString()));
