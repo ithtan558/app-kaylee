@@ -224,6 +224,7 @@ class Strings {
   static const String phanLoai = 'Phân loại';
   static const String danhMuc = 'Danh mục';
   static const String gia = 'Giá';
+  static const String ngayThangNamSinh = 'Ngày tháng năm sinh';
 
   Strings._();
 }
