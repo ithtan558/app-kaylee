@@ -27,7 +27,7 @@ class StaffDetailScreenBloc extends Cubit<SingleModel<Employee>>
         brandId: state.item?.brand?.id,
         phone: state.item?.phone,
         image: state.item?.imageFile,
-//        email: state.item?.email,
+        email: state.item?.email,
       ),
       onSuccess: ({message, result}) {
         emit(SingleModel.copy(state
@@ -104,7 +104,7 @@ class StaffDetailScreenBloc extends Cubit<SingleModel<Employee>>
         brandId: state.item?.brand?.id,
         phone: state.item?.phone,
         image: state.item?.imageFile,
-//        email: state.item?.email,
+        email: state.item?.email,
         employeeId: state.item?.id,
         id: state.item?.id,
       ),

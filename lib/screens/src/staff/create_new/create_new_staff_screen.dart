@@ -44,6 +44,8 @@ class _CreateNewStaffScreenState extends KayleeState<CreateNewStaffScreen> {
   final addressController = KayleeFullAddressController();
   final phoneTfController = TextEditingController();
   final phoneFocus = FocusNode();
+  final emailTfController = TextEditingController();
+  final emailFocus = FocusNode();
   final roleController = PickInputController<Role>();
   final brandController = PickInputController<Brand>();
   final imagePickerController = ImagePickerController();
@@ -97,6 +99,8 @@ class _CreateNewStaffScreenState extends KayleeState<CreateNewStaffScreen> {
     lastNameFocus.dispose();
     phoneTfController.dispose();
     phoneFocus.dispose();
+    emailTfController.dispose();
+    emailFocus.dispose();
     super.dispose();
   }
 
@@ -134,6 +138,7 @@ class _CreateNewStaffScreenState extends KayleeState<CreateNewStaffScreen> {
                             ..role = roleController.value
                             ..brand = brandController.value
                             ..phone = phoneTfController.text
+                            ..email = emailTfController.text
                             ..imageFile = imagePickerController.image;
                           bloc.update();
                         },
@@ -157,6 +162,7 @@ class _CreateNewStaffScreenState extends KayleeState<CreateNewStaffScreen> {
                   role: roleController.value,
                   brand: brandController.value,
                   phone: phoneTfController.text,
+                  email: emailTfController.text,
                   imageFile: imagePickerController.image);
               bloc.create();
             }
@@ -177,6 +183,7 @@ class _CreateNewStaffScreenState extends KayleeState<CreateNewStaffScreen> {
               ..initDistrict = state.item?.district
               ..initWard = state.item?.wards;
             phoneTfController.text = state.item?.phone;
+            emailTfController.text = state.item?.email;
             roleController.value = state.item?.role;
             brandController.value = state.item?.brand;
             return Column(
@@ -237,20 +244,23 @@ class _CreateNewStaffScreenState extends KayleeState<CreateNewStaffScreen> {
                   padding: const EdgeInsets.only(bottom: Dimens.px16),
                   child: KayleeTextField.phoneInput(
                     key: UniqueKey(),
-                    textInputAction: TextInputAction.done,
+                    textInputAction: TextInputAction.next,
                     controller: phoneTfController,
                     focusNode: phoneFocus,
+                    nextFocusNode: emailFocus,
                   ),
                 ),
-//                Padding(
-//                  padding: const EdgeInsets.only(bottom: Dimens.px16),
-//                  child: KayleeTextField.normal(
-//                    title: Strings.emailTuyChon,
-//                    hint: Strings.emailTuyChonHint,
-//                    textInputType: TextInputType.emailAddress,
-//                    textInputAction: TextInputAction.next,
-//                  ),
-//                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: Dimens.px16),
+                  child: KayleeTextField.normal(
+                    title: Strings.emailTuyChon,
+                    hint: Strings.emailTuyChonHint,
+                    textInputType: TextInputType.emailAddress,
+                    textInputAction: TextInputAction.next,
+                    focusNode: emailFocus,
+                    controller: emailTfController,
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: Dimens.px16),
                   child: KayleePickerTextField<Role>(
