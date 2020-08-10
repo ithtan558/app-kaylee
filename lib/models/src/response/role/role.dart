@@ -12,8 +12,12 @@ class Role {
   Role({
     this.id,
     this.name,
+    this.code,
+    this.description,
   });
 
   int id;
   String name;
+  String code;
+  String description;
 }
