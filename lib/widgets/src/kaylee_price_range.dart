@@ -97,7 +97,7 @@ class _CustomThumbShape extends SliderComponentShape {
       Size(Dimens.px32, Dimens.px32);
 
   @override
-  void paint(PaintingContext context, Offset center,
+  void paint(PaintingContext context, ui.Offset center,
       {Animation<double> activationAnimation,
       Animation<double> enableAnimation,
       bool isDiscrete,
@@ -105,7 +105,11 @@ class _CustomThumbShape extends SliderComponentShape {
       RenderBox parentBox,
       SliderThemeData sliderTheme,
       ui.TextDirection textDirection,
-      double value}) {}
+      double value,
+      double textScaleFactor,
+      ui.Size sizeWithOverflow}) {
+    // TODO: implement paint
+  }
 }
 
 class KayleePriceRangeController {
