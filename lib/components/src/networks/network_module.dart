@@ -26,6 +26,8 @@ abstract class NetworkModule extends Network {
   EmployeeService provideEmployeeService();
 
   CustomerService provideCustomerService();
+
+  RoleService provideRoleService();
 }
 
 class _NetworkModuleImpl extends NetworkModule {
@@ -57,4 +59,7 @@ class _NetworkModuleImpl extends NetworkModule {
 
   @override
   CustomerService provideCustomerService() => CustomerService(dio);
+
+  @override
+  RoleService provideRoleService() => RoleService(dio);
 }
