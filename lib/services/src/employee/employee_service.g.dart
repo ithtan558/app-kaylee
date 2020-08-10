@@ -133,20 +133,21 @@ class _EmployeeService implements EmployeeService {
   }
 
   @override
-  updateEmployee({firstName,
-    lastName,
-    birthday,
-    hometownCityId,
-    address,
-    cityId,
-    districtId,
-    wardsId,
-    roleId,
-    brandId,
-    phone,
-    image,
-    id,
-    employeeId}) async {
+  updateEmployee(
+      {firstName,
+      lastName,
+      birthday,
+      hometownCityId,
+      address,
+      cityId,
+      districtId,
+      wardsId,
+      roleId,
+      brandId,
+      phone,
+      image,
+      id,
+      employeeId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
