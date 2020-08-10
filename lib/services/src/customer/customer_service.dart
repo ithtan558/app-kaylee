@@ -37,7 +37,7 @@ abstract class CustomerService {
     @Part(name: 'wards_id') int wardsId,
     @Part() String phone,
     @Part() File image,
-//    @Part() String email,
+    @Part() String email,
   });
 
   @POST('customer/{customerId}')
@@ -53,7 +53,7 @@ abstract class CustomerService {
     @Part(name: 'wards_id') int wardsId,
     @Part() String phone,
     @Part() File image,
-//    @Part() String email,
+    @Part() String email,
     @Part() int id,
     @Path() int customerId,
   });
