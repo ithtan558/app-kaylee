@@ -22,7 +22,7 @@ class CreateNewStaffScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<StaffDetailScreenBloc>(
         create: (context) => StaffDetailScreenBloc(
             employeeService: context.network.provideEmployeeService(),
-            employee: context.getArguments<NewStaffScreenData>().employee),
+            employee: context.getArguments<NewStaffScreenData>()?.employee),
         child: CreateNewStaffScreen._(),
       );
 
