@@ -17,7 +17,8 @@ const types = <Type>[
   ProdCate,
   ServiceCate,
   Brand,
-  CustomerType
+  CustomerType,
+  Role,
 ];
 
 abstract class KayleePickerTextFieldView {
@@ -188,26 +189,33 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField>
         builder: (context) {
           return RepositoryProvider.value(
             value: pickerTFModel,
-            child: T == Duration
-                ? _DurationPickerView(
+            child: T == DateTime
+                ? _DatePickerView(
                     intiValue: widget.controller?.value,
                     onSelectedItemChanged: (value) {
                       currentValue = value as T;
                     },
                   )
-                : T == StartTime || T == EndTime
-                    ? _TimePickerView<T>(
+                : T == Duration
+                    ? _DurationPickerView(
                         intiValue: widget.controller?.value,
                         onSelectedItemChanged: (value) {
-                          currentValue = value;
+                          currentValue = value as T;
                         },
                       )
-                    : _PickerView<T>(
-                        intiValue: widget.controller?.value,
-                        onSelectedItemChanged: (value) {
-                          currentValue = value;
-                        },
-                      ),
+                    : T == StartTime || T == EndTime
+                        ? _TimePickerView<T>(
+                            intiValue: widget.controller?.value,
+                            onSelectedItemChanged: (value) {
+                              currentValue = value;
+                            },
+                          )
+                        : _PickerView<T>(
+                            intiValue: widget.controller?.value,
+                            onSelectedItemChanged: (value) {
+                              currentValue = value;
+                            },
+                          ),
           );
         });
   }
@@ -230,9 +238,50 @@ String _getTitle<T>(dynamic item) {
     final minutes = item.isNotNull && item.inMinutes > 0
         ? item.inMinutes - hour * Duration.minutesPerHour
         : 0;
-    return '${hour > 0 ? '$hour giờ ' : ''}${minutes > 0 ? '$minutes phút' : ''}';
+    return '${hour > 0 ? '$hour giờ ' : ''}${minutes > 0
+        ? '$minutes phút'
+        : ''}';
+  } else if (item is DateTime) {
+    final formatter = DateFormat('dd/MM/yyyy');
+    return formatter.format(item);
   }
   return '';
+}
+
+class _DatePickerView extends StatefulWidget {
+  final ValueChanged<DateTime> onSelectedItemChanged;
+  final DateTime intiValue;
+
+  _DatePickerView({this.onSelectedItemChanged, this.intiValue});
+
+  @override
+  _DatePickerViewState createState() => _DatePickerViewState();
+}
+
+class _DatePickerViewState extends BaseState<_DatePickerView> {
+  DateTime initDateTime;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.intiValue.isNull) {
+      initDateTime = DateTime.now();
+      widget.onSelectedItemChanged?.call(initDateTime);
+    } else {
+      initDateTime = widget.intiValue;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoDatePicker(
+      mode: CupertinoDatePickerMode.date,
+      initialDateTime: initDateTime,
+      onDateTimeChanged: (DateTime value) {
+        widget.onSelectedItemChanged?.call(value);
+      },
+    );
+  }
 }
 
 class _DurationPickerView extends StatefulWidget {
@@ -346,6 +395,7 @@ class _PickerViewState<T> extends BaseState<_PickerView> {
       servService: context.network.provideServService(),
       brandService: context.network.provideBrandService(),
       customerService: context.network.provideCustomerService(),
+      roleService: context.network.provideRoleService(),
     );
     if (T == City) {
       bloc.loadCity();
@@ -361,6 +411,8 @@ class _PickerViewState<T> extends BaseState<_PickerView> {
       bloc.loadBrands();
     } else if (T == CustomerType) {
       bloc.loadCustomerType();
+    } else if (T == Role) {
+      bloc.loadRole();
     }
   }
 
@@ -437,6 +489,7 @@ class _PickerViewBloc<T> extends Cubit<SingleModel<List<T>>> {
   ServService servService;
   BrandService brandService;
   CustomerService customerService;
+  RoleService roleService;
 
   _PickerViewBloc({
     this.commonService,
@@ -444,6 +497,7 @@ class _PickerViewBloc<T> extends Cubit<SingleModel<List<T>>> {
     this.servService,
     this.brandService,
     this.customerService,
+    this.roleService,
   }) : super(SingleModel());
 
   void loadCity() {
@@ -570,6 +624,26 @@ class _PickerViewBloc<T> extends Cubit<SingleModel<List<T>>> {
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
       request: customerService.getCustomerType(),
+      onSuccess: ({message, result}) {
+        emit(SingleModel.copy(state
+          ..loading = false
+          ..item = result
+          ..code = null
+          ..error = null));
+      },
+      onFailed: (code, {error}) {
+        emit(SingleModel.copy(state
+          ..loading = false
+          ..code = code
+          ..error = error));
+      },
+    );
+  }
+
+  void loadRole() {
+    emit(SingleModel.copy(state..loading = true));
+    RequestHandler(
+      request: roleService.getRoles(),
       onSuccess: ({message, result}) {
         emit(SingleModel.copy(state
           ..loading = false
