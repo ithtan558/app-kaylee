@@ -67,6 +67,12 @@ class _CreateNewCustomerScreenState
             onPressed: () {
               popScreen();
               switch (state.error.code) {
+                case ErrorCode.FIRST_NAME_CODE:
+                  firstNameFocus.requestFocus();
+                  break;
+                case ErrorCode.LAST_NAME_CODE:
+                  lastNameFocus.requestFocus();
+                  break;
                 case ErrorCode.PHONE_CODE:
                   phoneFocus.requestFocus();
                   break;
