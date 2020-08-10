@@ -17,6 +17,7 @@ Employee _$EmployeeFromJson(Map<String, dynamic> json) {
         : Role.fromJson(json['role'] as Map<String, dynamic>),
     birthday: json['birthday'] as String,
     phone: json['phone'] as String,
+    address: json['address'] as String,
     email: json['email'] as String,
     city: json['city'] == null
         ? null
@@ -33,11 +34,10 @@ Employee _$EmployeeFromJson(Map<String, dynamic> json) {
     brand: json['brand'] == null
         ? null
         : Brand.fromJson(json['brand'] as Map<String, dynamic>),
-  )..address = json['address'] as String;
+  );
 }
 
-Map<String, dynamic> _$EmployeeToJson(Employee instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$EmployeeToJson(Employee instance) => <String, dynamic>{
       'id': instance.id,
       'first_name': instance.firstName,
       'last_name': instance.lastName,

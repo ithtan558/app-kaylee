@@ -22,6 +22,7 @@ class Customer {
     this.imageFile,
     this.birthday,
     this.email,
+    this.address,
     this.city,
     this.district,
     this.wards,

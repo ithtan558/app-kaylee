@@ -22,6 +22,7 @@ class Employee {
       this.role,
       this.birthday,
       this.phone,
+      this.address,
       this.email,
       this.city,
       this.district,

@@ -13,8 +13,9 @@ Customer _$CustomerFromJson(Map<String, dynamic> json) {
     lastName: json['last_name'] as String,
     phone: json['phone'] as String,
     image: json['image'] as String,
-    birthday: json['birthday'] as int,
+    birthday: json['birthday'] as String,
     email: json['email'] as String,
+    address: json['address'] as String,
     city: json['city'] == null
         ? null
         : City.fromJson(json['city'] as Map<String, dynamic>),
@@ -27,11 +28,10 @@ Customer _$CustomerFromJson(Map<String, dynamic> json) {
     hometownCity: json['hometown_city'] == null
         ? null
         : City.fromJson(json['hometown_city'] as Map<String, dynamic>),
-  )..address = json['address'] as String;
+  );
 }
 
-Map<String, dynamic> _$CustomerToJson(Customer instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$CustomerToJson(Customer instance) => <String, dynamic>{
       'id': instance.id,
       'first_name': instance.firstName,
       'last_name': instance.lastName,
