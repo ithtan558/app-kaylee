@@ -48,6 +48,7 @@ class Customer {
     try {
       date = DateTime.parse(birthday);
     } catch (e) {}
+    if (date.isNull || date.year < 0) return null;
     return date;
   }
 
