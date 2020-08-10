@@ -213,7 +213,7 @@ class _CreateNewStaffScreenState extends KayleeState<CreateNewStaffScreen> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: Dimens.px16),
                   child: KayleePickerTextField<DateTime>(
-                    title: Strings.ngaySinh,
+                    title: Strings.ngayThangNamSinh,
                     hint: Strings.chonNgayThangNam,
                     controller: birthDayController,
                   ),
