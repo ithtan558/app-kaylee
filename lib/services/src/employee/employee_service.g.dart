@@ -75,8 +75,7 @@ class _EmployeeService implements EmployeeService {
       roleId,
       brandId,
       phone,
-      image,
-      email}) async {
+      image}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
@@ -119,9 +118,6 @@ class _EmployeeService implements EmployeeService {
           'image',
           MultipartFile.fromFileSync(image.path,
               filename: image.path.split(Platform.pathSeparator).last)));
-    }
-    if (email != null) {
-      _data.fields.add(MapEntry('email', email));
     }
     final Response<Map<String, dynamic>> _result = await _dio.request(
         'employee',
@@ -147,11 +143,10 @@ class _EmployeeService implements EmployeeService {
     wardsId,
     roleId,
     brandId,
-      phone,
-      image,
-      email,
-      id,
-      employeeId}) async {
+    phone,
+    image,
+    id,
+    employeeId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
@@ -194,9 +189,6 @@ class _EmployeeService implements EmployeeService {
           'image',
           MultipartFile.fromFileSync(image.path,
               filename: image.path.split(Platform.pathSeparator).last)));
-    }
-    if (email != null) {
-      _data.fields.add(MapEntry('email', email));
     }
     if (id != null) {
       _data.fields.add(MapEntry('id', id.toString()));

@@ -39,7 +39,7 @@ abstract class EmployeeService {
     @Part(name: 'brand_id') int brandId,
     @Part() String phone,
     @Part() File image,
-    @Part() String email,
+//    @Part() String email,
   });
 
   @POST('employee/{employeeId}')
@@ -57,7 +57,7 @@ abstract class EmployeeService {
     @Part(name: 'brand_id') int brandId,
     @Part() String phone,
     @Part() File image,
-    @Part() String email,
+//    @Part() String email,
     @Part() int id,
     @Path() int employeeId,
   });
