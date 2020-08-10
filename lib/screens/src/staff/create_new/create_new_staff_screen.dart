@@ -169,9 +169,6 @@ class _CreateNewStaffScreenState extends KayleeState<CreateNewStaffScreen> {
             bannerPickerController.existedImageUrl = state.item?.image;
             firstNameTfController.text = state.item?.firstName;
             lastNameTfController.text = state.item?.lastName;
-            print(
-                '[TUNG] ===> state.item?.birthDayInDateTime ${state.item
-                    ?.birthDayInDateTime?.year}');
             birthDayController.value = state.item?.birthDayInDateTime;
             homeTownCityController.value = state.item?.hometownCity;
             addressController
