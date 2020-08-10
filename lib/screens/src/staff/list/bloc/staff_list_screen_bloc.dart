@@ -22,7 +22,7 @@ class StaffListScreenBloc extends Cubit<LoadMoreModel<Employee>>
   void loadEmployees() {
     emit(LoadMoreModel.copy(state..loading = true));
     RequestHandler(
-      request: employeeService.getServices(
+      request: employeeService.getEmployees(
         limit: state.limit,
         page: state.page,
         keyword: _filter?.keyword,
