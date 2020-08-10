@@ -46,7 +46,7 @@ class _CreateNewStaffScreenState extends KayleeState<CreateNewStaffScreen> {
   final phoneFocus = FocusNode();
   final roleController = PickInputController<Role>();
   final brandController = PickInputController<Brand>();
-  final bannerPickerController = ImagePickerController();
+  final imagePickerController = ImagePickerController();
   final birthDayController = PickInputController<DateTime>();
 
   @override
@@ -134,7 +134,7 @@ class _CreateNewStaffScreenState extends KayleeState<CreateNewStaffScreen> {
                             ..role = roleController.value
                             ..brand = brandController.value
                             ..phone = phoneTfController.text
-                            ..imageFile = bannerPickerController.image;
+                            ..imageFile = imagePickerController.image;
                           bloc.update();
                         },
                         isDefaultAction: true,
@@ -157,7 +157,7 @@ class _CreateNewStaffScreenState extends KayleeState<CreateNewStaffScreen> {
                   role: roleController.value,
                   brand: brandController.value,
                   phone: phoneTfController.text,
-                  imageFile: bannerPickerController.image);
+                  imageFile: imagePickerController.image);
               bloc.create();
             }
           },
@@ -166,7 +166,7 @@ class _CreateNewStaffScreenState extends KayleeState<CreateNewStaffScreen> {
         child: BlocBuilder<StaffDetailScreenBloc, SingleModel<Employee>>(
           buildWhen: (previous, current) => !current.loading,
           builder: (context, state) {
-            bannerPickerController.existedImageUrl = state.item?.image;
+            imagePickerController.existedImageUrl = state.item?.image;
             firstNameTfController.text = state.item?.firstName;
             lastNameTfController.text = state.item?.lastName;
             birthDayController.value = state.item?.birthDayInDateTime;
@@ -182,7 +182,7 @@ class _CreateNewStaffScreenState extends KayleeState<CreateNewStaffScreen> {
             return Column(
               children: [
                 KayleeImagePicker(
-                  controller: bannerPickerController,
+                  controller: imagePickerController,
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: Dimens.px16),
