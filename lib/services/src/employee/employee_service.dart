@@ -11,7 +11,7 @@ abstract class EmployeeService {
   factory EmployeeService(Dio dio) = _EmployeeService;
 
   @GET('employee')
-  Future<ResponseModel<Employees>> getServices({
+  Future<ResponseModel<Employees>> getEmployees({
     @Query('page') int page,
     @Query('limit') int limit,
     @Query('keyword') String keyword,
@@ -22,16 +22,16 @@ abstract class EmployeeService {
   });
 
   @GET('employee/{employeeId}')
-  Future<ResponseModel<Employees>> getService({@Path() int employeeId});
+  Future<ResponseModel<Employee>> getEmployee({@Path() int employeeId});
 
   @POST('employee')
   @MultiPart()
-  Future<ResponseModel> newService({
+  Future<ResponseModel> newEmployee({
     @Part(name: 'first_name') String firstName,
     @Part(name: 'last_name') String lastName,
-    @Part() int birthday,
+    @Part() String birthday,
     @Part(name: 'hometown_city_id') int hometownCityId,
-    @Part() int address,
+    @Part() String address,
     @Part(name: 'city_id') int cityId,
     @Part(name: 'district_id') int districtId,
     @Part(name: 'wards_id') int wardsId,
@@ -44,12 +44,12 @@ abstract class EmployeeService {
 
   @POST('employee/{employeeId}')
   @MultiPart()
-  Future<ResponseModel> updateService({
+  Future<ResponseModel> updateEmployee({
     @Part(name: 'first_name') String firstName,
     @Part(name: 'last_name') String lastName,
-    @Part() int birthday,
+    @Part() String birthday,
     @Part(name: 'hometown_city_id') int hometownCityId,
-    @Part() int address,
+    @Part() String address,
     @Part(name: 'city_id') int cityId,
     @Part(name: 'district_id') int districtId,
     @Part(name: 'wards_id') int wardsId,
@@ -63,5 +63,5 @@ abstract class EmployeeService {
   });
 
   @DELETE('employee/delete/{employeeId}')
-  Future<ResponseModel> deleteService({@Path() int employeeId});
+  Future<ResponseModel> deleteEmployee({@Path() int employeeId});
 }

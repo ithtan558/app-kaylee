@@ -16,7 +16,7 @@ class _EmployeeService implements EmployeeService {
   String baseUrl;
 
   @override
-  getServices(
+  getEmployees(
       {page, limit, keyword, sort, brandId, cityId, districtIds}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
@@ -44,7 +44,7 @@ class _EmployeeService implements EmployeeService {
   }
 
   @override
-  getService({employeeId}) async {
+  getEmployee({employeeId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
@@ -58,12 +58,12 @@ class _EmployeeService implements EmployeeService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<Employees>.fromJson(_result.data);
+    final value = ResponseModel<Employee>.fromJson(_result.data);
     return value;
   }
 
   @override
-  newService(
+  newEmployee(
       {firstName,
       lastName,
       birthday,
@@ -88,13 +88,13 @@ class _EmployeeService implements EmployeeService {
       _data.fields.add(MapEntry('last_name', lastName));
     }
     if (birthday != null) {
-      _data.fields.add(MapEntry('birthday', birthday.toString()));
+      _data.fields.add(MapEntry('birthday', birthday));
     }
     if (hometownCityId != null) {
       _data.fields.add(MapEntry('hometown_city_id', hometownCityId.toString()));
     }
     if (address != null) {
-      _data.fields.add(MapEntry('address', address.toString()));
+      _data.fields.add(MapEntry('address', address));
     }
     if (cityId != null) {
       _data.fields.add(MapEntry('city_id', cityId.toString()));
@@ -137,17 +137,16 @@ class _EmployeeService implements EmployeeService {
   }
 
   @override
-  updateService(
-      {firstName,
-      lastName,
-      birthday,
-      hometownCityId,
-      address,
-      cityId,
-      districtId,
-      wardsId,
-      roleId,
-      brandId,
+  updateEmployee({firstName,
+    lastName,
+    birthday,
+    hometownCityId,
+    address,
+    cityId,
+    districtId,
+    wardsId,
+    roleId,
+    brandId,
       phone,
       image,
       email,
@@ -164,13 +163,13 @@ class _EmployeeService implements EmployeeService {
       _data.fields.add(MapEntry('last_name', lastName));
     }
     if (birthday != null) {
-      _data.fields.add(MapEntry('birthday', birthday.toString()));
+      _data.fields.add(MapEntry('birthday', birthday));
     }
     if (hometownCityId != null) {
       _data.fields.add(MapEntry('hometown_city_id', hometownCityId.toString()));
     }
     if (address != null) {
-      _data.fields.add(MapEntry('address', address.toString()));
+      _data.fields.add(MapEntry('address', address));
     }
     if (cityId != null) {
       _data.fields.add(MapEntry('city_id', cityId.toString()));
@@ -216,7 +215,7 @@ class _EmployeeService implements EmployeeService {
   }
 
   @override
-  deleteService({employeeId}) async {
+  deleteEmployee({employeeId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
