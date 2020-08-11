@@ -40,8 +40,8 @@ Map<String, dynamic> _$CustomerToJson(Customer instance) => <String, dynamic>{
       'birthday': instance.birthday,
       'email': instance.email,
       'address': instance.address,
-      'city': instance.city?.toJson(),
-      'district': instance.district?.toJson(),
-      'wards': instance.wards?.toJson(),
-      'hometown_city': instance.hometownCity?.toJson(),
+      'city': instance.city,
+      'district': instance.district,
+      'wards': instance.wards,
+      'hometown_city': instance.hometownCity,
     };

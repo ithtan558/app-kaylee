@@ -32,7 +32,7 @@ Map<String, dynamic> _$ProductToJson(Product instance) => <String, dynamic>{
       'image': instance.image,
       'price': instance.price,
       'description': instance.description,
-      'brands': instance.brands?.map((e) => e?.toJson())?.toList(),
-      'category': instance.category?.toJson(),
+      'brands': instance.brands,
+      'category': instance.category,
       'quantity': instance.quantity,
     };

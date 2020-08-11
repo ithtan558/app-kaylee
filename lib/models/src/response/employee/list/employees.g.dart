@@ -23,5 +23,5 @@ Map<String, dynamic> _$EmployeesToJson(Employees instance) => <String, dynamic>{
       'limit': instance.limit,
       'total': instance.total,
       'pages': instance.pages,
-      'items': instance.items?.map((e) => e?.toJson())?.toList(),
+      'items': instance.items,
     };
