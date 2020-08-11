@@ -78,12 +78,15 @@ class _ResetPassNewPassScreenState extends KayleeState<ResetPassNewPassScreen> {
                   hideLoading();
                   if (state.code.isNotNull &&
                       state.code != ErrorType.UNAUTHORIZED) {
-                    if (state.error.code.isNull)
+                    if (state.error.code.isNull) {
                       showKayleeAlertErrorYesDialog(
                         context: context,
                         error: state.error,
                         onPressed: popScreen,
                       );
+                    } else {
+                      newPassFocus.requestFocus();
+                    }
                   } else if (state.message.isNotNull) {
                     showKayleeAlertMessageYesDialog(
                       context: context,
@@ -103,7 +106,7 @@ class _ResetPassNewPassScreenState extends KayleeState<ResetPassNewPassScreen> {
                   controller: newPassTFController,
                   focusNode: newPassFocus,
                   error:
-                  state.error?.code.isNotNull ? state.error?.message : null,
+                      state.error?.code.isNotNull ? state.error?.message : null,
                 );
               },
             ),
