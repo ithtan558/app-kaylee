@@ -194,9 +194,7 @@ class _EmployeeService implements EmployeeService {
       _data.files.add(MapEntry(
           'image',
           MultipartFile.fromFileSync(image.path,
-              filename: image.path
-                  .split(Platform.pathSeparator)
-                  .last)));
+              filename: image.path.split(Platform.pathSeparator).last)));
     }
     if (email != null) {
       _data.fields.add(MapEntry('email', email));
