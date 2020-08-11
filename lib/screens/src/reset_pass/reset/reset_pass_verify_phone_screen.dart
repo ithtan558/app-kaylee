@@ -2,18 +2,20 @@ import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
-import 'package:kaylee/components/components.dart';
+import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/src/dimens.dart';
 import 'package:kaylee/res/src/strings.dart';
 import 'package:kaylee/screens/src/reset_pass/blocs/send_otp_bloc.dart';
 import 'package:kaylee/screens/src/reset_pass/otp/reset_pass_verify_otp_screeen.dart';
 import 'package:kaylee/screens/src/reset_pass/widgets/contact_us_text.dart';
+import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class ResetPassVerifyPhoneScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<SendOtpBloc>(
-        create: (context) => SendOtpBloc(
-            context.repository<NetworkModule>().provideUserService()),
+    create: (context) => SendOtpBloc(
+          userService: context.network.provideUserService(),
+        ),
         child: ResetPassVerifyPhoneScreen._(),
       );
 
@@ -46,35 +48,38 @@ class _ResetPassVerifyPhoneScreenState
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<SendOtpBloc, dynamic>(
+    return BlocListener<SendOtpBloc, SingleModel<VerifyPhoneResult>>(
       listener: (context, state) {
-        if (state is ErrorState) {
-          hideLoading();
-          showKayleeAlertDialog(
-              context: context,
-              view: KayleeAlertDialogView.error(
-                error: state.error,
-                actions: [
-                  KayleeAlertDialogAction.dongY(
-                    onPressed: () {
-                      popScreen();
-                    },
-                  ),
-                ],
-              ));
-        } else if (state is LoadingState) {
+        if (state.loading) {
           phoneFocus.unfocus();
           showLoading();
-        } else if (state is SuccessSendOtpState) {
+        } else if (!state.loading) {
           hideLoading();
-          pushScreen(PageIntent(
-              screen: ResetPassVerifyOtpScreen,
-              bundle: Bundle(OtpConfirmScreenData(
-                phone: _phoneTFController.text,
-                result: state.result,
-              ))));
-        } else if (state is PhoneErrorSendOtpState) {
-          hideLoading();
+          if (state.code.isNotNull && state.code != ErrorType.UNAUTHORIZED) {
+            showKayleeAlertErrorYesDialog(
+                context: context,
+                error: state.error,
+                onPressed: () {
+                  if (state.error.code == ErrorCode.PHONE_CODE) {
+                    phoneFocus.requestFocus();
+                  }
+                  popScreen();
+                });
+          } else if (state.item.isNotNull) {
+            showKayleeAlertMessageYesDialog(
+              context: context,
+              message: state.message,
+              onPressed: popScreen,
+              onDismiss: () {
+                pushScreen(PageIntent(
+                    screen: ResetPassVerifyOtpScreen,
+                    bundle: Bundle(OtpConfirmScreenData(
+                      phone: _phoneTFController.text,
+                      result: state.item,
+                    ))));
+              },
+            );
+          }
         }
       },
       child: UnFocusWidget(
@@ -91,14 +96,14 @@ class _ResetPassVerifyPhoneScreenState
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                BlocBuilder<SendOtpBloc, dynamic>(builder: (context, state) {
-                  return KayleeTextField.phoneInput(
-                    controller: _phoneTFController,
-                    focusNode: phoneFocus,
-                    error:
-                        state is PhoneErrorSendOtpState ? state.message : null,
-                  );
-                }),
+                BlocBuilder<SendOtpBloc, SingleModel<VerifyPhoneResult>>(
+                    builder: (context, state) {
+                      return KayleeTextField.phoneInput(
+                        controller: _phoneTFController,
+                        focusNode: phoneFocus,
+                        error: state?.error?.message,
+                      );
+                    }),
                 KayLeeRoundedButton.normal(
                   margin: EdgeInsets.only(top: Dimens.px16),
                   onPressed: () {
