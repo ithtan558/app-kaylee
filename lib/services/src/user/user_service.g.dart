@@ -95,10 +95,10 @@ class _UserService implements UserService {
   }
 
   @override
-  updatePass(body) async {
-    ArgumentError.checkNotNull(body, 'body');
+  updatePass({body}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(body?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
