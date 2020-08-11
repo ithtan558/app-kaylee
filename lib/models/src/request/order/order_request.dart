@@ -40,11 +40,13 @@ int _parseSupplierId(Supplier supplier) {
   return supplier?.id;
 }
 
-@JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
+@JsonSerializable(
+  fieldRename: FieldRename.snake,
+  includeIfNull: false,
+  createFactory: false,
+  explicitToJson: true,
+)
 class OrderRequest {
-  factory OrderRequest.fromJson(Map<String, dynamic> json) =>
-      _$OrderRequestFromJson(json);
-
   Map<String, dynamic> toJson() => _$OrderRequestToJson(this);
 
   OrderRequest(
@@ -87,11 +89,9 @@ int _parseCity(City city) {
   return city?.id;
 }
 
-@JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
+@JsonSerializable(
+    fieldRename: FieldRename.snake, includeIfNull: false, createFactory: false)
 class CartSuppInfo {
-  factory CartSuppInfo.fromJson(Map<String, dynamic> json) =>
-      _$CartSuppInfoFromJson(json);
-
   Map<String, dynamic> toJson() => _$CartSuppInfoToJson(this);
 
   CartSuppInfo({
@@ -116,11 +116,9 @@ class CartSuppInfo {
   String note;
 }
 
-@JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
+@JsonSerializable(
+    fieldRename: FieldRename.snake, includeIfNull: false, createFactory: false)
 class CartCustomer {
-  factory CartCustomer.fromJson(Map<String, dynamic> json) =>
-      _$CartCustomerFromJson(json);
-
   Map<String, dynamic> toJson() => _$CartCustomerToJson(this);
 
   CartCustomer({
