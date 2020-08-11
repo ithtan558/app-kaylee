@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/payment_info/bloc/payment_info_screen_bloc.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/src/kaylee_rounded_button.dart';
@@ -53,6 +54,18 @@ class _PaymentInfoScreenState extends KayleeState<PaymentInfoScreen> {
               onPressed: () {
                 popScreen();
               });
+        } else if (state.message.isNotNull) {
+          showKayleeAlertMessageYesDialog(
+            context: context,
+            message: state.message,
+            onPressed: () {
+              popScreen();
+            },
+            onDismiss: () {
+              context.cart.clear();
+              context.popUntilScreen(PageIntent(screen: HomeScreen));
+            },
+          );
         }
       }
     });
