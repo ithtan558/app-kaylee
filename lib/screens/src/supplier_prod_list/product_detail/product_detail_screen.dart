@@ -72,7 +72,7 @@ class _ProductDetailScreenState extends KayleeState<ProductDetailScreen>
       child: BlocBuilder<SupplierProdDetailBloc, SingleModel<Product>>(
         buildWhen: (previous, current) => !current.loading,
         builder: (context, state) {
-          if (state.loading) return Container();
+          if (state.item.isNull) return Container();
           final product = state.item;
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -131,9 +131,7 @@ class _ProductDetailScreenState extends KayleeState<ProductDetailScreen>
                   margin: EdgeInsets.zero,
                   onPressed: () {
                     bloc.add2Cart(
-                        previous: context.cart
-                            .getOrder()
-                            ?.supplier,
+                        previous: context.cart.getOrder()?.supplier,
                         current: data.supplier);
                   },
                 ),
