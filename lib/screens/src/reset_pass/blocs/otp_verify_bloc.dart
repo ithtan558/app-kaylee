@@ -2,69 +2,32 @@ import 'package:anth_package/anth_package.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/services/services.dart';
 
-class OtpVerifyBloc extends BaseBloc {
+class OtpVerifyBloc extends Cubit<SingleModel<VerifyOtpResult>> {
   UserService userService;
 
-  OtpVerifyBloc(this.userService);
-
-  @override
-  Stream mapEventToState(e) async* {
-    if (e is ErrorEvent) {
-      yield* errorState(e);
-    } else if (e is DoVerifyOtpConfirmScrEvent) {
-      yield LoadingState();
-      RequestHandler(
-        request: userService?.verifyOtp(e.body),
-        onSuccess: ({message, result}) {
-          add(SuccessOtpConfirmScrEvent(message, result));
-        },
-        onFailed: (code, {error}) {
-          if (error.code.isNotNull) {
-            add(InputErrorOtpConfirmScrEvent(error.message));
-          } else {
-            errorEvent(code, error: error);
-          }
-        },
-      );
-    } else if (e is SuccessOtpConfirmScrEvent) {
-      yield SuccessOtpConfirmScrState(e.message, e.result);
-    } else if (e is InputErrorOtpConfirmScrEvent) {
-      yield InputErrorOtpConfirmScrState(e.message);
-    }
-  }
+  OtpVerifyBloc({this.userService}) : super(SingleModel());
 
   void verifyOtp({int userId, String otp}) {
-    add(DoVerifyOtpConfirmScrEvent(VerifyOtpBody(
-      userId: userId,
-      otp: otp,
-    )));
+    emit(SingleModel.copy(state..loading = true));
+    RequestHandler(
+      request: userService?.verifyOtp(VerifyOtpBody(
+        userId: userId,
+        otp: otp,
+      )),
+      onSuccess: ({message, result}) {
+        emit(SingleModel.copy(state
+          ..loading = false
+          ..item = result
+          ..message = message
+          ..error = null
+          ..code = null));
+      },
+      onFailed: (code, {error}) {
+        emit(SingleModel.copy(state
+          ..loading = false
+          ..error = error
+          ..code = code));
+      },
+    );
   }
-}
-
-class DoVerifyOtpConfirmScrEvent {
-  VerifyOtpBody body;
-
-  DoVerifyOtpConfirmScrEvent(this.body);
-}
-
-class SuccessOtpConfirmScrEvent {
-  final Message message;
-  final VerifyOtpResult result;
-
-  SuccessOtpConfirmScrEvent(this.message, this.result);
-}
-
-class InputErrorOtpConfirmScrEvent extends MessageErrorEvent {
-  InputErrorOtpConfirmScrEvent(String message) : super(message);
-}
-
-class SuccessOtpConfirmScrState {
-  final Message message;
-  final VerifyOtpResult result;
-
-  SuccessOtpConfirmScrState(this.message, this.result);
-}
-
-class InputErrorOtpConfirmScrState extends MessageErrorState {
-  InputErrorOtpConfirmScrState(String message) : super(message);
 }

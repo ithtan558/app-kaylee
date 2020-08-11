@@ -24,7 +24,7 @@ class ResetPassVerifyOtpScreen extends StatefulWidget {
   static Widget newInstance() => MultiBlocProvider(providers: [
         BlocProvider<OtpVerifyBloc>(
           create: (context) =>
-              OtpVerifyBloc(context.network.provideUserService()),
+              OtpVerifyBloc(userService: context.network.provideUserService()),
         ),
         BlocProvider<SendOtpBloc>(
           create: (context) =>
@@ -64,33 +64,29 @@ class _ResetPassVerifyOtpScreenState
   Widget build(BuildContext context) {
     return MultiBlocListener(
       listeners: [
-        BlocListener<OtpVerifyBloc, dynamic>(
+        BlocListener<OtpVerifyBloc, SingleModel<VerifyOtpResult>>(
           listener: (context, state) {
-            if (state is LoadingState) {
+            if (state.loading) {
               showLoading();
-            } else if (state is ErrorState) {
+            } else if (!state.loading) {
               hideLoading();
-              showKayleeAlertErrorYesDialog(
-                context: context,
-                error: state.error,
-                onPressed: () {
-                  popScreen();
-                },
-              );
-            } else if (state is InputErrorOtpConfirmScrState) {
-              hideLoading();
-            } else if (state is SuccessOtpConfirmScrState) {
-              hideLoading();
+              if (state.code.isNotNull &&
+                  state.code != ErrorType.UNAUTHORIZED) {
+                showKayleeAlertErrorYesDialog(
+                  context: context,
+                  error: state.error,
+                  onPressed: popScreen,
+                );
+              }
+            } else if (state.item.isNotNull) {
               showKayleeAlertMessageYesDialog(
                 context: context,
                 message: state.message,
-                onPressed: () {
-                  popScreen();
-                },
+                onPressed: popScreen,
                 onDismiss: () {
                   pushReplacementScreen(PageIntent(
                       screen: ResetPassNewPassScreen,
-                      bundle: Bundle(NewPassScreenData(result: state.result))));
+                      bundle: Bundle(NewPassScreenData(result: state.item))));
                 },
               );
             }
@@ -104,8 +100,12 @@ class _ResetPassVerifyOtpScreenState
               hideLoading();
               if (state.code.isNotNull &&
                   state.code != ErrorType.UNAUTHORIZED) {
-                showKayleeAlertErrorYesDialog(
-                    context: context, error: state.error, onPressed: popScreen);
+                if (state.error.code.isNull) {
+                  showKayleeAlertErrorYesDialog(
+                      context: context,
+                      error: state.error,
+                      onPressed: popScreen);
+                }
               } else if (state.item.isNotNull) {
                 showKayleeAlertMessageYesDialog(
                   context: context,
@@ -140,15 +140,16 @@ class _ResetPassVerifyOtpScreenState
                 ),
                 Padding(
                     padding: const EdgeInsets.only(top: Dimens.px16),
-                    child: BlocBuilder<OtpVerifyBloc, dynamic>(
+                    child: BlocBuilder<OtpVerifyBloc,
+                        SingleModel<VerifyOtpResult>>(
                       builder: (context, state) {
                         return OtpInputField(
                           onComplete: (code) {
                             otpVerifyBloc.verifyOtp(
                                 userId: data?.result?.userId, otp: code);
                           },
-                          error: state is InputErrorOtpConfirmScrEvent
-                              ? state.message
+                          error: state.error.code.isNotNull
+                              ? state.error?.message
                               : null,
                         );
                       },
