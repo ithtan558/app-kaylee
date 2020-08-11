@@ -225,6 +225,12 @@ class Strings {
   static const String danhMuc = 'Danh mục';
   static const String gia = 'Giá';
   static const String ngayThangNamSinh = 'Ngày tháng năm sinh';
+  static const String thongTinThanhToan = 'Thông tin thanh toán';
+  static const String xacNhanVaDatHang = 'Xác nhận & đặt hàng';
+  static const String tienMat = 'Tiền mặt';
+  static const String theTinDung = 'Thẻ tín dụng';
+  static const String theAtm = 'Thẻ ATM';
+  static const String momo = 'Momo';
 
   Strings._();
 }
