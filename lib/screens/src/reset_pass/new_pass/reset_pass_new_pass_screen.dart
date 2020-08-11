@@ -19,7 +19,7 @@ class NewPassScreenData {
 
 class ResetPassNewPassScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<UpdatePassBloc>(
-    create: (context) => UpdatePassBloc(
+        create: (context) => UpdatePassBloc(
             userService: context.network.provideUserService(),
             resetPassToken: context
                 .getArguments<NewPassScreenData>()
@@ -78,16 +78,12 @@ class _ResetPassNewPassScreenState extends KayleeState<ResetPassNewPassScreen> {
                   hideLoading();
                   if (state.code.isNotNull &&
                       state.code != ErrorType.UNAUTHORIZED) {
-                    showKayleeAlertErrorYesDialog(
-                      context: context,
-                      error: state.error,
-                      onPressed: () {
-                        if (state.error.code == ErrorCode.PASSWORD_CODE) {
-                          newPassFocus.requestFocus();
-                        }
-                        popScreen();
-                      },
-                    );
+                    if (state.error.code.isNull)
+                      showKayleeAlertErrorYesDialog(
+                        context: context,
+                        error: state.error,
+                        onPressed: popScreen,
+                      );
                   } else if (state.message.isNotNull) {
                     showKayleeAlertMessageYesDialog(
                       context: context,
@@ -106,7 +102,8 @@ class _ResetPassNewPassScreenState extends KayleeState<ResetPassNewPassScreen> {
                   textInputAction: TextInputAction.done,
                   controller: newPassTFController,
                   focusNode: newPassFocus,
-                  error: state.error?.message,
+                  error:
+                  state.error?.code.isNotNull ? state.error?.message : null,
                 );
               },
             ),
