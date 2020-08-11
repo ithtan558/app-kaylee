@@ -129,19 +129,20 @@ class _CustomerService implements CustomerService {
   }
 
   @override
-  updateCustomer({firstName,
-    lastName,
-    birthday,
-    hometownCityId,
-    address,
-    cityId,
-    districtId,
-    wardsId,
-    phone,
-    image,
-    email,
-    id,
-    customerId}) async {
+  updateCustomer(
+      {firstName,
+      lastName,
+      birthday,
+      hometownCityId,
+      address,
+      cityId,
+      districtId,
+      wardsId,
+      phone,
+      image,
+      email,
+      id,
+      customerId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
