@@ -72,23 +72,24 @@ class _ResetPassVerifyOtpScreenState
               hideLoading();
               if (state.code.isNotNull &&
                   state.code != ErrorType.UNAUTHORIZED) {
-                showKayleeAlertErrorYesDialog(
+                if (state.error.code.isNull) {
+                  showKayleeAlertErrorYesDialog(
+                      context: context,
+                      error: state.error,
+                      onPressed: popScreen);
+                }
+              } else if (state.item.isNotNull) {
+                showKayleeAlertMessageYesDialog(
                   context: context,
-                  error: state.error,
+                  message: state.message,
                   onPressed: popScreen,
+                  onDismiss: () {
+                    pushReplacementScreen(PageIntent(
+                        screen: ResetPassNewPassScreen,
+                        bundle: Bundle(NewPassScreenData(result: state.item))));
+                  },
                 );
               }
-            } else if (state.item.isNotNull) {
-              showKayleeAlertMessageYesDialog(
-                context: context,
-                message: state.message,
-                onPressed: popScreen,
-                onDismiss: () {
-                  pushReplacementScreen(PageIntent(
-                      screen: ResetPassNewPassScreen,
-                      bundle: Bundle(NewPassScreenData(result: state.item))));
-                },
-              );
             }
           },
         ),
@@ -100,12 +101,8 @@ class _ResetPassVerifyOtpScreenState
               hideLoading();
               if (state.code.isNotNull &&
                   state.code != ErrorType.UNAUTHORIZED) {
-                if (state.error.code.isNull) {
-                  showKayleeAlertErrorYesDialog(
-                      context: context,
-                      error: state.error,
-                      onPressed: popScreen);
-                }
+                showKayleeAlertErrorYesDialog(
+                    context: context, error: state.error, onPressed: popScreen);
               } else if (state.item.isNotNull) {
                 showKayleeAlertMessageYesDialog(
                   context: context,
