@@ -3,9 +3,21 @@ import 'package:flutter/foundation.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/services/services.dart';
 
+abstract class ProductDetailAction {
+  //cart đang empty
+  void onNewAdd2Cart();
+
+  //cart có product cùng supplier
+  void onAdd2Cart();
+
+  //product đang chọn từ supplier khác, khác với supplier của product trong cart
+  void onResetCart();
+}
+
 class SupplierProdDetailBloc extends Cubit<SingleModel<Product>> {
   ProductService productService;
   Product product;
+  ProductDetailAction action;
 
   SupplierProdDetailBloc({@required this.productService, this.product})
       : super(SingleModel());
@@ -29,5 +41,15 @@ class SupplierProdDetailBloc extends Cubit<SingleModel<Product>> {
           ..code = code));
       },
     );
+  }
+
+  void add2Cart({Supplier previous, Supplier current}) {
+    if (previous.isNull) {
+      action?.onNewAdd2Cart();
+    } else if (previous?.id == current?.id) {
+      action?.onAdd2Cart();
+    } else {
+      action?.onResetCart();
+    }
   }
 }

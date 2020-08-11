@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
@@ -29,8 +31,10 @@ class ProductDetailScreen extends StatefulWidget {
   _ProductDetailScreenState createState() => new _ProductDetailScreenState();
 }
 
-class _ProductDetailScreenState extends KayleeState<ProductDetailScreen> {
+class _ProductDetailScreenState extends KayleeState<ProductDetailScreen>
+    implements ProductDetailAction {
   SupplierProdDetailBloc bloc;
+  StreamSubscription sub;
 
   ProductDetailScreenData get data =>
       context.getArguments<ProductDetailScreenData>();
@@ -38,19 +42,24 @@ class _ProductDetailScreenState extends KayleeState<ProductDetailScreen> {
   @override
   void initState() {
     super.initState();
-    bloc = context.bloc<SupplierProdDetailBloc>()
-      ..loadProduct()
-      ..listen((state) {
-        if (state.loading) {
-          showLoading();
-        } else if (!state.loading) {
-          hideLoading();
+    bloc = context.bloc<SupplierProdDetailBloc>()..action = this;
+    sub = bloc.listen((state) {
+      if (state.loading) {
+        showLoading();
+      } else if (!state.loading) {
+        hideLoading();
+        if (state.code.isNotNull && state.code != ErrorType.UNAUTHORIZED) {
+          showKayleeAlertErrorYesDialog(
+              context: context, error: state.error, onPressed: popScreen);
         }
-      });
+      }
+    });
+    bloc.loadProduct();
   }
 
   @override
   void dispose() {
+    sub.cancel();
     super.dispose();
   }
 
@@ -121,12 +130,11 @@ class _ProductDetailScreenState extends KayleeState<ProductDetailScreen> {
                   text: Strings.themVaoGioHang,
                   margin: EdgeInsets.zero,
                   onPressed: () {
-                    context.cart.updateOrderInfo(OrderRequest(
-                      supplier: data?.supplier,
-                    ));
-                    context.cart.addProdToCart(bloc.state.item);
-                    context.bloc<CartBloc>().updateCart();
-                    popScreen();
+                    bloc.add2Cart(
+                        previous: context.cart
+                            .getOrder()
+                            ?.supplier,
+                        current: data.supplier);
                   },
                 ),
               ),
@@ -135,5 +143,45 @@ class _ProductDetailScreenState extends KayleeState<ProductDetailScreen> {
         ),
       ),
     );
+  }
+
+  @override
+  void onAdd2Cart() {
+    context.cart.addProdToCart(bloc.state.item);
+    context.bloc<CartBloc>().updateCart();
+    popScreen();
+  }
+
+  @override
+  void onResetCart() {
+    showKayleeAlertDialog(
+      context: context,
+      view: KayleeAlertDialogView.message(
+        message: Message(
+            content:
+            'Bạn có chắc xóa đơn hàng của nhà cung cấp hiện tại và tạo đơn hàng của nhà cung cấp mới?'),
+        actions: [
+          KayleeAlertDialogAction.dongY(
+            isDefaultAction: true,
+            onPressed: () {
+              context.cart.clear();
+              onNewAdd2Cart();
+              popScreen();
+            },
+          ),
+          KayleeAlertDialogAction.huy(
+            onPressed: popScreen,
+          )
+        ],
+      ),
+    );
+  }
+
+  @override
+  void onNewAdd2Cart() {
+    context.cart.updateOrderInfo(OrderRequest(
+      supplier: data?.supplier,
+    ));
+    onAdd2Cart();
   }
 }
