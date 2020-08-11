@@ -70,7 +70,6 @@ class _ProductDetailScreenState extends KayleeState<ProductDetailScreen>
         title: Strings.chiTietSanPham,
       ),
       child: BlocBuilder<SupplierProdDetailBloc, SingleModel<Product>>(
-        buildWhen: (previous, current) => !current.loading,
         builder: (context, state) {
           if (state.item.isNull) return Container();
           final product = state.item;
