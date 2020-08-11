@@ -9,11 +9,18 @@ import 'package:kaylee/screens/src/supplier_prod_list/product_detail/bloc/bloc.d
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
+class ProductDetailScreenData {
+  Product product;
+  Supplier supplier;
+
+  ProductDetailScreenData({this.product, this.supplier});
+}
+
 class ProductDetailScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<SupplierProdDetailBloc>(
       create: (context) => SupplierProdDetailBloc(
           productService: context.network.provideProductService(),
-          product: context.bundle.args as Product),
+          product: context.getArguments<ProductDetailScreenData>().product),
       child: ProductDetailScreen._());
 
   ProductDetailScreen._();
@@ -24,6 +31,9 @@ class ProductDetailScreen extends StatefulWidget {
 
 class _ProductDetailScreenState extends KayleeState<ProductDetailScreen> {
   SupplierProdDetailBloc bloc;
+
+  ProductDetailScreenData get data =>
+      context.getArguments<ProductDetailScreenData>();
 
   @override
   void initState() {
@@ -111,6 +121,13 @@ class _ProductDetailScreenState extends KayleeState<ProductDetailScreen> {
                   text: Strings.themVaoGioHang,
                   margin: EdgeInsets.zero,
                   onPressed: () {
+                    context.cart.updateOrderInfo(OrderRequest(
+                        supplier: data?.supplier,
+                        cartEmployee:
+                        context.user
+                            .getUserInfo()
+                            ?.userInfo
+                            ?.id));
                     context.cart.addProdToCart(bloc.state.item);
                     context.bloc<CartBloc>().updateCart();
                     popScreen();
