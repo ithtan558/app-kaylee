@@ -9,12 +9,14 @@ part of 'order_request.dart';
 OrderRequest _$OrderRequestFromJson(Map<String, dynamic> json) {
   return OrderRequest(
     cartItems: json['cart_items'] as List,
-    cartEmployee: json['cart_employee'] as int,
+    cartEmployee: json['cart_employee'],
     cartSuppInfo: json['cart_supplier_information'] == null
         ? null
         : CartSuppInfo.fromJson(
             json['cart_supplier_information'] as Map<String, dynamic>),
-    supplierId: json['supplier_id'] as int,
+    supplier: json['supplier_id'] == null
+        ? null
+        : Supplier.fromJson(json['supplier_id'] as Map<String, dynamic>),
     cartCustomer: json['cart_customer'] == null
         ? null
         : CartCustomer.fromJson(json['cart_customer'] as Map<String, dynamic>),
@@ -33,9 +35,9 @@ Map<String, dynamic> _$OrderRequestToJson(OrderRequest instance) {
 
   writeNotNull('cart_items', _parseCartItem(instance.cartItems));
   writeNotNull('cart_supplier_information', instance.cartSuppInfo);
-  writeNotNull('supplier_id', instance.supplierId);
+  writeNotNull('supplier_id', _parseSupplierId(instance.supplier));
   writeNotNull('cart_customer', instance.cartCustomer);
-  val['cart_employee'] = instance.cartEmployee;
+  writeNotNull('cart_employee', _parseCartEmployee(instance.cartEmployee));
   writeNotNull('cart_discount', instance.cartDiscount);
   return val;
 }

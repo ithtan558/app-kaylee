@@ -27,7 +27,20 @@ _parseCartItem(List cartItems) {
   })?.toList();
 }
 
-@JsonSerializable(fieldRename: FieldRename.snake)
+int _parseCartEmployee(dynamic input) {
+  if (input is Customer)
+    return input.id;
+  else if (input is UserInfo)
+    return input.id;
+  else
+    return null;
+}
+
+int _parseSupplierId(Supplier supplier) {
+  return supplier?.id;
+}
+
+@JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
 class OrderRequest {
   factory OrderRequest.fromJson(Map<String, dynamic> json) =>
       _$OrderRequestFromJson(json);
@@ -38,28 +51,27 @@ class OrderRequest {
       {this.cartItems,
       this.cartEmployee,
       this.cartSuppInfo,
-      this.supplierId,
+      this.supplier,
       this.cartCustomer,
       this.cartDiscount});
 
-  @JsonKey(toJson: _parseCartItem, includeIfNull: false)
+  @JsonKey(toJson: _parseCartItem)
   List<dynamic> cartItems;
 
   ///khi order supplier
-  @JsonKey(includeIfNull: false, name: 'cart_supplier_information')
+  @JsonKey(name: 'cart_supplier_information')
   CartSuppInfo cartSuppInfo;
-  @JsonKey(includeIfNull: false)
-  int supplierId;
+  @JsonKey(toJson: _parseSupplierId, name: 'supplier_id')
+  Supplier supplier;
 
   ///khi order từ screens thu ngân
-  @JsonKey(includeIfNull: false)
   CartCustomer cartCustomer;
 
   ///khi quản lý mua, thì nó là [UserInfo.id]
   ///khi order cho customer, thì nó là customerId
-  int cartEmployee;
+  @JsonKey(toJson: _parseCartEmployee, name: 'cart_employee')
+  dynamic cartEmployee;
 
-  @JsonKey(includeIfNull: false)
   int cartDiscount;
 }
 
