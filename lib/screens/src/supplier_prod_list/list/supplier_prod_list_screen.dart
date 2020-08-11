@@ -24,7 +24,7 @@ class SupplierProdListScreen extends StatefulWidget {
         BlocProvider<SupplierProdListBloc>(
           create: (context) => SupplierProdListBloc(
             productService: context.network.provideProductService(),
-            supplierId: context.getArguments<Supplier>().id,
+            supplier: context.getArguments<Supplier>(),
           ),
         ),
       ], child: SupplierProdListScreen._());
@@ -42,6 +42,8 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
   StreamSubscription cateBlocSub;
   StreamSubscription prodsBlocSub;
 
+  Supplier get supplier => context.getArguments<Supplier>();
+
   @override
   void initState() {
     super.initState();
@@ -52,7 +54,7 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
       if (!state.loading) {
         hideLoading();
         if (state.items.isNotNullAndEmpty) {
-          prodsBloc.loadProds(cateId: state.items.first.id);
+          prodsBloc.loadProds(category: state.items.first);
         } else if (state.code.isNotNull &&
             state.code != ErrorType.UNAUTHORIZED) {
           showKayleeAlertErrorYesDialog(
@@ -114,10 +116,7 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
                   child: BlocBuilder<CartBloc, CartState>(
                     builder: (context, state) {
                       final amount =
-                          context.cart
-                              .getOrder()
-                              ?.cartItems
-                              ?.length ?? 0;
+                          context.cart.getOrder()?.cartItems?.length ?? 0;
                       return KayleeText.normalWhite12W400(
                           '${amount <= 9 ? amount : '9+'}');
                     },
@@ -142,9 +141,7 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
                 .elementAt(index)
                 .name,
             onSelected: (value) {
-              prodsBloc.loadProds(cateId: state.items
-                  .elementAt(value)
-                  .id);
+              prodsBloc.loadProds(category: state.items.elementAt(value));
             },
           );
         },
@@ -163,7 +160,11 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
                       name: item.name, image: item.image, price: item.price),
                   onTap: () {
                     pushScreen(PageIntent(
-                        screen: ProductDetailScreen, bundle: Bundle(item)));
+                        screen: ProductDetailScreen,
+                        bundle: Bundle(ProductDetailScreenData(
+                          supplier: supplier,
+                          product: item,
+                        ))));
                   },
                 );
               },
@@ -186,8 +187,7 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
         type: MaterialType.circle,
         child: GestureDetector(
           onTap: () {
-            final id = 'tungpt.95';
-            launch('http://m.me/$id');
+            launch(supplier?.facebook ?? '');
           },
           child: Container(
             height: Dimens.px56,

@@ -7,16 +7,16 @@ import 'package:kaylee/services/services.dart';
 class SupplierProdListBloc extends Cubit<LoadMoreModel<Product>>
     implements LoadMoreInterface {
   final ProductService productService;
-  int supplierId;
-  int cateId;
+  Supplier supplier;
+  ProdCate category;
 
-  SupplierProdListBloc({@required this.productService, this.supplierId})
+  SupplierProdListBloc({@required this.productService, this.supplier})
       : super(LoadMoreModel());
 
-  void loadProds({int cateId}) {
-    if (cateId.isNotNull) {
+  void loadProds({ProdCate category}) {
+    if (category.isNotNull) {
       ///user đổi category
-      this.cateId = cateId;
+      this.category = category;
 
       ///reset page và item về ban đầu
       state
@@ -26,8 +26,8 @@ class SupplierProdListBloc extends Cubit<LoadMoreModel<Product>>
     emit(LoadMoreModel.copy(state..loading = true));
     RequestHandler(
       request: productService.getProducts(
-        supplierId: supplierId,
-        categoryId: this.cateId,
+        supplierId: supplier?.id,
+        categoryId: this.category?.id,
         limit: state.limit,
         page: state.page,
       ),
