@@ -47,74 +47,87 @@ class _ReceiverInfoScreenState extends BaseState<ReceiverInfoScreen> {
     super.dispose();
   }
 
+  void saveInfo() {
+    context.cart.updateOrderInfo(context.cart.getOrder()
+      ..cartSuppInfo = CartSuppInfo(
+        name: nameTfController.text,
+        address: addressController.address,
+        city: addressController.city,
+        district: addressController.district,
+        ward: addressController.ward,
+        phone: phoneTfController.text,
+        note: noteTfController.text,
+      ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return UnFocusWidget(
-      child: KayleeScrollview(
-        appBar: KayleeAppBar(
-          title: Strings.thongTinNguoiNhan,
-        ),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(
-                  top: Dimens.px16, right: Dimens.px16, left: Dimens.px16),
-              child: KayleeTextField.normal(
-                title: Strings.hoVaTen,
-                hint: Strings.nhapHoVaTen,
-                controller: nameTfController,
-                focusNode: nameFocus,
-                textInputAction: TextInputAction.next,
+      child: WillPopScope(
+        onWillPop: () async {
+          saveInfo();
+          return true;
+        },
+        child: KayleeScrollview(
+          appBar: KayleeAppBar(
+            title: Strings.thongTinNguoiNhan,
+            onBack: () {
+              return true;
+            },
+          ),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: Dimens.px16, right: Dimens.px16, left: Dimens.px16),
+                child: KayleeTextField.normal(
+                  title: Strings.hoVaTen,
+                  hint: Strings.nhapHoVaTen,
+                  controller: nameTfController,
+                  focusNode: nameFocus,
+                  textInputAction: TextInputAction.next,
+                ),
               ),
-            ),
-            KayleeFullAddressInput(
-              title: Strings.diaChiHienTai,
-              padding: EdgeInsets.all(Dimens.px16),
-              controller: addressController,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: Dimens.px16, right: Dimens.px16, bottom: Dimens.px16),
-              child: KayleeTextField.phoneInput(
-                title: Strings.soDienThoai,
-                controller: phoneTfController,
-                focusNode: phoneFocus,
-                nextFocusNode: noteFocus,
-                textInputAction: TextInputAction.next,
+              KayleeFullAddressInput(
+                title: Strings.diaChiHienTai,
+                padding: EdgeInsets.all(Dimens.px16),
+                controller: addressController,
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: Dimens.px16, right: Dimens.px16, bottom: Dimens.px16),
-              child: KayleeTextField.multiLine(
-                title: Strings.luuY,
-                hint: Strings.luuYHint,
-                textInputAction: TextInputAction.newline,
-                controller: noteTfController,
-                fieldHeight:
-                (context.screenSize.width - Dimens.px32) / (343 / 233),
-                contentPadding: EdgeInsets.symmetric(vertical: Dimens.px16),
-                maxLength: 200,
-                focusNode: noteFocus,
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: Dimens.px16, right: Dimens.px16, bottom: Dimens.px16),
+                child: KayleeTextField.phoneInput(
+                  title: Strings.soDienThoai,
+                  controller: phoneTfController,
+                  focusNode: phoneFocus,
+                  nextFocusNode: noteFocus,
+                  textInputAction: TextInputAction.next,
+                ),
               ),
-            ),
-          ],
-        ),
-        bottom: KayLeeRoundedButton.normal(
-          text: Strings.tiepTuc,
-          margin: EdgeInsets.all(Dimens.px8),
-          onPressed: () {
-            context.cart.updateOrderInfo(context.cart.getOrder()
-              ..cartSuppInfo = CartSuppInfo(
-                name: nameTfController.text,
-                address: addressController.address,
-                city: addressController.city,
-                district: addressController.district,
-                ward: addressController.ward,
-                phone: phoneTfController.text,
-                note: noteTfController.text,
-              ));
-          },
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: Dimens.px16, right: Dimens.px16, bottom: Dimens.px16),
+                child: KayleeTextField.multiLine(
+                  title: Strings.luuY,
+                  hint: Strings.luuYHint,
+                  textInputAction: TextInputAction.newline,
+                  controller: noteTfController,
+                  fieldHeight:
+                      (context.screenSize.width - Dimens.px32) / (343 / 233),
+                  contentPadding: EdgeInsets.symmetric(vertical: Dimens.px16),
+                  maxLength: 200,
+                  focusNode: noteFocus,
+                ),
+              ),
+            ],
+          ),
+          bottom: KayLeeRoundedButton.normal(
+            text: Strings.tiepTuc,
+            margin: EdgeInsets.all(Dimens.px8),
+            onPressed: () {
+              saveInfo();
+            },
+          ),
         ),
       ),
     );
