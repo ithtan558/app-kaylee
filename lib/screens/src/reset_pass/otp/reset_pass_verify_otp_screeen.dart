@@ -148,7 +148,7 @@ class _ResetPassVerifyOtpScreenState
                             otpVerifyBloc.verifyOtp(
                                 userId: data?.result?.userId, otp: code);
                           },
-                          error: state.error.code.isNotNull
+                          error: state.error?.code.isNotNull
                               ? state.error?.message
                               : null,
                         );
