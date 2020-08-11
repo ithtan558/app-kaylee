@@ -98,12 +98,12 @@ class _ResetPassVerifyPhoneScreenState
               children: [
                 BlocBuilder<SendOtpBloc, SingleModel<VerifyPhoneResult>>(
                     builder: (context, state) {
-                      return KayleeTextField.phoneInput(
-                        controller: _phoneTFController,
-                        focusNode: phoneFocus,
-                        error: state?.error?.message,
-                      );
-                    }),
+                  return KayleeTextField.phoneInput(
+                    controller: _phoneTFController,
+                    focusNode: phoneFocus,
+                    error: state.error?.message,
+                  );
+                }),
                 KayLeeRoundedButton.normal(
                   margin: EdgeInsets.only(top: Dimens.px16),
                   onPressed: () {
