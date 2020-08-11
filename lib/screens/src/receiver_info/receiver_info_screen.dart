@@ -2,6 +2,7 @@ import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
@@ -126,6 +127,7 @@ class _ReceiverInfoScreenState extends BaseState<ReceiverInfoScreen> {
             margin: EdgeInsets.all(Dimens.px8),
             onPressed: () {
               saveInfo();
+              pushScreen(PageIntent(screen: PaymentInfoScreen));
             },
           ),
         ),
