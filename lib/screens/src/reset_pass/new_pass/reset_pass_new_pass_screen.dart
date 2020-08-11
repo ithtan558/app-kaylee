@@ -1,12 +1,14 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/base/kaylee_state.dart';
-import 'package:kaylee/components/components.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/reset_pass/blocs/update_pass_bloc.dart';
 import 'package:kaylee/screens/src/reset_pass/widgets/contact_us_text.dart';
+import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class NewPassScreenData {
@@ -17,8 +19,13 @@ class NewPassScreenData {
 
 class ResetPassNewPassScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<UpdatePassBloc>(
-        create: (context) => UpdatePassBloc(
-            context.repository<NetworkModule>().provideUserService()),
+    create: (context) => UpdatePassBloc(
+            userService: context.network.provideUserService(),
+            resetPassToken: context
+                .getArguments<NewPassScreenData>()
+                .result
+                .tokenResetPassword,
+            userId: context.getArguments<NewPassScreenData>().result.userId),
         child: ResetPassNewPassScreen._(),
       );
 
@@ -31,21 +38,17 @@ class ResetPassNewPassScreen extends StatefulWidget {
 
 class _ResetPassNewPassScreenState extends KayleeState<ResetPassNewPassScreen> {
   UpdatePassBloc updatePassBloc;
-  NewPassScreenData data;
-  final TextEditingController newPassTFController = TextEditingController();
-  FocusNode newPassFocus;
+  final newPassTFController = TextEditingController();
+  final newPassFocus = FocusNode();
 
   @override
   void initState() {
     super.initState();
     updatePassBloc = context.bloc<UpdatePassBloc>();
-    data = context.bundle.args as NewPassScreenData;
-    newPassFocus = FocusNode();
   }
 
   @override
   void dispose() {
-    updatePassBloc.close();
     newPassTFController.dispose();
     newPassFocus.dispose();
     super.dispose();
@@ -67,31 +70,34 @@ class _ResetPassNewPassScreenState extends KayleeState<ResetPassNewPassScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            BlocConsumer<UpdatePassBloc, dynamic>(
+            BlocConsumer<UpdatePassBloc, SingleModel>(
               listener: (context, state) {
-                if (state is ErrorState) {
-                  hideLoading();
-                  showKayleeAlertErrorYesDialog(
-                    context: context,
-                    error: state.error,
-                    onPressed: () {
-                      popScreen();
-                    },
-                  );
-                } else if (state is PassErrorUpdatePassState) {
-                  hideLoading();
-                } else if (state is LoadingState) {
+                if (state.loading) {
                   showLoading();
-                } else if (state is SuccessSendNewPassUpdatePassState) {
+                } else if (!state.loading) {
                   hideLoading();
-                  showKayleeAlertMessageYesDialog(
-                    context: context,
-                    message: state.message,
-                    onPressed: () {
-                      popScreen();
-                    },
-                    onDismiss: () {},
-                  );
+                  if (state.code.isNotNull &&
+                      state.code != ErrorType.UNAUTHORIZED) {
+                    showKayleeAlertErrorYesDialog(
+                      context: context,
+                      error: state.error,
+                      onPressed: () {
+                        if (state.error.code == ErrorCode.PASSWORD_CODE) {
+                          newPassFocus.requestFocus();
+                        }
+                        popScreen();
+                      },
+                    );
+                  } else if (state.message.isNotNull) {
+                    showKayleeAlertMessageYesDialog(
+                      context: context,
+                      message: state.message,
+                      onPressed: () {
+                        context.bloc<AppBloc>().loggedOut();
+                        context.pushToTop(PageIntent(screen: SplashScreen));
+                      },
+                    );
+                  }
                 }
               },
               builder: (context, state) {
@@ -100,8 +106,7 @@ class _ResetPassNewPassScreenState extends KayleeState<ResetPassNewPassScreen> {
                   textInputAction: TextInputAction.done,
                   controller: newPassTFController,
                   focusNode: newPassFocus,
-                  error:
-                      state is PassErrorUpdatePassState ? state.message : null,
+                  error: state.error?.message,
                 );
               },
             ),
@@ -109,10 +114,7 @@ class _ResetPassNewPassScreenState extends KayleeState<ResetPassNewPassScreen> {
               margin: EdgeInsets.only(top: Dimens.px16),
               onPressed: () {
                 newPassFocus.unfocus();
-                updatePassBloc.updatePass(
-                    userId: data?.result?.userId,
-                    resetPassToken: data?.result?.tokenResetPassword,
-                    newPass: newPassTFController.text);
+                updatePassBloc.updatePass(newPass: newPassTFController.text);
               },
               text: Strings.xacNhan,
             ),
