@@ -18,6 +18,7 @@ class ColorsRes {
   static const Color divider = Color(0xffdfdfe3);
   static const Color shadow = Color(0x4c000000);
   static const Color dialogNavigate = Color(0xe5f6f6f6);
+  static const Color radioInActive = Color(0xff78838c);
 
   ColorsRes._();
 }
