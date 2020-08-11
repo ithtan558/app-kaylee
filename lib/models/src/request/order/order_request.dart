@@ -75,6 +75,18 @@ class OrderRequest {
   int cartDiscount;
 }
 
+int _parseWard(Ward ward) {
+  return ward?.id;
+}
+
+int _parseDistrict(District district) {
+  return district?.id;
+}
+
+int _parseCity(City city) {
+  return city?.id;
+}
+
 @JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
 class CartSuppInfo {
   factory CartSuppInfo.fromJson(Map<String, dynamic> json) =>
@@ -85,11 +97,8 @@ class CartSuppInfo {
   CartSuppInfo({
     this.name,
     this.address,
-    this.wardsId,
     this.ward,
-    this.districtId,
     this.district,
-    this.cityId,
     this.city,
     this.phone,
     this.note,
@@ -97,14 +106,11 @@ class CartSuppInfo {
 
   String name;
   String address;
-  int wardsId;
-  @JsonKey(ignore: true)
+  @JsonKey(toJson: _parseWard, name: 'wards_id')
   Ward ward;
-  int districtId;
-  @JsonKey(ignore: true)
+  @JsonKey(toJson: _parseDistrict, name: 'district_id')
   District district;
-  int cityId;
-  @JsonKey(ignore: true)
+  @JsonKey(toJson: _parseCity, name: 'city_id')
   City city;
   String phone;
   String note;
@@ -122,10 +128,10 @@ class CartCustomer {
     this.lastName,
     this.phone,
     this.address,
-    this.hometownCityId,
-    this.cityId,
-    this.districtId,
-    this.wardsId,
+    this.hometownCity,
+    this.city,
+    this.district,
+    this.ward,
     this.note,
   });
 
@@ -133,9 +139,13 @@ class CartCustomer {
   String lastName;
   String phone;
   String address;
-  int hometownCityId;
-  int cityId;
-  int districtId;
-  int wardsId;
+  @JsonKey(toJson: _parseCity, name: 'hometown_city_id')
+  City hometownCity;
+  @JsonKey(toJson: _parseCity, name: 'city_id')
+  City city;
+  @JsonKey(toJson: _parseDistrict, name: 'district_id')
+  District district;
+  @JsonKey(toJson: _parseWard, name: 'wards_id')
+  Ward ward;
   String note;
 }

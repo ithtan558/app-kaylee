@@ -46,9 +46,15 @@ CartSuppInfo _$CartSuppInfoFromJson(Map<String, dynamic> json) {
   return CartSuppInfo(
     name: json['name'] as String,
     address: json['address'] as String,
-    wardsId: json['wards_id'] as int,
-    districtId: json['district_id'] as int,
-    cityId: json['city_id'] as int,
+    ward: json['wards_id'] == null
+        ? null
+        : Ward.fromJson(json['wards_id'] as Map<String, dynamic>),
+    district: json['district_id'] == null
+        ? null
+        : District.fromJson(json['district_id'] as Map<String, dynamic>),
+    city: json['city_id'] == null
+        ? null
+        : City.fromJson(json['city_id'] as Map<String, dynamic>),
     phone: json['phone'] as String,
     note: json['note'] as String,
   );
@@ -65,9 +71,9 @@ Map<String, dynamic> _$CartSuppInfoToJson(CartSuppInfo instance) {
 
   writeNotNull('name', instance.name);
   writeNotNull('address', instance.address);
-  writeNotNull('wards_id', instance.wardsId);
-  writeNotNull('district_id', instance.districtId);
-  writeNotNull('city_id', instance.cityId);
+  writeNotNull('wards_id', _parseWard(instance.ward));
+  writeNotNull('district_id', _parseDistrict(instance.district));
+  writeNotNull('city_id', _parseCity(instance.city));
   writeNotNull('phone', instance.phone);
   writeNotNull('note', instance.note);
   return val;
@@ -79,10 +85,18 @@ CartCustomer _$CartCustomerFromJson(Map<String, dynamic> json) {
     lastName: json['last_name'] as String,
     phone: json['phone'] as String,
     address: json['address'] as String,
-    hometownCityId: json['hometown_city_id'] as int,
-    cityId: json['city_id'] as int,
-    districtId: json['district_id'] as int,
-    wardsId: json['wards_id'] as int,
+    hometownCity: json['hometown_city_id'] == null
+        ? null
+        : City.fromJson(json['hometown_city_id'] as Map<String, dynamic>),
+    city: json['city_id'] == null
+        ? null
+        : City.fromJson(json['city_id'] as Map<String, dynamic>),
+    district: json['district_id'] == null
+        ? null
+        : District.fromJson(json['district_id'] as Map<String, dynamic>),
+    ward: json['wards_id'] == null
+        ? null
+        : Ward.fromJson(json['wards_id'] as Map<String, dynamic>),
     note: json['note'] as String,
   );
 }
@@ -100,10 +114,10 @@ Map<String, dynamic> _$CartCustomerToJson(CartCustomer instance) {
   writeNotNull('last_name', instance.lastName);
   writeNotNull('phone', instance.phone);
   writeNotNull('address', instance.address);
-  writeNotNull('hometown_city_id', instance.hometownCityId);
-  writeNotNull('city_id', instance.cityId);
-  writeNotNull('district_id', instance.districtId);
-  writeNotNull('wards_id', instance.wardsId);
+  writeNotNull('hometown_city_id', _parseCity(instance.hometownCity));
+  writeNotNull('city_id', _parseCity(instance.city));
+  writeNotNull('district_id', _parseDistrict(instance.district));
+  writeNotNull('wards_id', _parseWard(instance.ward));
   writeNotNull('note', instance.note);
   return val;
 }
