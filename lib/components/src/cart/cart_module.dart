@@ -148,5 +148,9 @@ class _CartModuleImpl extends CartModule {
       else if (item is Product) return e.id == item?.id;
       return false;
     });
+
+    if (this._order.cartItems.isEmpty) {
+      this._order = null;
+    }
   }
 }
