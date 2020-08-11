@@ -11,12 +11,9 @@ class PaymentInfoScreenBloc extends Cubit<SingleModel<OrderRequest>> {
         ));
 
   void sendOrder() {
-    final body = state.item.toJson();
-    print('[TUNG] ===> PaymentInfoScreenBloc body $body');
-    return;
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
-      request: orderService?.sendOrder(),
+      request: orderService?.sendOrder(orderRequest: state.item),
       onSuccess: ({message, result}) {
         emit(SingleModel.copy(state
           ..loading = false
