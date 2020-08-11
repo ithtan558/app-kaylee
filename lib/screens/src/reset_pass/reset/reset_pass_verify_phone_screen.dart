@@ -56,15 +56,12 @@ class _ResetPassVerifyPhoneScreenState
         } else if (!state.loading) {
           hideLoading();
           if (state.code.isNotNull && state.code != ErrorType.UNAUTHORIZED) {
-            showKayleeAlertErrorYesDialog(
-                context: context,
-                error: state.error,
-                onPressed: () {
-                  if (state.error.code == ErrorCode.PHONE_CODE) {
-                    phoneFocus.requestFocus();
-                  }
-                  popScreen();
-                });
+            if (state.error?.code.isNull) {
+              showKayleeAlertErrorYesDialog(
+                  context: context, error: state.error, onPressed: popScreen);
+            } else {
+              phoneFocus.requestFocus();
+            }
           } else if (state.item.isNotNull) {
             showKayleeAlertMessageYesDialog(
               context: context,
@@ -101,7 +98,9 @@ class _ResetPassVerifyPhoneScreenState
                   return KayleeTextField.phoneInput(
                     controller: _phoneTFController,
                     focusNode: phoneFocus,
-                    error: state.error?.message,
+                    error: state.error?.code.isNotNull
+                        ? state.error?.message
+                        : null,
                   );
                 }),
                 KayLeeRoundedButton.normal(
