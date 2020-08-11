@@ -150,7 +150,7 @@ class _CartModuleImpl extends CartModule {
     });
 
     if (this._order.cartItems.isEmpty) {
-      this._order = null;
+      clear();
     }
   }
 }
