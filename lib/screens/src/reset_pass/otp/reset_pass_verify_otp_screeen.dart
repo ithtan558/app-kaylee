@@ -2,12 +2,12 @@ import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
-import 'package:kaylee/components/components.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/src/dimens.dart';
 import 'package:kaylee/res/src/strings.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/reset_pass/blocs/send_otp_bloc.dart';
+import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/src/otp_input_field.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
@@ -23,12 +23,12 @@ class OtpConfirmScreenData {
 class ResetPassVerifyOtpScreen extends StatefulWidget {
   static Widget newInstance() => MultiBlocProvider(providers: [
         BlocProvider<OtpVerifyBloc>(
-          create: (context) => OtpVerifyBloc(
-              context.repository<NetworkModule>().provideUserService()),
+          create: (context) =>
+              OtpVerifyBloc(context.network.provideUserService()),
         ),
         BlocProvider<SendOtpBloc>(
-          create: (context) => SendOtpBloc(
-              context.repository<NetworkModule>().provideUserService()),
+          create: (context) =>
+              SendOtpBloc(userService: context.network.provideUserService()),
         ),
       ], child: ResetPassVerifyOtpScreen._());
 
@@ -96,30 +96,23 @@ class _ResetPassVerifyOtpScreenState
             }
           },
         ),
-        BlocListener<SendOtpBloc, dynamic>(
+        BlocListener<SendOtpBloc, SingleModel<VerifyPhoneResult>>(
           listener: (context, state) {
-            if (state is ErrorState) {
-              hideLoading();
-              showKayleeAlertErrorYesDialog(
-                context: context,
-                error: state.error,
-                onPressed: () {
-                  popScreen();
-                },
-              );
-            } else if (state is LoadingState) {
+            if (state.loading) {
               showLoading();
-            } else if (state is SuccessSendOtpState) {
+            } else if (!state.loading) {
               hideLoading();
-              showKayleeAlertMessageYesDialog(
-                context: context,
-                message: state.message,
-                onPressed: () {
-                  popScreen();
-                },
-              );
-            } else if (state is PhoneErrorSendOtpState) {
-              hideLoading();
+              if (state.code.isNotNull &&
+                  state.code != ErrorType.UNAUTHORIZED) {
+                showKayleeAlertErrorYesDialog(
+                    context: context, error: state.error, onPressed: popScreen);
+              } else if (state.item.isNotNull) {
+                showKayleeAlertMessageYesDialog(
+                  context: context,
+                  message: state.message,
+                  onDismiss: popScreen,
+                );
+              }
             }
           },
         ),
