@@ -35,7 +35,7 @@ Map<String, dynamic> _$BrandToJson(Brand instance) => <String, dynamic>{
       'start_time': instance.startTime,
       'end_time': instance.endTime,
       'image': instance.image,
-      'city': instance.city,
-      'district': instance.district,
-      'wards': instance.wards,
+      'city': instance.city?.toJson(),
+      'district': instance.district?.toJson(),
+      'wards': instance.wards?.toJson(),
     };

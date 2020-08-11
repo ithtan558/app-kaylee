@@ -46,8 +46,8 @@ Map<String, dynamic> _$UserInfoToJson(UserInfo instance) => <String, dynamic>{
       'address': instance.address,
       'gender': instance.gender,
       'image': instance.image,
-      'city': instance.city,
-      'district': instance.district,
-      'wards': instance.wards,
+      'city': instance.city?.toJson(),
+      'district': instance.district?.toJson(),
+      'wards': instance.wards?.toJson(),
       'roles': instance.roles,
     };
