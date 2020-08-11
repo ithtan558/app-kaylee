@@ -23,9 +23,7 @@ OrderRequest _$OrderRequestFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$OrderRequestToJson(OrderRequest instance) {
-  final val = <String, dynamic>{
-    'cart_items': instance.cartItems,
-  };
+  final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {
     if (value != null) {
@@ -33,11 +31,12 @@ Map<String, dynamic> _$OrderRequestToJson(OrderRequest instance) {
     }
   }
 
+  writeNotNull('cart_items', _parseCartItem(instance.cartItems));
   writeNotNull('cart_supplier_information', instance.cartSuppInfo);
   writeNotNull('supplier_id', instance.supplierId);
   writeNotNull('cart_customer', instance.cartCustomer);
   val['cart_employee'] = instance.cartEmployee;
-  val['cart_discount'] = instance.cartDiscount;
+  writeNotNull('cart_discount', instance.cartDiscount);
   return val;
 }
 
@@ -53,16 +52,24 @@ CartSuppInfo _$CartSuppInfoFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$CartSuppInfoToJson(CartSuppInfo instance) =>
-    <String, dynamic>{
-      'name': instance.name,
-      'address': instance.address,
-      'wards_id': instance.wardsId,
-      'district_id': instance.districtId,
-      'city_id': instance.cityId,
-      'phone': instance.phone,
-      'note': instance.note,
-    };
+Map<String, dynamic> _$CartSuppInfoToJson(CartSuppInfo instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('name', instance.name);
+  writeNotNull('address', instance.address);
+  writeNotNull('wards_id', instance.wardsId);
+  writeNotNull('district_id', instance.districtId);
+  writeNotNull('city_id', instance.cityId);
+  writeNotNull('phone', instance.phone);
+  writeNotNull('note', instance.note);
+  return val;
+}
 
 CartCustomer _$CartCustomerFromJson(Map<String, dynamic> json) {
   return CartCustomer(
@@ -78,15 +85,23 @@ CartCustomer _$CartCustomerFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$CartCustomerToJson(CartCustomer instance) =>
-    <String, dynamic>{
-      'first_name': instance.firstName,
-      'last_name': instance.lastName,
-      'phone': instance.phone,
-      'address': instance.address,
-      'hometown_city_id': instance.hometownCityId,
-      'city_id': instance.cityId,
-      'district_id': instance.districtId,
-      'wards_id': instance.wardsId,
-      'note': instance.note,
-    };
+Map<String, dynamic> _$CartCustomerToJson(CartCustomer instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('first_name', instance.firstName);
+  writeNotNull('last_name', instance.lastName);
+  writeNotNull('phone', instance.phone);
+  writeNotNull('address', instance.address);
+  writeNotNull('hometown_city_id', instance.hometownCityId);
+  writeNotNull('city_id', instance.cityId);
+  writeNotNull('district_id', instance.districtId);
+  writeNotNull('wards_id', instance.wardsId);
+  writeNotNull('note', instance.note);
+  return val;
+}

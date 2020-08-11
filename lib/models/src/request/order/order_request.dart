@@ -4,6 +4,29 @@ import 'package:kaylee/models/models.dart';
 
 part 'order_request.g.dart';
 
+_parseCartItem(List cartItems) {
+  return cartItems?.map((e) {
+    if (e is Product) {
+      final Map<String, dynamic> prodMap = e.toJson();
+
+      prodMap.removeWhere((key, value) => key != 'quantity');
+      prodMap.putIfAbsent('product_id', () {
+        return e.id;
+      });
+      return prodMap;
+    } else if (e is Service) {
+      final Map<String, dynamic> serviceMap = e.toJson();
+
+      serviceMap.removeWhere((key, value) => key != 'quantity');
+      serviceMap.putIfAbsent('service_id', () {
+        return e.id;
+      });
+
+      return serviceMap;
+    }
+  })?.toList();
+}
+
 @JsonSerializable(fieldRename: FieldRename.snake)
 class OrderRequest {
   factory OrderRequest.fromJson(Map<String, dynamic> json) =>
@@ -19,6 +42,7 @@ class OrderRequest {
       this.cartCustomer,
       this.cartDiscount});
 
+  @JsonKey(toJson: _parseCartItem, includeIfNull: false)
   List<dynamic> cartItems;
 
   ///khi order supplier
@@ -35,10 +59,11 @@ class OrderRequest {
   ///khi order cho customer, thì nó là customerId
   int cartEmployee;
 
+  @JsonKey(includeIfNull: false)
   int cartDiscount;
 }
 
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
 class CartSuppInfo {
   factory CartSuppInfo.fromJson(Map<String, dynamic> json) =>
       _$CartSuppInfoFromJson(json);
@@ -73,7 +98,7 @@ class CartSuppInfo {
   String note;
 }
 
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
 class CartCustomer {
   factory CartCustomer.fromJson(Map<String, dynamic> json) =>
       _$CartCustomerFromJson(json);
