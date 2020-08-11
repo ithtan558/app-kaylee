@@ -13,7 +13,7 @@ import 'package:kaylee/widgets/widgets.dart';
 
 class ResetPassVerifyPhoneScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<SendOtpBloc>(
-    create: (context) => SendOtpBloc(
+        create: (context) => SendOtpBloc(
           userService: context.network.provideUserService(),
         ),
         child: ResetPassVerifyPhoneScreen._(),
@@ -69,8 +69,8 @@ class _ResetPassVerifyPhoneScreenState
             showKayleeAlertMessageYesDialog(
               context: context,
               message: state.message,
-              onPressed: popScreen,
-              onDismiss: () {
+              onPressed: () {
+                popScreen();
                 pushScreen(PageIntent(
                     screen: ResetPassVerifyOtpScreen,
                     bundle: Bundle(OtpConfirmScreenData(
