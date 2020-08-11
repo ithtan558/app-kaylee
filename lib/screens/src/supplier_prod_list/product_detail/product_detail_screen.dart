@@ -122,12 +122,8 @@ class _ProductDetailScreenState extends KayleeState<ProductDetailScreen> {
                   margin: EdgeInsets.zero,
                   onPressed: () {
                     context.cart.updateOrderInfo(OrderRequest(
-                        supplier: data?.supplier,
-                        cartEmployee:
-                        context.user
-                            .getUserInfo()
-                            ?.userInfo
-                            ?.id));
+                      supplier: data?.supplier,
+                    ));
                     context.cart.addProdToCart(bloc.state.item);
                     context.bloc<CartBloc>().updateCart();
                     popScreen();
