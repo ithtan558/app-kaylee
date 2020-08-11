@@ -75,6 +75,8 @@ mixin KayleeRouting on Routing {
         return ReservationListScreen.newInstance();
       case CreateNewReservationScreen:
         return CreateNewReservationScreen.newInstance();
+      case PaymentInfoScreen:
+        return PaymentInfoScreen.newInstance();
       default:
         return SplashScreen.newInstance();
     }
