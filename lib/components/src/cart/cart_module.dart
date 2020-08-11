@@ -39,12 +39,12 @@ class _CartModuleImpl extends CartModule {
       _order = OrderRequest();
     }
     this._order
-      ..cartItems = order?.cartItems
-      ..cartSuppInfo = order?.cartSuppInfo
-      ..supplier = order?.supplier
-      ..cartCustomer = order?.cartCustomer
-      ..cartEmployee = order?.cartEmployee
-      ..cartDiscount = order?.cartDiscount;
+      ..cartItems = order?.cartItems ?? this._order.cartItems
+      ..cartSuppInfo = order?.cartSuppInfo ?? this._order.cartSuppInfo
+      ..cartCustomer = order?.cartCustomer ?? this._order.cartCustomer
+      ..supplier = order?.supplier ?? this._order.supplier
+      ..cartEmployee = order?.cartEmployee ?? this._order.cartEmployee
+      ..cartDiscount = order?.cartDiscount ?? this._order.cartDiscount;
   }
 
   @override
