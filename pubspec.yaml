@@ -34,7 +34,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   # json serializable
-  json_serializable: ^3.3.0
+  json_serializable: ^3.4.0
 
   # Tools to write binaries that run builders(In this project, we use it
   # for json_serializable, retrofit)
