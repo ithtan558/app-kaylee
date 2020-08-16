@@ -280,6 +280,7 @@ class _CreateNewCustomerScreenState
                     textInputAction: TextInputAction.done,
                     controller: emailTfController,
                     focusNode: emailFocus,
+                    key: UniqueKey(),
                   ),
                 ),
                 if (openFrom == CustomerScreenOpenFrom.cashier)
