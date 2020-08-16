@@ -147,7 +147,7 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField>
               ),
             ),
             focused: focused,
-            showFocusBorder: !widget.error.isNullOrEmpty),
+            isError: !widget.error.isNullOrEmpty),
         error: widget.error,
       ),
     );

@@ -509,7 +509,7 @@ class _NormalInputFieldState extends BaseState<NormalInputField> {
           ),
           fieldHeight: widget.fieldHeight,
           bgColor: widget.isStaticTField ? Colors.transparent : null,
-          showFocusBorder: !widget.error.isNullOrEmpty),
+          isError: !widget.error.isNullOrEmpty),
       error: widget.error,
     );
   }
@@ -699,7 +699,7 @@ class _WebsiteInputFieldState extends BaseState<WebsiteInputField> {
             ),
           ],
         ),
-        showFocusBorder: !widget.error.isNullOrEmpty,
+        isError: !widget.error.isNullOrEmpty,
       ),
       error: widget.error,
     );
@@ -864,16 +864,13 @@ class ErrorText extends StatelessWidget {
 
 class TextFieldBorderWrapper extends StatelessWidget {
   final Widget child;
-  final bool showFocusBorder;
+  final bool isError;
   final Color bgColor;
   final double fieldHeight;
   final bool focused;
 
   TextFieldBorderWrapper(this.child,
-      {this.showFocusBorder,
-        this.bgColor,
-        this.fieldHeight,
-        this.focused = false});
+      {this.isError, this.bgColor, this.fieldHeight, this.focused = false});
 
   @override
   Widget build(BuildContext context) {
@@ -884,8 +881,8 @@ class TextFieldBorderWrapper extends StatelessWidget {
         color: bgColor ?? Colors.white,
         borderRadius: BorderRadius.circular(Dimens.px5),
         border: Border.all(
-            width: (showFocusBorder ?? false) ? Dimens.px2 : Dimens.px1,
-            color: (showFocusBorder ?? false)
+            width: (isError ?? false) ? Dimens.px2 : Dimens.px1,
+            color: (isError ?? false)
                 ? ColorsRes.errorBorder
                 : ColorsRes.textFieldBorder),
         boxShadow: [
