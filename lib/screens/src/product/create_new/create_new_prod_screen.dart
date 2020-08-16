@@ -56,21 +56,22 @@ class _CreateNewProdScreenState extends KayleeState<CreateNewProdScreen> {
       } else if (!state.loading) {
         hideLoading();
         if (state.code.isNotNull && state.code != ErrorType.UNAUTHORIZED) {
-          showKayleeAlertErrorYesDialog(
-            context: context,
-            error: state.error,
-            onPressed: () {
-              popScreen();
-              switch (state.error.code) {
-                case ErrorCode.NAME_CODE:
-                  nameFocus.requestFocus();
-                  break;
-                case ErrorCode.PRICE_CODE:
-                  priceFocus.requestFocus();
-                  break;
-              }
-            },
-          );
+          if (state.error.code.isNull) {
+            showKayleeAlertErrorYesDialog(
+              context: context,
+              error: state.error,
+              onPressed: popScreen,
+            );
+          } else {
+            switch (state.error.code) {
+              case ErrorCode.NAME_CODE:
+                nameFocus.requestFocus();
+                break;
+              case ErrorCode.PRICE_CODE:
+                priceFocus.requestFocus();
+                break;
+            }
+          }
         } else if (state.message.isNotNull) {
           showKayleeAlertMessageYesDialog(
               context: context,
@@ -173,6 +174,10 @@ class _CreateNewProdScreenState extends KayleeState<CreateNewProdScreen> {
                     focusNode: nameFocus,
                     textInputAction: TextInputAction.next,
                     nextFocusNode: priceFocus,
+                    error: state.error?.code.isNotNull &&
+                            state.error.code == ErrorCode.NAME_CODE
+                        ? state.error.message
+                        : null,
                   ),
                 ),
                 Padding(
@@ -185,13 +190,16 @@ class _CreateNewProdScreenState extends KayleeState<CreateNewProdScreen> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: Dimens.px16),
                   child: KayleeTextField.price(
-                    title: Strings.giaTien,
-                    hint: '0',
-                    textInputAction: TextInputAction.next,
-                    controller: priceTfController,
-                    focusNode: priceFocus,
-                    nextFocusNode: descriptionFocus,
-                  ),
+                      title: Strings.giaTien,
+                      hint: '0',
+                      textInputAction: TextInputAction.next,
+                      controller: priceTfController,
+                      focusNode: priceFocus,
+                      nextFocusNode: descriptionFocus,
+                      error: state.error?.code.isNotNull &&
+                          state.error.code == ErrorCode.PRICE_CODE
+                          ? state.error.message
+                          : null),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: Dimens.px16),
