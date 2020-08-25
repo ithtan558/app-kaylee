@@ -14,7 +14,7 @@ export 'src/history_detail/history_detail_screen.dart';
 export 'src/home/home_screen.dart';
 export 'src/login/login_screen.dart';
 export 'src/notification/detail/notify_detail_screen.dart';
-export 'src/notification/notification_screen.dart';
+export 'src/notification/list/notification_screen.dart';
 export 'src/order_detail/create_new_order_screen.dart';
 export 'src/payment_info/payment_info_screen.dart';
 export 'src/product/create_new/create_new_prod_screen.dart';

@@ -1,5 +1,6 @@
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/models/models.dart' as models;
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/notification/detail/notify_detail_screen.dart';
 import 'package:kaylee/widgets/widgets.dart';
@@ -8,8 +9,9 @@ class NotifyItem extends StatefulWidget {
   final String index;
   final Function(dynamic item) onDeleted;
   final Function() onTap;
+  final models.Notification notification;
 
-  NotifyItem(this.index, {this.onDeleted, this.onTap});
+  NotifyItem({this.index, this.onDeleted, this.onTap, this.notification});
 
   @override
   _NotifyItemState createState() => new _NotifyItemState();

@@ -1,9 +1,11 @@
+import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/models/models.dart' as models;
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/screens/src/notification/list/bloc/notification_screen_bloc.dart';
 import 'package:kaylee/screens/src/notification/list/notify_item.dart';
 import 'package:kaylee/widgets/widgets.dart';
-import 'package:sticky_headers/sticky_headers.dart';
 
 class NotificationScreen extends StatefulWidget {
   static Widget newInstance() => NotificationScreen._();
@@ -15,9 +17,13 @@ class NotificationScreen extends StatefulWidget {
 }
 
 class _NotificationScreenState extends BaseState<NotificationScreen> {
+  NotificationScreenBloc _bloc;
+
   @override
   void initState() {
     super.initState();
+    _bloc = context.bloc<NotificationScreenBloc>();
+    _bloc.loadNotification();
   }
 
   @override
@@ -25,7 +31,6 @@ class _NotificationScreenState extends BaseState<NotificationScreen> {
     super.dispose();
   }
 
-  final list = [for (int i = 1; i <= 5; i++) '$i'];
 
   @override
   Widget build(BuildContext context) {
@@ -54,27 +59,28 @@ class _NotificationScreenState extends BaseState<NotificationScreen> {
               child: SearchInputField(hint: Strings.timThongBaoTheoTuKhoa),
             ),
             Expanded(
-              child: ListView.builder(
-                itemBuilder: (context, index) {
-                  return StickyHeader(
-                    header: LabelDividerView.monthYear(0),
-                    content: Column(
-                      children: list
-                          .map((e) => NotifyItem(
-                                e,
-                                onTap: () {
-                                },
-                                onDeleted: (item) {
-                                  list.removeWhere(
-                                      (element) => element == item);
-                                  setState(() {});
-                                },
-                              ))
-                          .toList(),
-                    ),
-                  );
-                },
-                itemCount: 10,
+              child: KayleeLoadMoreHandler(
+                controller: _bloc,
+                child: BlocBuilder<NotificationScreenBloc,
+                    LoadMoreModel<models.Notification>>(
+                  builder: (context, state) {
+                    return KayleeListView(
+                      itemBuilder: (context, index) {
+                        final item = state.items.elementAt(index);
+                        return NotifyItem(
+                          notification: item,
+                          onTap: () {},
+                          onDeleted: (item) {
+                            state.items
+                                .removeWhere((element) => element == item);
+                            setState(() {});
+                          },
+                        );
+                      },
+                      itemCount: 10,
+                    );
+                  },
+                ),
               ),
             )
           ],

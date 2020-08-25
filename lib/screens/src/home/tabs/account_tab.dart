@@ -6,7 +6,7 @@ import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/about/about_screen.dart';
 import 'package:kaylee/screens/src/edit_profile/edit_profile_screen.dart';
 import 'package:kaylee/screens/src/guide/guide_screen.dart';
-import 'package:kaylee/screens/src/notification/notification_screen.dart';
+import 'package:kaylee/screens/src/notification/list/notification_screen.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class AccountTab extends StatefulWidget {
