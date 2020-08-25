@@ -32,4 +32,28 @@ class _NotificationService implements NotificationService {
     final value = ResponseModel<NotificationCount>.fromJson(_result.data);
     return value;
   }
+
+  @override
+  getNotifications({page, limit, sort, keyword}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'page': page,
+      r'limit': limit,
+      r'sort': sort,
+      r'keyword': keyword
+    };
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        'notification',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = ResponseModel<Notifications>.fromJson(_result.data);
+    return value;
+  }
 }

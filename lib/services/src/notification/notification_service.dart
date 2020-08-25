@@ -10,4 +10,12 @@ abstract class NotificationService {
 
   @GET('notification/count-not-read')
   Future<ResponseModel<NotificationCount>> getNotificationCount();
+
+  @GET('notification')
+  Future<ResponseModel<Notifications>> getNotifications({
+    @Query('page') int page,
+    @Query('limit') int limit,
+    @Query('sort') String sort,
+    @Query('keyword') String keyword,
+  });
 }

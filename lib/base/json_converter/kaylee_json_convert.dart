@@ -1,7 +1,7 @@
-import 'package:anth_package/anth_package.dart';
+import 'package:anth_package/anth_package.dart' as anthPackage;
 import 'package:kaylee/models/models.dart';
 
-class KayleeJsonConverter extends JsonConverterFactory {
+class KayleeJsonConverter extends anthPackage.JsonConverterFactory {
   @override
   T fromJson<T>(json) {
     if (T == LoginResult) {
@@ -54,6 +54,10 @@ class KayleeJsonConverter extends JsonConverterFactory {
       return Customers.fromJson(json) as T;
     } else if (T == CustomerType) {
       return CustomerType.fromJson(json) as T;
+    } else if (T == Notification) {
+      return Notification.fromJson(json) as T;
+    } else if (T == Notifications) {
+      return Notifications.fromJson(json) as T;
     }
     return json as T;
   }
@@ -109,6 +113,10 @@ class KayleeJsonConverter extends JsonConverterFactory {
     } else if (json is Customers) {
       return json.toJson();
     } else if (json is CustomerType) {
+      return json.toJson();
+    } else if (json is Notification) {
+      return json.toJson();
+    } else if (json is Notifications) {
       return json.toJson();
     } else
       return json;

@@ -22,6 +22,8 @@ export 'src/response/employee/list/employees.dart';
 export 'src/response/error_code.dart';
 export 'src/response/login/login_result.dart';
 export 'src/response/notification/count/notification_count.dart';
+export 'src/response/notification/list/notifications.dart';
+export 'src/response/notification/notification.dart';
 export 'src/response/page_data/page_data.dart';
 export 'src/response/product/list/products.dart';
 export 'src/response/product/product.dart';
