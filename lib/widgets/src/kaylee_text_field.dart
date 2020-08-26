@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +16,23 @@ class KayleeTextField extends StatelessWidget {
 
   KayleeTextField({Key key, this.title, this.textInput}) : super(key: key);
 
+  factory KayleeTextField.search({
+    String hint,
+    SearchInputFieldController controller,
+    FocusNode focusNode,
+    ValueChanged<String> onChanged,
+    ValueChanged<String> onDoneTyping,
+  }) =>
+      KayleeTextField(
+        textInput: TextFieldBorderWrapper(SearchInputField(
+          hint: hint,
+          controller: controller,
+          focusNode: focusNode,
+          onChanged: onChanged,
+          onDoneTyping: onDoneTyping,
+        )),
+      );
+
   /// [fieldHeight] chiều cao của text field
   /// khi set [fieldHeight], để text field expand với chiều cao [fieldHeight], thì [expands] phải set = true
   factory KayleeTextField.normal(
@@ -24,13 +43,13 @@ class KayleeTextField extends StatelessWidget {
           FocusNode focusNode,
           FocusNode nextFocusNode,
           TextEditingController controller,
-          TextInputAction textInputAction,
-          TextInputType textInputType,
-          String error,
-          EdgeInsets contentPadding,
-          bool expands,
-          TextAlign textAlign,
-          int maxLength}) =>
+    TextInputAction textInputAction,
+    TextInputType textInputType,
+    String error,
+    EdgeInsets contentPadding,
+    bool expands,
+    TextAlign textAlign,
+    int maxLength}) =>
       KayleeTextField(
         key: key,
         title: title,
@@ -79,7 +98,7 @@ class KayleeTextField extends StatelessWidget {
     TextInputAction textInputAction,
     String error,
     EdgeInsets contentPadding =
-        const EdgeInsets.symmetric(vertical: Dimens.px16),
+    const EdgeInsets.symmetric(vertical: Dimens.px16),
     int maxLength,
   }) =>
       KayleeTextField.normal(
@@ -99,12 +118,11 @@ class KayleeTextField extends StatelessWidget {
         maxLength: maxLength,
       );
 
-  factory KayleeTextField.selection(
-          {String title,
-          String content,
-          String buttonText,
-          String error,
-          VoidCallback onPress}) =>
+  factory KayleeTextField.selection({String title,
+    String content,
+    String buttonText,
+    String error,
+    VoidCallback onPress}) =>
       KayleeTextField(
         title: title,
         textInput: SelectInputTextField(
@@ -115,15 +133,14 @@ class KayleeTextField extends StatelessWidget {
         ),
       );
 
-  factory KayleeTextField.phoneInput(
-          {Key key,
-          String title,
-          String hint,
-          FocusNode focusNode,
-          FocusNode nextFocusNode,
-          TextEditingController controller,
-          TextInputAction textInputAction,
-          String error}) =>
+  factory KayleeTextField.phoneInput({Key key,
+    String title,
+    String hint,
+    FocusNode focusNode,
+    FocusNode nextFocusNode,
+    TextEditingController controller,
+    TextInputAction textInputAction,
+    String error}) =>
       KayleeTextField(
         key: key,
         title: title ?? Strings.soDienThoai,
@@ -146,14 +163,13 @@ class KayleeTextField extends StatelessWidget {
         ),
       );
 
-  factory KayleeTextField.price(
-          {String title,
-          String hint,
-          String error,
-          TextEditingController controller,
-          TextInputAction textInputAction,
-          FocusNode focusNode,
-          FocusNode nextFocusNode}) =>
+  factory KayleeTextField.price({String title,
+    String hint,
+    String error,
+    TextEditingController controller,
+    TextInputAction textInputAction,
+    FocusNode focusNode,
+    FocusNode nextFocusNode}) =>
       KayleeTextField(
         title: title,
         textInput: PriceInputField(
@@ -212,13 +228,12 @@ class PriceInputField extends StatefulWidget {
   final FocusNode focusNode;
   final FocusNode nextFocusNode;
 
-  PriceInputField(
-      {this.error,
-      this.controller,
-      this.hint,
-      this.textInputAction,
-      this.focusNode,
-      this.nextFocusNode});
+  PriceInputField({this.error,
+    this.controller,
+    this.hint,
+    this.textInputAction,
+    this.focusNode,
+    this.nextFocusNode});
 
   @override
   _PriceInputFieldState createState() => _PriceInputFieldState();
@@ -243,33 +258,33 @@ class _PriceInputFieldState extends BaseState<PriceInputField> {
           children: [
             Expanded(
                 child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
-              child: TextField(
-                keyboardType: TextInputType.number,
-                textInputAction: widget.textInputAction,
-                style: TextStyles.normal16W400,
-                focusNode: widget.focusNode,
-                maxLines: 1,
-                minLines: 1,
-                controller: widget.controller,
-                onSubmitted: (value) {
-                  if (widget.textInputAction == TextInputAction.next) {
-                    if (widget.textInputAction == TextInputAction.next) {
-                      if (widget.nextFocusNode.isNotNull) {
-                        widget.nextFocusNode.requestFocus();
-                      } else
-                        FocusScope.of(context).nextFocus();
-                    }
-                  }
-                },
-                decoration: InputDecoration(
-                    enabledBorder: InputBorder.none,
-                    focusedBorder: InputBorder.none,
-                    border: InputBorder.none,
-                    hintText: widget.hint,
-                    hintStyle: TextStyles.hint16W400),
-              ),
-            )),
+                  padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
+                  child: TextField(
+                    keyboardType: TextInputType.number,
+                    textInputAction: widget.textInputAction,
+                    style: TextStyles.normal16W400,
+                    focusNode: widget.focusNode,
+                    maxLines: 1,
+                    minLines: 1,
+                    controller: widget.controller,
+                    onSubmitted: (value) {
+                      if (widget.textInputAction == TextInputAction.next) {
+                        if (widget.textInputAction == TextInputAction.next) {
+                          if (widget.nextFocusNode.isNotNull) {
+                            widget.nextFocusNode.requestFocus();
+                          } else
+                            FocusScope.of(context).nextFocus();
+                        }
+                      }
+                    },
+                    decoration: InputDecoration(
+                        enabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        border: InputBorder.none,
+                        hintText: widget.hint,
+                        hintStyle: TextStyles.hint16W400),
+                  ),
+                )),
             Container(
               width: Dimens.px1,
               margin: const EdgeInsets.symmetric(vertical: Dimens.px4),
@@ -301,9 +316,13 @@ class SearchInputField extends StatefulWidget {
   final SearchInputFieldController controller;
   final FocusNode focusNode;
   final ValueChanged<String> onChanged;
+  final ValueChanged<String> onDoneTyping;
 
-  SearchInputField(
-      {this.hint, this.controller, this.focusNode, this.onChanged});
+  SearchInputField({this.hint,
+    this.controller,
+    this.focusNode,
+    this.onChanged,
+    this.onDoneTyping});
 
   @override
   _SearchInputFieldState createState() => new _SearchInputFieldState();
@@ -312,13 +331,19 @@ class SearchInputField extends StatefulWidget {
 class _SearchInputFieldState extends BaseState<SearchInputField> {
   final tfController = TextEditingController();
   bool closeIsShowed = false;
+  final typingStreamController = StreamController<String>();
 
   @override
   void initState() {
     super.initState();
-    widget.controller.view = this;
+    widget.controller?.view = this;
     tfController.text = widget.controller?.keyword;
     closeIsShowed = widget?.controller?.keyword.isNotNullAndEmpty;
+    typingStreamController.stream
+        .debounceTime(Duration(milliseconds: 500))
+        .listen((keyword) {
+      widget.onDoneTyping?.call(keyword);
+    });
   }
 
   void clear() {
@@ -334,44 +359,44 @@ class _SearchInputFieldState extends BaseState<SearchInputField> {
   @override
   void dispose() {
     tfController.dispose();
+    typingStreamController.close();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return TextFieldBorderWrapper(
-      TextField(
-        focusNode: widget.focusNode,
-        textInputAction: TextInputAction.search,
-        controller: tfController,
-        textAlignVertical: TextAlignVertical.center,
-        onChanged: (text) {
-          widget?.controller?.keyword = text;
-          widget.onChanged?.call(text);
-          if (text.isNotEmpty && !closeIsShowed) {
-            setState(() {
-              closeIsShowed = !closeIsShowed;
-            });
-          }
-        },
-        decoration: InputDecoration(
-            contentPadding: EdgeInsets.only(
-                top: Dimens.px16, bottom: Dimens.px14, left: Dimens.px16),
-            border: InputBorder.none,
-            focusedBorder: InputBorder.none,
-            errorBorder: InputBorder.none,
-            hintText: widget.hint ?? '',
-            hintStyle: TextStyles.hint16W400,
-            suffixIcon: GestureDetector(
-              onTap: () {
-                clear();
-              },
-              child: Icon(
-                !closeIsShowed ? Icons.search : Icons.close,
-                color: ColorsRes.hintText,
-              ),
-            )),
-      ),
+    return TextField(
+      focusNode: widget.focusNode,
+      textInputAction: TextInputAction.search,
+      controller: tfController,
+      textAlignVertical: TextAlignVertical.center,
+      onChanged: (text) {
+        widget?.controller?.keyword = text;
+        typingStreamController.add(text);
+        widget.onChanged?.call(text);
+        if (text.isNotEmpty && !closeIsShowed) {
+          setState(() {
+            closeIsShowed = !closeIsShowed;
+          });
+        }
+      },
+      decoration: InputDecoration(
+          contentPadding: EdgeInsets.only(
+              top: Dimens.px16, bottom: Dimens.px14, left: Dimens.px16),
+          border: InputBorder.none,
+          focusedBorder: InputBorder.none,
+          errorBorder: InputBorder.none,
+          hintText: widget.hint ?? '',
+          hintStyle: TextStyles.hint16W400,
+          suffixIcon: GestureDetector(
+            onTap: () {
+              clear();
+            },
+            child: Icon(
+              !closeIsShowed ? Icons.search : Icons.close,
+              color: ColorsRes.hintText,
+            ),
+          )),
     );
   }
 }
@@ -392,21 +417,20 @@ class NormalInputField extends StatefulWidget {
   final bool expands;
   final int maxLength;
 
-  NormalInputField(
-      {this.hint,
-      this.initText,
-      this.error,
-      this.focusNode,
-      this.controller,
-      this.nextFocusNode,
-      this.textInputAction = TextInputAction.done,
-      this.textInputType = TextInputType.text,
-      this.isStaticTField = false,
-      this.fieldHeight,
-      this.contentPadding,
-      this.textAlign,
-      this.expands,
-      this.maxLength});
+  NormalInputField({this.hint,
+    this.initText,
+    this.error,
+    this.focusNode,
+    this.controller,
+    this.nextFocusNode,
+    this.textInputAction = TextInputAction.done,
+    this.textInputType = TextInputType.text,
+    this.isStaticTField = false,
+    this.fieldHeight,
+    this.contentPadding,
+    this.textAlign,
+    this.expands,
+    this.maxLength});
 
   @override
   _NormalInputFieldState createState() => _NormalInputFieldState();
@@ -526,19 +550,18 @@ class PhoneInputField extends StatefulWidget {
   final bool isStaticTField;
 
   factory PhoneInputField.static({String initText}) => PhoneInputField(
-        initText: initText,
-        isStaticTField: true,
-      );
+    initText: initText,
+    isStaticTField: true,
+  );
 
-  PhoneInputField(
-      {this.error,
-      this.focusNode,
-      this.controller,
-      this.nextFocusNode,
-      this.textInputAction = TextInputAction.done,
-      this.isStaticTField = false,
-      this.initText,
-      this.hint});
+  PhoneInputField({this.error,
+    this.focusNode,
+    this.controller,
+    this.nextFocusNode,
+    this.textInputAction = TextInputAction.done,
+    this.isStaticTField = false,
+    this.initText,
+    this.hint});
 
   @override
   _PhoneInputFieldState createState() => _PhoneInputFieldState();
@@ -577,12 +600,12 @@ class _PhoneInputFieldState extends State<PhoneInputField> {
                 color: ColorsRes.textFieldBorder,
                 width: Dimens.px1,
                 margin:
-                    const EdgeInsets.only(top: Dimens.px4, bottom: Dimens.px2)),
+                const EdgeInsets.only(top: Dimens.px4, bottom: Dimens.px2)),
             Expanded(
               child: TextField(
                 focusNode: widget.focusNode,
                 controller:
-                    widget.isStaticTField ? tfController : widget.controller,
+                widget.isStaticTField ? tfController : widget.controller,
                 keyboardType: TextInputType.phone,
                 enabled: !widget.isStaticTField,
                 textInputAction: widget.textInputAction,
@@ -712,8 +735,7 @@ class SelectInputTextField extends StatefulWidget {
   final String buttonText;
   final VoidCallback onPress;
 
-  SelectInputTextField(
-      {this.error, this.content, this.onPress, this.buttonText});
+  SelectInputTextField({this.error, this.content, this.onPress, this.buttonText});
 
   @override
   _SelectInputTextFieldState createState() => _SelectInputTextFieldState();
