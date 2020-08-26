@@ -24,20 +24,20 @@ class Notification {
   String title;
   String description;
   String content;
-  @JsonKey(fromJson: _parseStatusFromInt, toJson: _parse2Status)
+  @JsonKey(fromJson: parseStatusFromInt, toJson: parse2Status)
   Status status;
   String createdAt;
   String date;
 }
 
-int _parse2Status(Status status) {
+int parse2Status(Status status) {
   if (status == Status.read)
     return 1;
   else
     return 2;
 }
 
-Status _parseStatusFromInt(int status) {
+Status parseStatusFromInt(int status) {
   if (status == 1)
     return Status.read;
   else
