@@ -22,6 +22,7 @@ class KayleeTextField extends StatelessWidget {
     FocusNode focusNode,
     ValueChanged<String> onChanged,
     ValueChanged<String> onDoneTyping,
+    VoidCallback onClear,
   }) =>
       KayleeTextField(
         textInput: TextFieldBorderWrapper(SearchInputField(
@@ -30,6 +31,7 @@ class KayleeTextField extends StatelessWidget {
           focusNode: focusNode,
           onChanged: onChanged,
           onDoneTyping: onDoneTyping,
+          onClear: onClear,
         )),
       );
 
@@ -43,13 +45,13 @@ class KayleeTextField extends StatelessWidget {
           FocusNode focusNode,
           FocusNode nextFocusNode,
           TextEditingController controller,
-    TextInputAction textInputAction,
-    TextInputType textInputType,
-    String error,
-    EdgeInsets contentPadding,
-    bool expands,
-    TextAlign textAlign,
-    int maxLength}) =>
+          TextInputAction textInputAction,
+          TextInputType textInputType,
+          String error,
+          EdgeInsets contentPadding,
+          bool expands,
+          TextAlign textAlign,
+          int maxLength}) =>
       KayleeTextField(
         key: key,
         title: title,
@@ -317,12 +319,14 @@ class SearchInputField extends StatefulWidget {
   final FocusNode focusNode;
   final ValueChanged<String> onChanged;
   final ValueChanged<String> onDoneTyping;
+  final VoidCallback onClear;
 
   SearchInputField({this.hint,
     this.controller,
     this.focusNode,
     this.onChanged,
-    this.onDoneTyping});
+    this.onDoneTyping,
+    this.onClear});
 
   @override
   _SearchInputFieldState createState() => new _SearchInputFieldState();
@@ -353,6 +357,7 @@ class _SearchInputFieldState extends BaseState<SearchInputField> {
         widget.controller?.keyword = tfController.text;
         closeIsShowed = !closeIsShowed;
       });
+      widget.onClear?.call();
     }
   }
 
@@ -549,10 +554,11 @@ class PhoneInputField extends StatefulWidget {
   final TextInputAction textInputAction;
   final bool isStaticTField;
 
-  factory PhoneInputField.static({String initText}) => PhoneInputField(
-    initText: initText,
-    isStaticTField: true,
-  );
+  factory PhoneInputField.static({String initText}) =>
+      PhoneInputField(
+        initText: initText,
+        isStaticTField: true,
+      );
 
   PhoneInputField({this.error,
     this.focusNode,
@@ -735,7 +741,8 @@ class SelectInputTextField extends StatefulWidget {
   final String buttonText;
   final VoidCallback onPress;
 
-  SelectInputTextField({this.error, this.content, this.onPress, this.buttonText});
+  SelectInputTextField(
+      {this.error, this.content, this.onPress, this.buttonText});
 
   @override
   _SelectInputTextFieldState createState() => _SelectInputTextFieldState();
