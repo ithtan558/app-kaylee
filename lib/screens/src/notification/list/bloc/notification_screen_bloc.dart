@@ -3,11 +3,68 @@ import 'package:kaylee/base/loadmore_interface.dart';
 import 'package:kaylee/models/models.dart' as models;
 import 'package:kaylee/services/services.dart';
 
-class NotificationScreenBloc extends Cubit<LoadMoreModel<models.Notification>>
+class NotificationScreenBloc extends Cubit<SingleModel> {
+  final NotificationService notificationService;
+
+  NotificationScreenBloc({this.notificationService}) : super(SingleModel());
+
+  void deleteAll() {
+    emit(SingleModel.copy(state..loading = true));
+    RequestHandler(
+      request: notificationService.deleteAll(),
+      onSuccess: ({message, result}) {
+        emit(DeleteAllState(loading: false, message: message));
+      },
+      onFailed: (code, {error}) {
+        emit(SingleModel.copy(state
+          ..loading = false
+          ..code = code
+          ..error = error));
+      },
+    );
+  }
+
+  void delete({models.Notification notification}) {
+    emit(SingleModel.copy(state..loading = true));
+    RequestHandler(
+      request: notificationService.delete(id: notification.id),
+      onSuccess: ({message, result}) {
+        emit(DeleteState(
+          loading: false,
+          message: message,
+          item: notification,
+        ));
+      },
+      onFailed: (code, {error}) {
+        emit(SingleModel.copy(state
+          ..loading = false
+          ..code = code
+          ..error = error));
+      },
+    );
+  }
+}
+
+class DeleteAllState extends SingleModel {
+  DeleteAllState({
+    Message message,
+    bool loading,
+  }) : super(loading: loading, message: message);
+}
+
+class DeleteState extends SingleModel<models.Notification> {
+  DeleteState({
+    Message message,
+    models.Notification item,
+    bool loading,
+  }) : super(loading: loading, message: message, item: item);
+}
+
+class NotificationListBloc extends Cubit<LoadMoreModel<models.Notification>>
     implements LoadMoreInterface {
   final NotificationService notificationService;
 
-  NotificationScreenBloc({this.notificationService}) : super(LoadMoreModel());
+  NotificationListBloc({this.notificationService}) : super(LoadMoreModel());
 
   String keyword;
 
@@ -48,6 +105,15 @@ class NotificationScreenBloc extends Cubit<LoadMoreModel<models.Notification>>
           ..code = code));
       },
     );
+  }
+
+  void removeItem({models.Notification notification}) {
+    emit(LoadMoreModel.copy(
+        state..items.removeWhere((e) => e.id == notification.id)));
+  }
+
+  void removeAll() {
+    emit(LoadMoreModel.copy(state..items.clear()));
   }
 
   @override
