@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/models/models.dart' as models;
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/notification/list/bloc/notification_screen_bloc.dart';
 import 'package:kaylee/screens/src/notification/list/notify_item.dart';
 import 'package:kaylee/utils/utils.dart';
@@ -165,7 +166,7 @@ class _NotificationScreenState extends KayleeState<NotificationScreen> {
                             height: Dimens.px1,
                             color: ColorsRes.textFieldBorder,
                             margin:
-                            EdgeInsets.symmetric(horizontal: Dimens.px16),
+                                EdgeInsets.symmetric(horizontal: Dimens.px16),
                           );
                         },
                       );
@@ -178,5 +179,13 @@ class _NotificationScreenState extends KayleeState<NotificationScreen> {
         ),
       ),
     );
+  }
+
+  @override
+  void onPopResult(Type returnScreen, Bundle resultBundle) {
+    if (returnScreen == NotifyDetailScreen &&
+        resultBundle?.args is models.Notification) {
+      _notificationListBloc.removeItem(notification: resultBundle.args);
+    }
   }
 }
