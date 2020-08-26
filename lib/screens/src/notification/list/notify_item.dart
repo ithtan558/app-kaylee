@@ -18,7 +18,7 @@ class NotifyItem extends StatefulWidget {
 }
 
 class _NotifyItemState extends BaseState<NotifyItem> {
-  bool isRead = false;
+  bool get isRead => widget.notification.status == models.Status.read;
 
   @override
   void initState() {
@@ -46,7 +46,7 @@ class _NotifyItemState extends BaseState<NotifyItem> {
           if (widget.onTap.isNotNull) {
             if (!isRead) {
               setState(() {
-                isRead = !isRead;
+                widget.notification.status = models.Status.read;
               });
             }
             widget.onTap();
@@ -55,6 +55,7 @@ class _NotifyItemState extends BaseState<NotifyItem> {
         child: Container(
           padding: const EdgeInsets.all(Dimens.px16),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
@@ -70,7 +71,7 @@ class _NotifyItemState extends BaseState<NotifyItem> {
                       padding: EdgeInsets.only(
                           left: isRead ? 0 : Dimens.px8, right: Dimens.px16),
                       child: KayleeText(
-                        'A Beginners Guide To Chinese Cookery',
+                        widget.notification.title,
                         maxLines: 1,
                         style: isRead
                             ? TextStyles.normal16W400
@@ -78,22 +79,26 @@ class _NotifyItemState extends BaseState<NotifyItem> {
                       ),
                     ),
                   ),
-                  KayleeDateTimeText.dayMonthFromServer(
-                    0,
-                    textAlign: TextAlign.end,
-                    textStyle: isRead
-                        ? TextStyles.normal16W400
-                        : TextStyles.button16W500,
-                  )
+                  isRead
+                      ? KayleeText.normal16W400(
+                          widget.notification.date,
+                          textAlign: TextAlign.end,
+                          maxLines: 1,
+                        )
+                      : KayleeText.normal16W500(
+                          widget.notification.date,
+                          textAlign: TextAlign.end,
+                          maxLines: 1,
+                        )
                 ],
               ),
               Padding(
                 padding: const EdgeInsets.only(top: Dimens.px8),
                 child: KayleeText(
-                  'If you are considering purchasing a new grill, or barbecue, you will be faced with a multitude',
+                  widget.notification.description.plus('\n'),
                   maxLines: 2,
                   style:
-                      isRead ? TextStyles.hint16W400 : TextStyles.button16W400,
+                  isRead ? TextStyles.hint16W400 : TextStyles.button16W400,
                 ),
               )
             ],
