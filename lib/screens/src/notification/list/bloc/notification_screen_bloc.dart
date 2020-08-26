@@ -29,16 +29,18 @@ class NotificationScreenBloc extends Cubit<LoadMoreModel<models.Notification>>
         keyword: this.keyword,
       ),
       onSuccess: ({message, result}) {
-        emit(state
+        final notifications = (result as models.Notifications).items;
+        emit(LoadMoreModel.copy(state
           ..loading = false
+          ..items = notifications
           ..error = null
-          ..code = null);
+          ..code = null));
       },
       onFailed: (code, {error}) {
-        emit(state
+        emit(LoadMoreModel.copy(state
           ..loading = false
           ..error = error
-          ..code = code);
+          ..code = code));
       },
     );
   }
