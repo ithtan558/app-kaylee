@@ -42,7 +42,8 @@ class _NotifyItemState extends BaseState<NotifyItem> {
       child: InkWell(
         onTap: () {
           FocusScope.of(context).unfocus();
-          pushScreen(PageIntent(screen: NotifyDetailScreen));
+          pushScreen(PageIntent(
+              screen: NotifyDetailScreen, bundle: Bundle(widget.notification)));
           if (!isRead) {
             setState(() {
               widget.notification.status = models.Status.read;
