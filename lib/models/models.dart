@@ -2,6 +2,7 @@ library models;
 
 export 'src/filter.dart';
 export 'src/request/login/login_body.dart';
+export 'src/request/notification/notification_status_body.dart';
 export 'src/request/order/order_request.dart';
 export 'src/request/register/register_body.dart';
 export 'src/request/verify_otp/verify_otp_body.dart';
