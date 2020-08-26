@@ -1,4 +1,4 @@
-import 'package:anth_package/anth_package.dart';
+import 'package:anth_package/anth_package.dart' hide Notification;
 import 'package:dio/dio.dart';
 import 'package:kaylee/models/models.dart';
 
@@ -18,4 +18,17 @@ abstract class NotificationService {
     @Query('sort') String sort,
     @Query('keyword') String keyword,
   });
+
+  @DELETE('notification/delete/all')
+  Future<ResponseModel<Notifications>> deleteAll();
+
+  @DELETE('notification/delete/{id}')
+  Future<ResponseModel> delete({@Path() int id});
+
+  @GET('notification/{id}')
+  Future<ResponseModel<Notification>> getDetail(
+      {@Path() int id, @Query('id') int notificationId});
+
+  @POST('notification/update-status')
+  Future<ResponseModel> updateStatus({@Body() NotificationStatusBody body});
 }
