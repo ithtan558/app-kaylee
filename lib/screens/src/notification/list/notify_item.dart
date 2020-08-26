@@ -7,7 +7,7 @@ import 'package:kaylee/widgets/widgets.dart';
 
 class NotifyItem extends StatefulWidget {
   final String index;
-  final Function(dynamic item) onDeleted;
+  final Function() onDeleted;
   final Function() onTap;
   final models.Notification notification;
 
@@ -33,24 +33,22 @@ class _NotifyItemState extends BaseState<NotifyItem> {
   @override
   Widget build(BuildContext context) {
     return KayleeDismissible(
-      key: ValueKey(widget.index),
+      key: ValueKey(widget.notification),
       onDismissed: (_) {
         if (widget.onDeleted != null) {
-          widget.onDeleted(widget.index);
+          widget.onDeleted?.call();
         }
       },
       child: InkWell(
         onTap: () {
           FocusScope.of(context).unfocus();
           pushScreen(PageIntent(screen: NotifyDetailScreen));
-          if (widget.onTap.isNotNull) {
-            if (!isRead) {
-              setState(() {
-                widget.notification.status = models.Status.read;
-              });
-            }
-            widget.onTap();
+          if (!isRead) {
+            setState(() {
+              widget.notification.status = models.Status.read;
+            });
           }
+          widget.onTap?.call();
         },
         child: Container(
           padding: const EdgeInsets.all(Dimens.px16),
