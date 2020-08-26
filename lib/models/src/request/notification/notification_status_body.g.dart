@@ -9,8 +9,8 @@ part of 'notification_status_body.dart';
 NotificationStatusBody _$NotificationStatusBodyFromJson(
     Map<String, dynamic> json) {
   return NotificationStatusBody(
-    json['id'] as int,
-    json['status'] as int,
+    id: json['id'] as int,
+    status: parseStatusFromInt(json['status'] as int),
   );
 }
 
@@ -18,5 +18,5 @@ Map<String, dynamic> _$NotificationStatusBodyToJson(
         NotificationStatusBody instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'status': instance.status,
+      'status': parse2Status(instance.status),
     };
