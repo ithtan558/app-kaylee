@@ -98,7 +98,7 @@ class _NotifyItemState extends BaseState<NotifyItem> {
                   widget.notification.description.plus('\n'),
                   maxLines: 2,
                   style:
-                  isRead ? TextStyles.hint16W400 : TextStyles.button16W400,
+                      isRead ? TextStyles.hint16W400 : TextStyles.button16W400,
                 ),
               )
             ],
