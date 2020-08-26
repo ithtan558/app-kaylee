@@ -12,8 +12,13 @@ class NotificationScreenBloc extends Cubit<LoadMoreModel<models.Notification>>
   String keyword;
 
   void search({String keyword}) {
+    state.items = null;
     this.keyword = keyword;
     loadNotification();
+  }
+
+  void clearSearch() {
+    search(keyword: null);
   }
 
   void refresh() {
