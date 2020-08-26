@@ -100,7 +100,7 @@ class KayleeTextField extends StatelessWidget {
     TextInputAction textInputAction,
     String error,
     EdgeInsets contentPadding =
-    const EdgeInsets.symmetric(vertical: Dimens.px16),
+        const EdgeInsets.symmetric(vertical: Dimens.px16),
     int maxLength,
   }) =>
       KayleeTextField.normal(
@@ -380,6 +380,10 @@ class _SearchInputFieldState extends BaseState<SearchInputField> {
         typingStreamController.add(text);
         widget.onChanged?.call(text);
         if (text.isNotEmpty && !closeIsShowed) {
+          setState(() {
+            closeIsShowed = !closeIsShowed;
+          });
+        } else if (text.isEmpty) {
           setState(() {
             closeIsShowed = !closeIsShowed;
           });
