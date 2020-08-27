@@ -72,7 +72,7 @@ class _FilterScreenState<T extends Filter> extends BaseState<FilterScreen<T>> {
             Padding(
               padding: const EdgeInsets.only(
                   left: Dimens.px16, right: Dimens.px16, top: Dimens.px8),
-              child: SearchInputField(
+              child: KayleeTextField.search(
                 hint: Strings.timKiemTheoTuKhoa,
                 focusNode: searchFocus,
                 controller: searchTfController,
