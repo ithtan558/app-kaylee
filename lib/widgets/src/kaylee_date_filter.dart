@@ -5,7 +5,17 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/src/kaylee_flat_button.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
+class KayleeDateFilterController {
+  DateTime value;
+}
+
 class KayleeDateFilter extends StatefulWidget {
+  final ValueChanged<DateTime> onChanged;
+  final KayleeDateFilterController controller;
+
+  KayleeDateFilter({this.onChanged, @required this.controller})
+      : assert(controller.isNotNull);
+
   @override
   _KayleeDateFilterState createState() => new _KayleeDateFilterState();
 }
@@ -14,11 +24,16 @@ class _KayleeDateFilterState extends BaseState<KayleeDateFilter> {
   PageController pageController;
   DateTime selectedDate;
 
+  int get currentDay => pageController.page.toInt() + 1;
+
   @override
   void initState() {
     super.initState();
-    pageController = PageController(keepPage: false, viewportFraction: 1 / 7);
-    selectedDate = DateTime.now();
+    widget.controller.value = DateTime.now();
+    pageController = PageController(
+        keepPage: false,
+        viewportFraction: 1 / 7,
+        initialPage: widget.controller.value.day - 1);
   }
 
   @override
@@ -40,48 +55,38 @@ class _KayleeDateFilterState extends BaseState<KayleeDateFilter> {
           child: Column(
             children: [
               KayleeDateFilterButton(
-                selectedDate: selectedDate,
+                selectedDate: widget.controller.value,
                 onTap: () async {
-                  await showModalBottomSheet(
+                  await showPickerPopup(
                       context: context,
-                      backgroundColor: Colors.transparent,
-                      enableDrag: false,
-                      barrierColor: ColorsRes.shadow.withOpacity(0.1),
+                      onDone: () {
+                        if (selectedDate.isNotNull) {
+                          widget.controller.value = selectedDate;
+                          selectedDate = null;
+                          setState(() {});
+                        }
+                        widget.onChanged?.call(widget.controller.value);
+                      },
+                      onDismiss: () {
+                        selectedDate = null;
+                        setState(() {});
+                      },
                       builder: (context) {
-                        return Container(
-                          height: 215.0 + Dimens.px44,
-                          decoration: BoxDecoration(
-                            color: ColorsRes.dialogNavigate,
-                            boxShadow: [
-                              BoxShadow(
-                                  color: ColorsRes.shadow,
-                                  offset: Offset(0, -0.5),
-                                  blurRadius: 0,
-                                  spreadRadius: 0)
-                            ],
-                          ),
-                          child: Column(
-                            children: <Widget>[
-                              Container(
-                                  height: Dimens.px44,
-                                  alignment: Alignment.centerRight),
-                              Container(
-                                height: 215.0,
-                                child: KayleeDatePicker(
-                                  maximumDate: DateTime(DateTime.now().year,
-                                      DateTime.now().month, 1),
-                                  initialDateTime: selectedDate,
-                                  mode: KayleeDatePickerMode.monthYear,
-                                  onDateTimeChanged: (changed) {
-                                    setState(() {
-                                      selectedDate = changed;
-                                    });
-                                  },
-                                  backgroundColor: Colors.white,
-                                ),
-                              ),
-                            ],
-                          ),
+                        return KayleeDatePicker(
+                          maximumDate: DateTime(
+                              DateTime.now().year,
+                              DateTime.now().month,
+                              findMaxDate(DateTime.now())),
+                          initialDateTime: widget.controller.value,
+                          mode: KayleeDatePickerMode.monthYear,
+                          onDateTimeChanged: (changed) {
+                            int maxDay = findMaxDate(changed);
+                            final current =
+                                currentDay > maxDay ? maxDay : currentDay;
+                            selectedDate =
+                                DateTime(changed.year, changed.month, current);
+                          },
+                          backgroundColor: Colors.white,
                         );
                       });
                   return true;
@@ -127,6 +132,13 @@ class _KayleeDateFilterState extends BaseState<KayleeDateFilter> {
               margin: const EdgeInsets.symmetric(horizontal: Dimens.px16),
               height: Dimens.px48,
               child: PageView.builder(
+                onPageChanged: (index) {
+                  final date = widget.controller.value;
+                  widget.controller.value =
+                      DateTime(date.year, date.month, index + 1);
+                  widget.onChanged?.call(widget.controller.value);
+                },
+                physics: BouncingScrollPhysics(),
                 itemBuilder: (context, index) {
                   return Container(
                     alignment: Alignment.center,
@@ -137,7 +149,7 @@ class _KayleeDateFilterState extends BaseState<KayleeDateFilter> {
                   );
                 },
                 dragStartBehavior: DragStartBehavior.start,
-                itemCount: findMaxDate(selectedDate),
+                itemCount: findMaxDate(widget.controller.value),
                 scrollDirection: Axis.horizontal,
                 controller: pageController,
               ),
