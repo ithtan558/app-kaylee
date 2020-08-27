@@ -633,7 +633,6 @@ class _KayleeDatePickerMonthYearState extends State<KayleeDatePicker> {
   Alignment alignCenterRight;
 
   // The currently selected values of the picker.
-  int selectedDay;
   int selectedMonth;
   int selectedYear;
 
@@ -656,7 +655,6 @@ class _KayleeDatePickerMonthYearState extends State<KayleeDatePicker> {
   @override
   void initState() {
     super.initState();
-    selectedDay = widget.initialDateTime.day;
     selectedMonth = widget.initialDateTime.month;
     selectedYear = widget.initialDateTime.year;
 
@@ -733,9 +731,7 @@ class _KayleeDatePickerMonthYearState extends State<KayleeDatePicker> {
         squeeze: _kSqueeze,
         onSelectedItemChanged: (int index) {
           selectedMonth = index + 1;
-          if (_isCurrentDateValid)
-            widget.onDateTimeChanged(
-                DateTime(selectedYear, selectedMonth, selectedDay));
+          widget.onDateTimeChanged(DateTime(selectedYear, selectedMonth, 1));
         },
         children: List<Widget>.generate(12, (int index) {
           final int month = index + 1;
@@ -781,9 +777,7 @@ class _KayleeDatePickerMonthYearState extends State<KayleeDatePicker> {
         backgroundColor: widget.backgroundColor,
         onSelectedItemChanged: (int index) {
           selectedYear = index;
-          if (_isCurrentDateValid)
-            widget.onDateTimeChanged(
-                DateTime(selectedYear, selectedMonth, selectedDay));
+          widget.onDateTimeChanged(DateTime(selectedYear, selectedMonth, 1));
         },
         itemBuilder: (BuildContext context, int year) {
           if (year < widget.minimumYear) return null;
@@ -808,20 +802,6 @@ class _KayleeDatePickerMonthYearState extends State<KayleeDatePicker> {
     );
   }
 
-  bool get _isCurrentDateValid {
-    // The current date selection represents a range [minSelectedData, maxSelectDate].
-    final DateTime minSelectedDate =
-        DateTime(selectedYear, selectedMonth, selectedDay);
-    final DateTime maxSelectedDate =
-        DateTime(selectedYear, selectedMonth, selectedDay + 1);
-
-    final bool minCheck = widget.minimumDate?.isBefore(maxSelectedDate) ?? true;
-    final bool maxCheck =
-        widget.maximumDate?.isBefore(minSelectedDate) ?? false;
-
-    return minCheck && !maxCheck && minSelectedDate.day == selectedDay;
-  }
-
   // One or more pickers have just stopped scrolling.
   void _pickerDidStopScrolling() {
     // Call setState to update the greyed out days/months/years, as the currently
@@ -834,10 +814,8 @@ class _KayleeDatePickerMonthYearState extends State<KayleeDatePicker> {
 
     // Whenever scrolling lands on an invalid entry, the picker
     // automatically scrolls to a valid one.
-    final DateTime minSelectDate =
-        DateTime(selectedYear, selectedMonth, selectedDay);
-    final DateTime maxSelectDate =
-        DateTime(selectedYear, selectedMonth, selectedDay + 1);
+    final DateTime minSelectDate = DateTime(selectedYear, selectedMonth, 1);
+    final DateTime maxSelectDate = DateTime(selectedYear, selectedMonth, 1 + 1);
 
     final bool minCheck = widget.minimumDate?.isBefore(maxSelectDate) ?? true;
     final bool maxCheck = widget.maximumDate?.isBefore(minSelectDate) ?? false;
@@ -852,7 +830,7 @@ class _KayleeDatePickerMonthYearState extends State<KayleeDatePicker> {
 
     // Some months have less days (e.g. February). Go to the last day of that month
     // if the selectedDay exceeds the maximum.
-    if (minSelectDate.day != selectedDay) {
+    if (minSelectDate.day != 1) {
       final DateTime lastDay = _lastDayInMonth(selectedYear, selectedMonth);
       _scrollToDate(lastDay);
     }
