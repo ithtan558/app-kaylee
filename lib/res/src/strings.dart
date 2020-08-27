@@ -231,6 +231,8 @@ class Strings {
   static const String theTinDung = 'Thẻ tín dụng';
   static const String theAtm = 'Thẻ ATM';
   static const String momo = 'Momo';
+  static const String caiDat = 'Cài đặt';
+  static const String chiTietHoaHong = 'Chi tiết hoa hồng';
 
   Strings._();
 }
