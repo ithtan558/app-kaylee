@@ -5,6 +5,7 @@ import 'package:kaylee/base/kaylee_filter_interface.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/brand/list/bloc/brand_list_bloc.dart';
+import 'package:kaylee/screens/src/commission/list/bloc/bloc.dart';
 import 'package:kaylee/screens/src/customer/list/bloc/customer_list_screen_bloc.dart';
 import 'package:kaylee/screens/src/product/list/bloc/prod_list_bloc.dart';
 import 'package:kaylee/screens/src/service/list/bloc/service_list_bloc.dart';
@@ -134,6 +135,10 @@ class _FilterScreenState<T extends Filter> extends BaseState<FilterScreen<T>> {
         return ProductFilterView(
           controller: controller as KayleeFilterInterface<ProductFilter>,
         );
+      case CommissionFilter:
+        return CommissionFilterView(
+          controller: controller as KayleeFilterInterface<CommissionFilter>,
+        );
       default:
         return Container();
     }
@@ -173,15 +178,9 @@ class _BrandFilterViewState extends BaseState<BrandFilterView>
   @override
   void initState() {
     super.initState();
-    context
-        .repository<_FilterScreenState>()
-        .action = this;
-    cityController.value = widget.controller
-        ?.getFilter()
-        ?.city;
-    districtController.value = widget.controller
-        ?.getFilter()
-        ?.district;
+    context.repository<_FilterScreenState>().action = this;
+    cityController.value = widget.controller?.getFilter()?.city;
+    districtController.value = widget.controller?.getFilter()?.district;
   }
 
   @override
@@ -596,6 +595,100 @@ class _ProductFilterViewState extends BaseState<ProductFilterView>
           ),
         ),
       ],
+    );
+  }
+}
+
+class CommissionFilterView extends StatefulWidget {
+  final KayleeFilterInterface<CommissionFilter> controller;
+
+  CommissionFilterView({this.controller});
+
+  @override
+  _CommissionFilterViewState createState() => _CommissionFilterViewState();
+}
+
+class _CommissionFilterViewState extends BaseState<CommissionFilterView>
+    implements KayleeFilterAction {
+  final brandController = PickInputController<Brand>();
+  final cityController = PickInputController<City>();
+  final districtController = PickInputController<District>();
+
+  @override
+  void onApply() {
+    if (brandController.value != null) {
+      widget.controller
+          ?.updateFilter()
+          ?.brand = brandController.value;
+    }
+    if (cityController.value != null) {
+      widget.controller
+          ?.updateFilter()
+          ?.city = cityController.value;
+    }
+    if (districtController.value != null) {
+      widget.controller
+          ?.updateFilter()
+          ?.district = districtController.value;
+    }
+  }
+
+  @override
+  void onReset() {
+    brandController.clear();
+    cityController.clear();
+    districtController.clear();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    context
+        .repository<_FilterScreenState>()
+        .action = this;
+    brandController.value = widget.controller
+        ?.getFilter()
+        ?.brand;
+    cityController.value = widget.controller
+        ?.getFilter()
+        ?.city;
+    districtController.value = widget.controller
+        ?.getFilter()
+        ?.district;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return RepositoryProvider<KayleePickerTextFieldModel>(
+      create: (context) => KayleePickerTextFieldModel(),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(
+                horizontal: Dimens.px16, vertical: Dimens.px16),
+            child: KayleePickerTextField<Brand>(
+              title: Strings.diaDiemPhucVu,
+              controller: brandController,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+                left: Dimens.px16, right: Dimens.px16, bottom: Dimens.px16),
+            child: KayleePickerTextField<City>(
+              title: Strings.tinhTpHint,
+              controller: cityController,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+                left: Dimens.px16, right: Dimens.px16, bottom: Dimens.px16),
+            child: KayleePickerTextField<District>(
+              title: Strings.quan,
+              controller: districtController,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
