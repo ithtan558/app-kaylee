@@ -251,9 +251,9 @@ class KayleeText extends StatelessWidget {
       );
 
   factory KayleeText.normal26W700(String text,
-      {TextAlign textAlign = TextAlign.start,
-        int maxLines,
-        TextOverflow overflow}) =>
+          {TextAlign textAlign = TextAlign.start,
+          int maxLines,
+          TextOverflow overflow}) =>
       KayleeText(
         text,
         textAlign: textAlign,
@@ -432,77 +432,89 @@ class KayleeDateText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        GestureDetector(
-          onTap: onTap,
-          child: KayleeDateTimeText.dayMonthYear(
-            initDate,
-            textStyle: TextStyles.hyper16W400
-                .copyWith(decoration: TextDecoration.underline),
+    return IntrinsicWidth(
+      child: Row(
+        children: [
+          GestureDetector(
+            onTap: onTap,
+            child: KayleeDateTimeText.dayMonthYear(
+              initDate,
+              textStyle: TextStyles.hyper16W400
+                  .copyWith(decoration: TextDecoration.underline),
+            ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: Dimens.px4),
-          child: Image.asset(
-            Images.ic_calendar,
-            width: Dimens.px16,
-            height: Dimens.px16,
-          ),
-        )
-      ],
+          Padding(
+            padding: const EdgeInsets.only(left: Dimens.px4),
+            child: Image.asset(
+              Images.ic_calendar,
+              width: Dimens.px16,
+              height: Dimens.px16,
+            ),
+          )
+        ],
+      ),
     );
   }
 }
 
 class KayleeDatePickerText extends StatefulWidget {
-  final void Function(DateTime changed) onSelect;
+  final ValueChanged<DateTime> onSelect;
+  final KayleeDatePickerTextController controller;
 
-  KayleeDatePickerText({this.onSelect});
+  KayleeDatePickerText({this.onSelect, this.controller});
 
   @override
   _KayleeDatePickerTextState createState() => _KayleeDatePickerTextState();
 }
 
 class _KayleeDatePickerTextState extends BaseState<KayleeDatePickerText> {
-  DateTime selectedDate = DateTime.now();
+  DateTime selectedDate;
+  DateTime date;
 
   @override
   void initState() {
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
+    date = widget.controller?.value ?? DateTime.now();
   }
 
   @override
   Widget build(BuildContext context) {
     return KayleeDateText(
-      initDate: selectedDate,
+      initDate: date,
       onTap: () {
         showPickerPopup(
             context: context,
-            builder: (context) {
-              return KayleeDatePicker(
-                maximumDate: DateTime.now(),
-                initialDateTime: selectedDate,
-                onDateTimeChanged: (changed) {
-                  setState(() {
-                    selectedDate = changed;
-                  });
+            onDone: () {
+              if (selectedDate.isNotNull) {
+                date = selectedDate;
+                selectedDate = null;
+                widget.controller?.value = date;
 
-                  if (widget.onSelect.isNotNull) {
-                    widget.onSelect(selectedDate);
-                  }
+                setState(() {});
+                widget.onSelect?.call(date);
+              }
+            },
+            onDismiss: () {
+              selectedDate = null;
+            },
+            builder: (context) {
+              return CupertinoDatePicker(
+                maximumDate: DateTime.now(),
+                mode: CupertinoDatePickerMode.date,
+                initialDateTime: date,
+                onDateTimeChanged: (changed) {
+                  print('[TUNG] ===> onDateTimeChanged');
+                  selectedDate = changed;
                 },
-                backgroundColor: Colors.white,
               );
             });
       },
     );
   }
+}
+
+class KayleeDatePickerTextController {
+  DateTime value;
 }
 
 class KayleeDateRangePickerText extends StatefulWidget {
@@ -604,6 +616,36 @@ class _KayleeDateRangePickerTextState
           ),
         ),
       ],
+    );
+  }
+}
+
+class KayleeTotalAmountText extends StatelessWidget {
+  final dynamic price;
+
+  KayleeTotalAmountText({this.price});
+
+  @override
+  Widget build(BuildContext context) {
+    return IntrinsicWidth(
+      child: Row(
+        children: [
+          KayleeText.hint16W400(Strings.tong),
+          Container(
+            height: Dimens.px48,
+            margin: EdgeInsets.symmetric(horizontal: Dimens.px8),
+            padding: const EdgeInsets.symmetric(
+                vertical: Dimens.px8, horizontal: Dimens.px18),
+            decoration: new BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(Dimens.px5),
+                border: Border.fromBorderSide(
+                    BorderSide(color: ColorsRes.hyper, width: Dimens.px2))),
+            child: KayleePriceText.noUnitNormal26W700(price),
+          ),
+          KayleeText.hint16W400(Strings.vnd)
+        ],
+      ),
     );
   }
 }
