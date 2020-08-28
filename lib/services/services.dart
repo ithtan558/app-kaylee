@@ -1,6 +1,7 @@
 library services;
 
 export 'src/brand/brand_service.dart';
+export 'src/commission/commission_service.dart';
 export 'src/common/common_service.dart';
 export 'src/customer/customer_service.dart';
 export 'src/employee/employee_service.dart';
