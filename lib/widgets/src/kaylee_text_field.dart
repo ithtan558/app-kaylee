@@ -16,6 +16,17 @@ class KayleeTextField extends StatelessWidget {
 
   KayleeTextField({Key key, this.title, this.textInput}) : super(key: key);
 
+  factory KayleeTextField.priceWithUnderline({
+    String title,
+    dynamic price,
+  }) =>
+      KayleeTextField(
+        title: title,
+        textInput: PriceWithUnderLineBorderTextField(
+          price: price,
+        ),
+      );
+
   factory KayleeTextField.search({
     String hint,
     SearchInputFieldController controller,
@@ -120,11 +131,12 @@ class KayleeTextField extends StatelessWidget {
         maxLength: maxLength,
       );
 
-  factory KayleeTextField.selection({String title,
-    String content,
-    String buttonText,
-    String error,
-    VoidCallback onPress}) =>
+  factory KayleeTextField.selection(
+          {String title,
+          String content,
+          String buttonText,
+          String error,
+          VoidCallback onPress}) =>
       KayleeTextField(
         title: title,
         textInput: SelectInputTextField(
@@ -135,14 +147,15 @@ class KayleeTextField extends StatelessWidget {
         ),
       );
 
-  factory KayleeTextField.phoneInput({Key key,
-    String title,
-    String hint,
-    FocusNode focusNode,
-    FocusNode nextFocusNode,
-    TextEditingController controller,
-    TextInputAction textInputAction,
-    String error}) =>
+  factory KayleeTextField.phoneInput(
+          {Key key,
+          String title,
+          String hint,
+          FocusNode focusNode,
+          FocusNode nextFocusNode,
+          TextEditingController controller,
+          TextInputAction textInputAction,
+          String error}) =>
       KayleeTextField(
         key: key,
         title: title ?? Strings.soDienThoai,
@@ -865,6 +878,67 @@ class _UnitInputFieldState extends BaseState<UnitInputField> {
         ],
       )),
       error: widget.error,
+    );
+  }
+}
+
+class PriceWithUnderLineBorderTextField extends StatefulWidget {
+  final dynamic price;
+
+  PriceWithUnderLineBorderTextField({this.price});
+
+  @override
+  _PriceWithUnderLineBorderTextFieldState createState() =>
+      _PriceWithUnderLineBorderTextFieldState();
+}
+
+class _PriceWithUnderLineBorderTextFieldState
+    extends BaseState<PriceWithUnderLineBorderTextField> {
+  final _tfController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _tfController.text = CurrencyUtils.formatVNDWithCustomUnit(widget.price);
+  }
+
+  @override
+  void didUpdateWidget(PriceWithUnderLineBorderTextField oldWidget) {
+    _tfController.text = CurrencyUtils.formatVNDWithCustomUnit(widget.price);
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
+  void dispose() {
+    _tfController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: Dimens.px48,
+      child: TextField(
+        enabled: false,
+        controller: _tfController,
+        style: TextStyles.normal16W400,
+        decoration: InputDecoration(
+            contentPadding: const EdgeInsets.symmetric(horizontal: Dimens.px8),
+            disabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                  width: Dimens.px1,
+                  color: ColorsRes.hintText,
+                )),
+            suffixIcon: Padding(
+              padding: const EdgeInsets.only(right: Dimens.px8),
+              child: KayleeText.hint16W400(
+                Strings.vnd,
+                textAlign: TextAlign.center,
+              ),
+            ),
+            suffixIconConstraints: BoxConstraints(),
+            enabled: false),
+      ),
     );
   }
 }
