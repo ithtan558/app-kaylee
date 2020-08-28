@@ -233,6 +233,12 @@ class Strings {
   static const String momo = 'Momo';
   static const String caiDat = 'Cài đặt';
   static const String chiTietHoaHong = 'Chi tiết hoa hồng';
+  static const String tong = 'Tổng';
+  static const String hoaHongSanPham = 'Hoa hồng sản phẩm';
+  static const String hoaHongDichVu = 'Hoa hồng dịch vụ';
+  static const String donHang = 'Đơn hàng';
+  static const String doanhSo = 'Doanh số';
+  static const String hoaHong = 'Hoa hồng';
 
   Strings._();
 }
