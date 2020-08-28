@@ -1,7 +1,13 @@
+import 'dart:async';
+
+import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/screens/src/commission/detail/bloc/bloc.dart';
+import 'package:kaylee/utils/utils.dart';
+import 'package:kaylee/widgets/src/kaylee_text.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class CommissionDetailScreenData {
@@ -12,7 +18,14 @@ class CommissionDetailScreenData {
 }
 
 class CommissionDetailScreen extends StatefulWidget {
-  static Widget newInstance() => CommissionDetailScreen._();
+  static Widget newInstance() => BlocProvider(
+        create: (context) => CommissionDetailScreenBloc(
+            commissionService: context.network.provideCommissionService(),
+            employee:
+                context.getArguments<CommissionDetailScreenData>().employee,
+            date: context.getArguments<CommissionDetailScreenData>().date),
+        child: CommissionDetailScreen._(),
+      );
 
   CommissionDetailScreen._();
 
@@ -21,13 +34,32 @@ class CommissionDetailScreen extends StatefulWidget {
 }
 
 class _CommissionDetailScreenState extends KayleeState<CommissionDetailScreen> {
+  CommissionDetailScreenBloc _bloc;
+  StreamSubscription _sub;
+  final dateController = KayleeDatePickerTextController();
+
   @override
   void initState() {
     super.initState();
+    _bloc = context.bloc<CommissionDetailScreenBloc>();
+    dateController.value = _bloc.date;
+    _sub = _bloc.listen((state) {
+      if (state.loading) {
+        showLoading();
+      } else if (!state.loading) {
+        hideLoading();
+        if (state.code.isNotNull && state.code != ErrorType.UNAUTHORIZED) {
+          showKayleeAlertErrorYesDialog(
+              context: context, error: state.error, onPressed: popScreen);
+        }
+      }
+    });
+    _bloc.loadDetail();
   }
 
   @override
   void dispose() {
+    _sub.cancel();
     super.dispose();
   }
 
@@ -36,9 +68,104 @@ class _CommissionDetailScreenState extends KayleeState<CommissionDetailScreen> {
     return KayleeScrollview(
       appBar: KayleeAppBar(
         title: Strings.chiTietHoaHong,
-        actions: [KayleeAppBarAction.hyperText(title: Strings.caiDat)],
+        actions: [
+          KayleeAppBarAction.hyperText(
+            title: Strings.caiDat,
+            onTap: () {},
+          )
+        ],
       ),
-      child: Container(),
+      child: BlocBuilder<CommissionDetailScreenBloc, SingleModel>(
+        buildWhen: (previous, current) => current is CommissionDetailModel,
+        builder: (context, state) {
+          if (state is! CommissionDetailModel) return Container();
+          final data = (state as CommissionDetailModel).item;
+          return Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: Dimens.px16),
+                child: KayleeText.normal16W500(
+                  _bloc.employee.name,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: Dimens.px24, bottom: Dimens.px16),
+                child: KayleeTotalAmountText(
+                  price: data.commissionTotal,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: Dimens.px24),
+                child: KayleeDatePickerText(
+                  onSelect: (value) {
+                    _bloc.loadWithDate(date: value);
+                  },
+                ),
+              ),
+              LabelDividerView.withButton(
+                title: Strings.hoaHongSanPham,
+                buttonText: Strings.donHang,
+                onPress: () {},
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: Dimens.px16,
+                    left: Dimens.px16,
+                    right: Dimens.px16,
+                    bottom: Dimens.px24),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: KayleeTextField.priceWithUnderline(
+                        title: Strings.doanhSo,
+                        price: data.commissionProduct.total,
+                      ),
+                    ),
+                    SizedBox(width: Dimens.px16),
+                    Expanded(
+                      child: KayleeTextField.priceWithUnderline(
+                        title: Strings.hoaHong,
+                        price: data.commissionProduct.commission,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              LabelDividerView.withButton(
+                title: Strings.hoaHongDichVu,
+                buttonText: Strings.donHang,
+                onPress: () {},
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: Dimens.px16,
+                    left: Dimens.px16,
+                    right: Dimens.px16,
+                    bottom: Dimens.px24),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: KayleeTextField.priceWithUnderline(
+                        title: Strings.doanhSo,
+                        price: data.commissionService.total,
+                      ),
+                    ),
+                    SizedBox(width: Dimens.px16),
+                    Expanded(
+                      child: KayleeTextField.priceWithUnderline(
+                        title: Strings.hoaHong,
+                        price: data.commissionService.commission,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          );
+        },
+      ),
     );
   }
 }
