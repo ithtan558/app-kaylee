@@ -13,7 +13,7 @@ class LabelDividerView extends StatelessWidget {
       LabelDividerView(title: title);
 
   factory LabelDividerView.withButton(
-          {String title, String buttonText, Function onPress}) =>
+          {String title, String buttonText, VoidCallback onPress}) =>
       LabelDividerView(
         title: title,
         ending: Padding(
