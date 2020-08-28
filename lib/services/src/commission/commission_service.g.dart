@@ -104,9 +104,13 @@ class _CommissionService implements CommissionService {
   }
 
   @override
-  getUpdateSetting({userId}) async {
+  getUpdateSetting({userId, commissionProduct, commissionService}) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'user_id': userId};
+    final queryParameters = <String, dynamic>{
+      r'user_id': userId,
+      r'commission_product': commissionProduct,
+      r'commission_service': commissionService
+    };
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final Response<Map<String, dynamic>> _result = await _dio.request(

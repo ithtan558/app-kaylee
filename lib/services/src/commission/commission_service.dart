@@ -37,5 +37,7 @@ abstract class CommissionService {
   @POST('commission/setting/update')
   Future<ResponseModel> getUpdateSetting({
     @Query('user_id') int userId,
+    @Query('commission_product') int commissionProduct,
+    @Query('commission_service') int commissionService,
   });
 }
