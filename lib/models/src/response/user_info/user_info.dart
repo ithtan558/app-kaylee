@@ -1,3 +1,4 @@
+import 'package:anth_package/anth_package.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:kaylee/models/models.dart';
 
@@ -15,7 +16,6 @@ class UserInfo {
       this.brandId,
       this.firstName,
       this.lastName,
-      this.name,
       this.email,
       this.phone,
       this.username,
@@ -32,7 +32,9 @@ class UserInfo {
   int brandId;
   String firstName;
   String lastName;
-  String name;
+
+  String get name =>
+      (lastName.isNullOrEmpty ? '' : (lastName + ' ')) + (firstName ?? '');
   String email;
   String phone;
   String username;
