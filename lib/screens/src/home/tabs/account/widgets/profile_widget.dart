@@ -51,6 +51,8 @@ class ProfileWidget extends StatelessWidget {
                         children: [
                           KayleeText.normal26W700(
                             context.user.getUserInfo()?.userInfo?.name ?? '',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
                           Expanded(
                             child: Padding(
