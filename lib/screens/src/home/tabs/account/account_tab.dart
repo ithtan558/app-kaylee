@@ -4,8 +4,8 @@ import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/about/about_screen.dart';
-import 'package:kaylee/screens/src/edit_profile/edit_profile_screen.dart';
 import 'package:kaylee/screens/src/guide/guide_screen.dart';
+import 'package:kaylee/screens/src/home/tabs/account/widgets/profile_widget.dart';
 import 'package:kaylee/screens/src/notification/list/notification_screen.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
@@ -35,75 +35,7 @@ class _AccountTabState extends BaseState<AccountTab> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(Dimens.px10),
-                boxShadow: [
-                  BoxShadow(
-                      color: ColorsRes.shadow,
-                      offset: Offset(0, 1),
-                      blurRadius: Dimens.px5,
-                      spreadRadius: 0)
-                ],
-              ),
-              child: SafeArea(
-                  top: true,
-                  child: Container(
-                    padding: const EdgeInsets.all(Dimens.px16),
-                    child: SizedBox(
-                      height: Dimens.px103,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Container(
-                            clipBehavior: Clip.antiAlias,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(Dimens.px10),
-                            ),
-                            child: AspectRatio(
-                              aspectRatio: 1,
-                              child: Image.network(
-                                'https://kottke.org/plus/misc/images/ai-faces-01.jpg',
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Container(
-                              margin: const EdgeInsets.only(left: Dimens.px16),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  KayleeText.normal26W700(
-                                    "David Benz",
-                                  ),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: Dimens.px8),
-                                      child: KayleeText.normal16W400(
-                                        "Chủ doanh nghiệp",
-                                      ),
-                                    ),
-                                  ),
-                                  HyperLinkText(
-                                    text: Strings.suThongTin,
-                                    onTap: () {
-                                      pushScreen(PageIntent(
-                                          screen: EditProfileScreen));
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  )),
-            ),
+            ProfileWidget(),
             _buildMenuItem(
                 title: Strings.thongBao,
                 icon: Images.ic_acc_notify,
