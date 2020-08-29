@@ -75,7 +75,6 @@ class _CommissionDetailScreenState extends KayleeState<CommissionDetailScreen> {
             onTap: () {
               showKayleeBottomSheet(
                 context,
-                expand: false,
                 initialChildSize: 330 / context.screenSize.height,
                 maxChildSize: 330 / context.screenSize.height,
                 builder: (context, scrollController) {
