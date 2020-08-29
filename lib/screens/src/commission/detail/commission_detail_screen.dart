@@ -6,6 +6,7 @@ import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/commission/detail/bloc/bloc.dart';
+import 'package:kaylee/screens/src/commission/detail/widgets/commission_setting_dialog.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/src/kaylee_text.dart';
 import 'package:kaylee/widgets/widgets.dart';
@@ -71,7 +72,22 @@ class _CommissionDetailScreenState extends KayleeState<CommissionDetailScreen> {
         actions: [
           KayleeAppBarAction.hyperText(
             title: Strings.caiDat,
-            onTap: () {},
+            onTap: () {
+              showKayleeBottomSheet(
+                context,
+                expand: false,
+                initialChildSize: 330 / context.screenSize.height,
+                maxChildSize: 330 / context.screenSize.height,
+                builder: (context, scrollController) {
+                  return RepositoryProvider.value(
+                    value: _bloc.employee,
+                    child: CommissionSettingDialog.newInstance(
+                      scrollController: scrollController,
+                    ),
+                  );
+                },
+              );
+            },
           )
         ],
       ),

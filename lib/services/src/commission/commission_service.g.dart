@@ -57,7 +57,7 @@ class _CommissionService implements CommissionService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<CommissionProducts>.fromJson(_result.data);
+    final value = ResponseModel<CommProducts>.fromJson(_result.data);
     return value;
   }
 
@@ -80,7 +80,7 @@ class _CommissionService implements CommissionService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<CommissionProducts>.fromJson(_result.data);
+    final value = ResponseModel<CommServices>.fromJson(_result.data);
     return value;
   }
 
@@ -104,12 +104,12 @@ class _CommissionService implements CommissionService {
   }
 
   @override
-  getUpdateSetting({userId, commissionProduct, commissionService}) async {
+  getUpdateSetting({userId, product, service}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'user_id': userId,
-      r'commission_product': commissionProduct,
-      r'commission_service': commissionService
+      r'commission_product': product,
+      r'commission_service': service
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};

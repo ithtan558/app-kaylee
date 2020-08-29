@@ -12,21 +12,15 @@ class CommissionSettingBloc extends Cubit<SingleModel<CommissionSetting>> {
   }) : super(SingleModel());
 
   void loadSetting() {
-    emit(SingleModel.copy(state..loading = true));
     RequestHandler(
       request: commissionService.getSetting(
         userId: employee.id,
       ),
       onSuccess: ({message, result}) {
-        emit(SingleModel.copy(state
-          ..loading = false
-          ..item = result
-          ..error = null
-          ..code = null));
+        emit(CommissionSettingModel.copy(state..item = result));
       },
       onFailed: (code, {error}) {
         emit(SingleModel.copy(state
-          ..loading = false
           ..code = code
           ..error = error));
       },
@@ -41,8 +35,8 @@ class CommissionSettingBloc extends Cubit<SingleModel<CommissionSetting>> {
     RequestHandler(
       request: commissionService.getUpdateSetting(
         userId: employee.id,
-        commissionProduct: product,
-        commissionService: service,
+        product: product,
+        service: service,
       ),
       onSuccess: ({message, result}) {
         emit(CommissionSettingUpdateModel.copy(state
@@ -61,6 +55,15 @@ class CommissionSettingBloc extends Cubit<SingleModel<CommissionSetting>> {
 
 class CommissionSettingUpdateModel extends SingleModel<CommissionSetting> {
   CommissionSettingUpdateModel.copy(SingleModel old) {
+    this
+      ..loading = old?.loading
+      ..item = old?.item
+      ..message = old?.message;
+  }
+}
+
+class CommissionSettingModel extends SingleModel<CommissionSetting> {
+  CommissionSettingModel.copy(SingleModel old) {
     this
       ..loading = old?.loading
       ..item = old?.item

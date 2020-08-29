@@ -2,16 +2,16 @@ import 'package:anth_package/anth_package.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:kaylee/models/src/response/order/order.dart';
 
-part 'commission_product.g.dart';
+part 'comm_product.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class CommissionProduct {
-  factory CommissionProduct.fromJson(Map<String, dynamic> json) =>
-      _$CommissionProductFromJson(json);
+class CommProduct {
+  factory CommProduct.fromJson(Map<String, dynamic> json) =>
+      _$CommProductFromJson(json);
 
-  Map<String, dynamic> toJson() => _$CommissionProductToJson(this);
+  Map<String, dynamic> toJson() => _$CommProductToJson(this);
 
-  CommissionProduct({
+  CommProduct({
     this.id,
     this.code,
     this.name,
@@ -20,7 +20,6 @@ class CommissionProduct {
     this.createdAt,
     this.supplierName,
     this.commissionProduct,
-    this.date,
   });
 
   int id;
@@ -33,7 +32,8 @@ class CommissionProduct {
       name: 'order_status_id')
   OrderStatus orderStatus;
   String createdAt;
+
+  DateTime get createdAtDateTime => DateTime.tryParse(createdAt);
   String supplierName;
   int commissionProduct;
-  String date;
 }
