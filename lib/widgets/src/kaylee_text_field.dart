@@ -16,6 +16,35 @@ class KayleeTextField extends StatelessWidget {
 
   KayleeTextField({Key key, this.title, this.textInput}) : super(key: key);
 
+  factory KayleeTextField.withUnit({
+    Key key,
+    String title,
+    String hint,
+    FocusNode focusNode,
+    FocusNode nextFocusNode,
+    TextEditingController controller,
+    TextInputAction textInputAction,
+    TextInputType textInputType,
+    String error,
+    TextAlign textAlign,
+    String unit,
+  }) =>
+      KayleeTextField(
+        key: key,
+        title: title,
+        textInput: WithUnitInputField(
+          textInputAction: textInputAction,
+          focusNode: focusNode,
+          nextFocusNode: nextFocusNode,
+          controller: controller,
+          error: error,
+          hint: hint,
+          textInputType: textInputType,
+          textAlign: textAlign,
+          unit: unit,
+        ),
+      );
+
   factory KayleeTextField.priceWithUnderline({
     String title,
     dynamic price,
@@ -178,13 +207,14 @@ class KayleeTextField extends StatelessWidget {
         ),
       );
 
-  factory KayleeTextField.price({String title,
-    String hint,
-    String error,
-    TextEditingController controller,
-    TextInputAction textInputAction,
-    FocusNode focusNode,
-    FocusNode nextFocusNode}) =>
+  factory KayleeTextField.price(
+          {String title,
+          String hint,
+          String error,
+          TextEditingController controller,
+          TextInputAction textInputAction,
+          FocusNode focusNode,
+          FocusNode nextFocusNode}) =>
       KayleeTextField(
         title: title,
         textInput: PriceInputField(
@@ -423,6 +453,112 @@ class _SearchInputFieldState extends BaseState<SearchInputField> {
   }
 }
 
+class WithUnitInputField extends StatefulWidget {
+  final String error;
+  final String hint;
+  final FocusNode focusNode;
+  final FocusNode nextFocusNode;
+  final TextEditingController controller;
+  final TextInputAction textInputAction;
+  final TextInputType textInputType;
+  final EdgeInsets contentPadding;
+  final TextAlign textAlign;
+  final String unit;
+
+  WithUnitInputField({
+    this.hint,
+    this.error,
+    this.focusNode,
+    this.controller,
+    this.nextFocusNode,
+    this.textInputAction = TextInputAction.done,
+    this.textInputType = TextInputType.text,
+    this.contentPadding,
+    this.textAlign,
+    this.unit,
+  });
+
+  @override
+  _WithUnitInputFieldState createState() => _WithUnitInputFieldState();
+}
+
+class _WithUnitInputFieldState extends BaseState<WithUnitInputField> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ErrorText(
+      child: TextFieldBorderWrapper(
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: Dimens.px16),
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: TextField(
+                    focusNode: widget.focusNode,
+                    controller: widget.controller,
+                    keyboardType: widget.textInputType,
+                    textInputAction: widget.textInputAction,
+                    onSubmitted: (_) {
+                      if (widget.textInputAction == TextInputAction.next) {
+                        if (widget.nextFocusNode.isNotNull) {
+                          widget.nextFocusNode.requestFocus();
+                        } else
+                          FocusScope.of(context).nextFocus();
+                      }
+                    },
+                    autofocus: false,
+                    textAlign: widget.textAlign ?? TextAlign.start,
+                    textAlignVertical: TextAlignVertical.top,
+                    style: TextStyles.normal16W400,
+                    buildCounter: (context,
+                        {currentLength, isFocused, maxLength}) {
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      enabledBorder: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      border: InputBorder.none,
+                      hintText: widget.hint,
+                      contentPadding: widget.contentPadding ??
+                          const EdgeInsets.only(bottom: Dimens.px4),
+                      hintStyle: TextStyles.hint16W400,
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.only(left: Dimens.px16),
+                  margin: const EdgeInsets.symmetric(vertical: Dimens.px4),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      border: Border(
+                          left: BorderSide(
+                              color: ColorsRes.textFieldBorder,
+                              width: Dimens.px1))),
+                  child: KayleeText.normal16W400(
+                    widget.unit ?? '',
+                    maxLines: 1,
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                )
+              ],
+            ),
+          ),
+          isError: !widget.error.isNullOrEmpty),
+      error: widget.error,
+    );
+  }
+}
+
 class NormalInputField extends StatefulWidget {
   final String error;
   final String hint;
@@ -438,8 +574,11 @@ class NormalInputField extends StatefulWidget {
   final TextAlign textAlign;
   final bool expands;
   final int maxLength;
+  final Widget suffixWidget;
+  final BoxConstraints suffixBoxConstraints;
 
-  NormalInputField({this.hint,
+  NormalInputField({
+    this.hint,
     this.initText,
     this.error,
     this.focusNode,
@@ -452,7 +591,10 @@ class NormalInputField extends StatefulWidget {
     this.contentPadding,
     this.textAlign,
     this.expands,
-    this.maxLength});
+    this.maxLength,
+    this.suffixWidget,
+    this.suffixBoxConstraints,
+  });
 
   @override
   _NormalInputFieldState createState() => _NormalInputFieldState();
@@ -524,7 +666,10 @@ class _NormalInputFieldState extends BaseState<NormalInputField> {
                         hintText: widget.hint,
                         contentPadding: widget.contentPadding ??
                             const EdgeInsets.only(bottom: Dimens.px4),
-                        hintStyle: TextStyles.hint16W400),
+                        hintStyle: TextStyles.hint16W400,
+                        suffixIcon: widget.suffixWidget,
+                        suffixIconConstraints: widget.suffixBoxConstraints ??
+                            BoxConstraints(minWidth: 0)),
                   ),
                 ),
                 if (isPassTField)
