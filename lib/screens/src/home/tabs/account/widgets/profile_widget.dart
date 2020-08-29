@@ -63,10 +63,8 @@ class ProfileWidget extends StatelessWidget {
                           HyperLinkText(
                             text: Strings.suThongTin,
                             onTap: () {
-                              context.push(PageIntent(
-                                  screen: EditProfileScreen,
-                                  bundle: Bundle(
-                                      context.user.getUserInfo()?.userInfo)));
+                              context
+                                  .push(PageIntent(screen: EditProfileScreen));
                             },
                           ),
                         ],
