@@ -53,9 +53,7 @@ class _UserNameState extends BaseState<UserName> {
   @override
   Widget build(BuildContext context) {
     final userName = KayleeText.normalWhite16W500('Hi, ${userInfo?.firstName}');
-    final role = KayleeText.normalWhite12W400(
-      'Quản lý cửa hàng',
-    );
+    final role = KayleeText.normalWhite12W400(Strings.quanlyCuaHang);
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
