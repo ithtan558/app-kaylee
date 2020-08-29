@@ -14,6 +14,9 @@ Future<T> showKayleeBottomSheet<T>(BuildContext context,
     bool expand = true,
     double initialChildSize = 0.5,
     double minChildSize = 0.25}) {
+  final maxSize = maxChildSize ?? 1;
+  final initSize = initialChildSize ?? 0.5;
+  final minSize = minChildSize ?? 0.25;
   return showModalBottomSheet<T>(
       context: context,
       shape: const RoundedRectangleBorder(
@@ -24,58 +27,65 @@ Future<T> showKayleeBottomSheet<T>(BuildContext context,
       backgroundColor: Colors.transparent,
       isScrollControlled: true,
       builder: (c) {
-        return Stack(
-          children: <Widget>[
-            Positioned.fill(
-              child: GestureDetector(
-                onTap: () {
-                  context.pop();
-                },
-                child: Container(
-                  color: Colors.transparent,
+        final paddingBottomSize = MediaQuery.of(context).viewInsets.bottom /
+            context.screenSize.height;
+        return AnimatedPadding(
+          padding: MediaQuery.of(context).viewInsets,
+          duration: Duration(milliseconds: 200),
+          child: Stack(
+            children: <Widget>[
+              Positioned.fill(
+                child: GestureDetector(
+                  onTap: () {
+                    context.pop();
+                  },
+                  child: Container(
+                    color: Colors.transparent,
+                  ),
                 ),
               ),
-            ),
-            DraggableScrollableSheet(
-              maxChildSize: maxChildSize ?? 1,
-              expand: expand,
-              initialChildSize: initialChildSize ?? 0.5,
-              minChildSize: minChildSize ?? 0.25,
-              builder: (c, scrollController) {
-                return Container(
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(Dimens.px5),
-                        topRight: Radius.circular(Dimens.px5)),
-                    boxShadow: const [
-                      BoxShadow(
-                          color: ColorsRes.shadow,
-                          offset: Offset.zero,
-                          blurRadius: Dimens.px20,
-                          spreadRadius: 0)
-                    ],
-                  ),
-                  child: Column(
-                    children: [
-                      Container(
-                          width: context.scaleWidth(Dimens.px37),
-                          height: Dimens.px5,
-                          margin:
-                              const EdgeInsets.symmetric(vertical: Dimens.px16),
-                          decoration: BoxDecoration(
-                              color: ColorsRes.textFieldBorder,
-                              borderRadius: BorderRadius.circular(Dimens.px3))),
-                      Expanded(
-                        child:
-                            builder(context, scrollController) ?? Container(),
-                      )
-                    ],
-                  ),
-                );
-              },
-            )
-          ],
+              DraggableScrollableSheet(
+                maxChildSize: maxSize,
+                expand: expand,
+                initialChildSize: initSize,
+                minChildSize: minSize,
+                builder: (c, scrollController) {
+                  return Container(
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(Dimens.px5),
+                          topRight: Radius.circular(Dimens.px5)),
+                      boxShadow: const [
+                        BoxShadow(
+                            color: ColorsRes.shadow,
+                            offset: Offset.zero,
+                            blurRadius: Dimens.px20,
+                            spreadRadius: 0)
+                      ],
+                    ),
+                    child: Column(
+                      children: [
+                        Container(
+                            width: context.scaleWidth(Dimens.px37),
+                            height: Dimens.px5,
+                            margin: const EdgeInsets.symmetric(
+                                vertical: Dimens.px16),
+                            decoration: BoxDecoration(
+                                color: ColorsRes.textFieldBorder,
+                                borderRadius:
+                                    BorderRadius.circular(Dimens.px3))),
+                        Expanded(
+                          child:
+                              builder(context, scrollController) ?? Container(),
+                        )
+                      ],
+                    ),
+                  );
+                },
+              )
+            ],
+          ),
         );
       },
       barrierColor: ColorsRes.dialogDimBg);
