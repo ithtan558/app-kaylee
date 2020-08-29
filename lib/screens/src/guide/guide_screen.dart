@@ -1,10 +1,22 @@
+import 'dart:async';
+
+import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
+import 'package:kaylee/base/kaylee_state.dart';
+import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/screens/src/guide/bloc/bloc.dart';
+import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class GuideScreen extends StatefulWidget {
-  static Widget newInstance() => GuideScreen._();
+  static Widget newInstance() => BlocProvider(
+      create: (context) => GuideScreenBloc(
+            commonService: context.network.provideCommonService(),
+          ),
+      child: GuideScreen._());
 
   GuideScreen._();
 
@@ -12,33 +24,48 @@ class GuideScreen extends StatefulWidget {
   _GuideScreenState createState() => new _GuideScreenState();
 }
 
-class _GuideScreenState extends BaseState<GuideScreen> {
+class _GuideScreenState extends KayleeState<GuideScreen> {
+  GuideScreenBloc _bloc;
+  StreamSubscription _sub;
+
   @override
   void initState() {
     super.initState();
+    _bloc = context.bloc<GuideScreenBloc>();
+    _sub = _bloc.listen((state) {
+      if (state.loading) {
+        showLoading();
+      } else if (!state.loading) {
+        hideLoading();
+        if (state.code.isNotNull && state.code == ErrorType.UNAUTHORIZED) {
+          showKayleeAlertErrorYesDialog(
+              context: context, error: state.error, onPressed: popScreen);
+        }
+      }
+    });
+    _bloc.loadContent();
   }
 
   @override
   void dispose() {
+    _sub.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return KayleeScrollview(
       appBar: KayleeAppBar(
         title: Strings.huongDanSd,
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(Dimens.px16),
-        child: KayleeText.normal16W400(
-          'Mauris tristique enim elementum, rhoncus lorem nec, finibus ipsum. Integer iaculis, '
-          'neque non varius mollis, neque quam finibus enim, non mattis dolor dui eu urna. '
-          'In scelerisque magna eu euismod rutrum. Sed sit amet nisi a lorem accumsan porttitor. '
-          'Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. '
-          'Praesent gravida blandit mi non tempor. Cras sed nisl porta purus pharetra hendrerit interdum at neque.',
-          overflow: TextOverflow.visible,
-        ),
+      padding: const EdgeInsets.all(Dimens.px16),
+      child: BlocBuilder<GuideScreenBloc, SingleModel<Content>>(
+        builder: (context, state) {
+          return HtmlWidget(
+            state.item?.content ?? '',
+            textStyle: TextStyles.normal16W400,
+          );
+        },
       ),
     );
   }
