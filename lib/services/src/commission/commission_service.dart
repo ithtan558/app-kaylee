@@ -16,17 +16,21 @@ abstract class CommissionService {
   });
 
   @GET('commission/product/list-order')
-  Future<ResponseModel<CommProducts>> getProductOfOrder({
+  Future<ResponseModel<CommissionOrders>> getProductOfOrder({
     @Query('start_date') String startDate,
     @Query('end_date') String endDate,
     @Query('user_id') int userId,
+    @Query('page') int page,
+    @Query('limit') int limit,
   });
 
   @GET('commission/service/list-order')
-  Future<ResponseModel<CommServices>> getServiceOfOrder({
+  Future<ResponseModel<CommissionOrders>> getServiceOfOrder({
     @Query('start_date') String startDate,
     @Query('end_date') String endDate,
     @Query('user_id') int userId,
+    @Query('page') int page,
+    @Query('limit') int limit,
   });
 
   @GET('commission/setting')

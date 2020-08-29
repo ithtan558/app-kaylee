@@ -39,12 +39,14 @@ class _CommissionService implements CommissionService {
   }
 
   @override
-  getProductOfOrder({startDate, endDate, userId}) async {
+  getProductOfOrder({startDate, endDate, userId, page, limit}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'start_date': startDate,
       r'end_date': endDate,
-      r'user_id': userId
+      r'user_id': userId,
+      r'page': page,
+      r'limit': limit
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
@@ -57,17 +59,19 @@ class _CommissionService implements CommissionService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<CommProducts>.fromJson(_result.data);
+    final value = ResponseModel<CommissionOrders>.fromJson(_result.data);
     return value;
   }
 
   @override
-  getServiceOfOrder({startDate, endDate, userId}) async {
+  getServiceOfOrder({startDate, endDate, userId, page, limit}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'start_date': startDate,
       r'end_date': endDate,
-      r'user_id': userId
+      r'user_id': userId,
+      r'page': page,
+      r'limit': limit
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
@@ -80,7 +84,7 @@ class _CommissionService implements CommissionService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<CommServices>.fromJson(_result.data);
+    final value = ResponseModel<CommissionOrders>.fromJson(_result.data);
     return value;
   }
 
