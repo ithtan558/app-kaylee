@@ -62,16 +62,12 @@ class KayleeJsonConverter extends anthPackage.JsonConverterFactory {
       return Commission.fromJson(json) as T;
     } else if (T == CommissionDetail) {
       return CommissionDetail.fromJson(json) as T;
-    } else if (T == CommProduct) {
-      return CommProduct.fromJson(json) as T;
-    } else if (T == CommProducts) {
-      return CommProduct.fromJson(json) as T;
+    } else if (T == CommissionOrder) {
+      return CommissionOrder.fromJson(json) as T;
+    } else if (T == CommissionOrders) {
+      return CommissionOrders.fromJson(json) as T;
     } else if (T == CommissionSetting) {
       return CommissionSetting.fromJson(json) as T;
-    } else if (T == CommServices) {
-      return CommServices.fromJson(json) as T;
-    } else if (T == CommService) {
-      return CommService.fromJson(json) as T;
     }
     return json as T;
   }
@@ -136,15 +132,11 @@ class KayleeJsonConverter extends anthPackage.JsonConverterFactory {
       return json.toJson();
     } else if (json is CommissionDetail) {
       return json.toJson();
-    } else if (json is CommProduct) {
+    } else if (json is CommissionOrder) {
       return json.toJson();
-    } else if (json is CommProducts) {
+    } else if (json is CommissionOrders) {
       return json.toJson();
     } else if (json is CommissionSetting) {
-      return json.toJson();
-    } else if (json is CommServices) {
-      return json.toJson();
-    } else if (json is CommService) {
       return json.toJson();
     } else
       return json;

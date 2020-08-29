@@ -6,6 +6,8 @@ import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/commission/detail/bloc/bloc.dart';
+import 'package:kaylee/screens/src/commission/detail/widgets/commission_orders/comm_prod_order_list.dart';
+import 'package:kaylee/screens/src/commission/detail/widgets/commission_orders/comm_ser_order_list.dart';
 import 'package:kaylee/screens/src/commission/detail/widgets/commission_setting_dialog.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/src/kaylee_text.dart';
@@ -65,7 +67,7 @@ class _CommissionDetailScreenState extends KayleeState<CommissionDetailScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext parentContext) {
     return KayleeScrollview(
       appBar: KayleeAppBar(
         title: Strings.chiTietHoaHong,
@@ -74,9 +76,9 @@ class _CommissionDetailScreenState extends KayleeState<CommissionDetailScreen> {
             title: Strings.caiDat,
             onTap: () {
               showKayleeBottomSheet(
-                context,
-                initialChildSize: 330 / context.screenSize.height,
-                maxChildSize: 330 / context.screenSize.height,
+                parentContext,
+                initialChildSize: 330 / parentContext.screenSize.height,
+                maxChildSize: 330 / parentContext.screenSize.height,
                 builder: (context, scrollController) {
                   return RepositoryProvider.value(
                     value: _bloc.employee,
@@ -117,12 +119,30 @@ class _CommissionDetailScreenState extends KayleeState<CommissionDetailScreen> {
                   onSelect: (value) {
                     _bloc.loadWithDate(date: value);
                   },
+                  controller: dateController,
                 ),
               ),
               LabelDividerView.withButton(
                 title: Strings.hoaHongSanPham,
                 buttonText: Strings.donHang,
-                onPress: () {},
+                onPress: () {
+                  showKayleeBottomSheet(
+                    context,
+                    initialChildSize: 1 -
+                        (MediaQuery.of(parentContext).padding.top /
+                            context.screenSize.height),
+                    maxChildSize: 1 -
+                        (MediaQuery.of(parentContext).padding.top /
+                            context.screenSize.height),
+                    builder: (context, scrollController) {
+                      return CommProdOrderList.newInstance(
+                        scrollController: scrollController,
+                        date: _bloc.date,
+                        employee: _bloc.employee,
+                      );
+                    },
+                  );
+                },
               ),
               Padding(
                 padding: const EdgeInsets.only(
@@ -151,7 +171,30 @@ class _CommissionDetailScreenState extends KayleeState<CommissionDetailScreen> {
               LabelDividerView.withButton(
                 title: Strings.hoaHongDichVu,
                 buttonText: Strings.donHang,
-                onPress: () {},
+                onPress: () {
+                  showKayleeBottomSheet(
+                    context,
+                    initialChildSize: 1 -
+                        (MediaQuery
+                            .of(parentContext)
+                            .padding
+                            .top /
+                            context.screenSize.height),
+                    maxChildSize: 1 -
+                        (MediaQuery
+                            .of(parentContext)
+                            .padding
+                            .top /
+                            context.screenSize.height),
+                    builder: (context, scrollController) {
+                      return CommSerOrderList.newInstance(
+                        scrollController: scrollController,
+                        date: _bloc.date,
+                        employee: _bloc.employee,
+                      );
+                    },
+                  );
+                },
               ),
               Padding(
                 padding: const EdgeInsets.only(

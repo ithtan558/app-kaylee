@@ -240,6 +240,7 @@ class Strings {
   static const String doanhSo = 'Doanh số';
   static const String hoaHong = 'Hoa hồng';
   static const String chinhSuaThongTinHoaHong = 'Chỉnh sửa thông tin hoa hồng';
+  static const String dsDonChiHoaHong = 'Danh sách đơn hàng chi hoa hồng';
 
   Strings._();
 }

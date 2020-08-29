@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'comm_product.dart';
+part of 'commission_order.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-CommProduct _$CommProductFromJson(Map<String, dynamic> json) {
-  return CommProduct(
+CommissionOrder _$CommissionOrderFromJson(Map<String, dynamic> json) {
+  return CommissionOrder(
     id: json['id'] as int,
     code: json['code'] as String,
     name: json['name'] as String,
@@ -16,10 +16,11 @@ CommProduct _$CommProductFromJson(Map<String, dynamic> json) {
     createdAt: json['created_at'] as String,
     supplierName: json['supplier_name'] as String,
     commissionProduct: json['commission_product'] as int,
+    commissionService: json['commission_service'] as int,
   );
 }
 
-Map<String, dynamic> _$CommProductToJson(CommProduct instance) =>
+Map<String, dynamic> _$CommissionOrderToJson(CommissionOrder instance) =>
     <String, dynamic>{
       'id': instance.id,
       'code': instance.code,
@@ -29,4 +30,5 @@ Map<String, dynamic> _$CommProductToJson(CommProduct instance) =>
       'created_at': instance.createdAt,
       'supplier_name': instance.supplierName,
       'commission_product': instance.commissionProduct,
+      'commission_service': instance.commissionService,
     };

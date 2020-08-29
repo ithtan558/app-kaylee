@@ -6,11 +6,15 @@ import 'package:kaylee/widgets/widgets.dart';
 class LabelDividerView extends StatelessWidget {
   final String title;
   final Widget ending;
+  final Color bgColor;
 
-  LabelDividerView({this.title, this.ending});
+  LabelDividerView({this.title, this.ending, this.bgColor});
 
-  factory LabelDividerView.normal({String title}) =>
-      LabelDividerView(title: title);
+  factory LabelDividerView.normal({String title, Color bgColor}) =>
+      LabelDividerView(
+        title: title,
+        bgColor: bgColor,
+      );
 
   factory LabelDividerView.withButton(
           {String title, String buttonText, VoidCallback onPress}) =>
@@ -25,12 +29,13 @@ class LabelDividerView extends StatelessWidget {
         ),
       );
 
-  factory LabelDividerView.monthYear(int time) {
+  factory LabelDividerView.monthYear({DateTime time}) {
     final dateString = 'Tháng ' +
         DateFormat('${DateFormat.NUM_MONTH * 2}/${DateFormat.YEAR * 4}')
-            .format(DateTime.fromMillisecondsSinceEpoch((time ?? 0) * 1000));
+            .format(time);
     return LabelDividerView(
       title: dateString,
+      bgColor: ColorsRes.labelDivider1,
     );
   }
 
@@ -51,7 +56,7 @@ class LabelDividerView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: Dimens.px48,
-      color: ColorsRes.labelDivider,
+      color: bgColor ?? ColorsRes.labelDivider,
       child: Row(
         children: [
           Expanded(

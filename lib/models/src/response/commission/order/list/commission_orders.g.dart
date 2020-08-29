@@ -1,24 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'comm_products.dart';
+part of 'commission_orders.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-CommProducts _$CommProductsFromJson(Map<String, dynamic> json) {
-  return CommProducts()
+CommissionOrders _$CommissionOrdersFromJson(Map<String, dynamic> json) {
+  return CommissionOrders()
     ..page = json['page'] as int
     ..limit = json['limit'] as int
     ..total = json['total'] as int
     ..pages = json['pages'] as int
     ..items = (json['items'] as List)
-        ?.map((e) =>
-            e == null ? null : CommProduct.fromJson(e as Map<String, dynamic>))
+        ?.map((e) => e == null
+            ? null
+            : CommissionOrder.fromJson(e as Map<String, dynamic>))
         ?.toList();
 }
 
-Map<String, dynamic> _$CommProductsToJson(CommProducts instance) =>
+Map<String, dynamic> _$CommissionOrdersToJson(CommissionOrders instance) =>
     <String, dynamic>{
       'page': instance.page,
       'limit': instance.limit,

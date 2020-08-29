@@ -14,7 +14,8 @@ class ColorsRes {
   static const Color color2 = Color(0xfff4f4f4);
   static const Color filterButton = Color(0xffd8d8d8);
   static const Color dialogDimBg = Color(0x7f313131);
-  static const Color labelDivider = Color(0xffF2EEE6);
+  static const Color labelDivider = Color(0xfff3eee6);
+  static const Color labelDivider1 = Color(0xfff2f2f2);
   static const Color divider = Color(0xffdfdfe3);
   static const Color shadow = Color(0x4c000000);
   static const Color dialogNavigate = Color(0xe5f6f6f6);

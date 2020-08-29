@@ -12,6 +12,7 @@ class KayleeListView extends StatelessWidget {
   final double childAspectRatio;
   final IndexedWidgetBuilder separatorBuilder;
   final WidgetBuilder loadingBuilder;
+  final ScrollController controller;
 
   KayleeListView(
       {@required this.itemBuilder,
@@ -23,12 +24,14 @@ class KayleeListView extends StatelessWidget {
       this.childAspectRatio,
       this.itemCount,
       this.loadingBuilder,
-      this.separatorBuilder});
+      this.separatorBuilder,
+      this.controller});
 
   @override
   Widget build(BuildContext context) {
     final length = itemCount + 1;
     return ListView.separated(
+      controller: controller,
       padding: padding ?? EdgeInsets.all(Dimens.px16),
       physics: physics,
       shrinkWrap: shrinkWrap ?? false,
