@@ -25,7 +25,7 @@ abstract class OrderService {
     @Path() int orderId,
   });
 
-  @GET('order/update-status/{orderId}')
+  @POST('order/update-status/{orderId}')
   Future<ResponseModel> updateOrderStatus(
       {@Path() int orderId, @Body() UpdateOrderStatusBody body});
 }

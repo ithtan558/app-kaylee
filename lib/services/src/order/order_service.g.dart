@@ -89,7 +89,7 @@ class _OrderService implements OrderService {
         'order/update-status/$orderId',
         queryParameters: queryParameters,
         options: RequestOptions(
-            method: 'GET',
+            method: 'POST',
             headers: <String, dynamic>{},
             extra: _extra,
             baseUrl: baseUrl),
