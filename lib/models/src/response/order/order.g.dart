@@ -68,7 +68,7 @@ Map<String, dynamic> _$OrderToJson(Order instance) => <String, dynamic>{
       'information_receive_address': instance.informationReceiveAddress,
       'information_receive_city_name': instance.informationReceiveCityName,
       'information_receive_district_name':
-      instance.informationReceiveDistrictName,
+          instance.informationReceiveDistrictName,
       'information_receive_wards_name': instance.informationReceiveWardsName,
       'information_receive_note': instance.informationReceiveNote,
       'order_details': instance.orderDetails?.map((e) => e?.toJson())?.toList(),

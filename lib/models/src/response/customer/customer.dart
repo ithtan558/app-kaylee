@@ -44,7 +44,7 @@ class Customer {
 
   DateTime get birthDayInDateTime {
     DateTime date = DateTime.tryParse(birthday);
-    return (date?.year ?? -1 < 0) ? null : date;
+    return ((date?.year ?? -1) < 0) ? null : date;
   }
 
   String email;

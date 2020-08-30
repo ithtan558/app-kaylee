@@ -54,7 +54,7 @@ class Order {
 
   DateTime get createdAtInDateTime {
     DateTime date = DateTime.tryParse(createdAt);
-    return (date?.year ?? -1 < 0) ? null : date;
+    return ((date?.year ?? -1) < 0) ? null : date;
   }
 
   String supplierName;
