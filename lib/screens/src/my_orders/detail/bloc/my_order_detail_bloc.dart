@@ -52,7 +52,7 @@ class MyOrderDetailBloc extends Cubit<SingleModel<Order>> {
 class CancelOrderModel extends SingleModel<Order> {
   CancelOrderModel.copy(SingleModel old) {
     this
-      ..message = message
+      ..message = old?.message
       ..loading = old?.loading;
   }
 }
