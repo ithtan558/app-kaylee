@@ -19,4 +19,13 @@ abstract class OrderService {
     @Query('end_date') String endDate,
     @Query('is_history_by_supplier') int isHistoryBySupplier = 1,
   });
+
+  @GET('order/{orderId}')
+  Future<ResponseModel<Order>> getDetail({
+    @Path() int orderId,
+  });
+
+  @GET('order/update-status/{orderId}')
+  Future<ResponseModel> cancelOrder(
+      {@Path() int orderId, @Body() UpdateOrderStatusBody body});
 }
