@@ -43,6 +43,7 @@ class Employee {
   String birthday;
 
   DateTime get birthDayInDateTime {
+    if (birthday.isNull) return null;
     DateTime date = DateTime.tryParse(birthday);
     return ((date?.year ?? -1) < 0) ? null : date;
   }

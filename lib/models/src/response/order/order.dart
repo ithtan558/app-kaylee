@@ -53,6 +53,7 @@ class Order {
   String createdAt;
 
   DateTime get createdAtInDateTime {
+    if (createdAt.isNull) return null;
     DateTime date = DateTime.tryParse(createdAt);
     return ((date?.year ?? -1) < 0) ? null : date;
   }
