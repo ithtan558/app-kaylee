@@ -7,6 +7,8 @@ import 'package:kaylee/widgets/widgets.dart';
 
 class KayleeDateFilterController {
   DateTime value;
+
+  KayleeDateFilterController({this.value});
 }
 
 class KayleeDateFilter extends StatefulWidget {
