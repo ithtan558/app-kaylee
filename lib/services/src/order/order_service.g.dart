@@ -79,7 +79,7 @@ class _OrderService implements OrderService {
   }
 
   @override
-  cancelOrder({orderId, body}) async {
+  updateOrderStatus({orderId, body}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);

@@ -26,6 +26,6 @@ abstract class OrderService {
   });
 
   @GET('order/update-status/{orderId}')
-  Future<ResponseModel> cancelOrder(
+  Future<ResponseModel> updateOrderStatus(
       {@Path() int orderId, @Body() UpdateOrderStatusBody body});
 }
