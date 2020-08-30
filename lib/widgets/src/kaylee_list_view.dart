@@ -25,7 +25,7 @@ class KayleeListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final length = itemCount + 1;
+    final length = (itemCount ?? 0) + 1;
     return ListView.separated(
       controller: controller,
       padding: padding ?? EdgeInsets.all(Dimens.px16),
