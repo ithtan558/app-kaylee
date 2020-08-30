@@ -29,7 +29,7 @@ class _KayleeDateFilterState extends BaseState<KayleeDateFilter> {
   @override
   void initState() {
     super.initState();
-    widget.controller.value = DateTime.now();
+    widget.controller.value ??= DateTime.now();
     pageController = PageController(
         keepPage: false,
         viewportFraction: 1 / 7,
