@@ -248,6 +248,7 @@ class Strings {
   static const String hoanThanh = 'Hoàn thành';
   static const String chuaThanhToan = 'Chưa thanh toán';
   static const String soLuong = 'Số lượng';
+  static const String huyDon = 'Huỷ đơn';
 
   Strings._();
 }
