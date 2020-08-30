@@ -23,6 +23,7 @@ class UserInfo {
       this.address,
       this.gender,
       this.image,
+      this.hometownCity,
       this.city,
       this.district,
       this.wards,
@@ -39,9 +40,17 @@ class UserInfo {
   String phone;
   String username;
   String birthday;
+
+  DateTime get birthdayInDateTime {
+    if (birthday.isNull) return null;
+    DateTime date = DateTime.tryParse(birthday);
+    return ((date?.year ?? -1) < 0) ? null : date;
+  }
+
   String address;
   int gender;
   String image;
+  City hometownCity;
   City city;
   District district;
   Ward wards;

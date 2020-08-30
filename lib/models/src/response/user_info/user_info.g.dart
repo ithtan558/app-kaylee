@@ -19,6 +19,9 @@ UserInfo _$UserInfoFromJson(Map<String, dynamic> json) {
     address: json['address'] as String,
     gender: json['gender'] as int,
     image: json['image'] as String,
+    hometownCity: json['hometown_city'] == null
+        ? null
+        : City.fromJson(json['hometown_city'] as Map<String, dynamic>),
     city: json['city'] == null
         ? null
         : City.fromJson(json['city'] as Map<String, dynamic>),
@@ -44,6 +47,7 @@ Map<String, dynamic> _$UserInfoToJson(UserInfo instance) => <String, dynamic>{
       'address': instance.address,
       'gender': instance.gender,
       'image': instance.image,
+      'hometown_city': instance.hometownCity?.toJson(),
       'city': instance.city?.toJson(),
       'district': instance.district?.toJson(),
       'wards': instance.wards?.toJson(),
