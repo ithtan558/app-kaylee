@@ -3,11 +3,8 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'verify_phone_body.g.dart';
 
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable(fieldRename: FieldRename.snake, createFactory: false)
 class VerifyPhoneBody {
-  factory VerifyPhoneBody.fromJson(Map<String, dynamic> json) =>
-      _$VerifyPhoneBodyFromJson(json);
-
   Map<String, dynamic> toJson() => _$VerifyPhoneBodyToJson(this);
 
   VerifyPhoneBody({

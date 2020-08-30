@@ -4,7 +4,7 @@ import 'package:kaylee/models/models.dart';
 
 part 'login_result.g.dart';
 
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
 class LoginResult {
   factory LoginResult.fromJson(Map<String, dynamic> json) =>
       _$LoginResultFromJson(json);

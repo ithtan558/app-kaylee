@@ -43,13 +43,8 @@ class Employee {
   String birthday;
 
   DateTime get birthDayInDateTime {
-    DateTime date;
-    if (birthday.isNullOrEmpty) return null;
-    try {
-      date = DateTime.parse(birthday);
-    } catch (e) {}
-    if (date.isNull || date.year < 0) return null;
-    return date;
+    DateTime date = DateTime.tryParse(birthday);
+    return (date?.year ?? -1 < 0) ? null : date;
   }
 
   String phone;

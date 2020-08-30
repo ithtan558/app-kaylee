@@ -3,7 +3,7 @@ import 'package:kaylee/models/models.dart';
 
 part 'products.g.dart';
 
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
 class Products extends PageData<List<Product>> {
   factory Products.fromJson(Map<String, dynamic> json) =>
       _$ProductsFromJson(json);

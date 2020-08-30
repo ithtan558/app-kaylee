@@ -242,6 +242,12 @@ class Strings {
   static const String chinhSuaThongTinHoaHong = 'Chỉnh sửa thông tin hoa hồng';
   static const String dsDonChiHoaHong = 'Danh sách đơn hàng chi hoa hồng';
   static const String quanlyCuaHang = 'Quản lý cửa hàng';
+  static const String danhMucDonDatHang = 'Danh mục đơn đặt hàng';
+  static const String daTiepNhan = 'Đã tiếp nhận';
+  static const String dangCho = 'Đang chờ';
+  static const String hoanThanh = 'Hoàn thành';
+  static const String chuaThanhToan = 'Chưa thanh toán';
+  static const String soLuong = 'Số lượng';
 
   Strings._();
 }

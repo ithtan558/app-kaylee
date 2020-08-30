@@ -129,12 +129,20 @@ class KayleePriceText extends StatelessWidget {
   final TextStyle textStyle;
   final bool showUnit;
   final TextAlign textAlign;
+  final TextOverflow textOverflow;
 
-  factory KayleePriceText.normal(dynamic price, {TextStyle textStyle}) =>
+  factory KayleePriceText.normal(
+    dynamic price, {
+    TextStyle textStyle,
+    TextAlign textAlign = TextAlign.start,
+    TextOverflow textOverflow,
+  }) =>
       KayleePriceText(
         price,
         textStyle: textStyle,
         showUnit: true,
+        textAlign: textAlign,
+        textOverflow: textOverflow,
       );
 
   factory KayleePriceText.hyper16W700(dynamic price) => KayleePriceText.normal(
@@ -168,7 +176,10 @@ class KayleePriceText extends StatelessWidget {
       );
 
   KayleePriceText(this.price,
-      {this.textStyle, this.showUnit = true, this.textAlign = TextAlign.start});
+      {this.textStyle,
+        this.showUnit = true,
+        this.textAlign = TextAlign.start,
+        this.textOverflow});
 
   @override
   Widget build(BuildContext context) {
@@ -178,6 +189,7 @@ class KayleePriceText extends StatelessWidget {
       style: textStyle ?? TextStyles.hyper16W500,
       maxLines: 1,
       textAlign: textAlign,
+      overflow: textOverflow,
     );
   }
 }

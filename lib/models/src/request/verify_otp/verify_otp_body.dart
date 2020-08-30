@@ -3,12 +3,9 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'verify_otp_body.g.dart';
 
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable(fieldRename: FieldRename.snake, createFactory: false)
 @JsonSerializable()
 class VerifyOtpBody {
-  factory VerifyOtpBody.fromJson(Map<String, dynamic> json) =>
-      _$VerifyOtpBodyFromJson(json);
-
   Map<String, dynamic> toJson() => _$VerifyOtpBodyToJson(this);
 
   VerifyOtpBody({

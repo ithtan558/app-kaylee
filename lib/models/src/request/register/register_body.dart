@@ -3,11 +3,8 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'register_body.g.dart';
 
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable(fieldRename: FieldRename.snake, createFactory: false)
 class RegisterBody {
-  factory RegisterBody.fromJson(Map<String, dynamic> json) =>
-      _$RegisterBodyFromJson(json);
-
   Map<String, dynamic> toJson() => _$RegisterBodyToJson(this);
 
   RegisterBody({

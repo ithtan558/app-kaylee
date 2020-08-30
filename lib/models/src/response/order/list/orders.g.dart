@@ -1,24 +1,24 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'suppliers.dart';
+part of 'orders.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Suppliers _$SuppliersFromJson(Map<String, dynamic> json) {
-  return Suppliers()
+Orders _$OrdersFromJson(Map<String, dynamic> json) {
+  return Orders()
     ..page = json['page'] as int
     ..limit = json['limit'] as int
     ..total = json['total'] as int
     ..pages = json['pages'] as int
     ..items = (json['items'] as List)
-        ?.map((e) =>
-            e == null ? null : Supplier.fromJson(e as Map<String, dynamic>))
+        ?.map(
+            (e) => e == null ? null : Order.fromJson(e as Map<String, dynamic>))
         ?.toList();
 }
 
-Map<String, dynamic> _$SuppliersToJson(Suppliers instance) => <String, dynamic>{
+Map<String, dynamic> _$OrdersToJson(Orders instance) => <String, dynamic>{
       'page': instance.page,
       'limit': instance.limit,
       'total': instance.total,

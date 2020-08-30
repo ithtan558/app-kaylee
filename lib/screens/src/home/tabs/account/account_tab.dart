@@ -57,7 +57,9 @@ class _AccountTabState extends BaseState<AccountTab> {
             _buildMenuItem(
                 title: Strings.quanlyDonDh,
                 icon: Images.ic_acc_orderlist,
-                onClick: () {}),
+                onClick: () {
+                  pushScreen(PageIntent(screen: MyOrdersScreen));
+                }),
             _buildMenuItem(
                 title: Strings.dangXuat,
                 icon: Images.ic_acc_logout,

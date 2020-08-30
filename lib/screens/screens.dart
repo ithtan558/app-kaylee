@@ -14,6 +14,7 @@ export 'src/guide/guide_screen.dart';
 export 'src/history_detail/history_detail_screen.dart';
 export 'src/home/home_screen.dart';
 export 'src/login/login_screen.dart';
+export 'src/my_orders/list/my_orders_screen.dart';
 export 'src/notification/detail/notify_detail_screen.dart';
 export 'src/notification/list/notification_screen.dart';
 export 'src/order_detail/create_new_order_screen.dart';

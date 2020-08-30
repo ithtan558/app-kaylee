@@ -6,14 +6,6 @@ part of 'notification_status_body.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-NotificationStatusBody _$NotificationStatusBodyFromJson(
-    Map<String, dynamic> json) {
-  return NotificationStatusBody(
-    id: json['id'] as int,
-    status: parseStatusFromInt(json['status'] as int),
-  );
-}
-
 Map<String, dynamic> _$NotificationStatusBodyToJson(
         NotificationStatusBody instance) =>
     <String, dynamic>{
