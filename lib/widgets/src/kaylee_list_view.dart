@@ -5,11 +5,9 @@ class KayleeListView extends StatelessWidget {
   final EdgeInsets padding;
   final ScrollPhysics physics;
   final bool shrinkWrap;
-  final int crossAxisCount;
   final int mainAxisSpacing;
   final IndexedWidgetBuilder itemBuilder;
   final int itemCount;
-  final double childAspectRatio;
   final IndexedWidgetBuilder separatorBuilder;
   final WidgetBuilder loadingBuilder;
   final ScrollController controller;
@@ -19,9 +17,7 @@ class KayleeListView extends StatelessWidget {
       this.padding,
       this.physics,
       this.shrinkWrap,
-      this.crossAxisCount,
       this.mainAxisSpacing,
-      this.childAspectRatio,
       this.itemCount,
       this.loadingBuilder,
       this.separatorBuilder,
