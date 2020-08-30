@@ -1,6 +1,8 @@
+import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class MyOrderItem extends StatelessWidget {
@@ -79,7 +81,8 @@ class MyOrderItem extends StatelessWidget {
             text: Strings.chiTiet,
             margin: const EdgeInsets.all(Dimens.px16),
             onPressed: () {
-              // context.push(PageIntent());
+              context.push(PageIntent(
+                  screen: MyOrderDetailScreen, bundle: Bundle(order)));
             },
           )
         ],
