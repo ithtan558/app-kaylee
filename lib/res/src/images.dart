@@ -51,4 +51,8 @@ class Images {
   static const ic_radio_inactive = 'assets/ic_radio_unactive.png';
   static const ic_card = 'assets/ic_card.png';
   static const ic_momo = 'assets/ic_momo.png';
+  static const ic_phone = 'assets/ic_phone.png';
+  static const ic_address = 'assets/ic_address.png';
+  static const ic_edit = 'assets/ic_edit.png';
+  static const ic_list = 'assets/ic_list.png';
 }

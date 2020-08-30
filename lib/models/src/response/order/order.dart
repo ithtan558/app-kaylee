@@ -1,5 +1,6 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 
 part 'order.g.dart';
@@ -19,6 +20,25 @@ class Order {
     this.createdAt,
     this.supplierName,
     this.count,
+    this.isPaid,
+    this.phone,
+    this.email,
+    this.note,
+    this.subTotal,
+    this.discount,
+    this.taxValue,
+    this.supplierId,
+    this.customerFirstName,
+    this.customerLastName,
+    this.brandName,
+    this.informationReceiveName,
+    this.informationReceivePhone,
+    this.informationReceiveAddress,
+    this.informationReceiveCityName,
+    this.informationReceiveDistrictName,
+    this.informationReceiveWardsName,
+    this.informationReceiveNote,
+    this.orderDetails,
   });
 
   int id;
@@ -39,6 +59,26 @@ class Order {
 
   String supplierName;
   int count;
+
+  int isPaid;
+  String phone;
+  String email;
+  String note;
+  int subTotal;
+  int discount;
+  int taxValue;
+  int supplierId;
+  String customerFirstName;
+  String customerLastName;
+  String brandName;
+  String informationReceiveName;
+  String informationReceivePhone;
+  String informationReceiveAddress;
+  String informationReceiveCityName;
+  String informationReceiveDistrictName;
+  String informationReceiveWardsName;
+  String informationReceiveNote;
+  List<OrderItem> orderDetails;
 }
 
 OrderStatus parseOrderStatusFromInt(status) {
@@ -83,7 +123,7 @@ enum OrderStatus {
   cancel,
 }
 
-String orderStatus2Order({OrderStatus status}) {
+String orderStatus2Title({OrderStatus status}) {
   switch (status) {
     case OrderStatus.ordered:
       return Strings.daTiepNhan;

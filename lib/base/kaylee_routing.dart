@@ -81,6 +81,8 @@ mixin KayleeRouting on Routing {
         return CommissionDetailScreen.newInstance();
       case MyOrdersScreen:
         return MyOrdersScreen.newInstance();
+      case MyOrderDetailScreen:
+        return MyOrderDetailScreen.newInstance();
       default:
         return SplashScreen.newInstance();
     }

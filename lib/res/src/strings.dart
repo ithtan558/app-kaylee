@@ -250,6 +250,7 @@ class Strings {
   static const String soLuong = 'Số lượng';
   static const String huyDon = 'Huỷ đơn';
   static const String tinhTrangDonHang = 'Tình trạng đơn hàng';
+  static const String thuongHieu = 'Thương hiệu';
 
   Strings._();
 }

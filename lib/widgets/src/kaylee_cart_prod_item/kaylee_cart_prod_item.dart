@@ -12,8 +12,7 @@ abstract class KayleeCartProdItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-          vertical: Dimens.px16, horizontal: Dimens.px16),
+      padding: const EdgeInsets.symmetric(vertical: Dimens.px16),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -55,5 +54,5 @@ abstract class KayleeCartProdItem extends StatelessWidget {
     );
   }
 
-  void tapOnQuantity(BuildContext context);
+  void tapOnQuantity(BuildContext context) {}
 }

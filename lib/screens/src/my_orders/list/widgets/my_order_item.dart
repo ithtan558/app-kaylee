@@ -34,7 +34,7 @@ class MyOrderItem extends StatelessWidget {
                 ),
                 Expanded(
                   child: KayleeText.normal16W400(
-                    orderStatus2Order(status: order.status),
+                    orderStatus2Title(status: order.status),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.end,

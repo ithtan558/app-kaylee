@@ -2,6 +2,7 @@ import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/models/models.dart';
+import 'package:kaylee/res/res.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
@@ -15,6 +16,14 @@ class CartProdItem extends KayleeCartProdItem {
           amount: product.price * product.quantity,
           quantity: product.quantity,
         );
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
+      child: super.build(context),
+    );
+  }
 
   @override
   void tapOnQuantity(BuildContext context) async {

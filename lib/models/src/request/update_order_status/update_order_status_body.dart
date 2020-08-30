@@ -1,0 +1,18 @@
+import 'package:json_annotation/json_annotation.dart';
+import 'package:kaylee/models/models.dart';
+
+part 'update_order_status_body.g.dart';
+
+@JsonSerializable(explicitToJson: true, createFactory: false)
+class UpdateOrderStatusBody {
+  Map<String, dynamic> toJson() => _$UpdateOrderStatusBodyToJson(this);
+
+  UpdateOrderStatusBody({
+    this.status,
+    this.id,
+  });
+
+  @JsonKey(toJson: parseToIntFromOrderStatus, name: 'order_status_id')
+  OrderStatus status;
+  int id;
+}
