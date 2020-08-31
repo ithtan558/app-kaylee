@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
@@ -50,6 +51,9 @@ class _EditProfileScreenState extends KayleeState<EditProfileScreen> {
           showKayleeAlertErrorYesDialog(
               context: context, error: state.error, onPressed: popScreen);
         } else if (state is UpdateProfileModel) {
+          context.bloc<AppBloc>().notifyUpdateProfile(
+                userInfo: _bloc.userInfo,
+              );
           showKayleeAlertMessageYesDialog(
               context: context, message: state.message, onPressed: popScreen);
         }
@@ -107,9 +111,8 @@ class _EditProfileScreenState extends KayleeState<EditProfileScreen> {
           actionTitle: Strings.luu,
         ),
         padding: const EdgeInsets.all(Dimens.px16),
-        child: BlocBuilder<EditProfileBloc, SingleModel<UserInfo>>(
-          buildWhen: (previous, current) => current is ProfileModel,
-          builder: (context, state) {
+        child: BlocConsumer<EditProfileBloc, SingleModel<UserInfo>>(
+          listener: (context, state) {
             imagePickerController.existedImageUrl = state.item?.image;
             firstNameTfController.text = state.item?.firstName;
             lastNameTfController.text = state.item?.lastName;
@@ -120,6 +123,10 @@ class _EditProfileScreenState extends KayleeState<EditProfileScreen> {
               ..initCity = state.item?.city
               ..initDistrict = state.item?.district
               ..initWard = state.item?.wards;
+          },
+          listenWhen: (previous, current) => current is ProfileModel,
+          buildWhen: (previous, current) => current is ProfileModel,
+          builder: (context, state) {
             return Column(
               children: [
                 KayleeImagePicker(
