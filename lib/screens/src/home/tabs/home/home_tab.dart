@@ -35,7 +35,8 @@ class HomeTab extends StatefulWidget {
   _HomeTabState createState() => new _HomeTabState();
 }
 
-class _HomeTabState extends KayleeState<HomeTab> {
+class _HomeTabState extends KayleeState<HomeTab>
+    with AutomaticKeepAliveClientMixin {
   final scrollController = ScrollController();
   ScrollOffsetBloc scrollOffsetBloc;
 
@@ -60,6 +61,7 @@ class _HomeTabState extends KayleeState<HomeTab> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final listTitle = Padding(
       padding: const EdgeInsets.only(top: Dimens.px24, bottom: Dimens.px16),
       child: Center(
@@ -117,6 +119,9 @@ class _HomeTabState extends KayleeState<HomeTab> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class _NotificationIcon extends StatefulWidget {
