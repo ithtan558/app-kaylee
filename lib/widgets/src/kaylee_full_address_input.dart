@@ -10,7 +10,8 @@ class KayleeFullAddressInput extends StatefulWidget {
   final EdgeInsets padding;
   final KayleeFullAddressController controller;
 
-  KayleeFullAddressInput({this.title, this.padding, this.controller});
+  KayleeFullAddressInput({Key key, this.title, this.padding, this.controller})
+      : super(key: key);
 
   @override
   _KayleeFullAddressInputState createState() =>
