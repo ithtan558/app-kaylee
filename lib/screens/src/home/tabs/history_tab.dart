@@ -14,7 +14,8 @@ class HistoryTab extends StatefulWidget {
   _HistoryTabState createState() => new _HistoryTabState();
 }
 
-class _HistoryTabState extends BaseState<HistoryTab> {
+class _HistoryTabState extends BaseState<HistoryTab>
+    with AutomaticKeepAliveClientMixin {
   @override
   void initState() {
     super.initState();
@@ -27,6 +28,7 @@ class _HistoryTabState extends BaseState<HistoryTab> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return KayleeFilterView(
       title: Strings.lichSuDh,
       child: ListView.separated(
@@ -108,4 +110,7 @@ class _HistoryTabState extends BaseState<HistoryTab> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
