@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:anth_package/anth_package.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:kaylee/models/models.dart';
@@ -11,23 +13,22 @@ class UserInfo {
 
   Map<String, dynamic> toJson() => _$UserInfoToJson(this);
 
-  UserInfo(
-      {this.id,
-      this.brandId,
-      this.firstName,
-      this.lastName,
-      this.email,
-      this.phone,
-      this.username,
-      this.birthday,
-      this.address,
-      this.gender,
-      this.image,
-      this.hometownCity,
-      this.city,
-      this.district,
-      this.wards,
-      this.roles});
+  UserInfo({this.id,
+    this.brandId,
+    this.firstName,
+    this.lastName,
+    this.email,
+    this.phone,
+    this.username,
+    this.birthday,
+    this.address,
+    this.gender,
+    this.image,
+    this.hometownCity,
+    this.city,
+    this.district,
+    this.wards,
+    this.roles});
 
   int id;
   int brandId;
@@ -50,6 +51,8 @@ class UserInfo {
   String address;
   int gender;
   String image;
+  @JsonKey(ignore: true)
+  File imageFile;
   City hometownCity;
   City city;
   District district;
