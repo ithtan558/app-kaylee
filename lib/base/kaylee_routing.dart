@@ -23,8 +23,8 @@ mixin KayleeRouting on Routing {
         return NotificationScreen.newInstance();
       case SplashScreen:
         return SplashScreen.newInstance();
-      case HistoryDetailScreen:
-        return HistoryDetailScreen.newInstance();
+      case HistoryOrderDetailScreen:
+        return HistoryOrderDetailScreen.newInstance();
       case GuideScreen:
         return GuideScreen.newInstance();
       case AboutScreen:

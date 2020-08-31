@@ -11,7 +11,7 @@ export 'src/customer/list/customer_list_screen.dart';
 export 'src/edit_profile/edit_profile_screen.dart';
 export 'src/filter/filter_screen.dart';
 export 'src/guide/guide_screen.dart';
-export 'src/history_detail/history_detail_screen.dart';
+export 'src/history_detail/history_order_detail_screen.dart';
 export 'src/home/home_screen.dart';
 export 'src/login/login_screen.dart';
 export 'src/my_orders/detail/my_order_detail_screen.dart';
