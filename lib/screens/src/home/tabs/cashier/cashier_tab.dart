@@ -14,7 +14,8 @@ class CashierTab extends StatefulWidget {
   _CashierTabState createState() => new _CashierTabState();
 }
 
-class _CashierTabState extends BaseState<CashierTab> {
+class _CashierTabState extends BaseState<CashierTab>
+    with AutomaticKeepAliveClientMixin {
   @override
   void initState() {
     super.initState();
@@ -27,6 +28,7 @@ class _CashierTabState extends BaseState<CashierTab> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return KayleeFilterView(
       title: Strings.thuNgan,
       child: ListView.separated(
@@ -50,4 +52,7 @@ class _CashierTabState extends BaseState<CashierTab> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
