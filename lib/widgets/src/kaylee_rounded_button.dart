@@ -31,10 +31,11 @@ class KayLeeRoundedButton extends StatelessWidget {
         color: ColorsRes.hintText,
       );
 
-  factory KayLeeRoundedButton.button3({String text,
-    EdgeInsets margin,
-    VoidCallback onPressed,
-    double width}) =>
+  factory KayLeeRoundedButton.button3(
+          {String text,
+          EdgeInsets margin,
+          VoidCallback onPressed,
+          double width}) =>
       KayLeeRoundedButton(
         text: text,
         margin: margin,
@@ -43,10 +44,11 @@ class KayLeeRoundedButton extends StatelessWidget {
         color: ColorsRes.button1,
       );
 
-  factory KayLeeRoundedButton.normal({String text,
-    EdgeInsets margin,
-    VoidCallback onPressed,
-    double width}) =>
+  factory KayLeeRoundedButton.normal(
+          {String text,
+          EdgeInsets margin,
+          VoidCallback onPressed,
+          double width}) =>
       KayLeeRoundedButton(
         text: text,
         margin: margin,
@@ -69,7 +71,9 @@ class KayLeeRoundedButton extends StatelessWidget {
       width: width.isNotNull ? width : double.infinity,
       margin: margin ?? const EdgeInsets.symmetric(horizontal: Dimens.px16),
       child: FlatButton(
-        onPressed: onPressed,
+        onPressed: () {
+          onPressed?.call();
+        },
         shape: StadiumBorder(side: borderSide ?? BorderSide.none),
         splashColor: Colors.grey.withOpacity(0.7),
         color: color ?? ColorsRes.button,
