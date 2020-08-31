@@ -1,8 +1,11 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:kaylee/models/models.dart';
+import 'package:kaylee/services/services.dart';
 
 class AppBloc extends Cubit {
-  AppBloc() : super(InitState());
+  final UserService userService;
+
+  AppBloc({this.userService}) : super(InitState());
   bool isShowingLoginDialog = false;
   final _unauthorizedController = PublishSubject<UnauthorizedState>();
 
@@ -16,6 +19,22 @@ class AppBloc extends Cubit {
 
   void unauthorized({Error error}) {
     _unauthorizedController.add(UnauthorizedState(error: error));
+  }
+
+  void notifyUpdateProfile({UserInfo userInfo}) {
+    RequestHandler(
+      request: userService.getProfile(),
+      onSuccess: ({message, result}) {
+        emit(UpdateProfileState(
+          userInfo: result,
+        ));
+      },
+      onFailed: (code, {error}) {
+        emit(UpdateProfileState(
+          userInfo: userInfo,
+        ));
+      },
+    );
   }
 
   @override
@@ -46,3 +65,9 @@ class CartBloc extends Cubit<CartState> {
 }
 
 class CartState {}
+
+class UpdateProfileState {
+  final UserInfo userInfo;
+
+  UpdateProfileState({this.userInfo});
+}
