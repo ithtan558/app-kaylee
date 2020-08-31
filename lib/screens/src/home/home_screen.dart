@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/screens/src/home/tabs/account/account_tab.dart';
 import 'package:kaylee/screens/src/home/tabs/cashier/cashier_tab.dart';
-import 'package:kaylee/screens/src/home/tabs/history_tab.dart';
+import 'package:kaylee/screens/src/home/tabs/history/history_tab.dart';
 import 'package:kaylee/screens/src/home/tabs/home/home_tab.dart';
 import 'package:kaylee/widgets/src/kaylee_bottom_bar.dart';
 
