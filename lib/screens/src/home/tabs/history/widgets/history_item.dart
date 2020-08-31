@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
+import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class HistoryItem extends StatelessWidget {
@@ -12,8 +13,9 @@ class HistoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final date = (order?.createdAtInDateTime?.weekday ?? -1);
     return Container(
-      height: Dimens.px117,
+      height: Dimens.px118,
       child: KayleeInkwell(
         borderRadius: BorderRadius.circular(Dimens.px5),
         onTap: () {
@@ -34,14 +36,14 @@ class HistoryItem extends StatelessWidget {
                   children: [
                     Expanded(
                       child: KayleeText.normal16W500(
-                        '#0001546',
+                        '#${order.code ?? ''}',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     Expanded(
                       child: KayleeText.normal16W400(
-                        orderStatus2Title(status: OrderStatus.cancel),
+                        orderStatus2Title(status: order.status),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.end,
@@ -51,19 +53,20 @@ class HistoryItem extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.all(Dimens.px16).copyWith(bottom: 7),
+                padding:
+                    EdgeInsets.all(Dimens.px16).copyWith(bottom: Dimens.px8),
                 child: Row(
                   children: [
                     Expanded(
                       child: KayleeText.normal16W500(
-                        order?.name ?? 'asdfsadf',
+                        order?.name ?? '',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     Expanded(
                       child: KayleePriceText.normal(
-                        order?.amount ?? 1000000,
+                        order?.amount ?? 0,
                         textOverflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.end,
                       ),
@@ -75,7 +78,9 @@ class HistoryItem extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: Dimens.px16)
                     .copyWith(bottom: Dimens.px16),
                 child: KayleeText.hint16W400(
-                  'T2, 16/06/2020',
+                  '${date == DateTime.sunday ? 'CN' : 'T${date + 1}'} ${order
+                      ?.createdAtInDateTime?.toFormatString(
+                      pattern: dateFormat2)}',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
