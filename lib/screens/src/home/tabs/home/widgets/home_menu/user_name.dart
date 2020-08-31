@@ -52,7 +52,7 @@ class _UserNameState extends BaseState<UserName> {
 
   @override
   Widget build(BuildContext context) {
-    final userName = KayleeText.normalWhite16W500('Hi, ${userInfo?.firstName}');
+    final userName = KayleeText.normalWhite16W500('Hi, ${userInfo?.name}');
     final role = KayleeText.normalWhite12W400(Strings.quanlyCuaHang);
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
