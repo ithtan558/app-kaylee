@@ -287,12 +287,13 @@ class PriceInputField extends StatefulWidget {
   final FocusNode focusNode;
   final FocusNode nextFocusNode;
 
-  PriceInputField({this.error,
-    this.controller,
-    this.hint,
-    this.textInputAction,
-    this.focusNode,
-    this.nextFocusNode});
+  PriceInputField(
+      {this.error,
+      this.controller,
+      this.hint,
+      this.textInputAction,
+      this.focusNode,
+      this.nextFocusNode});
 
   @override
   _PriceInputFieldState createState() => _PriceInputFieldState();
