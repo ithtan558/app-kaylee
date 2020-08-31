@@ -49,8 +49,11 @@ class _HistoryTabState extends KayleeState<HistoryTab>
         child: BlocConsumer<HistoryTabBloc, LoadMoreModel<Order>>(
           listener: (context, state) {
             if (!state.loading) {
-              showKayleeAlertErrorYesDialog(
-                  context: context, error: state.error, onPressed: popScreen);
+              if (state.code.isNotNull &&
+                  state.code != ErrorType.UNAUTHORIZED) {
+                showKayleeAlertErrorYesDialog(
+                    context: context, error: state.error, onPressed: popScreen);
+              }
             }
           },
           builder: (context, state) {
@@ -65,7 +68,7 @@ class _HistoryTabState extends KayleeState<HistoryTab>
               },
               itemCount: state.items?.length,
               separatorBuilder: (context, index) =>
-              const SizedBox(height: Dimens.px16),
+                  const SizedBox(height: Dimens.px16),
               loadingBuilder: (context) {
                 if (state.ended) return Container();
                 return Align(
