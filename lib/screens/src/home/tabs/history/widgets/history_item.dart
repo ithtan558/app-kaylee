@@ -19,7 +19,8 @@ class HistoryItem extends StatelessWidget {
       child: KayleeInkwell(
         borderRadius: BorderRadius.circular(Dimens.px5),
         onTap: () {
-          context.push(PageIntent(screen: HistoryOrderDetailScreen));
+          context.push(PageIntent(
+              screen: HistoryOrderDetailScreen, bundle: Bundle(order)));
         },
         child: KayleeCartView(
           borderRadius: BorderRadius.circular(Dimens.px5),
