@@ -28,4 +28,11 @@ abstract class OrderService {
   @POST('order/update-status/{orderId}')
   Future<ResponseModel> updateOrderStatus(
       {@Path() int orderId, @Body() UpdateOrderStatusBody body});
+
+  @GET('order')
+  Future<ResponseModel<Orders>> getOrderHistory({
+    @Query('page') int page,
+    @Query('limit') int limit,
+    @Query('is_history') int isHistory = 1,
+  });
 }
