@@ -176,6 +176,20 @@ class KayleeTextField extends StatelessWidget {
         ),
       );
 
+  factory KayleeTextField.staticPhone({
+    Key key,
+    String title,
+    String initText,
+  }) =>
+      KayleeTextField(
+        key: key,
+        title: title ?? Strings.soDienThoai,
+        textInput: PhoneInputField(
+          initText: initText,
+          isStaticTField: true,
+        ),
+      );
+
   factory KayleeTextField.phoneInput(
           {Key key,
           String title,
@@ -607,6 +621,20 @@ class _NormalInputFieldState extends BaseState<NormalInputField> {
   @override
   void initState() {
     super.initState();
+    _initDataIfStaticWidget();
+  }
+
+  @override
+  void didUpdateWidget(NormalInputField oldWidget) {
+    _updateDataIfStaticWidget();
+    super.didUpdateWidget(oldWidget);
+  }
+
+  void _initDataIfStaticWidget() {
+    _updateDataIfStaticWidget();
+  }
+
+  void _updateDataIfStaticWidget() {
     if (widget.isStaticTField) {
       tfController = TextEditingController(text: widget.initText);
     }
@@ -716,12 +744,6 @@ class PhoneInputField extends StatefulWidget {
   final TextInputAction textInputAction;
   final bool isStaticTField;
 
-  factory PhoneInputField.static({String initText}) =>
-      PhoneInputField(
-        initText: initText,
-        isStaticTField: true,
-      );
-
   PhoneInputField({this.error,
     this.focusNode,
     this.controller,
@@ -741,6 +763,20 @@ class _PhoneInputFieldState extends State<PhoneInputField> {
   @override
   void initState() {
     super.initState();
+    _initDataIfStaticWidget();
+  }
+
+  @override
+  void didUpdateWidget(PhoneInputField oldWidget) {
+    _updateDataIfStaticWidget();
+    super.didUpdateWidget(oldWidget);
+  }
+
+  void _initDataIfStaticWidget() {
+    _updateDataIfStaticWidget();
+  }
+
+  void _updateDataIfStaticWidget() {
     if (widget.isStaticTField) {
       tfController = TextEditingController(text: widget.initText);
     }
