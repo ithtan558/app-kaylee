@@ -1,11 +1,23 @@
+import 'dart:async';
+
+import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/base/kaylee_state.dart';
+import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/screens/src/edit_profile/bloc/edit_profile_bloc.dart';
 import 'package:kaylee/screens/src/reset_pass/reset/reset_pass_verify_phone_screen.dart';
+import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class EditProfileScreen extends StatefulWidget {
-  static Widget newInstance() => EditProfileScreen._();
+  static Widget newInstance() => BlocProvider(
+      create: (context) => EditProfileBloc(
+            userInfo: context.user.getUserInfo()?.userInfo,
+            userService: context.network.provideUserService(),
+          ),
+      child: EditProfileScreen._());
 
   EditProfileScreen._();
 
@@ -13,116 +25,173 @@ class EditProfileScreen extends StatefulWidget {
   _EditProfileScreenState createState() => new _EditProfileScreenState();
 }
 
-class _EditProfileScreenState extends BaseState<EditProfileScreen> {
+class _EditProfileScreenState extends KayleeState<EditProfileScreen> {
+  final imagePickerController = ImagePickerController();
   final lastNameTfController = TextEditingController();
-  final nameTfController = TextEditingController();
-  final addrTfController = TextEditingController();
+  final firstNameTfController = TextEditingController();
   final lastNameFocus = FocusNode();
-  final nameFocus = FocusNode();
-  final addrFocus = FocusNode();
+  final firstNameFocus = FocusNode();
+  final birthDayController = PickInputController<DateTime>();
+  final addressController = KayleeFullAddressController();
+
+  EditProfileBloc _bloc;
+  StreamSubscription _sub;
 
   @override
   void initState() {
     super.initState();
+    _bloc = context.bloc<EditProfileBloc>();
+    _sub = _bloc.listen((state) {
+      if (state.loading) {
+        showLoading();
+      } else if (!state.loading) {
+        hideLoading();
+        if (state.code.isNotNull && state.code != ErrorType.UNAUTHORIZED) {
+          showKayleeAlertErrorYesDialog(
+              context: context, error: state.error, onPressed: popScreen);
+        } else if (state is UpdateProfileModel) {
+          showKayleeAlertMessageYesDialog(
+              context: context, message: state.message, onPressed: popScreen);
+        }
+      }
+    });
+    _bloc.loadProfile();
   }
 
   @override
   void dispose() {
     lastNameTfController.dispose();
-    nameTfController.dispose();
-    addrTfController.dispose();
+    firstNameTfController.dispose();
 
     lastNameFocus.dispose();
-    nameFocus.dispose();
-    addrFocus.dispose();
-
+    firstNameFocus.dispose();
+    _sub.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return UnFocusWidget(
-      child: Scaffold(
+      child: KayleeScrollview(
         appBar: KayleeAppBar.hyperTextAction(
           title: Strings.chinhSuThongTinCaNhan,
-          onActionClick: () {},
-          actionTitle: Strings.luu,
-        ),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.all(Dimens.px16),
-          child: Column(
-            children: [
-              KayleeImagePicker(
-                oldImages: [
-                  'https://us.123rf.com/450wm/subbotina/subbotina1512/subbotina151200067/49609375-beautiful-spa-model-girl-with-perfect-fresh-clean-skin.jpg?ver=6',
-                  'https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-                  'https://i.pinimg.com/originals/97/e4/2a/97e42a82fc7911961d3ca55f54d1372c.jpg',
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: Dimens.px16),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: KayleeTextField.normal(
-                        title: Strings.ho,
-                        hint: Strings.hoHint,
-                        controller: lastNameTfController,
-                        textInputAction: TextInputAction.next,
-                        focusNode: lastNameFocus,
-                      ),
+          onActionClick: () {
+            showKayleeAlertDialog(
+                context: context,
+                view: KayleeAlertDialogView(
+                  title: Strings.banDaChacChan,
+                  content: Strings.banCoDongYLuuLaiNhungThayDoi,
+                  actions: [
+                    KayleeAlertDialogAction.dongY(
+                      onPressed: () {
+                        popScreen();
+                        _bloc.userInfo
+                          ..firstName = firstNameTfController.text
+                          ..lastName = lastNameTfController.text
+                          ..birthday = birthDayController.value.toString()
+                          ..address = addressController.address
+                          ..city = addressController.city
+                          ..district = addressController.district
+                          ..wards = addressController.ward
+                          ..imageFile = imagePickerController.image;
+                        _bloc.updateProfile();
+                      },
+                      isDefaultAction: true,
                     ),
-                    SizedBox(width: Dimens.px8),
-                    Expanded(
-                      child: KayleeTextField.normal(
-                        title: Strings.ten,
-                        hint: Strings.tenHint,
-                        controller: nameTfController,
-                        textInputAction: TextInputAction.next,
-                        focusNode: nameFocus,
-                      ),
+                    KayleeAlertDialogAction.huy(
+                      onPressed: popScreen,
                     ),
                   ],
+                ));
+          },
+          actionTitle: Strings.luu,
+        ),
+        padding: const EdgeInsets.all(Dimens.px16),
+        child: BlocBuilder<EditProfileBloc, SingleModel<UserInfo>>(
+          buildWhen: (previous, current) => current is ProfileModel,
+          builder: (context, state) {
+            imagePickerController.existedImageUrl = state.item?.image;
+            firstNameTfController.text = state.item?.firstName;
+            lastNameTfController.text = state.item?.lastName;
+
+            birthDayController.value = state.item?.birthdayInDateTime;
+            addressController
+              ..initAddress = state.item?.address
+              ..initCity = state.item?.city
+              ..initDistrict = state.item?.district
+              ..initWard = state.item?.wards;
+            return Column(
+              children: [
+                KayleeImagePicker(
+                  controller: imagePickerController,
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: Dimens.px16),
-                child: KayleeTextField(
-                  title: Strings.soDienThoai,
-                  textInput: PhoneInputField.static(
-                    initText: '7738 7738',
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: Dimens.px16),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: KayleeTextField.normal(
+                          title: Strings.ho,
+                          hint: Strings.hoHint,
+                          controller: lastNameTfController,
+                          textInputAction: TextInputAction.next,
+                          focusNode: lastNameFocus,
+                          nextFocusNode: firstNameFocus,
+                        ),
+                      ),
+                      SizedBox(width: Dimens.px8),
+                      Expanded(
+                        child: KayleeTextField.normal(
+                          title: Strings.ten,
+                          hint: Strings.tenHint,
+                          controller: firstNameTfController,
+                          textInputAction: TextInputAction.done,
+                          focusNode: firstNameFocus,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: Dimens.px16),
-                child: KayleeTextField.staticWidget(
-                  title: Strings.soDienThoai,
-                  initText: 'david.cop20@gmail.com',
+                Padding(
+                  padding: const EdgeInsets.only(bottom: Dimens.px16),
+                  child: KayleeTextField.staticPhone(
+                    title: Strings.soDienThoai,
+                    initText: state.item?.phone,
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: Dimens.px16),
-                child: KayleePickerTextField(
-                  title: Strings.ngaySinh,
-                  hint: Strings.chonNgayThangNam,
+                Padding(
+                  padding: const EdgeInsets.only(bottom: Dimens.px16),
+                  child: KayleeTextField.staticWidget(
+                    title: Strings.email,
+                    initText: state.item?.email,
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: Dimens.px16),
-                child: KayleeFullAddressInput(
-                  title: Strings.diaChiHienTai,
+                Padding(
+                  padding: const EdgeInsets.only(bottom: Dimens.px16),
+                  child: KayleePickerTextField<DateTime>(
+                    title: Strings.ngaySinh,
+                    hint: Strings.chonNgayThangNam,
+                    controller: birthDayController,
+                  ),
                 ),
-              ),
-              KayleeTextField.selection(
-                title: Strings.matKhau,
-                buttonText: Strings.doiMatKhau,
-                onPress: () {
-                  pushScreen(PageIntent(screen: ResetPassVerifyPhoneScreen));
-                },
-              ),
-            ],
-          ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: Dimens.px16),
+                  child: KayleeFullAddressInput(
+                    key: UniqueKey(),
+                    title: Strings.diaChiHienTai,
+                    controller: addressController,
+                  ),
+                ),
+                KayleeTextField.selection(
+                  title: Strings.matKhau,
+                  buttonText: Strings.doiMatKhau,
+                  onPress: () {
+                    pushScreen(PageIntent(screen: ResetPassVerifyPhoneScreen));
+                  },
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
