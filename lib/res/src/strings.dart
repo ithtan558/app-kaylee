@@ -37,6 +37,7 @@ class Strings {
   static const String trangChu = 'Trang chủ';
   static const String thuNgan = 'Thu ngân';
   static const String lichSuDh = 'Lịch sử ĐH';
+  static const String lichSuDonHang = 'Lịch sử đơn hàng';
   static const String taiKhoan = 'Tài khoản';
   static const String dsNhaCc = 'Danh sách nhà cung cấp';
   static const String qlChiNhanh = 'Quản lý\nchi nhánh';
