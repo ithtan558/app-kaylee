@@ -34,7 +34,8 @@ class KayLeeApp extends StatefulWidget {
         ],
         child: MultiBlocProvider(providers: [
           BlocProvider<AppBloc>(
-            create: (context) => AppBloc(),
+            create: (context) =>
+                AppBloc(userService: context.network.provideUserService()),
           ),
           BlocProvider<CartBloc>(
             create: (context) => CartBloc(),
@@ -58,6 +59,12 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing, KayleeRouting {
           if (nextState.code == ErrorType.UNAUTHORIZED) {
             context.bloc<AppBloc>().unauthorized(error: nextState.error);
           }
+        }
+      },
+      change: (cubit, change) {
+        if (change.nextState is UpdateProfileState) {
+          context.user.updateUserInfo(
+              context.user.getUserInfo()..userInfo = change.nextState.userInfo);
         }
       },
     );
