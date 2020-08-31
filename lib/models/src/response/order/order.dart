@@ -28,8 +28,8 @@ class Order {
     this.discount,
     this.taxValue,
     this.supplierId,
-    this.customerFirstName,
-    this.customerLastName,
+    this.employeeFirstName,
+    this.employeeLastName,
     this.brandName,
     this.informationReceiveName,
     this.informationReceivePhone,
@@ -69,8 +69,14 @@ class Order {
   int discount;
   int taxValue;
   int supplierId;
-  String customerFirstName;
-  String customerLastName;
+  String employeeFirstName;
+  String employeeLastName;
+
+  Employee get employee => Employee(
+        firstName: employeeFirstName,
+        lastName: employeeLastName,
+      );
+
   String brandName;
   String informationReceiveName;
   String informationReceivePhone;
