@@ -55,4 +55,5 @@ class Images {
   static const ic_address = 'assets/ic_address.png';
   static const ic_edit = 'assets/ic_edit.png';
   static const ic_list = 'assets/ic_list.png';
+  static const ic_menu = 'assets/ic_menu.png';
 }
