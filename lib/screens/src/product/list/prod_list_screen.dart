@@ -81,74 +81,83 @@ class _ProdListScreenState extends KayleeState<ProdListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return KayleeTabView(
-      appBar: KayleeAppBar(
-        title: Strings.danhMucSanPham,
-        actions: <Widget>[
-          FilterButton<ProductFilter>(
-            controller: prodsListBloc,
-          )
-        ],
-      ),
-      tabBar: BlocBuilder<ProdCateBloc, SingleModel<List<Category>>>(
-        buildWhen: (previous, current) {
-          return !current.loading;
-        },
-        builder: (context, state) {
-          final categories = state.item;
-          return KayleeTabBar(
-            itemCount: categories?.length,
-            mapTitle: (index) => categories.elementAt(index).name,
-            onSelected: (value) {
-              prodsListBloc.changeTab(
-                  cateId: cateBloc.state.item.elementAt(value).id);
-            },
-          );
-        },
-      ),
-      pageView: KayleeLoadMoreHandler(
-        controller: context.bloc<ProdListBloc>(),
-        child: BlocBuilder<ProdListBloc, LoadMoreModel<Product>>(
-          builder: (context, state) {
-            return KayleeGridView(
-              padding: EdgeInsets.all(Dimens.px16),
-              childAspectRatio: 103 / 195,
-              itemBuilder: (c, index) {
-                final item = state.items.elementAt(index);
-                return KayleeProdItemView.canTap(
-                  data: KayleeProdItemData(
-                      name: item.name, image: item.image, price: item.price),
-                  onTap: () {
-                    pushScreen(PageIntent(
-                        screen: CreateNewProdScreen,
-                        bundle: Bundle(NewProdScreenData(
-                            openFrom: NewProdScreenOpenFrom.prodItem,
-                            product: item))));
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: KayleeTabView(
+            appBar: KayleeAppBar(
+              title: Strings.danhMucSanPham,
+              actions: <Widget>[
+                FilterButton<ProductFilter>(
+                  controller: prodsListBloc,
+                )
+              ],
+            ),
+            tabBar: BlocBuilder<ProdCateBloc, SingleModel<List<Category>>>(
+              buildWhen: (previous, current) {
+                return !current.loading;
+              },
+              builder: (context, state) {
+                final categories = state.item;
+                return KayleeTabBar(
+                  itemCount: categories?.length,
+                  mapTitle: (index) => categories.elementAt(index).name,
+                  onSelected: (value) {
+                    prodsListBloc.changeTab(
+                        cateId: cateBloc.state.item.elementAt(value).id);
                   },
                 );
               },
-              itemCount: state.items?.length,
-              loadingBuilder: (context) {
-                if (state.ended) return Container();
-                return Align(
-                  alignment: Alignment.topCenter,
-                  child: CupertinoActivityIndicator(
-                    radius: Dimens.px16,
-                  ),
-                );
-              },
-            );
-          },
+            ),
+            pageView: KayleeLoadMoreHandler(
+              controller: context.bloc<ProdListBloc>(),
+              child: BlocBuilder<ProdListBloc, LoadMoreModel<Product>>(
+                builder: (context, state) {
+                  return KayleeGridView(
+                    padding: EdgeInsets.all(Dimens.px16),
+                    childAspectRatio: 103 / 195,
+                    itemBuilder: (c, index) {
+                      final item = state.items.elementAt(index);
+                      return KayleeProdItemView.canTap(
+                        data: KayleeProdItemData(
+                            name: item.name,
+                            image: item.image,
+                            price: item.price),
+                        onTap: () {
+                          pushScreen(PageIntent(
+                              screen: CreateNewProdScreen,
+                              bundle: Bundle(NewProdScreenData(
+                                  openFrom: NewProdScreenOpenFrom.prodItem,
+                                  product: item))));
+                        },
+                      );
+                    },
+                    itemCount: state.items?.length,
+                    loadingBuilder: (context) {
+                      if (state.ended) return Container();
+                      return Align(
+                        alignment: Alignment.topCenter,
+                        child: CupertinoActivityIndicator(
+                          radius: Dimens.px16,
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+          ),
         ),
-      ),
-      floatingActionButton: KayleeFloatButton(
-        onTap: () {
-          pushScreen(PageIntent(
-              screen: CreateNewProdScreen,
-              bundle: Bundle(NewProdScreenData(
-                  openFrom: NewProdScreenOpenFrom.addNewProdBtn))));
-        },
-      ),
+        KayleeMenuFloatButton(
+          onMainTap: () {
+            pushScreen(PageIntent(
+                screen: CreateNewProdScreen,
+                bundle: Bundle(NewProdScreenData(
+                    openFrom: NewProdScreenOpenFrom.addNewProdBtn))));
+          },
+          onSecondTap: () {},
+        )
+      ],
     );
   }
 }
