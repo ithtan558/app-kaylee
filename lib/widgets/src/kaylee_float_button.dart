@@ -37,8 +37,24 @@ class _KayleeFloatButtonState extends State<KayleeFloatButton>
     if (offset.isNull) return;
     final dx = offset.dx;
     final dy = offset.dy;
-    if (dx >= 0 && dy <= Dimens.px56 && dy >= 0 && dy <= Dimens.px56) {
+    if (dx >= 0 &&
+        dy <= Dimens.px56 &&
+        dy >= 0 &&
+        dy <= Dimens.px56 &&
+        !animController.isDismissed) {
       widget.onTap?.call();
+    }
+  }
+
+  void _onDragUpdate(Offset offset) {
+    if (offset.isNull) return;
+    final dx = offset.dx;
+    final dy = offset.dy;
+    if (dx <= 0 ||
+        dy <= 0 ||
+        dx >= Dimens.px56 ||
+        dy >= Dimens.px56 && !animController.isAnimating) {
+      animController.reverse(from: animController.value);
     }
   }
 
@@ -55,13 +71,19 @@ class _KayleeFloatButtonState extends State<KayleeFloatButton>
         onTapUp: (detail) {
           animController.reverse(from: animController.value);
         },
+        onLongPressMoveUpdate: (details) {
+          // print('[TUNG] ===> onLongPressMoveUpdate');
+          _onDragUpdate(details.localPosition);
+        },
         onLongPressEnd: (details) {
           // print('[TUNG] ===> onLongPressEnd');
           animController.reverse(from: animController.value);
           _onTap(details.localPosition);
         },
         onPanUpdate: (details) {
+          // print('[TUNG] ===> onPanUpdate');
           currentLocalPoint = details.localPosition;
+          _onDragUpdate(currentLocalPoint);
         },
         onPanEnd: (details) {
           // print('[TUNG] ===> onPanEnd');
