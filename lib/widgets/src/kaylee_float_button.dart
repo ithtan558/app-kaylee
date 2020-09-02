@@ -1,10 +1,13 @@
+import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
 
 class KayleeFloatButton extends StatefulWidget {
   final VoidCallback onTap;
+  final String icon;
+  final Widget iconWidget;
 
-  KayleeFloatButton({this.onTap});
+  KayleeFloatButton({this.onTap, this.icon, this.iconWidget});
 
   @override
   _KayleeFloatButtonState createState() => _KayleeFloatButtonState();
@@ -13,6 +16,7 @@ class KayleeFloatButton extends StatefulWidget {
 class _KayleeFloatButtonState extends State<KayleeFloatButton>
     with SingleTickerProviderStateMixin {
   AnimationController animController;
+  Offset currentLocalPoint;
 
   @override
   void initState() {
@@ -25,6 +29,17 @@ class _KayleeFloatButtonState extends State<KayleeFloatButton>
   void dispose() {
     animController.dispose();
     super.dispose();
+  }
+
+  ///tính toạ độ của finger
+  ///chỉ onTap khi toạ độ (x,y) nằm trong khoảng từ (0,0) -> (56,56)
+  void _onTap(Offset offset) {
+    if (offset.isNull) return;
+    final dx = offset.dx;
+    final dy = offset.dy;
+    if (dx >= 0 && dy <= Dimens.px56 && dy >= 0 && dy <= Dimens.px56) {
+      widget.onTap?.call();
+    }
   }
 
   @override
@@ -40,9 +55,18 @@ class _KayleeFloatButtonState extends State<KayleeFloatButton>
         onTapUp: (detail) {
           animController.reverse(from: animController.value);
         },
-        onLongPressEnd: (detail) {
-          widget.onTap?.call();
+        onLongPressEnd: (details) {
+          // print('[TUNG] ===> onLongPressEnd');
           animController.reverse(from: animController.value);
+          _onTap(details.localPosition);
+        },
+        onPanUpdate: (details) {
+          currentLocalPoint = details.localPosition;
+        },
+        onPanEnd: (details) {
+          // print('[TUNG] ===> onPanEnd');
+          animController.reverse(from: animController.value);
+          _onTap(currentLocalPoint);
         },
         child: Stack(alignment: Alignment.center, children: [
           Container(
@@ -76,11 +100,12 @@ class _KayleeFloatButtonState extends State<KayleeFloatButton>
                   color: Colors.white, shape: BoxShape.circle),
             ),
           ),
-          const Icon(
-            Icons.add,
-            color: ColorsRes.button,
-            size: Dimens.px24,
-          )
+          widget.iconWidget ??
+              Icon(
+                widget.icon ?? Icons.add,
+                color: ColorsRes.button,
+                size: Dimens.px24,
+              )
         ]),
       ),
     );
