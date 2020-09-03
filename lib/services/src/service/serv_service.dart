@@ -13,6 +13,37 @@ abstract class ServService {
   @GET('service-category/all')
   Future<ResponseModel<ServiceCate>> getCategories();
 
+  @GET('service-category')
+  Future<ResponseModel<ServCategories>> getCategoryList({
+    @Query('page') int page,
+    @Query('limit') int limit,
+    @Query('sort') String sort,
+  });
+
+  @GET('service-category/{serviceId}')
+  Future<ResponseModel<ServiceCate>> getServiceCateDetail(
+      {@Path() int serviceId});
+
+  @POST('service-category')
+  @MultiPart()
+  Future<ResponseModel> newServiceCate({
+    @Part() String name,
+    @Part() String code,
+    @Part() int sequence,
+  });
+
+  @POST('service-category/{serviceId}')
+  @MultiPart()
+  Future<ResponseModel> updateProdCate(
+      {@Part() String name,
+      @Part() String code,
+      @Part() int sequence,
+      @Part() int id,
+      @Path() int serviceId});
+
+  @DELETE('service-category/delete/{serviceId}')
+  Future<ResponseModel> deleteProdCate({@Path() int serviceId});
+
   @GET('service')
   Future<ResponseModel<Services>> getServices({
     @Query('keyword') String keyword,

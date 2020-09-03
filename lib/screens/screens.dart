@@ -32,6 +32,8 @@ export 'src/reset_pass/new_pass/reset_pass_new_pass_screen.dart';
 export 'src/reset_pass/otp/reset_pass_verify_otp_screeen.dart';
 export 'src/reset_pass/reset/reset_pass_verify_phone_screen.dart';
 export 'src/revenue/revenue_screen.dart';
+export 'src/service/categories/detail/serv_cate_detail_screen.dart';
+export 'src/service/categories/list/serv_cate_list_screen.dart';
 export 'src/service/create_new/create_new_service_screen.dart';
 export 'src/service/list/service_list_screen.dart';
 export 'src/splash/splash_screen.dart';

@@ -82,6 +82,10 @@ mixin KayleeRouting on Routing {
         return ProdCateListScreen.newInstance();
       case ProdCateDetailScreen:
         return ProdCateDetailScreen.newInstance();
+      case ServCateListScreen:
+        return ServCateListScreen.newInstance();
+      case ServCateDetailScreen:
+        return ServCateDetailScreen.newInstance();
       default:
         return SplashScreen.newInstance();
     }

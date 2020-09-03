@@ -74,6 +74,10 @@ class KayleeJsonConverter extends anthPackage.JsonConverterFactory {
       return Orders.fromJson(json) as T;
     } else if (T == OrderItem) {
       return OrderItem.fromJson(json) as T;
+    } else if (T == ProdCategories) {
+      return ProdCategories.fromJson(json) as T;
+    } else if (T == ServCategories) {
+      return ServCategories.fromJson(json) as T;
     }
     return json as T;
   }
@@ -149,6 +153,10 @@ class KayleeJsonConverter extends anthPackage.JsonConverterFactory {
     } else if (json is Orders) {
       return json.toJson();
     } else if (json is OrderItem) {
+      return json.toJson();
+    } else if (json is ProdCategories) {
+      return json.toJson();
+    } else if (json is ServCategories) {
       return json.toJson();
     } else
       return json;

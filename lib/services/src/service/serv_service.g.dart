@@ -34,6 +34,126 @@ class _ServService implements ServService {
   }
 
   @override
+  getCategoryList({page, limit, sort}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'page': page,
+      r'limit': limit,
+      r'sort': sort
+    };
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        'service-category',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = ResponseModel<ServCategories>.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  getServiceCateDetail({serviceId}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        'service-category/$serviceId',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = ResponseModel<ServiceCate>.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  newServiceCate({name, code, sequence}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = FormData();
+    if (name != null) {
+      _data.fields.add(MapEntry('name', name));
+    }
+    if (code != null) {
+      _data.fields.add(MapEntry('code', code));
+    }
+    if (sequence != null) {
+      _data.fields.add(MapEntry('sequence', sequence.toString()));
+    }
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        'service-category',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  updateProdCate({name, code, sequence, id, serviceId}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = FormData();
+    if (name != null) {
+      _data.fields.add(MapEntry('name', name));
+    }
+    if (code != null) {
+      _data.fields.add(MapEntry('code', code));
+    }
+    if (sequence != null) {
+      _data.fields.add(MapEntry('sequence', sequence.toString()));
+    }
+    if (id != null) {
+      _data.fields.add(MapEntry('id', id.toString()));
+    }
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        'service-category/$serviceId',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  deleteProdCate({serviceId}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        'service-category/delete/$serviceId',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'DELETE',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    return value;
+  }
+
+  @override
   getServices(
       {keyword,
       page,

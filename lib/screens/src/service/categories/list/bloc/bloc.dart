@@ -3,19 +3,19 @@ import 'package:kaylee/base/loadmore_interface.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/services/services.dart';
 
-class ProCateListScreenBloc extends Cubit<LoadMoreModel<ProdCate>>
+class ServCateListScreenBloc extends Cubit<LoadMoreModel<ServiceCate>>
     implements LoadMoreInterface {
-  final ProductService productService;
+  final ServService servService;
 
-  ProCateListScreenBloc({this.productService}) : super(LoadMoreModel());
+  ServCateListScreenBloc({this.servService}) : super(LoadMoreModel());
 
   void loadCategories() {
     emit(LoadMoreModel.copy(state..loading = true));
     RequestHandler(
       request:
-          productService.getCategoryList(limit: state.limit, page: state.page),
+          servService.getCategoryList(limit: state.limit, page: state.page),
       onSuccess: ({message, result}) {
-        final cates = (result as ProdCategories).items;
+        final cates = (result as ServCategories).items;
         emit(LoadMoreModel.copy(state
           ..loading = false
           ..addAll(cates)

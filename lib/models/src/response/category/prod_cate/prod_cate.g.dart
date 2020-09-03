@@ -16,8 +16,7 @@ ProdCate _$ProdCateFromJson(Map<String, dynamic> json) {
     ..image = json['image'] as String;
 }
 
-Map<String, dynamic> _$ProdCateToJson(ProdCate instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$ProdCateToJson(ProdCate instance) => <String, dynamic>{
       'id': instance.id,
       'code': instance.code,
       'name': instance.name,
