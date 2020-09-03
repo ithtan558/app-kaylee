@@ -4,6 +4,7 @@ class Category {
     this.code,
     this.name,
     this.description,
+    this.sequence,
     this.image,
   });
 
@@ -11,5 +12,6 @@ class Category {
   String code;
   String name;
   String description;
+  int sequence;
   String image;
 }

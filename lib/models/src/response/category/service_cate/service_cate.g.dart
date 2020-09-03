@@ -12,6 +12,7 @@ ServiceCate _$ServiceCateFromJson(Map<String, dynamic> json) {
     ..code = json['code'] as String
     ..name = json['name'] as String
     ..description = json['description'] as String
+    ..sequence = json['sequence'] as int
     ..image = json['image'] as String;
 }
 
@@ -21,5 +22,6 @@ Map<String, dynamic> _$ServiceCateToJson(ServiceCate instance) =>
       'code': instance.code,
       'name': instance.name,
       'description': instance.description,
+      'sequence': instance.sequence,
       'image': instance.image,
     };
