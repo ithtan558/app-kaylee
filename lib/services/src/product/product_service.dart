@@ -23,6 +23,29 @@ abstract class ProductService {
   Future<ResponseModel<ProdCate>> getCategories(
       {@Query('supplier_id') int supplierId});
 
+  @GET('product-category/{productId}')
+  Future<ResponseModel<ProdCate>> getProdCateDetail({@Path() int productId});
+
+  @POST('product-category')
+  @MultiPart()
+  Future<ResponseModel> newProdCate({
+    @Part() String name,
+    @Part() String code,
+    @Part() int sequence,
+  });
+
+  @POST('product-category/{productId}')
+  @MultiPart()
+  Future<ResponseModel> updateProdCate(
+      {@Part() String name,
+      @Part() String code,
+      @Part() int sequence,
+      @Part() int id,
+      @Path() int productId});
+
+  @DELETE('product-category/delete/{productId}')
+  Future<ResponseModel> deleteProdCate({@Path() int productId});
+
   @GET('product/{proId}')
   Future<ResponseModel<Product>> getProduct({@Path() int proId});
 

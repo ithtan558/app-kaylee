@@ -60,6 +60,103 @@ class _ProductService implements ProductService {
   }
 
   @override
+  getProdCateDetail({productId}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        'product-category/$productId',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = ResponseModel<ProdCate>.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  newProdCate({name, code, sequence}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = FormData();
+    if (name != null) {
+      _data.fields.add(MapEntry('name', name));
+    }
+    if (code != null) {
+      _data.fields.add(MapEntry('code', code));
+    }
+    if (sequence != null) {
+      _data.fields.add(MapEntry('sequence', sequence.toString()));
+    }
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        'product-category',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  updateProdCate({name, code, sequence, id, productId}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = FormData();
+    if (name != null) {
+      _data.fields.add(MapEntry('name', name));
+    }
+    if (code != null) {
+      _data.fields.add(MapEntry('code', code));
+    }
+    if (sequence != null) {
+      _data.fields.add(MapEntry('sequence', sequence.toString()));
+    }
+    if (id != null) {
+      _data.fields.add(MapEntry('id', id.toString()));
+    }
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        'product-category/$productId',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  deleteProdCate({productId}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        'product-category/delete/$productId',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'DELETE',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    return value;
+  }
+
+  @override
   getProduct({proId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
