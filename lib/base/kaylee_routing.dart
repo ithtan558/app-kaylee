@@ -4,11 +4,6 @@ import 'package:kaylee/screens/screens.dart';
 
 mixin KayleeRouting on Routing {
   @override
-  Route<Bundle> onGenerateRoute(RouteSettings settings) {
-    return super.onGenerateRoute(settings);
-  }
-
-  @override
   Widget getRoutes(Type screen) {
     switch (screen) {
       case LoginScreen:
