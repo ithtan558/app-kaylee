@@ -94,7 +94,7 @@ class NotificationListBloc extends Cubit<LoadMoreModel<models.Notification>>
         final notifications = (result as models.Notifications).items;
         emit(LoadMoreModel.copy(state
           ..loading = false
-          ..items = notifications
+          ..addAll(notifications)
           ..error = null
           ..code = null));
       },
