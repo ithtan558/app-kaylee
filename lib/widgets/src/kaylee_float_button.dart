@@ -114,7 +114,7 @@ class _KayleeFloatButtonState extends State<KayleeFloatButton>
             builder: (c, child) {
               return Transform.scale(
                 scale:
-                1 + animController.value * (1 - Dimens.px46 / Dimens.px50),
+                    1 + animController.value * (1 - Dimens.px46 / Dimens.px50),
                 child: child,
               );
             },
@@ -146,10 +146,10 @@ class _KayleeFloatButtonState extends State<KayleeFloatButton>
 }
 
 class KayleeMenuFloatButton extends StatefulWidget {
-  final VoidCallback onMainTap;
-  final VoidCallback onSecondTap;
+  final MenuFloatItem mainItem;
+  final MenuFloatItem secondItem;
 
-  KayleeMenuFloatButton({this.onMainTap, this.onSecondTap});
+  KayleeMenuFloatButton({this.mainItem, this.secondItem});
 
   @override
   _KayleeMenuFloatButtonState createState() => _KayleeMenuFloatButtonState();
@@ -244,7 +244,7 @@ class _KayleeMenuFloatButtonState extends BaseState<KayleeMenuFloatButton>
                   onTap: () {
                     animController.reverse();
                     Future.delayed(Duration(milliseconds: 50), () {
-                      widget.onSecondTap?.call();
+                      widget.secondItem?.onTap?.call();
                     });
                   },
                   child: Center(
@@ -276,11 +276,11 @@ class _KayleeMenuFloatButtonState extends BaseState<KayleeMenuFloatButton>
                 );
               },
               child: _buildLabel(
-                title: 'Quản lý danh mục',
+                title: widget.secondItem?.title ?? '',
                 onTap: () {
                   animController.reverse();
                   Future.delayed(Duration(milliseconds: 50), () {
-                    widget.onSecondTap?.call();
+                    widget.secondItem?.onTap?.call();
                   });
                 },
               ),
@@ -304,11 +304,11 @@ class _KayleeMenuFloatButtonState extends BaseState<KayleeMenuFloatButton>
                 );
               },
               child: _buildLabel(
-                title: 'Tạo sản phẩm mới',
+                title: widget.mainItem?.title ?? '',
                 onTap: () {
                   animController.reverse();
                   Future.delayed(Duration(milliseconds: 50), () {
-                    widget.onMainTap?.call();
+                    widget.mainItem?.onTap?.call();
                   });
                 },
               ),
@@ -322,7 +322,7 @@ class _KayleeMenuFloatButtonState extends BaseState<KayleeMenuFloatButton>
                 if (animController.isCompleted) {
                   animController.reverse();
                   Future.delayed(Duration(milliseconds: 50), () {
-                    widget.onMainTap?.call();
+                    widget.mainItem?.onTap?.call();
                   });
                 } else {
                   animController.forward();
@@ -375,4 +375,11 @@ class _KayleeMenuFloatButtonState extends BaseState<KayleeMenuFloatButton>
       ),
     );
   }
+}
+
+class MenuFloatItem {
+  final String title;
+  final VoidCallback onTap;
+
+  MenuFloatItem({this.title, this.onTap});
 }

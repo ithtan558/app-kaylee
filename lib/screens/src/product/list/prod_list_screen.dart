@@ -149,13 +149,23 @@ class _ProdListScreenState extends KayleeState<ProdListScreen> {
           ),
         ),
         KayleeMenuFloatButton(
-          onMainTap: () {
-            pushScreen(PageIntent(
-                screen: CreateNewProdScreen,
-                bundle: Bundle(NewProdScreenData(
-                    openFrom: NewProdScreenOpenFrom.addNewProdBtn))));
-          },
-          onSecondTap: () {},
+          mainItem: MenuFloatItem(
+            title: Strings.taoSanPhamMoi,
+            onTap: () {
+              pushScreen(PageIntent(
+                  screen: CreateNewProdScreen,
+                  bundle: Bundle(NewProdScreenData(
+                      openFrom: NewProdScreenOpenFrom.addNewProdBtn))));
+            },
+          ),
+          secondItem: MenuFloatItem(
+            title: Strings.quanLyDanhMuc,
+            onTap: () {
+              pushScreen(PageIntent(
+                screen: ProdCateListScreen,
+              ));
+            },
+          ),
         )
       ],
     );
