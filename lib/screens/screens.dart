@@ -20,6 +20,8 @@ export 'src/notification/detail/notify_detail_screen.dart';
 export 'src/notification/list/notification_screen.dart';
 export 'src/order_detail/create_new_order_screen.dart';
 export 'src/payment_info/payment_info_screen.dart';
+export 'src/product/categories/detail/prod_cate_detail_screen.dart';
+export 'src/product/categories/list/prod_cate_list_screen.dart';
 export 'src/product/create_new/create_new_prod_screen.dart';
 export 'src/product/list/prod_list_screen.dart';
 export 'src/receiver_info/receiver_info_screen.dart';

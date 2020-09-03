@@ -78,6 +78,10 @@ mixin KayleeRouting on Routing {
         return MyOrdersScreen.newInstance();
       case MyOrderDetailScreen:
         return MyOrderDetailScreen.newInstance();
+      case ProdCateListScreen:
+        return ProdCateListScreen.newInstance();
+      case ProdCateDetailScreen:
+        return ProdCateDetailScreen.newInstance();
       default:
         return SplashScreen.newInstance();
     }
