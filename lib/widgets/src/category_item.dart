@@ -26,8 +26,9 @@ class CategoryItem extends StatelessWidget {
             width: Dimens.px48,
             height: double.infinity,
             alignment: Alignment.center,
+            padding: const EdgeInsets.all(Dimens.px8),
             child: KayleeText.normal16W500(
-              index?.toString() ?? '',
+              '${index?.toString()}',
               maxLines: 1,
               overflow: TextOverflow.fade,
               textAlign: TextAlign.center,
