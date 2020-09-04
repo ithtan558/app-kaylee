@@ -151,7 +151,7 @@ class _ServiceListScreenState extends KayleeState<ServiceListScreen> {
         ),
         KayleeMenuFloatButton(
           mainItem: MenuFloatItem(
-            title: Strings.taoSanPhamMoi,
+            title: Strings.taoDichVuMoi,
             onTap: () {
               pushScreen(PageIntent(
                   screen: CreateNewServiceScreen,
