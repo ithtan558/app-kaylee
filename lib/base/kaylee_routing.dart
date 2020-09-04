@@ -80,8 +80,8 @@ mixin KayleeRouting on Routing {
         return MyOrderDetailScreen.newInstance();
       case ProdCateListScreen:
         return ProdCateListScreen.newInstance();
-      case ProdCateDetailScreen:
-        return ProdCateDetailScreen.newInstance();
+      case CreateNewProdCateScreen:
+        return CreateNewProdCateScreen.newInstance();
       case ServCateListScreen:
         return ServCateListScreen.newInstance();
       case CreateNewServCateScreen:
