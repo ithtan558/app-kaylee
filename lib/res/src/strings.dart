@@ -254,6 +254,15 @@ class Strings {
   static const String thuongHieu = 'Thương hiệu';
   static const String inLaiHoaDon = 'In lại hoá đơn';
   static const String quanLyDanhMuc = 'Quản lý danh mục';
+  static const String taoDanhMucMoi = 'Tạo danh mục mới';
+  static const String chinhSuaDanhMuc = 'Chỉnh sửa danh mục';
+  static const String tenDanhMuc = 'Tên danh mục';
+  static const String maCode = 'Mã code';
+  static const String viTri = 'Vị trí';
+  static const String xoaDanhMuc = 'Xoá danh mục';
+  static const String nhapTenDanhMuc = 'Nhập tên danh mục';
+  static const String nhapMaCode = 'Nhập mã code';
+  static const String nhapViTri = 'Nhập vị trí';
 
   Strings._();
 }

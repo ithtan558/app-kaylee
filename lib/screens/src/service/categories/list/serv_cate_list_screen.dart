@@ -38,49 +38,72 @@ class _ServCateListScreenState extends KayleeState<ServCateListScreen> {
       appBar: KayleeAppBar(
         title: Strings.quanLyDanhMuc,
       ),
-      body: KayleeLoadMoreHandler(
-        controller: context.bloc<ServCateListScreenBloc>(),
-        child: BlocConsumer<ServCateListScreenBloc, LoadMoreModel<ServiceCate>>(
-          listener: (context, state) {
-            if (!state.loading) {
-              if (state.code.isNotNull &&
-                  state.code != ErrorType.UNAUTHORIZED) {
-                showKayleeAlertErrorYesDialog(
-                  context: context,
-                  error: state.error,
-                  onPressed: () {
-                    popScreen();
-                  },
-                );
-              }
-            }
-          },
-          builder: (context, state) {
-            return KayleeListView(
-              padding: EdgeInsets.all(Dimens.px16),
-              itemBuilder: (c, index) {
-                final item = state.items.elementAt(index);
-                return ServCateItem(
-                  category: item,
-                  onTap: () {
-                    pushScreen(PageIntent(
-                        screen: ProdCateDetailScreen, bundle: Bundle(item)));
-                  },
-                );
-              },
-              itemCount: state.items?.length,
-              separatorBuilder: (context, index) =>
-                  SizedBox(height: Dimens.px16),
-              loadingBuilder: (context) {
-                if (state.ended) return Container();
-                return Align(
-                  alignment: Alignment.topCenter,
-                  child: KayleeLoadingIndicator(),
-                );
-              },
-            );
-          },
-        ),
+      body: Column(
+        children: [
+          Expanded(
+            child: KayleeLoadMoreHandler(
+              controller: context.bloc<ServCateListScreenBloc>(),
+              child: BlocConsumer<ServCateListScreenBloc,
+                  LoadMoreModel<ServiceCate>>(
+                listener: (context, state) {
+                  if (!state.loading) {
+                    if (state.code.isNotNull &&
+                        state.code != ErrorType.UNAUTHORIZED) {
+                      showKayleeAlertErrorYesDialog(
+                        context: context,
+                        error: state.error,
+                        onPressed: () {
+                          popScreen();
+                        },
+                      );
+                    }
+                  }
+                },
+                builder: (context, state) {
+                  return KayleeListView(
+                    padding: EdgeInsets.all(Dimens.px16),
+                    itemBuilder: (c, index) {
+                      final item = state.items.elementAt(index);
+                      return ServCateItem(
+                        category: item,
+                        onTap: () {
+                          pushScreen(PageIntent(
+                              screen: CreateNewServCateScreen,
+                              bundle: Bundle(NewCateScreenData(
+                                serviceCate: item,
+                                openFrom: NewSerCateScreenOpenFrom.cateItem,
+                              ))));
+                        },
+                      );
+                    },
+                    itemCount: state.items?.length,
+                    separatorBuilder: (context, index) =>
+                        SizedBox(height: Dimens.px16),
+                    loadingBuilder: (context) {
+                      if (state.ended) return Container();
+                      return Align(
+                        alignment: Alignment.topCenter,
+                        child: KayleeLoadingIndicator(),
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+          ),
+          KayLeeRoundedButton.normal(
+            text: Strings.taoDanhMucMoi,
+            onPressed: () {
+              pushScreen(PageIntent(
+                  screen: CreateNewServCateScreen,
+                  bundle: Bundle(NewCateScreenData(
+                    openFrom: NewSerCateScreenOpenFrom.addNewCateBtn,
+                  ))));
+            },
+            margin: const EdgeInsets.symmetric(horizontal: Dimens.px16)
+                .copyWith(bottom: Dimens.px16),
+          )
+        ],
       ),
     );
   }

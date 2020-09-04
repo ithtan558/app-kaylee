@@ -33,7 +33,7 @@ abstract class ServService {
 
   @POST('service-category/{cateId}')
   @MultiPart()
-  Future<ResponseModel> updateProdCate(
+  Future<ResponseModel> updateServiceCate(
       {@Part() String name,
       @Part() String code,
       @Part() int sequence,
@@ -41,7 +41,7 @@ abstract class ServService {
       @Path() int cateId});
 
   @DELETE('service-category/delete/{cateId}')
-  Future<ResponseModel> deleteProdCate({@Path() int cateId});
+  Future<ResponseModel> deleteServiceCate({@Path() int cateId});
 
   @GET('service')
   Future<ResponseModel<Services>> getServices({

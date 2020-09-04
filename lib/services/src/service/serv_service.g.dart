@@ -104,7 +104,7 @@ class _ServService implements ServService {
   }
 
   @override
-  updateProdCate({name, code, sequence, id, cateId}) async {
+  updateServiceCate({name, code, sequence, id, cateId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
@@ -135,7 +135,7 @@ class _ServService implements ServService {
   }
 
   @override
-  deleteProdCate({cateId}) async {
+  deleteServiceCate({cateId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
