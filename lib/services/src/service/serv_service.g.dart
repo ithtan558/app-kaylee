@@ -57,13 +57,13 @@ class _ServService implements ServService {
   }
 
   @override
-  getServiceCateDetail({serviceId}) async {
+  getServiceCateDetail({cateId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'service-category/$serviceId',
+        'service-category/$cateId',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -104,7 +104,7 @@ class _ServService implements ServService {
   }
 
   @override
-  updateProdCate({name, code, sequence, id, serviceId}) async {
+  updateProdCate({name, code, sequence, id, cateId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
@@ -122,7 +122,7 @@ class _ServService implements ServService {
       _data.fields.add(MapEntry('id', id.toString()));
     }
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'service-category/$serviceId',
+        'service-category/$cateId',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -135,13 +135,13 @@ class _ServService implements ServService {
   }
 
   @override
-  deleteProdCate({serviceId}) async {
+  deleteProdCate({cateId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'service-category/delete/$serviceId',
+        'service-category/delete/$cateId',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'DELETE',

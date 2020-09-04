@@ -20,9 +20,8 @@ abstract class ServService {
     @Query('sort') String sort,
   });
 
-  @GET('service-category/{serviceId}')
-  Future<ResponseModel<ServiceCate>> getServiceCateDetail(
-      {@Path() int serviceId});
+  @GET('service-category/{cateId}')
+  Future<ResponseModel<ServiceCate>> getServiceCateDetail({@Path() int cateId});
 
   @POST('service-category')
   @MultiPart()
@@ -32,17 +31,17 @@ abstract class ServService {
     @Part() int sequence,
   });
 
-  @POST('service-category/{serviceId}')
+  @POST('service-category/{cateId}')
   @MultiPart()
   Future<ResponseModel> updateProdCate(
       {@Part() String name,
       @Part() String code,
       @Part() int sequence,
       @Part() int id,
-      @Path() int serviceId});
+      @Path() int cateId});
 
-  @DELETE('service-category/delete/{serviceId}')
-  Future<ResponseModel> deleteProdCate({@Path() int serviceId});
+  @DELETE('service-category/delete/{cateId}')
+  Future<ResponseModel> deleteProdCate({@Path() int cateId});
 
   @GET('service')
   Future<ResponseModel<Services>> getServices({
