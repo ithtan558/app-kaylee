@@ -55,7 +55,13 @@ class _ProdListScreenState extends KayleeState<ProdListScreen> {
             onPressed: popScreen,
           );
         } else {
-          prodsListBloc.loadInitData(cateId: state.item?.first?.id);
+          prodsListBloc.loadInitDataWithCate(
+              cateId: state.item
+                  ?.firstWhere(
+                    (element) => true,
+                    orElse: () => null,
+                  )
+                  ?.id);
         }
       } else if (state.loading) {
         showLoading();
@@ -96,59 +102,67 @@ class _ProdListScreenState extends KayleeState<ProdListScreen> {
                 final categories = state.item;
                 return KayleeTabBar(
                   itemCount: categories?.length,
-                  mapTitle: (index) => categories.elementAt(index).name,
+                  mapTitle: (index) =>
+                  categories
+                      .elementAt(index)
+                      .name,
                   onSelected: (value) {
                     prodsListBloc.changeTab(
-                        cateId: cateBloc.state.item.elementAt(value).id);
+                        cateId: cateBloc.state.item
+                            .elementAt(value)
+                            .id);
                   },
                 );
               },
             ),
-            pageView: KayleeLoadMoreHandler(
-              controller: context.bloc<ProdListBloc>(),
-              child: BlocConsumer<ProdListBloc, LoadMoreModel<Product>>(
-                listener: (context, state) {
-                  if (state.code.isNotNull &&
-                      state.code != ErrorType.UNAUTHORIZED) {
-                    showKayleeAlertErrorYesDialog(
-                      context: context,
-                      error: state.error,
-                      onPressed: popScreen,
+            pageView: KayleeRefreshIndicator(
+              controller: prodsListBloc,
+              child: KayleeLoadMoreHandler(
+                controller: context.bloc<ProdListBloc>(),
+                child: BlocConsumer<ProdListBloc, LoadMoreModel<Product>>(
+                  listener: (context, state) {
+                    if (state.code.isNotNull &&
+                        state.code != ErrorType.UNAUTHORIZED) {
+                      showKayleeAlertErrorYesDialog(
+                        context: context,
+                        error: state.error,
+                        onPressed: popScreen,
+                      );
+                    }
+                  },
+                  builder: (context, state) {
+                    return KayleeGridView(
+                      padding: EdgeInsets.all(Dimens.px16),
+                      childAspectRatio: 103 / 195,
+                      itemBuilder: (c, index) {
+                        final item = state.items.elementAt(index);
+                        return KayleeProdItemView.canTap(
+                          data: KayleeProdItemData(
+                              name: item.name,
+                              image: item.image,
+                              price: item.price),
+                          onTap: () {
+                            pushScreen(PageIntent(
+                                screen: CreateNewProdScreen,
+                                bundle: Bundle(NewProdScreenData(
+                                    openFrom: NewProdScreenOpenFrom.prodItem,
+                                    product: item))));
+                          },
+                        );
+                      },
+                      itemCount: state.items?.length,
+                      loadingBuilder: (context) {
+                        if (state.ended) return Container();
+                        return Align(
+                          alignment: Alignment.topCenter,
+                          child: CupertinoActivityIndicator(
+                            radius: Dimens.px16,
+                          ),
+                        );
+                      },
                     );
-                  }
-                },
-                builder: (context, state) {
-                  return KayleeGridView(
-                    padding: EdgeInsets.all(Dimens.px16),
-                    childAspectRatio: 103 / 195,
-                    itemBuilder: (c, index) {
-                      final item = state.items.elementAt(index);
-                      return KayleeProdItemView.canTap(
-                        data: KayleeProdItemData(
-                            name: item.name,
-                            image: item.image,
-                            price: item.price),
-                        onTap: () {
-                          pushScreen(PageIntent(
-                              screen: CreateNewProdScreen,
-                              bundle: Bundle(NewProdScreenData(
-                                  openFrom: NewProdScreenOpenFrom.prodItem,
-                                  product: item))));
-                        },
-                      );
-                    },
-                    itemCount: state.items?.length,
-                    loadingBuilder: (context) {
-                      if (state.ended) return Container();
-                      return Align(
-                        alignment: Alignment.topCenter,
-                        child: CupertinoActivityIndicator(
-                          radius: Dimens.px16,
-                        ),
-                      );
-                    },
-                  );
-                },
+                  },
+                ),
               ),
             ),
           ),

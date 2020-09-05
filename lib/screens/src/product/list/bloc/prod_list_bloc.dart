@@ -1,6 +1,7 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/foundation.dart';
 import 'package:kaylee/base/kaylee_filter_interface.dart';
+import 'package:kaylee/base/kaylee_list_interface.dart';
 import 'package:kaylee/base/loadmore_interface.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/services/services.dart';
@@ -13,6 +14,7 @@ class ProductFilter extends Filter {
 }
 
 class ProdListBloc extends Cubit<LoadMoreModel<Product>>
+    with KayleeListInterfaceMixin
     implements LoadMoreInterface, KayleeFilterInterface<ProductFilter> {
   final ProductService productService;
   int cateId;
@@ -22,7 +24,6 @@ class ProdListBloc extends Cubit<LoadMoreModel<Product>>
       : super(LoadMoreModel(items: []));
 
   void loadProds() {
-    emit(LoadMoreModel.copy(state..loading = true));
     RequestHandler(
       request: productService.getProducts(
         categoryId: this.cateId,
@@ -31,6 +32,7 @@ class ProdListBloc extends Cubit<LoadMoreModel<Product>>
       ),
       onSuccess: ({message, result}) {
         final prods = (result as Products).items;
+        completeRefresh();
         emit(LoadMoreModel.copy(state
           ..loading = false
           ..addAll(prods)
@@ -38,6 +40,7 @@ class ProdListBloc extends Cubit<LoadMoreModel<Product>>
           ..error = null));
       },
       onFailed: (code, {error}) {
+        completeRefresh();
         emit(LoadMoreModel.copy(state
           ..loading = false
           ..code = code
@@ -46,9 +49,9 @@ class ProdListBloc extends Cubit<LoadMoreModel<Product>>
     );
   }
 
-  void loadInitData({int cateId}) {
+  void loadInitDataWithCate({int cateId}) {
     if (cateId.isNotNull) {
-      emit(LoadMoreModel.copy(state..items = null));
+      loadInitData();
       changeTab(cateId: cateId);
     }
   }
@@ -59,9 +62,10 @@ class ProdListBloc extends Cubit<LoadMoreModel<Product>>
       this.cateId = cateId;
 
       //reset page và item về ban đầu
-      state
+      emit(LoadMoreModel.copy(state
+        ..loading = true
         ..page = 1
-        ..items = null;
+        ..items = null));
       loadProds();
     }
   }
@@ -103,5 +107,20 @@ class ProdListBloc extends Cubit<LoadMoreModel<Product>>
   ProductFilter updateFilter() {
     if (isEmptyFilter) _filter = ProductFilter();
     return _filter;
+  }
+
+  @override
+  void loadInitData() {
+    state..items = null;
+  }
+
+  @override
+  void refresh() {
+    state
+      ..page = 1
+      ..items = []
+      ..loading = true;
+    renewCompleter();
+    loadProds();
   }
 }
