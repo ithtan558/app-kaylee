@@ -48,53 +48,59 @@ class _ServCateListScreenState extends KayleeState<ServCateListScreen> {
       body: Column(
         children: [
           Expanded(
-            child: KayleeLoadMoreHandler(
-              controller: context.bloc<ServCateListScreenBloc>(),
-              child: BlocConsumer<ServCateListScreenBloc,
-                  LoadMoreModel<ServiceCate>>(
-                listener: (context, state) {
-                  if (!state.loading) {
-                    if (state.code.isNotNull &&
-                        state.code != ErrorType.UNAUTHORIZED) {
-                      showKayleeAlertErrorYesDialog(
-                        context: context,
-                        error: state.error,
-                        onPressed: () {
-                          popScreen();
-                        },
-                      );
+            child: RefreshIndicator(
+              onRefresh: () async {
+                _bloc.refresh();
+                await _bloc.awaitRefresh;
+              },
+              child: KayleeLoadMoreHandler(
+                controller: context.bloc<ServCateListScreenBloc>(),
+                child: BlocConsumer<ServCateListScreenBloc,
+                    LoadMoreModel<ServiceCate>>(
+                  listener: (context, state) {
+                    if (!state.loading) {
+                      if (state.code.isNotNull &&
+                          state.code != ErrorType.UNAUTHORIZED) {
+                        showKayleeAlertErrorYesDialog(
+                          context: context,
+                          error: state.error,
+                          onPressed: () {
+                            popScreen();
+                          },
+                        );
+                      }
                     }
-                  }
-                },
-                builder: (context, state) {
-                  return KayleeListView(
-                    padding: EdgeInsets.all(Dimens.px16),
-                    itemBuilder: (c, index) {
-                      final item = state.items.elementAt(index);
-                      return ServCateItem(
-                        category: item,
-                        onTap: () {
-                          pushScreen(PageIntent(
-                              screen: CreateNewServCateScreen,
-                              bundle: Bundle(NewCateScreenData(
-                                serviceCate: item,
-                                openFrom: NewSerCateScreenOpenFrom.cateItem,
-                              ))));
-                        },
-                      );
-                    },
-                    itemCount: state.items?.length,
-                    separatorBuilder: (context, index) =>
-                        SizedBox(height: Dimens.px16),
-                    loadingBuilder: (context) {
-                      if (state.ended) return Container();
-                      return Align(
-                        alignment: Alignment.topCenter,
-                        child: KayleeLoadingIndicator(),
-                      );
-                    },
-                  );
-                },
+                  },
+                  builder: (context, state) {
+                    return KayleeListView(
+                      padding: EdgeInsets.all(Dimens.px16),
+                      itemBuilder: (c, index) {
+                        final item = state.items.elementAt(index);
+                        return ServCateItem(
+                          category: item,
+                          onTap: () {
+                            pushScreen(PageIntent(
+                                screen: CreateNewServCateScreen,
+                                bundle: Bundle(NewCateScreenData(
+                                  serviceCate: item,
+                                  openFrom: NewSerCateScreenOpenFrom.cateItem,
+                                ))));
+                          },
+                        );
+                      },
+                      itemCount: state.items?.length,
+                      separatorBuilder: (context, index) =>
+                          SizedBox(height: Dimens.px16),
+                      loadingBuilder: (context) {
+                        if (state.ended) return Container();
+                        return Align(
+                          alignment: Alignment.topCenter,
+                          child: KayleeLoadingIndicator(),
+                        );
+                      },
+                    );
+                  },
+                ),
               ),
             ),
           ),

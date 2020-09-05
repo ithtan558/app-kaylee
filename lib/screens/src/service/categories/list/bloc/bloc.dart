@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:anth_package/anth_package.dart';
 import 'package:kaylee/base/kaylee_list_interface.dart';
 import 'package:kaylee/base/loadmore_interface.dart';
@@ -7,6 +9,7 @@ import 'package:kaylee/services/services.dart';
 class ServCateListScreenBloc extends Cubit<LoadMoreModel<ServiceCate>>
     implements LoadMoreInterface, KayleeListInterface {
   final ServService servService;
+  Completer _completer;
 
   ServCateListScreenBloc({this.servService}) : super(LoadMoreModel());
 
@@ -17,6 +20,7 @@ class ServCateListScreenBloc extends Cubit<LoadMoreModel<ServiceCate>>
           servService.getCategoryList(limit: state.limit, page: state.page),
       onSuccess: ({message, result}) {
         final cates = (result as ServCategories).items;
+        completeRefresh();
         emit(LoadMoreModel.copy(state
           ..loading = false
           ..addAll(cates)
@@ -24,6 +28,7 @@ class ServCateListScreenBloc extends Cubit<LoadMoreModel<ServiceCate>>
           ..error = null));
       },
       onFailed: (code, {error}) {
+        completeRefresh();
         emit(LoadMoreModel.copy(state
           ..loading = false
           ..code = code
@@ -51,6 +56,22 @@ class ServCateListScreenBloc extends Cubit<LoadMoreModel<ServiceCate>>
     state
       ..page = 1
       ..items = [];
+    renewCompleter();
     loadCategories();
+  }
+
+  @override
+  Future get awaitRefresh => _completer?.future;
+
+  @override
+  void renewCompleter() {
+    _completer = Completer();
+  }
+
+  @override
+  void completeRefresh() {
+    if (!(_completer?.isCompleted ?? true)) {
+      _completer.complete();
+    }
   }
 }
