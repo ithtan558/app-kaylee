@@ -81,7 +81,7 @@ class _ServCateListScreenState extends KayleeState<ServCateListScreen> {
                           onTap: () {
                             pushScreen(PageIntent(
                                 screen: CreateNewServCateScreen,
-                                bundle: Bundle(NewCateScreenData(
+                                bundle: Bundle(NewServCateScreenData(
                                   serviceCate: item,
                                   openFrom: NewSerCateScreenOpenFrom.cateItem,
                                 ))));
@@ -109,7 +109,7 @@ class _ServCateListScreenState extends KayleeState<ServCateListScreen> {
             onPressed: () {
               pushScreen(PageIntent(
                   screen: CreateNewServCateScreen,
-                  bundle: Bundle(NewCateScreenData(
+                  bundle: Bundle(NewServCateScreenData(
                     openFrom: NewSerCateScreenOpenFrom.addNewCateBtn,
                   ))));
             },

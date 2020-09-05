@@ -11,11 +11,11 @@ import 'package:kaylee/screens/src/service/categories/detail/bloc/serv_cate_deta
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
-class NewCateScreenData {
+class NewServCateScreenData {
   final NewSerCateScreenOpenFrom openFrom;
   final ServiceCate serviceCate;
 
-  NewCateScreenData({this.openFrom, this.serviceCate});
+  NewServCateScreenData({this.openFrom, this.serviceCate});
 }
 
 enum NewSerCateScreenOpenFrom { cateItem, addNewCateBtn }
@@ -23,8 +23,9 @@ enum NewSerCateScreenOpenFrom { cateItem, addNewCateBtn }
 class CreateNewServCateScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider(
       create: (context) => ServCateDetailBloc(
-            servService: context.network.provideServService(),
-            serviceCate: context.getArguments<NewCateScreenData>().serviceCate,
+        servService: context.network.provideServService(),
+            serviceCate:
+                context.getArguments<NewServCateScreenData>().serviceCate,
           ),
       child: CreateNewServCateScreen._());
 
@@ -95,7 +96,7 @@ class _CreateNewServCateScreenState
       }
     });
 
-    final data = context.getArguments<NewCateScreenData>();
+    final data = context.getArguments<NewServCateScreenData>();
     openFrom = data?.openFrom;
     if (openFrom == NewSerCateScreenOpenFrom.cateItem) {
       _bloc.get();
