@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
+import 'package:kaylee/base/reload_bloc.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/my_orders/detail/bloc/my_order_detail_bloc.dart';
 import 'package:kaylee/screens/src/my_orders/detail/widgets/order_prod_item.dart';
 import 'package:kaylee/utils/utils.dart';
@@ -42,7 +44,13 @@ class _MyOrderDetailScreenState extends KayleeState<MyOrderDetailScreen> {
               context: context, error: state.error, onPressed: popScreen);
         } else if (state is CancelOrderModel) {
           showKayleeAlertMessageYesDialog(
-              context: context, message: state.message, onPressed: popScreen);
+            context: context,
+            message: state.message,
+            onPressed: popScreen,
+            onDismiss: () {
+              context.bloc<ReloadBloc>().reload(screen: MyOrdersScreen);
+            },
+          );
         }
       }
     });

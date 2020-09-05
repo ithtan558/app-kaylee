@@ -25,7 +25,7 @@ class MyOrdersScreen extends StatefulWidget {
 
 class _MyOrdersScreenState extends KayleeState<MyOrdersScreen> {
   final dateFilterController =
-  KayleeDateFilterController(value: DateTime.now());
+      KayleeDateFilterController(value: DateTime.now());
   MyOrdersScreenBloc _bloc;
   StreamSubscription _sub;
 
@@ -35,6 +35,13 @@ class _MyOrdersScreenState extends KayleeState<MyOrdersScreen> {
     _bloc = context.bloc<MyOrdersScreenBloc>();
     _sub = _bloc.listen((state) {});
     _bloc.loadOrdersByDate(date: dateFilterController.value);
+  }
+
+  @override
+  void onReloadScreen(Type screen, Bundle bundle) {
+    if (screen == MyOrdersScreen) {
+      _bloc.refresh();
+    }
   }
 
   @override
