@@ -69,7 +69,7 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
     if (dialogContext.isNotNull) {
       final dialog = ModalRoute.of(dialogContext);
       if (dialog.isActive && dialog.settings.name == 'loading dialog') {
-        print('[TUNG] ===> hideLoading');
+        // print('[TUNG] ===> hideLoading');
         Navigator.removeRoute(context, dialog);
         dialogContext = null;
       }
