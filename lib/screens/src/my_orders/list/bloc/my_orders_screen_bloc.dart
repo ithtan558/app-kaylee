@@ -1,9 +1,12 @@
 import 'package:anth_package/anth_package.dart';
+import 'package:kaylee/base/kaylee_list_interface.dart';
 import 'package:kaylee/base/loadmore_interface.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/services/services.dart';
+import 'package:kaylee/utils/utils.dart';
 
 class MyOrdersScreenBloc extends Cubit<LoadMoreModel<Order>>
+    with KayleeListInterfaceMixin
     implements LoadMoreInterface {
   final OrderService orderService;
   DateTime date;
@@ -12,27 +15,24 @@ class MyOrdersScreenBloc extends Cubit<LoadMoreModel<Order>>
 
   void loadOrdersByDate({DateTime date}) {
     this.date = date;
-    state
+    emit(LoadMoreModel.copy(state
       ..page = 1
-      ..items = null;
+      ..items = null
+      ..loading = true));
     loadOrders();
   }
 
   void loadOrders() {
-    emit(LoadMoreModel.copy(state..loading = true));
     RequestHandler(
       request: orderService.getOrderSupplier(
         page: state.page,
         limit: state.limit,
-        startDate: '2020-06-11'
-        // date.toFormatString(pattern: dateFormat)
-        ,
-        endDate: '2022-06-11'
-        // date.toFormatString(pattern: dateFormat)
-        ,
+        startDate: date.toFormatString(pattern: dateFormat),
+        endDate: date.toFormatString(pattern: dateFormat),
       ),
       onSuccess: ({message, result}) {
         final orders = (result as Orders).items;
+        completeRefresh();
         emit(LoadMoreModel.copy(state
           ..loading = false
           ..addAll(orders)
@@ -40,6 +40,7 @@ class MyOrdersScreenBloc extends Cubit<LoadMoreModel<Order>>
           ..code = null));
       },
       onFailed: (code, {error}) {
+        completeRefresh();
         emit(LoadMoreModel.copy(state
           ..loading = false
           ..error = error
@@ -56,4 +57,13 @@ class MyOrdersScreenBloc extends Cubit<LoadMoreModel<Order>>
 
   @override
   bool loadWhen() => !state.loading && !state.ended;
+
+  @override
+  void refresh() {
+    super.refresh();
+    state
+      ..page = 1
+      ..items = [];
+    loadOrders();
+  }
 }
