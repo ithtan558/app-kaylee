@@ -22,11 +22,9 @@ class ProdCateDetailBloc extends Cubit<SingleModel<ProdCate>>
         sequence: state.item.sequence,
       ),
       onSuccess: ({message, result}) {
-        emit(SingleModel.copy(state
+        emit(NewProductCateModel.copy(state
           ..loading = false
-          ..message = message
-          ..error = null
-          ..code = null));
+          ..message = message));
       },
       onFailed: (code, {error}) {
         emit(SingleModel.copy(state
@@ -116,6 +114,15 @@ class UpdateProductCateModel extends SingleModel<ProdCate> {
 
 class DeleteProductCateModel extends SingleModel<ProdCate> {
   DeleteProductCateModel.copy(SingleModel old) {
+    this
+      ..loading = old?.loading
+      ..item = old?.item
+      ..message = old?.message;
+  }
+}
+
+class NewProductCateModel extends SingleModel<ProdCate> {
+  NewProductCateModel.copy(SingleModel old) {
     this
       ..loading = old?.loading
       ..item = old?.item

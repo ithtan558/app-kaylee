@@ -62,7 +62,7 @@ class _CreateNewProdCateScreenState
             error: state.error,
             onPressed: popScreen,
           );
-        } else if (state is DeleteProductCateModel && state.message.isNotNull) {
+        } else if (state is DeleteProductCateModel) {
           context.bloc<ReloadBloc>().reload(type: ProdCateListScreen);
           showKayleeAlertMessageYesDialog(
             context: context,
@@ -73,7 +73,7 @@ class _CreateNewProdCateScreenState
               popScreen();
             },
           );
-        } else if (state is UpdateProductCateModel && state.message.isNotNull) {
+        } else if (state is UpdateProductCateModel) {
           showKayleeAlertMessageYesDialog(
             context: context,
             message: state.message,
@@ -82,7 +82,7 @@ class _CreateNewProdCateScreenState
               context.bloc<ReloadBloc>().reload(type: ProdCateListScreen);
             },
           );
-        } else if (state.message.isNotNull) {
+        } else if (state is NewProductCateModel) {
           showKayleeAlertMessageYesDialog(
             context: context,
             message: state.message,
@@ -91,6 +91,7 @@ class _CreateNewProdCateScreenState
             },
             onDismiss: () {
               context.bloc<ReloadBloc>().reload(type: ProdCateListScreen);
+              popScreen();
             },
           );
         }
