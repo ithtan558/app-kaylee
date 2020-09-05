@@ -11,9 +11,14 @@ class SupplierProdListBloc extends Cubit<LoadMoreModel<Product>>
   ProdCate category;
 
   SupplierProdListBloc({@required this.productService, this.supplier})
-      : super(LoadMoreModel());
+      : super(LoadMoreModel(items: []));
 
-  void loadProds({ProdCate category}) {
+  void loadInitData({ProdCate category}) {
+    emit(LoadMoreModel.copy(state..items = null));
+    changeTab(category: category);
+  }
+
+  void changeTab({ProdCate category}) {
     if (category.isNotNull) {
       ///user đổi category
       this.category = category;
@@ -22,7 +27,11 @@ class SupplierProdListBloc extends Cubit<LoadMoreModel<Product>>
       state
         ..page = 1
         ..items = null;
+      loadProds();
     }
+  }
+
+  void loadProds() {
     emit(LoadMoreModel.copy(state..loading = true));
     RequestHandler(
       request: productService.getProducts(

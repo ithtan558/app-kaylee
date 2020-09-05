@@ -40,7 +40,6 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
   SupplierProdCateListBloc cateBloc;
   SupplierProdListBloc prodsBloc;
   StreamSubscription cateBlocSub;
-  StreamSubscription prodsBlocSub;
 
   Supplier get supplier => context.getArguments<Supplier>();
 
@@ -48,15 +47,11 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
   void initState() {
     super.initState();
     cateBloc = context.bloc<SupplierProdCateListBloc>();
-    prodsBloc = context.bloc<SupplierProdListBloc>();
 
     cateBlocSub = cateBloc.listen((state) {
       if (!state.loading) {
         hideLoading();
-        if (state.items.isNotNullAndEmpty) {
-          prodsBloc.loadProds(category: state.items.first);
-        } else if (state.code.isNotNull &&
-            state.code != ErrorType.UNAUTHORIZED) {
+        if (state.code.isNotNull && state.code != ErrorType.UNAUTHORIZED) {
           showKayleeAlertErrorYesDialog(
             context: context,
             error: state.error,
@@ -64,20 +59,11 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
               popScreen();
             },
           );
+        } else {
+          prodsBloc.loadInitData(category: state.items.first);
         }
       } else if (state.loading) {
         showLoading();
-      }
-    });
-
-    prodsBlocSub = prodsBloc.listen((state) {
-      if (state.code.isNotNull && state.code != ErrorType.UNAUTHORIZED) {
-        showKayleeAlertErrorYesDialog(
-            context: context,
-            error: state.error,
-            onPressed: () {
-              popScreen();
-            });
       }
     });
 
@@ -86,7 +72,6 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
 
   @override
   void dispose() {
-    prodsBlocSub.cancel();
     cateBlocSub.cancel();
     super.dispose();
   }
@@ -136,19 +121,28 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
           final categories = state.items;
           return KayleeTabBar(
             itemCount: categories?.length,
-            mapTitle: (index) =>
-            categories
-                .elementAt(index)
-                .name,
+            mapTitle: (index) => categories.elementAt(index).name,
             onSelected: (value) {
-              prodsBloc.loadProds(category: state.items.elementAt(value));
+              prodsBloc.changeTab(category: state.items.elementAt(value));
             },
           );
         },
       ),
       pageView: KayleeLoadMoreHandler(
         controller: prodsBloc,
-        child: BlocBuilder<SupplierProdListBloc, LoadMoreModel<Product>>(
+        child: BlocConsumer<SupplierProdListBloc, LoadMoreModel<Product>>(
+          listener: (context, state) {
+            if (!state.loading &&
+                state.code.isNotNull &&
+                state.code != ErrorType.UNAUTHORIZED) {
+              showKayleeAlertErrorYesDialog(
+                  context: context,
+                  error: state.error,
+                  onPressed: () {
+                    popScreen();
+                  });
+            }
+          },
           builder: (context, state) {
             return KayleeGridView(
               padding: EdgeInsets.all(Dimens.px16),
