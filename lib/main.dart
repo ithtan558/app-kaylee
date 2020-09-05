@@ -8,6 +8,7 @@ import 'package:kaylee/base/json_converter/kaylee_json_convert.dart';
 import 'package:kaylee/base/kaylee_bloc_observer.dart';
 import 'package:kaylee/base/kaylee_observer.dart';
 import 'package:kaylee/base/kaylee_routing.dart';
+import 'package:kaylee/base/reload_bloc.dart';
 import 'package:kaylee/components/components.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/utils/utils.dart';
@@ -39,6 +40,9 @@ class KayLeeApp extends StatefulWidget {
           ),
           BlocProvider<CartBloc>(
             create: (context) => CartBloc(),
+          ),
+          BlocProvider(
+            create: (context) => ReloadBloc(),
           ),
         ], child: KayLeeApp._()),
       );
@@ -92,11 +96,10 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing, KayleeRouting {
       child: MaterialApp(
         title: Strings.appName,
         onGenerateRoute: onGenerateRoute,
-        builder: (context, child) =>
-            MediaQuery(
-                data: MediaQuery.of(context)
-                    .copyWith(textScaleFactor: 1, boldText: false),
-                child: child),
+        builder: (context, child) => MediaQuery(
+            data: MediaQuery.of(context)
+                .copyWith(textScaleFactor: 1, boldText: false),
+            child: child),
         navigatorObservers: [
           KayleeObserver(),
         ],
