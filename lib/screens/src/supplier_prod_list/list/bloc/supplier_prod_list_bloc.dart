@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/foundation.dart';
 import 'package:kaylee/base/kaylee_list_interface.dart';
@@ -8,14 +6,14 @@ import 'package:kaylee/models/models.dart';
 import 'package:kaylee/services/services.dart';
 
 class SupplierProdListBloc extends Cubit<LoadMoreModel<Product>>
-    implements LoadMoreInterface, KayleeListInterface {
+    with KayleeListInterfaceMixin
+    implements LoadMoreInterface {
   final ProductService productService;
   Supplier supplier;
   ProdCate category;
 
   SupplierProdListBloc({@required this.productService, this.supplier})
       : super(LoadMoreModel(items: []));
-  Completer _completer;
 
   void loadInitDataWithCate({ProdCate category}) {
     loadInitData();
@@ -85,20 +83,5 @@ class SupplierProdListBloc extends Cubit<LoadMoreModel<Product>>
       ..loading = true;
     renewCompleter();
     loadProds();
-  }
-
-  @override
-  Future get awaitRefresh => _completer?.future;
-
-  @override
-  void renewCompleter() {
-    _completer = Completer();
-  }
-
-  @override
-  void completeRefresh() {
-    if (!(_completer?.isCompleted ?? true)) {
-      _completer.complete();
-    }
   }
 }
