@@ -48,11 +48,7 @@ class _ServCateListScreenState extends KayleeState<ServCateListScreen> {
       body: Column(
         children: [
           Expanded(
-            child: RefreshIndicator(
-              onRefresh: () async {
-                _bloc.refresh();
-                await _bloc.awaitRefresh;
-              },
+            child: KayleeRefreshIndicator(
               child: KayleeLoadMoreHandler(
                 controller: context.bloc<ServCateListScreenBloc>(),
                 child: BlocConsumer<ServCateListScreenBloc,
