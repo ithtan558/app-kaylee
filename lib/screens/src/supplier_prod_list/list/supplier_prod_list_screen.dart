@@ -61,7 +61,11 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
             },
           );
         } else {
-          prodsBloc.loadInitDataWithCate(category: state.items.first);
+          prodsBloc.loadInitDataWithCate(
+              category: state.items?.firstWhere(
+            (element) => true,
+            orElse: () => null,
+          ));
         }
       } else if (state.loading) {
         showLoading();
