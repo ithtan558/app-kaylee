@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
+
 abstract class KayleeListInterface {
   void loadInitData();
 
@@ -17,6 +19,9 @@ mixin KayleeListInterfaceMixin implements KayleeListInterface {
   @override
   void loadInitData() {}
 
+  ///những sub-class override function này phải call super
+  ///logic khi override phải đặt sau super
+  @mustCallSuper
   @override
   void refresh() {
     _renewCompleter();
