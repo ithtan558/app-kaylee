@@ -25,11 +25,9 @@ class BrandDetailScreenBloc extends Cubit<SingleModel<Brand>>
           wardsId: state.item?.wards?.id,
           image: state.item?.imageFile),
       onSuccess: ({message, result}) {
-        emit(SingleModel.copy(state
+        emit(NewBrandModel.copy(state
           ..loading = false
-          ..message = message
-          ..error = null
-          ..code = null));
+          ..message = message));
       },
       onFailed: (code, {error}) {
         emit(SingleModel.copy(state
@@ -46,11 +44,9 @@ class BrandDetailScreenBloc extends Cubit<SingleModel<Brand>>
     RequestHandler(
       request: brandService.deleteBrand(brandId: state.item?.id),
       onSuccess: ({message, result}) {
-        emit(SingleModel.copy(state
+        emit(DeleteBrandModel.copy(state
           ..loading = false
-          ..message = message
-          ..error = null
-          ..code = null));
+          ..message = message));
       },
       onFailed: (code, {error}) {
         emit(SingleModel.copy(state
@@ -100,11 +96,9 @@ class BrandDetailScreenBloc extends Cubit<SingleModel<Brand>>
         id: state.item?.id,
       ),
       onSuccess: ({message, result}) {
-        emit(SingleModel.copy(state
+        emit(UpdateBrandModel.copy(state
           ..loading = false
-          ..message = message
-          ..error = null
-          ..code = null));
+          ..message = message));
       },
       onFailed: (code, {error}) {
         emit(SingleModel.copy(state
@@ -113,5 +107,32 @@ class BrandDetailScreenBloc extends Cubit<SingleModel<Brand>>
           ..code = code));
       },
     );
+  }
+}
+
+class UpdateBrandModel extends SingleModel<Brand> {
+  UpdateBrandModel.copy(SingleModel old) {
+    this
+      ..item = old?.item
+      ..loading = old?.loading
+      ..message = old?.message;
+  }
+}
+
+class DeleteBrandModel extends SingleModel<Brand> {
+  DeleteBrandModel.copy(SingleModel old) {
+    this
+      ..item = old?.item
+      ..loading = old?.loading
+      ..message = old?.message;
+  }
+}
+
+class NewBrandModel extends SingleModel<Brand> {
+  NewBrandModel.copy(SingleModel old) {
+    this
+      ..item = old?.item
+      ..loading = old?.loading
+      ..message = old?.message;
   }
 }

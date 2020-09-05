@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:anth_package/anth_package.dart';
 import 'package:kaylee/base/kaylee_filter_interface.dart';
+import 'package:kaylee/base/kaylee_list_interface.dart';
 import 'package:kaylee/base/loadmore_interface.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/services/services.dart';
@@ -10,15 +13,19 @@ class BrandFilter extends Filter {
 }
 
 class BrandListBloc extends Cubit<LoadMoreModel<Brand>>
-    implements LoadMoreInterface, KayleeFilterInterface<BrandFilter> {
+    implements
+        LoadMoreInterface,
+        KayleeFilterInterface<BrandFilter>,
+        KayleeListInterface {
   BrandService brandService;
 
   BrandListBloc({this.brandService}) : super(LoadMoreModel());
 
   BrandFilter _filter;
+  Completer _completer;
 
   void loadBrands() {
-    emit(LoadMoreModel.copy(state..loading = true));
+    state.loading = true;
     RequestHandler(
       request: brandService?.getBrands(
         keyword: _filter?.keyword,
@@ -29,6 +36,7 @@ class BrandListBloc extends Cubit<LoadMoreModel<Brand>>
       ),
       onSuccess: ({message, result}) {
         final brands = (result as Brands).items;
+        completeRefresh();
         emit(LoadMoreModel.copy(state
           ..loading = false
           ..addAll(brands)
@@ -36,6 +44,7 @@ class BrandListBloc extends Cubit<LoadMoreModel<Brand>>
           ..error = null));
       },
       onFailed: (code, {error}) {
+        completeRefresh();
         emit(LoadMoreModel.copy(state
           ..loading = false
           ..code = code
@@ -85,4 +94,33 @@ class BrandListBloc extends Cubit<LoadMoreModel<Brand>>
 
   @override
   bool get loadFilterWhen => !isEmptyFilter || state.items.isNullOrEmpty;
+
+  @override
+  void loadInitData() {
+    loadBrands();
+  }
+
+  @override
+  void refresh() {
+    state
+      ..page = 1
+      ..items = [];
+    renewCompleter();
+    loadBrands();
+  }
+
+  @override
+  Future get awaitRefresh => _completer?.future;
+
+  @override
+  void renewCompleter() {
+    _completer = Completer();
+  }
+
+  @override
+  void completeRefresh() {
+    if (!(_completer?.isCompleted ?? true)) {
+      _completer.complete();
+    }
+  }
 }

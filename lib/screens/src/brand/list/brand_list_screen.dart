@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,31 +25,23 @@ class BrandListScreen extends StatefulWidget {
 
 class _BrandListScreenState extends KayleeState<BrandListScreen> {
   BrandListBloc brandListBloc;
-  StreamSubscription brandBlocSub;
 
   @override
   void initState() {
     super.initState();
-    brandListBloc = context.bloc<BrandListBloc>()..loadBrands();
-    brandBlocSub = brandListBloc.listen((state) {
-      if (!state.loading) {
-        if (state.code.isNotNull && state.code != ErrorType.UNAUTHORIZED) {
-          showKayleeAlertErrorYesDialog(
-            context: context,
-            error: state.error,
-            onPressed: () {
-              popScreen();
-            },
-          );
-        }
-      }
-    });
+    brandListBloc = context.bloc<BrandListBloc>()..loadInitData();
   }
 
   @override
   void dispose() {
-    brandBlocSub.cancel();
     super.dispose();
+  }
+
+  @override
+  void onReloadScreen(Type screen, Bundle bundle) {
+    if (screen == BrandListScreen) {
+      brandListBloc.refresh();
+    }
   }
 
   @override
@@ -65,39 +55,56 @@ class _BrandListScreenState extends KayleeState<BrandListScreen> {
           ),
         ],
       ),
-      body: KayleeLoadMoreHandler(
-        child: BlocBuilder<BrandListBloc, LoadMoreModel<Brand>>(
-          builder: (context, state) {
-            return KayleeListView(
-                padding: const EdgeInsets.only(
-                    bottom: Dimens.px16,
-                    top: Dimens.px8,
-                    right: Dimens.px16,
-                    left: Dimens.px16),
-                physics: BouncingScrollPhysics(),
-                itemBuilder: (c, index) {
-                  return BrandItem(
-                    brand: state.items.elementAt(index),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          brandListBloc.refresh();
+          await brandListBloc.awaitRefresh;
+        },
+        child: KayleeLoadMoreHandler(
+          child: BlocConsumer<BrandListBloc, LoadMoreModel<Brand>>(
+            listener: (context, state) {
+              if (!state.loading) {
+                if (state.code.isNotNull &&
+                    state.code != ErrorType.UNAUTHORIZED) {
+                  showKayleeAlertErrorYesDialog(
+                    context: context,
+                    error: state.error,
+                    onPressed: popScreen,
                   );
-                },
-                separatorBuilder: (c, index) {
-                  return SizedBox(
-                    height: Dimens.px16,
-                  );
-                },
-                loadingBuilder: (context) {
-                  if (state.ended) return Container();
-                  return Container(
-                    padding: const EdgeInsets.only(top: Dimens.px16),
-                    child: CupertinoActivityIndicator(
-                      radius: Dimens.px16,
-                    ),
-                  );
-                },
-                itemCount: state.items?.length ?? 0);
-          },
+                }
+              }
+            },
+            builder: (context, state) {
+              return KayleeListView(
+                  padding: const EdgeInsets.only(
+                      bottom: Dimens.px16,
+                      top: Dimens.px8,
+                      right: Dimens.px16,
+                      left: Dimens.px16),
+                  itemBuilder: (c, index) {
+                    return BrandItem(
+                      brand: state.items.elementAt(index),
+                    );
+                  },
+                  separatorBuilder: (c, index) {
+                    return SizedBox(
+                      height: Dimens.px16,
+                    );
+                  },
+                  loadingBuilder: (context) {
+                    if (state.ended) return Container();
+                    return Container(
+                      padding: const EdgeInsets.only(top: Dimens.px16),
+                      child: CupertinoActivityIndicator(
+                        radius: Dimens.px16,
+                      ),
+                    );
+                  },
+                  itemCount: state.items?.length ?? 0);
+            },
+          ),
+          controller: brandListBloc,
         ),
-        controller: brandListBloc,
       ),
       floatingActionButton: KayleeFloatButton(
         onTap: () {

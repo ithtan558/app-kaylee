@@ -4,8 +4,10 @@ import 'package:anth_package/anth_package.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
+import 'package:kaylee/base/reload_bloc.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/brand/create_new/bloc/brand_detail_screen_bloc.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/src/kaylee_picker_textfield.dart';
@@ -69,12 +71,25 @@ class _CreateNewBrandScreenState extends KayleeState<CreateNewBrandScreen> {
               }
             },
           );
-        } else if (state.message.isNotNull) {
+        } else if (state is DeleteBrandModel || state is NewBrandModel) {
           showKayleeAlertMessageYesDialog(
-              context: context,
-              message: state.message,
-              onPressed: popScreen,
-              onDismiss: popScreen);
+            context: context,
+            message: state.message,
+            onPressed: popScreen,
+            onDismiss: () {
+              context.bloc<ReloadBloc>().reload(screen: BrandListScreen);
+              popScreen();
+            },
+          );
+        } else if (state is UpdateBrandModel) {
+          showKayleeAlertMessageYesDialog(
+            context: context,
+            message: state.message,
+            onPressed: popScreen,
+            onDismiss: () {
+              context.bloc<ReloadBloc>().reload(screen: BrandListScreen);
+            },
+          );
         }
       }
     });
