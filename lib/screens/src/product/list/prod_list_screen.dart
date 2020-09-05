@@ -48,17 +48,14 @@ class _ProdListScreenState extends KayleeState<ProdListScreen> {
     cateBlocSub = cateBloc.listen((state) {
       if (!state.loading) {
         hideLoading();
-        if (state.item.isNotNullAndEmpty) {
-          prodsListBloc.changeTab(cateId: state.item.first.id);
-        } else if (state.code.isNotNull &&
-            state.code != ErrorType.UNAUTHORIZED) {
+        if (state.code.isNotNull && state.code != ErrorType.UNAUTHORIZED) {
           showKayleeAlertErrorYesDialog(
             context: context,
             error: state.error,
-            onPressed: () {
-              popScreen();
-            },
+            onPressed: popScreen,
           );
+        } else {
+          prodsListBloc.loadInitData(cateId: state.item?.first?.id);
         }
       } else if (state.loading) {
         showLoading();
@@ -94,9 +91,7 @@ class _ProdListScreenState extends KayleeState<ProdListScreen> {
               ],
             ),
             tabBar: BlocBuilder<ProdCateBloc, SingleModel<List<Category>>>(
-              buildWhen: (previous, current) {
-                return !current.loading;
-              },
+              buildWhen: (previous, current) => !current.loading,
               builder: (context, state) {
                 final categories = state.item;
                 return KayleeTabBar(
@@ -111,7 +106,17 @@ class _ProdListScreenState extends KayleeState<ProdListScreen> {
             ),
             pageView: KayleeLoadMoreHandler(
               controller: context.bloc<ProdListBloc>(),
-              child: BlocBuilder<ProdListBloc, LoadMoreModel<Product>>(
+              child: BlocConsumer<ProdListBloc, LoadMoreModel<Product>>(
+                listener: (context, state) {
+                  if (state.code.isNotNull &&
+                      state.code != ErrorType.UNAUTHORIZED) {
+                    showKayleeAlertErrorYesDialog(
+                      context: context,
+                      error: state.error,
+                      onPressed: popScreen,
+                    );
+                  }
+                },
                 builder: (context, state) {
                   return KayleeGridView(
                     padding: EdgeInsets.all(Dimens.px16),

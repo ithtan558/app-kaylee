@@ -18,7 +18,8 @@ class ProdListBloc extends Cubit<LoadMoreModel<Product>>
   int cateId;
   ProductFilter _filter;
 
-  ProdListBloc({@required this.productService}) : super(LoadMoreModel());
+  ProdListBloc({@required this.productService})
+      : super(LoadMoreModel(items: []));
 
   void loadProds() {
     emit(LoadMoreModel.copy(state..loading = true));
@@ -43,6 +44,13 @@ class ProdListBloc extends Cubit<LoadMoreModel<Product>>
           ..error = error));
       },
     );
+  }
+
+  void loadInitData({int cateId}) {
+    if (cateId.isNotNull) {
+      emit(LoadMoreModel.copy(state..items = null));
+      changeTab(cateId: cateId);
+    }
   }
 
   void changeTab({int cateId}) {
