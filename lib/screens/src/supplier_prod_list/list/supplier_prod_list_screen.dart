@@ -60,7 +60,7 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
             },
           );
         } else {
-          prodsBloc.loadInitData(category: state.items.first);
+          prodsBloc.loadInitDataWithCate(category: state.items.first);
         }
       } else if (state.loading) {
         showLoading();
@@ -128,52 +128,55 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
           );
         },
       ),
-      pageView: KayleeLoadMoreHandler(
+      pageView: KayleeRefreshIndicator(
         controller: prodsBloc,
-        child: BlocConsumer<SupplierProdListBloc, LoadMoreModel<Product>>(
-          listener: (context, state) {
-            if (!state.loading &&
-                state.code.isNotNull &&
-                state.code != ErrorType.UNAUTHORIZED) {
-              showKayleeAlertErrorYesDialog(
-                  context: context,
-                  error: state.error,
-                  onPressed: () {
-                    popScreen();
-                  });
-            }
-          },
-          builder: (context, state) {
-            return KayleeGridView(
-              padding: EdgeInsets.all(Dimens.px16),
-              childAspectRatio: 103 / 195,
-              itemBuilder: (c, index) {
-                final item = state.items.elementAt(index);
-                return KayleeProdItemView.canTap(
-                  data: KayleeProdItemData(
-                      name: item.name, image: item.image, price: item.price),
-                  onTap: () {
-                    pushScreen(PageIntent(
-                        screen: ProductDetailScreen,
-                        bundle: Bundle(ProductDetailScreenData(
-                          supplier: supplier,
-                          product: item,
-                        ))));
-                  },
-                );
-              },
-              itemCount: state.items?.length,
-              loadingBuilder: (context) {
-                if (state.ended) return Container();
-                return Align(
-                  alignment: Alignment.topCenter,
-                  child: CupertinoActivityIndicator(
-                    radius: Dimens.px16,
-                  ),
-                );
-              },
-            );
-          },
+        child: KayleeLoadMoreHandler(
+          controller: prodsBloc,
+          child: BlocConsumer<SupplierProdListBloc, LoadMoreModel<Product>>(
+            listener: (context, state) {
+              if (!state.loading &&
+                  state.code.isNotNull &&
+                  state.code != ErrorType.UNAUTHORIZED) {
+                showKayleeAlertErrorYesDialog(
+                    context: context,
+                    error: state.error,
+                    onPressed: () {
+                      popScreen();
+                    });
+              }
+            },
+            builder: (context, state) {
+              return KayleeGridView(
+                padding: EdgeInsets.all(Dimens.px16),
+                childAspectRatio: 103 / 195,
+                itemBuilder: (c, index) {
+                  final item = state.items.elementAt(index);
+                  return KayleeProdItemView.canTap(
+                    data: KayleeProdItemData(
+                        name: item.name, image: item.image, price: item.price),
+                    onTap: () {
+                      pushScreen(PageIntent(
+                          screen: ProductDetailScreen,
+                          bundle: Bundle(ProductDetailScreenData(
+                            supplier: supplier,
+                            product: item,
+                          ))));
+                    },
+                  );
+                },
+                itemCount: state.items?.length,
+                loadingBuilder: (context) {
+                  if (state.ended) return Container();
+                  return Align(
+                    alignment: Alignment.topCenter,
+                    child: CupertinoActivityIndicator(
+                      radius: Dimens.px16,
+                    ),
+                  );
+                },
+              );
+            },
+          ),
         ),
       ),
       floatingActionButton: Material(
