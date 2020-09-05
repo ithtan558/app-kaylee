@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:anth_package/anth_package.dart';
 import 'package:kaylee/base/kaylee_list_interface.dart';
 import 'package:kaylee/base/loadmore_interface.dart';
@@ -64,9 +62,9 @@ class DeleteState extends SingleModel<models.Notification> {
 }
 
 class NotificationListBloc extends Cubit<LoadMoreModel<models.Notification>>
-    implements LoadMoreInterface, KayleeListInterface {
+    with KayleeListInterfaceMixin
+    implements LoadMoreInterface {
   final NotificationService notificationService;
-  Completer _completer;
 
   NotificationListBloc({this.notificationService}) : super(LoadMoreModel());
 
@@ -139,20 +137,5 @@ class NotificationListBloc extends Cubit<LoadMoreModel<models.Notification>>
       ..items = [];
     renewCompleter();
     loadNotification();
-  }
-
-  @override
-  Future get awaitRefresh => _completer?.future;
-
-  @override
-  void renewCompleter() {
-    _completer = Completer();
-  }
-
-  @override
-  void completeRefresh() {
-    if (!(_completer?.isCompleted ?? true)) {
-      _completer.complete();
-    }
   }
 }
