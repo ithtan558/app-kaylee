@@ -1,4 +1,4 @@
-import 'package:core_plugin/core_plugin.dart' hide Path;
+import 'package:anth_package/anth_package.dart' hide Path;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
@@ -25,6 +25,7 @@ class KayleeDateFilter extends StatefulWidget {
 class _KayleeDateFilterState extends BaseState<KayleeDateFilter> {
   PageController pageController;
   DateTime selectedDate;
+  final changeTabController = BehaviorSubject<int>();
 
   int get currentDay => pageController.page.toInt() + 1;
 
@@ -36,11 +37,19 @@ class _KayleeDateFilterState extends BaseState<KayleeDateFilter> {
         keepPage: false,
         viewportFraction: 1 / 7,
         initialPage: widget.controller.value.day - 1);
+    changeTabController
+        .debounceTime(Duration(milliseconds: 500))
+        .listen((index) {
+      final date = widget.controller.value;
+      widget.controller.value = DateTime(date.year, date.month, index + 1);
+      widget.onChanged?.call(widget.controller.value);
+    });
   }
 
   @override
   void dispose() {
     pageController.dispose();
+    changeTabController.close();
     super.dispose();
   }
 
@@ -135,10 +144,7 @@ class _KayleeDateFilterState extends BaseState<KayleeDateFilter> {
               height: Dimens.px48,
               child: PageView.builder(
                 onPageChanged: (index) {
-                  final date = widget.controller.value;
-                  widget.controller.value =
-                      DateTime(date.year, date.month, index + 1);
-                  widget.onChanged?.call(widget.controller.value);
+                  changeTabController.add(index);
                 },
                 physics: BouncingScrollPhysics(),
                 itemBuilder: (context, index) {
