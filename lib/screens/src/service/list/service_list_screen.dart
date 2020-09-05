@@ -56,7 +56,13 @@ class _ServiceListScreenState extends KayleeState<ServiceListScreen> {
             },
           );
         } else {
-          serviceListBloc.loadInitDataWithCate(cateId: state.item?.first?.id);
+          serviceListBloc.loadInitDataWithCate(
+              cateId: state.item
+                  ?.firstWhere(
+                    (element) => true,
+                    orElse: () => null,
+                  )
+                  ?.id);
         }
       } else if (state.loading) {
         showLoading();
