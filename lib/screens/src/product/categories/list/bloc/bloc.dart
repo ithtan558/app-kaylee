@@ -13,16 +13,10 @@ class ProCateListScreenBloc extends Cubit<LoadMoreModel<ProdCate>>
 
   ProCateListScreenBloc({this.productService}) : super(LoadMoreModel());
 
-  @override
-  void loadInitData() {
-    emit(LoadMoreModel.copy(state..loading = true));
-    loadCategories();
-  }
-
   void loadCategories() {
     RequestHandler(
       request:
-      productService.getCategoryList(limit: state.limit, page: state.page),
+          productService.getCategoryList(limit: state.limit, page: state.page),
       onSuccess: ({message, result}) {
         final cates = (result as ProdCategories).items;
         completeRefresh();
@@ -50,6 +44,12 @@ class ProCateListScreenBloc extends Cubit<LoadMoreModel<ProdCate>>
 
   @override
   bool loadWhen() => !state.loading && !state.ended;
+
+  @override
+  void loadInitData() {
+    emit(LoadMoreModel.copy(state..loading = true));
+    loadCategories();
+  }
 
   @override
   void refresh() {
