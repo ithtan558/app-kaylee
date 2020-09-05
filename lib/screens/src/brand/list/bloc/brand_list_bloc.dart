@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:anth_package/anth_package.dart';
 import 'package:kaylee/base/kaylee_filter_interface.dart';
 import 'package:kaylee/base/kaylee_list_interface.dart';
@@ -13,16 +11,13 @@ class BrandFilter extends Filter {
 }
 
 class BrandListBloc extends Cubit<LoadMoreModel<Brand>>
-    implements
-        LoadMoreInterface,
-        KayleeFilterInterface<BrandFilter>,
-        KayleeListInterface {
+    with KayleeListInterfaceMixin
+    implements LoadMoreInterface, KayleeFilterInterface<BrandFilter> {
   BrandService brandService;
 
   BrandListBloc({this.brandService}) : super(LoadMoreModel());
 
   BrandFilter _filter;
-  Completer _completer;
 
   void loadBrands() {
     state.loading = true;
@@ -107,20 +102,5 @@ class BrandListBloc extends Cubit<LoadMoreModel<Brand>>
       ..items = [];
     renewCompleter();
     loadBrands();
-  }
-
-  @override
-  Future get awaitRefresh => _completer?.future;
-
-  @override
-  void renewCompleter() {
-    _completer = Completer();
-  }
-
-  @override
-  void completeRefresh() {
-    if (!(_completer?.isCompleted ?? true)) {
-      _completer.complete();
-    }
   }
 }
