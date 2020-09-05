@@ -1,6 +1,7 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/foundation.dart';
 import 'package:kaylee/base/kaylee_filter_interface.dart';
+import 'package:kaylee/base/kaylee_list_interface.dart';
 import 'package:kaylee/base/loadmore_interface.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/services/services.dart';
@@ -13,6 +14,7 @@ class ServiceFilter extends Filter {
 }
 
 class ServiceListBloc extends Cubit<LoadMoreModel<Service>>
+    with KayleeListInterfaceMixin
     implements LoadMoreInterface, KayleeFilterInterface<ServiceFilter> {
   final ServService servService;
   int cateId;
@@ -24,7 +26,6 @@ class ServiceListBloc extends Cubit<LoadMoreModel<Service>>
       : super(LoadMoreModel(items: []));
 
   void loadServices() {
-    emit(LoadMoreModel.copy(state..loading = true));
     RequestHandler(
       request: servService.getServices(
         categoryId: this.cateId,
@@ -37,6 +38,7 @@ class ServiceListBloc extends Cubit<LoadMoreModel<Service>>
       ),
       onSuccess: ({message, result}) {
         final services = (result as Services).items;
+        completeRefresh();
         emit(LoadMoreModel.copy(state
           ..loading = false
           ..addAll(services)
@@ -44,6 +46,7 @@ class ServiceListBloc extends Cubit<LoadMoreModel<Service>>
           ..error = null));
       },
       onFailed: (code, {error}) {
+        completeRefresh();
         emit(LoadMoreModel.copy(state
           ..loading = false
           ..code = code
@@ -54,7 +57,7 @@ class ServiceListBloc extends Cubit<LoadMoreModel<Service>>
 
   void loadInitDataWithCate({int cateId}) {
     if (cateId.isNotNull) {
-      emit(LoadMoreModel.copy(state..items = null));
+      loadInitData();
       changeTab(cateId: cateId);
     }
   }
@@ -65,9 +68,10 @@ class ServiceListBloc extends Cubit<LoadMoreModel<Service>>
       this.cateId = cateId;
 
       //reset page và item về ban đầu
-      state
+      emit(LoadMoreModel.copy(state
+        ..loading = true
         ..page = 1
-        ..items = null;
+        ..items = null));
       loadServices();
     }
   }
@@ -90,9 +94,9 @@ class ServiceListBloc extends Cubit<LoadMoreModel<Service>>
   @override
   void loadFilter() {
     if (loadFilterWhen) {
-      state
+      emit(state
         ..items = null
-        ..page = 1;
+        ..page = 1);
       loadServices();
     }
   }
@@ -109,5 +113,20 @@ class ServiceListBloc extends Cubit<LoadMoreModel<Service>>
   ServiceFilter updateFilter() {
     if (isEmptyFilter) _filter = ServiceFilter();
     return _filter;
+  }
+
+  @override
+  void loadInitData() {
+    state..items = null;
+  }
+
+  @override
+  void refresh() {
+    state
+      ..page = 1
+      ..items = []
+      ..loading = true;
+    renewCompleter();
+    loadServices();
   }
 }

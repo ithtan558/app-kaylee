@@ -109,53 +109,56 @@ class _ServiceListScreenState extends KayleeState<ServiceListScreen> {
                 );
               },
             ),
-            pageView: KayleeLoadMoreHandler(
+            pageView: KayleeRefreshIndicator(
               controller: serviceListBloc,
-              child: BlocConsumer<ServiceListBloc, LoadMoreModel<Service>>(
-                listener: (context, state) {
-                  if (state.code.isNotNull &&
-                      state.code != ErrorType.UNAUTHORIZED) {
-                    showKayleeAlertErrorYesDialog(
-                      context: context,
-                      error: state.error,
-                      onPressed: () {
-                        popScreen();
-                      },
-                    );
-                  }
-                },
-                builder: (context, state) {
-                  return KayleeGridView(
-                    padding: EdgeInsets.all(Dimens.px16),
-                    childAspectRatio: 103 / 195,
-                    itemBuilder: (c, index) {
-                      final item = state.items.elementAt(index);
-                      return KayleeProdItemView.canTap(
-                        data: KayleeProdItemData(
-                            name: item.name,
-                            image: item.image,
-                            price: item.price),
-                        onTap: () {
-                          pushScreen(PageIntent(
-                              screen: CreateNewServiceScreen,
-                              bundle: Bundle(NewServiceScreenData(
-                                  openFrom: ServiceScreenOpenFrom.serviceItem,
-                                  service: item))));
+              child: KayleeLoadMoreHandler(
+                controller: serviceListBloc,
+                child: BlocConsumer<ServiceListBloc, LoadMoreModel<Service>>(
+                  listener: (context, state) {
+                    if (state.code.isNotNull &&
+                        state.code != ErrorType.UNAUTHORIZED) {
+                      showKayleeAlertErrorYesDialog(
+                        context: context,
+                        error: state.error,
+                        onPressed: () {
+                          popScreen();
                         },
                       );
-                    },
-                    itemCount: state.items?.length,
-                    loadingBuilder: (context) {
-                      if (state.ended) return Container();
-                      return Align(
-                        alignment: Alignment.topCenter,
-                        child: CupertinoActivityIndicator(
-                          radius: Dimens.px16,
-                        ),
-                      );
-                    },
-                  );
-                },
+                    }
+                  },
+                  builder: (context, state) {
+                    return KayleeGridView(
+                      padding: EdgeInsets.all(Dimens.px16),
+                      childAspectRatio: 103 / 195,
+                      itemBuilder: (c, index) {
+                        final item = state.items.elementAt(index);
+                        return KayleeProdItemView.canTap(
+                          data: KayleeProdItemData(
+                              name: item.name,
+                              image: item.image,
+                              price: item.price),
+                          onTap: () {
+                            pushScreen(PageIntent(
+                                screen: CreateNewServiceScreen,
+                                bundle: Bundle(NewServiceScreenData(
+                                    openFrom: ServiceScreenOpenFrom.serviceItem,
+                                    service: item))));
+                          },
+                        );
+                      },
+                      itemCount: state.items?.length,
+                      loadingBuilder: (context) {
+                        if (state.ended) return Container();
+                        return Align(
+                          alignment: Alignment.topCenter,
+                          child: CupertinoActivityIndicator(
+                            radius: Dimens.px16,
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
               ),
             ),
           ),
