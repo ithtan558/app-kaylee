@@ -97,10 +97,10 @@ class BrandListBloc extends Cubit<LoadMoreModel<Brand>>
 
   @override
   void refresh() {
+    super.refresh();
     state
       ..page = 1
       ..items = [];
-    renewCompleter();
     loadBrands();
   }
 }

@@ -122,11 +122,11 @@ class ServiceListBloc extends Cubit<LoadMoreModel<Service>>
 
   @override
   void refresh() {
+    super.refresh();
     state
       ..page = 1
       ..items = []
       ..loading = true;
-    renewCompleter();
     loadServices();
   }
 }

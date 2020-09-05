@@ -77,11 +77,11 @@ class SupplierProdListBloc extends Cubit<LoadMoreModel<Product>>
 
   @override
   void refresh() {
+    super.refresh();
     state
       ..page = 1
       ..items = []
       ..loading = true;
-    renewCompleter();
     loadProds();
   }
 }
