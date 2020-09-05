@@ -28,10 +28,10 @@ class SupplierProdListBloc extends Cubit<LoadMoreModel<Product>>
       this.category = category;
 
       ///reset page và item về ban đầu
-      state
+      emit(LoadMoreModel.copy(state
+        ..loading = true
         ..page = 1
-        ..items = null;
-      emit(LoadMoreModel.copy(state..loading = true));
+        ..items = null));
       loadProds();
     }
   }
