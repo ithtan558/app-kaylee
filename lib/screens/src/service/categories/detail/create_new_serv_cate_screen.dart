@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
+import 'package:kaylee/base/reload_bloc.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/service/categories/detail/bloc/serv_cate_detail_bloc.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
@@ -60,18 +62,34 @@ class _CreateNewServCateScreenState
             error: state.error,
             onPressed: popScreen,
           );
-        } else if (state is DeleteServCateModel && state.message.isNotNull) {
+        } else if (state is DeleteServCateModel) {
           showKayleeAlertMessageYesDialog(
             context: context,
             message: state.message,
             onPressed: popScreen,
-            onDismiss: popScreen,
+            onDismiss: () {
+              context.bloc<ReloadBloc>().reload(type: ServCateListScreen);
+              popScreen();
+            },
           );
-        } else if (state.message.isNotNull) {
+        } else if (state is UpdateServCateModel) {
           showKayleeAlertMessageYesDialog(
             context: context,
             message: state.message,
             onPressed: popScreen,
+            onDismiss: () {
+              context.bloc<ReloadBloc>().reload(type: ServCateListScreen);
+            },
+          );
+        } else if (state is NewServCateModel) {
+          showKayleeAlertMessageYesDialog(
+            context: context,
+            message: state.message,
+            onPressed: popScreen,
+            onDismiss: () {
+              context.bloc<ReloadBloc>().reload(type: ServCateListScreen);
+              popScreen();
+            },
           );
         }
       }

@@ -22,11 +22,9 @@ class ServCateDetailBloc extends Cubit<SingleModel<ServiceCate>>
         sequence: state.item.sequence,
       ),
       onSuccess: ({message, result}) {
-        emit(SingleModel.copy(state
+        emit(NewServCateModel.copy(state
           ..loading = false
-          ..message = message
-          ..error = null
-          ..code = null));
+          ..message = message));
       },
       onFailed: (code, {error}) {
         emit(SingleModel.copy(state
@@ -91,11 +89,9 @@ class ServCateDetailBloc extends Cubit<SingleModel<ServiceCate>>
         cateId: state.item?.id,
       ),
       onSuccess: ({message, result}) {
-        emit(SingleModel.copy(state
+        emit(UpdateServCateModel.copy(state
           ..loading = false
-          ..message = message
-          ..error = null
-          ..code = null));
+          ..message = message));
       },
       onFailed: (code, {error}) {
         emit(SingleModel.copy(state
@@ -109,6 +105,24 @@ class ServCateDetailBloc extends Cubit<SingleModel<ServiceCate>>
 
 class DeleteServCateModel extends SingleModel<ServiceCate> {
   DeleteServCateModel.copy(SingleModel old) {
+    this
+      ..loading = old?.loading
+      ..item = old?.item
+      ..message = old?.message;
+  }
+}
+
+class UpdateServCateModel extends SingleModel<ServiceCate> {
+  UpdateServCateModel.copy(SingleModel old) {
+    this
+      ..loading = old?.loading
+      ..item = old?.item
+      ..message = old?.message;
+  }
+}
+
+class NewServCateModel extends SingleModel<ServiceCate> {
+  NewServCateModel.copy(SingleModel old) {
     this
       ..loading = old?.loading
       ..item = old?.item

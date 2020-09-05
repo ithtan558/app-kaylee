@@ -29,7 +29,14 @@ class _ServCateListScreenState extends KayleeState<ServCateListScreen> {
   void initState() {
     super.initState();
     _bloc = context.bloc<ServCateListScreenBloc>();
-    _bloc.loadCategories();
+    _bloc.loadInitData();
+  }
+
+  @override
+  void onReloadScreen(Type screen, Bundle bundle) {
+    if (screen == ServCateListScreen) {
+      _bloc.refresh();
+    }
   }
 
   @override
