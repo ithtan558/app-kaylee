@@ -74,7 +74,7 @@ class SupplierProdListBloc extends Cubit<LoadMoreModel<Product>>
 
   @override
   void loadInitData() {
-    emit(LoadMoreModel.copy(state..items = null));
+    state..items = null;
   }
 
   @override
