@@ -29,7 +29,14 @@ class _ProdCateListScreenState extends KayleeState<ProdCateListScreen> {
   void initState() {
     super.initState();
     _bloc = context.bloc<ProCateListScreenBloc>();
-    _bloc.loadCategories();
+    _bloc.loadInitData();
+  }
+
+  @override
+  void onReloadScreen(Type screen, Bundle bundle) {
+    if (screen == ProdCateListScreen) {
+      _bloc.refresh();
+    }
   }
 
   @override

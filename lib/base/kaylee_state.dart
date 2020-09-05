@@ -4,6 +4,7 @@ import 'package:anth_package/anth_package.dart' hide VoidCallback;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/app_bloc.dart';
+import 'package:kaylee/base/reload_bloc.dart';
 import 'package:kaylee/main.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
@@ -13,19 +14,27 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
   bool isShowLoading = false;
   AppBloc appBloc;
   StreamSubscription appBlocSub;
+  StreamSubscription _reloadBlocSub;
 
   @override
   void initState() {
     super.initState();
     appBloc = context.bloc<AppBloc>();
     _listenUnauthorStream();
+    _reloadBlocSub = context.bloc<ReloadBloc>().listen((state) {
+      onReloadScreen(state.screen, state.bundle);
+    });
   }
 
   @override
   void dispose() {
     appBlocSub?.cancel();
+    _reloadBlocSub?.cancel();
     super.dispose();
   }
+
+  ///ko cần thiết phải gọi super khi override lại ở sub-class
+  void onReloadScreen(Type screen, Bundle bundle) {}
 
   void showLoading({bool canDismiss = false, VoidCallback onDismiss}) {
     if (dialogContext.isNull ||

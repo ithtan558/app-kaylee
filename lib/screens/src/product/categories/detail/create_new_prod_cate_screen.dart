@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
+import 'package:kaylee/base/reload_bloc.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/product/categories/detail/bloc/prod_cate_detail_bloc.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
@@ -61,17 +63,35 @@ class _CreateNewProdCateScreenState
             onPressed: popScreen,
           );
         } else if (state is DeleteProductCateModel && state.message.isNotNull) {
+          context.bloc<ReloadBloc>().reload(type: ProdCateListScreen);
           showKayleeAlertMessageYesDialog(
             context: context,
             message: state.message,
             onPressed: popScreen,
-            onDismiss: popScreen,
+            onDismiss: () {
+              context.bloc<ReloadBloc>().reload(type: ProdCateListScreen);
+              popScreen();
+            },
+          );
+        } else if (state is UpdateProductCateModel && state.message.isNotNull) {
+          showKayleeAlertMessageYesDialog(
+            context: context,
+            message: state.message,
+            onPressed: popScreen,
+            onDismiss: () {
+              context.bloc<ReloadBloc>().reload(type: ProdCateListScreen);
+            },
           );
         } else if (state.message.isNotNull) {
           showKayleeAlertMessageYesDialog(
             context: context,
             message: state.message,
-            onPressed: popScreen,
+            onPressed: () {
+              popScreen();
+            },
+            onDismiss: () {
+              context.bloc<ReloadBloc>().reload(type: ProdCateListScreen);
+            },
           );
         }
       }
