@@ -52,7 +52,7 @@ class ServiceListBloc extends Cubit<LoadMoreModel<Service>>
     );
   }
 
-  void loadInitData({int cateId}) {
+  void loadInitDataWithCate({int cateId}) {
     if (cateId.isNotNull) {
       emit(LoadMoreModel.copy(state..items = null));
       changeTab(cateId: cateId);
