@@ -18,7 +18,10 @@ class ServiceListBloc extends Cubit<LoadMoreModel<Service>>
   int cateId;
   ServiceFilter _filter;
 
-  ServiceListBloc({@required this.servService}) : super(LoadMoreModel());
+  ///phải set [LoadMoreModel.items] = empty vì lúc init screen, phải chờ load category trước,
+  ///thì lúc này KayleeGridView phải ẩn loading indicator đi
+  ServiceListBloc({@required this.servService})
+      : super(LoadMoreModel(items: []));
 
   void loadServices() {
     emit(LoadMoreModel.copy(state..loading = true));
@@ -47,6 +50,13 @@ class ServiceListBloc extends Cubit<LoadMoreModel<Service>>
           ..error = error));
       },
     );
+  }
+
+  void loadInitData({int cateId}) {
+    if (cateId.isNotNull) {
+      emit(LoadMoreModel.copy(state..items = null));
+      changeTab(cateId: cateId);
+    }
   }
 
   void changeTab({int cateId}) {

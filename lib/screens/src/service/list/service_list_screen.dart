@@ -47,10 +47,7 @@ class _ServiceListScreenState extends KayleeState<ServiceListScreen> {
     sub = cateBloc.listen((state) {
       if (!state.loading) {
         hideLoading();
-        if (state.item.isNotNullAndEmpty) {
-          serviceListBloc.changeTab(cateId: state.item.first.id);
-        } else if (state.code.isNotNull &&
-            state.code != ErrorType.UNAUTHORIZED) {
+        if (state.code.isNotNull && state.code != ErrorType.UNAUTHORIZED) {
           showKayleeAlertErrorYesDialog(
             context: context,
             error: state.error,
@@ -58,6 +55,8 @@ class _ServiceListScreenState extends KayleeState<ServiceListScreen> {
               popScreen();
             },
           );
+        } else {
+          serviceListBloc.loadInitData(cateId: state.item?.first?.id);
         }
       } else if (state.loading) {
         showLoading();
@@ -112,7 +111,19 @@ class _ServiceListScreenState extends KayleeState<ServiceListScreen> {
             ),
             pageView: KayleeLoadMoreHandler(
               controller: serviceListBloc,
-              child: BlocBuilder<ServiceListBloc, LoadMoreModel<Service>>(
+              child: BlocConsumer<ServiceListBloc, LoadMoreModel<Service>>(
+                listener: (context, state) {
+                  if (state.code.isNotNull &&
+                      state.code != ErrorType.UNAUTHORIZED) {
+                    showKayleeAlertErrorYesDialog(
+                      context: context,
+                      error: state.error,
+                      onPressed: () {
+                        popScreen();
+                      },
+                    );
+                  }
+                },
                 builder: (context, state) {
                   return KayleeGridView(
                     padding: EdgeInsets.all(Dimens.px16),
