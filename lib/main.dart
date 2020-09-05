@@ -34,11 +34,11 @@ class KayLeeApp extends StatefulWidget {
           ),
         ],
         child: MultiBlocProvider(providers: [
-          BlocProvider<AppBloc>(
+          BlocProvider(
             create: (context) =>
                 AppBloc(userService: context.network.provideUserService()),
           ),
-          BlocProvider<CartBloc>(
+          BlocProvider(
             create: (context) => CartBloc(),
           ),
           BlocProvider(
