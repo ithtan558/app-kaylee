@@ -7,8 +7,7 @@ abstract class KayleeListInterface {
 
   Future<dynamic> get awaitRefresh;
 
-  void renewCompleter();
-
+  ///gọi sau khi call api complete
   void completeRefresh();
 }
 
@@ -19,13 +18,14 @@ mixin KayleeListInterfaceMixin implements KayleeListInterface {
   void loadInitData() {}
 
   @override
-  void refresh() {}
+  void refresh() {
+    _renewCompleter();
+  }
 
   @override
   Future get awaitRefresh => _completer?.future;
 
-  @override
-  void renewCompleter() {
+  void _renewCompleter() {
     _completer = Completer();
   }
 
