@@ -34,7 +34,7 @@ class _CustomerListScreenState extends BaseState<CustomerListScreen> {
     super.initState();
     customersBloc = context.bloc<CustomerListScreenBloc>();
     customersBlocSub = customersBloc.listen((state) {
-      if (state.code.isNotNull) {
+      if (!state.loading && state.code.isNotNull) {
         showKayleeAlertErrorYesDialog(context: context, error: state.error);
       }
     });
@@ -58,41 +58,44 @@ class _CustomerListScreenState extends BaseState<CustomerListScreen> {
           )
         ],
       ),
-      body: KayleeLoadMoreHandler(
-        controller: context.bloc<CustomerListScreenBloc>(),
-        child: BlocBuilder<CustomerListScreenBloc, LoadMoreModel<Customer>>(
-          buildWhen: (previous, current) {
-            return !current.loading;
-          },
-          builder: (context, state) {
-            return KayleeGridView(
-              padding: EdgeInsets.all(Dimens.px16),
-              childAspectRatio: 103 / 229,
-              itemBuilder: (c, index) {
-                final item = state.items.elementAt(index);
-                return CustomerItem(
-                  customer: item,
-                  onTap: () {
-                    pushScreen(PageIntent(
-                        screen: CreateNewCustomerScreen,
-                        bundle: Bundle(NewCustomerScreenData(
-                            openFrom: CustomerScreenOpenFrom.customerListItem,
-                            customer: item))));
-                  },
-                );
-              },
-              itemCount: state.items?.length,
-              loadingBuilder: (context) {
-                if (state.ended) return Container();
-                return Align(
-                  alignment: Alignment.topCenter,
-                  child: CupertinoActivityIndicator(
-                    radius: Dimens.px16,
-                  ),
-                );
-              },
-            );
-          },
+      body: KayleeRefreshIndicator(
+        controller: customersBloc,
+        child: KayleeLoadMoreHandler(
+          controller: context.bloc<CustomerListScreenBloc>(),
+          child: BlocBuilder<CustomerListScreenBloc, LoadMoreModel<Customer>>(
+            buildWhen: (previous, current) {
+              return !current.loading;
+            },
+            builder: (context, state) {
+              return KayleeGridView(
+                padding: EdgeInsets.all(Dimens.px16),
+                childAspectRatio: 103 / 229,
+                itemBuilder: (c, index) {
+                  final item = state.items.elementAt(index);
+                  return CustomerItem(
+                    customer: item,
+                    onTap: () {
+                      pushScreen(PageIntent(
+                          screen: CreateNewCustomerScreen,
+                          bundle: Bundle(NewCustomerScreenData(
+                              openFrom: CustomerScreenOpenFrom.customerListItem,
+                              customer: item))));
+                    },
+                  );
+                },
+                itemCount: state.items?.length,
+                loadingBuilder: (context) {
+                  if (state.ended) return Container();
+                  return Align(
+                    alignment: Alignment.topCenter,
+                    child: CupertinoActivityIndicator(
+                      radius: Dimens.px16,
+                    ),
+                  );
+                },
+              );
+            },
+          ),
         ),
       ),
       floatingActionButton: KayleeFloatButton(

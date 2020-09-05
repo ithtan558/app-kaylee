@@ -1,6 +1,7 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/foundation.dart';
 import 'package:kaylee/base/kaylee_filter_interface.dart';
+import 'package:kaylee/base/kaylee_list_interface.dart';
 import 'package:kaylee/base/loadmore_interface.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/services/services.dart';
@@ -12,6 +13,7 @@ class CustomerFilter extends Filter {
 }
 
 class CustomerListScreenBloc extends Cubit<LoadMoreModel<Customer>>
+    with KayleeListInterfaceMixin
     implements LoadMoreInterface, KayleeFilterInterface<CustomerFilter> {
   final CustomerService customerService;
   CustomerFilter _filter;
@@ -20,7 +22,7 @@ class CustomerListScreenBloc extends Cubit<LoadMoreModel<Customer>>
       : super(LoadMoreModel());
 
   void loadCustomers() {
-    emit(LoadMoreModel.copy(state..loading = true));
+    state.loading = true;
     RequestHandler(
       request: customerService.getCustomers(
         limit: state.limit,
@@ -32,6 +34,7 @@ class CustomerListScreenBloc extends Cubit<LoadMoreModel<Customer>>
       ),
       onSuccess: ({message, result}) {
         final customers = (result as Customers).items;
+        completeRefresh();
         emit(LoadMoreModel.copy(state
           ..loading = false
           ..addAll(customers)
@@ -39,6 +42,7 @@ class CustomerListScreenBloc extends Cubit<LoadMoreModel<Customer>>
           ..error = null));
       },
       onFailed: (code, {error}) {
+        completeRefresh();
         emit(LoadMoreModel.copy(state
           ..loading = false
           ..code = code
@@ -87,4 +91,13 @@ class CustomerListScreenBloc extends Cubit<LoadMoreModel<Customer>>
 
   @override
   bool get loadFilterWhen => !isEmptyFilter || state.items.isNullOrEmpty;
+
+  @override
+  void refresh() {
+    super.refresh();
+    state
+      ..page = 1
+      ..items = [];
+    loadCustomers();
+  }
 }
