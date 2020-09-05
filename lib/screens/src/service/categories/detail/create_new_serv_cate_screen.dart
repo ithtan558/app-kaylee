@@ -69,7 +69,7 @@ class _CreateNewServCateScreenState
             message: state.message,
             onPressed: popScreen,
             onDismiss: () {
-              context.bloc<ReloadBloc>().reload(type: ServCateListScreen);
+              context.bloc<ReloadBloc>().reload(screen: ServCateListScreen);
               popScreen();
             },
           );
@@ -79,7 +79,7 @@ class _CreateNewServCateScreenState
             message: state.message,
             onPressed: popScreen,
             onDismiss: () {
-              context.bloc<ReloadBloc>().reload(type: ServCateListScreen);
+              context.bloc<ReloadBloc>().reload(screen: ServCateListScreen);
             },
           );
         } else if (state is NewServCateModel) {
@@ -88,7 +88,7 @@ class _CreateNewServCateScreenState
             message: state.message,
             onPressed: popScreen,
             onDismiss: () {
-              context.bloc<ReloadBloc>().reload(type: ServCateListScreen);
+              context.bloc<ReloadBloc>().reload(screen: ServCateListScreen);
               popScreen();
             },
           );

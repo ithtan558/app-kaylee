@@ -63,13 +63,13 @@ class _CreateNewProdCateScreenState
             onPressed: popScreen,
           );
         } else if (state is DeleteProductCateModel) {
-          context.bloc<ReloadBloc>().reload(type: ProdCateListScreen);
+          context.bloc<ReloadBloc>().reload(screen: ProdCateListScreen);
           showKayleeAlertMessageYesDialog(
             context: context,
             message: state.message,
             onPressed: popScreen,
             onDismiss: () {
-              context.bloc<ReloadBloc>().reload(type: ProdCateListScreen);
+              context.bloc<ReloadBloc>().reload(screen: ProdCateListScreen);
               popScreen();
             },
           );
@@ -79,7 +79,7 @@ class _CreateNewProdCateScreenState
             message: state.message,
             onPressed: popScreen,
             onDismiss: () {
-              context.bloc<ReloadBloc>().reload(type: ProdCateListScreen);
+              context.bloc<ReloadBloc>().reload(screen: ProdCateListScreen);
             },
           );
         } else if (state is NewProductCateModel) {
@@ -90,7 +90,7 @@ class _CreateNewProdCateScreenState
               popScreen();
             },
             onDismiss: () {
-              context.bloc<ReloadBloc>().reload(type: ProdCateListScreen);
+              context.bloc<ReloadBloc>().reload(screen: ProdCateListScreen);
               popScreen();
             },
           );
