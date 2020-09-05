@@ -2,30 +2,26 @@ import 'package:anth_package/anth_package.dart';
 
 const String _timeFormat = 'HH:mm';
 
-class StartTime {
+abstract class _RangTime {
   String time;
 
-  String get formattedTime =>
-      DateFormat(_timeFormat).format(DateFormat(_timeFormat).parse(time));
+  _RangTime({this.time});
+
+  String get formattedTime => time.isNullOrEmpty
+      ? null
+      : DateFormat(_timeFormat).format(DateFormat(_timeFormat).parse(time));
 
   DateTime get datetime {
+    if (time.isNullOrEmpty) return null;
     final date = DateFormat(_timeFormat).parse(this.time);
     return date;
   }
-
-  StartTime({this.time});
 }
 
-class EndTime {
-  String time;
+class StartTime extends _RangTime {
+  StartTime({String time}) : super(time: time);
+}
 
-  String get formattedTime =>
-      DateFormat(_timeFormat).format(DateFormat(_timeFormat).parse(time));
-
-  DateTime get datetime {
-    final date = DateFormat(_timeFormat).parse(this.time);
-    return date;
-  }
-
-  EndTime({this.time});
+class EndTime extends _RangTime {
+  EndTime({String time}) : super(time: time);
 }
