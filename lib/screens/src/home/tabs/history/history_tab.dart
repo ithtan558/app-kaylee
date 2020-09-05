@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
@@ -13,8 +15,8 @@ import 'package:kaylee/widgets/widgets.dart';
 class HistoryTab extends StatefulWidget {
   static Widget newInstance() => BlocProvider(
       create: (context) => HistoryTabBloc(
-            orderService: context.network.provideOrderService(),
-          ),
+        orderService: context.network.provideOrderService(),
+      ),
       child: HistoryTab._());
 
   HistoryTab._();
@@ -26,16 +28,29 @@ class HistoryTab extends StatefulWidget {
 class _HistoryTabState extends KayleeState<HistoryTab>
     with AutomaticKeepAliveClientMixin {
   HistoryTabBloc _bloc;
+  StreamSubscription _sub;
 
   @override
   void initState() {
     super.initState();
     _bloc = context.bloc<HistoryTabBloc>();
+    _sub = _bloc.listen((state) {
+      if (state.code.isNotNull && state.code != ErrorType.UNAUTHORIZED) {
+        showKayleeAlertErrorYesDialog(
+          context: context,
+          error: state.error,
+          onPressed: () {
+            popScreen();
+          },
+        );
+      }
+    });
     _bloc.loadOrders();
   }
 
   @override
   void dispose() {
+    _sub.cancel();
     super.dispose();
   }
 
@@ -44,40 +59,33 @@ class _HistoryTabState extends KayleeState<HistoryTab>
     super.build(context);
     return KayleeFilterView(
       title: Strings.lichSuDonHang,
-      child: KayleeLoadMoreHandler(
+      child: KayleeRefreshIndicator(
         controller: _bloc,
-        child: BlocConsumer<HistoryTabBloc, LoadMoreModel<Order>>(
-          listener: (context, state) {
-            if (!state.loading) {
-              if (state.code.isNotNull &&
-                  state.code != ErrorType.UNAUTHORIZED) {
-                showKayleeAlertErrorYesDialog(
-                    context: context, error: state.error, onPressed: popScreen);
-              }
-            }
-          },
-          builder: (context, state) {
-            return KayleeListView(
-              padding: EdgeInsets.all(Dimens.px16),
-              physics: BouncingScrollPhysics(),
-              itemBuilder: (c, index) {
-                final item = state.items.elementAt(index);
-                return HistoryItem(
-                  order: item,
-                );
-              },
-              itemCount: state.items?.length,
-              separatorBuilder: (context, index) =>
-                  const SizedBox(height: Dimens.px16),
-              loadingBuilder: (context) {
-                if (state.ended) return Container();
-                return Align(
-                  alignment: Alignment.topCenter,
-                  child: KayleeLoadingIndicator(),
-                );
-              },
-            );
-          },
+        child: KayleeLoadMoreHandler(
+          controller: _bloc,
+          child: BlocBuilder<HistoryTabBloc, LoadMoreModel<Order>>(
+            builder: (context, state) {
+              return KayleeListView(
+                padding: EdgeInsets.all(Dimens.px16),
+                itemBuilder: (c, index) {
+                  final item = state.items.elementAt(index);
+                  return HistoryItem(
+                    order: item,
+                  );
+                },
+                itemCount: state.items?.length,
+                separatorBuilder: (context, index) =>
+                    const SizedBox(height: Dimens.px16),
+                loadingBuilder: (context) {
+                  if (state.ended) return Container();
+                  return Align(
+                    alignment: Alignment.topCenter,
+                    child: KayleeLoadingIndicator(),
+                  );
+                },
+              );
+            },
+          ),
         ),
       ),
     );
