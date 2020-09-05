@@ -47,6 +47,7 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
   void initState() {
     super.initState();
     cateBloc = context.bloc<SupplierProdCateListBloc>();
+    prodsBloc = context.bloc<SupplierProdListBloc>();
 
     cateBlocSub = cateBloc.listen((state) {
       if (!state.loading) {
