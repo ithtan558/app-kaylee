@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:anth_package/anth_package.dart';
+import 'package:kaylee/base/kaylee_list_interface.dart';
 import 'package:kaylee/base/loadmore_interface.dart';
 import 'package:kaylee/models/models.dart' as models;
 import 'package:kaylee/services/services.dart';
@@ -61,8 +64,9 @@ class DeleteState extends SingleModel<models.Notification> {
 }
 
 class NotificationListBloc extends Cubit<LoadMoreModel<models.Notification>>
-    implements LoadMoreInterface {
+    implements LoadMoreInterface, KayleeListInterface {
   final NotificationService notificationService;
+  Completer _completer;
 
   NotificationListBloc({this.notificationService}) : super(LoadMoreModel());
 
@@ -78,12 +82,8 @@ class NotificationListBloc extends Cubit<LoadMoreModel<models.Notification>>
     search(keyword: null);
   }
 
-  void refresh() {
-    loadNotification();
-  }
-
   void loadNotification() {
-    emit(LoadMoreModel.copy(state..loading = true));
+    state.loading = true;
     RequestHandler(
       request: notificationService.getNotifications(
         page: this.state.page,
@@ -92,6 +92,7 @@ class NotificationListBloc extends Cubit<LoadMoreModel<models.Notification>>
       ),
       onSuccess: ({message, result}) {
         final notifications = (result as models.Notifications).items;
+        completeRefresh();
         emit(LoadMoreModel.copy(state
           ..loading = false
           ..addAll(notifications)
@@ -99,6 +100,7 @@ class NotificationListBloc extends Cubit<LoadMoreModel<models.Notification>>
           ..code = null));
       },
       onFailed: (code, {error}) {
+        completeRefresh();
         emit(LoadMoreModel.copy(state
           ..loading = false
           ..error = error
@@ -124,4 +126,33 @@ class NotificationListBloc extends Cubit<LoadMoreModel<models.Notification>>
 
   @override
   bool loadWhen() => !state.loading && !state.ended;
+
+  @override
+  void loadInitData() {
+    loadNotification();
+  }
+
+  @override
+  void refresh() {
+    state
+      ..page = 1
+      ..items = [];
+    renewCompleter();
+    loadNotification();
+  }
+
+  @override
+  Future get awaitRefresh => _completer?.future;
+
+  @override
+  void renewCompleter() {
+    _completer = Completer();
+  }
+
+  @override
+  void completeRefresh() {
+    if (!(_completer?.isCompleted ?? true)) {
+      _completer.complete();
+    }
+  }
 }

@@ -44,12 +44,19 @@ class _NotificationScreenState extends KayleeState<NotificationScreen> {
     super.initState();
     _notificationListBloc = context.bloc<NotificationListBloc>();
     _notificationScreenBloc = context.bloc<NotificationScreenBloc>();
-    _notificationListBloc.loadNotification();
+    _notificationListBloc.loadInitData();
   }
 
   @override
   void dispose() {
     super.dispose();
+  }
+
+  @override
+  void onReloadScreen(Type screen, Bundle bundle) {
+    if (screen == NotificationScreen) {
+      _notificationListBloc.refresh();
+    }
   }
 
   @override
@@ -134,43 +141,46 @@ class _NotificationScreenState extends KayleeState<NotificationScreen> {
                 ),
               ),
               Expanded(
-                child: KayleeLoadMoreHandler(
+                child: KayleeRefreshIndicator(
                   controller: _notificationListBloc,
-                  child: BlocBuilder<NotificationListBloc,
-                      LoadMoreModel<models.Notification>>(
-                    builder: (context, state) {
-                      return KayleeListView(
-                        padding: EdgeInsets.zero,
-                        itemBuilder: (context, index) {
-                          final item = state.items.elementAt(index);
-                          return NotifyItem(
-                            notification: item,
-                            onDeleted: () {
-                              _notificationScreenBloc.delete(
-                                  notification: item);
-                            },
-                          );
-                        },
-                        itemCount: state.items?.length ?? 0,
-                        loadingBuilder: (context) {
-                          if (state.ended) return Container();
-                          return Container(
-                            padding: const EdgeInsets.only(top: Dimens.px16),
-                            child: CupertinoActivityIndicator(
-                              radius: Dimens.px16,
-                            ),
-                          );
-                        },
-                        separatorBuilder: (c, index) {
-                          return Container(
-                            height: Dimens.px1,
-                            color: ColorsRes.textFieldBorder,
-                            margin:
-                                EdgeInsets.symmetric(horizontal: Dimens.px16),
-                          );
-                        },
-                      );
-                    },
+                  child: KayleeLoadMoreHandler(
+                    controller: _notificationListBloc,
+                    child: BlocBuilder<NotificationListBloc,
+                        LoadMoreModel<models.Notification>>(
+                      builder: (context, state) {
+                        return KayleeListView(
+                          padding: EdgeInsets.zero,
+                          itemBuilder: (context, index) {
+                            final item = state.items.elementAt(index);
+                            return NotifyItem(
+                              notification: item,
+                              onDeleted: () {
+                                _notificationScreenBloc.delete(
+                                    notification: item);
+                              },
+                            );
+                          },
+                          itemCount: state.items?.length ?? 0,
+                          loadingBuilder: (context) {
+                            if (state.ended) return Container();
+                            return Container(
+                              padding: const EdgeInsets.only(top: Dimens.px16),
+                              child: CupertinoActivityIndicator(
+                                radius: Dimens.px16,
+                              ),
+                            );
+                          },
+                          separatorBuilder: (c, index) {
+                            return Container(
+                              height: Dimens.px1,
+                              color: ColorsRes.textFieldBorder,
+                              margin:
+                                  EdgeInsets.symmetric(horizontal: Dimens.px16),
+                            );
+                          },
+                        );
+                      },
+                    ),
                   ),
                 ),
               )
