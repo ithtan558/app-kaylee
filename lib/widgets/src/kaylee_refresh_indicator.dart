@@ -1,4 +1,3 @@
-import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_list_interface.dart';
 
@@ -14,11 +13,9 @@ class KayleeRefreshIndicator extends StatelessWidget {
     return RefreshIndicator(
       child: child ?? SizedBox(),
       onRefresh: () async {
-        if (onRefresh.isNotNull) {
-          return onRefresh.call();
-        }
-        controller.refresh();
-        await controller.awaitRefresh;
+        await onRefresh?.call();
+        controller?.refresh();
+        await controller?.awaitRefresh;
       },
     );
   }
