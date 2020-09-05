@@ -110,8 +110,8 @@ class NotificationListBloc extends Cubit<LoadMoreModel<models.Notification>>
   }
 
   void removeItem({models.Notification notification}) {
-    emit(LoadMoreModel.copy(
-        state..items.removeWhere((e) => e.id == notification.id)));
+    state.items.removeWhere((e) => e.id == notification.id);
+    emit(LoadMoreModel.copy(state));
   }
 
   void removeAll() {
