@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
+import 'package:kaylee/base/reload_bloc.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/product/create_new/bloc/prod_detail_screen_bloc.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
@@ -72,12 +74,26 @@ class _CreateNewProdScreenState extends KayleeState<CreateNewProdScreen> {
                 break;
             }
           }
-        } else if (state.message.isNotNull) {
+        } else if (state is NewProdDetailModel ||
+            state is DeleteProdDetailModel) {
           showKayleeAlertMessageYesDialog(
-              context: context,
-              message: state.message,
-              onPressed: popScreen,
-              onDismiss: popScreen);
+            context: context,
+            message: state.message,
+            onPressed: popScreen,
+            onDismiss: () {
+              context.bloc<ReloadBloc>().reload(widget: ProdListScreen);
+              popScreen();
+            },
+          );
+        } else if (state is UpdateProdDetailModel) {
+          showKayleeAlertMessageYesDialog(
+            context: context,
+            message: state.message,
+            onPressed: popScreen,
+            onDismiss: () {
+              context.bloc<ReloadBloc>().reload(widget: ProdListScreen);
+            },
+          );
         }
       }
     });
@@ -152,7 +168,7 @@ class _CreateNewProdScreenState extends KayleeState<CreateNewProdScreen> {
         ),
         padding: const EdgeInsets.all(Dimens.px16),
         child: BlocBuilder<ProdDetailScreenBloc, SingleModel<Product>>(
-          buildWhen: (previous, current) => !current.loading,
+          buildWhen: (previous, current) => current is ProdDetailModel,
           builder: (context, state) {
             bannerPickerController?.existedImageUrl = state.item?.image;
             nameTfController.text = state.item?.name;

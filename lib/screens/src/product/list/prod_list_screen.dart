@@ -86,6 +86,8 @@ class _ProdListScreenState extends KayleeState<ProdListScreen> {
   void onReloadWidget(Type widget, Bundle bundle) {
     if (widget == ProdCateListScreen) {
       cateBloc.refresh();
+    } else if (widget == ProdListScreen) {
+      prodsListBloc.refresh();
     }
   }
 

@@ -22,11 +22,11 @@ class ProdDetailScreenBloc extends Cubit<SingleModel<Product>>
           description: state.item?.description,
           image: state.item?.imageFile),
       onSuccess: ({message, result}) {
-        emit(SingleModel.copy(state
-          ..loading = false
-          ..message = message
-          ..error = null
-          ..code = null));
+        emit(NewProdDetailModel.copy(
+          state
+            ..loading = false
+            ..message = message,
+        ));
       },
       onFailed: (code, {error}) {
         emit(SingleModel.copy(state
@@ -43,11 +43,11 @@ class ProdDetailScreenBloc extends Cubit<SingleModel<Product>>
     RequestHandler(
       request: prodService.deleteProduct(prodId: state.item?.id),
       onSuccess: ({message, result}) {
-        emit(SingleModel.copy(state
-          ..loading = false
-          ..message = message
-          ..error = null
-          ..code = null));
+        emit(DeleteProdDetailModel.copy(
+          state
+            ..loading = false
+            ..message = message,
+        ));
       },
       onFailed: (code, {error}) {
         emit(SingleModel.copy(state
@@ -67,11 +67,11 @@ class ProdDetailScreenBloc extends Cubit<SingleModel<Product>>
         (result as Product).brands?.forEach((e) {
           e.selected = true;
         });
-        emit(SingleModel.copy(state
-          ..loading = false
-          ..item = result
-          ..error = null
-          ..code = null));
+        emit(ProdDetailModel.copy(
+          state
+            ..loading = false
+            ..item = result,
+        ));
       },
       onFailed: (code, {error}) {
         emit(SingleModel.copy(state
@@ -97,11 +97,11 @@ class ProdDetailScreenBloc extends Cubit<SingleModel<Product>>
         id: state.item?.id,
       ),
       onSuccess: ({message, result}) {
-        emit(SingleModel.copy(state
-          ..loading = false
-          ..message = message
-          ..error = null
-          ..code = null));
+        emit(UpdateProdDetailModel.copy(
+          state
+            ..loading = false
+            ..message = message,
+        ));
       },
       onFailed: (code, {error}) {
         emit(SingleModel.copy(state
@@ -110,5 +110,40 @@ class ProdDetailScreenBloc extends Cubit<SingleModel<Product>>
           ..code = code));
       },
     );
+  }
+}
+
+class ProdDetailModel extends SingleModel<Product> {
+  ProdDetailModel.copy(SingleModel old) {
+    this
+      ..loading = old?.loading
+      ..item = old?.item;
+  }
+}
+
+class DeleteProdDetailModel extends SingleModel<Product> {
+  DeleteProdDetailModel.copy(SingleModel old) {
+    this
+      ..loading = old?.loading
+      ..item = old?.item
+      ..message = old?.message;
+  }
+}
+
+class UpdateProdDetailModel extends SingleModel<Product> {
+  UpdateProdDetailModel.copy(SingleModel old) {
+    this
+      ..loading = old?.loading
+      ..item = old?.item
+      ..message = old?.message;
+  }
+}
+
+class NewProdDetailModel extends SingleModel<Product> {
+  NewProdDetailModel.copy(SingleModel old) {
+    this
+      ..loading = old?.loading
+      ..item = old?.item
+      ..message = old?.message;
   }
 }
