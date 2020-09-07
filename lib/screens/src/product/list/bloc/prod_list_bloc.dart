@@ -50,10 +50,7 @@ class ProdListBloc extends Cubit<LoadMoreModel<Product>>
   }
 
   void loadInitDataWithCate({int cateId}) {
-    if (cateId.isNotNull) {
-      loadInitData();
       changeTab(cateId: cateId);
-    }
   }
 
   void changeTab({int cateId}) {

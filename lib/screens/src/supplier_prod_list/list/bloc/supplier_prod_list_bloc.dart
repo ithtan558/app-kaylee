@@ -16,7 +16,6 @@ class SupplierProdListBloc extends Cubit<LoadMoreModel<Product>>
       : super(LoadMoreModel(items: []));
 
   void loadInitDataWithCate({ProdCate category}) {
-    loadInitData();
     changeTab(category: category);
   }
 
@@ -69,11 +68,6 @@ class SupplierProdListBloc extends Cubit<LoadMoreModel<Product>>
 
   @override
   bool loadWhen() => !state.loading && !state.ended;
-
-  @override
-  void loadInitData() {
-    state..items = null;
-  }
 
   @override
   void refresh() {
