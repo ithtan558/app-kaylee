@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
+import 'package:kaylee/base/reload_bloc.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/staff/create_new/bloc/staff_detail_screen_bloc.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
@@ -79,12 +81,26 @@ class _CreateNewStaffScreenState extends KayleeState<CreateNewStaffScreen> {
               }
             },
           );
-        } else if (state.message.isNotNull) {
+        } else if (state is NewStaffDetailModel ||
+            state is DeleteStaffDetailModel) {
           showKayleeAlertMessageYesDialog(
-              context: context,
-              message: state.message,
-              onPressed: popScreen,
-              onDismiss: popScreen);
+            context: context,
+            message: state.message,
+            onPressed: popScreen,
+            onDismiss: () {
+              context.bloc<ReloadBloc>().reload(widget: StaffListScreen);
+              popScreen();
+            },
+          );
+        } else if (state is UpdateStaffDetailModel) {
+          showKayleeAlertMessageYesDialog(
+            context: context,
+            message: state.message,
+            onPressed: popScreen,
+            onDismiss: () {
+              context.bloc<ReloadBloc>().reload(widget: StaffListScreen);
+            },
+          );
         }
       }
     });
@@ -176,7 +192,7 @@ class _CreateNewStaffScreenState extends KayleeState<CreateNewStaffScreen> {
         ),
         padding: const EdgeInsets.all(Dimens.px16),
         child: BlocBuilder<StaffDetailScreenBloc, SingleModel<Employee>>(
-          buildWhen: (previous, current) => !current.loading,
+          buildWhen: (previous, current) => current is StaffDetailModel,
           builder: (context, state) {
             imagePickerController.existedImageUrl = state.item?.image;
             firstNameTfController.text = state.item?.firstName;

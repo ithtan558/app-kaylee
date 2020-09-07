@@ -97,7 +97,7 @@ class StaffListScreenBloc extends Cubit<LoadMoreModel<Employee>>
     super.refresh();
     state
       ..page = 1
-      ..items = [];
+      ..items.clear();
     loadEmployees();
   }
 }

@@ -30,11 +30,11 @@ class StaffDetailScreenBloc extends Cubit<SingleModel<Employee>>
         email: state.item?.email,
       ),
       onSuccess: ({message, result}) {
-        emit(SingleModel.copy(state
-          ..loading = false
-          ..message = message
-          ..error = null
-          ..code = null));
+        emit(NewStaffDetailModel.copy(
+          state
+            ..loading = false
+            ..message = message,
+        ));
       },
       onFailed: (code, {error}) {
         emit(SingleModel.copy(state
@@ -51,11 +51,11 @@ class StaffDetailScreenBloc extends Cubit<SingleModel<Employee>>
     RequestHandler(
       request: employeeService.deleteEmployee(employeeId: state.item?.id),
       onSuccess: ({message, result}) {
-        emit(SingleModel.copy(state
-          ..loading = false
-          ..message = message
-          ..error = null
-          ..code = null));
+        emit(DeleteStaffDetailModel.copy(
+          state
+            ..loading = false
+            ..message = message,
+        ));
       },
       onFailed: (code, {error}) {
         emit(SingleModel.copy(state
@@ -72,11 +72,11 @@ class StaffDetailScreenBloc extends Cubit<SingleModel<Employee>>
     RequestHandler(
       request: employeeService.getEmployee(employeeId: state.item?.id),
       onSuccess: ({message, result}) {
-        emit(SingleModel.copy(state
-          ..loading = false
-          ..item = result
-          ..error = null
-          ..code = null));
+        emit(StaffDetailModel.copy(
+          state
+            ..loading = false
+            ..item = result,
+        ));
       },
       onFailed: (code, {error}) {
         emit(SingleModel.copy(state
@@ -109,11 +109,11 @@ class StaffDetailScreenBloc extends Cubit<SingleModel<Employee>>
         id: state.item?.id,
       ),
       onSuccess: ({message, result}) {
-        emit(SingleModel.copy(state
-          ..loading = false
-          ..message = message
-          ..error = null
-          ..code = null));
+        emit(UpdateStaffDetailModel.copy(
+          state
+            ..loading = false
+            ..message = message,
+        ));
       },
       onFailed: (code, {error}) {
         emit(SingleModel.copy(state
@@ -122,5 +122,40 @@ class StaffDetailScreenBloc extends Cubit<SingleModel<Employee>>
           ..code = code));
       },
     );
+  }
+}
+
+class StaffDetailModel extends SingleModel<Employee> {
+  StaffDetailModel.copy(SingleModel old) {
+    this
+      ..loading = old?.loading
+      ..item = old?.item;
+  }
+}
+
+class DeleteStaffDetailModel extends SingleModel<Employee> {
+  DeleteStaffDetailModel.copy(SingleModel old) {
+    this
+      ..loading = old?.loading
+      ..item = old?.item
+      ..message = old?.message;
+  }
+}
+
+class UpdateStaffDetailModel extends SingleModel<Employee> {
+  UpdateStaffDetailModel.copy(SingleModel old) {
+    this
+      ..loading = old?.loading
+      ..item = old?.item
+      ..message = old?.message;
+  }
+}
+
+class NewStaffDetailModel extends SingleModel<Employee> {
+  NewStaffDetailModel.copy(SingleModel old) {
+    this
+      ..loading = old?.loading
+      ..item = old?.item
+      ..message = old?.message;
   }
 }

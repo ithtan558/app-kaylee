@@ -51,6 +51,13 @@ class _StaffListScreenState extends KayleeState<StaffListScreen> {
   }
 
   @override
+  void onReloadWidget(Type widget, Bundle bundle) {
+    if (widget == StaffListScreen) {
+      staffsBloc.refresh();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: KayleeAppBar(
