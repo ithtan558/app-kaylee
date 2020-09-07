@@ -110,11 +110,6 @@ class ProdListBloc extends Cubit<LoadMoreModel<Product>>
   }
 
   @override
-  void loadInitData() {
-    state..items = null;
-  }
-
-  @override
   void refresh() {
     super.refresh();
     state
