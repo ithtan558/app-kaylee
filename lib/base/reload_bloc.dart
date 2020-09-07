@@ -3,17 +3,17 @@ import 'package:anth_package/anth_package.dart';
 class ReloadBloc extends Cubit<ReloadState> {
   ReloadBloc() : super(ReloadState());
 
-  void reload({Type screen, Bundle bundle}) {
+  void reload({Type widget, Bundle bundle}) {
     emit(ReloadState(
-      screen: screen,
+      widget: widget,
       bundle: bundle,
     ));
   }
 }
 
 class ReloadState {
-  final Type screen;
+  final Type widget;
   final Bundle bundle;
 
-  ReloadState({this.screen, this.bundle});
+  ReloadState({this.widget, this.bundle});
 }

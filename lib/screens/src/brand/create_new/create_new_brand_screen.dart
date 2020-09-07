@@ -77,7 +77,7 @@ class _CreateNewBrandScreenState extends KayleeState<CreateNewBrandScreen> {
             message: state.message,
             onPressed: popScreen,
             onDismiss: () {
-              context.bloc<ReloadBloc>().reload(screen: BrandListScreen);
+              context.bloc<ReloadBloc>().reload(widget: BrandListScreen);
               popScreen();
             },
           );
@@ -87,7 +87,7 @@ class _CreateNewBrandScreenState extends KayleeState<CreateNewBrandScreen> {
             message: state.message,
             onPressed: popScreen,
             onDismiss: () {
-              context.bloc<ReloadBloc>().reload(screen: BrandListScreen);
+              context.bloc<ReloadBloc>().reload(widget: BrandListScreen);
             },
           );
         }

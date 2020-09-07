@@ -22,7 +22,7 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
     appBloc = context.bloc<AppBloc>();
     _listenUnauthorStream();
     _reloadBlocSub = context.bloc<ReloadBloc>().listen((state) {
-      onReloadScreen(state.screen, state.bundle);
+      onReloadScreen(state.widget, state.bundle);
     });
   }
 
