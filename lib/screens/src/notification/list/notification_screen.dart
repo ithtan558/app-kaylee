@@ -3,9 +3,11 @@ import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
+import 'package:kaylee/base/reload_bloc.dart';
 import 'package:kaylee/models/models.dart' as models;
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
+import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/notification_button/notification_button.dart';
 import 'package:kaylee/screens/src/notification/list/bloc/notification_screen_bloc.dart';
 import 'package:kaylee/screens/src/notification/list/notify_item.dart';
 import 'package:kaylee/utils/utils.dart';
@@ -83,9 +85,15 @@ class _NotificationScreenState extends KayleeState<NotificationScreen> {
               } else if (state is DeleteState) {
                 _notificationListBloc.removeItem(notification: state.item);
                 showKayleeAlertMessageYesDialog(
-                    context: context,
-                    message: state.message,
-                    onPressed: popScreen);
+                  context: context,
+                  message: state.message,
+                  onPressed: popScreen,
+                  onDismiss: () {
+                    context
+                        .bloc<ReloadBloc>()
+                        .reload(widget: NotificationButton);
+                  },
+                );
               } else if (state.code.isNotNull &&
                   state.code != ErrorType.UNAUTHORIZED) {
                 showKayleeAlertErrorYesDialog(
@@ -189,6 +197,7 @@ class _NotificationScreenState extends KayleeState<NotificationScreen> {
     if (returnScreen == NotifyDetailScreen &&
         resultBundle?.args is models.Notification) {
       _notificationListBloc.removeItem(notification: resultBundle.args);
+      context.bloc<ReloadBloc>().reload(widget: NotificationButton);
     }
   }
 }

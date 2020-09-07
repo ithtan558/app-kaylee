@@ -30,6 +30,13 @@ class _NotificationButtonState extends KayleeState<NotificationButton> {
   }
 
   @override
+  void onReloadWidget(Type widget, Bundle bundle) {
+    if (widget == NotificationButton) {
+      context.bloc<NotiButtonBloc>().getNotificationCount();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
@@ -55,14 +62,14 @@ class _NotificationButtonState extends KayleeState<NotificationButton> {
             return state <= 0
                 ? Container()
                 : Container(
-                width: Dimens.px17,
-                height: Dimens.px17,
-                decoration: BoxDecoration(
-                    color: ColorsRes.errorBorder, shape: BoxShape.circle),
-                alignment: Alignment.center,
-                child: KayleeText.normalWhite12W400(
-                  '${state > 99 ? 99 : state}',
-                ));
+                    width: Dimens.px17,
+                    height: Dimens.px17,
+                    decoration: BoxDecoration(
+                        color: ColorsRes.errorBorder, shape: BoxShape.circle),
+                    alignment: Alignment.center,
+                    child: KayleeText.normalWhite12W400(
+                      '${state > 99 ? 99 : state}',
+                    ));
           }),
         )
       ],
