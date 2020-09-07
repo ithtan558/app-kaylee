@@ -4,6 +4,7 @@ import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
@@ -25,7 +26,7 @@ class CustomerListScreen extends StatefulWidget {
   _CustomerListScreenState createState() => new _CustomerListScreenState();
 }
 
-class _CustomerListScreenState extends BaseState<CustomerListScreen> {
+class _CustomerListScreenState extends KayleeState<CustomerListScreen> {
   CustomerListScreenBloc customersBloc;
   StreamSubscription customersBlocSub;
 
@@ -45,6 +46,13 @@ class _CustomerListScreenState extends BaseState<CustomerListScreen> {
   void dispose() {
     customersBlocSub.cancel();
     super.dispose();
+  }
+
+  @override
+  void onReloadWidget(Type widget, Bundle bundle) {
+    if (widget == CustomerListScreen) {
+      customersBloc.refresh();
+    }
   }
 
   @override

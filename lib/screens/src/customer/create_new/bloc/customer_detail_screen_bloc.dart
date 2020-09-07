@@ -28,11 +28,9 @@ class CustomerDetailScreenBloc extends Cubit<SingleModel<Customer>>
         email: state.item?.email,
       ),
       onSuccess: ({message, result}) {
-        emit(SingleModel.copy(state
+        emit(NewCustomerDetailModel.copy(state
           ..loading = false
-          ..message = message
-          ..error = null
-          ..code = null));
+          ..message = message));
       },
       onFailed: (code, {error}) {
         emit(SingleModel.copy(state
@@ -49,11 +47,9 @@ class CustomerDetailScreenBloc extends Cubit<SingleModel<Customer>>
     RequestHandler(
       request: customerService.deleteCustomer(customerId: state.item?.id),
       onSuccess: ({message, result}) {
-        emit(SingleModel.copy(state
+        emit(DeleteCustomerDetailModel.copy(state
           ..loading = false
-          ..message = message
-          ..error = null
-          ..code = null));
+          ..message = message));
       },
       onFailed: (code, {error}) {
         emit(SingleModel.copy(state
@@ -103,11 +99,9 @@ class CustomerDetailScreenBloc extends Cubit<SingleModel<Customer>>
         id: state.item?.id,
       ),
       onSuccess: ({message, result}) {
-        emit(SingleModel.copy(state
+        emit(UpdateCustomerDetailModel.copy(state
           ..loading = false
-          ..message = message
-          ..error = null
-          ..code = null));
+          ..message = message));
       },
       onFailed: (code, {error}) {
         emit(SingleModel.copy(state
@@ -124,5 +118,32 @@ class CustomerDetailModel extends SingleModel<Customer> {
     this
       ..loading = old?.loading
       ..item = old?.item;
+  }
+}
+
+class DeleteCustomerDetailModel extends SingleModel<Customer> {
+  DeleteCustomerDetailModel.copy(SingleModel old) {
+    this
+      ..loading = old?.loading
+      ..item = old?.item
+      ..message = old?.message;
+  }
+}
+
+class UpdateCustomerDetailModel extends SingleModel<Customer> {
+  UpdateCustomerDetailModel.copy(SingleModel old) {
+    this
+      ..loading = old?.loading
+      ..item = old?.item
+      ..message = old?.message;
+  }
+}
+
+class NewCustomerDetailModel extends SingleModel<Customer> {
+  NewCustomerDetailModel.copy(SingleModel old) {
+    this
+      ..loading = old?.loading
+      ..item = old?.item
+      ..message = old?.message;
   }
 }

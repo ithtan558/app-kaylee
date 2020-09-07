@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
+import 'package:kaylee/base/reload_bloc.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/customer/create_new/bloc/customer_detail_screen_bloc.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
@@ -79,12 +81,26 @@ class _CreateNewCustomerScreenState
               }
             },
           );
-        } else if (state.message.isNotNull) {
+        } else if (state is NewCustomerDetailModel ||
+            state is DeleteCustomerDetailModel) {
           showKayleeAlertMessageYesDialog(
-              context: context,
-              message: state.message,
-              onPressed: popScreen,
-              onDismiss: popScreen);
+            context: context,
+            message: state.message,
+            onPressed: popScreen,
+            onDismiss: () {
+              context.bloc<ReloadBloc>().reload(widget: CustomerListScreen);
+              popScreen();
+            },
+          );
+        } else if (state is UpdateCustomerDetailModel) {
+          showKayleeAlertMessageYesDialog(
+            context: context,
+            message: state.message,
+            onPressed: popScreen,
+            onDismiss: () {
+              context.bloc<ReloadBloc>().reload(widget: CustomerListScreen);
+            },
+          );
         }
       }
     });
