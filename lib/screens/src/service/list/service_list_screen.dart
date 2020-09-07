@@ -75,7 +75,7 @@ class _ServiceListScreenState extends KayleeState<ServiceListScreen> {
       }
     });
 
-    cateBloc.loadServiceCate();
+    cateBloc.loadInitData();
   }
 
   @override
@@ -190,5 +190,12 @@ class _ServiceListScreenState extends KayleeState<ServiceListScreen> {
         )
       ],
     );
+  }
+
+  @override
+  void onReloadWidget(Type widget, Bundle bundle) {
+    if (widget == ServCateListScreen) {
+      cateBloc.refresh();
+    }
   }
 }
