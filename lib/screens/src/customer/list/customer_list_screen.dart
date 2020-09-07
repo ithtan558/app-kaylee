@@ -38,7 +38,8 @@ class _CustomerListScreenState extends KayleeState<CustomerListScreen> {
       if (!state.loading &&
           state.code.isNotNull &&
           state.code != ErrorType.UNAUTHORIZED) {
-        showKayleeAlertErrorYesDialog(context: context, error: state.error);
+        showKayleeAlertErrorYesDialog(
+            context: context, error: state.error, onPressed: popScreen);
       }
     });
     customersBloc.loadCustomers();
