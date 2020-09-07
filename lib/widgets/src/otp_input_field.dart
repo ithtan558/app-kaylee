@@ -82,6 +82,7 @@ class _OtpInputFieldState extends BaseState<OtpInputField> {
                 currentFocus: pinFocus1,
                 nextFocus: pinFocus2,
                 tfController: tfController1,
+                autoFocus: true,
               ),
               _PinTextField(
                 currentFocus: pinFocus2,
@@ -119,12 +120,15 @@ class _PinTextField extends StatefulWidget {
   final TextInputAction textInputAction;
   final TextEditingController tfController;
   final void Function() onComplete;
+  final bool autoFocus;
 
-  _PinTextField({this.nextFocus,
-    this.currentFocus,
-    this.textInputAction = TextInputAction.next,
-    this.tfController,
-    this.onComplete});
+  _PinTextField(
+      {this.nextFocus,
+      this.currentFocus,
+      this.textInputAction = TextInputAction.next,
+      this.tfController,
+      this.onComplete,
+      this.autoFocus});
 
   @override
   _PinTextFieldState createState() => _PinTextFieldState();
@@ -163,6 +167,7 @@ class _PinTextFieldState extends BaseState<_PinTextField> {
             textInputAction: widget.textInputAction,
             keyboardType: TextInputType.number,
             style: TextStyles.normal26W700,
+            autofocus: widget.autoFocus ?? false,
             onChanged: (pin) {
               setState(() {});
               if (pin.isEmpty) {
