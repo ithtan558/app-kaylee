@@ -33,7 +33,7 @@ class _ProdCateListScreenState extends KayleeState<ProdCateListScreen> {
   }
 
   @override
-  void onReloadScreen(Type screen, Bundle bundle) {
+  void onReloadWidget(Type screen, Bundle bundle) {
     if (screen == ProdCateListScreen) {
       _bloc.refresh();
     }

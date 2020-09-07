@@ -38,7 +38,7 @@ class _MyOrdersScreenState extends KayleeState<MyOrdersScreen> {
   }
 
   @override
-  void onReloadScreen(Type screen, Bundle bundle) {
+  void onReloadWidget(Type screen, Bundle bundle) {
     if (screen == MyOrdersScreen) {
       _bloc.refresh();
     }

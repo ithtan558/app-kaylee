@@ -38,7 +38,7 @@ class _BrandListScreenState extends KayleeState<BrandListScreen> {
   }
 
   @override
-  void onReloadScreen(Type screen, Bundle bundle) {
+  void onReloadWidget(Type screen, Bundle bundle) {
     if (screen == BrandListScreen) {
       brandListBloc.refresh();
     }

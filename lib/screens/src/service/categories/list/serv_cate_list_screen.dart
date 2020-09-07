@@ -33,7 +33,7 @@ class _ServCateListScreenState extends KayleeState<ServCateListScreen> {
   }
 
   @override
-  void onReloadScreen(Type screen, Bundle bundle) {
+  void onReloadWidget(Type screen, Bundle bundle) {
     if (screen == ServCateListScreen) {
       _bloc.refresh();
     }

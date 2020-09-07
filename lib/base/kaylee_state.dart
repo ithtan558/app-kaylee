@@ -22,7 +22,7 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
     appBloc = context.bloc<AppBloc>();
     _listenUnauthorStream();
     _reloadBlocSub = context.bloc<ReloadBloc>().listen((state) {
-      onReloadScreen(state.widget, state.bundle);
+      onReloadWidget(state.widget, state.bundle);
     });
   }
 
@@ -34,7 +34,7 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
   }
 
   ///ko cần thiết phải gọi super khi override lại ở sub-class
-  void onReloadScreen(Type screen, Bundle bundle) {}
+  void onReloadWidget(Type screen, Bundle bundle) {}
 
   void showLoading({bool canDismiss = false, VoidCallback onDismiss}) {
     if (dialogContext.isNull ||
