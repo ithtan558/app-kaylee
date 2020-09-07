@@ -79,9 +79,15 @@ class _NotificationScreenState extends KayleeState<NotificationScreen> {
               if (state is DeleteAllState) {
                 _notificationListBloc.removeAll();
                 showKayleeAlertMessageYesDialog(
-                    context: context,
-                    message: state.message,
-                    onPressed: popScreen);
+                  context: context,
+                  message: state.message,
+                  onPressed: popScreen,
+                  onDismiss: () {
+                    context
+                        .bloc<ReloadBloc>()
+                        .reload(widget: NotificationButton);
+                  },
+                );
               } else if (state is DeleteState) {
                 _notificationListBloc.removeItem(notification: state.item);
                 showKayleeAlertMessageYesDialog(
