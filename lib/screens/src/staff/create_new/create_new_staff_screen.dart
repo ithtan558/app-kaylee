@@ -249,7 +249,6 @@ class _CreateNewStaffScreenState extends KayleeState<CreateNewStaffScreen> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: Dimens.px16),
                   child: KayleeTextField.phoneInput(
-                    key: UniqueKey(),
                     textInputAction: TextInputAction.next,
                     controller: phoneTfController,
                     focusNode: phoneFocus,

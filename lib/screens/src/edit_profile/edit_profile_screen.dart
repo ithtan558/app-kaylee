@@ -184,7 +184,6 @@ class _EditProfileScreenState extends KayleeState<EditProfileScreen> {
                 Padding(
                   padding: const EdgeInsets.only(bottom: Dimens.px16),
                   child: KayleeFullAddressInput(
-                    key: UniqueKey(),
                     title: Strings.diaChiHienTai,
                     controller: addressController,
                   ),

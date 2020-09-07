@@ -261,7 +261,6 @@ class _CreateNewCustomerScreenState
                       right: Dimens.px16,
                       bottom: Dimens.px16),
                   child: KayleeTextField.phoneInput(
-                    key: UniqueKey(),
                     textInputAction: TextInputAction.next,
                     controller: phoneTfController,
                     focusNode: phoneFocus,
@@ -280,7 +279,6 @@ class _CreateNewCustomerScreenState
                     textInputAction: TextInputAction.done,
                     controller: emailTfController,
                     focusNode: emailFocus,
-                    key: UniqueKey(),
                   ),
                 ),
                 if (openFrom == CustomerScreenOpenFrom.cashier)

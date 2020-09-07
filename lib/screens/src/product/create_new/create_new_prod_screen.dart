@@ -210,7 +210,6 @@ class _CreateNewProdScreenState extends KayleeState<CreateNewProdScreen> {
                   ),
                 ),
                 KayleeTextField.multiLine(
-                  key: UniqueKey(),
                   title: Strings.moTa,
                   hint: Strings.nhapMoTaSanPham,
                   textInputAction: TextInputAction.newline,

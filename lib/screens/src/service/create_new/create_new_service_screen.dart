@@ -208,14 +208,12 @@ class _CreateNewServiceScreenState extends KayleeState<CreateNewServiceScreen> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: Dimens.px16),
                     child: KayleePickerTextField<ServiceCate>(
-                      key: UniqueKey(),
                       title: Strings.loaiDichVu,
                       hint: Strings.chonLoaiDichVu,
                       controller: serviceCateController,
                     ),
                   ),
                   KayleeTextField.multiLine(
-                    key: UniqueKey(),
                     title: Strings.moTa,
                     hint: Strings.nhapMoTaDichVu,
                     textInputAction: TextInputAction.newline,
