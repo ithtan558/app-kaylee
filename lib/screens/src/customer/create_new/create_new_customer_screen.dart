@@ -170,7 +170,7 @@ class _CreateNewCustomerScreenState
           },
         ),
         child: BlocBuilder<CustomerDetailScreenBloc, SingleModel<Customer>>(
-          buildWhen: (previous, current) => !current.loading,
+          buildWhen: (previous, current) => current is CustomerDetailModel,
           builder: (context, state) {
             imagePickerController.existedImageUrl = state.item?.image;
             firstNameTfController.text = state.item?.firstName;

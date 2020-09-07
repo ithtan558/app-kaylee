@@ -70,11 +70,9 @@ class CustomerDetailScreenBloc extends Cubit<SingleModel<Customer>>
     RequestHandler(
       request: customerService.getCustomer(customerId: state.item?.id),
       onSuccess: ({message, result}) {
-        emit(SingleModel.copy(state
+        emit(CustomerDetailModel.copy(state
           ..loading = false
-          ..item = result
-          ..error = null
-          ..code = null));
+          ..item = result));
       },
       onFailed: (code, {error}) {
         emit(SingleModel.copy(state
@@ -118,5 +116,13 @@ class CustomerDetailScreenBloc extends Cubit<SingleModel<Customer>>
           ..code = code));
       },
     );
+  }
+}
+
+class CustomerDetailModel extends SingleModel<Customer> {
+  CustomerDetailModel.copy(SingleModel old) {
+    this
+      ..loading = old?.loading
+      ..item = old?.item;
   }
 }
