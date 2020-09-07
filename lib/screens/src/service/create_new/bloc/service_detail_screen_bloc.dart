@@ -23,11 +23,11 @@ class ServiceDetailScreenBloc extends Cubit<SingleModel<Service>>
           image: state.item?.imageFile,
           categoryId: state.item?.category?.id),
       onSuccess: ({message, result}) {
-        emit(SingleModel.copy(state
-          ..loading = false
-          ..message = message
-          ..error = null
-          ..code = null));
+        emit(NewServiceDetailModel.copy(
+          state
+            ..loading = false
+            ..message = message,
+        ));
       },
       onFailed: (code, {error}) {
         emit(SingleModel.copy(state
@@ -44,11 +44,11 @@ class ServiceDetailScreenBloc extends Cubit<SingleModel<Service>>
     RequestHandler(
       request: servService.deleteService(serviceId: state.item?.id),
       onSuccess: ({message, result}) {
-        emit(SingleModel.copy(state
-          ..loading = false
-          ..message = message
-          ..error = null
-          ..code = null));
+        emit(DeleteServiceDetailModel.copy(
+          state
+            ..loading = false
+            ..message = message,
+        ));
       },
       onFailed: (code, {error}) {
         emit(SingleModel.copy(state
@@ -68,11 +68,11 @@ class ServiceDetailScreenBloc extends Cubit<SingleModel<Service>>
         (result as Service).brands?.forEach((e) {
           e.selected = true;
         });
-        emit(SingleModel.copy(state
-          ..loading = false
-          ..item = result
-          ..error = null
-          ..code = null));
+        emit(ServiceDetailModel.copy(
+          state
+            ..loading = false
+            ..item = result,
+        ));
       },
       onFailed: (code, {error}) {
         emit(SingleModel.copy(state
@@ -99,11 +99,11 @@ class ServiceDetailScreenBloc extends Cubit<SingleModel<Service>>
         serviceId: state.item?.id,
       ),
       onSuccess: ({message, result}) {
-        emit(SingleModel.copy(state
-          ..loading = false
-          ..message = message
-          ..error = null
-          ..code = null));
+        emit(UpdateServiceDetailModel.copy(
+          state
+            ..loading = false
+            ..message = message,
+        ));
       },
       onFailed: (code, {error}) {
         emit(SingleModel.copy(state
@@ -112,5 +112,40 @@ class ServiceDetailScreenBloc extends Cubit<SingleModel<Service>>
           ..code = code));
       },
     );
+  }
+}
+
+class ServiceDetailModel extends SingleModel<Service> {
+  ServiceDetailModel.copy(SingleModel old) {
+    this
+      ..loading = old?.loading
+      ..item = old?.item;
+  }
+}
+
+class DeleteServiceDetailModel extends SingleModel<Service> {
+  DeleteServiceDetailModel.copy(SingleModel old) {
+    this
+      ..loading = old?.loading
+      ..item = old?.item
+      ..message = old?.message;
+  }
+}
+
+class UpdateServiceDetailModel extends SingleModel<Service> {
+  UpdateServiceDetailModel.copy(SingleModel old) {
+    this
+      ..loading = old?.loading
+      ..item = old?.item
+      ..message = old?.message;
+  }
+}
+
+class NewServiceDetailModel extends SingleModel<Service> {
+  NewServiceDetailModel.copy(SingleModel old) {
+    this
+      ..loading = old?.loading
+      ..item = old?.item
+      ..message = old?.message;
   }
 }

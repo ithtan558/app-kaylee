@@ -196,6 +196,8 @@ class _ServiceListScreenState extends KayleeState<ServiceListScreen> {
   void onReloadWidget(Type widget, Bundle bundle) {
     if (widget == ServCateListScreen) {
       cateBloc.refresh();
+    } else if (widget == ServiceListScreen) {
+      serviceListBloc.refresh();
     }
   }
 }

@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
+import 'package:kaylee/base/reload_bloc.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/service/create_new/bloc/service_detail_screen_bloc.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
@@ -72,12 +74,26 @@ class _CreateNewServiceScreenState extends KayleeState<CreateNewServiceScreen> {
               }
             },
           );
-        } else if (state.message.isNotNull) {
+        } else if (state is NewServiceDetailModel ||
+            state is DeleteServiceDetailModel) {
           showKayleeAlertMessageYesDialog(
-              context: context,
-              message: state.message,
-              onPressed: popScreen,
-              onDismiss: popScreen);
+            context: context,
+            message: state.message,
+            onPressed: popScreen,
+            onDismiss: () {
+              context.bloc<ReloadBloc>().reload(widget: ServiceListScreen);
+              popScreen();
+            },
+          );
+        } else if (state is UpdateServiceDetailModel) {
+          showKayleeAlertMessageYesDialog(
+            context: context,
+            message: state.message,
+            onPressed: popScreen,
+            onDismiss: () {
+              context.bloc<ReloadBloc>().reload(widget: ServiceListScreen);
+            },
+          );
         }
       }
     });
@@ -155,7 +171,7 @@ class _CreateNewServiceScreenState extends KayleeState<CreateNewServiceScreen> {
         ),
         padding: const EdgeInsets.all(Dimens.px16),
         child: BlocBuilder<ServiceDetailScreenBloc, SingleModel<Service>>(
-            buildWhen: (previous, current) => !current.loading,
+            buildWhen: (previous, current) => current is ServiceDetailModel,
             builder: (context, state) {
               bannerPickerController?.existedImageUrl = state.item?.image;
               nameTfController.text = state.item?.name;
