@@ -15,6 +15,9 @@ class ReservationListScreen extends StatefulWidget {
 }
 
 class _ReservationListScreenState extends BaseState<ReservationListScreen> {
+  final dateFilterController =
+      KayleeDateFilterController(value: DateTime.now());
+
   @override
   void initState() {
     super.initState();
@@ -39,7 +42,9 @@ class _ReservationListScreenState extends BaseState<ReservationListScreen> {
       ),
       body: Column(
         children: [
-          KayleeDateFilter(),
+          KayleeDateFilter(
+            controller: dateFilterController,
+          ),
           Expanded(
               child: ListView.separated(
                   padding: const EdgeInsets.all(Dimens.px16),
