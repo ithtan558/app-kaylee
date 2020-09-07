@@ -34,7 +34,7 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
   }
 
   ///ko cần thiết phải gọi super khi override lại ở sub-class
-  void onReloadWidget(Type screen, Bundle bundle) {}
+  void onReloadWidget(Type widget, Bundle bundle) {}
 
   void showLoading({bool canDismiss = false, VoidCallback onDismiss}) {
     if (dialogContext.isNull ||
