@@ -72,7 +72,7 @@ class _ProdListScreenState extends KayleeState<ProdListScreen> {
         showKayleeAlertErrorYesDialog(context: context, error: state.error);
       }
     });
-    cateBloc.loadProdCate();
+    cateBloc.loadInitData();
   }
 
   @override
@@ -80,6 +80,13 @@ class _ProdListScreenState extends KayleeState<ProdListScreen> {
     cateBlocSub.cancel();
     prodListBlocSub.cancel();
     super.dispose();
+  }
+
+  @override
+  void onReloadWidget(Type widget, Bundle bundle) {
+    if (widget == ProdCateListScreen) {
+      cateBloc.refresh();
+    }
   }
 
   @override
@@ -102,15 +109,10 @@ class _ProdListScreenState extends KayleeState<ProdListScreen> {
                 final categories = state.item;
                 return KayleeTabBar(
                   itemCount: categories?.length,
-                  mapTitle: (index) =>
-                  categories
-                      .elementAt(index)
-                      .name,
+                  mapTitle: (index) => categories.elementAt(index).name,
                   onSelected: (value) {
                     prodsListBloc.changeTab(
-                        cateId: cateBloc.state.item
-                            .elementAt(value)
-                            .id);
+                        cateId: cateBloc.state.item.elementAt(value).id);
                   },
                 );
               },

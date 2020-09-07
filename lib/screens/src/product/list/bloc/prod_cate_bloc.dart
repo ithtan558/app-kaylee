@@ -8,8 +8,7 @@ class ProdCateBloc extends Cubit<SingleModel<List<Category>>> {
 
   ProdCateBloc({@required this.productService}) : super(SingleModel());
 
-  void loadProdCate() {
-    emit(SingleModel.copy(state..loading = true));
+  void _loadProdCate() {
     RequestHandler(
       request: productService.getCategories(),
       onSuccess: ({message, result}) {
@@ -26,5 +25,14 @@ class ProdCateBloc extends Cubit<SingleModel<List<Category>>> {
           ..error = error));
       },
     );
+  }
+
+  void loadInitData() {
+    emit(SingleModel.copy(state..loading = true));
+    _loadProdCate();
+  }
+
+  void refresh() {
+    _loadProdCate();
   }
 }
