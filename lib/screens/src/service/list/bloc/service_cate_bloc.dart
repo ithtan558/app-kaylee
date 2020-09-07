@@ -8,8 +8,7 @@ class ServiceCateBloc extends Cubit<SingleModel<List<Category>>> {
 
   ServiceCateBloc({@required this.servService}) : super(SingleModel());
 
-  void loadServiceCate() {
-    emit(SingleModel.copy(state..loading = true));
+  void _loadServiceCate() {
     RequestHandler(
       request: servService.getCategories(),
       onSuccess: ({message, result}) {
@@ -26,5 +25,14 @@ class ServiceCateBloc extends Cubit<SingleModel<List<Category>>> {
           ..error = error));
       },
     );
+  }
+
+  void loadInitData() {
+    emit(SingleModel.copy(state..loading = true));
+    _loadServiceCate();
+  }
+
+  void refresh() {
+    _loadServiceCate();
   }
 }
