@@ -43,7 +43,9 @@ class _NotifyItemState extends BaseState<NotifyItem> {
         onTap: () {
           FocusScope.of(context).unfocus();
           pushScreen(PageIntent(
-              screen: NotifyDetailScreen, bundle: Bundle(widget.notification)));
+              screen: NotifyDetailScreen,
+              bundle: Bundle(
+                  models.Notification.fromJson(widget.notification.toJson()))));
           if (!isRead) {
             setState(() {
               widget.notification.status = models.Status.read;
