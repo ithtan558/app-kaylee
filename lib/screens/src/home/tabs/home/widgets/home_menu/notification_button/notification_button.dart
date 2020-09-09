@@ -4,15 +4,10 @@ import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/notification_button/bloc.dart';
-import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class NotificationButton extends StatefulWidget {
-  static Widget newInstance() => BlocProvider(
-        create: (context) => NotiButtonBloc(
-            service: context.network.provideNotificationService()),
-        child: NotificationButton._(),
-      );
+  static Widget newInstance() => NotificationButton._();
 
   NotificationButton._();
 

@@ -11,6 +11,7 @@ import 'package:kaylee/base/kaylee_routing.dart';
 import 'package:kaylee/base/reload_bloc.dart';
 import 'package:kaylee/components/components.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/notification_button/bloc.dart';
 import 'package:kaylee/utils/utils.dart';
 
 BuildContext dialogContext;
@@ -43,6 +44,11 @@ class KayLeeApp extends StatefulWidget {
           ),
           BlocProvider(
             create: (context) => ReloadBloc(),
+          ),
+          BlocProvider(
+            create: (context) => NotiButtonBloc(
+              service: context.network.provideNotificationService(),
+            ),
           ),
         ], child: KayLeeApp._()),
       );
