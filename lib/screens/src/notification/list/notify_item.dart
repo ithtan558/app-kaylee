@@ -18,7 +18,8 @@ class NotifyItem extends StatefulWidget {
 }
 
 class _NotifyItemState extends BaseState<NotifyItem> {
-  bool get isRead => widget.notification.status == models.Status.read;
+  bool get isRead =>
+      widget.notification.status == models.NotificationStatus.read;
 
   @override
   void initState() {
@@ -48,7 +49,7 @@ class _NotifyItemState extends BaseState<NotifyItem> {
                   models.Notification.fromJson(widget.notification.toJson()))));
           if (!isRead) {
             setState(() {
-              widget.notification.status = models.Status.read;
+              widget.notification.status = models.NotificationStatus.read;
             });
           }
           widget.onTap?.call();

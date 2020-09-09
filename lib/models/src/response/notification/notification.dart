@@ -25,26 +25,26 @@ class Notification {
   String description;
   String content;
   @JsonKey(fromJson: parseStatusFromInt, toJson: parse2Status)
-  Status status;
+  NotificationStatus status;
   String createdAt;
   String date;
 }
 
-int parse2Status(Status status) {
-  if (status == Status.read)
+int parse2Status(NotificationStatus status) {
+  if (status == NotificationStatus.read)
     return 2;
   else
     return 1;
 }
 
-Status parseStatusFromInt(int status) {
+NotificationStatus parseStatusFromInt(int status) {
   if (status == 2)
-    return Status.read;
+    return NotificationStatus.read;
   else
-    return Status.notRead;
+    return NotificationStatus.notRead;
 }
 
-enum Status {
+enum NotificationStatus {
   notRead,
   read,
 }
