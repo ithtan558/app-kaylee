@@ -32,19 +32,19 @@ class Notification {
 
 int parse2Status(Status status) {
   if (status == Status.read)
-    return 1;
-  else
     return 2;
+  else
+    return 1;
 }
 
 Status parseStatusFromInt(int status) {
-  if (status == 1)
+  if (status == 2)
     return Status.read;
   else
     return Status.notRead;
 }
 
 enum Status {
-  read,
   notRead,
+  read,
 }
