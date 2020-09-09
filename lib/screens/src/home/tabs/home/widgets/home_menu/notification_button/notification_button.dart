@@ -1,18 +1,16 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
-import 'package:kaylee/components/components.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/notification_button/bloc.dart';
+import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class NotificationButton extends StatefulWidget {
-  static Widget newInstance() => BlocProvider<NotiButtonBloc>(
+  static Widget newInstance() => BlocProvider(
         create: (context) => NotiButtonBloc(
-            service: context
-                .repository<NetworkModule>()
-                .provideNotificationService()),
+            service: context.network.provideNotificationService()),
         child: NotificationButton._(),
       );
 
