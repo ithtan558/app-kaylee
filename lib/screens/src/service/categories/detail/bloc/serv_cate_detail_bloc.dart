@@ -62,11 +62,9 @@ class ServCateDetailBloc extends Cubit<SingleModel<ServiceCate>>
     RequestHandler(
       request: servService.getServiceCateDetail(cateId: state.item?.id),
       onSuccess: ({message, result}) {
-        emit(SingleModel.copy(state
+        emit(DetailServCateModel.copy(state
           ..loading = false
-          ..item = result
-          ..error = null
-          ..code = null));
+          ..item = result));
       },
       onFailed: (code, {error}) {
         emit(SingleModel.copy(state
@@ -127,5 +125,13 @@ class NewServCateModel extends SingleModel<ServiceCate> {
       ..loading = old?.loading
       ..item = old?.item
       ..message = old?.message;
+  }
+}
+
+class DetailServCateModel extends SingleModel<ServiceCate> {
+  DetailServCateModel.copy(SingleModel old) {
+    this
+      ..loading = old?.loading
+      ..item = old?.item;
   }
 }

@@ -23,7 +23,7 @@ enum NewSerCateScreenOpenFrom { cateItem, addNewCateBtn }
 class CreateNewServCateScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider(
       create: (context) => ServCateDetailBloc(
-        servService: context.network.provideServService(),
+            servService: context.network.provideServService(),
             serviceCate:
                 context.getArguments<NewServCateScreenData>().serviceCate,
           ),
@@ -162,12 +162,15 @@ class _CreateNewServCateScreenState
           },
         ),
         padding: const EdgeInsets.all(Dimens.px16),
-        child: BlocBuilder<ServCateDetailBloc, SingleModel<ServiceCate>>(
-          buildWhen: (previous, current) => !current.loading,
-          builder: (context, state) {
+        child: BlocConsumer<ServCateDetailBloc, SingleModel<ServiceCate>>(
+          listener: (context, state) {
             nameTfController.text = state.item?.name;
             codeTfController.text = state.item?.code;
             sequenceTfController.text = state.item?.sequence?.toString();
+          },
+          listenWhen: (previous, current) => current is DetailServCateModel,
+          buildWhen: (previous, current) => current is DetailServCateModel,
+          builder: (context, state) {
             return Column(
               children: [
                 Padding(
