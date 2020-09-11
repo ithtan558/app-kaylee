@@ -93,9 +93,9 @@ class ServiceListBloc extends Cubit<LoadMoreModel<Service>>
   @override
   void loadFilter() {
     if (loadFilterWhen) {
-      emit(state
+      emit(LoadMoreModel.copy(state
         ..items = null
-        ..page = 1);
+        ..page = 1));
       loadServices();
     }
   }

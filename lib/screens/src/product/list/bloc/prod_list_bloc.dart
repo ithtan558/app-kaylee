@@ -85,9 +85,9 @@ class ProdListBloc extends Cubit<LoadMoreModel<Product>>
   @override
   void loadFilter() {
     if (loadFilterWhen) {
-      state
+      emit(LoadMoreModel.copy(state
         ..items = null
-        ..page = 1;
+        ..page = 1));
       loadProds();
     }
   }
