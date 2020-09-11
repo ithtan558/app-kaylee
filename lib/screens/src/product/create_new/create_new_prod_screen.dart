@@ -167,15 +167,18 @@ class _CreateNewProdScreenState extends KayleeState<CreateNewProdScreen> {
           },
         ),
         padding: const EdgeInsets.all(Dimens.px16),
-        child: BlocBuilder<ProdDetailScreenBloc, SingleModel<Product>>(
-          buildWhen: (previous, current) => current is ProdDetailModel,
-          builder: (context, state) {
+        child: BlocConsumer<ProdDetailScreenBloc, SingleModel<Product>>(
+          listenWhen: (previous, current) => current is ProdDetailModel,
+          listener: (context, state) {
             bannerPickerController?.existedImageUrl = state.item?.image;
             nameTfController.text = state.item?.name;
             brandSelectController.brands = state.item?.brands;
             priceTfController.text = state.item?.price?.toString();
             prodCateController.value = state.item?.category;
             descriptionTfController.text = state.item?.description;
+          },
+          buildWhen: (previous, current) => current is ProdDetailModel,
+          builder: (context, state) {
             return Column(
               children: [
                 KayleeImagePicker(
@@ -191,7 +194,7 @@ class _CreateNewProdScreenState extends KayleeState<CreateNewProdScreen> {
                     textInputAction: TextInputAction.next,
                     nextFocusNode: priceFocus,
                     error: state.error?.code.isNotNull &&
-                            state.error.code == ErrorCode.NAME_CODE
+                        state.error.code == ErrorCode.NAME_CODE
                         ? state.error.message
                         : null,
                   ),
@@ -230,7 +233,7 @@ class _CreateNewProdScreenState extends KayleeState<CreateNewProdScreen> {
                   hint: Strings.nhapMoTaSanPham,
                   textInputAction: TextInputAction.newline,
                   fieldHeight:
-                      (context.screenSize.width - Dimens.px32) / (343 / 233),
+                  (context.screenSize.width - Dimens.px32) / (343 / 233),
                   contentPadding: EdgeInsets.symmetric(vertical: Dimens.px16),
                   controller: descriptionTfController,
                   focusNode: descriptionFocus,
