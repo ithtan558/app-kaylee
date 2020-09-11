@@ -13,22 +13,23 @@ class UserInfo {
 
   Map<String, dynamic> toJson() => _$UserInfoToJson(this);
 
-  UserInfo({this.id,
-    this.brandId,
-    this.firstName,
-    this.lastName,
-    this.email,
-    this.phone,
-    this.username,
-    this.birthday,
-    this.address,
-    this.gender,
-    this.image,
-    this.hometownCity,
-    this.city,
-    this.district,
-    this.wards,
-    this.roles});
+  UserInfo(
+      {this.id,
+      this.brandId,
+      this.firstName,
+      this.lastName,
+      this.email,
+      this.phone,
+      this.username,
+      this.birthday,
+      this.address,
+      this.gender,
+      this.image,
+      this.hometownCity,
+      this.city,
+      this.district,
+      this.wards,
+      this.roleId});
 
   int id;
   int brandId;
@@ -57,5 +58,5 @@ class UserInfo {
   City city;
   District district;
   Ward wards;
-  List<String> roles;
+  int roleId;
 }

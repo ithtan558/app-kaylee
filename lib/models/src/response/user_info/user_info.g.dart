@@ -31,7 +31,7 @@ UserInfo _$UserInfoFromJson(Map<String, dynamic> json) {
     wards: json['wards'] == null
         ? null
         : Ward.fromJson(json['wards'] as Map<String, dynamic>),
-    roles: (json['roles'] as List)?.map((e) => e as String)?.toList(),
+    roleId: json['role_id'] as int,
   );
 }
 
@@ -51,5 +51,5 @@ Map<String, dynamic> _$UserInfoToJson(UserInfo instance) => <String, dynamic>{
       'city': instance.city?.toJson(),
       'district': instance.district?.toJson(),
       'wards': instance.wards?.toJson(),
-      'roles': instance.roles,
+      'role_id': instance.roleId,
     };
