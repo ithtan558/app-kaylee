@@ -171,6 +171,7 @@ class _CreateNewServiceScreenState extends KayleeState<CreateNewServiceScreen> {
         ),
         padding: const EdgeInsets.all(Dimens.px16),
         child: BlocConsumer<ServiceDetailScreenBloc, SingleModel<Service>>(
+            listenWhen: (previous, current) => current is ServiceDetailModel,
             listener: (context, state) {
               bannerPickerController?.existedImageUrl = state.item?.image;
               nameTfController.text = state.item?.name;
@@ -236,7 +237,7 @@ class _CreateNewServiceScreenState extends KayleeState<CreateNewServiceScreen> {
                     hint: Strings.nhapMoTaDichVu,
                     textInputAction: TextInputAction.newline,
                     fieldHeight:
-                    (context.screenSize.width - Dimens.px32) / (343 / 233),
+                        (context.screenSize.width - Dimens.px32) / (343 / 233),
                     contentPadding: EdgeInsets.symmetric(vertical: Dimens.px16),
                     controller: descriptionTfController,
                     focusNode: descriptionFocus,
