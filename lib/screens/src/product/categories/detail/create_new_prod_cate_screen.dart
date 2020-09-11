@@ -164,12 +164,15 @@ class _CreateNewProdCateScreenState
           },
         ),
         padding: const EdgeInsets.all(Dimens.px16),
-        child: BlocBuilder<ProdCateDetailBloc, SingleModel<ProdCate>>(
-          buildWhen: (previous, current) => !current.loading,
-          builder: (context, state) {
+        child: BlocConsumer<ProdCateDetailBloc, SingleModel<ProdCate>>(
+          listener: (context, state) {
             nameTfController.text = state.item?.name;
             codeTfController.text = state.item?.code;
             sequenceTfController.text = state.item?.sequence?.toString();
+          },
+          listenWhen: (previous, current) => current is DetailProductCateModel,
+          buildWhen: (previous, current) => current is DetailProductCateModel,
+          builder: (context, state) {
             return Column(
               children: [
                 Padding(
