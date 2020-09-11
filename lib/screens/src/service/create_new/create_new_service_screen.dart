@@ -170,9 +170,8 @@ class _CreateNewServiceScreenState extends KayleeState<CreateNewServiceScreen> {
           },
         ),
         padding: const EdgeInsets.all(Dimens.px16),
-        child: BlocBuilder<ServiceDetailScreenBloc, SingleModel<Service>>(
-            buildWhen: (previous, current) => current is ServiceDetailModel,
-            builder: (context, state) {
+        child: BlocConsumer<ServiceDetailScreenBloc, SingleModel<Service>>(
+            listener: (context, state) {
               bannerPickerController?.existedImageUrl = state.item?.image;
               nameTfController.text = state.item?.name;
               brandSelectController.brands = state.item?.brands;
@@ -180,6 +179,9 @@ class _CreateNewServiceScreenState extends KayleeState<CreateNewServiceScreen> {
               priceTfController.text = state.item?.price?.toString();
               serviceCateController.value = state.item?.category;
               descriptionTfController.text = state.item?.description;
+            },
+            buildWhen: (previous, current) => current is ServiceDetailModel,
+            builder: (context, state) {
               return Column(
                 children: [
                   KayleeImagePicker(
@@ -234,7 +236,7 @@ class _CreateNewServiceScreenState extends KayleeState<CreateNewServiceScreen> {
                     hint: Strings.nhapMoTaDichVu,
                     textInputAction: TextInputAction.newline,
                     fieldHeight:
-                        (context.screenSize.width - Dimens.px32) / (343 / 233),
+                    (context.screenSize.width - Dimens.px32) / (343 / 233),
                     contentPadding: EdgeInsets.symmetric(vertical: Dimens.px16),
                     controller: descriptionTfController,
                     focusNode: descriptionFocus,
