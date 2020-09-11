@@ -36,7 +36,7 @@ class _FilterButtonState<T extends Filter> extends BaseState<FilterButton<T>> {
       iconColor:
           (widget.controller?.isEmptyFilter ?? true) ? null : ColorsRes.hyper,
       onTap: () {
-        Navigator.push(
+        Navigator.push<Bundle>(
           context,
           MaterialPageRoute(
             builder: (context) => FilterScreen<T>(
@@ -44,15 +44,12 @@ class _FilterButtonState<T extends Filter> extends BaseState<FilterButton<T>> {
             ),
           ),
         ).then((value) {
-          widget.controller?.loadFilter();
-          setState(() {});
+          if (value is Bundle && (value.args ?? false)) {
+            widget.controller?.loadFilter();
+            setState(() {});
+          }
         });
       },
     );
-  }
-
-  @override
-  void onPopResult(Type returnScreen, Bundle resultBundle) {
-    super.onPopResult(returnScreen, resultBundle);
   }
 }

@@ -13,6 +13,8 @@ import 'package:kaylee/screens/src/staff/list/bloc/staff_list_screen_bloc.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 abstract class KayleeFilterAction {
+  ///khi call function này, chỉ thay đổi [KayleeFilterInterface] khi controller.value bên trong mỗi view != null
+  ///vì không muốn tạo Object [Filter] nếu controller.value == null
   void onApply();
 
   void onReset();
@@ -109,7 +111,7 @@ class _FilterScreenState<T extends Filter> extends BaseState<FilterScreen<T>> {
                   searchTfController.keyword;
             }
             action?.onApply();
-            popScreen();
+            popScreen(resultBundle: Bundle(true));
           },
         ),
       ),
