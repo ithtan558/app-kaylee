@@ -101,7 +101,7 @@ class ServiceListBloc extends Cubit<LoadMoreModel<Service>>
   }
 
   @override
-  bool get loadFilterWhen => !isEmptyFilter || state.items.isNullOrEmpty;
+  bool get loadFilterWhen => !isEmptyFilter;
 
   @override
   void resetFilter() {

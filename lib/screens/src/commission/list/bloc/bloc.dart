@@ -90,7 +90,7 @@ class CommissionListScreenBloc extends Cubit<LoadMoreModel<Employee>>
   }
 
   @override
-  bool get loadFilterWhen => !isEmptyFilter || state.items.isNullOrEmpty;
+  bool get loadFilterWhen => !isEmptyFilter;
 
   @override
   void refresh() {

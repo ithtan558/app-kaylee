@@ -90,7 +90,7 @@ class CustomerListScreenBloc extends Cubit<LoadMoreModel<Customer>>
   }
 
   @override
-  bool get loadFilterWhen => !isEmptyFilter || state.items.isNullOrEmpty;
+  bool get loadFilterWhen => !isEmptyFilter;
 
   @override
   void refresh() {

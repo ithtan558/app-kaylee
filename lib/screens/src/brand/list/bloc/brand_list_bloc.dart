@@ -88,7 +88,7 @@ class BrandListBloc extends Cubit<LoadMoreModel<Brand>>
   }
 
   @override
-  bool get loadFilterWhen => !isEmptyFilter || state.items.isNullOrEmpty;
+  bool get loadFilterWhen => !isEmptyFilter;
 
   @override
   void loadInitData() {

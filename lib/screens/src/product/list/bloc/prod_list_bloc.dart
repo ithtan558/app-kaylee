@@ -50,7 +50,7 @@ class ProdListBloc extends Cubit<LoadMoreModel<Product>>
   }
 
   void loadInitDataWithCate({int cateId}) {
-      changeTab(cateId: cateId);
+    changeTab(cateId: cateId);
   }
 
   void changeTab({int cateId}) {
@@ -93,7 +93,7 @@ class ProdListBloc extends Cubit<LoadMoreModel<Product>>
   }
 
   @override
-  bool get loadFilterWhen => !isEmptyFilter || state.items.isNullOrEmpty;
+  bool get loadFilterWhen => !isEmptyFilter;
 
   @override
   void resetFilter() {
