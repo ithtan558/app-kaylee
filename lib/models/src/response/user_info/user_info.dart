@@ -29,7 +29,7 @@ class UserInfo {
       this.city,
       this.district,
       this.wards,
-      this.roleId});
+      this.userRole});
 
   int id;
   int brandId;
@@ -58,5 +58,32 @@ class UserInfo {
   City city;
   District district;
   Ward wards;
-  int roleId;
+  @JsonKey(
+      name: 'role_id',
+      fromJson: parseUserRoleFromInt,
+      toJson: parseUserRoleToInt)
+  UserRole userRole;
+}
+
+UserRole parseUserRoleFromInt(int input) {
+  if (input == 1) return UserRole.SUPER_ADMIN;
+  if (input == 2) return UserRole.MANAGER;
+  if (input == 3) return UserRole.BRAND_MANAGER;
+  if (input == 4) return UserRole.EMPLOYEE;
+  return null;
+}
+
+int parseUserRoleToInt(UserRole userRole) {
+  if (userRole == UserRole.SUPER_ADMIN) return 1;
+  if (userRole == UserRole.MANAGER) return 2;
+  if (userRole == UserRole.BRAND_MANAGER) return 3;
+  if (userRole == UserRole.EMPLOYEE) return 4;
+  return null;
+}
+
+enum UserRole {
+  SUPER_ADMIN,
+  MANAGER,
+  BRAND_MANAGER,
+  EMPLOYEE,
 }
