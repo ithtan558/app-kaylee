@@ -97,7 +97,7 @@ class _NotifyItemState extends BaseState<NotifyItem> {
               Padding(
                 padding: const EdgeInsets.only(top: Dimens.px8),
                 child: KayleeText(
-                  widget.notification.description.plus('\n'),
+                  widget.notification.description,
                   maxLines: 2,
                   style:
                       isRead ? TextStyles.hint16W400 : TextStyles.button16W400,
