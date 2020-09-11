@@ -1,7 +1,8 @@
+import 'dart:async';
+
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/app_bloc.dart';
-import 'package:kaylee/components/components.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/res/src/images.dart';
 import 'package:kaylee/screens/screens.dart';
@@ -11,7 +12,7 @@ import 'package:kaylee/widgets/widgets.dart';
 
 class SplashScreen extends StatefulWidget {
   static Widget newInstance() =>
-      BlocProvider(create: (_) => SplashScreenBloc(), child: SplashScreen._());
+      BlocProvider(create: (c) => SplashScreenBloc(), child: SplashScreen._());
 
   SplashScreen._();
 
@@ -22,16 +23,24 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends BaseState<SplashScreen> {
   final logoRatio = 211 / 95;
   SplashScreenBloc bloc;
+  StreamSubscription _sub;
 
   @override
   void initState() {
     super.initState();
     bloc = context.bloc<SplashScreenBloc>();
     bloc.config();
+    _sub = context.bloc<AppBloc>().listen((state) {
+      if (state is DoneSetupLoggedInState) {
+        bloc.userService = context.network.provideUserService();
+        bloc.loadUserInfo();
+      }
+    });
   }
 
   @override
   void dispose() {
+    _sub.cancel();
     bloc.close();
     super.dispose();
   }
@@ -56,8 +65,7 @@ class _SplashScreenState extends BaseState<SplashScreen> {
             BlocConsumer<SplashScreenBloc, dynamic>(
               builder: (context, state) {
                 if (state is LoadedSharedPrefSplashScrState) {
-                  final user =
-                      RepositoryProvider.of<UserModule>(context).getUserInfo();
+                  final user = context.user.getUserInfo();
                   if (user?.token.isNullOrEmpty) {
                     return Column(
                       children: [
@@ -69,7 +77,7 @@ class _SplashScreenState extends BaseState<SplashScreen> {
                         ),
                         Container(
                           margin:
-                              const EdgeInsets.symmetric(vertical: Dimens.px32),
+                          const EdgeInsets.symmetric(vertical: Dimens.px32),
                           child: Go2RegisterText(),
                         )
                       ],
@@ -85,8 +93,20 @@ class _SplashScreenState extends BaseState<SplashScreen> {
                   final user = context.user?.getUserInfo();
                   if (user?.token.isNotNullAndEmpty) {
                     context.bloc<AppBloc>().loggedIn(user);
-                    bloc.pushToHomeScreen();
                   }
+                } else if (state is LoadedUserInfoState) {
+                  context.user.updateUserInfo(
+                      context.user.getUserInfo()..userInfo = state.userInfo);
+                  bloc.pushToHomeScreen();
+                } else if (state is ErrorLoadInfoState) {
+                  showKayleeAlertErrorYesDialog(
+                    context: context,
+                    error: state.error,
+                    onPressed: popScreen,
+                    onDismiss: () {
+                      bloc.pushToHomeScreen();
+                    },
+                  );
                 }
               },
             )

@@ -37,6 +37,8 @@ class AppBloc extends Cubit {
     );
   }
 
+  void doneLoggedInSetup() => emit(DoneSetupLoggedInState());
+
   @override
   Future<void> close() {
     _unauthorizedController.close();
@@ -51,6 +53,8 @@ class LoggedInState {
 }
 
 class LoggedOutState {}
+
+class DoneSetupLoggedInState {}
 
 class UnauthorizedState {
   Error error;
