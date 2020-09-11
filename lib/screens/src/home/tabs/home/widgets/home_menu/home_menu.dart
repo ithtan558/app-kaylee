@@ -2,12 +2,14 @@ import 'dart:ui';
 
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/home/tabs/home/bloc/scroll_offset_bloc.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/home_menu_item.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/notification_button/notification_button.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/user_name.dart';
+import 'package:kaylee/utils/utils.dart';
 
 class HomeMenu extends StatefulWidget {
   static Widget newInstance() => BlocProvider<HomeMenuBloc>(
@@ -48,55 +50,27 @@ class _HomeMenuState extends BaseState<HomeMenu> {
     super.dispose();
   }
 
+  final gradientBg = Container(
+      decoration: const BoxDecoration(
+    gradient: LinearGradient(
+      colors: [
+        ColorsRes.color1,
+        ColorsRes.button,
+        ColorsRes.button,
+        ColorsRes.color1,
+      ],
+      stops: [0, 0.4, 0.7, 1],
+      begin: Alignment(0.50, -0.87),
+      end: Alignment(-0.50, 0.87),
+      // angle: 210,
+      // scale: undefined,
+    ),
+  ));
+
   @override
   Widget build(BuildContext context) {
-    final gradientBg = Container(
-        decoration: const BoxDecoration(
-      gradient: LinearGradient(
-        colors: [
-          ColorsRes.color1,
-          ColorsRes.button,
-          ColorsRes.button,
-          ColorsRes.color1,
-        ],
-        stops: [0, 0.4, 0.7, 1],
-        begin: Alignment(0.50, -0.87),
-        end: Alignment(-0.50, 0.87),
-        // angle: 210,
-        // scale: undefined,
-      ),
-    ));
-    final row2Items = [
-      HomeMenuItem(
-        title: Strings.dsKhachHang,
-        icon: Images.ic_user_list,
-        onTap: () {
-          context.push(PageIntent(screen: CustomerListScreen));
-        },
-      ),
-      HomeMenuItem(
-        title: Strings.dsLichHen,
-        icon: Images.ic_booking,
-        onTap: () {
-          context.push(PageIntent(screen: ReservationListScreen));
-        },
-      ),
-      HomeMenuItem(
-        title: Strings.hoaHongNv,
-        icon: Images.ic_commission,
-        onTap: () {
-          context.push(PageIntent(screen: CommissionListScreen));
-        },
-      ),
-      HomeMenuItem(
-        title: Strings.doanhThuBanHang,
-        icon: Images.ic_revenue,
-        onTap: () {
-          context.push(PageIntent(screen: RevenueScreen));
-        },
-      ),
-    ];
-    final menuRow1 = [
+    final userInfo = context.user.getUserInfo().userInfo;
+    final menuItems = [
       HomeMenuItem(
         title: Strings.qlChiNhanh,
         icon: Images.ic_store,
@@ -118,15 +92,47 @@ class _HomeMenuState extends BaseState<HomeMenu> {
           context.push(PageIntent(screen: ProdListScreen));
         },
       ),
+      if (userInfo.userRole != UserRole.EMPLOYEE)
+        HomeMenuItem(
+          title: Strings.qlNhanVien,
+          icon: Images.ic_person,
+          onTap: () {
+            context.push(PageIntent(screen: StaffListScreen));
+          },
+        ),
       HomeMenuItem(
-        title: Strings.qlNhanVien,
-        icon: Images.ic_person,
+        title: Strings.dsKhachHang,
+        icon: Images.ic_user_list,
         onTap: () {
-          context.push(PageIntent(screen: StaffListScreen));
+          context.push(PageIntent(screen: CustomerListScreen));
         },
       ),
-      ...row2Items
+      HomeMenuItem(
+        title: Strings.dsLichHen,
+        icon: Images.ic_booking,
+        onTap: () {
+          context.push(PageIntent(screen: ReservationListScreen));
+        },
+      ),
+      if (userInfo.userRole != UserRole.EMPLOYEE)
+        HomeMenuItem(
+          title: Strings.hoaHongNv,
+          icon: Images.ic_commission,
+          onTap: () {
+            context.push(PageIntent(screen: CommissionListScreen));
+          },
+        ),
+      if (userInfo.userRole != UserRole.EMPLOYEE)
+        HomeMenuItem(
+          title: Strings.doanhThuBanHang,
+          icon: Images.ic_revenue,
+          onTap: () {
+            context.push(PageIntent(screen: RevenueScreen));
+          },
+        ),
     ];
+    final menuRow1 = menuItems.getRange(0, 4);
+    final row2Items = menuItems.sublist(menuRow1.length, menuItems.length);
     final menuRow2 = Column(
       children: [
         Expanded(
@@ -196,7 +202,7 @@ class _HomeMenuState extends BaseState<HomeMenu> {
                         physics: !(snapshot.data ?? false)
                             ? NeverScrollableScrollPhysics()
                             : ClampingScrollPhysics(),
-                        children: menuRow1,
+                        children: menuItems,
                       );
                     }),
               ),
