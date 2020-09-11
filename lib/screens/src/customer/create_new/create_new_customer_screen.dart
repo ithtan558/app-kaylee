@@ -185,13 +185,11 @@ class _CreateNewCustomerScreenState
             }
           },
         ),
-        child: BlocBuilder<CustomerDetailScreenBloc, SingleModel<Customer>>(
-          buildWhen: (previous, current) => current is CustomerDetailModel,
-          builder: (context, state) {
+        child: BlocConsumer<CustomerDetailScreenBloc, SingleModel<Customer>>(
+          listener: (context, state) {
             imagePickerController.existedImageUrl = state.item?.image;
             firstNameTfController.text = state.item?.firstName;
             lastNameTfController.text = state.item?.lastName;
-
             birthDayController.value = state.item?.birthDayInDateTime;
             homeTownCityController.value = state.item?.hometownCity;
             addressController
@@ -201,6 +199,10 @@ class _CreateNewCustomerScreenState
               ..initWard = state.item?.wards;
             phoneTfController.text = state.item?.phone;
             emailTfController.text = state.item?.email;
+          },
+          listenWhen: (previous, current) => current is CustomerDetailModel,
+          buildWhen: (previous, current) => current is CustomerDetailModel,
+          builder: (context, state) {
             return Column(
               children: [
                 Padding(
