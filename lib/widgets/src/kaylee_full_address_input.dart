@@ -29,10 +29,6 @@ class _KayleeFullAddressInputState extends BaseState<KayleeFullAddressInput> {
   void initState() {
     super.initState();
     widget.controller?._view = this;
-    updateValue();
-  }
-
-  void updateValue() {
     addressTFController.text = widget?.controller?.initAddress ?? '';
     cityController.value = widget?.controller?.initCity;
     districtController.value = widget?.controller?.initDistrict;
@@ -41,7 +37,21 @@ class _KayleeFullAddressInputState extends BaseState<KayleeFullAddressInput> {
 
   @override
   void didUpdateWidget(KayleeFullAddressInput oldWidget) {
-    updateValue();
+    if (widget?.controller?.initAddress != oldWidget.controller?.initAddress) {
+      addressTFController.text = widget?.controller?.initAddress ?? '';
+    }
+    if (widget?.controller?.initCity?.id !=
+        oldWidget.controller?.initCity?.id) {
+      cityController.value = widget?.controller?.initCity;
+    }
+    if (widget?.controller?.initDistrict?.id !=
+        oldWidget.controller?.initDistrict?.id) {
+      districtController.value = widget?.controller?.initDistrict;
+    }
+    if (widget?.controller?.initWard?.id !=
+        oldWidget.controller?.initWard?.id) {
+      wardController.value = widget?.controller?.initWard;
+    }
     super.didUpdateWidget(oldWidget);
   }
 
