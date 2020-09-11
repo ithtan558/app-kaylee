@@ -63,11 +63,9 @@ class BrandDetailScreenBloc extends Cubit<SingleModel<Brand>>
     RequestHandler(
       request: brandService.getBrand(brandId: state.item?.id),
       onSuccess: ({message, result}) {
-        emit(SingleModel.copy(state
+        emit(DetailBrandModel.copy(state
           ..loading = false
-          ..item = result
-          ..error = null
-          ..code = null));
+          ..item = result));
       },
       onFailed: (code, {error}) {
         emit(SingleModel.copy(state
@@ -134,5 +132,13 @@ class NewBrandModel extends SingleModel<Brand> {
       ..item = old?.item
       ..loading = old?.loading
       ..message = old?.message;
+  }
+}
+
+class DetailBrandModel extends SingleModel<Brand> {
+  DetailBrandModel.copy(SingleModel old) {
+    this
+      ..item = old?.item
+      ..loading = old?.loading;
   }
 }

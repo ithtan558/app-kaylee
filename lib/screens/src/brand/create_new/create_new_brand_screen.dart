@@ -174,9 +174,8 @@ class _CreateNewBrandScreenState extends KayleeState<CreateNewBrandScreen> {
             )
           ],
         ),
-        child: BlocBuilder<BrandDetailScreenBloc, SingleModel<Brand>>(
-          buildWhen: (previous, current) => !current.loading,
-          builder: (context, state) {
+        child: BlocConsumer<BrandDetailScreenBloc, SingleModel<Brand>>(
+          listener: (context, state) {
             bannerPickerController.existedImageUrl = state.item?.image;
             nameTfController.text = state.item?.name;
             addressController
@@ -187,6 +186,10 @@ class _CreateNewBrandScreenState extends KayleeState<CreateNewBrandScreen> {
             phoneTfController.text = state.item?.phone;
             startTimeController.value = state.item?.start;
             endTimeController.value = state.item?.end;
+          },
+          listenWhen: (previous, current) => current is DetailBrandModel,
+          buildWhen: (previous, current) => current is DetailBrandModel,
+          builder: (context, state) {
             return Column(
               children: [
                 KayleeImagePicker(
