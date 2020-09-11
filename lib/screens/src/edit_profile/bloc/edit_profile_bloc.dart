@@ -35,9 +35,9 @@ class EditProfileBloc extends Cubit<SingleModel<UserInfo>> {
         lastName: userInfo.lastName,
         birthday: userInfo.birthday,
         address: userInfo.address,
-        cityId: userInfo.city.id,
-        districtId: userInfo.district.id,
-        wardsId: userInfo.wards.id,
+        cityId: userInfo.city?.id,
+        districtId: userInfo.district?.id,
+        wardsId: userInfo.wards?.id,
         image: userInfo.imageFile,
       ),
       onSuccess: ({message, result}) {
