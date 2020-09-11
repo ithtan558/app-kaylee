@@ -191,9 +191,8 @@ class _CreateNewStaffScreenState extends KayleeState<CreateNewStaffScreen> {
           },
         ),
         padding: const EdgeInsets.all(Dimens.px16),
-        child: BlocBuilder<StaffDetailScreenBloc, SingleModel<Employee>>(
-          buildWhen: (previous, current) => current is StaffDetailModel,
-          builder: (context, state) {
+        child: BlocConsumer<StaffDetailScreenBloc, SingleModel<Employee>>(
+          listener: (context, state) {
             imagePickerController.existedImageUrl = state.item?.image;
             firstNameTfController.text = state.item?.firstName;
             lastNameTfController.text = state.item?.lastName;
@@ -208,6 +207,10 @@ class _CreateNewStaffScreenState extends KayleeState<CreateNewStaffScreen> {
             emailTfController.text = state.item?.email;
             roleController.value = state.item?.role;
             brandController.value = state.item?.brand;
+          },
+          listenWhen: (previous, current) => current is StaffDetailModel,
+          buildWhen: (previous, current) => current is StaffDetailModel,
+          builder: (context, state) {
             return Column(
               children: [
                 KayleeImagePicker(
