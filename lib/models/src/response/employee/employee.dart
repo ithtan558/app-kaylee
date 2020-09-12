@@ -28,7 +28,8 @@ class Employee {
       this.district,
       this.wards,
       this.hometownCity,
-      this.brand});
+      this.brand,
+      this.password});
 
   int id;
   String firstName;
@@ -56,4 +57,5 @@ class Employee {
   Ward wards;
   City hometownCity;
   Brand brand;
+  String password;
 }
