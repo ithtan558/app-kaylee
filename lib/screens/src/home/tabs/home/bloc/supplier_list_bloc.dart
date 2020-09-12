@@ -11,28 +11,35 @@ class SupplierListBloc extends Cubit<LoadMoreModel<Supplier>>
 
   SupplierListBloc({this.supplierService}) : super(LoadMoreModel());
 
+  @override
+  void loadInitData() {
+    emit(LoadMoreModel.copy(state..loading = true));
+    loadSuppliers();
+  }
+
   void loadSuppliers() async {
-    state.loading = true;
-    RequestHandler(
-      request:
-          supplierService.getSuppliers(page: state.page, limit: state.limit),
-      onSuccess: ({message, result}) {
-        final supp = (result as Suppliers).items;
-        completeRefresh();
-        emit(LoadMoreModel.copy(state
-          ..loading = false
-          ..addAll(supp)
-          ..code = null
-          ..error = null));
-      },
-      onFailed: (code, {error}) {
-        completeRefresh();
-        emit(LoadMoreModel.copy(state
-          ..loading = false
-          ..code = code
-          ..error = error));
-      },
-    );
+    Future.delayed(Duration(seconds: 5), () {
+      RequestHandler(
+        request:
+            supplierService.getSuppliers(page: state.page, limit: state.limit),
+        onSuccess: ({message, result}) {
+          final supp = (result as Suppliers).items;
+          completeRefresh();
+          emit(LoadMoreModel.copy(state
+            ..loading = false
+            ..addAll(supp)
+            ..code = null
+            ..error = null));
+        },
+        onFailed: (code, {error}) {
+          completeRefresh();
+          emit(LoadMoreModel.copy(state
+            ..loading = false
+            ..code = code
+            ..error = error));
+        },
+      );
+    });
   }
 
   @override
@@ -49,7 +56,8 @@ class SupplierListBloc extends Cubit<LoadMoreModel<Supplier>>
     super.refresh();
     state
       ..page = 1
-      ..items = [];
+      ..items = []
+      ..loading = true;
     loadSuppliers();
   }
 }

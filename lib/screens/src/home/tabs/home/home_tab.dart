@@ -52,7 +52,7 @@ class _HomeTabState extends KayleeState<HomeTab>
       scrollOffsetBloc.addOffset(scrollController.offset);
     });
     supplierListBloc = context.bloc<SupplierListBloc>();
-    supplierListBloc.loadSuppliers();
+    supplierListBloc.loadInitData();
   }
 
   @override
