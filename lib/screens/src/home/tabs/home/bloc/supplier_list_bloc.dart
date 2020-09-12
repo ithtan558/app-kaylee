@@ -1,22 +1,24 @@
 import 'package:anth_package/anth_package.dart';
+import 'package:kaylee/base/kaylee_list_interface.dart';
 import 'package:kaylee/base/loadmore_interface.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/services/services.dart';
 
 class SupplierListBloc extends Cubit<LoadMoreModel<Supplier>>
+    with KayleeListInterfaceMixin
     implements LoadMoreInterface {
   final SupplierService supplierService;
 
   SupplierListBloc({this.supplierService}) : super(LoadMoreModel());
 
   void loadSuppliers() async {
-    emit(LoadMoreModel.copy(state..loading = true));
+    state.loading = true;
     RequestHandler(
       request:
           supplierService.getSuppliers(page: state.page, limit: state.limit),
       onSuccess: ({message, result}) {
         final supp = (result as Suppliers).items;
-
+        completeRefresh();
         emit(LoadMoreModel.copy(state
           ..loading = false
           ..addAll(supp)
@@ -24,6 +26,7 @@ class SupplierListBloc extends Cubit<LoadMoreModel<Supplier>>
           ..error = null));
       },
       onFailed: (code, {error}) {
+        completeRefresh();
         emit(LoadMoreModel.copy(state
           ..loading = false
           ..code = code
@@ -40,6 +43,15 @@ class SupplierListBloc extends Cubit<LoadMoreModel<Supplier>>
 
   @override
   bool loadWhen() => !state.loading && !state.ended;
+
+  @override
+  void refresh() {
+    super.refresh();
+    state
+      ..page = 1
+      ..items = [];
+    loadSuppliers();
+  }
 }
 
 class SupplierListModel extends LoadMoreModel<Supplier> {
