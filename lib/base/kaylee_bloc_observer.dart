@@ -1,7 +1,10 @@
 import 'package:anth_package/anth_package.dart';
 
 class KayleeBlocObserver extends BlocObserver {
+  //khi bloc extend Bloc
   final void Function(dynamic currentState, dynamic nextState) transition;
+
+  //khi bloc extend Cubit
   final void Function(Cubit cubit, Change change) change;
 
   KayleeBlocObserver({this.transition, this.change});
