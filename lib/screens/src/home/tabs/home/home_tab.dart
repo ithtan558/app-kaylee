@@ -5,12 +5,14 @@ import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kaylee/base/kaylee_state.dart';
+import 'package:kaylee/base/reload_bloc.dart';
 import 'package:kaylee/components/components.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/home/tabs/home/bloc/scroll_offset_bloc.dart';
 import 'package:kaylee/screens/src/home/tabs/home/bloc/supplier_list_bloc.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/home_menu.dart';
+import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/notification_button/notification_button.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/supplier_item.dart';
 import 'package:kaylee/widgets/src/kaylee_text.dart';
 import 'package:kaylee/widgets/widgets.dart';
@@ -71,49 +73,66 @@ class _HomeTabState extends KayleeState<HomeTab>
     return AnnotatedRegion(
       value: SystemUiOverlayStyle.light,
       child: Scaffold(
-        body: Container(
-          height: double.infinity,
-          width: double.infinity,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage(
-                    Images.bg_home,
-                  ),
-                  fit: BoxFit.fill)),
-          child: Column(
-            children: <Widget>[
-              BlocProvider<ScrollOffsetBloc>.value(
-                  value: scrollOffsetBloc, child: HomeMenu.newInstance()),
-              Expanded(
-                child: KayleeLoadMoreHandler(
-                  controller: context.bloc<SupplierListBloc>(),
-                  child: BlocBuilder<SupplierListBloc, LoadMoreModel>(
-                    builder: (context, state) {
-                      return ListView.separated(
-                        controller: scrollController,
-                        physics: BouncingScrollPhysics(),
-                        padding: const EdgeInsets.only(bottom: Dimens.px16),
-                        itemBuilder: (c, index) {
-                          if (index == 0) {
-                            return listTitle;
-                          } else {
-                            return SupplierItem(
-                              supplier: state.items.elementAt(index - 1),
+        body: KayleeRefreshIndicator(
+          controller: supplierListBloc,
+          onRefresh: () async {
+            context.bloc<ReloadBloc>().reload(widget: NotificationButton);
+            return;
+          },
+          child: Container(
+            height: double.infinity,
+            width: double.infinity,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage(
+                      Images.bg_home,
+                    ),
+                    fit: BoxFit.fill)),
+            child: Column(
+              children: <Widget>[
+                BlocProvider<ScrollOffsetBloc>.value(
+                    value: scrollOffsetBloc, child: HomeMenu.newInstance()),
+                Expanded(
+                  child: KayleeLoadMoreHandler(
+                    controller: context.bloc<SupplierListBloc>(),
+                    child: BlocBuilder<SupplierListBloc, LoadMoreModel>(
+                      builder: (context, state) {
+                        int itemCount = (state.items?.length ?? 0);
+                        final limit = 10;
+                        int subItemCount =
+                            limit - (itemCount < limit ? itemCount : limit);
+                        final expectItemCount = itemCount + subItemCount;
+                        return KayleeListView(
+                          controller: scrollController,
+                          physics: BouncingScrollPhysics(),
+                          padding: const EdgeInsets.only(bottom: Dimens.px16),
+                          itemBuilder: (c, index) {
+                            if (index == 0) {
+                              return listTitle;
+                            } else if (expectItemCount != itemCount &&
+                                index > itemCount) {
+                              return Container(
+                                height: Dimens.px46,
+                              );
+                            } else {
+                              return SupplierItem(
+                                supplier: state.items.elementAt(index - 1),
+                              );
+                            }
+                          },
+                          itemCount: 1 + expectItemCount,
+                          separatorBuilder: (BuildContext context, int index) {
+                            return Container(
+                              height: index >= 1 ? Dimens.px16 : 0,
                             );
-                          }
-                        },
-                        itemCount: 1 + (state.items?.length ?? 0),
-                        separatorBuilder: (BuildContext context, int index) {
-                          return Container(
-                            height: index >= 1 ? Dimens.px16 : 0,
-                          );
-                        },
-                      );
-                    },
+                          },
+                        );
+                      },
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
