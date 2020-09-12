@@ -87,13 +87,18 @@ class KayleeAppBarAction extends StatelessWidget {
   factory KayleeAppBarAction.hyperText(
           {@required String title, void Function() onTap}) =>
       KayleeAppBarAction(
-        child: Container(
-          height: double.infinity,
-          margin: EdgeInsets.only(right: Dimens.px16),
-          alignment: Alignment.centerRight,
-          child: HyperLinkText(
-            text: title ?? '',
+        child: SizedBox(
+          height: kToolbarHeight,
+          width: kToolbarHeight,
+          child: InkWell(
             onTap: onTap,
+            customBorder: CircleBorder(),
+            child: Center(
+              child: HyperLinkText(
+                text: title ?? '',
+                onTap: onTap,
+              ),
+            ),
           ),
         ),
       );
