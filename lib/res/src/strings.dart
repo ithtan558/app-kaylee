@@ -263,6 +263,7 @@ class Strings {
   static const String nhapTenDanhMuc = 'Nhập tên danh mục';
   static const String nhapMaCode = 'Nhập mã code';
   static const String nhapViTri = 'Nhập vị trí';
+  static const String tatCa = 'Tất cả';
 
   Strings._();
 }

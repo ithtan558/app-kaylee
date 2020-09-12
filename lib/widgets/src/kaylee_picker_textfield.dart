@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/services/services.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
@@ -31,12 +32,16 @@ class KayleePickerTextField<T> extends StatefulWidget {
   final String hint;
   final PickInputController<T> controller;
 
+  ///nếu [useForFilter] == true (khi [KayleePickerTextField] đc gắn ở [FilterScreen]) => hiện item 'Tất cả'
+  final bool useForFilter;
+
   KayleePickerTextField({
     Key key,
     this.hint,
     this.error,
     this.title,
     this.controller,
+    this.useForFilter,
   }) : super(key: key);
 
   @override
@@ -211,7 +216,8 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField>
                             },
                           )
                         : _PickerView<T>(
-                            intiValue: widget.controller?.value,
+              intiValue: widget.controller?.value,
+                            useForFilter: widget.useForFilter,
                             onSelectedItemChanged: (value) {
                               currentValue = value;
                             },
@@ -368,8 +374,9 @@ class _TimePickerViewState<T> extends BaseState<_TimePickerView> {
 class _PickerView<T> extends StatefulWidget {
   final ValueChanged onSelectedItemChanged;
   final T intiValue;
+  final bool useForFilter;
 
-  _PickerView({this.onSelectedItemChanged, this.intiValue});
+  _PickerView({this.onSelectedItemChanged, this.intiValue, this.useForFilter});
 
   @override
   _PickerViewState<T> createState() => _PickerViewState<T>();
@@ -396,6 +403,7 @@ class _PickerViewState<T> extends BaseState<_PickerView> {
       brandService: context.network.provideBrandService(),
       customerService: context.network.provideCustomerService(),
       roleService: context.network.provideRoleService(),
+      useForFilter: widget.useForFilter,
     );
     if (T == City) {
       bloc.loadCity();
@@ -484,12 +492,13 @@ class PickInputController<T> {
 }
 
 class _PickerViewBloc<T> extends Cubit<SingleModel<List<T>>> {
-  CommonService commonService;
-  ProductService productService;
-  ServService servService;
-  BrandService brandService;
-  CustomerService customerService;
-  RoleService roleService;
+  final CommonService commonService;
+  final ProductService productService;
+  final ServService servService;
+  final BrandService brandService;
+  final CustomerService customerService;
+  final RoleService roleService;
+  final bool useForFilter;
 
   _PickerViewBloc({
     this.commonService,
@@ -498,6 +507,7 @@ class _PickerViewBloc<T> extends Cubit<SingleModel<List<T>>> {
     this.brandService,
     this.customerService,
     this.roleService,
+    this.useForFilter,
   }) : super(SingleModel());
 
   void loadCity() {
@@ -505,6 +515,10 @@ class _PickerViewBloc<T> extends Cubit<SingleModel<List<T>>> {
     RequestHandler(
       request: commonService.getCity(),
       onSuccess: ({message, result}) {
+        if (useForFilter ?? false) {
+          (result as List<City>).insert(0, City(name: Strings.tatCa));
+        }
+
         emit(SingleModel.copy(state
           ..loading = false
           ..item = result
@@ -525,6 +539,10 @@ class _PickerViewBloc<T> extends Cubit<SingleModel<List<T>>> {
     RequestHandler(
       request: commonService.getDistrict(city),
       onSuccess: ({message, result}) {
+        if (useForFilter ?? false) {
+          (result as List<District>).insert(0, District(name: Strings.tatCa));
+        }
+
         emit(SingleModel.copy(state
           ..loading = false
           ..item = result
@@ -545,6 +563,10 @@ class _PickerViewBloc<T> extends Cubit<SingleModel<List<T>>> {
     RequestHandler(
       request: commonService.getWard(district),
       onSuccess: ({message, result}) {
+        if (useForFilter ?? false) {
+          (result as List<Ward>).insert(0, Ward(name: Strings.tatCa));
+        }
+
         emit(SingleModel.copy(state
           ..loading = false
           ..item = result
@@ -565,6 +587,12 @@ class _PickerViewBloc<T> extends Cubit<SingleModel<List<T>>> {
     RequestHandler(
       request: productService.getCategories(),
       onSuccess: ({message, result}) {
+        if (useForFilter ?? false) {
+          (result as List<ProdCate>)
+              .insert(0, ProdCate()
+            ..name = Strings.tatCa);
+        }
+
         emit(SingleModel.copy(state
           ..loading = false
           ..item = result
@@ -585,6 +613,12 @@ class _PickerViewBloc<T> extends Cubit<SingleModel<List<T>>> {
     RequestHandler(
       request: servService.getCategories(),
       onSuccess: ({message, result}) {
+        if (useForFilter ?? false) {
+          (result as List<ServiceCate>)
+              .insert(0, ServiceCate()
+            ..name = Strings.tatCa);
+        }
+
         emit(SingleModel.copy(state
           ..loading = false
           ..item = result
@@ -605,6 +639,10 @@ class _PickerViewBloc<T> extends Cubit<SingleModel<List<T>>> {
     RequestHandler(
       request: brandService.getAllBrands(),
       onSuccess: ({message, result}) {
+        if (useForFilter ?? false) {
+          (result as List<Brand>).insert(0, Brand(name: Strings.tatCa));
+        }
+
         emit(SingleModel.copy(state
           ..loading = false
           ..item = result
@@ -625,6 +663,10 @@ class _PickerViewBloc<T> extends Cubit<SingleModel<List<T>>> {
     RequestHandler(
       request: customerService.getCustomerType(),
       onSuccess: ({message, result}) {
+        if (useForFilter ?? false) {
+          (result as List<CustomerType>)
+              .insert(0, CustomerType(name: Strings.tatCa));
+        }
         emit(SingleModel.copy(state
           ..loading = false
           ..item = result
@@ -645,6 +687,10 @@ class _PickerViewBloc<T> extends Cubit<SingleModel<List<T>>> {
     RequestHandler(
       request: roleService.getRoles(),
       onSuccess: ({message, result}) {
+        if (useForFilter ?? false) {
+          (result as List<Role>).insert(0, Role(id: -1, name: Strings.tatCa));
+        }
+
         emit(SingleModel.copy(state
           ..loading = false
           ..item = result

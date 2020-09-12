@@ -200,6 +200,7 @@ class _BrandFilterViewState extends BaseState<BrandFilterView>
             child: KayleePickerTextField<City>(
               title: Strings.tinhTpHint,
               controller: cityController,
+              useForFilter: true,
             ),
           ),
           Padding(
@@ -208,6 +209,7 @@ class _BrandFilterViewState extends BaseState<BrandFilterView>
             child: KayleePickerTextField<District>(
               title: Strings.quan,
               controller: districtController,
+              useForFilter: true,
             ),
           ),
         ],
@@ -234,9 +236,7 @@ class _StaffFilterViewState extends BaseState<StaffFilterView>
   @override
   void onApply() {
     if (brandController.value != null) {
-      widget.controller
-          ?.updateFilter()
-          ?.brand = brandController.value;
+      widget.controller?.updateFilter()?.brand = brandController.value;
     }
     if (cityController.value != null) {
       widget.controller
@@ -286,6 +286,7 @@ class _StaffFilterViewState extends BaseState<StaffFilterView>
             child: KayleePickerTextField<Brand>(
               title: Strings.cuaHangApDung,
               controller: brandController,
+              useForFilter: true,
             ),
           ),
           Padding(
@@ -294,6 +295,7 @@ class _StaffFilterViewState extends BaseState<StaffFilterView>
             child: KayleePickerTextField<City>(
               title: Strings.tinhTpHint,
               controller: cityController,
+              useForFilter: true,
             ),
           ),
           Padding(
@@ -302,6 +304,7 @@ class _StaffFilterViewState extends BaseState<StaffFilterView>
             child: KayleePickerTextField<District>(
               title: Strings.quan,
               controller: districtController,
+              useForFilter: true,
             ),
           ),
         ],
@@ -380,6 +383,7 @@ class _CustomerFilterViewState extends BaseState<CustomerFilterView>
             child: KayleePickerTextField<CustomerType>(
               title: Strings.phanLoai,
               controller: typeController,
+              useForFilter: true,
             ),
           ),
           Padding(
@@ -388,6 +392,7 @@ class _CustomerFilterViewState extends BaseState<CustomerFilterView>
             child: KayleePickerTextField<City>(
               title: Strings.tinhTpHint,
               controller: cityController,
+              useForFilter: true,
             ),
           ),
           Padding(
@@ -396,6 +401,7 @@ class _CustomerFilterViewState extends BaseState<CustomerFilterView>
             child: KayleePickerTextField<District>(
               title: Strings.quan,
               controller: districtController,
+              useForFilter: true,
             ),
           ),
         ],
@@ -489,6 +495,7 @@ class _ServiceFilterViewState extends BaseState<ServiceFilterView>
           child: KayleePickerTextField<ServiceCate>(
             title: Strings.danhMuc,
             controller: categoryController,
+            useForFilter: true,
           ),
         ),
         Padding(
@@ -497,6 +504,7 @@ class _ServiceFilterViewState extends BaseState<ServiceFilterView>
           child: KayleePickerTextField<Brand>(
             title: Strings.cuaHangApDung,
             controller: brandController,
+            useForFilter: true,
           ),
         ),
       ],
@@ -589,6 +597,7 @@ class _ProductFilterViewState extends BaseState<ProductFilterView>
           child: KayleePickerTextField<ProdCate>(
             title: Strings.danhMuc,
             controller: categoryController,
+            useForFilter: true,
           ),
         ),
         Padding(
@@ -597,6 +606,7 @@ class _ProductFilterViewState extends BaseState<ProductFilterView>
           child: KayleePickerTextField<Brand>(
             title: Strings.cuaHangApDung,
             controller: brandController,
+            useForFilter: true,
           ),
         ),
       ],
@@ -674,6 +684,7 @@ class _CommissionFilterViewState extends BaseState<CommissionFilterView>
             child: KayleePickerTextField<Brand>(
               title: Strings.diaDiemPhucVu,
               controller: brandController,
+              useForFilter: true,
             ),
           ),
           Padding(
@@ -682,6 +693,7 @@ class _CommissionFilterViewState extends BaseState<CommissionFilterView>
             child: KayleePickerTextField<City>(
               title: Strings.tinhTpHint,
               controller: cityController,
+              useForFilter: true,
             ),
           ),
           Padding(
@@ -690,6 +702,7 @@ class _CommissionFilterViewState extends BaseState<CommissionFilterView>
             child: KayleePickerTextField<District>(
               title: Strings.quan,
               controller: districtController,
+              useForFilter: true,
             ),
           ),
         ],
