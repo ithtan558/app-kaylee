@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:anth_package/anth_package.dart';
@@ -13,9 +14,9 @@ import 'package:kaylee/utils/utils.dart';
 
 class HomeMenu extends StatefulWidget {
   static Widget newInstance() => BlocProvider<HomeMenuBloc>(
-        create: (context) => HomeMenuBloc(),
-        child: HomeMenu._(),
-      );
+    create: (context) => HomeMenuBloc(),
+    child: HomeMenu._(),
+  );
 
   HomeMenu._();
 
@@ -27,13 +28,14 @@ class _HomeMenuState extends BaseState<HomeMenu> {
   ScrollOffsetBloc scrollOffsetBloc;
   final menuScrollController = ScrollController();
   HomeMenuBloc homeMenuCubit;
+  StreamSubscription _sub;
 
   @override
   void initState() {
     super.initState();
     scrollOffsetBloc = context.bloc<ScrollOffsetBloc>();
     homeMenuCubit = context.bloc<HomeMenuBloc>();
-    scrollOffsetBloc?.listen((offset) {
+    _sub = scrollOffsetBloc.listen((offset) {
       homeMenuCubit.updateHomeMenuState(
           offset: offset, collapseMenuHeight: collapseMenuHeight);
       if (menuScrollController.offset > 0 &&
@@ -47,25 +49,26 @@ class _HomeMenuState extends BaseState<HomeMenu> {
   @override
   void dispose() {
     menuScrollController.dispose();
+    _sub.cancel();
     super.dispose();
   }
 
   final gradientBg = Container(
       decoration: const BoxDecoration(
-    gradient: LinearGradient(
-      colors: [
-        ColorsRes.color1,
-        ColorsRes.button,
-        ColorsRes.button,
-        ColorsRes.color1,
-      ],
-      stops: [0, 0.4, 0.7, 1],
-      begin: Alignment(0.50, -0.87),
-      end: Alignment(-0.50, 0.87),
-      // angle: 210,
-      // scale: undefined,
-    ),
-  ));
+        gradient: LinearGradient(
+          colors: [
+            ColorsRes.color1,
+            ColorsRes.button,
+            ColorsRes.button,
+            ColorsRes.color1,
+          ],
+          stops: [0, 0.4, 0.7, 1],
+          begin: Alignment(0.50, -0.87),
+          end: Alignment(-0.50, 0.87),
+          // angle: 210,
+          // scale: undefined,
+        ),
+      ));
 
   @override
   Widget build(BuildContext context) {
@@ -162,20 +165,20 @@ class _HomeMenuState extends BaseState<HomeMenu> {
           ),
           Positioned.fill(
               child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaY: 70, sigmaX: 100),
-            child: StreamBuilder<bool>(
-              stream: homeMenuCubit.backGroundStateController.stream,
-              builder: (context, snapshot) {
-                return AnimatedOpacity(
-                  duration: Duration(milliseconds: 250),
-                  opacity: snapshot.data ?? false ? 0.6 : 0.3,
-                  child: Container(
-                    color: Colors.black,
-                  ),
-                );
-              },
-            ),
-          ))
+                filter: ImageFilter.blur(sigmaY: 70, sigmaX: 100),
+                child: StreamBuilder<bool>(
+                  stream: homeMenuCubit.backGroundStateController.stream,
+                  builder: (context, snapshot) {
+                    return AnimatedOpacity(
+                      duration: Duration(milliseconds: 250),
+                      opacity: snapshot.data ?? false ? 0.6 : 0.3,
+                      child: Container(
+                        color: Colors.black,
+                      ),
+                    );
+                  },
+                ),
+              ))
         ]),
       ),
       Positioned.fill(
@@ -277,7 +280,7 @@ class HomeMenuBloc extends Cubit<HomeMenuState> {
         HomeMenuBloc.menuHeight - collapseMenuHeight;
     //percent collapse của appbar khi user scroll
     final double collapsePercent =
-    offs < scrollingDistance ? offs / scrollingDistance : 1;
+        offs < scrollingDistance ? offs / scrollingDistance : 1;
     if (collapsePercent == 1 && !state.isCollapsed) {
       //khi appbar đã collapse và state của appbar trước đó ko phải là collapse
       state.isCollapsed = true;
@@ -289,13 +292,13 @@ class HomeMenuBloc extends Cubit<HomeMenuState> {
     }
     emit(HomeMenuState.copy(state
       ..menuRow2CollapsePercent =
-          state.collapsePercent >= 0 && state.collapsePercent < 1
-              ? 1 - state.collapsePercent
-              : 1
+      state.collapsePercent >= 0 && state.collapsePercent < 1
+          ? 1 - state.collapsePercent
+          : 1
       ..collapsePercent = collapsePercent
       ..offset = offs
       ..height =
-          collapsePercent == 1 ? collapseMenuHeight : menuHeight - offs));
+      collapsePercent == 1 ? collapseMenuHeight : menuHeight - offs));
   }
 }
 
@@ -306,12 +309,11 @@ class HomeMenuState {
   bool isCollapsed;
   double menuRow2CollapsePercent;
 
-  HomeMenuState(
-      {this.collapsePercent = 0,
-      this.height = 0,
-      this.offset = 0,
-      this.isCollapsed = false,
-      this.menuRow2CollapsePercent = 1});
+  HomeMenuState({this.collapsePercent = 0,
+    this.height = 0,
+    this.offset = 0,
+    this.isCollapsed = false,
+    this.menuRow2CollapsePercent = 1});
 
   HomeMenuState.copy(HomeMenuState old) {
     this
