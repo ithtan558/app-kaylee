@@ -18,28 +18,26 @@ class SupplierListBloc extends Cubit<LoadMoreModel<Supplier>>
   }
 
   void loadSuppliers() async {
-    Future.delayed(Duration(seconds: 5), () {
-      RequestHandler(
-        request:
-            supplierService.getSuppliers(page: state.page, limit: state.limit),
-        onSuccess: ({message, result}) {
-          final supp = (result as Suppliers).items;
-          completeRefresh();
-          emit(LoadMoreModel.copy(state
-            ..loading = false
-            ..addAll(supp)
-            ..code = null
-            ..error = null));
-        },
-        onFailed: (code, {error}) {
-          completeRefresh();
-          emit(LoadMoreModel.copy(state
-            ..loading = false
-            ..code = code
-            ..error = error));
-        },
-      );
-    });
+    RequestHandler(
+      request:
+          supplierService.getSuppliers(page: state.page, limit: state.limit),
+      onSuccess: ({message, result}) {
+        final supp = (result as Suppliers).items;
+        completeRefresh();
+        emit(LoadMoreModel.copy(state
+          ..loading = false
+          ..addAll(supp)
+          ..code = null
+          ..error = null));
+      },
+      onFailed: (code, {error}) {
+        completeRefresh();
+        emit(LoadMoreModel.copy(state
+          ..loading = false
+          ..code = code
+          ..error = error));
+      },
+    );
   }
 
   @override
