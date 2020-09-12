@@ -4,6 +4,8 @@ import 'package:kaylee/base/kaylee_list_interface.dart';
 class KayleeRefreshIndicator extends StatelessWidget {
   final KayleeListInterface controller;
   final Widget child;
+
+  ///dùng cho những action cần thực hiện trước khi fresh list
   final RefreshCallback onRefresh;
 
   KayleeRefreshIndicator({this.controller, this.child, this.onRefresh});
