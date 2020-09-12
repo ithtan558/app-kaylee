@@ -76,7 +76,8 @@ class _EmployeeService implements EmployeeService {
       brandId,
       phone,
       image,
-      email}) async {
+      email,
+      password}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
@@ -118,10 +119,15 @@ class _EmployeeService implements EmployeeService {
       _data.files.add(MapEntry(
           'image',
           MultipartFile.fromFileSync(image.path,
-              filename: image.path.split(Platform.pathSeparator).last)));
+              filename: image.path
+                  .split(Platform.pathSeparator)
+                  .last)));
     }
     if (email != null) {
       _data.fields.add(MapEntry('email', email));
+    }
+    if (password != null) {
+      _data.fields.add(MapEntry('password', password));
     }
     final Response<Map<String, dynamic>> _result = await _dio.request(
         'employee',
@@ -141,18 +147,19 @@ class _EmployeeService implements EmployeeService {
       {firstName,
       lastName,
       birthday,
-      hometownCityId,
-      address,
-      cityId,
-      districtId,
-      wardsId,
-      roleId,
-      brandId,
-      phone,
-      image,
-      email,
-      id,
-      employeeId}) async {
+        hometownCityId,
+        address,
+        cityId,
+        districtId,
+        wardsId,
+        roleId,
+        brandId,
+        phone,
+        image,
+        email,
+        password,
+        id,
+        employeeId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
@@ -194,10 +201,15 @@ class _EmployeeService implements EmployeeService {
       _data.files.add(MapEntry(
           'image',
           MultipartFile.fromFileSync(image.path,
-              filename: image.path.split(Platform.pathSeparator).last)));
+              filename: image.path
+                  .split(Platform.pathSeparator)
+                  .last)));
     }
     if (email != null) {
       _data.fields.add(MapEntry('email', email));
+    }
+    if (password != null) {
+      _data.fields.add(MapEntry('password', password));
     }
     if (id != null) {
       _data.fields.add(MapEntry('id', id.toString()));

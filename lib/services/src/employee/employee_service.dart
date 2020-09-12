@@ -40,6 +40,7 @@ abstract class EmployeeService {
     @Part() String phone,
     @Part() File image,
     @Part() String email,
+    @Part() String password,
   });
 
   @POST('employee/{employeeId}')
@@ -58,6 +59,7 @@ abstract class EmployeeService {
     @Part() String phone,
     @Part() File image,
     @Part() String email,
+    @Part() String password,
     @Part() int id,
     @Path() int employeeId,
   });
