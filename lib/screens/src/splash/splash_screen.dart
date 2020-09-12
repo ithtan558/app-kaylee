@@ -32,8 +32,10 @@ class _SplashScreenState extends BaseState<SplashScreen> {
     bloc.config();
     _sub = context.bloc<AppBloc>().listen((state) {
       if (state is DoneSetupLoggedInState) {
-        bloc.userService = context.network.provideUserService();
-        bloc.loadUserInfo();
+        if (ModalRoute.of(context).isCurrent) {
+          bloc.userService = context.network.provideUserService();
+          bloc.loadUserInfo();
+        }
       }
     });
   }
