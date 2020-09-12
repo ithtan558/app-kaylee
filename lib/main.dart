@@ -75,6 +75,10 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing, KayleeRouting {
         if (change.nextState is UpdateProfileState) {
           context.user.updateUserInfo(
               context.user.getUserInfo()..userInfo = change.nextState.userInfo);
+        } else if (change.nextState is BaseModel) {
+          if (change.nextState.code == ErrorType.UNAUTHORIZED) {
+            context.bloc<AppBloc>().unauthorized(error: change.nextState.error);
+          }
         }
       },
     );
