@@ -48,6 +48,8 @@ class _CreateNewStaffScreenState extends KayleeState<CreateNewStaffScreen> {
   final phoneFocus = FocusNode();
   final emailTfController = TextEditingController();
   final emailFocus = FocusNode();
+  final passwordTfController = TextEditingController();
+  final passwordFocus = FocusNode();
   final roleController = PickInputController<Role>();
   final brandController = PickInputController<Brand>();
   final imagePickerController = ImagePickerController();
@@ -70,14 +72,13 @@ class _CreateNewStaffScreenState extends KayleeState<CreateNewStaffScreen> {
               popScreen();
               switch (state.error.code) {
                 case ErrorCode.FIRST_NAME_CODE:
-                  firstNameFocus.requestFocus();
-                  break;
+                  return firstNameFocus.requestFocus();
                 case ErrorCode.LAST_NAME_CODE:
-                  lastNameFocus.requestFocus();
-                  break;
+                  return lastNameFocus.requestFocus();
                 case ErrorCode.PHONE_CODE:
-                  phoneFocus.requestFocus();
-                  break;
+                  return phoneFocus.requestFocus();
+                case ErrorCode.PASSWORD_CODE:
+                  return passwordFocus.requestFocus();
               }
             },
           );
@@ -123,6 +124,8 @@ class _CreateNewStaffScreenState extends KayleeState<CreateNewStaffScreen> {
     phoneFocus.dispose();
     emailTfController.dispose();
     emailFocus.dispose();
+    passwordTfController.dispose();
+    passwordFocus.dispose();
     super.dispose();
   }
 
@@ -161,6 +164,7 @@ class _CreateNewStaffScreenState extends KayleeState<CreateNewStaffScreen> {
                             ..brand = brandController.value
                             ..phone = phoneTfController.text
                             ..email = emailTfController.text
+                            ..password = passwordTfController.text
                             ..imageFile = imagePickerController.image;
                           bloc.update();
                         },
@@ -185,6 +189,7 @@ class _CreateNewStaffScreenState extends KayleeState<CreateNewStaffScreen> {
                   brand: brandController.value,
                   phone: phoneTfController.text,
                   email: emailTfController.text,
+                  password: passwordTfController.text,
                   imageFile: imagePickerController.image);
               bloc.create();
             }
@@ -204,6 +209,7 @@ class _CreateNewStaffScreenState extends KayleeState<CreateNewStaffScreen> {
               ..initDistrict = state.item?.district
               ..initWard = state.item?.wards;
             phoneTfController.text = state.item?.phone;
+            passwordTfController.text = state.item?.password;
             emailTfController.text = state.item?.email;
             roleController.value = state.item?.role;
             brandController.value = state.item?.brand;
@@ -271,6 +277,15 @@ class _CreateNewStaffScreenState extends KayleeState<CreateNewStaffScreen> {
                     textInputAction: TextInputAction.next,
                     controller: phoneTfController,
                     focusNode: phoneFocus,
+                    nextFocusNode: passwordFocus,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: Dimens.px16),
+                  child: KayleeTextField.password(
+                    textInputAction: TextInputAction.next,
+                    controller: passwordTfController,
+                    focusNode: passwordFocus,
                     nextFocusNode: emailFocus,
                   ),
                 ),
