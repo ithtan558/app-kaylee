@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "165119837573",
+    "firebase_url": "https://kaylee-d2522.firebaseio.com",
+    "project_id": "kaylee-d2522",
+    "storage_bucket": "kaylee-d2522.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:165119837573:android:9d4a62454920727d55f0ec",
+        "android_client_info": {
+          "package_name": "com.kaylee.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "165119837573-19765lad551jb70hiobotnh2f0535jlc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kaylee.android",
+            "certificate_hash": "63ef0eacbeec91e565980b9d0e69748c76d765f9"
+          }
+        },
+        {
+          "client_id": "165119837573-bl4n9hsr8edjfb159prh8k46q0iqemhn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAagbsoVR_2xZ2-l0FZCYr98wEn0QhPV3Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "165119837573-bl4n9hsr8edjfb159prh8k46q0iqemhn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "165119837573-qmsmfn7hs270ca3g3ri3ubj7uudieg6q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.kaylee.ios",
+                "app_store_id": "1530411047"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
