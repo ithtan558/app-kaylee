@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:anth_package/anth_package.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,6 +19,20 @@ import 'package:kaylee/utils/utils.dart';
 
 BuildContext dialogContext;
 
+Future<dynamic> myBackgroundMessageHandler(Map<String, dynamic> message) async {
+  if (message.containsKey('data')) {
+    // Handle data message
+    final dynamic data = message['data'];
+  }
+
+  if (message.containsKey('notification')) {
+    // Handle notification message
+    final dynamic notification = message['notification'];
+  }
+
+  // Or do other work.
+}
+
 void main() {
   JsonConverterBuilder.init(KayleeJsonConverter());
   runApp(KayLeeApp.newInstance());
@@ -32,6 +49,9 @@ class KayLeeApp extends StatefulWidget {
           ),
           RepositoryProvider<CartModule>(
             create: (_) => CartModule.init(),
+          ),
+          RepositoryProvider<FirebaseMessaging>(
+            create: (_) => FirebaseMessaging(),
           ),
         ],
         child: MultiBlocProvider(providers: [
@@ -60,9 +80,12 @@ class KayLeeApp extends StatefulWidget {
 }
 
 class _KayLeeAppState extends BaseState<KayLeeApp> with Routing, KayleeRouting {
+  FirebaseMessaging firebaseMessaging;
+
   @override
   void initState() {
     super.initState();
+
     Bloc.observer = KayleeBlocObserver(
       transition: (currentState, nextState) {
         if (nextState is BaseModel) {
@@ -74,7 +97,8 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing, KayleeRouting {
       change: (cubit, change) {
         if (change.nextState is UpdateProfileState) {
           context.user.updateUserInfo(
-              context.user.getUserInfo()..userInfo = change.nextState.userInfo);
+              context.user.getUserInfo()
+                ..userInfo = change.nextState.userInfo);
         } else if (change.nextState is BaseModel) {
           if (change.nextState.code == ErrorType.UNAUTHORIZED) {
             context.bloc<AppBloc>().unauthorized(error: change.nextState.error);
@@ -82,6 +106,19 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing, KayleeRouting {
         }
       },
     );
+    firebaseMessaging = RepositoryProvider.of<FirebaseMessaging>(context);
+
+    firebaseMessaging.getToken().then((token) {
+      print('[TUNG] ===> token $token');
+      //todo save token to local
+    });
+
+    if (Platform.isIOS) {
+      firebaseMessaging.requestNotificationPermissions();
+      firebaseMessaging.onIosSettingsRegistered.listen((settings) {
+        print('[TUNG] ===> invoke ios notification permission $settings');
+      });
+    }
   }
 
   @override
@@ -94,7 +131,9 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing, KayleeRouting {
           context.network.dio.options
             ..headers = {
               NetworkModule.AUTHORIZATION:
-                  context.user.getUserInfo().requestToken
+              context.user
+                  .getUserInfo()
+                  .requestToken
 //              NetworkModule.AUTHORIZATION: ''
             };
           context.bloc<AppBloc>().doneLoggedInSetup();
@@ -134,9 +173,9 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing, KayleeRouting {
           textTheme: context.theme.textTheme
             ..bodyText2
                 .copyWith(
-                    fontFamily: Fonts.HelveticaNeue,
-                    fontStyle: FontStyle.normal,
-                    letterSpacing: 0)
+                fontFamily: Fonts.HelveticaNeue,
+                fontStyle: FontStyle.normal,
+                letterSpacing: 0)
                 .merge(TextStyles.normal16W400),
         ),
       ),
