@@ -24,6 +24,7 @@ dependencies:
   flutter_widget_from_html_core: ^0.5.0+3
   package_info: ^0.4.3
   firebase_messaging: ^7.0.0
+  flutter_local_notifications: ^1.4.4+4
 
   anth_package:
     path: ../anth_package
