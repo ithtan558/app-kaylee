@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:anth_package/anth_package.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/home_menu.dart';
@@ -52,7 +54,18 @@ class _UserNameState extends BaseState<UserName> {
 
   @override
   Widget build(BuildContext context) {
-    final userName = KayleeText.normalWhite16W500('Hi, ${userInfo?.name}');
+    final userName = GestureDetector(
+      onLongPress: () async {
+        final token = await context.repository<FirebaseMessaging>().getToken();
+        Clipboard.setData(ClipboardData(text: token)).then((value) {
+          Toast.show('Copied FCM token', context);
+        });
+      },
+      child: Container(
+        color: Colors.transparent,
+        child: KayleeText.normalWhite16W500('Hi, ${userInfo?.name}'),
+      ),
+    );
     final role = KayleeText.normalWhite12W400(Strings.quanlyCuaHang);
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
