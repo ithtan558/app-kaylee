@@ -21,7 +21,7 @@ packages:
       path: "../anth_package"
       relative: true
     source: path
-    version: "0.0.4"
+    version: "0.0.5"
   args:
     dependency: transitive
     description:
@@ -173,11 +173,11 @@ packages:
     dependency: transitive
     description:
       path: "."
-      ref: "0.4.9"
-      resolved-ref: "91d0176e6cbdca27e0aa1c58a0eff54cc91fbd35"
+      ref: "0.4.11"
+      resolved-ref: "4dc6b07e2a533680bea7654063489d71c4f467ae"
       url: "https://github.com/tungpham6195/flutter.core_plugin.git"
     source: git
-    version: "0.4.9"
+    version: "0.4.11"
   coverage:
     dependency: transitive
     description:
@@ -1009,5 +1009,5 @@ packages:
     source: hosted
     version: "2.2.1"
 sdks:
-  dart: ">=2.9.0-14.0.dev <3.0.0"
+  dart: ">=2.9.2 <3.0.0"
   flutter: ">=1.20.0 <2.0.0"
