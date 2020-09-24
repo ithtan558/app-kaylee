@@ -39,6 +39,7 @@ export 'src/response/order/order_item/order_item.dart';
 export 'src/response/page_data/page_data.dart';
 export 'src/response/product/list/products.dart';
 export 'src/response/product/product.dart';
+export 'src/response/report/employee/employee_revenue.dart';
 export 'src/response/role/role.dart';
 export 'src/response/service/list/services.dart';
 export 'src/response/service/service.dart';
