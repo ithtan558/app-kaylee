@@ -119,9 +119,7 @@ class _EmployeeService implements EmployeeService {
       _data.files.add(MapEntry(
           'image',
           MultipartFile.fromFileSync(image.path,
-              filename: image.path
-                  .split(Platform.pathSeparator)
-                  .last)));
+              filename: image.path.split(Platform.pathSeparator).last)));
     }
     if (email != null) {
       _data.fields.add(MapEntry('email', email));
@@ -143,23 +141,22 @@ class _EmployeeService implements EmployeeService {
   }
 
   @override
-  updateEmployee(
-      {firstName,
-      lastName,
-      birthday,
-        hometownCityId,
-        address,
-        cityId,
-        districtId,
-        wardsId,
-        roleId,
-        brandId,
-        phone,
-        image,
-        email,
-        password,
-        id,
-        employeeId}) async {
+  updateEmployee({firstName,
+    lastName,
+    birthday,
+    hometownCityId,
+    address,
+    cityId,
+    districtId,
+    wardsId,
+    roleId,
+    brandId,
+    phone,
+    image,
+    email,
+    password,
+    id,
+    employeeId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
