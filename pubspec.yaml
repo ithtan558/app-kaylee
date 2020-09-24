@@ -20,8 +20,8 @@ dependencies:
 
   permission_handler: ^5.0.1+1
   sticky_headers: ^0.1.8+1
-  image_picker: ^0.6.7+8
-  flutter_widget_from_html_core: ^0.5.0+3
+  image_picker: ^0.6.7+11
+  flutter_widget_from_html_core: ^0.5.0+5
   package_info: ^0.4.3
   firebase_messaging: ^7.0.0
   flutter_local_notifications: ^1.4.4+4
@@ -36,7 +36,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   # json serializable
-  json_serializable: ^3.4.1
+  json_serializable: ^3.5.0
 
   # Tools to write binaries that run builders(In this project, we use it
   # for json_serializable, retrofit)
