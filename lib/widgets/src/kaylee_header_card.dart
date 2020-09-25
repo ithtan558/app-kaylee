@@ -1,0 +1,30 @@
+import 'package:flutter/material.dart';
+import 'package:kaylee/res/res.dart';
+import 'package:kaylee/widgets/widgets.dart';
+
+class KayleeHeaderCard extends StatelessWidget {
+  final Widget header;
+  final Widget child;
+
+  KayleeHeaderCard({this.header, this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return KayleeCartView(
+      borderRadius: BorderRadius.circular(Dimens.px10),
+      child: Material(
+        clipBehavior: Clip.antiAlias,
+        child: Column(
+          children: [
+            Container(
+              padding: EdgeInsets.all(Dimens.px16),
+              color: ColorsRes.color2,
+              child: header ?? SizedBox(),
+            ),
+            child ?? SizedBox(),
+          ],
+        ),
+      ),
+    );
+  }
+}
