@@ -264,6 +264,7 @@ class Strings {
   static const String nhapMaCode = 'Nhập mã code';
   static const String nhapViTri = 'Nhập vị trí';
   static const String tatCa = 'Tất cả';
+  static const String tatCaChiNhanh = 'Tất cả chi nhánh';
 
   Strings._();
 }
