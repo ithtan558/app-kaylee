@@ -21,4 +21,11 @@ abstract class ReportService {
     @Query('end_date') String endDate,
     @Query('brand_id') int brandId,
   });
+
+  @GET('report/get-total-by-service-date')
+  Future<ResponseModel<ServiceRevenue>> getTotalByService({
+    @Query('start_date') String startDate,
+    @Query('end_date') String endDate,
+    @Query('brand_id') int brandId,
+  });
 }

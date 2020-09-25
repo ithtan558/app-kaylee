@@ -60,4 +60,27 @@ class _ReportService implements ReportService {
     final value = ResponseModel<EmployeeRevenue>.fromJson(_result.data);
     return value;
   }
+
+  @override
+  getTotalByService({startDate, endDate, brandId}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'start_date': startDate,
+      r'end_date': endDate,
+      r'brand_id': brandId
+    };
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        'report/get-total-by-service-date',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = ResponseModel<ServiceRevenue>.fromJson(_result.data);
+    return value;
+  }
 }
