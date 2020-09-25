@@ -9,16 +9,16 @@ abstract class ReportService {
   factory ReportService(Dio dio) = _ReportService;
 
   @GET('report/get-total')
-  Future<ResponseModel<Revenue>> getTotal(
+  Future<ResponseModel<Revenue>> getTotal({
     @Query('start_date') String startDate,
     @Query('end_date') String endDate,
     @Query('brand_id') int brandId,
-  );
+  });
 
   @GET('report/get-total-by-employee-date')
-  Future<ResponseModel<EmployeeRevenue>> getTotalByEmployee(
+  Future<ResponseModel<EmployeeRevenue>> getTotalByEmployee({
     @Query('start_date') String startDate,
     @Query('end_date') String endDate,
     @Query('brand_id') int brandId,
-  );
+  });
 }

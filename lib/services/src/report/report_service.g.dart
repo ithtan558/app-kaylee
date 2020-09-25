@@ -16,16 +16,14 @@ class _ReportService implements ReportService {
   String baseUrl;
 
   @override
-  getTotal(startDate, endDate, brandId) async {
-    ArgumentError.checkNotNull(startDate, 'startDate');
-    ArgumentError.checkNotNull(endDate, 'endDate');
-    ArgumentError.checkNotNull(brandId, 'brandId');
+  getTotal({startDate, endDate, brandId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'start_date': startDate,
       r'end_date': endDate,
       r'brand_id': brandId
     };
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final Response<Map<String, dynamic>> _result = await _dio.request(
         'report/get-total',
@@ -41,16 +39,14 @@ class _ReportService implements ReportService {
   }
 
   @override
-  getTotalByEmployee(startDate, endDate, brandId) async {
-    ArgumentError.checkNotNull(startDate, 'startDate');
-    ArgumentError.checkNotNull(endDate, 'endDate');
-    ArgumentError.checkNotNull(brandId, 'brandId');
+  getTotalByEmployee({startDate, endDate, brandId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'start_date': startDate,
       r'end_date': endDate,
       r'brand_id': brandId
     };
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final Response<Map<String, dynamic>> _result = await _dio.request(
         'report/get-total-by-employee-date',
