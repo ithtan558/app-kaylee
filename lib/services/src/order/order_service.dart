@@ -35,4 +35,11 @@ abstract class OrderService {
     @Query('limit') int limit,
     @Query('is_history') int isHistory = 1,
   });
+
+  @GET('order')
+  Future<ResponseModel<Orders>> getOrderCashier({
+    @Query('page') int page,
+    @Query('limit') int limit,
+    @Query('order_status_id') int orderStatusId,
+  });
 }

@@ -119,4 +119,26 @@ class _OrderService implements OrderService {
     final value = ResponseModel<Orders>.fromJson(_result.data);
     return value;
   }
+
+  @override
+  getOrderCashier({page, limit, orderStatusId}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'page': page,
+      r'limit': limit,
+      r'order_status_id': orderStatusId
+    };
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final Response<Map<String, dynamic>> _result = await _dio.request('order',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = ResponseModel<Orders>.fromJson(_result.data);
+    return value;
+  }
 }
