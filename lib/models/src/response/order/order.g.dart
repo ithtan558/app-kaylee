@@ -13,7 +13,9 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
     name: json['name'] as String,
     amount: json['amount'] as int,
     status: parseOrderStatusFromInt(json['order_status_id']),
-    createdAt: json['created_at'] as String,
+    createdAt: json['created_at'] == null
+        ? null
+        : DateTime.parse(json['created_at'] as String),
     supplierName: json['supplier_name'] as String,
     count: json['count'] as int,
     isPaid: json['is_paid'] as int,
@@ -43,13 +45,14 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$OrderToJson(Order instance) => <String, dynamic>{
+Map<String, dynamic> _$OrderToJson(Order instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'code': instance.code,
       'name': instance.name,
       'amount': instance.amount,
       'order_status_id': parseToIntFromOrderStatus(instance.status),
-      'created_at': instance.createdAt,
+      'created_at': instance.createdAt?.toIso8601String(),
       'supplier_name': instance.supplierName,
       'count': instance.count,
       'is_paid': instance.isPaid,

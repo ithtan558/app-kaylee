@@ -50,13 +50,7 @@ class Order {
       toJson: parseToIntFromOrderStatus,
       name: 'order_status_id')
   OrderStatus status;
-  String createdAt;
-
-  DateTime get createdAtInDateTime {
-    if (createdAt.isNull) return null;
-    DateTime date = DateTime.tryParse(createdAt);
-    return ((date?.year ?? -1) < 0) ? null : date;
-  }
+  DateTime createdAt;
 
   String supplierName;
   int count;
