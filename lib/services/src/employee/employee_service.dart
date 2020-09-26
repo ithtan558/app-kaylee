@@ -21,6 +21,11 @@ abstract class EmployeeService {
     @Query('district_ids') String districtIds,
   });
 
+  @GET('employee/get-by-phone-and-name')
+  Future<ResponseModel<Employee>> findEmployees({
+    @Query('keyword') String keyword,
+  });
+
   @GET('employee/{employeeId}')
   Future<ResponseModel<Employee>> getEmployee({@Path() int employeeId});
 
