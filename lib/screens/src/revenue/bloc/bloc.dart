@@ -1,21 +1,22 @@
 import 'package:anth_package/anth_package.dart';
+import 'package:flutter/foundation.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/services/services.dart';
 import 'package:kaylee/utils/utils.dart';
 
-class TotalRevenueBloc extends Cubit<SingleModel<Revenue>> {
-  final ReportService reportService;
+class TotalRevenueBloc extends Cubit<SingleModel<Revenue>>
+    with _ReportBlocHelper {
+  TotalRevenueBloc({ReportService reportService}) : super(SingleModel()) {
+    this._reportService = reportService;
+  }
 
-  TotalRevenueBloc({this.reportService}) : super(SingleModel());
-  Brand brand;
-  DateTime date;
-
-  void loadData() {
-    final dateInString = date?.toFormatString(pattern: dateFormat);
+  @override
+  void loadData({Brand brand, DateTime date}) {
+    super.loadData(brand: brand, date: date);
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
-      request: reportService.getTotal(
-          startDate: dateInString, endDate: dateInString, brandId: brand?.id),
+      request: _reportService.getTotal(
+          startDate: dateInString, endDate: dateInString, brandId: _brand?.id),
       onSuccess: ({message, result}) {
         emit(SingleModel.copy(state
           ..loading = false
@@ -33,19 +34,19 @@ class TotalRevenueBloc extends Cubit<SingleModel<Revenue>> {
   }
 }
 
-class EmployeeRevenueBloc extends Cubit<SingleModel<EmployeeRevenue>> {
-  final ReportService reportService;
+class EmployeeRevenueBloc extends Cubit<SingleModel<List<EmployeeRevenue>>>
+    with _ReportBlocHelper {
+  EmployeeRevenueBloc({ReportService reportService}) : super(SingleModel()) {
+    this._reportService = reportService;
+  }
 
-  EmployeeRevenueBloc({this.reportService}) : super(SingleModel());
-  Brand brand;
-  DateTime date;
-
-  void loadData() {
-    final dateInString = date?.toFormatString(pattern: dateFormat);
+  @override
+  void loadData({Brand brand, DateTime date}) {
+    super.loadData(brand: brand, date: date);
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
-      request: reportService.getTotalByEmployee(
-          startDate: dateInString, endDate: dateInString, brandId: brand?.id),
+      request: _reportService.getTotalByEmployee(
+          startDate: '2020-6-11', endDate: '2020-09-30', brandId: brand?.id),
       onSuccess: ({message, result}) {
         emit(SingleModel.copy(state
           ..loading = false
@@ -63,19 +64,19 @@ class EmployeeRevenueBloc extends Cubit<SingleModel<EmployeeRevenue>> {
   }
 }
 
-class ServiceRevenueBloc extends Cubit<SingleModel<ServiceRevenue>> {
-  final ReportService reportService;
+class ServiceRevenueBloc extends Cubit<SingleModel<List<ServiceRevenue>>>
+    with _ReportBlocHelper {
+  ServiceRevenueBloc({ReportService reportService}) : super(SingleModel()) {
+    this._reportService = reportService;
+  }
 
-  ServiceRevenueBloc({this.reportService}) : super(SingleModel());
-  Brand brand;
-  DateTime date;
-
-  void loadData() {
-    final dateInString = date?.toFormatString(pattern: dateFormat);
+  @override
+  void loadData({Brand brand, DateTime date}) {
+    super.loadData(brand: brand, date: date);
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
-      request: reportService.getTotalByService(
-          startDate: dateInString, endDate: dateInString, brandId: brand?.id),
+      request: _reportService.getTotalByService(
+          startDate: '2020-6-11', endDate: '2020-09-30', brandId: brand?.id),
       onSuccess: ({message, result}) {
         emit(SingleModel.copy(state
           ..loading = false
@@ -90,5 +91,19 @@ class ServiceRevenueBloc extends Cubit<SingleModel<ServiceRevenue>> {
           ..error = error));
       },
     );
+  }
+}
+
+mixin _ReportBlocHelper {
+  ReportService _reportService;
+  Brand _brand;
+  DateTime _date;
+
+  String get dateInString => _date?.toFormatString(pattern: dateFormat);
+
+  @mustCallSuper
+  void loadData({Brand brand, DateTime date}) {
+    if (brand.isNotNull) this._brand = brand;
+    if (date.isNotNull) this._date = date;
   }
 }
