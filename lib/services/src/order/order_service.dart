@@ -40,6 +40,6 @@ abstract class OrderService {
   Future<ResponseModel<Orders>> getOrderCashier({
     @Query('page') int page,
     @Query('limit') int limit,
-    @Query('order_status_id') int orderStatusId,
+    @Query('order_status_id') int orderStatusId = 4,
   });
 }

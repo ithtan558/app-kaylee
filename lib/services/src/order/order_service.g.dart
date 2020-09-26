@@ -121,7 +121,7 @@ class _OrderService implements OrderService {
   }
 
   @override
-  getOrderCashier({page, limit, orderStatusId}) async {
+  getOrderCashier({page, limit, orderStatusId = 4}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'page': page,
