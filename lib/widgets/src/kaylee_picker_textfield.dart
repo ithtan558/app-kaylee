@@ -20,6 +20,7 @@ const types = <Type>[
   Brand,
   CustomerType,
   Role,
+  Employee
 ];
 
 abstract class KayleePickerTextFieldView {
@@ -403,6 +404,7 @@ class _PickerViewState<T> extends BaseState<_PickerView> {
       brandService: context.network.provideBrandService(),
       customerService: context.network.provideCustomerService(),
       roleService: context.network.provideRoleService(),
+      employeeService: context.network.provideEmployeeService(),
       useForFilter: widget.useForFilter,
     );
     if (T == City) {
@@ -421,6 +423,8 @@ class _PickerViewState<T> extends BaseState<_PickerView> {
       bloc.loadCustomerType();
     } else if (T == Role) {
       bloc.loadRole();
+    } else if (T == Employee) {
+      bloc.loadEmployees();
     }
   }
 
@@ -498,6 +502,7 @@ class _PickerViewBloc<T> extends Cubit<SingleModel<List<T>>> {
   final BrandService brandService;
   final CustomerService customerService;
   final RoleService roleService;
+  final EmployeeService employeeService;
   final bool useForFilter;
 
   _PickerViewBloc({
@@ -507,6 +512,7 @@ class _PickerViewBloc<T> extends Cubit<SingleModel<List<T>>> {
     this.brandService,
     this.customerService,
     this.roleService,
+    this.employeeService,
     this.useForFilter,
   }) : super(SingleModel());
 
@@ -689,6 +695,31 @@ class _PickerViewBloc<T> extends Cubit<SingleModel<List<T>>> {
       onSuccess: ({message, result}) {
         if (useForFilter ?? false) {
           (result as List<Role>).insert(0, Role(id: -1, name: Strings.tatCa));
+        }
+
+        emit(SingleModel.copy(state
+          ..loading = false
+          ..item = result
+          ..code = null
+          ..error = null));
+      },
+      onFailed: (code, {error}) {
+        emit(SingleModel.copy(state
+          ..loading = false
+          ..code = code
+          ..error = error));
+      },
+    );
+  }
+
+  void loadEmployees() {
+    emit(SingleModel.copy(state..loading = true));
+    RequestHandler(
+      request: employeeService.findEmployees(),
+      onSuccess: ({message, result}) {
+        if (useForFilter ?? false) {
+          (result as List<Employee>)
+              .insert(0, Employee(firstName: Strings.tatCa));
         }
 
         emit(SingleModel.copy(state
