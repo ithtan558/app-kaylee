@@ -13,7 +13,7 @@ class HistoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final date = (order?.createdAtInDateTime?.weekday ?? -1);
+    final date = (order?.createdAt?.weekday ?? -1);
     return Container(
       height: Dimens.px118,
       child: KayleeInkwell(
@@ -79,9 +79,7 @@ class HistoryItem extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: Dimens.px16)
                     .copyWith(bottom: Dimens.px16),
                 child: KayleeText.hint16W400(
-                  '${date == DateTime.sunday ? 'CN' : 'T${date + 1}'} ${order
-                      ?.createdAtInDateTime?.toFormatString(
-                      pattern: dateFormat2)}',
+                  '${date == DateTime.sunday ? 'CN' : 'T${date + 1}'}, ${order?.createdAt?.toFormatString(pattern: dateFormat2)}',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
