@@ -1,5 +1,6 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/models/models.dart' hide OrderItem;
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/order_detail/widgets/order_item.dart';
 import 'package:kaylee/widgets/widgets.dart';
@@ -24,6 +25,8 @@ class CreateNewOrderScreen extends StatefulWidget {
 class _CreateNewOrderScreenState extends BaseState<CreateNewOrderScreen> {
   final services = [for (int i = 0; i <= 2; i++) i];
   OrderScreenOpenFrom openFrom;
+  final brandController = PickInputController<Brand>();
+  final employeeController = PickInputController<Employee>();
 
   @override
   void initState() {
@@ -63,10 +66,20 @@ class _CreateNewOrderScreenState extends BaseState<CreateNewOrderScreen> {
                 child: KayleePickerTextField(
                   title: Strings.chiNhanh,
                   hint: Strings.chonChiNhanhTrongDs,
+                  controller: brandController,
                 ),
               );
-
             if (index == 2)
+              return Padding(
+                padding: const EdgeInsets.only(
+                    left: Dimens.px16, right: Dimens.px16, bottom: Dimens.px16),
+                child: KayleePickerTextField(
+                  title: Strings.nhanVienThucThien,
+                  hint: Strings.chonNhanVienTrongDs,
+                  controller: employeeController,
+                ),
+              );
+            if (index == 3)
               return LabelDividerView.withButton(
                 title: Strings.danhSachDichVu,
                 buttonText: Strings.themDichVu,
@@ -127,8 +140,11 @@ class _CreateNewOrderScreenState extends BaseState<CreateNewOrderScreen> {
                   );
                 },
               );
-            if (index - 3 >= 0 &&
-                index - 3 <= (services.isNullOrEmpty ? 0 : (services.length))) {
+
+            final orderItemIndex = index - 4;
+            if (orderItemIndex >= 0 &&
+                orderItemIndex <=
+                    (services.isNullOrEmpty ? 0 : (services.length))) {
               if (services.isNullOrEmpty)
                 return Padding(
                   padding: const EdgeInsets.all(Dimens.px16),
@@ -136,9 +152,9 @@ class _CreateNewOrderScreenState extends BaseState<CreateNewOrderScreen> {
                     Strings.chuSuDungDichVu,
                   ),
                 );
-              else if (index - 3 < services.length)
+              else if (orderItemIndex < services.length)
                 return OrderItem(
-                  data: services.elementAt(index - 3),
+                  data: services.elementAt(orderItemIndex),
                   onDismissed: (value) {
                     setState(() {
                       services.removeWhere((e) => e == value);
@@ -172,12 +188,12 @@ class _CreateNewOrderScreenState extends BaseState<CreateNewOrderScreen> {
             }
 
             if (index ==
-                3 + (services.isNullOrEmpty ? 0 : services.length) + 1) {
+                4 + (services.isNullOrEmpty ? 0 : services.length) + 1) {
               return LabelDividerView(title: Strings.giamGia);
             }
 
             if (index ==
-                3 + (services.isNullOrEmpty ? 0 : services.length) + 2) {
+                4 + (services.isNullOrEmpty ? 0 : services.length) + 2) {
               return Padding(
                 padding: const EdgeInsets.all(Dimens.px16),
                 child: KayleeTextField.unitSelection(
@@ -192,7 +208,7 @@ class _CreateNewOrderScreenState extends BaseState<CreateNewOrderScreen> {
               onPressed: () {},
             );
           },
-          itemCount: 3 //từ view 'thông tin khách hàng' -> 'Danh sách dịch vụ'
+          itemCount: 4 //từ view 'thông tin khách hàng' -> 'Danh sách dịch vụ'
               +
               (services.isNullOrEmpty
                   ? 1
