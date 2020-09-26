@@ -177,9 +177,9 @@ class KayleePriceText extends StatelessWidget {
 
   KayleePriceText(this.price,
       {this.textStyle,
-        this.showUnit = true,
-        this.textAlign = TextAlign.start,
-        this.textOverflow});
+      this.showUnit = true,
+      this.textAlign = TextAlign.start,
+      this.textOverflow});
 
   @override
   Widget build(BuildContext context) {
@@ -527,6 +527,8 @@ class _KayleeDatePickerTextState extends BaseState<KayleeDatePickerText> {
 
 class KayleeDatePickerTextController {
   DateTime value;
+
+  KayleeDatePickerTextController({this.value});
 }
 
 class KayleeDateRangePickerText extends StatefulWidget {
