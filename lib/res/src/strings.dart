@@ -265,6 +265,7 @@ class Strings {
   static const String nhapViTri = 'Nhập vị trí';
   static const String tatCa = 'Tất cả';
   static const String tatCaChiNhanh = 'Tất cả chi nhánh';
+  static const String tongDoanhThu = 'Tổng doanh thu';
 
   Strings._();
 }
