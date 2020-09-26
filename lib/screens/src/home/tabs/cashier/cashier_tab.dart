@@ -1,12 +1,20 @@
-import 'package:core_plugin/core_plugin.dart';
+import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/base/kaylee_state.dart';
+import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
+import 'package:kaylee/screens/src/home/tabs/cashier/bloc/cashier_tab_bloc.dart';
 import 'package:kaylee/screens/src/home/tabs/cashier/widgets/cashier_item.dart';
+import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class CashierTab extends StatefulWidget {
-  static Widget newInstance() => CashierTab._();
+  static Widget newInstance() => BlocProvider(
+        create: (context) =>
+            CashierTabBloc(orderService: context.network.provideOrderService()),
+        child: CashierTab._(),
+      );
 
   CashierTab._();
 
@@ -14,11 +22,14 @@ class CashierTab extends StatefulWidget {
   _CashierTabState createState() => new _CashierTabState();
 }
 
-class _CashierTabState extends BaseState<CashierTab>
+class _CashierTabState extends KayleeState<CashierTab>
     with AutomaticKeepAliveClientMixin {
+  CashierTabBloc get _cashierTabBloc => context.bloc<CashierTabBloc>();
+
   @override
   void initState() {
     super.initState();
+    _cashierTabBloc.loadInitData();
   }
 
   @override
@@ -27,21 +38,63 @@ class _CashierTabState extends BaseState<CashierTab>
   }
 
   @override
+  void onReloadWidget(Type screen, Bundle bundle) {
+    if (screen == BrandListScreen) {
+      _cashierTabBloc.refresh();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     super.build(context);
     return KayleeFilterView(
       title: Strings.thuNgan,
-      child: ListView.separated(
-          padding: EdgeInsets.all(Dimens.px16),
-          itemBuilder: (c, index) {
-            return CashierItem();
-          },
-          separatorBuilder: (c, index) {
-            return Container(
-              height: Dimens.px16,
-            );
-          },
-          itemCount: 10),
+      child: RefreshIndicator(
+        onRefresh: () async {
+          _cashierTabBloc.refresh();
+          await _cashierTabBloc.awaitRefresh;
+        },
+        child: KayleeLoadMoreHandler(
+          controller: _cashierTabBloc,
+          child: BlocConsumer<CashierTabBloc, LoadMoreModel<Order>>(
+            listener: (context, state) {
+              if (!state.loading) {
+                if (state.code.isNotNull &&
+                    state.code != ErrorType.UNAUTHORIZED) {
+                  showKayleeAlertErrorYesDialog(
+                    context: context,
+                    error: state.error,
+                    onPressed: popScreen,
+                  );
+                }
+              }
+            },
+            builder: (context, state) {
+              return KayleeListView(
+                  padding: EdgeInsets.all(Dimens.px16),
+                  itemBuilder: (c, index) {
+                    return CashierItem(
+                      order: state.items.elementAt(index),
+                      onCancelOrder: () {
+
+                      },
+                    );
+                  },
+                  loadingBuilder: (context) {
+                    if (state.ended) return Container();
+                    return Container(
+                      padding: const EdgeInsets.only(top: Dimens.px16),
+                      child: KayleeLoadingIndicator(),
+                    );
+                  },
+                  separatorBuilder: (c, index) {
+                    return SizedBox(height: Dimens.px16);
+                  },
+                  itemCount: state.items?.length ?? 0);
+            },
+          ),
+        ),
+      ),
       floatingActionButton: KayleeFloatButton(
         onTap: () {
           pushScreen(PageIntent(

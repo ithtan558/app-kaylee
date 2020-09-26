@@ -1,8 +1,16 @@
+import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class CashierItem extends StatelessWidget {
+  final Order order;
+  final VoidCallback onCancelOrder;
+
+  CashierItem({this.order, this.onCancelOrder});
+
   @override
   Widget build(BuildContext context) {
     return KayleeCartView(
@@ -16,8 +24,10 @@ class CashierItem extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                KayleeText.normal16W500('#654654654'),
-                KayleeText.normal16W400('Đã đặt'),
+                KayleeText.normal16W500('#${order.code ?? ''}'),
+                KayleeText.normal16W400(order.status == OrderStatus.not_paid
+                    ? Strings.chuaThanhToan
+                    : ''),
               ],
             ),
           ),
@@ -36,12 +46,13 @@ class CashierItem extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    KayleeText.normal16W500('Willard Chavez'),
+                    KayleeText.normal16W500(order.name),
                     KayleePriceText.normal(450000),
                   ],
                 ),
                 SizedBox(height: Dimens.px8),
-                KayleeText.hint16W400('Số lượng khách: 01'),
+                KayleeText.hint16W400(
+                    '${Strings.gioBatDau} ${order.createdAt.toFormatString(pattern: dateFormat3)}'),
               ],
             ),
           ),
@@ -57,7 +68,9 @@ class CashierItem extends StatelessWidget {
                   child: KayLeeRoundedButton.button2(
                     text: Strings.huy,
                     margin: EdgeInsets.zero,
-                    onPressed: () {},
+                    onPressed: () {
+                      onCancelOrder?.call();
+                    },
                   ),
                 ),
                 SizedBox(width: Dimens.px16),
@@ -65,7 +78,9 @@ class CashierItem extends StatelessWidget {
                   child: KayLeeRoundedButton.normal(
                     text: Strings.chiTiet,
                     margin: EdgeInsets.zero,
-                    onPressed: () {},
+                    onPressed: () {
+                      //todo go to order detail
+                    },
                   ),
                 ),
               ],
