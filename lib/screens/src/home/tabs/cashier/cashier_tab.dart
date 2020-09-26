@@ -38,8 +38,8 @@ class _CashierTabState extends KayleeState<CashierTab>
   }
 
   @override
-  void onReloadWidget(Type screen, Bundle bundle) {
-    if (screen == BrandListScreen) {
+  void onReloadWidget(Type widget, Bundle bundle) {
+    if (widget == CashierTab) {
       _cashierTabBloc.refresh();
     }
   }
@@ -73,12 +73,8 @@ class _CashierTabState extends KayleeState<CashierTab>
               return KayleeListView(
                   padding: EdgeInsets.all(Dimens.px16),
                   itemBuilder: (c, index) {
-                    return CashierItem(
-                      order: state.items.elementAt(index),
-                      onCancelOrder: () {
-
-                      },
-                    );
+                    return CashierItem.newInstance(
+                        order: state.items.elementAt(index));
                   },
                   loadingBuilder: (context) {
                     if (state.ended) return Container();
