@@ -27,8 +27,6 @@ Future<T> showKayleeBottomSheet<T>(BuildContext context,
       backgroundColor: Colors.transparent,
       isScrollControlled: true,
       builder: (c) {
-        final paddingBottomSize = MediaQuery.of(context).viewInsets.bottom /
-            context.screenSize.height;
         return AnimatedPadding(
           padding: MediaQuery.of(context).viewInsets,
           duration: Duration(milliseconds: 200),
@@ -357,6 +355,7 @@ class KayleeAlertDialogAction extends StatelessWidget {
 }
 
 ///vd: show date time picker
+///[onDismiss] trả callback khi dialog dismiss hoặc user click 'Huỷ'
 Future showPickerPopup(
     {@required BuildContext context,
     @required WidgetBuilder builder,
@@ -552,7 +551,7 @@ class _KayleeAmountChangingViewState
               child: FlatButton(
                   padding: const EdgeInsets.symmetric(vertical: Dimens.px18),
                   shape:
-                  RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+                      RoundedRectangleBorder(borderRadius: BorderRadius.zero),
                   onPressed: () {
                     if (current <= 0) {
                       if (widget.onRemoveItem.isNotNull) {
