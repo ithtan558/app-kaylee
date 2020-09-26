@@ -46,7 +46,7 @@ class EmployeeRevenueBloc extends Cubit<SingleModel<List<EmployeeRevenue>>>
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
       request: _reportService.getTotalByEmployee(
-          startDate: '2020-6-11', endDate: '2020-09-30', brandId: brand?.id),
+          startDate: dateInString, endDate: dateInString, brandId: brand?.id),
       onSuccess: ({message, result}) {
         emit(SingleModel.copy(state
           ..loading = false
@@ -76,7 +76,7 @@ class ServiceRevenueBloc extends Cubit<SingleModel<List<ServiceRevenue>>>
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
       request: _reportService.getTotalByService(
-          startDate: '2020-6-11', endDate: '2020-09-30', brandId: brand?.id),
+          startDate: dateInString, endDate: dateInString, brandId: brand?.id),
       onSuccess: ({message, result}) {
         emit(SingleModel.copy(state
           ..loading = false
