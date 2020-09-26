@@ -42,6 +42,7 @@ class MyOrderDetailBloc extends Cubit<SingleModel<Order>> {
       },
       onFailed: (code, {error}) {
         emit(SingleModel.copy(state
+          ..loading = false
           ..error = error
           ..code = code));
       },
