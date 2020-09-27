@@ -116,12 +116,15 @@ class CartSuppInfo {
   String note;
 }
 
-@JsonSerializable(
-    fieldRename: FieldRename.snake, includeIfNull: false, createFactory: false)
+@JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
 class CartCustomer {
+  factory CartCustomer.fromJson(Map<String, dynamic> json) =>
+      _$CartCustomerFromJson(json);
+
   Map<String, dynamic> toJson() => _$CartCustomerToJson(this);
 
   CartCustomer({
+    this.id,
     this.firstName,
     this.lastName,
     this.phone,
@@ -133,8 +136,12 @@ class CartCustomer {
     this.note,
   });
 
+  int id;
   String firstName;
   String lastName;
+
+  String get name =>
+      (lastName.isNullOrEmpty ? '' : (lastName + ' ')) + (firstName ?? '');
   String phone;
   String address;
   @JsonKey(toJson: _parseCity, name: 'hometown_city_id')
