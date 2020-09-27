@@ -41,7 +41,7 @@ class _CartModuleImpl extends CartModule {
     this._order
       ..cartItems = order?.cartItems ?? this._order.cartItems
       ..cartSuppInfo = order?.cartSuppInfo ?? this._order.cartSuppInfo
-      ..cartCustomer = order?.cartCustomer ?? this._order.cartCustomer
+      ..customer = order?.customer ?? this._order.customer
       ..supplier = order?.supplier ?? this._order.supplier
       ..cartEmployee = order?.cartEmployee ?? this._order.cartEmployee
       ..cartDiscount = order?.cartDiscount ?? this._order.cartDiscount;
