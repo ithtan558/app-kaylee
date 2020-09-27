@@ -7,7 +7,7 @@ import 'package:kaylee/models/models.dart';
 part 'customer.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
-class Customer with PersonalInfoHelper {
+class Customer {
   factory Customer.fromJson(Map<String, dynamic> json) =>
       _$CustomerFromJson(json);
 
@@ -15,8 +15,8 @@ class Customer with PersonalInfoHelper {
 
   Customer({
     this.id,
-    String firstName,
-    String lastName,
+    this.firstName,
+    this.lastName,
     this.phone,
     this.image,
     this.imageFile,
@@ -27,13 +27,14 @@ class Customer with PersonalInfoHelper {
     this.district,
     this.wards,
     this.hometownCity,
-  }) {
-    this.firstName = firstName;
-    this.lastName = lastName;
-  }
+  });
 
   int id;
+  String firstName;
+  String lastName;
 
+  String get name =>
+      (lastName.isNullOrEmpty ? '' : (lastName + ' ')) + (firstName ?? '');
   String phone;
   String image;
   @JsonKey(ignore: true)

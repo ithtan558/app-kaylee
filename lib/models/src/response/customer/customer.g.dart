@@ -33,11 +33,10 @@ Customer _$CustomerFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$CustomerToJson(Customer instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$CustomerToJson(Customer instance) => <String, dynamic>{
+      'id': instance.id,
       'first_name': instance.firstName,
       'last_name': instance.lastName,
-      'id': instance.id,
       'phone': instance.phone,
       'image': instance.image,
       'birthday': instance.birthday?.toIso8601String(),
