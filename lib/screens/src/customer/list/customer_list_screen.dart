@@ -111,7 +111,11 @@ class _CustomerListScreenState extends KayleeState<CustomerListScreen> {
       ),
       floatingActionButton: KayleeFloatButton(
         onTap: () {
-          pushScreen(PageIntent(screen: CreateNewCustomerScreen));
+          pushScreen(PageIntent(
+              screen: CreateNewCustomerScreen,
+              bundle: Bundle(NewCustomerScreenData(
+                openFrom: CustomerScreenOpenFrom.addNewCustomerBtn,
+              ))));
         },
       ),
     );
