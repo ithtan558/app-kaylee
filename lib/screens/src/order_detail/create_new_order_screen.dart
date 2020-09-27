@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:kaylee/models/models.dart' hide OrderItem;
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/order_detail/widgets/order_item.dart';
+import 'package:kaylee/screens/src/order_detail/widgets/select_customer_field.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class NewOrderScreenData {
@@ -27,6 +28,7 @@ class _CreateNewOrderScreenState extends BaseState<CreateNewOrderScreen> {
   OrderScreenOpenFrom openFrom;
   final brandController = PickInputController<Brand>();
   final employeeController = PickInputController<Employee>();
+  final customerController = SelectCustomerController();
 
   @override
   void initState() {
@@ -53,10 +55,9 @@ class _CreateNewOrderScreenState extends BaseState<CreateNewOrderScreen> {
             if (index == 0)
               return Padding(
                 padding: const EdgeInsets.all(Dimens.px16),
-                child: KayleeTextField.selection(
-                  title: Strings.thongTinKh,
-                  buttonText: Strings.chinhSua,
-                  onPress: () {},
+                child: SelectCustomerField(
+                  controller: customerController,
+                  onSelect: (value) {},
                 ),
               );
             if (index == 1)
