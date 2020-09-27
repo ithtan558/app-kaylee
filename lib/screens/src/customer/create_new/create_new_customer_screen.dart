@@ -8,6 +8,7 @@ import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/customer/create_new/bloc/customer_detail_screen_bloc.dart';
+import 'package:kaylee/screens/src/order_detail/widgets/select_customer_field.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
@@ -135,7 +136,9 @@ class _CreateNewCustomerScreenState
               : Strings.taoKhachHangMoi,
           actionTitle: openFrom == CustomerScreenOpenFrom.customerListItem
               ? Strings.luu
-              : Strings.tao,
+              : openFrom == CustomerScreenOpenFrom.addNewCustomerBtn
+                  ? Strings.tao
+                  : null,
           onActionClick: () {
             if (openFrom == CustomerScreenOpenFrom.customerListItem) {
               showKayleeAlertDialog(
@@ -302,7 +305,23 @@ class _CreateNewCustomerScreenState
                 if (openFrom == CustomerScreenOpenFrom.cashier)
                   KayLeeRoundedButton.normal(
                     text: Strings.taoDonHang,
-                    onPressed: () {},
+                    onPressed: () {
+                      context.bloc<ReloadBloc>().reload(
+                          widget: SelectCustomerField,
+                          bundle: Bundle(Customer(
+                              firstName: firstNameTfController.text,
+                              lastName: lastNameTfController.text,
+                              birthday: birthDayController.value,
+                              hometownCity: homeTownCityController.value,
+                              address: addressController.address,
+                              city: addressController.city,
+                              district: addressController.district,
+                              wards: addressController.ward,
+                              phone: phoneTfController.text,
+                              email: emailTfController.text,
+                              imageFile: imagePickerController.image)));
+                      popScreen();
+                    },
                     margin: const EdgeInsets.all(Dimens.px8),
                   ),
                 if (openFrom == CustomerScreenOpenFrom.customerListItem)
