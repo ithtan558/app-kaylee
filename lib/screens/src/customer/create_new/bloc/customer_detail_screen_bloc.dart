@@ -2,6 +2,7 @@ import 'package:anth_package/anth_package.dart';
 import 'package:kaylee/base/crud_interface.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/services/services.dart';
+import 'package:kaylee/utils/utils.dart';
 
 class CustomerDetailScreenBloc extends Cubit<SingleModel<Customer>>
     implements CRUDInterface {
@@ -17,7 +18,7 @@ class CustomerDetailScreenBloc extends Cubit<SingleModel<Customer>>
       request: customerService.newCustomer(
         firstName: state.item?.firstName,
         lastName: state.item?.lastName,
-        birthday: state.item?.birthday,
+        birthday: state.item?.birthday?.toFormatString(pattern: dateFormat),
         hometownCityId: state.item?.hometownCity?.id,
         address: state.item?.address,
         cityId: state.item?.city?.id,
@@ -86,7 +87,7 @@ class CustomerDetailScreenBloc extends Cubit<SingleModel<Customer>>
       request: customerService.updateCustomer(
         firstName: state.item?.firstName,
         lastName: state.item?.lastName,
-        birthday: state.item?.birthday,
+        birthday: state.item?.birthday?.toFormatString(pattern: dateFormat),
         hometownCityId: state.item?.hometownCity?.id,
         address: state.item?.address,
         cityId: state.item?.city?.id,

@@ -150,7 +150,7 @@ class _CreateNewCustomerScreenState
                           bloc.state.item
                             ..firstName = firstNameTfController.text
                             ..lastName = lastNameTfController.text
-                            ..birthday = birthDayController.value.toString()
+                            ..birthday = birthDayController.value
                             ..hometownCity = homeTownCityController.value
                             ..address = addressController.address
                             ..city = addressController.city
@@ -172,7 +172,7 @@ class _CreateNewCustomerScreenState
               bloc.state.item = Customer(
                   firstName: firstNameTfController.text,
                   lastName: lastNameTfController.text,
-                  birthday: birthDayController.value?.toString(),
+                  birthday: birthDayController.value,
                   hometownCity: homeTownCityController.value,
                   address: addressController.address,
                   city: addressController.city,
@@ -190,7 +190,7 @@ class _CreateNewCustomerScreenState
             imagePickerController.existedImageUrl = state.item?.image;
             firstNameTfController.text = state.item?.firstName;
             lastNameTfController.text = state.item?.lastName;
-            birthDayController.value = state.item?.birthDayInDateTime;
+            birthDayController.value = state.item?.birthday;
             homeTownCityController.value = state.item?.hometownCity;
             addressController
               ..initAddress = state.item?.address
