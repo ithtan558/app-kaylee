@@ -54,7 +54,7 @@ class _OrderItemState extends BaseState<OrderItem> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(bottom: Dimens.px8),
+              padding: const EdgeInsets.only(bottom: Dimens.px16),
               child: Row(
                 children: [
                   Container(
@@ -91,14 +91,6 @@ class _OrderItemState extends BaseState<OrderItem> {
                   )),
                   KayleePriceUnitText(90000)
                 ],
-              ),
-            ),
-            Padding(
-              padding:
-              const EdgeInsets.only(bottom: Dimens.px16, top: Dimens.px8),
-              child: KayleePickerTextField(
-                title: Strings.nhanVienThucThien,
-                hint: Strings.chonNhanVienTrongDs,
               ),
             ),
             Container(
