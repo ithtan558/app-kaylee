@@ -169,47 +169,55 @@ Future<void> showKayleeGo2SettingDialog({
       ));
 }
 
-Future<void> showKayleeDialog(
-    {@required BuildContext context,
-    bool barrierDismissible = true,
-    bool showFullScreen = false,
-    bool showShadow = false,
-    BorderRadius borderRadius,
-    EdgeInsets margin,
-    Widget child}) {
+Future<void> showKayleeDialog({
+  @required BuildContext context,
+  bool barrierDismissible = true,
+  bool showFullScreen = false,
+  bool showShadow = false,
+  BorderRadius borderRadius,
+  EdgeInsets margin,
+  Widget child,
+  ValueSetter onDismiss,
+}) {
   return showGeneralDialog(
-      context: context,
-      barrierLabel: '',
-      pageBuilder: (c, anim1, anim2) {
-        final c = Container(
-          margin: margin ?? const EdgeInsets.symmetric(horizontal: Dimens.px24),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              if (showShadow)
-                BoxShadow(
-                    color: ColorsRes.shadow,
-                    offset: Offset(0, Dimens.px10),
-                    blurRadius: Dimens.px20,
-                    spreadRadius: 0)
-            ],
-          ),
-          child: Material(
-            clipBehavior: Clip.antiAlias,
-            borderRadius: borderRadius ?? BorderRadius.circular(Dimens.px10),
-            color: Colors.white,
-            child: child ?? Container(),
-          ),
-        );
-        return SafeArea(
-          top: true,
-          bottom: true,
-          child: showFullScreen ? c : Center(child: IntrinsicHeight(child: c)),
-        );
-      },
-      barrierColor: ColorsRes.dialogDimBg,
-      barrierDismissible: barrierDismissible,
-      transitionDuration: Duration(milliseconds: 200));
+          context: context,
+          barrierLabel: '',
+          pageBuilder: (c, anim1, anim2) {
+            final c = Container(
+              margin:
+                  margin ?? const EdgeInsets.symmetric(horizontal: Dimens.px24),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  if (showShadow)
+                    BoxShadow(
+                        color: ColorsRes.shadow,
+                        offset: Offset(0, Dimens.px10),
+                        blurRadius: Dimens.px20,
+                        spreadRadius: 0)
+                ],
+              ),
+              child: Material(
+                clipBehavior: Clip.antiAlias,
+                borderRadius:
+                    borderRadius ?? BorderRadius.circular(Dimens.px10),
+                color: Colors.white,
+                child: child ?? Container(),
+              ),
+            );
+            return SafeArea(
+              top: true,
+              bottom: true,
+              child:
+                  showFullScreen ? c : Center(child: IntrinsicHeight(child: c)),
+            );
+          },
+          barrierColor: ColorsRes.dialogDimBg,
+          barrierDismissible: barrierDismissible,
+          transitionDuration: Duration(milliseconds: 200))
+      .then((value) {
+    onDismiss?.call(value);
+  });
 }
 
 Future showKayleeAlertDialog(
