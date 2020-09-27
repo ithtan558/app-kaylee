@@ -268,6 +268,8 @@ class Strings {
   static const String tongDoanhThu = 'Tổng doanh thu';
   static const String daDat = 'Đã đặt';
   static const String gioBatDau = 'Giờ bắt đầu';
+  static const String hintTimKhachHangTheoTenHoacSdt =
+      'Tìm theo tên KH/Số điện thoại';
 
   Strings._();
 }
