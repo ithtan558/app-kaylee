@@ -63,11 +63,21 @@ class _CashierItemState extends KayleeState<CashierItem> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  KayleeText.normal16W500('#${widget.order.code ?? ''}'),
-                  KayleeText.normal16W400(
+                  Expanded(
+                      child: KayleeText.normal16W500(
+                    '#${widget.order.code ?? ''}',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  )),
+                  Expanded(
+                    child: KayleeText.normal16W400(
                       widget.order.status == OrderStatus.not_paid
                           ? Strings.chuaThanhToan
-                          : ''),
+                          : '',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -86,8 +96,17 @@ class _CashierItemState extends KayleeState<CashierItem> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      KayleeText.normal16W500(widget.order.name),
-                      KayleePriceText.normal(450000),
+                      Expanded(
+                          child: KayleeText.normal16W500(
+                            widget.order.name,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          )),
+                      Expanded(
+                          child: KayleePriceText.normal(
+                            450000,
+                            textAlign: TextAlign.end,
+                          )),
                     ],
                   ),
                   SizedBox(height: Dimens.px8),
