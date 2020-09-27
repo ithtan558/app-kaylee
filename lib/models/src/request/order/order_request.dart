@@ -27,8 +27,14 @@ _parseCartItem(List cartItems) {
   })?.toList();
 }
 
+_parseCartCustomer(Customer customer) {
+  if (customer.isNull) return null;
+  final cartCustomer = CartCustomer.fromJson(customer.toJson());
+  return cartCustomer.toJson();
+}
+
 int _parseCartEmployee(dynamic input) {
-  if (input is Customer)
+  if (input is Employee)
     return input.id;
   else if (input is UserInfo)
     return input.id;
@@ -54,7 +60,7 @@ class OrderRequest {
       this.cartEmployee,
       this.cartSuppInfo,
       this.supplier,
-      this.cartCustomer,
+      this.customer,
       this.cartDiscount});
 
   @JsonKey(toJson: _parseCartItem)
@@ -67,10 +73,11 @@ class OrderRequest {
   Supplier supplier;
 
   ///khi order từ screens thu ngân
-  CartCustomer cartCustomer;
+  @JsonKey(name: 'cart_customer', toJson: _parseCartCustomer)
+  Customer customer;
 
   ///khi quản lý mua, thì nó là [UserInfo.id]
-  ///khi order cho customer, thì nó là customerId
+  ///khi order cho customer, thì nó là employee_id
   @JsonKey(toJson: _parseCartEmployee, name: 'cart_employee')
   dynamic cartEmployee;
 
