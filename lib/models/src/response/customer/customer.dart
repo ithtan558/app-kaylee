@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:anth_package/anth_package.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:kaylee/models/models.dart';
-import 'package:kaylee/models/src/personal_info_helper.dart';
 
 part 'customer.g.dart';
 
