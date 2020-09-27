@@ -21,6 +21,11 @@ abstract class CustomerService {
     @Query('district_ids') String districtIds,
   });
 
+  @GET('customer/get-by-phone-and-name')
+  Future<ResponseModel<Customer>> findCustomer({
+    @Query('keyword') String keyword,
+  });
+
   @GET('customer/{customerId}')
   Future<ResponseModel<Customer>> getCustomer({@Path() int customerId});
 
