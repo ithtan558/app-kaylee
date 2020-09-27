@@ -30,14 +30,13 @@ class _OrderItemState extends BaseState<OrderItem> {
                   KayleeAlertDialogAction.dongY(
                     onPressed: () {
                       popScreen(resultBundle: Bundle(true));
-                      return false;
+                      widget.onDismissed?.call(widget.data);
                     },
                     isDefaultAction: true,
                   ),
                   KayleeAlertDialogAction.huy(
                     onPressed: () {
                       popScreen(resultBundle: Bundle(false));
-                      return false;
                     },
                   ),
                 ]));
