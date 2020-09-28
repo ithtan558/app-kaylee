@@ -6,17 +6,19 @@ import 'package:kaylee/widgets/widgets.dart';
 class KayleeProdItemView extends StatelessWidget {
   final Widget child;
 
-  factory KayleeProdItemView.canTap({@required KayleeProdItemData data, void Function() onTap}) =>
+  factory KayleeProdItemView.canTap(
+          {@required KayleeProdItemData data, void Function() onTap}) =>
       KayleeProdItemView(
           child: KayleeInkwell(
-            child: KayleeProdItem(
-              data: data,
-            ),
-            onTap: onTap,
-          ));
+        child: KayleeProdItem(
+          data: data,
+        ),
+        onTap: onTap,
+      ));
 
-  factory KayleeProdItemView.canSelect({@required KayleeProdItemData data,
-    void Function(bool selected) onSelect}) =>
+  factory KayleeProdItemView.canSelect(
+          {@required KayleeProdItemData data,
+          void Function(bool selected) onSelect}) =>
       KayleeProdItemView(
         child: _SelectingProItemView(
           data: data,
@@ -35,8 +37,9 @@ class KayleeProdItemView extends StatelessWidget {
 class _SelectingProItemView extends StatefulWidget {
   final Function(bool selected) onSelect;
   final KayleeProdItemData data;
+  final bool selected;
 
-  _SelectingProItemView({@required this.data, this.onSelect});
+  _SelectingProItemView({@required this.data, this.onSelect, this.selected});
 
   @override
   _SelectingProItemViewState createState() => _SelectingProItemViewState();
@@ -52,6 +55,7 @@ class _SelectingProItemViewState extends BaseState<_SelectingProItemView>
   @override
   void initState() {
     super.initState();
+    isSelected = widget.selected ?? false;
     animController = AnimationController(
         vsync: this,
         duration: Duration(milliseconds: 550),
@@ -68,6 +72,9 @@ class _SelectingProItemViewState extends BaseState<_SelectingProItemView>
             curve: Curves.easeIn),
       ),
     );
+    if (isSelected) {
+      animController.value = 1;
+    }
   }
 
   @override

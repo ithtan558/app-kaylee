@@ -8,9 +8,14 @@ class KayleeTabView extends StatefulWidget {
   final Widget floatingActionButton;
   final Widget tabBar;
   final Widget pageView;
+  final Color bgColor;
 
   KayleeTabView(
-      {this.appBar, this.tabBar, this.floatingActionButton, this.pageView});
+      {this.appBar,
+      this.tabBar,
+      this.floatingActionButton,
+      this.pageView,
+      this.bgColor});
 
   @override
   _KayleeTabViewState createState() => _KayleeTabViewState();
@@ -32,6 +37,7 @@ class _KayleeTabViewState extends BaseState<KayleeTabView>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: widget.appBar,
+      backgroundColor: widget.bgColor ?? context.theme.scaffoldBackgroundColor,
       body: Column(
         children: [
           if (widget.tabBar.isNotNull)
@@ -66,11 +72,13 @@ class KayleeTabBar extends StatefulWidget {
   final ValueSetter<int> onSelected;
   final int itemCount;
   final String Function(int index) mapTitle;
+  final EdgeInsets padding;
 
   KayleeTabBar({
     @required this.itemCount,
     @required this.mapTitle,
     this.onSelected,
+    this.padding,
   });
 
   @override
@@ -106,10 +114,12 @@ class _KayleeTabBarState extends BaseState<KayleeTabBar> {
           },
         );
       },
-      separatorBuilder: (context, index) => Container(
-        width: Dimens.px16,
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
+      separatorBuilder: (context, index) =>
+          Container(
+            width: Dimens.px16,
+          ),
+      padding:
+      widget.padding ?? const EdgeInsets.symmetric(horizontal: Dimens.px16),
       itemCount: widget.itemCount ?? 0,
     );
   }
