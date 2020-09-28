@@ -12,7 +12,7 @@ import 'package:kaylee/screens/src/order_detail/widgets/select_product_item_list
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
-class SelectProdListScreen extends StatefulWidget {
+class SelectProdList extends StatefulWidget {
   static Widget newInstance() => MultiBlocProvider(providers: [
         BlocProvider(
           create: (context) => SelectProdCateBloc(
@@ -24,15 +24,15 @@ class SelectProdListScreen extends StatefulWidget {
             productService: context.network.provideProductService(),
           ),
         ),
-      ], child: SelectProdListScreen._());
+      ], child: SelectProdList._());
 
-  SelectProdListScreen._();
+  SelectProdList._();
 
   @override
-  _SelectProdListScreenState createState() => _SelectProdListScreenState();
+  _SelectProdListState createState() => _SelectProdListState();
 }
 
-class _SelectProdListScreenState extends KayleeState<SelectProdListScreen> {
+class _SelectProdListState extends KayleeState<SelectProdList> {
   SelectProdCateBloc get cateBloc => context.bloc<SelectProdCateBloc>();
   StreamSubscription cateBlocSub;
 
@@ -82,7 +82,7 @@ class _SelectProdListScreenState extends KayleeState<SelectProdListScreen> {
   void onReloadWidget(Type widget, Bundle bundle) {
     if (widget == ProdCateListScreen) {
       cateBloc.refresh();
-    } else if (widget == SelectProdListScreen) {
+    } else if (widget == SelectProdList) {
       prodsListBloc.refresh();
     }
   }

@@ -12,7 +12,7 @@ import 'package:kaylee/screens/src/order_detail/widgets/select_service_item_list
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
-class SelectServiceListScreen extends StatefulWidget {
+class SelectServiceList extends StatefulWidget {
   static Widget newInstance() => MultiBlocProvider(providers: [
         BlocProvider(
           create: (context) => SelectServiceCateBloc(
@@ -24,17 +24,16 @@ class SelectServiceListScreen extends StatefulWidget {
             servService: context.network.provideServService(),
           ),
         ),
-      ], child: SelectServiceListScreen._());
+      ], child: SelectServiceList._());
 
-  SelectServiceListScreen._();
+  SelectServiceList._();
 
   @override
-  _SelectServiceListScreenState createState() =>
-      _SelectServiceListScreenState();
+  _SelectServiceListState createState() =>
+      _SelectServiceListState();
 }
 
-class _SelectServiceListScreenState
-    extends KayleeState<SelectServiceListScreen> {
+class _SelectServiceListState extends KayleeState<SelectServiceList> {
   SelectServiceCateBloc get cateBloc => context.bloc<SelectServiceCateBloc>();
   StreamSubscription cateBlocSub;
 
@@ -85,7 +84,7 @@ class _SelectServiceListScreenState
   void onReloadWidget(Type widget, Bundle bundle) {
     if (widget == ProdCateListScreen) {
       cateBloc.refresh();
-    } else if (widget == SelectServiceListScreen) {
+    } else if (widget == SelectServiceList) {
       serviceListBloc.refresh();
     }
   }
