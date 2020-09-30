@@ -39,4 +39,6 @@ class Product {
       brands?.where((e) => e.selected)?.map((e) => e.id)?.join(',');
   ProdCate category;
   int quantity;
+  @JsonKey(ignore: true)
+  bool selected = false;
 }
