@@ -42,4 +42,6 @@ class Service {
       brands?.where((e) => e.selected)?.map((e) => e.id)?.join(',');
   ServiceCate category;
   int quantity;
+  @JsonKey(ignore: true)
+  bool selected = false;
 }
