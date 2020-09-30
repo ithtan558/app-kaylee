@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
-import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/order_detail/widgets/select_service_item_list/bloc/select_service_cate_bloc.dart';
 import 'package:kaylee/screens/src/order_detail/widgets/select_service_item_list/bloc/select_service_list_bloc.dart';
 import 'package:kaylee/utils/utils.dart';
@@ -93,15 +92,6 @@ class _SelectServiceListState extends KayleeState<SelectServiceList> {
   }
 
   @override
-  void onReloadWidget(Type widget, Bundle bundle) {
-    if (widget == ProdCateListScreen) {
-      cateBloc.refresh();
-    } else if (widget == SelectServiceList) {
-      serviceListBloc.refresh();
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
     return KayleeTabView(
       bgColor: Colors.white,
@@ -113,19 +103,14 @@ class _SelectServiceListState extends KayleeState<SelectServiceList> {
           return KayleeTabBar(
             padding: const EdgeInsets.symmetric(horizontal: Dimens.px8),
             itemCount: categories?.length,
-            mapTitle: (index) =>
-            categories
-                .elementAt(index)
-                .name,
+            mapTitle: (index) => categories.elementAt(index).name,
             onSelected: (value) {
               serviceListBloc.changeTab(
-                  cateId: cateBloc.state.item
-                      .elementAt(value)
-                      .id);
+                  cateId: cateBloc.state.item.elementAt(value).id);
             },
           );
         },
-          ),
+      ),
       pageView: Column(
         children: [
           Expanded(
@@ -134,7 +119,7 @@ class _SelectServiceListState extends KayleeState<SelectServiceList> {
               child: KayleeLoadMoreHandler(
                 controller: serviceListBloc,
                 child:
-                BlocConsumer<SelectServiceListBloc, LoadMoreModel<Service>>(
+                    BlocConsumer<SelectServiceListBloc, LoadMoreModel<Service>>(
                   listener: (context, state) {
                     if (state.code.isNotNull &&
                         state.code != ErrorType.UNAUTHORIZED) {
