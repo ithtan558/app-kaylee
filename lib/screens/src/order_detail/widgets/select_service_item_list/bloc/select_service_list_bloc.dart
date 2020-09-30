@@ -10,10 +10,14 @@ class SelectServiceListBloc extends Cubit<LoadMoreModel<Service>>
     implements LoadMoreInterface {
   final ServService servService;
   int cateId;
-  List<Service> selectedServices;
+  final List<Service> _selectedServices = [];
 
-  SelectServiceListBloc({@required this.servService, this.selectedServices})
-      : super(LoadMoreModel(items: []));
+  List<Service> get selectedServices => _selectedServices;
+
+  SelectServiceListBloc({@required this.servService, List<Service> initialData})
+      : super(LoadMoreModel(items: [])) {
+    if (initialData.isNotNullAndEmpty) _selectedServices.addAll(initialData);
+  }
 
   void loadServices() {
     RequestHandler(
@@ -24,6 +28,15 @@ class SelectServiceListBloc extends Cubit<LoadMoreModel<Service>>
       ),
       onSuccess: ({message, result}) {
         final services = (result as Services).items;
+        services?.forEach((element) {
+          final selected = _selectedServices.singleWhere(
+            (selected) => selected.id == element.id,
+            orElse: () => null,
+          );
+          if (selected.isNotNull) {
+            element.selected = true;
+          }
+        });
         completeRefresh();
         emit(LoadMoreModel.copy(state
           ..loading = false
@@ -60,16 +73,17 @@ class SelectServiceListBloc extends Cubit<LoadMoreModel<Service>>
   }
 
   void select({Service service}) {
-    selectedServices ??= [];
-    final selectedItem = selectedServices.singleWhere(
-      (e) => e.id == service.id,
+    final item = state.items.singleWhere(
+          (element) => element.id == service.id,
       orElse: () => null,
     );
-    if (selectedItem.isNotNull) {
-      selectedServices.remove(selectedItem);
+    item?.selected = !service.selected;
+    if (!item.selected) {
+      _selectedServices.removeWhere((element) => element.id == service.id);
     } else {
-      selectedServices.add(selectedItem);
+      _selectedServices.add(item..quantity = 1);
     }
+    emit(LoadMoreModel.copy(state));
   }
 
   @override
