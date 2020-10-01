@@ -42,32 +42,35 @@ class OrderRequest {
 
   List<OrderRequestItem> cartItems;
 
+  @JsonKey(ignore: true)
   int get totalAmount =>
       cartItems?.fold(0, (previous, e) {
         int price = 0;
         price = previous + e.price * e.quantity;
         return price;
       }) ??
-      0;
+          0;
 
+  @JsonKey(ignore: true)
   List<Product> get products => cartItems
       ?.where((cartItem) => cartItem.productId.isNotNull)
       ?.map((cartItem) => Product(
-            id: cartItem.productId,
-            name: cartItem.name,
-            price: cartItem.price,
-            quantity: cartItem.quantity,
-          ))
+    id: cartItem.productId,
+    name: cartItem.name,
+    price: cartItem.price,
+    quantity: cartItem.quantity,
+  ))
       ?.toList();
 
+  @JsonKey(ignore: true)
   List<Service> get services => cartItems
       ?.where((cartItem) => cartItem.serviceId.isNotNull)
       ?.map((cartItem) => Service(
-            id: cartItem.serviceId,
-            name: cartItem.name,
-            price: cartItem.price,
-            quantity: cartItem.quantity,
-          ))
+    id: cartItem.serviceId,
+    name: cartItem.name,
+    price: cartItem.price,
+    quantity: cartItem.quantity,
+  ))
       ?.toList();
 
   ///khi order supplier
