@@ -7,7 +7,7 @@ import 'package:kaylee/screens/src/order_detail/widgets/select_customer_dialog.d
 import 'package:kaylee/widgets/widgets.dart';
 
 class SelectCustomerField extends StatefulWidget {
-  final ValueChanged<CartCustomer> onSelect;
+  final ValueChanged<Customer> onSelect;
   final SelectCustomerController controller;
 
   SelectCustomerField({this.onSelect, this.controller});
@@ -22,8 +22,7 @@ class _SelectCustomerFieldState extends KayleeState<SelectCustomerField> {
     if (widget == SelectCustomerField &&
         bundle.isNotNull &&
         bundle.args is Customer) {
-      this.widget.controller?.customer =
-          CartCustomer.fromJson(bundle.args.toJson());
+      this.widget.controller?.customer = bundle.args;
       setState(() {});
     }
   }
@@ -43,8 +42,7 @@ class _SelectCustomerFieldState extends KayleeState<SelectCustomerField> {
           showShadow: true,
           child: SelectCustomerDialog.newInstance(
             onSelect: (value) {
-              widget.controller.customer =
-                  CartCustomer.fromJson(value.toJson());
+              widget.controller.customer = value;
               widget.onSelect.call(widget.controller.customer);
               setState(() {});
             },
@@ -56,7 +54,7 @@ class _SelectCustomerFieldState extends KayleeState<SelectCustomerField> {
 }
 
 class SelectCustomerController {
-  CartCustomer customer;
+  Customer customer;
 
   SelectCustomerController({this.customer});
 }
