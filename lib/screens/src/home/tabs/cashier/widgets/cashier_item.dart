@@ -76,6 +76,7 @@ class _CashierItemState extends KayleeState<CashierItem> {
                           : '',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.end,
                     ),
                   ),
                 ],
@@ -98,15 +99,15 @@ class _CashierItemState extends KayleeState<CashierItem> {
                     children: [
                       Expanded(
                           child: KayleeText.normal16W500(
-                            widget.order.name,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          )),
+                        widget.order.name,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      )),
                       Expanded(
                           child: KayleePriceText.normal(
-                            450000,
-                            textAlign: TextAlign.end,
-                          )),
+                        450000,
+                        textAlign: TextAlign.end,
+                      )),
                     ],
                   ),
                   SizedBox(height: Dimens.px8),
