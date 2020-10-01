@@ -44,9 +44,12 @@ class _EmployeeService implements EmployeeService {
   }
 
   @override
-  findEmployees({keyword}) async {
+  findEmployees({keyword, brandId}) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'keyword': keyword};
+    final queryParameters = <String, dynamic>{
+      r'keyword': keyword,
+      r'brand_id': brandId
+    };
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final Response<Map<String, dynamic>> _result = await _dio.request(
