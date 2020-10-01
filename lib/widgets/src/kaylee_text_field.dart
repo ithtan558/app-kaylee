@@ -244,6 +244,15 @@ class KayleeTextField extends StatelessWidget {
         ),
       );
 
+  factory KayleeTextField.staticPrice({String title, dynamic initPrice}) =>
+      KayleeTextField(
+        title: title,
+        textInput: PriceInputField(
+          initText: CurrencyUtils.formatVNDWithCustomUnit(initPrice ?? 0),
+          isStaticTField: true,
+        ),
+      );
+
   factory KayleeTextField.password({
     String title,
     String hint,
@@ -289,6 +298,8 @@ class PriceInputField extends StatefulWidget {
   final TextInputAction textInputAction;
   final FocusNode focusNode;
   final FocusNode nextFocusNode;
+  final String initText;
+  final bool isStaticTField;
 
   PriceInputField(
       {this.error,
@@ -296,21 +307,37 @@ class PriceInputField extends StatefulWidget {
       this.hint,
       this.textInputAction,
       this.focusNode,
-      this.nextFocusNode});
+      this.nextFocusNode,
+      this.initText,
+      this.isStaticTField});
 
   @override
   _PriceInputFieldState createState() => _PriceInputFieldState();
 }
 
 class _PriceInputFieldState extends BaseState<PriceInputField> {
+  TextEditingController tfController;
+
   @override
   void initState() {
     super.initState();
+    _initDataIfStaticWidget();
   }
 
   @override
-  void dispose() {
-    super.dispose();
+  void didUpdateWidget(PriceInputField oldWidget) {
+    _updateDataIfStaticWidget();
+    super.didUpdateWidget(oldWidget);
+  }
+
+  void _initDataIfStaticWidget() {
+    _updateDataIfStaticWidget();
+  }
+
+  void _updateDataIfStaticWidget() {
+    if (widget.isStaticTField) {
+      tfController = TextEditingController(text: widget.initText);
+    }
   }
 
   @override
@@ -321,33 +348,36 @@ class _PriceInputFieldState extends BaseState<PriceInputField> {
           children: [
             Expanded(
                 child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
-              child: TextField(
-                keyboardType: TextInputType.number,
-                textInputAction: widget.textInputAction,
-                style: TextStyles.normal16W400,
-                focusNode: widget.focusNode,
-                maxLines: 1,
-                minLines: 1,
-                controller: widget.controller,
-                onSubmitted: (value) {
-                  if (widget.textInputAction == TextInputAction.next) {
-                    if (widget.textInputAction == TextInputAction.next) {
-                      if (widget.nextFocusNode.isNotNull) {
-                        widget.nextFocusNode.requestFocus();
-                      } else
-                        FocusScope.of(context).nextFocus();
-                    }
-                  }
-                },
-                decoration: InputDecoration(
-                    enabledBorder: InputBorder.none,
-                    focusedBorder: InputBorder.none,
-                    border: InputBorder.none,
-                    hintText: widget.hint,
-                    hintStyle: TextStyles.hint16W400),
-              ),
-            )),
+                  padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
+                  child: TextField(
+                    keyboardType: TextInputType.number,
+                    textInputAction: widget.textInputAction,
+                    style: TextStyles.normal16W400,
+                    focusNode: widget.focusNode,
+                    maxLines: 1,
+                    minLines: 1,
+                    controller:
+                    widget.isStaticTField ? tfController : widget.controller,
+                    onSubmitted: (value) {
+                      if (widget.textInputAction == TextInputAction.next) {
+                        if (widget.textInputAction == TextInputAction.next) {
+                          if (widget.nextFocusNode.isNotNull) {
+                            widget.nextFocusNode.requestFocus();
+                          } else
+                            FocusScope.of(context).nextFocus();
+                        }
+                      }
+                    },
+                    enabled: !widget.isStaticTField,
+                    decoration: InputDecoration(
+                        enabled: !widget.isStaticTField,
+                        enabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        border: InputBorder.none,
+                        hintText: widget.hint,
+                        hintStyle: TextStyles.hint16W400),
+                  ),
+                )),
             Container(
               width: Dimens.px1,
               margin: const EdgeInsets.symmetric(vertical: Dimens.px4),
