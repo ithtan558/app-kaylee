@@ -51,7 +51,7 @@ class _CartScreenState extends BaseState<CartScreen> {
                       if (index < cartItems.length) {
                         final item = cartItems?.elementAt(index);
                         return CartProdItem(
-                          product: item,
+                          item: item,
                           onRemoveItem: () {
                             context.cart.removeProd(item);
                             context.bloc<CartBloc>().updateCart();
@@ -84,12 +84,9 @@ class _CartScreenState extends BaseState<CartScreen> {
     );
   }
 
-  Widget buildTotalAmountInfo(List cartItems) {
+  Widget buildTotalAmountInfo(List<OrderRequestItem> cartItems) {
     final total = cartItems.fold(0, (previousValue, e) {
-      int price = 0;
-      if (e is Product) {
-        price = previousValue + e.price * e.quantity;
-      }
+      final price = previousValue + e.price * e.quantity;
       return price;
     });
     return Padding(

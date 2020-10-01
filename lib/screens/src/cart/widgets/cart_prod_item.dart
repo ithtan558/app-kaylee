@@ -8,13 +8,13 @@ import 'package:kaylee/widgets/widgets.dart';
 
 class CartProdItem extends KayleeCartProdItem {
   final VoidCallback onRemoveItem;
-  final Product product;
+  final OrderRequestItem item;
 
-  CartProdItem({@required this.product, this.onRemoveItem})
+  CartProdItem({@required this.item, this.onRemoveItem})
       : super(
-          name: product.name,
-          amount: product.price * product.quantity,
-          quantity: product.quantity,
+          name: item.name,
+          amount: item.price * item.quantity,
+          quantity: item.quantity,
         );
 
   @override
@@ -29,10 +29,10 @@ class CartProdItem extends KayleeCartProdItem {
   void tapOnQuantity(BuildContext context) async {
     await showKayleeAmountChangingDialog(
       context: context,
-      title: product.name ?? '',
-      initAmount: product.quantity,
+      title: item.name ?? '',
+      initAmount: item.quantity,
       onAmountChange: (value) {
-        context.cart.updateProd(product.quantity = value);
+        context.cart.updateItem(item..quantity = value);
         context.bloc<CartBloc>().updateCart();
       },
       onRemoveItem: onRemoveItem,
