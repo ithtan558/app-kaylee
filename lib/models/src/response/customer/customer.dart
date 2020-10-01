@@ -15,6 +15,7 @@ class Customer {
 
   Customer({
     this.id,
+    this.fullName,
     this.firstName,
     this.lastName,
     this.phone,
@@ -30,11 +31,14 @@ class Customer {
   });
 
   int id;
+  @JsonKey(name: 'name')
+  String fullName;
   String firstName;
   String lastName;
 
   String get name =>
-      (lastName.isNullOrEmpty ? '' : (lastName + ' ')) + (firstName ?? '');
+      fullName ??
+      ((lastName.isNullOrEmpty ? '' : (lastName + ' ')) + (firstName ?? ''));
   String phone;
   String image;
   @JsonKey(ignore: true)
