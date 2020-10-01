@@ -10,6 +10,7 @@ import 'package:kaylee/models/models.dart' hide OrderItem;
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/home/tabs/cashier/cashier_tab.dart';
 import 'package:kaylee/screens/src/order_detail/bloc/order_detail_bloc.dart';
+import 'package:kaylee/screens/src/order_detail/widgets/payment_method_dialog.dart';
 import 'package:kaylee/screens/src/order_detail/widgets/select_customer_field.dart';
 import 'package:kaylee/screens/src/order_detail/widgets/select_order_item_list.dart';
 import 'package:kaylee/utils/utils.dart';
@@ -234,17 +235,28 @@ class _CreateNewOrderScreenState extends KayleeState<CreateNewOrderScreen> {
                         text: Strings.thanhToan,
                         margin: const EdgeInsets.all(Dimens.px8),
                         onPressed: () {
-                          if (openFrom == OrderScreenOpenFrom.detailButton) {
-                            //todo update status
-                            _bloc.updatePayStatus();
-                          } else if (openFrom ==
-                              OrderScreenOpenFrom.addNewButton) {
-                            _cart.updateOrderInfo(OrderRequest(
-                              brand: brandController.value,
-                              employee: employeeController.value,
-                            ));
-                            _bloc.pay();
-                          }
+                          showKayleeDialog(
+                            context: context,
+                            showShadow: true,
+                            child: RepositoryProvider.value(
+                              value: _order,
+                              child: PaymentMethodDialog.newInstance(
+                                onConfirm: () {
+                                  if (openFrom ==
+                                      OrderScreenOpenFrom.detailButton) {
+                                    _bloc.updatePayStatus();
+                                  } else if (openFrom ==
+                                      OrderScreenOpenFrom.addNewButton) {
+                                    _cart.updateOrderInfo(OrderRequest(
+                                      brand: brandController.value,
+                                      employee: employeeController.value,
+                                    ));
+                                    _bloc.pay();
+                                  }
+                                },
+                              ),
+                            ),
+                          );
                         },
                       );
                     },
