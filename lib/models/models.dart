@@ -4,6 +4,7 @@ export 'src/filter.dart';
 export 'src/personal_info_helper.dart';
 export 'src/request/login/login_body.dart';
 export 'src/request/notification/notification_status_body.dart';
+export 'src/request/order/order_item/order_request_item.dart';
 export 'src/request/order/order_request.dart';
 export 'src/request/register/register_body.dart';
 export 'src/request/update_order_status/update_order_status_body.dart';
