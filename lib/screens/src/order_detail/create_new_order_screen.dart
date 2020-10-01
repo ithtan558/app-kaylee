@@ -1,5 +1,6 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/components/components.dart';
 import 'package:kaylee/models/models.dart' hide OrderItem;
 import 'package:kaylee/res/res.dart';
@@ -19,13 +20,20 @@ enum OrderScreenOpenFrom { detailButton, addNewButton }
 
 class CreateNewOrderScreen extends StatefulWidget {
   static Widget newInstance() => RepositoryProvider(
-        create: (context) => CartModule.init(),
-        child: BlocProvider(
-            create: (context) => OrderDetailBloc(
-                  orderService: context.network.provideOrderService(),
-                  order: context.getArguments<Order>(),
-                ),
-            child: CreateNewOrderScreen._()),
+    create: (context) => CartModule.init(),
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) => OrderDetailBloc(
+                orderService: context.network.provideOrderService(),
+                order: context.getArguments<Order>(),
+                cart: context.cart,
+              ),
+            ),
+            BlocProvider(create: (context) => CartBloc()),
+          ],
+          child: CreateNewOrderScreen._(),
+        ),
       );
 
   CreateNewOrderScreen._();
@@ -35,7 +43,6 @@ class CreateNewOrderScreen extends StatefulWidget {
 }
 
 class _CreateNewOrderScreenState extends BaseState<CreateNewOrderScreen> {
-  final services = [for (int i = 0; i <= 2; i++) i];
   OrderScreenOpenFrom openFrom;
   final brandController = PickInputController<Brand>();
   final employeeController = PickInputController<Employee>();
@@ -97,28 +104,6 @@ class _CreateNewOrderScreenState extends BaseState<CreateNewOrderScreen> {
                     ),
                   ),
                   SelectOrderItemList(),
-                  Container(
-                    padding: const EdgeInsets.only(
-                        left: Dimens.px16,
-                        right: Dimens.px16,
-                        top: Dimens.px16,
-                        bottom: Dimens.px20),
-                    child: Column(
-                      children: [
-                        KayleeTitlePriceText.normal(
-                          title: Strings.tongChiPhi,
-                          price: 190000,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: Dimens.px8),
-                          child: KayleeTitlePriceText.bold(
-                            title: Strings.thanhTien,
-                            price: 190000,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
                   LabelDividerView(title: Strings.giamGia),
                   Padding(
                     padding: const EdgeInsets.all(Dimens.px16),
