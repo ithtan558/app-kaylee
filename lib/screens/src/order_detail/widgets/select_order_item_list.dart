@@ -149,7 +149,7 @@ class _SelectOrderItemListState extends KayleeState<SelectOrderItemList> {
             if (order?.cartItems.isNullOrEmpty) return SizedBox();
             return OrderAmount(
               amount: order.totalAmount,
-              discount: order.cartDiscount,
+              discount: order.discount,
             );
           },
         ),

@@ -40,7 +40,7 @@ class OrderRequest {
     return OrderRequest(
       id: order.id,
       customer: order.customer,
-      cartDiscount: order.discount,
+      discount: order.discount,
       cartItems: order.orderDetails
           .map((e) => OrderRequestItem(
                 serviceId: e.serviceId,
@@ -58,15 +58,14 @@ class OrderRequest {
     );
   }
 
-  OrderRequest(
-      {this.cartItems,
-      this.employee,
-      this.cartSuppInfo,
-      this.supplier,
-      this.customer,
-      this.cartDiscount,
-      this.id,
-      this.isPaid});
+  OrderRequest({this.cartItems,
+    this.employee,
+    this.cartSuppInfo,
+    this.supplier,
+    this.customer,
+    this.discount,
+    this.id,
+    this.isPaid});
 
   List<OrderRequestItem> cartItems;
 
@@ -80,27 +79,29 @@ class OrderRequest {
           0;
 
   @JsonKey(ignore: true)
-  List<Product> get products => cartItems
-      ?.where((cartItem) => cartItem.productId.isNotNull)
-      ?.map((cartItem) =>
-      Product(
-        id: cartItem.productId,
-        name: cartItem.name,
-        price: cartItem.price,
-        quantity: cartItem.quantity,
-      ))
+  List<Product> get products =>
+      cartItems
+          ?.where((cartItem) => cartItem.productId.isNotNull)
+          ?.map((cartItem) =>
+          Product(
+            id: cartItem.productId,
+            name: cartItem.name,
+            price: cartItem.price,
+            quantity: cartItem.quantity,
+          ))
       ?.toList();
 
   @JsonKey(ignore: true)
-  List<Service> get services => cartItems
-      ?.where((cartItem) => cartItem.serviceId.isNotNull)
-      ?.map((cartItem) =>
-      Service(
-        id: cartItem.serviceId,
-        name: cartItem.name,
-        price: cartItem.price,
-        quantity: cartItem.quantity,
-      ))
+  List<Service> get services =>
+      cartItems
+          ?.where((cartItem) => cartItem.serviceId.isNotNull)
+          ?.map((cartItem) =>
+          Service(
+            id: cartItem.serviceId,
+            name: cartItem.name,
+            price: cartItem.price,
+            quantity: cartItem.quantity,
+          ))
       ?.toList();
 
   ///khi order supplier
@@ -118,7 +119,8 @@ class OrderRequest {
   @JsonKey(toJson: _parseCartEmployee, name: 'cart_employee')
   dynamic employee;
 
-  int cartDiscount;
+  @JsonKey(name: 'cart_discount')
+  int discount;
   int id;
   @JsonKey(toJson: parseBoolToInt)
   bool isPaid;
