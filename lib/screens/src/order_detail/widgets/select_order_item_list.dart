@@ -1,21 +1,30 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/base/kaylee_state.dart';
+import 'package:kaylee/components/components.dart';
+import 'package:kaylee/models/models.dart' hide OrderItem;
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/screens/src/order_detail/widgets/order_amount.dart';
 import 'package:kaylee/screens/src/order_detail/widgets/order_item.dart';
 import 'package:kaylee/screens/src/order_detail/widgets/select_product_item_list/select_product_list.dart';
 import 'package:kaylee/screens/src/order_detail/widgets/select_service_item_list/select_service_list.dart';
+import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class SelectOrderItemList extends StatefulWidget {
-  SelectOrderItemList({Key key}) : super(key: key);
+  SelectOrderItemList();
 
   @override
   _SelectOrderItemListState createState() => _SelectOrderItemListState();
 }
 
 class _SelectOrderItemListState extends KayleeState<SelectOrderItemList> {
-  List items;
+  CartModule get cart => context.cart;
+
+  CartBloc get _cartBloc => context.bloc<CartBloc>();
+
+  OrderRequest get order => cart.getOrder();
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +34,8 @@ class _SelectOrderItemListState extends KayleeState<SelectOrderItemList> {
         LabelDividerView.withButton(
           title: Strings.danhSachDichVu,
           buttonText: Strings.themDichVu,
-          onPress: () async {
-            await showKayleeDialog(
+          onPress: () {
+            showKayleeDialog(
               context: context,
               showShadow: true,
               child: Padding(
@@ -52,9 +61,13 @@ class _SelectOrderItemListState extends KayleeState<SelectOrderItemList> {
                           popScreen();
                           showOrderItemList(
                             title: Strings.danhSachDichVu,
-                            child: SelectServiceList.newInstance(),
-                            onConfirm: () {},
-                            onCancel: () {},
+                            child: SelectServiceList.newInstance(
+                              onConfirm: (items) {
+                                cart.updateItems(items);
+                                _cartBloc.updateCart();
+                              },
+                              initialValue: order?.services,
+                            ),
                           );
                         },
                         margin: EdgeInsets.zero,
@@ -68,9 +81,13 @@ class _SelectOrderItemListState extends KayleeState<SelectOrderItemList> {
                           popScreen();
                           showOrderItemList(
                             title: Strings.danhSachSanPham,
-                            child: SelectProdList.newInstance(),
-                            onConfirm: () {},
-                            onCancel: () {},
+                            child: SelectProdList.newInstance(
+                              onConfirm: (items) {
+                                cart.updateItems(items);
+                                _cartBloc.updateCart();
+                              },
+                              initialValue: order?.products,
+                            ),
                           );
                         },
                         margin: EdgeInsets.zero,
@@ -80,9 +97,7 @@ class _SelectOrderItemListState extends KayleeState<SelectOrderItemList> {
                       padding: const EdgeInsets.only(top: Dimens.px16),
                       child: KayLeeRoundedButton.button2(
                         text: Strings.huy,
-                        onPressed: () {
-                          popScreen();
-                        },
+                        onPressed: popScreen,
                         margin: EdgeInsets.zero,
                       ),
                     ),
@@ -92,28 +107,52 @@ class _SelectOrderItemListState extends KayleeState<SelectOrderItemList> {
             );
           },
         ),
-        if (items.isNullOrEmpty)
-          Padding(
-            padding: const EdgeInsets.all(Dimens.px16),
-            child: KayleeText.hint16W400(
-              Strings.chuSuDungDichVu,
-            ),
-          )
-        else
-          ListView.builder(
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              return OrderItem(
-                data: items.elementAt(index),
-                onDismissed: (value) {
-                  setState(() {
-                    items.removeWhere((e) => e == value);
-                  });
-                },
+        BlocBuilder<CartBloc, CartState>(
+          builder: (context, state) {
+            if (order?.cartItems.isNullOrEmpty)
+              return Padding(
+                padding: const EdgeInsets.all(Dimens.px16),
+                child: KayleeText.hint16W400(
+                  Strings.chuSuDungDichVu,
+                ),
               );
-            },
-            itemCount: items.length,
-          )
+            return SizedBox();
+          },
+        ),
+        BlocBuilder<CartBloc, CartState>(
+          builder: (context, state) {
+            final cartItems = order?.cartItems;
+            if (cartItems.isNullOrEmpty) return SizedBox();
+            return ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                final item = cartItems.elementAt(index);
+                return OrderItem(
+                  data: item,
+                  onRemoveItem: (value) {
+                    cart.removeProd(item);
+                    _cartBloc.updateCart();
+                  },
+                  onQuantityChange: (value) {
+                    cart.updateItem(item..quantity = value);
+                    _cartBloc.updateCart();
+                  },
+                );
+              },
+              itemCount: cartItems.length,
+            );
+          },
+        ),
+        BlocBuilder<CartBloc, CartState>(
+          builder: (context, state) {
+            if (order?.cartItems.isNullOrEmpty) return SizedBox();
+            return OrderAmount(
+              amount: order.totalAmount,
+              discount: 0,
+            );
+          },
+        ),
       ],
     );
   }
@@ -121,8 +160,7 @@ class _SelectOrderItemListState extends KayleeState<SelectOrderItemList> {
   Future showOrderItemList({
     String title,
     Widget child,
-    VoidCallback onConfirm,
-    VoidCallback onCancel,
+    ValueSetter onDismiss,
   }) {
     return showKayleeDialog(
         context: context,
@@ -130,6 +168,7 @@ class _SelectOrderItemListState extends KayleeState<SelectOrderItemList> {
         margin: const EdgeInsets.all(Dimens.px8),
         showFullScreen: true,
         showShadow: true,
+        onDismiss: onDismiss,
         child: Column(
           children: [
             Padding(
@@ -143,33 +182,6 @@ class _SelectOrderItemListState extends KayleeState<SelectOrderItemList> {
               ),
             ),
             Expanded(child: child ?? SizedBox()),
-            Padding(
-              padding: const EdgeInsets.all(Dimens.px16),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: KayLeeRoundedButton.button2(
-                      text: Strings.huy,
-                      margin: const EdgeInsets.only(right: Dimens.px8),
-                      onPressed: () {
-                        popScreen();
-                        onConfirm?.call();
-                      },
-                    ),
-                  ),
-                  Expanded(
-                    child: KayLeeRoundedButton.normal(
-                      text: Strings.xacNhan,
-                      margin: const EdgeInsets.only(left: Dimens.px8),
-                      onPressed: () {
-                        popScreen();
-                        onCancel?.call();
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            )
           ],
         ));
   }
