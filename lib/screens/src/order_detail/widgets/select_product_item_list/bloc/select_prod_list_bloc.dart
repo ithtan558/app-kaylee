@@ -10,9 +10,14 @@ class SelectProdListBloc extends Cubit<LoadMoreModel<Product>>
     implements LoadMoreInterface {
   final ProductService productService;
   int cateId;
+  final List<Product> _selectedProds = [];
 
-  SelectProdListBloc({@required this.productService})
-      : super(LoadMoreModel(items: []));
+  List<Product> get selectedProds => _selectedProds;
+
+  SelectProdListBloc({@required this.productService, List<Product> initialData})
+      : super(LoadMoreModel(items: [])) {
+    if (initialData.isNotNullAndEmpty) _selectedProds.addAll(initialData);
+  }
 
   void loadProds() {
     RequestHandler(
@@ -23,6 +28,15 @@ class SelectProdListBloc extends Cubit<LoadMoreModel<Product>>
       ),
       onSuccess: ({message, result}) {
         final prods = (result as Products).items;
+        prods?.forEach((element) {
+          final selected = _selectedProds.singleWhere(
+            (selected) => selected.id == element.id,
+            orElse: () => null,
+          );
+          if (selected.isNotNull) {
+            element.selected = true;
+          }
+        });
         completeRefresh();
         emit(LoadMoreModel.copy(state
           ..loading = false
@@ -56,6 +70,20 @@ class SelectProdListBloc extends Cubit<LoadMoreModel<Product>>
         ..items = null));
       loadProds();
     }
+  }
+
+  void select({Product product}) {
+    final item = state.items.singleWhere(
+          (element) => element.id == product.id,
+      orElse: () => null,
+    );
+    item?.selected = !product.selected;
+    if (!item.selected) {
+      _selectedProds.removeWhere((element) => element.id == product.id);
+    } else {
+      _selectedProds.add(item..quantity = 1);
+    }
+    emit(LoadMoreModel.copy(state));
   }
 
   @override
