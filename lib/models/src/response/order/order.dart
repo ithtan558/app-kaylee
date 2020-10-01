@@ -14,15 +14,16 @@ class Order {
   Order({
     this.id,
     this.code,
-    this.name,
     this.amount,
     this.status,
     this.createdAt,
     this.supplierName,
     this.count,
     this.isPaid,
+    this.name,
     this.phone,
     this.email,
+    this.customer,
     this.note,
     this.subTotal,
     this.discount,
@@ -43,7 +44,6 @@ class Order {
 
   int id;
   String code;
-  String name;
   int amount;
   @JsonKey(
       fromJson: parseOrderStatusFromInt,
@@ -56,9 +56,17 @@ class Order {
   int count;
 
   int isPaid;
+
+  /*begin: customer info*/
+  String name;
   String phone;
   String email;
+  Customer customer;
+
+  /*end: customer info*/
+
   String note;
+
   int subTotal;
   int discount;
   int taxValue;

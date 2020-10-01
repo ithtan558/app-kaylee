@@ -10,7 +10,6 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
   return Order(
     id: json['id'] as int,
     code: json['code'] as String,
-    name: json['name'] as String,
     amount: json['amount'] as int,
     status: parseOrderStatusFromInt(json['order_status_id']),
     createdAt: json['created_at'] == null
@@ -19,8 +18,12 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
     supplierName: json['supplier_name'] as String,
     count: json['count'] as int,
     isPaid: json['is_paid'] as int,
+    name: json['name'] as String,
     phone: json['phone'] as String,
     email: json['email'] as String,
+    customer: json['customer'] == null
+        ? null
+        : Customer.fromJson(json['customer'] as Map<String, dynamic>),
     note: json['note'] as String,
     subTotal: json['sub_total'] as int,
     discount: json['discount'] as int,
@@ -45,18 +48,20 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$OrderToJson(Order instance) => <String, dynamic>{
+Map<String, dynamic> _$OrderToJson(Order instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'code': instance.code,
-      'name': instance.name,
       'amount': instance.amount,
       'order_status_id': parseToIntFromOrderStatus(instance.status),
       'created_at': instance.createdAt?.toIso8601String(),
       'supplier_name': instance.supplierName,
       'count': instance.count,
       'is_paid': instance.isPaid,
+      'name': instance.name,
       'phone': instance.phone,
       'email': instance.email,
+      'customer': instance.customer?.toJson(),
       'note': instance.note,
       'sub_total': instance.subTotal,
       'discount': instance.discount,
