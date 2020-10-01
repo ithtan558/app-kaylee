@@ -111,6 +111,12 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField>
                   } else {
                     showAlert(content: Strings.xinVuiLongChonQuan);
                   }
+                } else if (T == Employee) {
+                  if (pickerTFModel?.brand?.id.isNotNull) {
+                    showPicker();
+                  } else {
+                    showAlert(content: Strings.batBuocChonChiNhanh);
+                  }
                 } else {
                   showPicker();
                 }
@@ -424,7 +430,7 @@ class _PickerViewState<T> extends BaseState<_PickerView> {
     } else if (T == Role) {
       bloc.loadRole();
     } else if (T == Employee) {
-      bloc.loadEmployees();
+      bloc.loadEmployees(parentBloc?.brand?.id);
     }
   }
 
@@ -712,10 +718,10 @@ class _PickerViewBloc<T> extends Cubit<SingleModel<List<T>>> {
     );
   }
 
-  void loadEmployees() {
+  void loadEmployees(int brandId) {
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
-      request: employeeService.findEmployees(),
+      request: employeeService.findEmployees(brandId: brandId),
       onSuccess: ({message, result}) {
         if (useForFilter ?? false) {
           (result as List<Employee>)
