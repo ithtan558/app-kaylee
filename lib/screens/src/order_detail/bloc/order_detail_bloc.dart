@@ -17,7 +17,31 @@ class OrderDetailBloc extends Cubit<SingleModel<OrderRequest>>
   }) : super(SingleModel());
 
   void pay() {
-    // cart.updateOrderInfo();
+    cart.updateOrderInfo(OrderRequest(isPaid: true));
+    create();
+  }
+
+  void updatePayStatus() {
+    emit(SingleModel.copy(state..loading = true));
+    RequestHandler(
+      request: orderService.updateOrderStatus(
+          orderId: cart.getOrder()?.id,
+          body: UpdateOrderStatusBody(
+            id: cart.getOrder()?.id,
+            status: OrderStatus.finished,
+          )),
+      onSuccess: ({message, result}) {
+        emit(CreateOrderState.copy(state
+          ..loading = false
+          ..message = message));
+      },
+      onFailed: (code, {error}) {
+        emit(SingleModel.copy(state
+          ..loading = false
+          ..error = error
+          ..code = code));
+      },
+    );
   }
 
   @override

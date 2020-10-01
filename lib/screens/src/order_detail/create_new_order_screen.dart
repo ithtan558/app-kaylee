@@ -124,7 +124,7 @@ class _CreateNewOrderScreenState extends KayleeState<CreateNewOrderScreen> {
       child: Scaffold(
         appBar: KayleeAppBar.hyperTextAction(
           title: openFrom == OrderScreenOpenFrom.addNewButton ||
-              openFrom == OrderScreenOpenFrom.addNewFromReservation
+                  openFrom == OrderScreenOpenFrom.addNewFromReservation
               ? Strings.taoDonHangMoi
               : Strings.chinhSuaDonHang,
           actionTitle: openFrom == OrderScreenOpenFrom.addNewButton ||
@@ -233,7 +233,19 @@ class _CreateNewOrderScreenState extends KayleeState<CreateNewOrderScreen> {
                       return KayLeeRoundedButton.normal(
                         text: Strings.thanhToan,
                         margin: const EdgeInsets.all(Dimens.px8),
-                        onPressed: () {},
+                        onPressed: () {
+                          if (openFrom == OrderScreenOpenFrom.detailButton) {
+                            //todo update status
+                            _bloc.updatePayStatus();
+                          } else if (openFrom ==
+                              OrderScreenOpenFrom.addNewButton) {
+                            _cart.updateOrderInfo(OrderRequest(
+                              brand: brandController.value,
+                              employee: employeeController.value,
+                            ));
+                            _bloc.pay();
+                          }
+                        },
                       );
                     },
                   )
