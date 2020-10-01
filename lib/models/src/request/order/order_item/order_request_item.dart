@@ -25,6 +25,10 @@ class OrderRequestItem {
   int price;
   String name;
 
+  bool get isService => serviceId.isNotNull;
+
+  bool get isProduct => productId.isNotNull;
+
   factory OrderRequestItem.copyFromProduct({Product product}) =>
       OrderRequestItem(
         productId: product.id,
