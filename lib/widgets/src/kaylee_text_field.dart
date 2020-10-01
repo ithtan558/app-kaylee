@@ -119,6 +119,7 @@ class KayleeTextField extends StatelessWidget {
     TextEditingController controller,
     TextInputAction textInputAction,
     String error,
+    ValueChanged<String> onChange,
   }) =>
       KayleeTextField(
         title: title,
@@ -126,6 +127,7 @@ class KayleeTextField extends StatelessWidget {
           hint: hint,
           error: error,
           textInputAction: textInputAction,
+          onChange: onChange,
         ),
       );
 
@@ -318,33 +320,33 @@ class _PriceInputFieldState extends BaseState<PriceInputField> {
           children: [
             Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
-                  child: TextField(
-                    keyboardType: TextInputType.number,
-                    textInputAction: widget.textInputAction,
-                    style: TextStyles.normal16W400,
-                    focusNode: widget.focusNode,
-                    maxLines: 1,
-                    minLines: 1,
-                    controller: widget.controller,
-                    onSubmitted: (value) {
-                      if (widget.textInputAction == TextInputAction.next) {
-                        if (widget.textInputAction == TextInputAction.next) {
-                          if (widget.nextFocusNode.isNotNull) {
-                            widget.nextFocusNode.requestFocus();
-                          } else
-                            FocusScope.of(context).nextFocus();
-                        }
-                      }
-                    },
-                    decoration: InputDecoration(
-                        enabledBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        border: InputBorder.none,
-                        hintText: widget.hint,
-                        hintStyle: TextStyles.hint16W400),
-                  ),
-                )),
+              padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
+              child: TextField(
+                keyboardType: TextInputType.number,
+                textInputAction: widget.textInputAction,
+                style: TextStyles.normal16W400,
+                focusNode: widget.focusNode,
+                maxLines: 1,
+                minLines: 1,
+                controller: widget.controller,
+                onSubmitted: (value) {
+                  if (widget.textInputAction == TextInputAction.next) {
+                    if (widget.textInputAction == TextInputAction.next) {
+                      if (widget.nextFocusNode.isNotNull) {
+                        widget.nextFocusNode.requestFocus();
+                      } else
+                        FocusScope.of(context).nextFocus();
+                    }
+                  }
+                },
+                decoration: InputDecoration(
+                    enabledBorder: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    border: InputBorder.none,
+                    hintText: widget.hint,
+                    hintStyle: TextStyles.hint16W400),
+              ),
+            )),
             Container(
               width: Dimens.px1,
               margin: const EdgeInsets.symmetric(vertical: Dimens.px4),
@@ -990,8 +992,9 @@ class UnitInputField extends StatefulWidget {
   final String hint;
   final String error;
   final TextInputAction textInputAction;
+  final ValueChanged<String> onChange;
 
-  UnitInputField({this.hint, this.error, this.textInputAction});
+  UnitInputField({this.hint, this.error, this.textInputAction, this.onChange});
 
   @override
   _UnitInputFieldState createState() => _UnitInputFieldState();
@@ -1021,6 +1024,7 @@ class _UnitInputFieldState extends BaseState<UnitInputField> {
                 style: TextStyles.normal16W400,
                 keyboardType: TextInputType.number,
                 textInputAction: widget.textInputAction,
+                onChanged: widget.onChange,
                 onSubmitted: (value) {
                   if (widget.textInputAction == TextInputAction.next) {
                     FocusScope.of(context).nextFocus();
