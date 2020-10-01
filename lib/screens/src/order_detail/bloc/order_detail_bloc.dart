@@ -48,6 +48,7 @@ class OrderDetailBloc extends Cubit<SingleModel<OrderRequest>>
     RequestHandler(
       request: orderService.getDetail(orderId: order.id),
       onSuccess: ({message, result}) {
+        (result as Order).id = order.id;
         cart.updateOrderInfo(OrderRequest.copyFromOrder(order: result));
         emit(SingleModel.copy(state
           ..loading = false
@@ -69,7 +70,7 @@ class OrderDetailBloc extends Cubit<SingleModel<OrderRequest>>
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
       request: orderService.updateOrder(
-          orderRequest: cart.getOrder(), orderId: cart.getOrder()?.id),
+          orderRequest: cart.getOrder(), orderId: order.id),
       onSuccess: ({message, result}) {
         emit(UpdateOrderState.copy(state
           ..loading = false
