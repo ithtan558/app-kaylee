@@ -57,6 +57,7 @@ class _CreateNewOrderScreenState extends KayleeState<CreateNewOrderScreen> {
   final employeeController = PickInputController<Employee>();
   final customerController = SelectCustomerController();
   final discountController = TextEditingController();
+  final pickerTextFieldModel = KayleePickerTextFieldModel();
 
   CartModule get _cart => context.cart;
 
@@ -177,10 +178,13 @@ class _CreateNewOrderScreenState extends KayleeState<CreateNewOrderScreen> {
                               left: Dimens.px16,
                               right: Dimens.px16,
                               bottom: Dimens.px16),
-                          child: KayleePickerTextField(
-                            title: Strings.chiNhanh,
-                            hint: Strings.chonChiNhanhTrongDs,
-                            controller: brandController,
+                          child: RepositoryProvider.value(
+                            value: pickerTextFieldModel,
+                            child: KayleePickerTextField(
+                              title: Strings.chiNhanh,
+                              hint: Strings.chonChiNhanhTrongDs,
+                              controller: brandController,
+                            ),
                           ),
                         ),
                         Padding(
@@ -188,10 +192,13 @@ class _CreateNewOrderScreenState extends KayleeState<CreateNewOrderScreen> {
                               left: Dimens.px16,
                               right: Dimens.px16,
                               bottom: Dimens.px16),
-                          child: KayleePickerTextField(
-                            title: Strings.nhanVienThucThien,
-                            hint: Strings.chonNhanVienTrongDs,
-                            controller: employeeController,
+                          child: RepositoryProvider.value(
+                            value: pickerTextFieldModel,
+                            child: KayleePickerTextField(
+                              title: Strings.nhanVienThucThien,
+                              hint: Strings.chonNhanVienTrongDs,
+                              controller: employeeController,
+                            ),
                           ),
                         ),
                         SelectOrderItemList(),
