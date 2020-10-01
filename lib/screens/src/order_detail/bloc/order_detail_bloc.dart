@@ -88,6 +88,7 @@ class OrderDetailBloc extends Cubit<SingleModel<OrderRequest>>
 class UpdateOrderState extends SingleModel<OrderRequest> {
   UpdateOrderState.copy(SingleModel old) {
     this
+      ..loading = old?.loading
       ..item = old?.item
       ..message = old?.message;
   }
@@ -96,6 +97,7 @@ class UpdateOrderState extends SingleModel<OrderRequest> {
 class CreateOrderState extends SingleModel<OrderRequest> {
   CreateOrderState.copy(SingleModel old) {
     this
+      ..loading = old?.loading
       ..item = old?.item
       ..message = old?.message;
   }
