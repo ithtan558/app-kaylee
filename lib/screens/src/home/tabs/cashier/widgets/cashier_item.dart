@@ -100,14 +100,14 @@ class _CashierItemState extends KayleeState<CashierItem> {
                     children: [
                       Expanded(
                           child: KayleeText.normal16W500(
-                        widget.order.name,
+                        widget.order.name ?? '',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       )),
                       Expanded(
                           child: KayleePriceText.normal(
-                        450000,
-                        textAlign: TextAlign.end,
+                            widget.order.amount,
+                            textAlign: TextAlign.end,
                       )),
                     ],
                   ),
