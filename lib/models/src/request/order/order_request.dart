@@ -4,29 +4,6 @@ import 'package:kaylee/models/models.dart';
 
 part 'order_request.g.dart';
 
-_parseCartItem(List cartItems) {
-  return cartItems?.map((e) {
-    if (e is Product) {
-      final Map<String, dynamic> prodMap = e.toJson();
-
-      prodMap.removeWhere((key, value) => key != 'quantity');
-      prodMap.putIfAbsent('product_id', () {
-        return e.id;
-      });
-      return prodMap;
-    } else if (e is Service) {
-      final Map<String, dynamic> serviceMap = e.toJson();
-
-      serviceMap.removeWhere((key, value) => key != 'quantity');
-      serviceMap.putIfAbsent('service_id', () {
-        return e.id;
-      });
-
-      return serviceMap;
-    }
-  })?.toList();
-}
-
 _parseCartCustomer(Customer customer) {
   if (customer.isNull) return null;
   final cartCustomer = CartCustomer.fromJson(customer.toJson());
@@ -63,8 +40,7 @@ class OrderRequest {
       this.customer,
       this.cartDiscount});
 
-  @JsonKey(toJson: _parseCartItem)
-  List<dynamic> cartItems;
+  List<OrderRequestItem> cartItems;
 
   ///khi order supplier
   @JsonKey(name: 'cart_supplier_information')

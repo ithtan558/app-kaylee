@@ -15,7 +15,8 @@ Map<String, dynamic> _$OrderRequestToJson(OrderRequest instance) {
     }
   }
 
-  writeNotNull('cart_items', _parseCartItem(instance.cartItems));
+  writeNotNull(
+      'cart_items', instance.cartItems?.map((e) => e?.toJson())?.toList());
   writeNotNull('cart_supplier_information', instance.cartSuppInfo?.toJson());
   writeNotNull('supplier_id', _parseSupplierId(instance.supplier));
   writeNotNull('cart_customer', _parseCartCustomer(instance.customer));
