@@ -56,7 +56,8 @@ class Order {
   String supplierName;
   int count;
 
-  int isPaid;
+  @JsonKey(fromJson: parseBoolFromInt, toJson: parseBoolToInt)
+  bool isPaid;
 
   /*begin: customer info*/
   String name;

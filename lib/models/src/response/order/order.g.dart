@@ -17,7 +17,7 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
         : DateTime.parse(json['created_at'] as String),
     supplierName: json['supplier_name'] as String,
     count: json['count'] as int,
-    isPaid: json['is_paid'] as int,
+    isPaid: parseBoolFromInt(json['is_paid'] as int),
     name: json['name'] as String,
     phone: json['phone'] as String,
     email: json['email'] as String,
@@ -53,8 +53,7 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
       : Employee.fromJson(json['employee'] as Map<String, dynamic>);
 }
 
-Map<String, dynamic> _$OrderToJson(Order instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$OrderToJson(Order instance) => <String, dynamic>{
       'id': instance.id,
       'code': instance.code,
       'amount': instance.amount,
@@ -62,7 +61,7 @@ Map<String, dynamic> _$OrderToJson(Order instance) =>
       'created_at': instance.createdAt?.toIso8601String(),
       'supplier_name': instance.supplierName,
       'count': instance.count,
-      'is_paid': instance.isPaid,
+      'is_paid': parseBoolToInt(instance.isPaid),
       'name': instance.name,
       'phone': instance.phone,
       'email': instance.email,
@@ -82,7 +81,7 @@ Map<String, dynamic> _$OrderToJson(Order instance) =>
       'information_receive_address': instance.informationReceiveAddress,
       'information_receive_city_name': instance.informationReceiveCityName,
       'information_receive_district_name':
-      instance.informationReceiveDistrictName,
+          instance.informationReceiveDistrictName,
       'information_receive_wards_name': instance.informationReceiveWardsName,
       'information_receive_note': instance.informationReceiveNote,
       'order_details': instance.orderDetails?.map((e) => e?.toJson())?.toList(),
