@@ -79,14 +79,14 @@ class _HistoryOrderDetailScreenState
                             children: [
                               KayleeTextField.staticWidget(
                                 title: Strings.thongTinKh,
-                                initText: state.item.name,
+                                initText: state.item.customer?.name,
                               ),
                               Padding(
                                 padding:
                                     const EdgeInsets.only(top: Dimens.px16),
                                 child: KayleeTextField.staticWidget(
                                   title: Strings.chiNhanh,
-                                  initText: state.item.brandName,
+                                  initText: state.item.brand?.name,
                                 ),
                               ),
                               Padding(
@@ -94,7 +94,7 @@ class _HistoryOrderDetailScreenState
                                     const EdgeInsets.only(top: Dimens.px16),
                                 child: KayleeTextField.staticWidget(
                                   title: Strings.nhanVienThucThien,
-                                  initText: state.item.employee.name,
+                                  initText: state.item.employee?.name,
                                 ),
                               ),
                             ],

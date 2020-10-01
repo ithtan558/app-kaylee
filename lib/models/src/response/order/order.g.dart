@@ -31,6 +31,9 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
     supplierId: json['supplier_id'] as int,
     employeeFirstName: json['employee_first_name'] as String,
     employeeLastName: json['employee_last_name'] as String,
+    brand: json['brand'] == null
+        ? null
+        : Brand.fromJson(json['brand'] as Map<String, dynamic>),
     brandName: json['brand_name'] as String,
     informationReceiveName: json['information_receive_name'] as String,
     informationReceivePhone: json['information_receive_phone'] as String,
@@ -45,10 +48,13 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
         ?.map((e) =>
             e == null ? null : OrderItem.fromJson(e as Map<String, dynamic>))
         ?.toList(),
-  );
+  )..employee = json['employee'] == null
+      ? null
+      : Employee.fromJson(json['employee'] as Map<String, dynamic>);
 }
 
-Map<String, dynamic> _$OrderToJson(Order instance) => <String, dynamic>{
+Map<String, dynamic> _$OrderToJson(Order instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'code': instance.code,
       'amount': instance.amount,
@@ -68,13 +74,15 @@ Map<String, dynamic> _$OrderToJson(Order instance) => <String, dynamic>{
       'supplier_id': instance.supplierId,
       'employee_first_name': instance.employeeFirstName,
       'employee_last_name': instance.employeeLastName,
+      'employee': instance.employee?.toJson(),
+      'brand': instance.brand?.toJson(),
       'brand_name': instance.brandName,
       'information_receive_name': instance.informationReceiveName,
       'information_receive_phone': instance.informationReceivePhone,
       'information_receive_address': instance.informationReceiveAddress,
       'information_receive_city_name': instance.informationReceiveCityName,
       'information_receive_district_name':
-          instance.informationReceiveDistrictName,
+      instance.informationReceiveDistrictName,
       'information_receive_wards_name': instance.informationReceiveWardsName,
       'information_receive_note': instance.informationReceiveNote,
       'order_details': instance.orderDetails?.map((e) => e?.toJson())?.toList(),

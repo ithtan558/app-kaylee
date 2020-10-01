@@ -31,6 +31,7 @@ class Order {
     this.supplierId,
     this.employeeFirstName,
     this.employeeLastName,
+    this.brand,
     this.brandName,
     this.informationReceiveName,
     this.informationReceivePhone,
@@ -74,11 +75,9 @@ class Order {
   String employeeFirstName;
   String employeeLastName;
 
-  Employee get employee => Employee(
-        firstName: employeeFirstName,
-        lastName: employeeLastName,
-      );
+  Employee employee;
 
+  Brand brand;
   String brandName;
   String informationReceiveName;
   String informationReceivePhone;
