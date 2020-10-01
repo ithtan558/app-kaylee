@@ -21,6 +21,9 @@ class _PaymentMethodDialogState extends KayleeState<PaymentMethodDialog> {
 
   @override
   Widget build(BuildContext context) {
+    int discountAmount =
+        ((_order?.totalAmount ?? 0) * (_order.discount ?? 0)) ~/ 100;
+    int summary = (_order?.totalAmount ?? 0) - discountAmount;
     return Container(
       width: double.infinity,
       child: Column(
@@ -33,7 +36,7 @@ class _PaymentMethodDialogState extends KayleeState<PaymentMethodDialog> {
           Padding(
             padding: const EdgeInsets.all(Dimens.px16),
             child: KayleeTotalAmountText(
-              price: _order?.totalAmount,
+              price: summary,
             ),
           ),
           Container(
@@ -42,43 +45,43 @@ class _PaymentMethodDialogState extends KayleeState<PaymentMethodDialog> {
           ),
           Expanded(
               child: SingleChildScrollView(
-            child: Column(
-              children: [
-                _ExpandView(
-                  title: Strings.tienMat,
-                  imageOfPaymentMethod: Images.ic_cash,
-                  expand: KayleeTextField.staticPrice(
-                    title: Strings.soTien,
-                    initPrice: _order?.totalAmount,
+                child: Column(
+                  children: [
+                    _ExpandView(
+                      title: Strings.tienMat,
+                      imageOfPaymentMethod: Images.ic_cash,
+                      expand: KayleeTextField.staticPrice(
+                        title: Strings.soTien,
+                    initPrice: summary,
                   ),
+                    ),
+                    Container(
+                      color: ColorsRes.textFieldBorder,
+                      height: Dimens.px1,
+                    ),
+                    _ExpandView(
+                      title: Strings.theTinDung,
+                      imageOfPaymentMethod: Images.ic_card,
+                    ),
+                    Container(
+                      color: ColorsRes.textFieldBorder,
+                      height: Dimens.px1,
+                    ),
+                    _ExpandView(
+                      title: Strings.theAtm,
+                      imageOfPaymentMethod: Images.ic_card,
+                    ),
+                    Container(
+                      color: ColorsRes.textFieldBorder,
+                      height: Dimens.px1,
+                    ),
+                    _ExpandView(
+                      title: Strings.viMomo,
+                      imageOfPaymentMethod: Images.ic_momo,
+                    ),
+                  ],
                 ),
-                Container(
-                  color: ColorsRes.textFieldBorder,
-                  height: Dimens.px1,
-                ),
-                _ExpandView(
-                  title: Strings.theTinDung,
-                  imageOfPaymentMethod: Images.ic_card,
-                ),
-                Container(
-                  color: ColorsRes.textFieldBorder,
-                  height: Dimens.px1,
-                ),
-                _ExpandView(
-                  title: Strings.theAtm,
-                  imageOfPaymentMethod: Images.ic_card,
-                ),
-                Container(
-                  color: ColorsRes.textFieldBorder,
-                  height: Dimens.px1,
-                ),
-                _ExpandView(
-                  title: Strings.viMomo,
-                  imageOfPaymentMethod: Images.ic_momo,
-                ),
-              ],
-            ),
-          )),
+              )),
           Container(
             color: ColorsRes.textFieldBorder,
             height: Dimens.px1,
