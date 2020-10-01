@@ -38,24 +38,25 @@ class OrderRequest {
 
   factory OrderRequest.copyFromOrder({Order order}) {
     return OrderRequest(
-      id: order.id,
-      customer: order.customer,
-      discount: order.discount,
-      cartItems: order.orderDetails
-          .map((e) => OrderRequestItem(
-                serviceId: e.serviceId,
-                productId: e.productId,
-                quantity: e.quantity,
-                price: e.price,
-                name: e.name,
-              ))
-          .toList(),
-      employee: order.employee,
-      supplier: Supplier(
-        id: order.supplierId,
-        name: order.supplierName,
-      ),
-    );
+        id: order.id,
+        customer: order.customer,
+        discount: order.discount,
+        cartItems: order.orderDetails
+            .map((e) => OrderRequestItem(
+                  serviceId: e.serviceId,
+                  productId: e.productId,
+                  quantity: e.quantity,
+                  price: e.price,
+                  name: e.name,
+                ))
+            .toList(),
+        employee: order.employee,
+        supplier: Supplier(
+          id: order.supplierId,
+          name: order.supplierName,
+        ),
+        brand: order.brand,
+        isPaid: order.isPaid);
   }
 
   OrderRequest(
