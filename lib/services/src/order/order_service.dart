@@ -11,6 +11,10 @@ abstract class OrderService {
   @POST('order')
   Future<ResponseModel> sendOrder({@Body() OrderRequest orderRequest});
 
+  @POST('order/{orderId}')
+  Future<ResponseModel> updateOrder(
+      {@Body() OrderRequest orderRequest, @Path() int orderId});
+
   @GET('order')
   Future<ResponseModel<Orders>> getOrderSupplier({
     @Query('page') int page,

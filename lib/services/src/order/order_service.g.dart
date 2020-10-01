@@ -35,6 +35,26 @@ class _OrderService implements OrderService {
   }
 
   @override
+  updateOrder({orderRequest, orderId}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    _data.addAll(orderRequest?.toJson() ?? <String, dynamic>{});
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        'order/$orderId',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    return value;
+  }
+
+  @override
   getOrderSupplier(
       {page, limit, startDate, endDate, isHistoryBySupplier = 1}) async {
     const _extra = <String, dynamic>{};
