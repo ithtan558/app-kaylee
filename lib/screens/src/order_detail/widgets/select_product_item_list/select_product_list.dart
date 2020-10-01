@@ -6,27 +6,39 @@ import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
-import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/order_detail/widgets/select_product_item_list/bloc/select_prod_cate_bloc.dart';
 import 'package:kaylee/screens/src/order_detail/widgets/select_product_item_list/bloc/select_prod_list_bloc.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class SelectProdList extends StatefulWidget {
-  static Widget newInstance() => MultiBlocProvider(providers: [
-        BlocProvider(
-          create: (context) => SelectProdCateBloc(
-            productService: context.network.provideProductService(),
-          ),
-        ),
-        BlocProvider(
-          create: (context) => SelectProdListBloc(
-            productService: context.network.provideProductService(),
-          ),
-        ),
-      ], child: SelectProdList._());
+  static Widget newInstance({
+    List<Product> initialValue,
+    ValueChanged<List<Product>> onConfirm,
+    VoidCallback onCancel,
+  }) =>
+      MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) => SelectProdCateBloc(
+                productService: context.network.provideProductService(),
+              ),
+            ),
+            BlocProvider(
+              create: (context) => SelectProdListBloc(
+                productService: context.network.provideProductService(),
+                initialData: initialValue,
+              ),
+            ),
+          ],
+          child: SelectProdList._(
+            onConfirm: onConfirm,
+            onCancel: onCancel,
+          ));
+  final ValueChanged<List<Product>> onConfirm;
+  final VoidCallback onCancel;
 
-  SelectProdList._();
+  SelectProdList._({this.onConfirm, this.onCancel});
 
   @override
   _SelectProdListState createState() => _SelectProdListState();
@@ -37,7 +49,7 @@ class _SelectProdListState extends KayleeState<SelectProdList> {
   StreamSubscription cateBlocSub;
 
   SelectProdListBloc get prodsListBloc => context.bloc<SelectProdListBloc>();
-  StreamSubscription prodListBlocSub;
+  StreamSubscription _sub;
 
   @override
   void initState() {
@@ -63,7 +75,7 @@ class _SelectProdListState extends KayleeState<SelectProdList> {
         }
       }
     });
-    prodListBlocSub = prodsListBloc.listen((state) {
+    _sub = prodsListBloc.listen((state) {
       if (state.code.isNotNull && state.code != ErrorType.UNAUTHORIZED) {
         showKayleeAlertErrorYesDialog(context: context, error: state.error);
       }
@@ -74,17 +86,8 @@ class _SelectProdListState extends KayleeState<SelectProdList> {
   @override
   void dispose() {
     cateBlocSub.cancel();
-    prodListBlocSub.cancel();
+    _sub.cancel();
     super.dispose();
-  }
-
-  @override
-  void onReloadWidget(Type widget, Bundle bundle) {
-    if (widget == ProdCateListScreen) {
-      cateBloc.refresh();
-    } else if (widget == SelectProdList) {
-      prodsListBloc.refresh();
-    }
   }
 
   @override
@@ -98,55 +101,112 @@ class _SelectProdListState extends KayleeState<SelectProdList> {
           return KayleeTabBar(
             padding: const EdgeInsets.symmetric(horizontal: Dimens.px8),
             itemCount: categories?.length,
-            mapTitle: (index) => categories.elementAt(index).name,
+            mapTitle: (index) =>
+            categories
+                .elementAt(index)
+                .name,
             onSelected: (value) {
               prodsListBloc.changeTab(
-                  cateId: cateBloc.state.item.elementAt(value).id);
+                  cateId: cateBloc.state.item
+                      .elementAt(value)
+                      .id);
             },
           );
         },
       ),
-      pageView: KayleeRefreshIndicator(
-        controller: prodsListBloc,
-        child: KayleeLoadMoreHandler(
-          controller: prodsListBloc,
-          child: BlocConsumer<SelectProdListBloc, LoadMoreModel<Product>>(
-            listener: (context, state) {
-              if (state.code.isNotNull &&
-                  state.code != ErrorType.UNAUTHORIZED) {
-                showKayleeAlertErrorYesDialog(
-                  context: context,
-                  error: state.error,
-                  onPressed: popScreen,
-                );
-              }
-            },
-            builder: (context, state) {
-              return KayleeGridView(
-                padding: EdgeInsets.all(Dimens.px8),
-                childAspectRatio: 103 / 195,
-                itemBuilder: (c, index) {
-                  final item = state.items.elementAt(index);
-                  return KayleeProdItemView.canSelect(
-                    data: KayleeProdItemData(
-                        name: item.name, image: item.image, price: item.price),
-                    onSelect: (selected) {},
-                  );
-                },
-                itemCount: state.items?.length,
-                loadingBuilder: (context) {
-                  if (state.ended) return Container();
-                  return Align(
-                    alignment: Alignment.topCenter,
-                    child: CupertinoActivityIndicator(
-                      radius: Dimens.px16,
-                    ),
-                  );
-                },
-              );
-            },
+      pageView: Column(
+        children: [
+          Expanded(
+            child: KayleeRefreshIndicator(
+              controller: prodsListBloc,
+              child: KayleeLoadMoreHandler(
+                controller: prodsListBloc,
+                child: BlocConsumer<SelectProdListBloc, LoadMoreModel<Product>>(
+                  listener: (context, state) {
+                    if (state.code.isNotNull &&
+                        state.code != ErrorType.UNAUTHORIZED) {
+                      showKayleeAlertErrorYesDialog(
+                        context: context,
+                        error: state.error,
+                        onPressed: popScreen,
+                      );
+                    }
+                  },
+                  builder: (context, state) {
+                    return KayleeGridView(
+                      padding: EdgeInsets.all(Dimens.px8),
+                      childAspectRatio: 103 / 195,
+                      itemBuilder: (c, index) {
+                        final item = state.items.elementAt(index);
+                        return KayleeProdItemView.canSelect(
+                          data: KayleeProdItemData(
+                              name: item.name,
+                              image: item.image,
+                              price: item.price),
+                          selected: item.selected,
+                          onSelect: (selected) {
+                            prodsListBloc.select(product: item);
+                          },
+                        );
+                      },
+                      itemCount: state.items?.length,
+                      loadingBuilder: (context) {
+                        if (state.ended) return Container();
+                        return Align(
+                          alignment: Alignment.topCenter,
+                          child: CupertinoActivityIndicator(
+                            radius: Dimens.px16,
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
+              ),
+            ),
           ),
-        ),
+          Padding(
+            padding: const EdgeInsets.all(Dimens.px16),
+            child: Row(
+              children: [
+                Expanded(
+                  child: KayLeeRoundedButton.button2(
+                    text: Strings.huy,
+                    margin: const EdgeInsets.only(right: Dimens.px8),
+                    onPressed: () {
+                      widget.onCancel?.call();
+                      popScreen();
+                    },
+                  ),
+                ),
+                Expanded(
+                  child:
+                  BlocBuilder<SelectProdListBloc, LoadMoreModel<Product>>(
+                    builder: (context, state) {
+                      final enable =
+                          (prodsListBloc.selectedProds?.length ?? 0) > 0 &&
+                              (state.items?.length ?? 0) > 0;
+                      return enable
+                          ? KayLeeRoundedButton.normal(
+                        text: Strings.xacNhan,
+                        margin: const EdgeInsets.only(left: Dimens.px8),
+                        onPressed: () {
+                          widget.onConfirm
+                              ?.call(prodsListBloc.selectedProds);
+                          popScreen();
+                        },
+                      )
+                          : KayLeeRoundedButton.button3(
+                        text: Strings.xacNhan,
+                        margin: const EdgeInsets.only(left: Dimens.px8),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
       ),
     );
   }
