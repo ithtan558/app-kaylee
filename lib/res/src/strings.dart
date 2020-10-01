@@ -270,6 +270,7 @@ class Strings {
   static const String gioBatDau = 'Giờ bắt đầu';
   static const String hintTimKhachHangTheoTenHoacSdt =
       'Tìm theo tên KH/Số điện thoại';
+  static const String batBuocChonChiNhanh = 'Bắt buộc chọn chi nhánh';
 
   Strings._();
 }
