@@ -98,7 +98,7 @@ packages:
       name: build_runner_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.2.0"
+    version: "6.0.1"
   built_collection:
     dependency: transitive
     description:
@@ -174,7 +174,7 @@ packages:
     description:
       path: "."
       ref: "0.4.11"
-      resolved-ref: a22eb28df04c4dd9afbcba6dafd30857d4572b01
+      resolved-ref: "4a034a9cde8dacfc2b5d6576fef1c552f23e5800"
       url: "https://github.com/tungpham6195/flutter.core_plugin.git"
     source: git
     version: "0.4.11"
@@ -296,7 +296,7 @@ packages:
       name: firebase_messaging
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "7.0.0"
+    version: "7.0.1"
   fixnum:
     dependency: transitive
     description:
@@ -358,7 +358,7 @@ packages:
       name: flutter_widget_from_html_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.0+5"
+    version: "0.5.0+6"
   flutter_widgets:
     dependency: transitive
     description:
@@ -470,7 +470,7 @@ packages:
       name: logger
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.9.3"
+    version: "0.9.4"
   logging:
     dependency: transitive
     description:
@@ -624,7 +624,7 @@ packages:
       name: plugin_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.2"
+    version: "1.0.3"
   pool:
     dependency: transitive
     description:
