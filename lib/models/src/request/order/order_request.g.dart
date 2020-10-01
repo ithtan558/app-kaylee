@@ -20,8 +20,11 @@ Map<String, dynamic> _$OrderRequestToJson(OrderRequest instance) {
   writeNotNull('cart_supplier_information', instance.cartSuppInfo?.toJson());
   writeNotNull('supplier_id', _parseSupplierId(instance.supplier));
   writeNotNull('cart_customer', _parseCartCustomer(instance.customer));
-  writeNotNull('cart_employee', _parseCartEmployee(instance.cartEmployee));
+  writeNotNull('cart_employee', _parseCartEmployee(instance.employee));
   writeNotNull('cart_discount', instance.cartDiscount);
+  writeNotNull('id', instance.id);
+  writeNotNull('is_paid', parseBoolToInt(instance.isPaid));
+  writeNotNull('brand_id', _parseBrand(instance.brand));
   return val;
 }
 

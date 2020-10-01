@@ -23,6 +23,10 @@ int _parseSupplierId(Supplier supplier) {
   return supplier?.id;
 }
 
+int _parseBrand(Brand brand) {
+  return brand?.id;
+}
+
 @JsonSerializable(
   fieldRename: FieldRename.snake,
   includeIfNull: false,
@@ -32,13 +36,37 @@ int _parseSupplierId(Supplier supplier) {
 class OrderRequest {
   Map<String, dynamic> toJson() => _$OrderRequestToJson(this);
 
+  factory OrderRequest.copyFromOrder({Order order}) {
+    return OrderRequest(
+      id: order.id,
+      customer: order.customer,
+      cartDiscount: order.discount,
+      cartItems: order.orderDetails
+          .map((e) => OrderRequestItem(
+                serviceId: e.serviceId,
+                productId: e.productId,
+                quantity: e.quantity,
+                price: e.price,
+                name: e.name,
+              ))
+          .toList(),
+      employee: order.employee,
+      supplier: Supplier(
+        id: order.supplierId,
+        name: order.supplierName,
+      ),
+    );
+  }
+
   OrderRequest(
       {this.cartItems,
-      this.cartEmployee,
+      this.employee,
       this.cartSuppInfo,
       this.supplier,
       this.customer,
-      this.cartDiscount});
+      this.cartDiscount,
+      this.id,
+      this.isPaid});
 
   List<OrderRequestItem> cartItems;
 
@@ -54,23 +82,25 @@ class OrderRequest {
   @JsonKey(ignore: true)
   List<Product> get products => cartItems
       ?.where((cartItem) => cartItem.productId.isNotNull)
-      ?.map((cartItem) => Product(
-    id: cartItem.productId,
-    name: cartItem.name,
-    price: cartItem.price,
-    quantity: cartItem.quantity,
-  ))
+      ?.map((cartItem) =>
+      Product(
+        id: cartItem.productId,
+        name: cartItem.name,
+        price: cartItem.price,
+        quantity: cartItem.quantity,
+      ))
       ?.toList();
 
   @JsonKey(ignore: true)
   List<Service> get services => cartItems
       ?.where((cartItem) => cartItem.serviceId.isNotNull)
-      ?.map((cartItem) => Service(
-    id: cartItem.serviceId,
-    name: cartItem.name,
-    price: cartItem.price,
-    quantity: cartItem.quantity,
-  ))
+      ?.map((cartItem) =>
+      Service(
+        id: cartItem.serviceId,
+        name: cartItem.name,
+        price: cartItem.price,
+        quantity: cartItem.quantity,
+      ))
       ?.toList();
 
   ///khi order supplier
@@ -86,9 +116,14 @@ class OrderRequest {
   ///khi quản lý mua, thì nó là [UserInfo.id]
   ///khi order cho customer, thì nó là employee_id
   @JsonKey(toJson: _parseCartEmployee, name: 'cart_employee')
-  dynamic cartEmployee;
+  dynamic employee;
 
   int cartDiscount;
+  int id;
+  @JsonKey(toJson: parseBoolToInt)
+  bool isPaid;
+  @JsonKey(toJson: _parseBrand, name: 'brand_id')
+  Brand brand;
 }
 
 int _parseWard(Ward ward) {

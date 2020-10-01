@@ -126,7 +126,7 @@ class _PaymentInfoScreenState extends KayleeState<PaymentInfoScreen> {
         margin: EdgeInsets.all(Dimens.px8),
         onPressed: () {
           context.cart.updateOrderInfo(OrderRequest(
-            cartEmployee: context.user.getUserInfo()?.userInfo,
+            employee: context.user.getUserInfo()?.userInfo,
           ));
 
           bloc.sendOrder();
