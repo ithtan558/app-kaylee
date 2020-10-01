@@ -23,6 +23,7 @@ class _SelectCustomerFieldState extends KayleeState<SelectCustomerField> {
         bundle.isNotNull &&
         bundle.args is Customer) {
       this.widget.controller?.customer = bundle.args;
+      this.widget.onSelect.call(this.widget.controller?.customer);
       setState(() {});
     }
   }
