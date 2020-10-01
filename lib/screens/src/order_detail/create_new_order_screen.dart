@@ -90,7 +90,7 @@ class _CreateNewOrderScreenState extends KayleeState<CreateNewOrderScreen> {
               context.bloc<ReloadBloc>().reload(widget: CashierTab);
             },
           );
-        } else if (state is CreateOrderState) {
+        } else if (state is CreateOrderState || state is DoPaymentOrderState) {
           showKayleeAlertMessageYesDialog(
             context: context,
             message: state.message,

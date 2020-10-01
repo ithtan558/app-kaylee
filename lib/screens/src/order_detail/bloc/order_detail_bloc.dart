@@ -31,7 +31,7 @@ class OrderDetailBloc extends Cubit<SingleModel<OrderRequest>>
             status: OrderStatus.finished,
           )),
       onSuccess: ({message, result}) {
-        emit(CreateOrderState.copy(state
+        emit(DoPaymentOrderState.copy(state
           ..loading = false
           ..message = message));
       },
@@ -121,6 +121,15 @@ class UpdateOrderState extends SingleModel<OrderRequest> {
 
 class CreateOrderState extends SingleModel<OrderRequest> {
   CreateOrderState.copy(SingleModel old) {
+    this
+      ..loading = old?.loading
+      ..item = old?.item
+      ..message = old?.message;
+  }
+}
+
+class DoPaymentOrderState extends SingleModel<OrderRequest> {
+  DoPaymentOrderState.copy(SingleModel old) {
     this
       ..loading = old?.loading
       ..item = old?.item
