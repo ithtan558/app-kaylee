@@ -16,13 +16,16 @@ class KayleeProdItemView extends StatelessWidget {
         onTap: onTap,
       ));
 
-  factory KayleeProdItemView.canSelect(
-          {@required KayleeProdItemData data,
-          void Function(bool selected) onSelect}) =>
+  factory KayleeProdItemView.canSelect({
+    @required KayleeProdItemData data,
+    bool selected,
+    void Function(bool selected) onSelect,
+  }) =>
       KayleeProdItemView(
         child: _SelectingProItemView(
           data: data,
           onSelect: onSelect,
+          selected: selected,
         ),
       );
 
@@ -93,9 +96,7 @@ class _SelectingProItemViewState extends BaseState<_SelectingProItemView>
           animController.forward();
         }
         isSelected = !isSelected;
-        if (widget.onSelect.isNotNull) {
-          widget.onSelect(isSelected);
-        }
+        widget.onSelect?.call(isSelected);
       },
       child: Container(
         color: Colors.transparent,
