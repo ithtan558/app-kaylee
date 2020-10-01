@@ -4,6 +4,7 @@ import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/base/reload_bloc.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/home/tabs/cashier/bloc/order_itme_bloc.dart';
 import 'package:kaylee/screens/src/home/tabs/cashier/cashier_tab.dart';
 import 'package:kaylee/utils/utils.dart';
@@ -139,7 +140,12 @@ class _CashierItemState extends KayleeState<CashierItem> {
                       text: Strings.chiTiet,
                       margin: EdgeInsets.zero,
                       onPressed: () {
-                        //todo go to order detail
+                        context.push(PageIntent(
+                          screen: CreateNewOrderScreen,
+                          bundle: Bundle(NewOrderScreenData(
+                              order: widget.order,
+                              openFrom: OrderScreenOpenFrom.detailButton)),
+                        ));
                       },
                     ),
                   ),

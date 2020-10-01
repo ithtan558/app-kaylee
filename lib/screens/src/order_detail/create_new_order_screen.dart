@@ -17,29 +17,33 @@ import 'package:kaylee/widgets/widgets.dart';
 
 class NewOrderScreenData {
   final OrderScreenOpenFrom openFrom;
+  final Order order;
 
-  NewOrderScreenData({this.openFrom});
+  NewOrderScreenData({
+    this.openFrom,
+    this.order,
+  });
 }
 
 enum OrderScreenOpenFrom { detailButton, addNewButton, addNewFromReservation }
 
 class CreateNewOrderScreen extends StatefulWidget {
   static Widget newInstance() => RepositoryProvider(
-    create: (context) => CartModule.init(),
-    child: MultiBlocProvider(
+        create: (context) => CartModule.init(),
+        child: MultiBlocProvider(
           providers: [
             BlocProvider(
               create: (context) => OrderDetailBloc(
                 orderService: context.network.provideOrderService(),
-                order: context.getArguments<Order>(),
+                order: context.getArguments<NewOrderScreenData>()?.order,
                 cart: context.cart,
               ),
             ),
             BlocProvider(create: (context) => CartBloc()),
           ],
           child: CreateNewOrderScreen._(),
-    ),
-  );
+        ),
+      );
 
   CreateNewOrderScreen._();
 
