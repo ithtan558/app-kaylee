@@ -52,7 +52,70 @@ class _CartModuleImpl extends CartModule {
     if (_order.isNull) {
       _order = OrderRequest();
     }
-    this._order.cartItems = items;
+    this._order.cartItems ??= [];
+
+    if (items.isNullOrEmpty) return;
+    List<OrderRequestItem> newItems = items
+        .map((e) => e is Service
+            ? OrderRequestItem.copyFromService(service: e)
+            : OrderRequestItem.copyFromProduct(product: e))
+        .toList();
+
+    List<OrderRequestItem> notContainItems = [];
+    if (items is List<Service>) {
+      _order.cartItems
+          .where((cartItem) => cartItem.isService)
+          .forEach((cartItem) {
+        final newItem = newItems.singleWhere(
+          (newItem) => newItem.serviceId == cartItem.serviceId,
+          orElse: () => null,
+        );
+        if (newItem.isNull) {
+          notContainItems.add(cartItem);
+        }
+      });
+
+      notContainItems.forEach((notContainItem) {
+        _order.cartItems.removeWhere((cartItem) =>
+            cartItem.isService &&
+            cartItem.serviceId == notContainItem.serviceId);
+      });
+    } else if (items is List<Product>) {
+      _order.cartItems
+          .where((cartItem) => cartItem.isProduct)
+          .forEach((cartItem) {
+        final newItem = newItems.singleWhere(
+          (newItem) => newItem.productId == cartItem.productId,
+          orElse: () => null,
+        );
+        if (newItem.isNull) {
+          notContainItems.add(cartItem);
+        }
+      });
+
+      notContainItems.forEach((notContainItem) {
+        _order.cartItems.removeWhere((cartItem) =>
+            cartItem.isProduct &&
+            cartItem.productId == notContainItem.productId);
+      });
+    }
+
+    newItems.forEach((newItem) {
+      final oldItemIndex = _order.cartItems.indexWhere(
+        (cartItem) =>
+            (cartItem.serviceId.isNotNull &&
+                newItem.serviceId.isNotNull &&
+                cartItem.serviceId == newItem.serviceId) ||
+            (cartItem.productId.isNotNull &&
+                newItem.productId.isNotNull &&
+                cartItem.productId == newItem.productId),
+      );
+      if (oldItemIndex < 0) {
+        return _order.cartItems.add(newItem);
+      }
+      _order.cartItems.removeAt(oldItemIndex);
+      _order.cartItems.insert(oldItemIndex, newItem);
+    });
   }
 
   @override
