@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/res/src/colors_res.dart';
 import 'package:kaylee/res/src/dimens.dart';
@@ -1030,6 +1031,10 @@ class _UnitInputFieldState extends BaseState<UnitInputField> {
                     FocusScope.of(context).nextFocus();
                   }
                 },
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(
+                      RegExp(r'^[1-9]$|^[1-9][0-9]$|^(100)$'))
+                ],
                 decoration: InputDecoration(
                     enabledBorder: InputBorder.none,
                     focusedBorder: InputBorder.none,
