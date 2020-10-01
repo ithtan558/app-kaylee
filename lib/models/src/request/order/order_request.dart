@@ -58,14 +58,16 @@ class OrderRequest {
     );
   }
 
-  OrderRequest({this.cartItems,
-    this.employee,
-    this.cartSuppInfo,
-    this.supplier,
-    this.customer,
-    this.discount,
-    this.id,
-    this.isPaid});
+  OrderRequest(
+      {this.cartItems,
+      this.employee,
+      this.cartSuppInfo,
+      this.supplier,
+      this.customer,
+      this.discount,
+      this.id,
+      this.isPaid,
+      this.brand});
 
   List<OrderRequestItem> cartItems;
 
@@ -76,7 +78,7 @@ class OrderRequest {
         price = previous + e.price * e.quantity;
         return price;
       }) ??
-          0;
+      0;
 
   @JsonKey(ignore: true)
   List<Product> get products =>
@@ -89,7 +91,7 @@ class OrderRequest {
             price: cartItem.price,
             quantity: cartItem.quantity,
           ))
-      ?.toList();
+          ?.toList();
 
   @JsonKey(ignore: true)
   List<Service> get services =>
@@ -102,7 +104,7 @@ class OrderRequest {
             price: cartItem.price,
             quantity: cartItem.quantity,
           ))
-      ?.toList();
+          ?.toList();
 
   ///khi order supplier
   @JsonKey(name: 'cart_supplier_information')
