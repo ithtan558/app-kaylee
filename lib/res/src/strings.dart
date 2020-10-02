@@ -274,6 +274,8 @@ class Strings {
   static const String batBuocChonChiNhanh = 'Bắt buộc chọn chi nhánh';
   static const String soTienCanThanhToan = 'Số tiền cần thanh toán';
   static const String soTien = 'Số tiền';
+  static const String inHoaDon = 'In hoá đơn';
+  static const String veDsDonHang = 'Về danh sách đơn hàng';
 
   Strings._();
 }

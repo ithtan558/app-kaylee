@@ -16,12 +16,26 @@ class OrderDetailBloc extends Cubit<SingleModel<OrderRequest>>
     this.cart,
   }) : super(SingleModel());
 
-  void pay() {
+  void createOrderAndPay() {
     cart.updateOrderInfo(OrderRequest(isPaid: true));
-    create();
+    emit(SingleModel.copy(state..loading = true));
+    RequestHandler(
+      request: orderService.sendOrder(orderRequest: cart.getOrder()),
+      onSuccess: ({message, result}) {
+        emit(DoPaymentOrderState.copy(state
+          ..loading = false
+          ..message = message));
+      },
+      onFailed: (code, {error}) {
+        emit(SingleModel.copy(state
+          ..loading = false
+          ..error = error
+          ..code = code));
+      },
+    );
   }
 
-  void updatePayStatus() {
+  void payOrder() {
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
       request: orderService.updateOrderStatus(

@@ -90,11 +90,34 @@ class _CreateNewOrderScreenState extends KayleeState<CreateNewOrderScreen> {
               context.bloc<ReloadBloc>().reload(widget: CashierTab);
             },
           );
-        } else if (state is CreateOrderState || state is DoPaymentOrderState) {
+        } else if (state is CreateOrderState) {
           showKayleeAlertMessageYesDialog(
             context: context,
             message: state.message,
             onPressed: popScreen,
+            onDismiss: () {
+              context.bloc<ReloadBloc>().reload(widget: CashierTab);
+              popScreen();
+            },
+          );
+        } else if (state is DoPaymentOrderState) {
+          showKayleeAlertDialog(
+            context: context,
+            view: KayleeAlertDialogView(
+              title: state.message.title,
+              content: state.message.content,
+              actions: [
+                KayleeAlertDialogAction(
+                  title: Strings.inHoaDon,
+                  isDefaultAction: true,
+                  onPressed: popScreen,
+                ),
+                KayleeAlertDialogAction(
+                  title: Strings.veDsDonHang,
+                  onPressed: popScreen,
+                ),
+              ],
+            ),
             onDismiss: () {
               context.bloc<ReloadBloc>().reload(widget: CashierTab);
               popScreen();
@@ -244,14 +267,14 @@ class _CreateNewOrderScreenState extends KayleeState<CreateNewOrderScreen> {
                                 onConfirm: () {
                                   if (openFrom ==
                                       OrderScreenOpenFrom.detailButton) {
-                                    _bloc.updatePayStatus();
+                                    _bloc.payOrder();
                                   } else if (openFrom ==
                                       OrderScreenOpenFrom.addNewButton) {
                                     _cart.updateOrderInfo(OrderRequest(
                                       brand: brandController.value,
                                       employee: employeeController.value,
                                     ));
-                                    _bloc.pay();
+                                    _bloc.createOrderAndPay();
                                   }
                                 },
                               ),
