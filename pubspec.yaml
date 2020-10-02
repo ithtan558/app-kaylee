@@ -23,8 +23,8 @@ dependencies:
   image_picker: ^0.6.7+11
   flutter_widget_from_html_core: ^0.5.0+6
   package_info: ^0.4.3
-  firebase_messaging: ^7.0.1
-  flutter_local_notifications: ^1.4.4+4
+  firebase_messaging: ^7.0.2
+  flutter_local_notifications: ^1.4.4+5
 
   anth_package:
     path: ../anth_package
