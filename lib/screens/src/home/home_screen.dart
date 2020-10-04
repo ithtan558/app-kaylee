@@ -38,7 +38,7 @@ class _HomeScreenState extends KayleeState<HomeScreen> {
         AndroidInitializationSettings('@mipmap/ic_launcher');
     var initializationSettingsIOS = IOSInitializationSettings();
     var initializationSettings = InitializationSettings(
-        initializationSettingsAndroid, initializationSettingsIOS);
+        android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
 
     notificationsPlugin.initialize(initializationSettings,
         onSelectNotification: (_) async {
@@ -97,12 +97,16 @@ class _HomeScreenState extends KayleeState<HomeScreen> {
   }
 
   _showNotificationLocal(String title, String body) {
-    final notificationId = DateTime.now().second.toString();
+    final notificationId = DateTime
+        .now()
+        .second
+        .toString();
     final androidDetail = AndroidNotificationDetails(
         notificationId, 'FcmNotification', '',
-        priority: Priority.High, importance: Importance.Max);
+        priority: Priority.high, importance: Importance.max);
     final iosDetail = IOSNotificationDetails();
-    final platformDetail = NotificationDetails(androidDetail, iosDetail);
+    final platformDetail =
+    NotificationDetails(android: androidDetail, iOS: iosDetail);
     notificationsPlugin.show(
         int.parse(notificationId), title, body, platformDetail);
   }
