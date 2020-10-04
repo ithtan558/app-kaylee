@@ -36,6 +36,8 @@ class KayleePickerTextField<T> extends StatefulWidget {
   ///nếu [useForFilter] == true (khi [KayleePickerTextField] đc gắn ở [FilterScreen]) => hiện item 'Tất cả'
   final bool useForFilter;
 
+  final ValueSetter<T> onSelect;
+
   KayleePickerTextField({
     Key key,
     this.hint,
@@ -43,6 +45,7 @@ class KayleePickerTextField<T> extends StatefulWidget {
     this.title,
     this.controller,
     this.useForFilter,
+    this.onSelect,
   }) : super(key: key);
 
   @override
@@ -189,6 +192,7 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField>
         onDone: () {
           if (currentValue != null) {
             widget.controller?.value = currentValue;
+            widget?.onSelect?.call(currentValue);
           }
         },
         onDismiss: () {
