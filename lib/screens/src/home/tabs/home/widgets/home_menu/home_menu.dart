@@ -14,9 +14,9 @@ import 'package:kaylee/utils/utils.dart';
 
 class HomeMenu extends StatefulWidget {
   static Widget newInstance() => BlocProvider<HomeMenuBloc>(
-    create: (context) => HomeMenuBloc(),
-    child: HomeMenu._(),
-  );
+        create: (context) => HomeMenuBloc(),
+        child: HomeMenu._(),
+      );
 
   HomeMenu._();
 
@@ -72,15 +72,18 @@ class _HomeMenuState extends BaseState<HomeMenu> {
 
   @override
   Widget build(BuildContext context) {
-    final userInfo = context.user.getUserInfo().userInfo;
+    final userInfo = context.user
+        .getUserInfo()
+        .userInfo;
     final menuItems = [
-      HomeMenuItem(
-        title: Strings.qlChiNhanh,
-        icon: Images.ic_store,
-        onTap: () {
-          context.push(PageIntent(screen: BrandListScreen));
-        },
-      ),
+      if (userInfo.userRole != UserRole.EMPLOYEE)
+        HomeMenuItem(
+          title: Strings.qlChiNhanh,
+          icon: Images.ic_store,
+          onTap: () {
+            context.push(PageIntent(screen: BrandListScreen));
+          },
+        ),
       HomeMenuItem(
         title: Strings.dsDichVu,
         icon: Images.ic_service_list,
@@ -214,28 +217,29 @@ class _HomeMenuState extends BaseState<HomeMenu> {
           ],
         ),
       ),
-      Positioned.fill(
-          top: Dimens.px56 + Dimens.px32 + homeMenuItemHeight,
-          bottom: Dimens.px24,
-          child: Container(
-            alignment: Alignment.center,
-            child: Padding(
-              padding: const EdgeInsets.only(
-                  left: Dimens.px16, right: Dimens.px16, top: Dimens.px16),
-              child: BlocBuilder<HomeMenuBloc, HomeMenuState>(
-                builder: (context, state) {
-                  return Opacity(
-                    opacity: state.menuRow2CollapsePercent,
-                    child: Transform.scale(
-                      scale: state.menuRow2CollapsePercent,
-                      alignment: Alignment.centerRight,
-                      child: menuRow2,
-                    ),
-                  );
-                },
+      if(row2Items.isNotNullAndEmpty)
+        Positioned.fill(
+            top: Dimens.px56 + Dimens.px32 + homeMenuItemHeight,
+            bottom: Dimens.px24,
+            child: Container(
+              alignment: Alignment.center,
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    left: Dimens.px16, right: Dimens.px16, top: Dimens.px16),
+                child: BlocBuilder<HomeMenuBloc, HomeMenuState>(
+                  builder: (context, state) {
+                    return Opacity(
+                      opacity: state.menuRow2CollapsePercent,
+                      child: Transform.scale(
+                        scale: state.menuRow2CollapsePercent,
+                        alignment: Alignment.centerRight,
+                        child: menuRow2,
+                      ),
+                    );
+                  },
+                ),
               ),
-            ),
-          )),
+            )),
       Positioned.fill(
         child: UserName(),
       ),
