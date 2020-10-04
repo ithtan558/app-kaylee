@@ -309,7 +309,7 @@ class PriceInputField extends StatefulWidget {
       this.focusNode,
       this.nextFocusNode,
       this.initText,
-      this.isStaticTField});
+      this.isStaticTField = false});
 
   @override
   _PriceInputFieldState createState() => _PriceInputFieldState();
