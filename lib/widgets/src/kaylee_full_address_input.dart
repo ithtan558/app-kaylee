@@ -29,28 +29,26 @@ class _KayleeFullAddressInputState extends BaseState<KayleeFullAddressInput> {
   void initState() {
     super.initState();
     widget.controller?._view = this;
-    addressTFController.text = widget?.controller?.initAddress ?? '';
-    cityController.value = widget?.controller?.initCity;
-    districtController.value = widget?.controller?.initDistrict;
-    wardController.value = widget?.controller?.initWard;
+    addressTFController.text = widget.controller?.initAddress ?? '';
+    cityController.value = widget.controller?.initCity;
+    districtController.value = widget.controller?.initDistrict;
+    wardController.value = widget.controller?.initWard;
   }
 
   @override
   void didUpdateWidget(KayleeFullAddressInput oldWidget) {
-    if (widget?.controller?.initAddress != oldWidget.controller?.initAddress) {
-      addressTFController.text = widget?.controller?.initAddress ?? '';
+    if (addressTFController.text != oldWidget.controller?.initAddress) {
+      addressTFController.text = widget.controller?.initAddress ?? '';
     }
-    if (widget?.controller?.initCity?.id !=
-        oldWidget.controller?.initCity?.id) {
-      cityController.value = widget?.controller?.initCity;
+    if (cityController.value?.id != oldWidget.controller?.initCity?.id) {
+      cityController.value = widget.controller?.initCity;
     }
-    if (widget?.controller?.initDistrict?.id !=
+    if (districtController.value?.id !=
         oldWidget.controller?.initDistrict?.id) {
-      districtController.value = widget?.controller?.initDistrict;
+      districtController.value = widget.controller?.initDistrict;
     }
-    if (widget?.controller?.initWard?.id !=
-        oldWidget.controller?.initWard?.id) {
-      wardController.value = widget?.controller?.initWard;
+    if (wardController.value?.id != oldWidget.controller?.initWard?.id) {
+      wardController.value = widget.controller?.initWard;
     }
     super.didUpdateWidget(oldWidget);
   }
