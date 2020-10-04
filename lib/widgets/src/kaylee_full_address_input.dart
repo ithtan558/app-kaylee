@@ -68,12 +68,10 @@ class _KayleeFullAddressInputState extends BaseState<KayleeFullAddressInput> {
         create: (context) => KayleePickerTextFieldModel(),
         child: Column(
           children: [
-            KayleeTextField.normal(
+            KayleePickerTextField<City>(
               title: widget.title,
-              hint: Strings.diaChiHienTaiHint,
-              textInputAction: TextInputAction.done,
-              controller: addressTFController,
-              focusNode: addressFocus,
+              hint: Strings.tinhTpHint,
+              controller: cityController,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: Dimens.px8),
@@ -95,9 +93,11 @@ class _KayleeFullAddressInputState extends BaseState<KayleeFullAddressInput> {
                 ],
               ),
             ),
-            KayleePickerTextField<City>(
-              hint: Strings.tinhTpHint,
-              controller: cityController,
+            KayleeTextField.normal(
+              hint: Strings.diaChiHienTaiHint,
+              textInputAction: TextInputAction.done,
+              controller: addressTFController,
+              focusNode: addressFocus,
             ),
           ],
         ),
