@@ -5,7 +5,7 @@ description: Kaylee application.
 # pub.dev using `pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 0.0.7+00007
+version: 0.0.8+00008
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -21,10 +21,10 @@ dependencies:
   permission_handler: ^5.0.1+1
   sticky_headers: ^0.1.8+1
   image_picker: ^0.6.7+11
-  flutter_widget_from_html_core: ^0.5.0+6
+  flutter_widget_from_html_core: ^0.5.0+7
   package_info: ^0.4.3
   firebase_messaging: ^7.0.2
-  flutter_local_notifications: ^1.5.0
+  flutter_local_notifications: ^2.0.0
 
   anth_package:
     path: ../anth_package
