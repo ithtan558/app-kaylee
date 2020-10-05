@@ -78,16 +78,16 @@ class _KayleeFullAddressInputState extends BaseState<KayleeFullAddressInput> {
               child: Row(
                 children: [
                   Expanded(
-                    child: KayleePickerTextField<Ward>(
-                      hint: Strings.phuong,
-                      controller: wardController,
+                    child: KayleePickerTextField<District>(
+                      hint: Strings.quan,
+                      controller: districtController,
                     ),
                   ),
                   SizedBox(width: Dimens.px8),
                   Expanded(
-                    child: KayleePickerTextField<District>(
-                      hint: Strings.quan,
-                      controller: districtController,
+                    child: KayleePickerTextField<Ward>(
+                      hint: Strings.phuong,
+                      controller: wardController,
                     ),
                   ),
                 ],
