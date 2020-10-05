@@ -15,8 +15,8 @@ import 'package:kaylee/widgets/widgets.dart';
 class HistoryTab extends StatefulWidget {
   static Widget newInstance() => BlocProvider(
       create: (context) => HistoryTabBloc(
-        orderService: context.network.provideOrderService(),
-      ),
+            orderService: context.network.provideOrderService(),
+          ),
       child: HistoryTab._());
 
   HistoryTab._();
@@ -46,6 +46,13 @@ class _HistoryTabState extends KayleeState<HistoryTab>
       }
     });
     _bloc.loadOrders();
+  }
+
+  @override
+  void onReloadWidget(Type widget, Bundle bundle) {
+    if (widget == HistoryTab) {
+      _bloc.refresh();
+    }
   }
 
   @override

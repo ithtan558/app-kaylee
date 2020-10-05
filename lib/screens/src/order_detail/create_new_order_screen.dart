@@ -9,6 +9,7 @@ import 'package:kaylee/components/components.dart';
 import 'package:kaylee/models/models.dart' hide OrderItem;
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/home/tabs/cashier/cashier_tab.dart';
+import 'package:kaylee/screens/src/home/tabs/history/history_tab.dart';
 import 'package:kaylee/screens/src/order_detail/bloc/order_detail_bloc.dart';
 import 'package:kaylee/screens/src/order_detail/widgets/payment_method_dialog.dart';
 import 'package:kaylee/screens/src/order_detail/widgets/select_customer_field.dart';
@@ -120,6 +121,7 @@ class _CreateNewOrderScreenState extends KayleeState<CreateNewOrderScreen> {
             ),
             onDismiss: () {
               context.bloc<ReloadBloc>().reload(widget: CashierTab);
+              context.bloc<ReloadBloc>().reload(widget: HistoryTab);
               popScreen();
             },
           );
