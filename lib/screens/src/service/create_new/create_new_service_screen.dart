@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/base/reload_bloc.dart';
 import 'package:kaylee/models/models.dart';
@@ -42,7 +43,11 @@ class _CreateNewServiceScreenState extends KayleeState<CreateNewServiceScreen> {
   final nameTfController = TextEditingController();
   final nameFocus = FocusNode();
   final brandSelectController = BrandSelectTFController();
-  final priceTfController = TextEditingController();
+  final priceTfController = MoneyMaskedTextController(
+    thousandSeparator: '.',
+    precision: 0,
+    decimalSeparator: '',
+  );
   final priceFocus = FocusNode();
   final descriptionTfController = TextEditingController();
   final descriptionFocus = FocusNode();
