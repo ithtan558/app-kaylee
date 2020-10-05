@@ -148,7 +148,8 @@ class _CreateNewServiceScreenState extends KayleeState<CreateNewServiceScreen> {
                             ..description = descriptionTfController.text
                             ..brands = brandSelectController.brands
                             ..time = timeController.value?.inMinutes
-                            ..price = int.tryParse(priceTfController.text)
+                            ..price = int.tryParse(
+                                priceTfController.text.replaceAll('.', ''))
                             ..imageFile = bannerPickerController.image
                             ..category = serviceCateController.value;
                           bloc.update();
@@ -167,7 +168,8 @@ class _CreateNewServiceScreenState extends KayleeState<CreateNewServiceScreen> {
                     description: descriptionTfController.text,
                     brands: brandSelectController.brands,
                     time: timeController.value?.inMinutes,
-                    price: int.tryParse(priceTfController.text),
+                    price: int.tryParse(
+                        priceTfController.text.replaceAll('.', '')),
                     imageFile: bannerPickerController.image,
                     category: serviceCateController.value)
                 ..create();

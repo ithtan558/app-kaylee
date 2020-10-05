@@ -146,7 +146,8 @@ class _CreateNewProdScreenState extends KayleeState<CreateNewProdScreen> {
                           bloc.state.item
                             ..name = nameTfController.text
                             ..brands = brandSelectController.brands
-                            ..price = int.tryParse(priceTfController.text)
+                            ..price = int.tryParse(
+                                priceTfController.text.replaceAll('.', ''))
                             ..category = prodCateController.value
                             ..description = descriptionTfController.text
                             ..imageFile = bannerPickerController.image;
@@ -163,7 +164,8 @@ class _CreateNewProdScreenState extends KayleeState<CreateNewProdScreen> {
               bloc.state.item = Product(
                   name: nameTfController.text,
                   brands: brandSelectController.brands,
-                  price: int.tryParse(priceTfController.text),
+                  price:
+                      int.tryParse(priceTfController.text.replaceAll('.', '')),
                   category: prodCateController.value,
                   description: descriptionTfController.text,
                   imageFile: bannerPickerController.image);
