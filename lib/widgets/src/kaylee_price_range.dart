@@ -22,7 +22,7 @@ class KayleePriceRange extends StatefulWidget {
 class _KayleePriceRangeState extends BaseState<KayleePriceRange>
     implements KayleePriceRangeView {
   RangeValues rangeValues;
-  final double min = 0, max = 100000000;
+  final double min = 0, max = 10000000;
 
   @override
   void initState() {
