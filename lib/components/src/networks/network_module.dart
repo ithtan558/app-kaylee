@@ -34,6 +34,8 @@ abstract class NetworkModule extends Network {
   CommissionService provideCommissionService();
 
   ReportService provideReportService();
+
+  ReservationService provideReservationService();
 }
 
 class _NetworkModuleImpl extends NetworkModule {
@@ -77,4 +79,7 @@ class _NetworkModuleImpl extends NetworkModule {
 
   @override
   ReportService provideReportService() => ReportService(dio);
+
+  @override
+  ReservationService provideReservationService() => ReservationService(dio);
 }
