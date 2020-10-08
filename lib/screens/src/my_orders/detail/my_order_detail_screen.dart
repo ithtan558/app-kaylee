@@ -66,16 +66,28 @@ class _MyOrderDetailScreenState extends KayleeState<MyOrderDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: KayleeAppBar(
+      appBar: KayleeAppBar.hyperTextAction(
         title: Strings.donHang.plus(' #${_bloc.order?.code ?? ''}'),
-        actions: [
-          KayleeAppBarAction.hyperText(
-            title: Strings.huyDon,
-            onTap: () {
-              _bloc.cancelOrder();
-            },
-          ),
-        ],
+        actionTitle: Strings.huyDon,
+        onActionClick: () {
+          showKayleeAlertDialog(
+              context: context,
+              view: KayleeAlertDialogView(
+                content: Strings.banDaChacChanHuyDonHangNay,
+                actions: [
+                  KayleeAlertDialogAction.huy(
+                    onPressed: popScreen,
+                  ),
+                  KayleeAlertDialogAction.dongY(
+                    isDefaultAction: true,
+                    onPressed: () {
+                      popScreen();
+                      _bloc.cancelOrder();
+                    },
+                  )
+                ],
+              ));
+        },
       ),
       body: BlocBuilder<MyOrderDetailBloc, SingleModel<Order>>(
         buildWhen: (previous, current) => current is OrderDetailModel,
