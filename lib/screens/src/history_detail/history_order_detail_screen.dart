@@ -123,6 +123,15 @@ class _HistoryOrderDetailScreenState
                                 title: Strings.tongChiPhi,
                                 price: state.item.amount,
                               ),
+                              if ((state.item.discount ?? 0) > 0)
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(top: Dimens.px8),
+                                  child: KayleeTitlePriceText.normal(
+                                    title: Strings.giamGia,
+                                    price: state.item.discount,
+                                  ),
+                                ),
                               Padding(
                                 padding: const EdgeInsets.only(top: Dimens.px8),
                                 child: KayleeTitlePriceText.bold(
