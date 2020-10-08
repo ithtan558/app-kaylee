@@ -9,6 +9,7 @@ export 'src/notification/notification_service.dart';
 export 'src/order/order_service.dart';
 export 'src/product/product_service.dart';
 export 'src/report/report_service.dart';
+export 'src/reservation/reservation_service.dart';
 export 'src/role/role_service.dart';
 export 'src/service/serv_service.dart';
 export 'src/supplier/supplier_service.dart';
