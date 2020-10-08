@@ -276,6 +276,8 @@ class Strings {
   static const String soTien = 'Số tiền';
   static const String inHoaDon = 'In hoá đơn';
   static const String veDsDonHang = 'Về danh sách đơn hàng';
+  static const String banDaChacChanHuyDonHangNay =
+      'Bạn đã chắc chắn muốn huỷ đơn hàng này';
 
   Strings._();
 }
