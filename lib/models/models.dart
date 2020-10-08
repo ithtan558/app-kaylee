@@ -44,6 +44,8 @@ export 'src/response/product/product.dart';
 export 'src/response/report/employee/employee_revenue.dart';
 export 'src/response/report/revenue/revenue.dart';
 export 'src/response/report/service/service_revenue.dart';
+export 'src/response/reservation/list/reservations.dart';
+export 'src/response/reservation/reservation.dart';
 export 'src/response/role/role.dart';
 export 'src/response/service/list/services.dart';
 export 'src/response/service/service.dart';
