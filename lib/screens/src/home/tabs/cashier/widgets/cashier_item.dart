@@ -106,8 +106,8 @@ class _CashierItemState extends KayleeState<CashierItem> {
                       )),
                       Expanded(
                           child: KayleePriceText.normal(
-                            widget.order.amount,
-                            textAlign: TextAlign.end,
+                        widget.order.amount,
+                        textAlign: TextAlign.end,
                       )),
                     ],
                   ),
@@ -130,7 +130,23 @@ class _CashierItemState extends KayleeState<CashierItem> {
                       text: Strings.huy,
                       margin: EdgeInsets.zero,
                       onPressed: () {
-                        orderItemBloc.cancelOrder();
+                        showKayleeAlertDialog(
+                            context: context,
+                            view: KayleeAlertDialogView(
+                              content: Strings.banDaChacChanHuyDonHangNay,
+                              actions: [
+                                KayleeAlertDialogAction.huy(
+                                  onPressed: popScreen,
+                                ),
+                                KayleeAlertDialogAction.dongY(
+                                  isDefaultAction: true,
+                                  onPressed: () {
+                                    popScreen();
+                                    orderItemBloc.cancelOrder();
+                                  },
+                                )
+                              ],
+                            ));
                       },
                     ),
                   ),
