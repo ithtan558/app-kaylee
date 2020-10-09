@@ -10,6 +10,7 @@ import 'package:kaylee/widgets/widgets.dart';
 
 class ReservationItem extends StatefulWidget {
   static Widget newInstance({Reservation reservation}) => BlocProvider(
+      key: ValueKey(reservation),
       create: (context) => ReservationItemBloc(
             service: context.network.provideReservationService(),
             reservation: reservation,
