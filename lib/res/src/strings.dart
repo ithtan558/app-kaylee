@@ -278,6 +278,7 @@ class Strings {
   static const String veDsDonHang = 'Về danh sách đơn hàng';
   static const String banDaChacChanHuyDonHangNay =
       'Bạn đã chắc chắn muốn huỷ đơn hàng này';
+  static const String soLuongKhach = 'Số lượng khách';
 
   Strings._();
 }
