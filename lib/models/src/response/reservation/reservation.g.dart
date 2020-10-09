@@ -12,7 +12,7 @@ Reservation _$ReservationFromJson(Map<String, dynamic> json) {
     code: json['code'] as String,
     firstName: json['first_name'] as String,
     lastName: json['last_name'] as String,
-    status: json['status'] as int,
+    status: _parseReservationStatusFromJson(json['status'] as int),
     quantity: json['quantity'] as int,
     datetime: json['datetime'] == null
         ? null
@@ -27,7 +27,7 @@ Map<String, dynamic> _$ReservationToJson(Reservation instance) =>
       'code': instance.code,
       'first_name': instance.firstName,
       'last_name': instance.lastName,
-      'status': instance.status,
+      'status': _parseReservationStatusToJson(instance.status),
       'quantity': instance.quantity,
       'datetime': instance.datetime?.toIso8601String(),
       'customer_id': instance.customerId,

@@ -26,7 +26,11 @@ class Reservation {
   String code;
   String firstName;
   String lastName;
-  int status;
+  @JsonKey(
+    fromJson: _parseReservationStatusFromJson,
+    toJson: _parseReservationStatusToJson,
+  )
+  ReservationStatus status;
   int quantity;
   DateTime datetime;
   int customerId;
@@ -37,4 +41,27 @@ class Reservation {
         firstName: firstName,
         lastName: lastName,
       );
+}
+
+ReservationStatus _parseReservationStatusFromJson(int json) {
+  try {
+    return ReservationStatus.values.elementAt(json - 1);
+  } catch (e) {
+    return null;
+  }
+}
+
+int _parseReservationStatusToJson(ReservationStatus status) {
+  try {
+    return status.index + 1;
+  } catch (e) {
+    return null;
+  }
+}
+
+enum ReservationStatus {
+  booked,
+  came,
+  ordered,
+  canceled,
 }
