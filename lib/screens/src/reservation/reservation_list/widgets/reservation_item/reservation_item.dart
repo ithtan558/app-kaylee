@@ -27,8 +27,6 @@ class _ReservationItemState extends KayleeState<ReservationItem> {
 
   @override
   Widget build(BuildContext context) {
-    final status = _bloc.reservation.status;
-
     return KayleeCartView(
       borderRadius: BorderRadius.circular(Dimens.px5),
       child: BlocConsumer<ReservationItemBloc, SingleModel>(
@@ -49,6 +47,7 @@ class _ReservationItemState extends KayleeState<ReservationItem> {
           }
         },
         builder: (context, state) {
+          final status = _bloc.reservation.status;
           return Column(
             children: [
               Container(
@@ -63,10 +62,10 @@ class _ReservationItemState extends KayleeState<ReservationItem> {
                     KayleeText(
                       '#${_bloc.reservation.code}',
                       style: TextStyles.normal16W500.copyWith(
-                          color: _bloc.reservation.status ==
-                              ReservationStatus.came
-                              ? Colors.white
-                              : ColorsRes.text),
+                          color:
+                              _bloc.reservation.status == ReservationStatus.came
+                                  ? Colors.white
+                                  : ColorsRes.text),
                     ),
                     _buildStatusTitle(reservation: _bloc.reservation),
                   ],
@@ -106,7 +105,15 @@ class _ReservationItemState extends KayleeState<ReservationItem> {
                         child: KayLeeRoundedButton.normal(
                           text: Strings.chinhSua,
                           margin: EdgeInsets.zero,
-                          onPressed: () {},
+                          onPressed: () {
+                            context.push(PageIntent(
+                                screen: CreateNewReservationScreen,
+                                bundle: Bundle(CreateNewReservationScreenData(
+                                  openFrom:
+                                  ReservationScreenOpenFrom.editButton,
+                                  reservation: _bloc.reservation,
+                                ))));
+                          },
                         ),
                       ),
                       SizedBox(width: Dimens.px16),
