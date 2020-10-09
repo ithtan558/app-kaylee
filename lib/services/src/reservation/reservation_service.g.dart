@@ -42,4 +42,29 @@ class _ReservationService implements ReservationService {
     final value = ResponseModel<Reservations>.fromJson(_result.data);
     return value;
   }
+
+  @override
+  updateStatus({reservationId, id, status}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = FormData();
+    if (id != null) {
+      _data.fields.add(MapEntry('id', id.toString()));
+    }
+    if (status != null) {
+      _data.fields.add(MapEntry('status', status.toString()));
+    }
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        'reservation/update-status/$reservationId',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    return value;
+  }
 }

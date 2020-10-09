@@ -17,4 +17,13 @@ abstract class ReservationService {
       @Query('sort') String sort,
       @Query('page') int page,
       @Query('limit') int limit});
+
+  ///2= đã đến
+  ///4= huỷ
+  @POST('reservation/update-status/{reservationId}')
+  Future<ResponseModel> updateStatus({
+    @Path() int reservationId,
+    @Part() int id,
+    @Part() int status,
+  });
 }
