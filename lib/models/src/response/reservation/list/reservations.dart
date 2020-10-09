@@ -5,7 +5,7 @@ import 'package:kaylee/models/models.dart';
 part 'reservations.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class Reservations extends PageData<Reservation> {
+class Reservations extends PageData<List<Reservation>> {
   factory Reservations.fromJson(Map<String, dynamic> json) =>
       _$ReservationsFromJson(json);
 

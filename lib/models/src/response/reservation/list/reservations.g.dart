@@ -12,9 +12,10 @@ Reservations _$ReservationsFromJson(Map<String, dynamic> json) {
     ..limit = json['limit'] as int
     ..total = json['total'] as int
     ..pages = json['pages'] as int
-    ..items = json['items'] == null
-        ? null
-        : Reservation.fromJson(json['items'] as Map<String, dynamic>);
+    ..items = (json['items'] as List)
+        ?.map((e) =>
+            e == null ? null : Reservation.fromJson(e as Map<String, dynamic>))
+        ?.toList();
 }
 
 Map<String, dynamic> _$ReservationsToJson(Reservations instance) =>
