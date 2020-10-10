@@ -4,36 +4,52 @@ import 'package:kaylee/models/models.dart';
 
 part 'reservation.g.dart';
 
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable(
+  fieldRename: FieldRename.snake,
+  explicitToJson: true,
+)
 class Reservation {
   factory Reservation.fromJson(Map<String, dynamic> json) =>
       _$ReservationFromJson(json);
 
   Map<String, dynamic> toJson() => _$ReservationToJson(this);
 
-  Reservation({
-    this.id,
-    this.code,
-    this.firstName,
-    this.lastName,
-    this.status,
-    this.quantity,
-    this.datetime,
-    this.customerId,
-  });
+  Reservation(
+      {this.id,
+      this.brandId,
+      this.brandName,
+      this.code,
+      this.firstName,
+      this.lastName,
+      this.phone,
+      this.address,
+      this.status,
+      this.datetime,
+      this.quantity,
+      this.note,
+      this.customerId,
+      this.brand,
+      this.city,
+      this.district,
+      this.wards});
 
   int id;
   String code;
+  int brandId;
+  String brandName;
+  int customerId;
   String firstName;
   String lastName;
+  String phone;
+  String address;
   @JsonKey(
     fromJson: _parseReservationStatusFromJson,
     toJson: _parseReservationStatusToJson,
   )
   ReservationStatus status;
-  int quantity;
   DateTime datetime;
-  int customerId;
+  int quantity;
+  String note;
 
   @JsonKey(ignore: true)
   Customer get customer => Customer(
@@ -41,6 +57,11 @@ class Reservation {
         firstName: firstName,
         lastName: lastName,
       );
+
+  Brand brand;
+  City city;
+  District district;
+  Ward wards;
 }
 
 ReservationStatus _parseReservationStatusFromJson(int json) {
