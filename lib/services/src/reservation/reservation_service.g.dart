@@ -116,7 +116,7 @@ class _ReservationService implements ReservationService {
       _data.fields.add(MapEntry('datetime', datetime));
     }
     if (brandId != null) {
-      _data.fields.add(MapEntry('brand_id', brandId));
+      _data.fields.add(MapEntry('brand_id', brandId.toString()));
     }
     final Response<Map<String, dynamic>> _result = await _dio.request(
         'reservation',
@@ -181,7 +181,7 @@ class _ReservationService implements ReservationService {
       _data.fields.add(MapEntry('datetime', datetime));
     }
     if (brandId != null) {
-      _data.fields.add(MapEntry('brand_id', brandId));
+      _data.fields.add(MapEntry('brand_id', brandId.toString()));
     }
     if (id != null) {
       _data.fields.add(MapEntry('id', id.toString()));

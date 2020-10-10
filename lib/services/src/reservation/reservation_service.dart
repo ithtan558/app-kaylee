@@ -40,7 +40,7 @@ abstract class ReservationService {
     @Part() int quantity,
     @Part() String note,
     @Part() String datetime,
-    @Part(name: 'brand_id') String brandId,
+    @Part(name: 'brand_id') int brandId,
   });
 
   @POST('reservation/{reservationId}')
@@ -56,7 +56,7 @@ abstract class ReservationService {
     @Part() int quantity,
     @Part() String note,
     @Part() String datetime,
-    @Part(name: 'brand_id') String brandId,
+    @Part(name: 'brand_id') int brandId,
     @Part() int id,
     @Path() int reservationId,
   });
