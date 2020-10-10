@@ -282,6 +282,7 @@ class Strings {
   static const String xoaHen = 'Xoá hẹn';
   static const String banDaChacChanHuyLichHenNay =
       'Bạn đã chắc chắn mún hủy lịch hẹn này';
+  static const String tinhTrang = 'Tình trạng';
 
   Strings._();
 }
