@@ -15,7 +15,7 @@ class KayleeQuantitySlider extends StatefulWidget {
 
 class _KayleeQuantitySliderState extends State<KayleeQuantitySlider> {
   final minQuantity = 1;
-  final maxQuantity = 100;
+  final maxQuantity = 10;
 
   @override
   void initState() {
