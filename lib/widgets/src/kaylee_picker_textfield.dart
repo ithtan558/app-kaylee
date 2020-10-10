@@ -208,6 +208,12 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField>
             child: T == DateTime
                 ? _DatePickerView(
                     intiValue: widget.controller?.value,
+                    maxDate: widget.controller is DatePickInputController
+                        ? (widget.controller as DatePickInputController).maxDate
+                        : null,
+                    minDate: widget.controller is DatePickInputController
+                        ? (widget.controller as DatePickInputController).minDate
+                        : null,
                     onSelectedItemChanged: (value) {
                       currentValue = value as T;
                     },
@@ -228,10 +234,10 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField>
                           )
                         : _PickerView<T>(
               intiValue: widget.controller?.value,
-                            useForFilter: widget.useForFilter,
-                            onSelectedItemChanged: (value) {
-                              currentValue = value;
-                            },
+              useForFilter: widget.useForFilter,
+              onSelectedItemChanged: (value) {
+                currentValue = value;
+              },
                           ),
           );
         });
@@ -268,8 +274,11 @@ String _getTitle<T>(dynamic item) {
 class _DatePickerView extends StatefulWidget {
   final ValueChanged<DateTime> onSelectedItemChanged;
   final DateTime intiValue;
+  final DateTime minDate;
+  final DateTime maxDate;
 
-  _DatePickerView({this.onSelectedItemChanged, this.intiValue});
+  _DatePickerView(
+      {this.onSelectedItemChanged, this.intiValue, this.minDate, this.maxDate});
 
   @override
   _DatePickerViewState createState() => _DatePickerViewState();
@@ -294,6 +303,8 @@ class _DatePickerViewState extends BaseState<_DatePickerView> {
     return CupertinoDatePicker(
       mode: CupertinoDatePickerMode.date,
       initialDateTime: initDateTime,
+      minimumDate: widget.minDate?.toDate12AM(),
+      maximumDate: widget.maxDate?.toDate12PM(),
       onDateTimeChanged: (DateTime value) {
         widget.onSelectedItemChanged?.call(value);
       },
@@ -305,7 +316,10 @@ class _DurationPickerView extends StatefulWidget {
   final ValueChanged<Duration> onSelectedItemChanged;
   final Duration intiValue;
 
-  _DurationPickerView({this.onSelectedItemChanged, this.intiValue});
+  _DurationPickerView({
+    this.onSelectedItemChanged,
+    this.intiValue,
+  });
 
   @override
   _DurationPickerViewState createState() => _DurationPickerViewState();
@@ -492,6 +506,14 @@ class _PickerViewState<T> extends BaseState<_PickerView> {
     }
     return 0;
   }
+}
+
+class DatePickInputController extends PickInputController<DateTime> {
+  final DateTime minDate;
+  final DateTime maxDate;
+
+  DatePickInputController({DateTime value, this.minDate, this.maxDate})
+      : super(value: value);
 }
 
 class PickInputController<T> {
