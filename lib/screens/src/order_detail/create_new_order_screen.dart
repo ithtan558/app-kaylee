@@ -20,10 +20,12 @@ import 'package:kaylee/widgets/widgets.dart';
 class NewOrderScreenData {
   final OrderScreenOpenFrom openFrom;
   final Order order;
+  final Reservation reservation;
 
   NewOrderScreenData({
     this.openFrom,
     this.order,
+    this.reservation,
   });
 }
 

@@ -9,11 +9,13 @@ class OrderDetailBloc extends Cubit<SingleModel<OrderRequest>>
   final OrderService orderService;
   final Order order;
   final CartModule cart;
+  final Reservation reservation;
 
   OrderDetailBloc({
     this.orderService,
     this.order,
     this.cart,
+    this.reservation,
   }) : super(SingleModel());
 
   void createOrderAndPay() {

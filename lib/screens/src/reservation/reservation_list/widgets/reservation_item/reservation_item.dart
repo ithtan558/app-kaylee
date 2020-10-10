@@ -111,7 +111,7 @@ class _ReservationItemState extends KayleeState<ReservationItem> {
                                 screen: CreateNewReservationScreen,
                                 bundle: Bundle(CreateNewReservationScreenData(
                                   openFrom:
-                                  ReservationScreenOpenFrom.editButton,
+                                      ReservationScreenOpenFrom.editButton,
                                   reservation: _bloc.reservation,
                                 ))));
                           },
@@ -127,8 +127,10 @@ class _ReservationItemState extends KayleeState<ReservationItem> {
                             context.push(PageIntent(
                                 screen: CreateNewOrderScreen,
                                 bundle: Bundle(NewOrderScreenData(
-                                    openFrom: OrderScreenOpenFrom
-                                        .addNewFromReservation))));
+                                  openFrom: OrderScreenOpenFrom
+                                      .addNewFromReservation,
+                                  reservation: _bloc.reservation,
+                                ))));
                           },
                         )
                             : KayLeeRoundedButton.normal(
