@@ -9,3 +9,13 @@ extension KayleeBuildContextExtension on BuildContext {
 
   CartModule get cart => this.repository<CartModule>();
 }
+
+extension DateTimeExtension on DateTime {
+  DateTime combineWithTime({DateTime time}) {
+    return DateTime(year, month, day, time.hour, time.minute);
+  }
+
+  DateTime toDate12AM() => DateTime(year, month, day);
+
+  DateTime toDate12PM() => DateTime(year, month, day, 23, 59, 59);
+}
