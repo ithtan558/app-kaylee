@@ -26,4 +26,41 @@ abstract class ReservationService {
     @Part() int id,
     @Part() int status,
   });
+
+  @POST('reservation')
+  @MultiPart()
+  Future<ResponseModel> newReservation({
+    @Part(name: 'first_name') String firstName,
+    @Part(name: 'last_name') String lastName,
+    @Part() String address,
+    @Part(name: 'city_id') int cityId,
+    @Part(name: 'district_id') int districtId,
+    @Part(name: 'wards_id') int wardsId,
+    @Part() String phone,
+    @Part() int quantity,
+    @Part() String note,
+    @Part() String datetime,
+    @Part(name: 'brand_id') String brandId,
+  });
+
+  @POST('reservation/{reservationId}')
+  @MultiPart()
+  Future<ResponseModel> updateReservation({
+    @Part(name: 'first_name') String firstName,
+    @Part(name: 'last_name') String lastName,
+    @Part() String address,
+    @Part(name: 'city_id') int cityId,
+    @Part(name: 'district_id') int districtId,
+    @Part(name: 'wards_id') int wardsId,
+    @Part() String phone,
+    @Part() int quantity,
+    @Part() String note,
+    @Part() String datetime,
+    @Part(name: 'brand_id') String brandId,
+    @Part() int id,
+    @Path() int reservationId,
+  });
+
+  @GET('reservation/{id}')
+  Future<ResponseModel<Reservation>> getReservation({@Path() int id});
 }
