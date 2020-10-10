@@ -8,6 +8,7 @@ import 'package:kaylee/screens/src/brand/list/bloc/brand_list_bloc.dart';
 import 'package:kaylee/screens/src/commission/list/bloc/bloc.dart';
 import 'package:kaylee/screens/src/customer/list/bloc/customer_list_screen_bloc.dart';
 import 'package:kaylee/screens/src/product/list/bloc/prod_list_bloc.dart';
+import 'package:kaylee/screens/src/reservation/reservation_list/bloc/bloc.dart';
 import 'package:kaylee/screens/src/service/list/bloc/service_list_bloc.dart';
 import 'package:kaylee/screens/src/staff/list/bloc/staff_list_screen_bloc.dart';
 import 'package:kaylee/widgets/widgets.dart';
@@ -144,6 +145,10 @@ class _FilterScreenState<T extends Filter> extends BaseState<FilterScreen<T>> {
         return CommissionFilterView(
           controller: controller as KayleeFilterInterface<CommissionFilter>,
         );
+      case ReservationFilter:
+        return ReservationFilterFilterView(
+          controller: controller as KayleeFilterInterface<ReservationFilter>,
+        );
       default:
         return Container();
     }
@@ -239,9 +244,7 @@ class _StaffFilterViewState extends BaseState<StaffFilterView>
       widget.controller?.updateFilter()?.brand = brandController.value;
     }
     if (cityController.value != null) {
-      widget.controller
-          ?.updateFilter()
-          ?.city = cityController.value;
+      widget.controller?.updateFilter()?.city = cityController.value;
     }
     if (districtController.value != null) {
       widget.controller
@@ -702,6 +705,65 @@ class _CommissionFilterViewState extends BaseState<CommissionFilterView>
             child: KayleePickerTextField<District>(
               title: Strings.quan,
               controller: districtController,
+              useForFilter: true,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ReservationFilterFilterView extends StatefulWidget {
+  final KayleeFilterInterface<ReservationFilter> controller;
+
+  ReservationFilterFilterView({this.controller});
+
+  @override
+  _ReservationFilterViewState createState() => _ReservationFilterViewState();
+}
+
+class _ReservationFilterViewState extends BaseState<ReservationFilterFilterView>
+    implements KayleeFilterAction {
+  final brandController = PickInputController<Brand>();
+
+  @override
+  void onApply() {
+    if (brandController.value != null) {
+      widget.controller
+          ?.updateFilter()
+          ?.brand = brandController.value;
+    }
+  }
+
+  @override
+  void onReset() {
+    brandController.clear();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    context
+        .repository<_FilterScreenState>()
+        .action = this;
+    brandController.value = widget.controller
+        ?.getFilter()
+        ?.brand;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return RepositoryProvider<KayleePickerTextFieldModel>(
+      create: (context) => KayleePickerTextFieldModel(),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(
+                horizontal: Dimens.px16, vertical: Dimens.px16),
+            child: KayleePickerTextField(
+              title: Strings.chiNhanh,
+              controller: brandController,
               useForFilter: true,
             ),
           ),
