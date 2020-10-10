@@ -75,16 +75,16 @@ class _MyOrderDetailScreenState extends KayleeState<MyOrderDetailScreen> {
               view: KayleeAlertDialogView(
                 content: Strings.banDaChacChanHuyDonHangNay,
                 actions: [
-                  KayleeAlertDialogAction.huy(
-                    onPressed: popScreen,
-                  ),
                   KayleeAlertDialogAction.dongY(
                     isDefaultAction: true,
                     onPressed: () {
                       popScreen();
                       _bloc.cancelOrder();
                     },
-                  )
+                  ),
+                  KayleeAlertDialogAction.huy(
+                    onPressed: popScreen,
+                  ),
                 ],
               ));
         },
