@@ -135,16 +135,16 @@ class _CashierItemState extends KayleeState<CashierItem> {
                             view: KayleeAlertDialogView(
                               content: Strings.banDaChacChanHuyDonHangNay,
                               actions: [
-                                KayleeAlertDialogAction.huy(
-                                  onPressed: popScreen,
-                                ),
                                 KayleeAlertDialogAction.dongY(
                                   isDefaultAction: true,
                                   onPressed: () {
                                     popScreen();
                                     orderItemBloc.cancelOrder();
                                   },
-                                )
+                                ),
+                                KayleeAlertDialogAction.huy(
+                                  onPressed: popScreen,
+                                ),
                               ],
                             ));
                       },
