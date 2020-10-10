@@ -279,6 +279,9 @@ class Strings {
   static const String banDaChacChanHuyDonHangNay =
       'Bạn đã chắc chắn muốn huỷ đơn hàng này';
   static const String soLuongKhach = 'Số lượng khách';
+  static const String xoaHen = 'Xoá hẹn';
+  static const String banDaChacChanHuyLichHenNay =
+      'Bạn đã chắc chắn mún hủy lịch hẹn này';
 
   Strings._();
 }
