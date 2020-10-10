@@ -136,6 +136,11 @@ class _CreateNewOrderScreenState extends KayleeState<CreateNewOrderScreen> {
 
     if (openFrom == OrderScreenOpenFrom.detailButton) {
       _bloc.get();
+    } else if (openFrom == OrderScreenOpenFrom.addNewFromReservation) {
+      _cart.updateOrderInfo(OrderRequest(
+          customer: data.reservation.customer, brand: data.reservation.brand));
+      customerController.customer = _order.customer;
+      brandController.value = _order.brand;
     }
   }
 
@@ -240,7 +245,9 @@ class _CreateNewOrderScreenState extends KayleeState<CreateNewOrderScreen> {
                               controller: discountController,
                               textInputAction: TextInputAction.done,
                               onChange: (value) {
-                                _order.discount = int.tryParse(value);
+                                _cart.updateOrderInfo(OrderRequest(
+                                  discount: int.tryParse(value),
+                                ));
                                 _cartBloc.updateCart();
                               },
                             ),
