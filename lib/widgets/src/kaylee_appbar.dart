@@ -22,12 +22,9 @@ class KayleeAppBar extends StatelessWidget implements PreferredSizeWidget {
         onBack: onBack,
         actions: [
           if (actionTitle.isNotNullAndEmpty)
-            Padding(
-              padding: const EdgeInsets.only(right: Dimens.px16),
-              child: KayleeAppBarAction.hyperText(
-                title: actionTitle,
-                onTap: onActionClick,
-              ),
+            KayleeAppBarAction.hyperText(
+              title: actionTitle,
+              onTap: onActionClick,
             )
         ],
         leadingIcon: leadingIcon,
@@ -90,11 +87,11 @@ class KayleeAppBarAction extends StatelessWidget {
   factory KayleeAppBarAction.hyperText(
           {@required String title, void Function() onTap}) =>
       KayleeAppBarAction(
-        child: SizedBox(
-          height: kToolbarHeight,
-          child: InkWell(
-            onTap: onTap,
-            customBorder: CircleBorder(),
+        child: InkWell(
+          onTap: onTap,
+          customBorder: CircleBorder(),
+          child: Padding(
+            padding: const EdgeInsets.all(Dimens.px16),
             child: Center(
               child: HyperLinkText(
                 text: title ?? '',
