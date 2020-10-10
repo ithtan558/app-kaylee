@@ -5,7 +5,7 @@ import 'package:kaylee/base/reload_bloc.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
-import 'package:kaylee/screens/src/home/tabs/cashier/bloc/order_itme_bloc.dart';
+import 'package:kaylee/screens/src/home/tabs/cashier/bloc/order_item_bloc.dart';
 import 'package:kaylee/screens/src/home/tabs/cashier/cashier_tab.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
