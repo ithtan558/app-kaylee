@@ -7,7 +7,7 @@ import 'package:kaylee/services/services.dart';
 import 'package:kaylee/utils/utils.dart';
 
 class ReservationFilter extends Filter {
-  OrderStatus status;
+  ReservationStatus status;
   Brand brand;
 }
 

@@ -20,7 +20,8 @@ const types = <Type>[
   Brand,
   CustomerType,
   Role,
-  Employee
+  Employee,
+  ReservationStatus
 ];
 
 abstract class KayleePickerTextFieldView {
@@ -233,11 +234,11 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField>
                             },
                           )
                         : _PickerView<T>(
-              intiValue: widget.controller?.value,
-              useForFilter: widget.useForFilter,
-              onSelectedItemChanged: (value) {
-                currentValue = value;
-              },
+                            intiValue: widget.controller?.value,
+                            useForFilter: widget.useForFilter,
+                            onSelectedItemChanged: (value) {
+                              currentValue = value;
+                            },
                           ),
           );
         });
@@ -253,6 +254,11 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField>
 
 String _getTitle<T>(dynamic item) {
   if (item != null && types.contains(T)) {
+    if (item is ReservationStatus) {
+      if (item == ReservationStatus.booked) return Strings.daDat;
+      if (item == ReservationStatus.came) return Strings.daDen;
+      if (item == ReservationStatus.canceled) return Strings.huy;
+    }
     return item.name;
   } else if (item is StartTime || item is EndTime) {
     return item.formattedTime;
@@ -449,6 +455,8 @@ class _PickerViewState<T> extends BaseState<_PickerView> {
       bloc.loadRole();
     } else if (T == Employee) {
       bloc.loadEmployees(parentBloc?.brand?.id);
+    } else if (T == ReservationStatus) {
+      bloc.loadReservationStatus();
     }
   }
 
@@ -502,6 +510,7 @@ class _PickerViewState<T> extends BaseState<_PickerView> {
 
   int getIndex(dynamic item) {
     if (item != null && types.contains(T)) {
+      if (item is ReservationStatus) return item.index;
       return item.id;
     }
     return 0;
@@ -767,6 +776,18 @@ class _PickerViewBloc<T> extends Cubit<SingleModel<List<T>>> {
           ..error = error));
       },
     );
+  }
+
+  void loadReservationStatus() {
+    emit(SingleModel.copy(state
+      ..loading = false
+      ..item = [
+        ReservationStatus.booked,
+        ReservationStatus.came,
+        ReservationStatus.canceled,
+      ] as List<T>
+      ..code = null
+      ..error = null));
   }
 }
 

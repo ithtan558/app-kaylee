@@ -257,18 +257,10 @@ class _StaffFilterViewState extends BaseState<StaffFilterView>
   @override
   void initState() {
     super.initState();
-    context
-        .repository<_FilterScreenState>()
-        .action = this;
-    brandController.value = widget.controller
-        ?.getFilter()
-        ?.brand;
-    cityController.value = widget.controller
-        ?.getFilter()
-        ?.city;
-    districtController.value = widget.controller
-        ?.getFilter()
-        ?.district;
+    context.repository<_FilterScreenState>().action = this;
+    brandController.value = widget.controller?.getFilter()?.brand;
+    cityController.value = widget.controller?.getFilter()?.city;
+    districtController.value = widget.controller?.getFilter()?.district;
   }
 
   @override
@@ -720,6 +712,7 @@ class ReservationFilterFilterView extends StatefulWidget {
 class _ReservationFilterViewState extends BaseState<ReservationFilterFilterView>
     implements KayleeFilterAction {
   final brandController = PickInputController<Brand>();
+  final statusController = PickInputController<ReservationStatus>();
 
   @override
   void onApply() {
@@ -728,11 +721,17 @@ class _ReservationFilterViewState extends BaseState<ReservationFilterFilterView>
           ?.updateFilter()
           ?.brand = brandController.value;
     }
+    if (statusController.value != null) {
+      widget.controller
+          ?.updateFilter()
+          ?.status = statusController.value;
+    }
   }
 
   @override
   void onReset() {
     brandController.clear();
+    statusController.clear();
   }
 
   @override
@@ -744,6 +743,9 @@ class _ReservationFilterViewState extends BaseState<ReservationFilterFilterView>
     brandController.value = widget.controller
         ?.getFilter()
         ?.brand;
+    statusController.value = widget.controller
+        ?.getFilter()
+        ?.status;
   }
 
   @override
@@ -755,6 +757,13 @@ class _ReservationFilterViewState extends BaseState<ReservationFilterFilterView>
           Padding(
             padding: const EdgeInsets.symmetric(
                 horizontal: Dimens.px16, vertical: Dimens.px16),
+            child: KayleePickerTextField(
+              title: Strings.tinhTrang,
+              controller: statusController,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
             child: KayleePickerTextField(
               title: Strings.chiNhanh,
               controller: brandController,
