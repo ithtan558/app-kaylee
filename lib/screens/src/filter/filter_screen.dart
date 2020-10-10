@@ -51,19 +51,15 @@ class _FilterScreenState<T extends Filter> extends BaseState<FilterScreen<T>> {
   Widget build(BuildContext context) {
     return UnFocusWidget(
       child: KayleeScrollview(
-        appBar: KayleeAppBar(
+        appBar: KayleeAppBar.hyperTextAction(
           title: Strings.timKiemChonLoc,
-          actions: <Widget>[
-            KayleeAppBarAction.hyperText(
-              title: Strings.xoa,
-              onTap: () {
-                action?.onReset();
-                searchFocus.unfocus();
-                searchTfController.clear();
-                widget.controller.resetFilter();
-              },
-            )
-          ],
+          actionTitle: Strings.xoa,
+          onActionClick: () {
+            action?.onReset();
+            searchFocus.unfocus();
+            searchTfController.clear();
+            widget.controller.resetFilter();
+          },
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -247,9 +243,7 @@ class _StaffFilterViewState extends BaseState<StaffFilterView>
       widget.controller?.updateFilter()?.city = cityController.value;
     }
     if (districtController.value != null) {
-      widget.controller
-          ?.updateFilter()
-          ?.district = districtController.value;
+      widget.controller?.updateFilter()?.district = districtController.value;
     }
   }
 
