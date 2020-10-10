@@ -23,7 +23,7 @@ class ReservationListScreen extends StatefulWidget {
 
 class _ReservationListScreenState extends BaseState<ReservationListScreen> {
   final dateFilterController =
-  KayleeDateFilterController(value: DateTime.now());
+      KayleeDateFilterController(value: DateTime.now());
 
   ReservationListBloc get _bloc => context.bloc<ReservationListBloc>();
 
@@ -92,7 +92,10 @@ class _ReservationListScreenState extends BaseState<ReservationListScreen> {
       ),
       floatingActionButton: KayleeFloatButton(
         onTap: () {
-          pushScreen(PageIntent(screen: CreateNewReservationScreen));
+          pushScreen(PageIntent(
+              screen: CreateNewReservationScreen,
+              bundle: Bundle(CreateNewReservationScreenData(
+                  openFrom: ReservationScreenOpenFrom.addNewButton))));
         },
       ),
     );

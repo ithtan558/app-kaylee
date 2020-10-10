@@ -62,12 +62,10 @@ class StaffListScreenBloc extends Cubit<LoadMoreModel<Employee>>
 
   @override
   void loadFilter() {
-    if (loadFilterWhen) {
       emit(LoadMoreModel.copy(state
         ..items = null
         ..page = 1));
       loadEmployees();
-    }
   }
 
   @override
@@ -88,9 +86,6 @@ class StaffListScreenBloc extends Cubit<LoadMoreModel<Employee>>
     if (isEmptyFilter) _filter = StaffFilter();
     return _filter;
   }
-
-  @override
-  bool get loadFilterWhen => !isEmptyFilter;
 
   @override
   void refresh() {

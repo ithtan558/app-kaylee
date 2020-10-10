@@ -7,8 +7,6 @@ abstract class KayleeFilterInterface<T extends Filter> {
 
   bool get isEmptyFilter;
 
-  bool get loadFilterWhen;
-
   T getFilter();
 
   T updateFilter();
