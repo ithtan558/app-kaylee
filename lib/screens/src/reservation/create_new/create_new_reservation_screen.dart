@@ -1,7 +1,14 @@
+import 'dart:async';
+
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/base/kaylee_state.dart';
+import 'package:kaylee/base/reload_bloc.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/screens/screens.dart';
+import 'package:kaylee/screens/src/reservation/create_new/bloc/bloc.dart';
+import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class CreateNewReservationScreenData {
@@ -14,7 +21,14 @@ class CreateNewReservationScreenData {
 enum ReservationScreenOpenFrom { editButton, addNewButton }
 
 class CreateNewReservationScreen extends StatefulWidget {
-  static Widget newInstance() => CreateNewReservationScreen._();
+  static Widget newInstance() => BlocProvider(
+      create: (context) => ReservationDetailBloc(
+            service: context.network.provideReservationService(),
+            reservation: context
+                .getArguments<CreateNewReservationScreenData>()
+                .reservation,
+          ),
+      child: CreateNewReservationScreen._());
 
   CreateNewReservationScreen._();
 
@@ -24,19 +38,91 @@ class CreateNewReservationScreen extends StatefulWidget {
 }
 
 class _CreateNewReservationScreenState
-    extends BaseState<CreateNewReservationScreen> {
+    extends KayleeState<CreateNewReservationScreen> {
+  ReservationScreenOpenFrom openFrom;
+
+  ReservationDetailBloc get _bloc => context.bloc<ReservationDetailBloc>();
+
+  final brandController = PickInputController<Brand>();
   final lastNameTfController = TextEditingController();
-  final nameTfController = TextEditingController();
   final lastNameFocus = FocusNode();
-  final nameFocus = FocusNode();
+  final firstNameTfController = TextEditingController();
+  final firstNameFocus = FocusNode();
+  final phoneTfController = TextEditingController();
+  final phoneFocus = FocusNode();
+  final addressController = KayleeFullAddressController();
+  final dateController = DatePickInputController(minDate: DateTime.now());
+  final timeController = PickInputController<StartTime>();
+  final guessQuantityController = QuantitySliderController(quantity: 1);
+  final noteTfController = TextEditingController();
+  final noteFocus = FocusNode();
+  StreamSubscription reservationDetailScreenBlocSub;
+
+  @override
+  void initState() {
+    super.initState();
+    reservationDetailScreenBlocSub = _bloc.listen((state) {
+      if (state.loading) {
+        showLoading();
+      } else if (!state.loading) {
+        hideLoading();
+        if (state.code.isNotNull && state.code != ErrorType.UNAUTHORIZED) {
+          showKayleeAlertErrorYesDialog(
+            context: context,
+            error: state.error,
+            onPressed: () {
+              popScreen();
+              switch (state.error.code) {
+                case ErrorCode.PHONE_CODE:
+                  return phoneFocus.requestFocus();
+                case ErrorCode.LAST_NAME_CODE:
+                  return lastNameFocus.requestFocus();
+                case ErrorCode.FIRST_NAME_CODE:
+                  return firstNameFocus.requestFocus();
+              }
+            },
+          );
+        } else if (state is CancelReservationModel ||
+            state is NewReservationModel) {
+          showKayleeAlertMessageYesDialog(
+            context: context,
+            message: state.message,
+            onPressed: popScreen,
+            onDismiss: () {
+              context.bloc<ReloadBloc>().reload(widget: ReservationListScreen);
+              popScreen();
+            },
+          );
+        } else if (state is UpdateReservationModel) {
+          showKayleeAlertMessageYesDialog(
+            context: context,
+            message: state.message,
+            onPressed: popScreen,
+            onDismiss: () {
+              context.bloc<ReloadBloc>().reload(widget: ReservationListScreen);
+            },
+          );
+        }
+      }
+    });
+    final data = context.getArguments<CreateNewReservationScreenData>();
+    openFrom = data?.openFrom;
+    if (openFrom == ReservationScreenOpenFrom.editButton) {
+      _bloc.get();
+    }
+  }
 
   @override
   void dispose() {
+    reservationDetailScreenBlocSub.cancel();
+    noteTfController.dispose();
+    noteFocus.dispose();
+    phoneTfController.dispose();
+    phoneFocus.dispose();
     lastNameTfController.dispose();
-    nameTfController.dispose();
-
     lastNameFocus.dispose();
-    nameFocus.dispose();
+    firstNameTfController.dispose();
+    firstNameFocus.dispose();
 
     super.dispose();
   }
@@ -45,81 +131,211 @@ class _CreateNewReservationScreenState
   Widget build(BuildContext context) {
     return UnFocusWidget(
       child: KayleeScrollview(
-        appBar: KayleeAppBar.hyperTextAction(
-          actionTitle: Strings.tao,
+        appBar: KayleeAppBar(
           title: Strings.taoLichHenMoi,
-        ),
-        padding: const EdgeInsets.all(Dimens.px16),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: Dimens.px16),
-              child: KayleePickerTextField(
-                title: Strings.chonChiNhanh,
-                hint: Strings.chonChinhanhDeDatLich,
+          actions: [
+            Container(
+              alignment: Alignment.centerRight,
+              padding: const EdgeInsets.only(right: Dimens.px16),
+              child: HyperLinkText(
+                text: openFrom == ReservationScreenOpenFrom.editButton
+                    ? Strings.luu
+                    : Strings.tao,
+                onTap: () {
+                  if (openFrom == ReservationScreenOpenFrom.editButton) {
+                    showKayleeAlertDialog(
+                        context: context,
+                        view: KayleeAlertDialogView(
+                          title: Strings.banDaChacChan,
+                          content: Strings.banCoDongYLuuLaiNhungThayDoi,
+                          actions: [
+                            KayleeAlertDialogAction.dongY(
+                              onPressed: () {
+                                popScreen();
+
+                                _bloc.state.item
+                                  ..firstName = firstNameTfController.text
+                                  ..lastName = lastNameTfController.text
+                                  ..address = addressController.address
+                                  ..city = addressController.city
+                                  ..district = addressController.district
+                                  ..wards = addressController.ward
+                                  ..phone = phoneTfController.text
+                                  ..quantity = guessQuantityController.quantity
+                                  ..note = noteTfController.text
+                                  ..datetime = dateController.value
+                                      .combineWithTime(
+                                      time: timeController.value?.datetime)
+                                  ..brand = brandController.value;
+                                _bloc.update();
+                              },
+                              isDefaultAction: true,
+                            ),
+                            KayleeAlertDialogAction.huy(
+                              onPressed: popScreen,
+                            ),
+                          ],
+                        ));
+                  } else {
+                    _bloc.state.item = Reservation(
+                        firstName: firstNameTfController.text,
+                        lastName: lastNameTfController.text,
+                        address: addressController.address,
+                        city: addressController.city,
+                        district: addressController.district,
+                        wards: addressController.ward,
+                        phone: phoneTfController.text,
+                        quantity: guessQuantityController.quantity,
+                        note: noteTfController.text,
+                        datetime: dateController.value.combineWithTime(
+                            time: timeController.value?.datetime),
+                        brand: brandController.value);
+                    _bloc.create();
+                  }
+                },
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: Dimens.px16),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: KayleeTextField.normal(
-                      title: Strings.ho,
-                      hint: Strings.hoHint,
-                      controller: lastNameTfController,
-                      textInputAction: TextInputAction.next,
-                      focusNode: lastNameFocus,
-                    ),
-                  ),
-                  SizedBox(width: Dimens.px8),
-                  Expanded(
-                    child: KayleeTextField.normal(
-                      title: Strings.ten,
-                      hint: Strings.tenHint,
-                      controller: nameTfController,
-                      textInputAction: TextInputAction.next,
-                      focusNode: nameFocus,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-                padding: const EdgeInsets.only(bottom: Dimens.px16),
-                child: KayleeTextField.phoneInput()),
-            Padding(
-              padding: const EdgeInsets.only(bottom: Dimens.px16),
-              child: KayleeFullAddressInput(
-                title: Strings.diaChiHienTai,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: Dimens.px16),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: KayleePickerTextField(
-                      title: Strings.ngayDat,
-                      hint: Strings.chonNgay,
-                    ),
-                  ),
-                  SizedBox(width: Dimens.px8),
-                  Expanded(
-                    child: KayleePickerTextField(
-                      title: Strings.gioDat,
-                      hint: Strings.chonThoiGian,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            KayleeTextField.multiLine(
-              title: Strings.ghiChu,
-              fieldHeight: 233,
-              hint: Strings.nhapGhiChuCuaKH,
             )
           ],
+        ),
+        padding: const EdgeInsets.all(Dimens.px16),
+        child: BlocConsumer<ReservationDetailBloc, SingleModel<Reservation>>(
+          listener: (context, state) {
+            brandController.value = state.item?.brand;
+            firstNameTfController.text = state.item?.firstName;
+            lastNameTfController.text = state.item?.lastName;
+            addressController.initAddress = state.item?.address;
+            addressController.initCity = state.item?.city;
+            addressController.initDistrict = state.item?.district;
+            addressController.initWard = state.item?.wards;
+            phoneTfController.text = state.item?.phone;
+            guessQuantityController.quantity = state.item?.quantity;
+            dateController.value = state.item?.datetime;
+            timeController.value = StartTime(
+                time: DateFormat(dateFormat3).format(state.item?.datetime));
+            noteTfController.text = state.item?.note;
+          },
+          listenWhen: (previous, current) => current is DetailReservationModel,
+          buildWhen: (previous, current) => current is DetailReservationModel,
+          builder: (context, state) {
+            return Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: Dimens.px16),
+                  child: KayleePickerTextField(
+                    title: Strings.chonChiNhanh,
+                    hint: Strings.chonChinhanhDeDatLich,
+                    controller: brandController,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: Dimens.px16),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: KayleeTextField.normal(
+                          title: Strings.ho,
+                          hint: Strings.hoHint,
+                          controller: lastNameTfController,
+                          textInputAction: TextInputAction.next,
+                          focusNode: lastNameFocus,
+                          nextFocusNode: firstNameFocus,
+                        ),
+                      ),
+                      SizedBox(width: Dimens.px8),
+                      Expanded(
+                        child: KayleeTextField.normal(
+                          title: Strings.ten,
+                          hint: Strings.tenHint,
+                          controller: firstNameTfController,
+                          textInputAction: TextInputAction.next,
+                          focusNode: firstNameFocus,
+                          nextFocusNode: phoneFocus,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                    padding: const EdgeInsets.only(bottom: Dimens.px16),
+                    child: KayleeTextField.phoneInput(
+                      controller: phoneTfController,
+                      focusNode: phoneFocus,
+                    )),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: Dimens.px16),
+                  child: KayleeFullAddressInput(
+                    title: Strings.diaChiHienTai,
+                    controller: addressController,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: Dimens.px16),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: KayleePickerTextField(
+                          title: Strings.ngayDat,
+                          hint: Strings.chonNgay,
+                          controller: dateController,
+                        ),
+                      ),
+                      SizedBox(width: Dimens.px8),
+                      Expanded(
+                        child: KayleePickerTextField(
+                          title: Strings.gioDat,
+                          hint: Strings.chonThoiGian,
+                          controller: timeController,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: Dimens.px16),
+                  child: KayleeQuantitySlider(
+                    title: Strings.soLuongKhach,
+                    controller: guessQuantityController,
+                  ),
+                ),
+                KayleeTextField.multiLine(
+                  title: Strings.ghiChu,
+                  fieldHeight: 233,
+                  hint: Strings.nhapGhiChuCuaKH,
+                  controller: noteTfController,
+                  focusNode: noteFocus,
+                ),
+                if (openFrom == ReservationScreenOpenFrom.editButton)
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: Dimens.px24,
+                      bottom: Dimens.px8,
+                    ),
+                    child: HyperLinkText(
+                      onTap: () {
+                        showKayleeAlertDialog(
+                            context: context,
+                            view: KayleeAlertDialogView(
+                              content: Strings.banDaChacChanHuyLichHenNay,
+                              actions: [
+                                KayleeAlertDialogAction.huy(
+                                  onPressed: popScreen,
+                                ),
+                                KayleeAlertDialogAction.dongY(
+                                  isDefaultAction: true,
+                                  onPressed: () {
+                                    popScreen();
+                                    _bloc.delete();
+                                  },
+                                )
+                              ],
+                            ));
+                      },
+                      text: Strings.xoaHen,
+                    ),
+                  ),
+              ],
+            );
+          },
         ),
       ),
     );
