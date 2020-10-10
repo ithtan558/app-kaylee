@@ -45,14 +45,14 @@ class _CreateNewBrandScreenState extends KayleeState<CreateNewBrandScreen> {
   final addressController = KayleeFullAddressController();
   final phoneTfController = TextEditingController();
   final phoneFocus = FocusNode();
-  BrandDetailScreenBloc bloc;
+
+  BrandDetailScreenBloc get bloc => context.bloc<BrandDetailScreenBloc>();
   StreamSubscription brandDetailScreenBlocSub;
   final bannerPickerController = ImagePickerController();
 
   @override
   void initState() {
     super.initState();
-    bloc = context.bloc<BrandDetailScreenBloc>();
     brandDetailScreenBlocSub = bloc.listen((state) {
       if (state.loading) {
         showLoading();
