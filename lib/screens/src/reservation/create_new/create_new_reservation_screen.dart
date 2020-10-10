@@ -165,7 +165,7 @@ class _CreateNewReservationScreenState
                                   ..note = noteTfController.text
                                   ..datetime = dateController.value
                                       .combineWithTime(
-                                      time: timeController.value?.datetime)
+                                          time: timeController.value?.datetime)
                                   ..brand = brandController.value;
                                 _bloc.update();
                               },
@@ -317,16 +317,16 @@ class _CreateNewReservationScreenState
                             view: KayleeAlertDialogView(
                               content: Strings.banDaChacChanHuyLichHenNay,
                               actions: [
-                                KayleeAlertDialogAction.huy(
-                                  onPressed: popScreen,
-                                ),
                                 KayleeAlertDialogAction.dongY(
                                   isDefaultAction: true,
                                   onPressed: () {
                                     popScreen();
                                     _bloc.delete();
                                   },
-                                )
+                                ),
+                                KayleeAlertDialogAction.huy(
+                                  onPressed: popScreen,
+                                ),
                               ],
                             ));
                       },
