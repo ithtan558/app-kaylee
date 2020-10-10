@@ -121,25 +121,25 @@ class _ReservationItemState extends KayleeState<ReservationItem> {
                       Expanded(
                         child: status == ReservationStatus.came
                             ? KayLeeRoundedButton.normal(
-                          text: Strings.taoDonHang,
-                          margin: EdgeInsets.zero,
-                          onPressed: () {
-                            context.push(PageIntent(
-                                screen: CreateNewOrderScreen,
-                                bundle: Bundle(NewOrderScreenData(
-                                  openFrom: OrderScreenOpenFrom
-                                      .addNewFromReservation,
-                                  reservation: _bloc.reservation,
-                                ))));
-                          },
-                        )
+                                text: Strings.taoDonHang,
+                                margin: EdgeInsets.zero,
+                                onPressed: () {
+                                  context.push(PageIntent(
+                                      screen: CreateNewOrderScreen,
+                                      bundle: Bundle(NewOrderScreenData(
+                                        openFrom: OrderScreenOpenFrom
+                                            .addNewFromReservation,
+                                        reservation: _bloc.reservation,
+                                      ))));
+                                },
+                              )
                             : KayLeeRoundedButton.normal(
-                          text: Strings.daDen,
-                          margin: EdgeInsets.zero,
-                          onPressed: () {
-                            _bloc.updateCameStatus();
-                          },
-                        ),
+                                text: Strings.daDen,
+                                margin: EdgeInsets.zero,
+                                onPressed: () {
+                                  _bloc.updateCameStatus();
+                                },
+                              ),
                       ),
                     ],
                   ),
@@ -155,7 +155,7 @@ class _ReservationItemState extends KayleeState<ReservationItem> {
     final status = reservation.status;
     final dateInString = reservation.datetime.isNull
         ? null
-        : ' ${DateFormat('HH:mm').format(reservation.datetime)}';
+        : ' ${DateFormat(dateFormat3).format(reservation.datetime)}';
     if (status == ReservationStatus.canceled)
       return KayleeText.normal16W400(Strings.huy);
     if (status == ReservationStatus.booked)
