@@ -4,8 +4,13 @@ import 'package:kaylee/services/services.dart';
 
 class AppBloc extends Cubit {
   final UserService userService;
+  final CampaignService campaignService;
 
-  AppBloc({this.userService}) : super(InitState());
+  AppBloc({
+    this.userService,
+    this.campaignService,
+  }) : super(InitState());
+
   bool isShowingLoginDialog = false;
   final _unauthorizedController = PublishSubject<UnauthorizedState>();
 
@@ -38,6 +43,19 @@ class AppBloc extends Cubit {
   }
 
   void doneLoggedInSetup() => emit(DoneSetupLoggedInState());
+
+  void getFcmTopic() {
+    RequestHandler(
+      request: campaignService.getAllCampaign(),
+      onSuccess: ({message, result}) {
+        final campaigns = (result as List<Campaign>)
+            .where((campaign) => campaign.isNotNull)
+            .toList();
+        emit(LoadedTopicState(campaigns: campaigns));
+      },
+      onFailed: (code, {error}) {},
+    );
+  }
 
   @override
   Future<void> close() {
@@ -74,4 +92,10 @@ class UpdateProfileState {
   final UserInfo userInfo;
 
   UpdateProfileState({this.userInfo});
+}
+
+class LoadedTopicState {
+  List<Campaign> campaigns;
+
+  LoadedTopicState({this.campaigns});
 }

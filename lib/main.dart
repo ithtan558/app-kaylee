@@ -43,8 +43,10 @@ class KayLeeApp extends StatefulWidget {
         ],
         child: MultiBlocProvider(providers: [
           BlocProvider(
-            create: (context) =>
-                AppBloc(userService: context.network.provideUserService()),
+            create: (context) => AppBloc(
+              userService: context.network.provideUserService(),
+              campaignService: context.network.provideCampaignService(),
+            ),
           ),
           BlocProvider(
             create: (context) => CartBloc(),
@@ -118,11 +120,16 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing, KayleeRouting {
                   .getUserInfo()
                   .requestToken
             };
+          _appBloc.getFcmTopic();
           _appBloc.doneLoggedInSetup();
         } else if (state is LoggedOutState) {
           context.user.removeUserInfo();
           context.cart.clear();
           context.network.dio.options..headers = {};
+        } else if (state is LoadedTopicState) {
+          state.campaigns.forEach((campaign) {
+            firebaseMessaging.subscribeToTopic(campaign.key);
+          });
         }
       },
       child: MaterialApp(
