@@ -10,8 +10,10 @@ class FcmResponse {
 
   Map<String, dynamic> toJson() => _$FcmResponseToJson(this);
 
-  final FcmNotification notification;
-  final FcmAps aps;
+  @JsonKey(fromJson: _parseFcmNotificationFromJson)
+  FcmNotification notification;
+  @JsonKey(fromJson: _parseFcmApsFromJson)
+  FcmAps aps;
   final dynamic data;
 
   FcmResponse({
@@ -19,6 +21,14 @@ class FcmResponse {
     this.aps,
     this.data,
   });
+}
+
+FcmNotification _parseFcmNotificationFromJson(json) {
+  return FcmNotification.fromJson(json.cast<String, dynamic>());
+}
+
+FcmAps _parseFcmApsFromJson(json) {
+  return FcmAps.fromJson(json.cast<String, dynamic>());
 }
 
 //for general

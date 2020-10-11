@@ -8,13 +8,8 @@ part of 'fcm_response.dart';
 
 FcmResponse _$FcmResponseFromJson(Map<String, dynamic> json) {
   return FcmResponse(
-    notification: json['notification'] == null
-        ? null
-        : FcmNotification.fromJson(
-            json['notification'] as Map<String, dynamic>),
-    aps: json['aps'] == null
-        ? null
-        : FcmAps.fromJson(json['aps'] as Map<String, dynamic>),
+    notification: _parseFcmNotificationFromJson(json['notification']),
+    aps: _parseFcmApsFromJson(json['aps']),
     data: json['data'],
   );
 }
