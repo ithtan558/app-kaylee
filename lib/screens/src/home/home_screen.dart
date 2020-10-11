@@ -27,7 +27,6 @@ class _HomeScreenState extends KayleeState<HomeScreen> {
 
   final FlutterLocalNotificationsPlugin notificationsPlugin =
       FlutterLocalNotificationsPlugin();
-  FirebaseMessaging firebaseMessaging;
 
   @override
   void initState() {
@@ -82,16 +81,13 @@ class _HomeScreenState extends KayleeState<HomeScreen> {
   _showNotificationLocal({FcmResponse response}) {
     if (response.isNull) return;
 
-    final notificationId = DateTime
-        .now()
-        .second
-        .toString();
+    final notificationId = DateTime.now().second.toString();
     final androidDetail = AndroidNotificationDetails(
         notificationId, 'FcmNotification', '',
         priority: Priority.high, importance: Importance.max);
     final iosDetail = IOSNotificationDetails();
     final platformDetail =
-    NotificationDetails(android: androidDetail, iOS: iosDetail);
+        NotificationDetails(android: androidDetail, iOS: iosDetail);
     notificationsPlugin.show(
         int.parse(notificationId),
         response.notification?.title ?? response.aps?.alert?.title ?? '',
