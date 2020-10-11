@@ -14,12 +14,21 @@ class FcmResponse {
   FcmNotification notification;
   @JsonKey(fromJson: _parseFcmApsFromJson)
   FcmAps aps;
-  final dynamic data;
+  @JsonKey(name: 'data', fromJson: _parseFcmDataFromJson)
+  final FcmData androidData;
+  final String link;
+  @JsonKey(name: 'click_action')
+  final String clickAction;
+
+  @JsonKey(ignore: true)
+  FcmData get iosData => FcmData(link: link, clickAction: clickAction);
 
   FcmResponse({
     this.notification,
     this.aps,
-    this.data,
+    this.androidData,
+    this.link,
+    this.clickAction,
   });
 }
 
@@ -31,6 +40,10 @@ FcmNotification _parseFcmNotificationFromJson(json) {
 
 FcmAps _parseFcmApsFromJson(json) {
   return json == null ? null : FcmAps.fromJson(json.cast<String, dynamic>());
+}
+
+FcmData _parseFcmDataFromJson(json) {
+  return json == null ? null : FcmData.fromJson(json.cast<String, dynamic>());
 }
 
 //for general
@@ -46,28 +59,32 @@ class FcmNotification {
   FcmNotification({this.title, this.body});
 }
 
-///for Ios
 @JsonSerializable(fieldRename: FieldRename.snake)
+class FcmData {
+  factory FcmData.fromJson(Map<String, dynamic> json) =>
+      _$FcmDataFromJson(json);
+
+  Map<String, dynamic> toJson() => _$FcmDataToJson(this);
+
+  final String link;
+  @JsonKey(name: 'click_action')
+  final String clickAction;
+
+  FcmData({
+    this.link,
+    this.clickAction,
+  });
+}
+
+///for Ios
+@JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
 class FcmAps {
   factory FcmAps.fromJson(Map<String, dynamic> json) => _$FcmApsFromJson(json);
 
   Map<String, dynamic> toJson() => _$FcmApsToJson(this);
 
-  final FcmAlert alert;
+  @JsonKey(fromJson: _parseFcmNotificationFromJson)
+  final FcmNotification alert;
 
   FcmAps({this.alert});
-}
-
-///for Ios
-@JsonSerializable(fieldRename: FieldRename.snake)
-class FcmAlert {
-  factory FcmAlert.fromJson(Map<String, dynamic> json) =>
-      _$FcmAlertFromJson(json);
-
-  Map<String, dynamic> toJson() => _$FcmAlertToJson(this);
-
-  final String title;
-  final String body;
-
-  FcmAlert({this.title, this.body});
 }

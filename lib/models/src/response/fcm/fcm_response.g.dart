@@ -10,7 +10,9 @@ FcmResponse _$FcmResponseFromJson(Map<String, dynamic> json) {
   return FcmResponse(
     notification: _parseFcmNotificationFromJson(json['notification']),
     aps: _parseFcmApsFromJson(json['aps']),
-    data: json['data'],
+    androidData: _parseFcmDataFromJson(json['data']),
+    link: json['link'] as String,
+    clickAction: json['click_action'] as String,
   );
 }
 
@@ -18,7 +20,9 @@ Map<String, dynamic> _$FcmResponseToJson(FcmResponse instance) =>
     <String, dynamic>{
       'notification': instance.notification?.toJson(),
       'aps': instance.aps?.toJson(),
-      'data': instance.data,
+      'data': instance.androidData?.toJson(),
+      'link': instance.link,
+      'click_action': instance.clickAction,
     };
 
 FcmNotification _$FcmNotificationFromJson(Map<String, dynamic> json) {
@@ -34,26 +38,24 @@ Map<String, dynamic> _$FcmNotificationToJson(FcmNotification instance) =>
       'body': instance.body,
     };
 
+FcmData _$FcmDataFromJson(Map<String, dynamic> json) {
+  return FcmData(
+    link: json['link'] as String,
+    clickAction: json['click_action'] as String,
+  );
+}
+
+Map<String, dynamic> _$FcmDataToJson(FcmData instance) => <String, dynamic>{
+      'link': instance.link,
+      'click_action': instance.clickAction,
+    };
+
 FcmAps _$FcmApsFromJson(Map<String, dynamic> json) {
   return FcmAps(
-    alert: json['alert'] == null
-        ? null
-        : FcmAlert.fromJson(json['alert'] as Map<String, dynamic>),
+    alert: _parseFcmNotificationFromJson(json['alert']),
   );
 }
 
 Map<String, dynamic> _$FcmApsToJson(FcmAps instance) => <String, dynamic>{
-      'alert': instance.alert,
-    };
-
-FcmAlert _$FcmAlertFromJson(Map<String, dynamic> json) {
-  return FcmAlert(
-    title: json['title'] as String,
-    body: json['body'] as String,
-  );
-}
-
-Map<String, dynamic> _$FcmAlertToJson(FcmAlert instance) => <String, dynamic>{
-      'title': instance.title,
-      'body': instance.body,
+      'alert': instance.alert?.toJson(),
     };

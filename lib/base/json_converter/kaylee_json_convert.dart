@@ -94,8 +94,8 @@ class KayleeJsonConverter extends anthPackage.JsonConverterFactory {
       return FcmNotification.fromJson(json) as T;
     } else if (T == FcmAps) {
       return FcmAps.fromJson(json) as T;
-    } else if (T == FcmAlert) {
-      return FcmAlert.fromJson(json) as T;
+    } else if (T == FcmData) {
+      return FcmData.fromJson(json) as T;
     }
     return json as T;
   }
@@ -192,7 +192,7 @@ class KayleeJsonConverter extends anthPackage.JsonConverterFactory {
       return json.toJson();
     } else if (json is FcmAps) {
       return json.toJson();
-    } else if (json is FcmAlert) {
+    } else if (json is FcmData) {
       return json.toJson();
     } else
       return json;
