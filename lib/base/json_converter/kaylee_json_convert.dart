@@ -96,6 +96,8 @@ class KayleeJsonConverter extends anthPackage.JsonConverterFactory {
       return FcmAps.fromJson(json) as T;
     } else if (T == FcmData) {
       return FcmData.fromJson(json) as T;
+    } else if (T == Campaign) {
+      return Campaign.fromJson(json) as T;
     }
     return json as T;
   }
@@ -193,6 +195,8 @@ class KayleeJsonConverter extends anthPackage.JsonConverterFactory {
     } else if (json is FcmAps) {
       return json.toJson();
     } else if (json is FcmData) {
+      return json.toJson();
+    } else if (json is Campaign) {
       return json.toJson();
     } else
       return json;

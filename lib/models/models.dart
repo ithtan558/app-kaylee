@@ -12,6 +12,7 @@ export 'src/request/verify_otp/verify_otp_body.dart';
 export 'src/request/verify_phone/verify_phone_body.dart';
 export 'src/response/brand/brand.dart';
 export 'src/response/brand/list/brands.dart';
+export 'src/response/campaign/campaign.dart';
 export 'src/response/category/category.dart';
 export 'src/response/category/prod_cate/list/prod_categories.dart';
 export 'src/response/category/prod_cate/prod_cate.dart';
