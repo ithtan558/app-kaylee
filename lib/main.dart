@@ -19,21 +19,8 @@ import 'package:kaylee/utils/utils.dart';
 
 BuildContext dialogContext;
 
-Future<dynamic> myBackgroundMessageHandler(Map<String, dynamic> message) async {
-  if (message.containsKey('data')) {
-    // Handle data message
-    final dynamic data = message['data'];
-  }
-
-  if (message.containsKey('notification')) {
-    // Handle notification message
-    final dynamic notification = message['notification'];
-  }
-
-  // Or do other work.
-}
-
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   JsonConverterBuilder.init(KayleeJsonConverter());
   runApp(KayLeeApp.newInstance());
 }
@@ -97,8 +84,7 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing, KayleeRouting {
       change: (cubit, change) {
         if (change.nextState is UpdateProfileState) {
           context.user.updateUserInfo(
-              context.user.getUserInfo()
-                ..userInfo = change.nextState.userInfo);
+              context.user.getUserInfo()..userInfo = change.nextState.userInfo);
         } else if (change.nextState is BaseModel) {
           if (change.nextState.code == ErrorType.UNAUTHORIZED) {
             context.bloc<AppBloc>().unauthorized(error: change.nextState.error);
