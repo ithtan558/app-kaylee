@@ -67,7 +67,10 @@ class KayLeeApp extends StatefulWidget {
 }
 
 class _KayLeeAppState extends BaseState<KayLeeApp> with Routing, KayleeRouting {
-  FirebaseMessaging firebaseMessaging;
+  FirebaseMessaging get firebaseMessaging =>
+      context.repository<FirebaseMessaging>();
+
+  AppBloc get _appBloc => context.bloc<AppBloc>();
 
   @override
   void initState() {
@@ -77,7 +80,7 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing, KayleeRouting {
       transition: (currentState, nextState) {
         if (nextState is BaseModel) {
           if (nextState.code == ErrorType.UNAUTHORIZED) {
-            context.bloc<AppBloc>().unauthorized(error: nextState.error);
+            _appBloc.unauthorized(error: nextState.error);
           }
         }
       },
@@ -87,17 +90,11 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing, KayleeRouting {
               context.user.getUserInfo()..userInfo = change.nextState.userInfo);
         } else if (change.nextState is BaseModel) {
           if (change.nextState.code == ErrorType.UNAUTHORIZED) {
-            context.bloc<AppBloc>().unauthorized(error: change.nextState.error);
+            _appBloc.unauthorized(error: change.nextState.error);
           }
         }
       },
     );
-    firebaseMessaging = RepositoryProvider.of<FirebaseMessaging>(context);
-
-    firebaseMessaging.getToken().then((token) {
-      print('[TUNG] ===> token $token');
-      //todo save token to local
-    });
 
     if (Platform.isIOS) {
       firebaseMessaging.requestNotificationPermissions();
@@ -120,9 +117,8 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing, KayleeRouting {
               context.user
                   .getUserInfo()
                   .requestToken
-//              NetworkModule.AUTHORIZATION: ''
             };
-          context.bloc<AppBloc>().doneLoggedInSetup();
+          _appBloc.doneLoggedInSetup();
         } else if (state is LoggedOutState) {
           context.user.removeUserInfo();
           context.cart.clear();
