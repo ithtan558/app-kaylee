@@ -5,6 +5,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:kaylee/base/kaylee_state.dart';
+import 'package:kaylee/models/models.dart';
 import 'package:kaylee/screens/src/home/tabs/account/account_tab.dart';
 import 'package:kaylee/screens/src/home/tabs/cashier/cashier_tab.dart';
 import 'package:kaylee/screens/src/home/tabs/history/history_tab.dart';
@@ -47,56 +48,41 @@ class _HomeScreenState extends KayleeState<HomeScreen> {
     print('[TUNG] ===> _HomeScreenState initState');
 
     context.repository<FirebaseMessaging>().configure(
-          onBackgroundMessage: myBgMessage,
+          onBackgroundMessage: Platform.isIOS ? null : myBgMessage,
           onMessage: _handleFcmNotification,
           onResume: _openFcmNotification,
           onLaunch: _openFcmNotification,
         );
   }
 
-  Future<dynamic> _handleFcmNotification(map) async {
-    String title;
-    String body;
+  Future<dynamic> _handleFcmNotification(Map<String, dynamic> map) async {
+    final Logger logger = Logger();
+    FcmResponse response;
     try {
       print('[TUNG] ===> _handleFcmNotification');
       print('[TUNG] ===> $map');
-      if (Platform.isIOS) {
-        title = map['notification']['title'];
-        body = map['notification']['body'];
-      } else {
-        title = map['data']['title'];
-        body = map['data']['content'];
-      }
-    } catch (e) {
-      print('[TUNG] ===> $e');
+      response = FcmResponse.fromJson(map);
+    } catch (e, s) {
+      Logger().e('error _handleFcmNotification', e, s);
     }
-    if (!title.isNullOrEmpty && !body.isNullOrEmpty) {
-      _showNotificationLocal(title, body);
-    }
+    _showNotificationLocal(response: response);
   }
 
   Future<dynamic> _openFcmNotification(map) async {
-    String title;
-    String body;
+    FcmResponse response;
     try {
-      print('[TUNG] ===> _openFcmNotification $map');
-      if (Platform.isIOS) {
-        title = map['title'];
-        body = map['content'];
-      } else {
-        title = map['data']['title'];
-        body = map['data']['content'];
-      }
-      if (!title.isNullOrEmpty && !body.isNullOrEmpty) {
-        //todo mở lại dòng này khi làm tới NotificationScreen
-//        pushScreen(PageIntent(screen: NotificationScreen));
-      }
+      print('[TUNG] ===> _openFcmNotification');
+      print('[TUNG] ===> $map');
+      response = FcmResponse.fromJson(map);
     } catch (e) {
-      print('[TUNG] ===> ${e.toString()}');
+      print('[TUNG] ===> $e');
     }
+    _showNotificationLocal(response: response);
   }
 
-  _showNotificationLocal(String title, String body) {
+  _showNotificationLocal({FcmResponse response}) {
+    if (response.isNull) return;
+
     final notificationId = DateTime
         .now()
         .second
@@ -108,7 +94,10 @@ class _HomeScreenState extends KayleeState<HomeScreen> {
     final platformDetail =
     NotificationDetails(android: androidDetail, iOS: iosDetail);
     notificationsPlugin.show(
-        int.parse(notificationId), title, body, platformDetail);
+        int.parse(notificationId),
+        response.notification?.title ?? response.aps?.alert?.title ?? '',
+        response.notification?.body ?? response.aps?.alert?.body ?? '',
+        platformDetail);
   }
 
   @override
