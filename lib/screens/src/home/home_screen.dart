@@ -45,7 +45,6 @@ class _HomeScreenState extends KayleeState<HomeScreen> {
         onSelectNotification: (_) async {
       //todo go to notification's screen
     });
-    print('[TUNG] ===> _HomeScreenState initState');
 
     context.repository<FirebaseMessaging>().configure(
           onBackgroundMessage: Platform.isIOS ? null : myBgMessage,
