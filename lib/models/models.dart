@@ -31,6 +31,7 @@ export 'src/response/district/district.dart';
 export 'src/response/employee/employee.dart';
 export 'src/response/employee/list/employees.dart';
 export 'src/response/error_code.dart';
+export 'src/response/fcm/fcm_response.dart';
 export 'src/response/login/login_result.dart';
 export 'src/response/notification/count/notification_count.dart';
 export 'src/response/notification/list/notifications.dart';

@@ -88,6 +88,14 @@ class KayleeJsonConverter extends anthPackage.JsonConverterFactory {
       return Reservation.fromJson(json) as T;
     } else if (T == Reservations) {
       return Reservations.fromJson(json) as T;
+    } else if (T == FcmResponse) {
+      return FcmResponse.fromJson(json) as T;
+    } else if (T == FcmNotification) {
+      return FcmNotification.fromJson(json) as T;
+    } else if (T == FcmAps) {
+      return FcmAps.fromJson(json) as T;
+    } else if (T == FcmAlert) {
+      return FcmAlert.fromJson(json) as T;
     }
     return json as T;
   }
@@ -177,6 +185,14 @@ class KayleeJsonConverter extends anthPackage.JsonConverterFactory {
     } else if (json is Reservation) {
       return json.toJson();
     } else if (json is Reservations) {
+      return json.toJson();
+    } else if (json is FcmResponse) {
+      return json.toJson();
+    } else if (json is FcmNotification) {
+      return json.toJson();
+    } else if (json is FcmAps) {
+      return json.toJson();
+    } else if (json is FcmAlert) {
       return json.toJson();
     } else
       return json;
