@@ -9,8 +9,10 @@ class LoginBody {
   LoginBody({
     this.account,
     this.password,
+    this.token,
   });
 
   String account;
   String password;
+  String token;
 }

@@ -9,4 +9,5 @@ part of 'login_body.dart';
 Map<String, dynamic> _$LoginBodyToJson(LoginBody instance) => <String, dynamic>{
       'account': instance.account,
       'password': instance.password,
+      'token': instance.token,
     };
