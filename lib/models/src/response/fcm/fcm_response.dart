@@ -24,11 +24,13 @@ class FcmResponse {
 }
 
 FcmNotification _parseFcmNotificationFromJson(json) {
-  return FcmNotification.fromJson(json.cast<String, dynamic>());
+  return json == null
+      ? null
+      : FcmNotification.fromJson(json.cast<String, dynamic>());
 }
 
 FcmAps _parseFcmApsFromJson(json) {
-  return FcmAps.fromJson(json.cast<String, dynamic>());
+  return json == null ? null : FcmAps.fromJson(json.cast<String, dynamic>());
 }
 
 //for general
