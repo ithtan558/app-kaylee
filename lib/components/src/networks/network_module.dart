@@ -36,6 +36,8 @@ abstract class NetworkModule extends Network {
   ReportService provideReportService();
 
   ReservationService provideReservationService();
+
+  CampaignService provideCampaignService();
 }
 
 class _NetworkModuleImpl extends NetworkModule {
@@ -82,4 +84,7 @@ class _NetworkModuleImpl extends NetworkModule {
 
   @override
   ReservationService provideReservationService() => ReservationService(dio);
+
+  @override
+  CampaignService provideCampaignService() => CampaignService(dio);
 }
