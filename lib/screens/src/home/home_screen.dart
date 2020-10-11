@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'dart:convert';
 
 import 'package:anth_package/anth_package.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -10,11 +10,8 @@ import 'package:kaylee/screens/src/home/tabs/account/account_tab.dart';
 import 'package:kaylee/screens/src/home/tabs/cashier/cashier_tab.dart';
 import 'package:kaylee/screens/src/home/tabs/history/history_tab.dart';
 import 'package:kaylee/screens/src/home/tabs/home/home_tab.dart';
+import 'package:kaylee/utils/deeplink_helper.dart';
 import 'package:kaylee/widgets/src/kaylee_bottom_bar.dart';
-
-Future<dynamic> myBgMessage(Map<String, dynamic> map) async {
-  print('[TUNG] ===> onBgMessage $map');
-}
 
 class HomeScreen extends StatefulWidget {
   static Widget newInstance() => HomeScreen._();
@@ -41,24 +38,25 @@ class _HomeScreenState extends KayleeState<HomeScreen> {
     var initializationSettings = InitializationSettings(
         android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
 
-    notificationsPlugin.initialize(initializationSettings,
-        onSelectNotification: (_) async {
-      //todo go to notification's screen
-    });
+    notificationsPlugin.initialize(
+      initializationSettings,
+      onSelectNotification: (String payload) async {
+        if (payload.isNullOrEmpty) return;
+        _onOpenNotification(jsonDecode(payload));
+      },
+    );
 
     context.repository<FirebaseMessaging>().configure(
-          onBackgroundMessage: Platform.isIOS ? null : myBgMessage,
-          onMessage: _handleFcmNotification,
-          onResume: _openFcmNotification,
-          onLaunch: _openFcmNotification,
+          onMessage: _onMessageFcm,
+          onResume: _onOpenNotification,
+          onLaunch: _onOpenNotification,
         );
   }
 
-  Future<dynamic> _handleFcmNotification(Map<String, dynamic> map) async {
-    final Logger logger = Logger();
+  Future<dynamic> _onMessageFcm(Map<String, dynamic> map) async {
     FcmResponse response;
     try {
-      print('[TUNG] ===> _handleFcmNotification');
+      print('[TUNG] ===> _onMessageFcm');
       print('[TUNG] ===> $map');
       response = FcmResponse.fromJson(map);
     } catch (e, s) {
@@ -67,16 +65,18 @@ class _HomeScreenState extends KayleeState<HomeScreen> {
     _showNotificationLocal(response: response);
   }
 
-  Future<dynamic> _openFcmNotification(map) async {
+  Future<dynamic> _onOpenNotification(map) async {
     FcmResponse response;
     try {
-      print('[TUNG] ===> _openFcmNotification');
+      print('[TUNG] ===> _onOpenNotification');
       print('[TUNG] ===> $map');
       response = FcmResponse.fromJson(map);
     } catch (e) {
       print('[TUNG] ===> $e');
     }
-    _showNotificationLocal(response: response);
+    if (response.isNull) return;
+    context.push(DeepLinkHelper.handleNotificationLink(
+        link: response.androidData?.link ?? response.iosData?.link));
   }
 
   _showNotificationLocal({FcmResponse response}) {
@@ -96,7 +96,8 @@ class _HomeScreenState extends KayleeState<HomeScreen> {
         int.parse(notificationId),
         response.notification?.title ?? response.aps?.alert?.title ?? '',
         response.notification?.body ?? response.aps?.alert?.body ?? '',
-        platformDetail);
+        platformDetail,
+        payload: jsonEncode(response.toJson() ?? {}));
   }
 
   @override
