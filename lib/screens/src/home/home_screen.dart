@@ -55,8 +55,8 @@ class _HomeScreenState extends KayleeState<HomeScreen> {
   Future<dynamic> _onMessageFcm(Map<String, dynamic> map) async {
     FcmResponse response;
     try {
-      print('[TUNG] ===> _onMessageFcm');
-      print('[TUNG] ===> $map');
+      // print('[TUNG] ===> _onMessageFcm');
+      // print('[TUNG] ===> $map');
       response = FcmResponse.fromJson(map);
     } catch (e, s) {
       Logger().e('error _handleFcmNotification', e, s);
@@ -67,11 +67,11 @@ class _HomeScreenState extends KayleeState<HomeScreen> {
   Future<dynamic> _onOpenNotification(map) async {
     FcmResponse response;
     try {
-      print('[TUNG] ===> _onOpenNotification');
-      print('[TUNG] ===> $map');
+      // print('[TUNG] ===> _onOpenNotification');
+      // print('[TUNG] ===> $map');
       response = FcmResponse.fromJson(map);
-    } catch (e) {
-      print('[TUNG] ===> $e');
+    } catch (e, s) {
+      Logger().e('error _onOpenNotification', e, s);
     }
     if (response.isNull) return;
     context.push(DeepLinkHelper.handleNotificationLink(
@@ -93,7 +93,7 @@ class _HomeScreenState extends KayleeState<HomeScreen> {
         response.notification?.title ?? response.aps?.alert?.title ?? '',
         response.notification?.body ?? response.aps?.alert?.body ?? '',
         platformDetail,
-        payload: jsonEncode(response.toJson() ?? {}));
+        payload: jsonEncode(response));
   }
 
   @override
