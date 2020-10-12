@@ -515,7 +515,7 @@ class _KayleeDatePickerTextState extends BaseState<KayleeDatePickerText> {
                 mode: CupertinoDatePickerMode.date,
                 initialDateTime: date,
                 onDateTimeChanged: (changed) {
-                  print('[TUNG] ===> onDateTimeChanged');
+                  // print('[TUNG] ===> onDateTimeChanged');
                   selectedDate = changed;
                 },
               );

@@ -47,7 +47,7 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
           barrierDismissible: canDismiss,
           pageBuilder: (BuildContext context, Animation<double> animation,
               Animation<double> secondaryAnimation) {
-            print('[TUNG] ===> showLoading');
+            // print('[TUNG] ===> showLoading');
             dialogContext = context;
             return CupertinoActivityIndicator(
               radius: Dimens.px16,

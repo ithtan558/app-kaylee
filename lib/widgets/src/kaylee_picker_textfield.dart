@@ -68,7 +68,7 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField>
     try {
       pickerTFModel = context.repository<KayleePickerTextFieldModel>();
     } catch (e) {
-      print('[TUNG] ===> chưa provide KayleePickerTextFieldModel');
+      // print('[TUNG] ===> chưa provide KayleePickerTextFieldModel');
     }
     updateValue();
   }
@@ -423,8 +423,8 @@ class _PickerViewState<T> extends BaseState<_PickerView> {
     super.initState();
     try {
       parentBloc = context.repository<KayleePickerTextFieldModel>();
-    } catch (e, s) {
-      print('[TUNG] ===> $s');
+    } catch (e, _) {
+      // print('[TUNG] ===> $s');
     }
 
     bloc = _PickerViewBloc(

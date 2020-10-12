@@ -107,7 +107,7 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing, KayleeRouting {
     if (Platform.isIOS) {
       firebaseMessaging.requestNotificationPermissions();
       firebaseMessaging.onIosSettingsRegistered.listen((settings) {
-        print('[TUNG] ===> invoke ios notification permission $settings');
+        // print('[TUNG] ===> invoke ios notification permission $settings');
       });
     }
   }

@@ -297,16 +297,16 @@ class _ImageGridState extends BaseState<_ImageGrid> {
         widget.onSelect(selectedFile);
       }
     } else if (await Permission.storage.isDenied) {
-      print('[TUNG] ===> isDenied');
+      // print('[TUNG] ===> isDenied');
       await Permission.storage.request();
     } else if (await Permission.storage.isRestricted) {
-      print('[TUNG] ===> isRestricted');
+      // print('[TUNG] ===> isRestricted');
       await showKayleeGo2SettingDialog(context: context);
     } else if (await Permission.storage.isPermanentlyDenied) {
-      print('[TUNG] ===> isPermanentlyDenied');
+      // print('[TUNG] ===> isPermanentlyDenied');
       await showKayleeGo2SettingDialog(context: context);
     } else if (await Permission.storage.isUndetermined) {
-      print('[TUNG] ===> isUndetermined');
+      // print('[TUNG] ===> isUndetermined');
       await Permission.storage.request();
     }
   }
