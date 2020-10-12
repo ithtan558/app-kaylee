@@ -29,8 +29,7 @@ class _FcmModuleImpl extends FcmModule {
 
   @override
   void overrideTopics({List<Campaign> campaigns}) {
-    if (campaigns.isNull) return;
-    final json = jsonEncode(campaigns);
+    final json = jsonEncode(campaigns ?? []);
     SharedRef.putString(_SHARE_REF_CAMPAIGN, json);
   }
 }
