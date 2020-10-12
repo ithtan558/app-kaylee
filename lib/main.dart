@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:anth_package/anth_package.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -40,6 +41,9 @@ class KayLeeApp extends StatefulWidget {
           RepositoryProvider<FirebaseMessaging>(
             create: (_) => FirebaseMessaging(),
           ),
+          RepositoryProvider<FcmModule>(
+            create: (_) => FcmModule.init(),
+          ),
         ],
         child: MultiBlocProvider(providers: [
           BlocProvider(
@@ -73,6 +77,8 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing, KayleeRouting {
       context.repository<FirebaseMessaging>();
 
   AppBloc get _appBloc => context.bloc<AppBloc>();
+
+  FcmModule get fcm => context.fcm;
 
   @override
   void initState() {
@@ -116,9 +122,7 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing, KayleeRouting {
           context.network.dio.options
             ..headers = {
               NetworkModule.AUTHORIZATION:
-              context.user
-                  .getUserInfo()
-                  .requestToken
+              context.user.getUserInfo().requestToken
             };
           _appBloc.getFcmTopic();
           _appBloc.doneLoggedInSetup();
@@ -127,8 +131,16 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing, KayleeRouting {
           context.cart.clear();
           context.network.dio.options..headers = {};
         } else if (state is LoadedTopicState) {
-          state.campaigns.forEach((campaign) {
-            firebaseMessaging.subscribeToTopic(campaign.key);
+          Future(() {
+            final oldTopics = fcm.getTopics();
+            oldTopics.forEach((campaign) {
+              firebaseMessaging.unsubscribeFromTopic(campaign.key);
+            });
+            fcm.overrideTopics(campaigns: state.campaigns);
+            fcm.getTopics().forEach((campaign) {
+              firebaseMessaging.subscribeToTopic(campaign.key);
+            });
+            return 1;
           });
         }
       },
