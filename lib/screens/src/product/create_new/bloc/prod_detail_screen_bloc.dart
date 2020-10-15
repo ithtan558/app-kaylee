@@ -15,6 +15,7 @@ class ProdDetailScreenBloc extends Cubit<SingleModel<Product>>
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
       request: prodService.newProduct(
+          code: state.item.code,
           name: state.item?.name,
           brandIds: state.item?.selectedBrandIds,
           price: state.item?.price,
@@ -87,6 +88,7 @@ class ProdDetailScreenBloc extends Cubit<SingleModel<Product>>
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
       request: prodService.updateProduct(
+        code: state.item.code,
         name: state.item?.name,
         brandIds: state.item?.selectedBrandIds,
         price: state.item?.price,

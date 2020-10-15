@@ -40,6 +40,8 @@ class _CreateNewProdScreenState extends KayleeState<CreateNewProdScreen> {
   ProdDetailScreenBloc bloc;
   StreamSubscription prodDetailScreenBlocSub;
   final bannerPickerController = ImagePickerController();
+  final codeTfController = TextEditingController();
+  final codeFocus = FocusNode();
   final nameTfController = TextEditingController();
   final nameFocus = FocusNode();
   final brandSelectController = BrandSelectTFController();
@@ -77,6 +79,9 @@ class _CreateNewProdScreenState extends KayleeState<CreateNewProdScreen> {
               case ErrorCode.PRICE_CODE:
                 priceFocus.requestFocus();
                 break;
+              case ErrorCode.CODE_CODE:
+                codeFocus.requestFocus();
+                break;
             }
           }
         } else if (state is NewProdDetailModel ||
@@ -112,6 +117,8 @@ class _CreateNewProdScreenState extends KayleeState<CreateNewProdScreen> {
   @override
   void dispose() {
     prodDetailScreenBlocSub.cancel();
+    codeTfController.dispose();
+    codeFocus.dispose();
     nameTfController.dispose();
     nameFocus.dispose();
     priceTfController.dispose();
@@ -144,6 +151,7 @@ class _CreateNewProdScreenState extends KayleeState<CreateNewProdScreen> {
                         onPressed: () {
                           popScreen();
                           bloc.state.item
+                            ..code = codeTfController.text
                             ..name = nameTfController.text
                             ..brands = brandSelectController.brands
                             ..price = int.tryParse(
@@ -162,6 +170,7 @@ class _CreateNewProdScreenState extends KayleeState<CreateNewProdScreen> {
                   ));
             } else {
               bloc.state.item = Product(
+                  code: codeTfController.text,
                   name: nameTfController.text,
                   brands: brandSelectController.brands,
                   price:
@@ -178,6 +187,7 @@ class _CreateNewProdScreenState extends KayleeState<CreateNewProdScreen> {
           listenWhen: (previous, current) => current is ProdDetailModel,
           listener: (context, state) {
             bannerPickerController?.existedImageUrl = state.item?.image;
+            codeTfController.text = state.item?.code;
             nameTfController.text = state.item?.name;
             brandSelectController.brands = state.item?.brands;
             priceTfController.text = state.item?.price?.toString();
@@ -193,6 +203,21 @@ class _CreateNewProdScreenState extends KayleeState<CreateNewProdScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: Dimens.px16),
+                  child: KayleeTextField.normal(
+                    title: Strings.maSanPham,
+                    hint: Strings.nhapMaSanPham,
+                    controller: codeTfController,
+                    focusNode: codeFocus,
+                    textInputAction: TextInputAction.next,
+                    nextFocusNode: nameFocus,
+                    error: state.error?.code.isNotNull &&
+                        state.error.code == ErrorCode.CODE_CODE
+                        ? state.error.message
+                        : null,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: Dimens.px16),
                   child: KayleeTextField.normal(
                     title: Strings.tenSanPham,
                     hint: Strings.nhapTenSanPham,
