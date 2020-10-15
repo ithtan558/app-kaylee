@@ -283,6 +283,10 @@ class Strings {
   static const String banDaChacChanHuyLichHenNay =
       'Bạn đã chắc chắn mún hủy lịch hẹn này';
   static const String tinhTrang = 'Tình trạng';
+  static const String maDichVu = 'Mã dịch vụ';
+  static const String nhapMaDichVu = 'Nhập mã dịch vụ';
+  static const String maSanPham = 'Mã sản phẩm';
+  static const String nhapMaSanPham = 'Nhập mã sản phẩm';
 
   Strings._();
 }
