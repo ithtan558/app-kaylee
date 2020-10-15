@@ -22,10 +22,12 @@ Service _$ServiceFromJson(Map<String, dynamic> json) {
         ? null
         : ServiceCate.fromJson(json['category'] as Map<String, dynamic>),
     quantity: json['quantity'] as int,
+    code: json['code'] as String,
   );
 }
 
-Map<String, dynamic> _$ServiceToJson(Service instance) => <String, dynamic>{
+Map<String, dynamic> _$ServiceToJson(Service instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'time': instance.time,
@@ -35,4 +37,5 @@ Map<String, dynamic> _$ServiceToJson(Service instance) => <String, dynamic>{
       'brands': instance.brands,
       'category': instance.category,
       'quantity': instance.quantity,
+      'code': instance.code,
     };

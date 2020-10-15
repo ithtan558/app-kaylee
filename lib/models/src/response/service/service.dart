@@ -24,6 +24,7 @@ class Service {
     this.brands,
     this.category,
     this.quantity,
+    this.code,
   });
 
   int id;
@@ -42,6 +43,7 @@ class Service {
       brands?.where((e) => e.selected)?.map((e) => e.id)?.join(',');
   ServiceCate category;
   int quantity;
+  String code;
   @JsonKey(ignore: true)
   bool selected = false;
 }
