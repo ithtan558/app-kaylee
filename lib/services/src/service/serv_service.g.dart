@@ -190,7 +190,14 @@ class _ServService implements ServService {
 
   @override
   newService(
-      {name, description, brandIds, time, price, image, categoryId}) async {
+      {name,
+      description,
+      brandIds,
+      time,
+      price,
+      image,
+      categoryId,
+      code}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
@@ -214,10 +221,15 @@ class _ServService implements ServService {
       _data.files.add(MapEntry(
           'image',
           MultipartFile.fromFileSync(image.path,
-              filename: image.path.split(Platform.pathSeparator).last)));
+              filename: image.path
+                  .split(Platform.pathSeparator)
+                  .last)));
     }
     if (categoryId != null) {
       _data.fields.add(MapEntry('category_id', categoryId.toString()));
+    }
+    if (code != null) {
+      _data.fields.add(MapEntry('code', code));
     }
     final Response<Map<String, dynamic>> _result = await _dio.request('service',
         queryParameters: queryParameters,
@@ -232,16 +244,16 @@ class _ServService implements ServService {
   }
 
   @override
-  updateService(
-      {name,
-      description,
-      brandIds,
-      time,
-      price,
-      image,
-      categoryId,
-      id,
-      serviceId}) async {
+  updateService({name,
+    description,
+    brandIds,
+    time,
+    price,
+    image,
+    categoryId,
+    code,
+    id,
+    serviceId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
@@ -265,10 +277,15 @@ class _ServService implements ServService {
       _data.files.add(MapEntry(
           'image',
           MultipartFile.fromFileSync(image.path,
-              filename: image.path.split(Platform.pathSeparator).last)));
+              filename: image.path
+                  .split(Platform.pathSeparator)
+                  .last)));
     }
     if (categoryId != null) {
       _data.fields.add(MapEntry('category_id', categoryId.toString()));
+    }
+    if (code != null) {
+      _data.fields.add(MapEntry('code', code));
     }
     if (id != null) {
       _data.fields.add(MapEntry('id', id.toString()));

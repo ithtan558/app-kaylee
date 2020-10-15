@@ -199,7 +199,8 @@ class _ProductService implements ProductService {
   }
 
   @override
-  newProduct({name, description, brandIds, price, image, categoryId}) async {
+  newProduct(
+      {name, description, brandIds, price, image, categoryId, code}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
@@ -224,6 +225,9 @@ class _ProductService implements ProductService {
     }
     if (categoryId != null) {
       _data.fields.add(MapEntry('category_id', categoryId.toString()));
+    }
+    if (code != null) {
+      _data.fields.add(MapEntry('code', code));
     }
     final Response<Map<String, dynamic>> _result = await _dio.request('product',
         queryParameters: queryParameters,
@@ -238,15 +242,15 @@ class _ProductService implements ProductService {
   }
 
   @override
-  updateProduct(
-      {name,
-      description,
-      brandIds,
-      price,
-      image,
-      categoryId,
-      id,
-      prodId}) async {
+  updateProduct({name,
+    description,
+    brandIds,
+    price,
+    image,
+    categoryId,
+    code,
+    id,
+    prodId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
@@ -267,10 +271,15 @@ class _ProductService implements ProductService {
       _data.files.add(MapEntry(
           'image',
           MultipartFile.fromFileSync(image.path,
-              filename: image.path.split(Platform.pathSeparator).last)));
+              filename: image.path
+                  .split(Platform.pathSeparator)
+                  .last)));
     }
     if (categoryId != null) {
       _data.fields.add(MapEntry('category_id', categoryId.toString()));
+    }
+    if (code != null) {
+      _data.fields.add(MapEntry('code', code));
     }
     if (id != null) {
       _data.fields.add(MapEntry('id', id.toString()));
