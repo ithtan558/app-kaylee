@@ -15,6 +15,7 @@ class ServiceDetailScreenBloc extends Cubit<SingleModel<Service>>
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
       request: servService.newService(
+          code: state.item?.code,
           name: state.item?.name,
           description: state.item?.description,
           brandIds: state.item?.selectedBrandIds,
@@ -88,6 +89,7 @@ class ServiceDetailScreenBloc extends Cubit<SingleModel<Service>>
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
       request: servService.updateService(
+        code: state.item?.code,
         name: state.item?.name,
         description: state.item?.description,
         brandIds: state.item?.selectedBrandIds,

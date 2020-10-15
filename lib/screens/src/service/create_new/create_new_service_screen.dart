@@ -40,6 +40,8 @@ class _CreateNewServiceScreenState extends KayleeState<CreateNewServiceScreen> {
   ServiceDetailScreenBloc bloc;
   StreamSubscription serviceDetailScreenBlocSub;
   final bannerPickerController = ImagePickerController();
+  final codeTfController = TextEditingController();
+  final codeFocus = FocusNode();
   final nameTfController = TextEditingController();
   final nameFocus = FocusNode();
   final brandSelectController = BrandSelectTFController();
@@ -75,6 +77,9 @@ class _CreateNewServiceScreenState extends KayleeState<CreateNewServiceScreen> {
                   break;
                 case ErrorCode.NAME_CODE:
                   nameFocus.requestFocus();
+                  break;
+                case ErrorCode.CODE_CODE:
+                  codeFocus.requestFocus();
                   break;
               }
             },
@@ -112,6 +117,8 @@ class _CreateNewServiceScreenState extends KayleeState<CreateNewServiceScreen> {
   @override
   void dispose() {
     serviceDetailScreenBlocSub.cancel();
+    codeTfController.dispose();
+    codeFocus.dispose();
     nameTfController.dispose();
     nameFocus.dispose();
     priceTfController.dispose();
@@ -144,6 +151,7 @@ class _CreateNewServiceScreenState extends KayleeState<CreateNewServiceScreen> {
                         onPressed: () {
                           popScreen();
                           bloc.state.item
+                            ..code = codeTfController.text
                             ..name = nameTfController.text
                             ..description = descriptionTfController.text
                             ..brands = brandSelectController.brands
@@ -164,6 +172,7 @@ class _CreateNewServiceScreenState extends KayleeState<CreateNewServiceScreen> {
             } else {
               bloc
                 ..state.item = Service(
+                    code: codeTfController.text,
                     name: nameTfController.text,
                     description: descriptionTfController.text,
                     brands: brandSelectController.brands,
@@ -181,6 +190,7 @@ class _CreateNewServiceScreenState extends KayleeState<CreateNewServiceScreen> {
             listenWhen: (previous, current) => current is ServiceDetailModel,
             listener: (context, state) {
               bannerPickerController?.existedImageUrl = state.item?.image;
+              codeTfController.text = state.item?.code;
               nameTfController.text = state.item?.name;
               brandSelectController.brands = state.item?.brands;
               timeController.value = state.item?.timeInDuration;
@@ -197,6 +207,21 @@ class _CreateNewServiceScreenState extends KayleeState<CreateNewServiceScreen> {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: Dimens.px16),
+                    child: KayleeTextField.normal(
+                      title: Strings.maDichVu,
+                      hint: Strings.nhapMaDichVu,
+                      controller: codeTfController,
+                      focusNode: codeFocus,
+                      textInputAction: TextInputAction.next,
+                      nextFocusNode: nameFocus,
+                      error: state.error?.code.isNotNull &&
+                              state.error.code == ErrorCode.CODE_CODE
+                          ? state.error.message
+                          : null,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: Dimens.px16),
                     child: KayleeTextField.normal(
                       title: Strings.tenDichVu,
                       hint: Strings.nhapTenDichVu,
