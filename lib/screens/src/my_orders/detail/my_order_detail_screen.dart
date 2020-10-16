@@ -167,11 +167,11 @@ class _MyOrderDetailScreenState extends KayleeState<MyOrderDetailScreen> {
               ),
               SliverList(
                   delegate: SliverChildBuilderDelegate((context, index) {
-                final item = state.item.orderDetails.elementAt(index);
+                final item = state.item.orderItems.elementAt(index);
                 return OrderProdItem(
                   orderItem: item,
                 );
-              }, childCount: state.item.orderDetails?.length ?? 0)),
+              }, childCount: state.item.orderItems?.length ?? 0)),
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.all(Dimens.px16),

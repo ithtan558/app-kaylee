@@ -40,7 +40,7 @@ class Order {
     this.informationReceiveDistrictName,
     this.informationReceiveWardsName,
     this.informationReceiveNote,
-    this.orderDetails,
+    this.orderItems,
   });
 
   int id;
@@ -87,7 +87,8 @@ class Order {
   String informationReceiveDistrictName;
   String informationReceiveWardsName;
   String informationReceiveNote;
-  List<OrderItem> orderDetails;
+  @JsonKey(name: 'order_details')
+  List<OrderItem> orderItems;
 }
 
 OrderStatus parseOrderStatusFromInt(status) {

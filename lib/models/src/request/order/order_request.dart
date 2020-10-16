@@ -41,7 +41,7 @@ class OrderRequest {
         id: order.id,
         customer: order.customer,
         discount: order.discount,
-        cartItems: order.orderDetails
+        cartItems: order.orderItems
             .map((e) => OrderRequestItem(
                   serviceId: e.serviceId,
                   productId: e.productId,

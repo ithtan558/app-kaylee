@@ -44,7 +44,7 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
     informationReceiveWardsName:
         json['information_receive_wards_name'] as String,
     informationReceiveNote: json['information_receive_note'] as String,
-    orderDetails: (json['order_details'] as List)
+    orderItems: (json['order_details'] as List)
         ?.map((e) =>
             e == null ? null : OrderItem.fromJson(e as Map<String, dynamic>))
         ?.toList(),
@@ -74,15 +74,15 @@ Map<String, dynamic> _$OrderToJson(Order instance) => <String, dynamic>{
       'employee_first_name': instance.employeeFirstName,
       'employee_last_name': instance.employeeLastName,
       'employee': instance.employee?.toJson(),
-      'brand': instance.brand?.toJson(),
-      'brand_name': instance.brandName,
-      'information_receive_name': instance.informationReceiveName,
-      'information_receive_phone': instance.informationReceivePhone,
-      'information_receive_address': instance.informationReceiveAddress,
-      'information_receive_city_name': instance.informationReceiveCityName,
-      'information_receive_district_name':
-          instance.informationReceiveDistrictName,
-      'information_receive_wards_name': instance.informationReceiveWardsName,
-      'information_receive_note': instance.informationReceiveNote,
-      'order_details': instance.orderDetails?.map((e) => e?.toJson())?.toList(),
-    };
+  'brand': instance.brand?.toJson(),
+  'brand_name': instance.brandName,
+  'information_receive_name': instance.informationReceiveName,
+  'information_receive_phone': instance.informationReceivePhone,
+  'information_receive_address': instance.informationReceiveAddress,
+  'information_receive_city_name': instance.informationReceiveCityName,
+  'information_receive_district_name':
+  instance.informationReceiveDistrictName,
+  'information_receive_wards_name': instance.informationReceiveWardsName,
+  'information_receive_note': instance.informationReceiveNote,
+  'order_details': instance.orderItems?.map((e) => e?.toJson())?.toList(),
+};
