@@ -12,6 +12,7 @@ import 'package:kaylee/widgets/widgets.dart';
 
 class CashierItem extends StatefulWidget {
   static Widget newInstance({Order order}) => BlocProvider(
+    key: ValueKey(order),
         create: (context) => OrderItemBloc(
           orderService: context.network.provideOrderService(),
           order: order,
