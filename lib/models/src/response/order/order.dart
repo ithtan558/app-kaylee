@@ -71,6 +71,9 @@ class Order {
 
   int subTotal;
   int discount;
+
+  @JsonKey(ignore: true)
+  int get total => (discount ?? 0) + (amount ?? 0);
   int taxValue;
   int supplierId;
   String employeeFirstName;
