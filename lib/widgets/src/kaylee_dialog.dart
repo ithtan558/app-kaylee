@@ -393,6 +393,7 @@ Future showPickerPopup(
                   padding: const EdgeInsets.symmetric(horizontal: Dimens.px8),
                   alignment: Alignment.centerRight,
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       GestureDetector(
@@ -402,6 +403,7 @@ Future showPickerPopup(
                           },
                           child: Container(
                             color: Colors.transparent,
+                            alignment: Alignment.center,
                             child: Text(
                               Strings.huy,
                               style: TextStyle(
@@ -421,6 +423,7 @@ Future showPickerPopup(
                           },
                           child: Container(
                             color: Colors.transparent,
+                            alignment: Alignment.center,
                             child: Text(
                               Strings.hoanTat,
                               style: TextStyle(
