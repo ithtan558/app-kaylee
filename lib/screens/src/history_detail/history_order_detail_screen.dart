@@ -109,11 +109,11 @@ class _HistoryOrderDetailScreenState
                       SliverList(
                           delegate:
                               SliverChildBuilderDelegate((context, index) {
-                        final item = state.item.orderDetails.elementAt(index);
+                        final item = state.item.orderItems.elementAt(index);
                         return HistoryOrderItem(
                           item: item,
                         );
-                      }, childCount: state.item.orderDetails?.length ?? 0)),
+                      }, childCount: state.item.orderItems?.length ?? 0)),
                       SliverToBoxAdapter(
                         child: Padding(
                           padding: const EdgeInsets.all(Dimens.px16),
@@ -121,7 +121,7 @@ class _HistoryOrderDetailScreenState
                             children: [
                               KayleeTitlePriceText.normal(
                                 title: Strings.tongChiPhi,
-                                price: state.item.amount,
+                                price: state.item.total,
                               ),
                               if ((state.item.discount ?? 0) > 0)
                                 Padding(
