@@ -8,8 +8,8 @@ import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
-import 'package:kaylee/screens/src/supplier/supplier_prod_list/list/bloc/supplier_prod_cate_list_bloc.dart';
-import 'package:kaylee/screens/src/supplier/supplier_prod_list/list/bloc/supplier_prod_list_bloc.dart';
+import 'package:kaylee/screens/src/supplier/product_list/list/bloc/supplier_prod_cate_list_bloc.dart';
+import 'package:kaylee/screens/src/supplier/product_list/list/bloc/supplier_prod_list_bloc.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
