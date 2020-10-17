@@ -7,8 +7,8 @@ import 'package:kaylee/base/reload_bloc.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
-import 'package:kaylee/screens/src/my_orders/detail/bloc/my_order_detail_bloc.dart';
-import 'package:kaylee/screens/src/my_orders/detail/widgets/order_prod_item.dart';
+import 'package:kaylee/screens/src/supplier/my_orders/detail/bloc/my_order_detail_bloc.dart';
+import 'package:kaylee/screens/src/supplier/my_orders/detail/widgets/order_prod_item.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 

@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
-import 'package:kaylee/screens/src/my_orders/list/bloc/my_orders_screen_bloc.dart';
-import 'package:kaylee/screens/src/my_orders/list/widgets/my_order_item.dart';
+import 'package:kaylee/screens/src/supplier/my_orders/list/bloc/my_orders_screen_bloc.dart';
+import 'package:kaylee/screens/src/supplier/my_orders/list/widgets/my_order_item.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
