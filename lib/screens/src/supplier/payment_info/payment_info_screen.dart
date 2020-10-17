@@ -7,7 +7,7 @@ import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
-import 'package:kaylee/screens/src/payment_info/bloc/payment_info_screen_bloc.dart';
+import 'package:kaylee/screens/src/supplier/payment_info/bloc/payment_info_screen_bloc.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/src/kaylee_rounded_button.dart';
 import 'package:kaylee/widgets/widgets.dart';
