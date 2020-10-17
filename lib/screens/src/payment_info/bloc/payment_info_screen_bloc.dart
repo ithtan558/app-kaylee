@@ -13,7 +13,7 @@ class PaymentInfoScreenBloc extends Cubit<SingleModel<OrderRequest>> {
   void sendOrder() {
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
-      request: orderService?.sendOrder(orderRequest: state.item),
+      request: orderService?.sendOrderToSupplier(orderRequest: state.item),
       onSuccess: ({message, result}) {
         emit(SingleModel.copy(state
           ..loading = false
