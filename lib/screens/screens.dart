@@ -39,5 +39,5 @@ export 'src/service/list/service_list_screen.dart';
 export 'src/splash/splash_screen.dart';
 export 'src/staff/create_new/create_new_staff_screen.dart';
 export 'src/staff/list/staff_list_screen.dart';
-export 'src/supplier_prod_list/list/supplier_prod_list_screen.dart';
-export 'src/supplier_prod_list/product_detail/product_detail_screen.dart';
+export 'src/supplier/supplier_prod_list/list/supplier_prod_list_screen.dart';
+export 'src/supplier/supplier_prod_list/product_detail/product_detail_screen.dart';
