@@ -45,6 +45,8 @@ class Order {
 
   int id;
   String code;
+
+  ///số tiền thanh toán
   int amount;
   @JsonKey(
       fromJson: parseOrderStatusFromInt,
@@ -70,7 +72,16 @@ class Order {
   String note;
 
   int subTotal;
+
+  ///số tiền giảm giá
   int discount;
+
+  ///tính % giảm giá (từ 0 -> 100, kiểu Integer) dựa trên số tiền giảm giá [discount] và số tiền thanh toán [amount]
+  @JsonKey(ignore: true)
+  int get discountPercent {
+    if (amount == 0) return 0;
+    return discount * 100 ~/ (discount + amount);
+  }
 
   @JsonKey(ignore: true)
   int get total => (discount ?? 0) + (amount ?? 0);
