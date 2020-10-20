@@ -25,7 +25,6 @@ dependencies:
   package_info: ^0.4.3
   firebase_messaging: ^7.0.3
   flutter_local_notifications: ^2.0.2
-  heic_to_jpg: ^0.1.2
   flutter_masked_text: ^0.8.0
   anth_package:
     path: ../anth_package
