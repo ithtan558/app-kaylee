@@ -40,7 +40,7 @@ class OrderRequest {
     return OrderRequest(
         id: order.id,
         customer: order.customer,
-        discount: order.discount,
+        discount: order.discountPercent,
         cartItems: order.orderItems
             .map((e) => OrderRequestItem(
                   serviceId: e.serviceId,
