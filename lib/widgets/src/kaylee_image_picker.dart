@@ -90,8 +90,8 @@ class _KayleeProfileImagePickerState extends BaseState<KayleeImagePicker> {
                               fit: BoxFit.cover,
                             )
                           : Image.network(
-                  widget.controller?.existedImageUrl ?? '',
-                  fit: BoxFit.cover,
+                              widget.controller?.existedImageUrl ?? '',
+                              fit: BoxFit.cover,
                             ),
                     ),
             ),
@@ -180,7 +180,7 @@ class _KayleeBannerImagePickerState extends BaseState<KayleeImagePicker> {
                   : Image.network(
                 widget.controller?.existedImageUrl ?? '',
                 fit: BoxFit.cover,
-                    ),
+              ),
             ),
           ),
           Positioned(
@@ -290,8 +290,8 @@ class _ImageGridState extends BaseState<_ImageGrid> {
 
   Future<void> handlePermission() async {
     if (await Permission.storage.isGranted) {
-      final pickedFile =
-      await ImagePicker().getImage(source: ImageSource.gallery);
+      final pickedFile = await ImagePicker()
+          .getImage(source: ImageSource.gallery, maxHeight: 99, maxWidth: 99);
       final selectedFile = File(pickedFile.path);
       if (widget.onSelect.isNotNull) {
         widget.onSelect(selectedFile);
