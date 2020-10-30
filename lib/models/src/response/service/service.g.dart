@@ -26,8 +26,7 @@ Service _$ServiceFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$ServiceToJson(Service instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$ServiceToJson(Service instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'time': instance.time,

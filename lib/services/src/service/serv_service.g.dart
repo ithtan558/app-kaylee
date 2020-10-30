@@ -16,11 +16,11 @@ class _ServService implements ServService {
   String baseUrl;
 
   @override
-  getCategories() async {
+  Future<ResponseModel<ServiceCate>> getCategories() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
+    final _result = await _dio.request<Map<String, dynamic>>(
         'service-category/all',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -34,7 +34,8 @@ class _ServService implements ServService {
   }
 
   @override
-  getCategoryList({page, limit, sort}) async {
+  Future<ResponseModel<ServCategories>> getCategoryList(
+      {page, limit, sort}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'page': page,
@@ -43,8 +44,7 @@ class _ServService implements ServService {
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
-        'service-category',
+    final _result = await _dio.request<Map<String, dynamic>>('service-category',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -57,12 +57,12 @@ class _ServService implements ServService {
   }
 
   @override
-  getServiceCateDetail({cateId}) async {
+  Future<ResponseModel<ServiceCate>> getServiceCateDetail({cateId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
+    final _result = await _dio.request<Map<String, dynamic>>(
         'service-category/$cateId',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -76,7 +76,7 @@ class _ServService implements ServService {
   }
 
   @override
-  newServiceCate({name, code, sequence}) async {
+  Future<ResponseModel<dynamic>> newServiceCate({name, code, sequence}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
@@ -90,8 +90,7 @@ class _ServService implements ServService {
     if (sequence != null) {
       _data.fields.add(MapEntry('sequence', sequence.toString()));
     }
-    final Response<Map<String, dynamic>> _result = await _dio.request(
-        'service-category',
+    final _result = await _dio.request<Map<String, dynamic>>('service-category',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -104,7 +103,8 @@ class _ServService implements ServService {
   }
 
   @override
-  updateServiceCate({name, code, sequence, id, cateId}) async {
+  Future<ResponseModel<dynamic>> updateServiceCate(
+      {name, code, sequence, id, cateId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
@@ -121,7 +121,7 @@ class _ServService implements ServService {
     if (id != null) {
       _data.fields.add(MapEntry('id', id.toString()));
     }
-    final Response<Map<String, dynamic>> _result = await _dio.request(
+    final _result = await _dio.request<Map<String, dynamic>>(
         'service-category/$cateId',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -135,12 +135,12 @@ class _ServService implements ServService {
   }
 
   @override
-  deleteServiceCate({cateId}) async {
+  Future<ResponseModel<dynamic>> deleteServiceCate({cateId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
+    final _result = await _dio.request<Map<String, dynamic>>(
         'service-category/delete/$cateId',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -154,7 +154,7 @@ class _ServService implements ServService {
   }
 
   @override
-  getServices(
+  Future<ResponseModel<Services>> getServices(
       {keyword,
       page,
       limit,
@@ -176,7 +176,7 @@ class _ServService implements ServService {
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request('service',
+    final _result = await _dio.request<Map<String, dynamic>>('service',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -189,15 +189,14 @@ class _ServService implements ServService {
   }
 
   @override
-  newService(
-      {name,
-      description,
-      brandIds,
-      time,
-      price,
-      image,
-      categoryId,
-      code}) async {
+  Future<ResponseModel<dynamic>> newService({name,
+    description,
+    brandIds,
+    time,
+    price,
+    image,
+    categoryId,
+    code}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
@@ -231,7 +230,7 @@ class _ServService implements ServService {
     if (code != null) {
       _data.fields.add(MapEntry('code', code));
     }
-    final Response<Map<String, dynamic>> _result = await _dio.request('service',
+    final _result = await _dio.request<Map<String, dynamic>>('service',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -244,7 +243,7 @@ class _ServService implements ServService {
   }
 
   @override
-  updateService({name,
+  Future<ResponseModel<dynamic>> updateService({name,
     description,
     brandIds,
     time,
@@ -290,7 +289,7 @@ class _ServService implements ServService {
     if (id != null) {
       _data.fields.add(MapEntry('id', id.toString()));
     }
-    final Response<Map<String, dynamic>> _result = await _dio.request(
+    final _result = await _dio.request<Map<String, dynamic>>(
         'service/$serviceId',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -304,12 +303,12 @@ class _ServService implements ServService {
   }
 
   @override
-  getService({serviceId}) async {
+  Future<ResponseModel<Service>> getService({serviceId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
+    final _result = await _dio.request<Map<String, dynamic>>(
         'service/$serviceId',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -323,12 +322,12 @@ class _ServService implements ServService {
   }
 
   @override
-  deleteService({serviceId}) async {
+  Future<ResponseModel<Service>> deleteService({serviceId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
+    final _result = await _dio.request<Map<String, dynamic>>(
         'service/delete/$serviceId}',
         queryParameters: queryParameters,
         options: RequestOptions(

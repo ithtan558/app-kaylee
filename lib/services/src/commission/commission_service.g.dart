@@ -16,7 +16,8 @@ class _CommissionService implements CommissionService {
   String baseUrl;
 
   @override
-  getDetail({startDate, endDate, userId}) async {
+  Future<ResponseModel<Commission>> getDetail(
+      {startDate, endDate, userId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'start_date': startDate,
@@ -25,7 +26,7 @@ class _CommissionService implements CommissionService {
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
+    final _result = await _dio.request<Map<String, dynamic>>(
         'commission/detail',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -39,7 +40,8 @@ class _CommissionService implements CommissionService {
   }
 
   @override
-  getProductOfOrder({startDate, endDate, userId, page, limit}) async {
+  Future<ResponseModel<CommissionOrders>> getProductOfOrder(
+      {startDate, endDate, userId, page, limit}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'start_date': startDate,
@@ -50,7 +52,7 @@ class _CommissionService implements CommissionService {
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
+    final _result = await _dio.request<Map<String, dynamic>>(
         'commission/product/list-order',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -64,7 +66,8 @@ class _CommissionService implements CommissionService {
   }
 
   @override
-  getServiceOfOrder({startDate, endDate, userId, page, limit}) async {
+  Future<ResponseModel<CommissionOrders>> getServiceOfOrder(
+      {startDate, endDate, userId, page, limit}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'start_date': startDate,
@@ -75,7 +78,7 @@ class _CommissionService implements CommissionService {
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
+    final _result = await _dio.request<Map<String, dynamic>>(
         'commission/service/list-order',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -89,12 +92,12 @@ class _CommissionService implements CommissionService {
   }
 
   @override
-  getSetting({userId}) async {
+  Future<ResponseModel<CommissionSetting>> getSetting({userId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'user_id': userId};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
+    final _result = await _dio.request<Map<String, dynamic>>(
         'commission/setting',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -108,7 +111,8 @@ class _CommissionService implements CommissionService {
   }
 
   @override
-  getUpdateSetting({userId, product, service}) async {
+  Future<ResponseModel<dynamic>> getUpdateSetting(
+      {userId, product, service}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'user_id': userId,
@@ -117,7 +121,7 @@ class _CommissionService implements CommissionService {
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
+    final _result = await _dio.request<Map<String, dynamic>>(
         'commission/setting/update',
         queryParameters: queryParameters,
         options: RequestOptions(

@@ -16,11 +16,11 @@ class _NotificationService implements NotificationService {
   String baseUrl;
 
   @override
-  getNotificationCount() async {
+  Future<ResponseModel<NotificationCount>> getNotificationCount() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
+    final _result = await _dio.request<Map<String, dynamic>>(
         'notification/count-not-read',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -34,7 +34,8 @@ class _NotificationService implements NotificationService {
   }
 
   @override
-  getNotifications({page, limit, sort, keyword}) async {
+  Future<ResponseModel<Notifications>> getNotifications(
+      {page, limit, sort, keyword}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'page': page,
@@ -44,8 +45,7 @@ class _NotificationService implements NotificationService {
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
-        'notification',
+    final _result = await _dio.request<Map<String, dynamic>>('notification',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -58,11 +58,11 @@ class _NotificationService implements NotificationService {
   }
 
   @override
-  deleteAll() async {
+  Future<ResponseModel<Notifications>> deleteAll() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
+    final _result = await _dio.request<Map<String, dynamic>>(
         'notification/delete/all',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -76,12 +76,12 @@ class _NotificationService implements NotificationService {
   }
 
   @override
-  delete({id}) async {
+  Future<ResponseModel<dynamic>> delete({id}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
+    final _result = await _dio.request<Map<String, dynamic>>(
         'notification/delete/$id',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -95,13 +95,12 @@ class _NotificationService implements NotificationService {
   }
 
   @override
-  getDetail({id, notificationId}) async {
+  Future<ResponseModel<Notification>> getDetail({id, notificationId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'id': notificationId};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
-        'notification/$id',
+    final _result = await _dio.request<Map<String, dynamic>>('notification/$id',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -114,13 +113,14 @@ class _NotificationService implements NotificationService {
   }
 
   @override
-  updateStatus({body}) async {
+  Future<ResponseModel<dynamic>> updateStatus({body}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(body?.toJson() ?? <String, dynamic>{});
-    final Response<Map<String, dynamic>> _result = await _dio.request(
+    _data.removeWhere((k, v) => v == null);
+    final _result = await _dio.request<Map<String, dynamic>>(
         'notification/update-status',
         queryParameters: queryParameters,
         options: RequestOptions(

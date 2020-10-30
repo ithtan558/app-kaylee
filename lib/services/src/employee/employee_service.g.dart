@@ -16,7 +16,7 @@ class _EmployeeService implements EmployeeService {
   String baseUrl;
 
   @override
-  getEmployees(
+  Future<ResponseModel<Employees>> getEmployees(
       {page, limit, keyword, sort, brandId, cityId, districtIds}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
@@ -30,8 +30,7 @@ class _EmployeeService implements EmployeeService {
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
-        'employee',
+    final _result = await _dio.request<Map<String, dynamic>>('employee',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -44,7 +43,7 @@ class _EmployeeService implements EmployeeService {
   }
 
   @override
-  findEmployees({keyword, brandId}) async {
+  Future<ResponseModel<Employee>> findEmployees({keyword, brandId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'keyword': keyword,
@@ -52,7 +51,7 @@ class _EmployeeService implements EmployeeService {
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
+    final _result = await _dio.request<Map<String, dynamic>>(
         'employee/get-by-phone-and-name',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -66,12 +65,12 @@ class _EmployeeService implements EmployeeService {
   }
 
   @override
-  getEmployee({employeeId}) async {
+  Future<ResponseModel<Employee>> getEmployee({employeeId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
+    final _result = await _dio.request<Map<String, dynamic>>(
         'employee/$employeeId',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -85,7 +84,7 @@ class _EmployeeService implements EmployeeService {
   }
 
   @override
-  newEmployee(
+  Future<ResponseModel<dynamic>> newEmployee(
       {firstName,
       lastName,
       birthday,
@@ -149,8 +148,7 @@ class _EmployeeService implements EmployeeService {
     if (password != null) {
       _data.fields.add(MapEntry('password', password));
     }
-    final Response<Map<String, dynamic>> _result = await _dio.request(
-        'employee',
+    final _result = await _dio.request<Map<String, dynamic>>('employee',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -163,17 +161,16 @@ class _EmployeeService implements EmployeeService {
   }
 
   @override
-  updateEmployee(
-      {firstName,
-      lastName,
-      birthday,
-      hometownCityId,
-      address,
-      cityId,
-      districtId,
-      wardsId,
-      roleId,
-      brandId,
+  Future<ResponseModel<dynamic>> updateEmployee({firstName,
+    lastName,
+    birthday,
+    hometownCityId,
+    address,
+    cityId,
+    districtId,
+    wardsId,
+    roleId,
+    brandId,
       phone,
       image,
       email,
@@ -232,7 +229,7 @@ class _EmployeeService implements EmployeeService {
     if (id != null) {
       _data.fields.add(MapEntry('id', id.toString()));
     }
-    final Response<Map<String, dynamic>> _result = await _dio.request(
+    final _result = await _dio.request<Map<String, dynamic>>(
         'employee/$employeeId',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -246,12 +243,12 @@ class _EmployeeService implements EmployeeService {
   }
 
   @override
-  deleteEmployee({employeeId}) async {
+  Future<ResponseModel<dynamic>> deleteEmployee({employeeId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
+    final _result = await _dio.request<Map<String, dynamic>>(
         'employee/delete/$employeeId',
         queryParameters: queryParameters,
         options: RequestOptions(

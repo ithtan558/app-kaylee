@@ -16,7 +16,7 @@ class _CustomerService implements CustomerService {
   String baseUrl;
 
   @override
-  getCustomers(
+  Future<ResponseModel<Customers>> getCustomers(
       {page, limit, keyword, sort, typeId, cityId, districtIds}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
@@ -30,8 +30,7 @@ class _CustomerService implements CustomerService {
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
-        'customer',
+    final _result = await _dio.request<Map<String, dynamic>>('customer',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -44,12 +43,12 @@ class _CustomerService implements CustomerService {
   }
 
   @override
-  findCustomer({keyword}) async {
+  Future<ResponseModel<Customer>> findCustomer({keyword}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'keyword': keyword};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
+    final _result = await _dio.request<Map<String, dynamic>>(
         'customer/get-by-phone-and-name',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -63,12 +62,12 @@ class _CustomerService implements CustomerService {
   }
 
   @override
-  getCustomer({customerId}) async {
+  Future<ResponseModel<Customer>> getCustomer({customerId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
+    final _result = await _dio.request<Map<String, dynamic>>(
         'customer/$customerId',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -82,7 +81,7 @@ class _CustomerService implements CustomerService {
   }
 
   @override
-  newCustomer(
+  Future<ResponseModel<Customer>> newCustomer(
       {firstName,
       lastName,
       birthday,
@@ -134,8 +133,7 @@ class _CustomerService implements CustomerService {
     if (email != null) {
       _data.fields.add(MapEntry('email', email));
     }
-    final Response<Map<String, dynamic>> _result = await _dio.request(
-        'customer',
+    final _result = await _dio.request<Map<String, dynamic>>('customer',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -148,17 +146,16 @@ class _CustomerService implements CustomerService {
   }
 
   @override
-  updateCustomer(
-      {firstName,
-      lastName,
-      birthday,
-      hometownCityId,
-      address,
-      cityId,
-      districtId,
-      wardsId,
-      phone,
-      image,
+  Future<ResponseModel<Customer>> updateCustomer({firstName,
+    lastName,
+    birthday,
+    hometownCityId,
+    address,
+    cityId,
+    districtId,
+    wardsId,
+    phone,
+    image,
       email,
       id,
       customerId}) async {
@@ -205,7 +202,7 @@ class _CustomerService implements CustomerService {
     if (id != null) {
       _data.fields.add(MapEntry('id', id.toString()));
     }
-    final Response<Map<String, dynamic>> _result = await _dio.request(
+    final _result = await _dio.request<Map<String, dynamic>>(
         'customer/$customerId',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -219,12 +216,12 @@ class _CustomerService implements CustomerService {
   }
 
   @override
-  deleteCustomer({customerId}) async {
+  Future<ResponseModel<dynamic>> deleteCustomer({customerId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
+    final _result = await _dio.request<Map<String, dynamic>>(
         'customer/delete/$customerId',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -238,11 +235,11 @@ class _CustomerService implements CustomerService {
   }
 
   @override
-  getCustomerType() async {
+  Future<ResponseModel<CustomerType>> getCustomerType() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
+    final _result = await _dio.request<Map<String, dynamic>>(
         'customer-type/all',
         queryParameters: queryParameters,
         options: RequestOptions(

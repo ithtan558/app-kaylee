@@ -16,14 +16,14 @@ class _UserService implements UserService {
   String baseUrl;
 
   @override
-  register(body) async {
+  Future<ResponseModel<dynamic>> register(body) async {
     ArgumentError.checkNotNull(body, 'body');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body?.toJson() ?? <String, dynamic>{});
-    final Response<Map<String, dynamic>> _result = await _dio.request(
-        'register',
+    _data.removeWhere((k, v) => v == null);
+    final _result = await _dio.request<Map<String, dynamic>>('register',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -36,13 +36,14 @@ class _UserService implements UserService {
   }
 
   @override
-  login(body) async {
+  Future<ResponseModel<LoginResult>> login(body) async {
     ArgumentError.checkNotNull(body, 'body');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body?.toJson() ?? <String, dynamic>{});
-    final Response<Map<String, dynamic>> _result = await _dio.request('login',
+    _data.removeWhere((k, v) => v == null);
+    final _result = await _dio.request<Map<String, dynamic>>('login',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -55,13 +56,14 @@ class _UserService implements UserService {
   }
 
   @override
-  verifyPhone(body) async {
+  Future<ResponseModel<VerifyPhoneResult>> verifyPhone(body) async {
     ArgumentError.checkNotNull(body, 'body');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body?.toJson() ?? <String, dynamic>{});
-    final Response<Map<String, dynamic>> _result = await _dio.request(
+    _data.removeWhere((k, v) => v == null);
+    final _result = await _dio.request<Map<String, dynamic>>(
         'forgot/verify-phone-and-send-otp',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -75,13 +77,14 @@ class _UserService implements UserService {
   }
 
   @override
-  verifyOtp(body) async {
+  Future<ResponseModel<VerifyOtpResult>> verifyOtp(body) async {
     ArgumentError.checkNotNull(body, 'body');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body?.toJson() ?? <String, dynamic>{});
-    final Response<Map<String, dynamic>> _result = await _dio.request(
+    _data.removeWhere((k, v) => v == null);
+    final _result = await _dio.request<Map<String, dynamic>>(
         'forgot/verify-otp',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -95,13 +98,14 @@ class _UserService implements UserService {
   }
 
   @override
-  updatePass({body}) async {
+  Future<ResponseModel<dynamic>> updatePass({body}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(body?.toJson() ?? <String, dynamic>{});
-    final Response<Map<String, dynamic>> _result = await _dio.request(
+    _data.removeWhere((k, v) => v == null);
+    final _result = await _dio.request<Map<String, dynamic>>(
         'forgot/update-password',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -115,12 +119,11 @@ class _UserService implements UserService {
   }
 
   @override
-  getProfile() async {
+  Future<ResponseModel<UserInfo>> getProfile() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
-        'user-info',
+    final _result = await _dio.request<Map<String, dynamic>>('user-info',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -133,7 +136,7 @@ class _UserService implements UserService {
   }
 
   @override
-  update(
+  Future<ResponseModel<dynamic>> update(
       {firstName,
       lastName,
       birthday,
@@ -173,7 +176,7 @@ class _UserService implements UserService {
           MultipartFile.fromFileSync(image.path,
               filename: image.path.split(Platform.pathSeparator).last)));
     }
-    final Response<Map<String, dynamic>> _result = await _dio.request('update',
+    final _result = await _dio.request<Map<String, dynamic>>('update',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',

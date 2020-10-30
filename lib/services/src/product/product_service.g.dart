@@ -16,7 +16,8 @@ class _ProductService implements ProductService {
   String baseUrl;
 
   @override
-  getProducts({supplierId, keyword, sort, categoryId, page, limit}) async {
+  Future<ResponseModel<Products>> getProducts(
+      {supplierId, keyword, sort, categoryId, page, limit}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'supplier_id': supplierId,
@@ -28,7 +29,7 @@ class _ProductService implements ProductService {
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request('product',
+    final _result = await _dio.request<Map<String, dynamic>>('product',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -41,12 +42,12 @@ class _ProductService implements ProductService {
   }
 
   @override
-  getCategories({supplierId}) async {
+  Future<ResponseModel<ProdCate>> getCategories({supplierId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'supplier_id': supplierId};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
+    final _result = await _dio.request<Map<String, dynamic>>(
         'product-category/all',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -60,7 +61,8 @@ class _ProductService implements ProductService {
   }
 
   @override
-  getCategoryList({page, limit, sort}) async {
+  Future<ResponseModel<ProdCategories>> getCategoryList(
+      {page, limit, sort}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'page': page,
@@ -69,8 +71,7 @@ class _ProductService implements ProductService {
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
-        'product-category',
+    final _result = await _dio.request<Map<String, dynamic>>('product-category',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -83,12 +84,12 @@ class _ProductService implements ProductService {
   }
 
   @override
-  getProdCateDetail({cateId}) async {
+  Future<ResponseModel<ProdCate>> getProdCateDetail({cateId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
+    final _result = await _dio.request<Map<String, dynamic>>(
         'product-category/$cateId',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -102,7 +103,7 @@ class _ProductService implements ProductService {
   }
 
   @override
-  newProdCate({name, code, sequence}) async {
+  Future<ResponseModel<dynamic>> newProdCate({name, code, sequence}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
@@ -116,8 +117,7 @@ class _ProductService implements ProductService {
     if (sequence != null) {
       _data.fields.add(MapEntry('sequence', sequence.toString()));
     }
-    final Response<Map<String, dynamic>> _result = await _dio.request(
-        'product-category',
+    final _result = await _dio.request<Map<String, dynamic>>('product-category',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -130,7 +130,8 @@ class _ProductService implements ProductService {
   }
 
   @override
-  updateProdCate({name, code, sequence, id, cateId}) async {
+  Future<ResponseModel<dynamic>> updateProdCate(
+      {name, code, sequence, id, cateId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
@@ -147,7 +148,7 @@ class _ProductService implements ProductService {
     if (id != null) {
       _data.fields.add(MapEntry('id', id.toString()));
     }
-    final Response<Map<String, dynamic>> _result = await _dio.request(
+    final _result = await _dio.request<Map<String, dynamic>>(
         'product-category/$cateId',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -161,12 +162,12 @@ class _ProductService implements ProductService {
   }
 
   @override
-  deleteProdCate({cateId}) async {
+  Future<ResponseModel<dynamic>> deleteProdCate({cateId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
+    final _result = await _dio.request<Map<String, dynamic>>(
         'product-category/delete/$cateId',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -180,13 +181,12 @@ class _ProductService implements ProductService {
   }
 
   @override
-  getProduct({proId}) async {
+  Future<ResponseModel<Product>> getProduct({proId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
-        'product/$proId',
+    final _result = await _dio.request<Map<String, dynamic>>('product/$proId',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -199,7 +199,7 @@ class _ProductService implements ProductService {
   }
 
   @override
-  newProduct(
+  Future<ResponseModel<dynamic>> newProduct(
       {name, description, brandIds, price, image, categoryId, code}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -229,7 +229,7 @@ class _ProductService implements ProductService {
     if (code != null) {
       _data.fields.add(MapEntry('code', code));
     }
-    final Response<Map<String, dynamic>> _result = await _dio.request('product',
+    final _result = await _dio.request<Map<String, dynamic>>('product',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -242,15 +242,16 @@ class _ProductService implements ProductService {
   }
 
   @override
-  updateProduct({name,
-    description,
-    brandIds,
-    price,
-    image,
-    categoryId,
-    code,
-    id,
-    prodId}) async {
+  Future<ResponseModel<dynamic>> updateProduct(
+      {name,
+      description,
+      brandIds,
+      price,
+      image,
+      categoryId,
+      code,
+      id,
+      prodId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
@@ -284,8 +285,7 @@ class _ProductService implements ProductService {
     if (id != null) {
       _data.fields.add(MapEntry('id', id.toString()));
     }
-    final Response<Map<String, dynamic>> _result = await _dio.request(
-        'product/$prodId',
+    final _result = await _dio.request<Map<String, dynamic>>('product/$prodId',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -298,12 +298,12 @@ class _ProductService implements ProductService {
   }
 
   @override
-  deleteProduct({prodId}) async {
+  Future<ResponseModel<dynamic>> deleteProduct({prodId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
+    final _result = await _dio.request<Map<String, dynamic>>(
         'product/delete/$prodId',
         queryParameters: queryParameters,
         options: RequestOptions(

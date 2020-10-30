@@ -16,12 +16,11 @@ class _RoleService implements RoleService {
   String baseUrl;
 
   @override
-  getRoles() async {
+  Future<ResponseModel<Role>> getRoles() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
-        'role/all',
+    final _result = await _dio.request<Map<String, dynamic>>('role/all',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',

@@ -16,13 +16,14 @@ class _OrderService implements OrderService {
   String baseUrl;
 
   @override
-  sendOrder({orderRequest}) async {
+  Future<ResponseModel<dynamic>> sendOrder({orderRequest}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(orderRequest?.toJson() ?? <String, dynamic>{});
-    final Response<Map<String, dynamic>> _result = await _dio.request('order',
+    _data.removeWhere((k, v) => v == null);
+    final _result = await _dio.request<Map<String, dynamic>>('order',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -35,14 +36,14 @@ class _OrderService implements OrderService {
   }
 
   @override
-  sendOrderToSupplier({orderRequest}) async {
+  Future<ResponseModel<dynamic>> sendOrderToSupplier({orderRequest}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(orderRequest?.toJson() ?? <String, dynamic>{});
-    final Response<Map<String, dynamic>> _result = await _dio.request(
-        'supplier/order',
+    _data.removeWhere((k, v) => v == null);
+    final _result = await _dio.request<Map<String, dynamic>>('supplier/order',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -55,14 +56,14 @@ class _OrderService implements OrderService {
   }
 
   @override
-  updateOrder({orderRequest, orderId}) async {
+  Future<ResponseModel<dynamic>> updateOrder({orderRequest, orderId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(orderRequest?.toJson() ?? <String, dynamic>{});
-    final Response<Map<String, dynamic>> _result = await _dio.request(
-        'order/$orderId',
+    _data.removeWhere((k, v) => v == null);
+    final _result = await _dio.request<Map<String, dynamic>>('order/$orderId',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -75,7 +76,7 @@ class _OrderService implements OrderService {
   }
 
   @override
-  getOrderSupplier(
+  Future<ResponseModel<Orders>> getOrderSupplier(
       {page, limit, startDate, endDate, isHistoryBySupplier = 1}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
@@ -87,7 +88,7 @@ class _OrderService implements OrderService {
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request('order',
+    final _result = await _dio.request<Map<String, dynamic>>('order',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -100,13 +101,12 @@ class _OrderService implements OrderService {
   }
 
   @override
-  getDetail({orderId}) async {
+  Future<ResponseModel<Order>> getDetail({orderId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
-        'order/$orderId',
+    final _result = await _dio.request<Map<String, dynamic>>('order/$orderId',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -119,13 +119,14 @@ class _OrderService implements OrderService {
   }
 
   @override
-  updateOrderStatus({orderId, body}) async {
+  Future<ResponseModel<dynamic>> updateOrderStatus({orderId, body}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(body?.toJson() ?? <String, dynamic>{});
-    final Response<Map<String, dynamic>> _result = await _dio.request(
+    _data.removeWhere((k, v) => v == null);
+    final _result = await _dio.request<Map<String, dynamic>>(
         'order/update-status/$orderId',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -139,7 +140,8 @@ class _OrderService implements OrderService {
   }
 
   @override
-  getOrderHistory({page, limit, isHistory = 1}) async {
+  Future<ResponseModel<Orders>> getOrderHistory(
+      {page, limit, isHistory = 1}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'page': page,
@@ -148,7 +150,7 @@ class _OrderService implements OrderService {
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request('order',
+    final _result = await _dio.request<Map<String, dynamic>>('order',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -161,7 +163,8 @@ class _OrderService implements OrderService {
   }
 
   @override
-  getOrderCashier({page, limit, orderStatusId = 4}) async {
+  Future<ResponseModel<Orders>> getOrderCashier(
+      {page, limit, orderStatusId = 4}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'page': page,
@@ -170,7 +173,7 @@ class _OrderService implements OrderService {
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request('order',
+    final _result = await _dio.request<Map<String, dynamic>>('order',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',

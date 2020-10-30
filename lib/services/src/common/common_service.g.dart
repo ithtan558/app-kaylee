@@ -16,13 +16,12 @@ class _CommonService implements CommonService {
   String baseUrl;
 
   @override
-  getContent(hashtag) async {
+  Future<ResponseModel<Content>> getContent(hashtag) async {
     ArgumentError.checkNotNull(hashtag, 'hashtag');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
-        'content/$hashtag',
+    final _result = await _dio.request<Map<String, dynamic>>('content/$hashtag',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -35,12 +34,11 @@ class _CommonService implements CommonService {
   }
 
   @override
-  getCity() async {
+  Future<ResponseModel<City>> getCity() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
-        'city/all',
+    final _result = await _dio.request<Map<String, dynamic>>('city/all',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -53,12 +51,12 @@ class _CommonService implements CommonService {
   }
 
   @override
-  getDistrict(city) async {
+  Future<ResponseModel<District>> getDistrict(city) async {
     ArgumentError.checkNotNull(city, 'city');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
+    final _result = await _dio.request<Map<String, dynamic>>(
         'district/list-by-city/$city',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -72,12 +70,12 @@ class _CommonService implements CommonService {
   }
 
   @override
-  getWard(district) async {
+  Future<ResponseModel<Ward>> getWard(district) async {
     ArgumentError.checkNotNull(district, 'district');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
+    final _result = await _dio.request<Map<String, dynamic>>(
         'wards/list-by-district/$district',
         queryParameters: queryParameters,
         options: RequestOptions(

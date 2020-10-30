@@ -16,7 +16,7 @@ class _ReservationService implements ReservationService {
   String baseUrl;
 
   @override
-  getReservations(
+  Future<ResponseModel<Reservations>> getReservations(
       {keyword, brandId, status, datetime, sort, page, limit}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
@@ -30,8 +30,7 @@ class _ReservationService implements ReservationService {
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
-        'reservation',
+    final _result = await _dio.request<Map<String, dynamic>>('reservation',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -44,7 +43,8 @@ class _ReservationService implements ReservationService {
   }
 
   @override
-  updateStatus({reservationId, id, status}) async {
+  Future<ResponseModel<dynamic>> updateStatus(
+      {reservationId, id, status}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
@@ -55,7 +55,7 @@ class _ReservationService implements ReservationService {
     if (status != null) {
       _data.fields.add(MapEntry('status', status.toString()));
     }
-    final Response<Map<String, dynamic>> _result = await _dio.request(
+    final _result = await _dio.request<Map<String, dynamic>>(
         'reservation/update-status/$reservationId',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -69,7 +69,7 @@ class _ReservationService implements ReservationService {
   }
 
   @override
-  newReservation(
+  Future<ResponseModel<dynamic>> newReservation(
       {firstName,
       lastName,
       address,
@@ -118,8 +118,7 @@ class _ReservationService implements ReservationService {
     if (brandId != null) {
       _data.fields.add(MapEntry('brand_id', brandId.toString()));
     }
-    final Response<Map<String, dynamic>> _result = await _dio.request(
-        'reservation',
+    final _result = await _dio.request<Map<String, dynamic>>('reservation',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -132,17 +131,16 @@ class _ReservationService implements ReservationService {
   }
 
   @override
-  updateReservation(
-      {firstName,
-      lastName,
-      address,
-      cityId,
-      districtId,
-      wardsId,
-      phone,
-      quantity,
-      note,
-      datetime,
+  Future<ResponseModel<dynamic>> updateReservation({firstName,
+    lastName,
+    address,
+    cityId,
+    districtId,
+    wardsId,
+    phone,
+    quantity,
+    note,
+    datetime,
       brandId,
       id,
       reservationId}) async {
@@ -186,7 +184,7 @@ class _ReservationService implements ReservationService {
     if (id != null) {
       _data.fields.add(MapEntry('id', id.toString()));
     }
-    final Response<Map<String, dynamic>> _result = await _dio.request(
+    final _result = await _dio.request<Map<String, dynamic>>(
         'reservation/$reservationId',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -200,13 +198,12 @@ class _ReservationService implements ReservationService {
   }
 
   @override
-  getReservation({id}) async {
+  Future<ResponseModel<Reservation>> getReservation({id}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
-        'reservation/$id',
+    final _result = await _dio.request<Map<String, dynamic>>('reservation/$id',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',

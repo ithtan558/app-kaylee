@@ -16,12 +16,11 @@ class _CampaignService implements CampaignService {
   String baseUrl;
 
   @override
-  getAllCampaign() async {
+  Future<ResponseModel<Campaign>> getAllCampaign() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
-        'campaign/all',
+    final _result = await _dio.request<Map<String, dynamic>>('campaign/all',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',

@@ -16,7 +16,7 @@ class _ReportService implements ReportService {
   String baseUrl;
 
   @override
-  getTotal({startDate, endDate, brandId}) async {
+  Future<ResponseModel<Revenue>> getTotal({startDate, endDate, brandId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'start_date': startDate,
@@ -25,8 +25,7 @@ class _ReportService implements ReportService {
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
-        'report/get-total',
+    final _result = await _dio.request<Map<String, dynamic>>('report/get-total',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -39,7 +38,8 @@ class _ReportService implements ReportService {
   }
 
   @override
-  getTotalByEmployee({startDate, endDate, brandId}) async {
+  Future<ResponseModel<EmployeeRevenue>> getTotalByEmployee(
+      {startDate, endDate, brandId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'start_date': startDate,
@@ -48,7 +48,7 @@ class _ReportService implements ReportService {
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
+    final _result = await _dio.request<Map<String, dynamic>>(
         'report/get-total-by-employee-date',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -62,7 +62,8 @@ class _ReportService implements ReportService {
   }
 
   @override
-  getTotalByService({startDate, endDate, brandId}) async {
+  Future<ResponseModel<ServiceRevenue>> getTotalByService(
+      {startDate, endDate, brandId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'start_date': startDate,
@@ -71,7 +72,7 @@ class _ReportService implements ReportService {
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
+    final _result = await _dio.request<Map<String, dynamic>>(
         'report/get-total-by-service-date',
         queryParameters: queryParameters,
         options: RequestOptions(

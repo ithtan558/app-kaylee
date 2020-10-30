@@ -16,12 +16,11 @@ class _BrandService implements BrandService {
   String baseUrl;
 
   @override
-  getAllBrands() async {
+  Future<ResponseModel<Brand>> getAllBrands() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
-        'brand/all',
+    final _result = await _dio.request<Map<String, dynamic>>('brand/all',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -34,7 +33,8 @@ class _BrandService implements BrandService {
   }
 
   @override
-  getBrands({keyword, page, limit, cityId, districtIds}) async {
+  Future<ResponseModel<Brands>> getBrands(
+      {keyword, page, limit, cityId, districtIds}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'keyword': keyword,
@@ -45,7 +45,7 @@ class _BrandService implements BrandService {
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request('brand',
+    final _result = await _dio.request<Map<String, dynamic>>('brand',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -58,13 +58,12 @@ class _BrandService implements BrandService {
   }
 
   @override
-  getBrand({brandId}) async {
+  Future<ResponseModel<Brand>> getBrand({brandId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
-        'brand/$brandId',
+    final _result = await _dio.request<Map<String, dynamic>>('brand/$brandId',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -77,7 +76,7 @@ class _BrandService implements BrandService {
   }
 
   @override
-  newBrand(
+  Future<ResponseModel<dynamic>> newBrand(
       {name,
       phone,
       location,
@@ -121,7 +120,7 @@ class _BrandService implements BrandService {
           MultipartFile.fromFileSync(image.path,
               filename: image.path.split(Platform.pathSeparator).last)));
     }
-    final Response<Map<String, dynamic>> _result = await _dio.request('brand',
+    final _result = await _dio.request<Map<String, dynamic>>('brand',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -134,17 +133,16 @@ class _BrandService implements BrandService {
   }
 
   @override
-  updateBrand(
-      {name,
-      phone,
-      location,
-      cityId,
-      districtId,
-      startTime,
-      endTime,
-      wardsId,
-      image,
-      id,
+  Future<ResponseModel<dynamic>> updateBrand({name,
+    phone,
+    location,
+    cityId,
+    districtId,
+    startTime,
+    endTime,
+    wardsId,
+    image,
+    id,
       brandId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -183,8 +181,7 @@ class _BrandService implements BrandService {
     if (id != null) {
       _data.fields.add(MapEntry('id', id.toString()));
     }
-    final Response<Map<String, dynamic>> _result = await _dio.request(
-        'brand/$brandId',
+    final _result = await _dio.request<Map<String, dynamic>>('brand/$brandId',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -197,12 +194,12 @@ class _BrandService implements BrandService {
   }
 
   @override
-  deleteBrand({brandId}) async {
+  Future<ResponseModel<dynamic>> deleteBrand({brandId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
+    final _result = await _dio.request<Map<String, dynamic>>(
         'brand/delete/$brandId',
         queryParameters: queryParameters,
         options: RequestOptions(

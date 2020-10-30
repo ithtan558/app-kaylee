@@ -16,7 +16,8 @@ class _SupplierService implements SupplierService {
   String baseUrl;
 
   @override
-  getSuppliers({page = 1, limit = 10, sort}) async {
+  Future<ResponseModel<Suppliers>> getSuppliers(
+      {page = 1, limit = 10, sort}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'page': page,
@@ -25,8 +26,7 @@ class _SupplierService implements SupplierService {
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final Response<Map<String, dynamic>> _result = await _dio.request(
-        'supplier',
+    final _result = await _dio.request<Map<String, dynamic>>('supplier',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
