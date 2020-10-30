@@ -26,6 +26,7 @@ dependencies:
   firebase_messaging: ^7.0.3
   flutter_local_notifications: ^3.0.1
   flutter_masked_text: ^0.8.0
+  cached_network_image: ^2.3.3
   anth_package:
     path: ../anth_package
 #    git:
