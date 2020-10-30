@@ -49,6 +49,7 @@ class _MyOrderDetailScreenState extends KayleeState<MyOrderDetailScreen> {
             onPressed: popScreen,
             onDismiss: () {
               context.bloc<ReloadBloc>().reload(widget: MyOrdersScreen);
+              popScreen();
             },
           );
         }
