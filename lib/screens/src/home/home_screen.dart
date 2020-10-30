@@ -5,11 +5,13 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:kaylee/base/kaylee_state.dart';
+import 'package:kaylee/base/reload_bloc.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/screens/src/home/tabs/account/account_tab.dart';
 import 'package:kaylee/screens/src/home/tabs/cashier/cashier_tab.dart';
 import 'package:kaylee/screens/src/home/tabs/history/history_tab.dart';
 import 'package:kaylee/screens/src/home/tabs/home/home_tab.dart';
+import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/notification_button/notification_button.dart';
 import 'package:kaylee/utils/deeplink_helper.dart';
 import 'package:kaylee/widgets/src/kaylee_bottom_bar.dart';
 
@@ -94,6 +96,7 @@ class _HomeScreenState extends KayleeState<HomeScreen> {
         response.notification?.body ?? response.aps?.alert?.body ?? '',
         platformDetail,
         payload: jsonEncode(response));
+    context.bloc<ReloadBloc>().reload(widget: NotificationButton);
   }
 
   @override
