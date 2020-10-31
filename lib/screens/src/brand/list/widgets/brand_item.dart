@@ -1,4 +1,5 @@
 import 'package:anth_package/anth_package.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
@@ -25,9 +26,10 @@ class BrandItem extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: Dimens.px52),
                 child: AspectRatio(
                   aspectRatio: 343 / 188,
-                  child: Image.network(
-                    brand.image ?? '',
+                  child: CachedNetworkImage(
+                    imageUrl: brand.image ?? '',
                     fit: BoxFit.cover,
+                    memCacheHeight: 418,
                   ),
                 ),
               ),
