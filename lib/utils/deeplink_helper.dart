@@ -1,5 +1,5 @@
 import 'package:anth_package/anth_package.dart';
-import 'package:kaylee/models/models.dart';
+import 'package:kaylee/models/models.dart' as models;
 import 'package:kaylee/screens/screens.dart';
 
 class DeepLinkHelper {
@@ -14,7 +14,7 @@ class DeepLinkHelper {
           return PageIntent(
             screen: MyOrderDetailScreen,
             bundle: Bundle(
-              Order(id: orderId),
+              models.Order(id: orderId),
             ),
           );
         }
@@ -26,8 +26,22 @@ class DeepLinkHelper {
             screen: ProductDetailScreen,
             bundle: Bundle(
               ProductDetailScreenData(
-                product: Product(id: productId),
-                supplier: Supplier(id: supplierId),
+                product: models.Product(id: productId),
+                supplier: models.Supplier(id: supplierId),
+              ),
+            ),
+          );
+        }
+      } else if (uri.path == 'notification/detail') {
+        final notificationId =
+            int.tryParse(uri.queryParameters['notification_id']);
+        if (notificationId.isNotNull) {
+          return PageIntent(
+            screen: NotifyDetailScreen,
+            bundle: Bundle(
+              models.Notification(
+                id: notificationId,
+                status: models.NotificationStatus.notRead,
               ),
             ),
           );
