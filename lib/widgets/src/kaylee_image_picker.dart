@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -89,8 +90,9 @@ class _KayleeProfileImagePickerState extends BaseState<KayleeImagePicker> {
                               selectedFile,
                               fit: BoxFit.cover,
                             )
-                          : Image.network(
-                              widget.controller?.existedImageUrl ?? '',
+                          : CachedNetworkImage(
+                              imageUrl:
+                                  widget.controller?.existedImageUrl ?? '',
                               fit: BoxFit.cover,
                             ),
                     ),
@@ -174,11 +176,11 @@ class _KayleeBannerImagePickerState extends BaseState<KayleeImagePicker> {
               color: ColorsRes.dialogDimBg,
               child: selectedFile.isNotNull
                   ? Image.file(
-                      selectedFile,
-                      fit: BoxFit.cover,
-                    )
-                  : Image.network(
-                widget.controller?.existedImageUrl ?? '',
+                selectedFile,
+                fit: BoxFit.cover,
+              )
+                  : CachedNetworkImage(
+                imageUrl: widget.controller?.existedImageUrl ?? '',
                 fit: BoxFit.cover,
               ),
             ),
@@ -352,8 +354,8 @@ class _ImageGridState extends BaseState<_ImageGrid> {
           final selectedImage = widget.images.elementAt(index - 1);
           return _BorderWrapper.dynamic(
             isSelected: selectedExistedImage == selectedImage,
-            child: Image.network(
-              widget.images.elementAt(index - 1),
+            child: CachedNetworkImage(
+              imageUrl: widget.images.elementAt(index - 1),
               fit: BoxFit.cover,
               filterQuality: FilterQuality.low,
             ),

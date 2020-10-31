@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:anth_package/anth_package.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/app_bloc.dart';
@@ -78,9 +79,10 @@ class _ProductDetailScreenState extends KayleeState<ProductDetailScreen>
             children: [
               AspectRatio(
                 aspectRatio: 1,
-                child: Image.network(
-                  product.image ?? '',
+                child: CachedNetworkImage(
+                  imageUrl: product.image ?? '',
                   fit: BoxFit.cover,
+                  height: 512,
                 ),
               ),
               Padding(
@@ -156,7 +158,7 @@ class _ProductDetailScreenState extends KayleeState<ProductDetailScreen>
       view: KayleeAlertDialogView.message(
         message: Message(
             content:
-            'Bạn có chắc xóa đơn hàng của nhà cung cấp hiện tại và tạo đơn hàng của nhà cung cấp mới?'),
+                'Bạn có chắc xóa đơn hàng của nhà cung cấp hiện tại và tạo đơn hàng của nhà cung cấp mới?'),
         actions: [
           KayleeAlertDialogAction.dongY(
             isDefaultAction: true,

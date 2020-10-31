@@ -1,4 +1,5 @@
 import 'package:anth_package/anth_package.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
@@ -36,8 +37,9 @@ class ProfileWidget extends StatelessWidget {
                     ),
                     child: AspectRatio(
                       aspectRatio: 1,
-                      child: Image.network(
-                        context.user.getUserInfo()?.userInfo?.image ?? '',
+                      child: CachedNetworkImage(
+                        imageUrl:
+                            context.user.getUserInfo()?.userInfo?.image ?? '',
                         fit: BoxFit.cover,
                       ),
                     ),

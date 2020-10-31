@@ -1,4 +1,5 @@
 import 'package:anth_package/anth_package.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
@@ -35,7 +36,10 @@ class SupplierItem extends StatelessWidget {
                   width: (context.screenSize.width - Dimens.px32) * 96 / 343,
                   child: AspectRatio(
                       aspectRatio: imageRatio,
-                      child: Image.network(supplier?.image ?? '')),
+                      child: CachedNetworkImage(
+                        imageUrl: supplier?.image ?? '',
+                        height: 64,
+                      )),
                 ),
               ),
               Container(

@@ -1,4 +1,5 @@
 import 'package:anth_package/anth_package.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/models/models.dart';
@@ -19,9 +20,10 @@ class CustomerItem extends StatelessWidget {
           child: KayleeCartView(
               itemHeight: double.infinity,
               child: KayleeImageInfoLayout(
-                imageView: Image.network(
-                  customer?.image ?? '',
+                imageView: CachedNetworkImage(
+                  imageUrl: customer?.image ?? '',
                   fit: BoxFit.cover,
+                  memCacheHeight: 256,
                 ),
                 infoView: Padding(
                   padding: const EdgeInsets.only(top: Dimens.px16),

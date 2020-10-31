@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:anth_package/anth_package.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/app_bloc.dart';
@@ -85,9 +86,10 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
   Widget build(BuildContext context) {
     return KayleeTabView(
       appBar: KayleeAppBar(
-        titleWidget: Image.network(
-          cateBloc.supplier?.image ?? '',
+        titleWidget: CachedNetworkImage(
+          imageUrl: cateBloc.supplier?.image ?? '',
           height: Dimens.px30,
+          memCacheHeight: 64,
         ),
         actions: <Widget>[
           KayleeAppBarAction.button(

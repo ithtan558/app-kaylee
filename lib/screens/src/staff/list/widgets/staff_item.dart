@@ -1,4 +1,5 @@
 import 'package:anth_package/anth_package.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
@@ -16,9 +17,10 @@ class StaffItem extends StatelessWidget {
       child: KayleeCartView(
           itemHeight: double.infinity,
           child: KayleeImageInfoLayout(
-            imageView: Image.network(
-              employee?.image ?? '',
+            imageView: CachedNetworkImage(
+              imageUrl: employee?.image ?? '',
               fit: BoxFit.cover,
+              memCacheHeight: 256,
             ),
             infoView: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
