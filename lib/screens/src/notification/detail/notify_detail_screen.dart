@@ -7,8 +7,8 @@ import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/models/models.dart' as models;
 import 'package:kaylee/res/res.dart';
-import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/notification/detail/bloc/bloc.dart';
+import 'package:kaylee/utils/deeplink_helper.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
@@ -124,30 +124,15 @@ class _NotifyDetailScreenState extends KayleeState<NotifyDetailScreen> {
                     data.content ?? '',
                     textStyle: TextStyles.hint16W400,
                     onTapUrl: (url) {
-                      if (url.endsWith('/')) {
-                        url = url.replaceRange(url.length - 1, url.length, '');
-                      }
-                      // print('[TUNG] ===> $url');
-                      final uri = Uri.tryParse(url);
-                      if (uri.isNotNull && uri.path == '/product/detail') {
-                        // print('[TUNG] ===> ${uri.queryParameters}');
-                        int prodId;
-                        if (uri
-                            .queryParameters['product_id'].isNotNullAndEmpty) {
-                          prodId =
-                              int.tryParse(uri.queryParameters['product_id']);
-                        }
-                        int supplierId;
-                        if (uri
-                            .queryParameters['supplier_id'].isNotNullAndEmpty) {
-                          supplierId =
-                              int.tryParse(uri.queryParameters['supplier_id']);
-                        }
-                        pushScreen(PageIntent(
-                            screen: ProductDetailScreen,
-                            bundle: Bundle(ProductDetailScreenData(
-                                product: models.Product(id: prodId),
-                                supplier: models.Supplier(id: supplierId)))));
+                      final pageIntent =
+                          DeepLinkHelper.handleNotificationLink(link: url);
+                      if (pageIntent.isNotNull) {
+                        pushScreen(pageIntent);
+                      } else {
+                        showKayleeAlertErrorYesDialog(
+                            context: context,
+                            error: Error(message: Strings.khongTimThayTrang),
+                            onPressed: popScreen);
                       }
                     },
                   ),

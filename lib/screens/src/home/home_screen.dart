@@ -7,6 +7,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/base/reload_bloc.dart';
 import 'package:kaylee/models/models.dart';
+import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/home/tabs/account/account_tab.dart';
 import 'package:kaylee/screens/src/home/tabs/cashier/cashier_tab.dart';
 import 'package:kaylee/screens/src/home/tabs/history/history_tab.dart';
@@ -47,10 +48,10 @@ class _HomeScreenState extends KayleeState<HomeScreen> {
     );
 
     context.repository<FirebaseMessaging>().configure(
-      onMessage: _onMessageFcm,
-      onResume: _onResumeFcm,
-      onLaunch: _onLaunchFcm,
-    );
+          onMessage: _onMessageFcm,
+          onResume: _onResumeFcm,
+          onLaunch: _onLaunchFcm,
+        );
   }
 
   ///open local notification
@@ -98,7 +99,8 @@ class _HomeScreenState extends KayleeState<HomeScreen> {
     }
     if (response.isNull) return;
     context.push(DeepLinkHelper.handleNotificationLink(
-        link: response.androidData?.link ?? response.iosData?.link));
+        link: response.androidData?.link ?? response.iosData?.link,
+        ifNOtFound: PageIntent(screen: NotificationScreen)));
   }
 
   _showNotificationLocal({FcmResponse response}) {
