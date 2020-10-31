@@ -134,7 +134,25 @@ class _NotificationScreenState extends KayleeState<NotificationScreen> {
                   text: Strings.xoaTatCa,
                   textStyle: TextStyles.hyper16W500,
                   onTap: () {
-                    _notificationScreenBloc.deleteAll();
+                    showKayleeAlertDialog(
+                        context: context,
+                        view: KayleeAlertDialogView.message(
+                          message: Message(
+                            content: Strings.banChanChanMuonXoaTatCaThongBao,
+                          ),
+                          actions: [
+                            KayleeAlertDialogAction.dongY(
+                              isDefaultAction: true,
+                              onPressed: () {
+                                popScreen();
+                                _notificationScreenBloc.deleteAll();
+                              },
+                            ),
+                            KayleeAlertDialogAction.huy(
+                              onPressed: popScreen,
+                            ),
+                          ],
+                        ));
                   },
                 ),
               )
