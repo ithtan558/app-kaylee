@@ -38,11 +38,8 @@ class DeepLinkHelper {
   }
 
   ///[ifNOtFound] trả về page chỉ định khi [link] ko xác định đc trang cần navigate tới
-  ///[ifNOtFound] is null => return trang [NotificationScreen]
   static PageIntent handleNotificationLink(
       {String link, PageIntent ifNOtFound}) {
-    return handleLink(link: link) ??
-        ifNOtFound ??
-        PageIntent(screen: NotificationScreen);
+    return handleLink(link: link) ?? ifNOtFound;
   }
 }
