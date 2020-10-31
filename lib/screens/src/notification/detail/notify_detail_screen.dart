@@ -42,7 +42,7 @@ class _NotifyDetailScreenState extends KayleeState<NotifyDetailScreen> {
         hideLoading();
       }
     });
-    _bloc.loadDetail();
+    _bloc.get();
   }
 
   @override

@@ -1,36 +1,30 @@
 import 'package:anth_package/anth_package.dart' hide Notification, Status;
+import 'package:kaylee/base/crud_interface.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/services/services.dart';
 
-class NotifyDetailScreenBloc extends Cubit<SingleModel> {
+class NotifyDetailScreenBloc extends Cubit<SingleModel>
+    implements CRUDInterface {
   final NotificationService notificationService;
   Notification notification;
 
   NotifyDetailScreenBloc({this.notificationService, this.notification})
       : super(SingleModel());
 
-  void delete() {
-    emit(SingleModel.copy(state..loading = true));
+  void _updateStatus() {
     RequestHandler(
-      request: notificationService.delete(id: 1
-          // notification.id
-          ),
-      onSuccess: ({message, result}) {
-        emit(DeleteNotificationState.copy(state
-          ..loading = false
-          ..item = notification
-          ..message = message));
-      },
-      onFailed: (code, {error}) {
-        emit(SingleModel.copy(state
-          ..loading = false
-          ..error = error
-          ..code = code));
-      },
-    );
+        request: notificationService.updateStatus(
+            body: NotificationStatusBody(
+      id: notification.id,
+      status: NotificationStatus.read,
+    )));
   }
 
-  void loadDetail() {
+  @override
+  void create() {}
+
+  @override
+  void get() {
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
       request: notificationService.getDetail(
@@ -56,13 +50,29 @@ class NotifyDetailScreenBloc extends Cubit<SingleModel> {
     );
   }
 
-  void _updateStatus() {
+  @override
+  void update() {}
+
+  @override
+  void delete() {
+    emit(SingleModel.copy(state..loading = true));
     RequestHandler(
-        request: notificationService.updateStatus(
-            body: NotificationStatusBody(
-              id: notification.id,
-      status: NotificationStatus.read,
-    )));
+      request: notificationService.delete(id: 1
+        // notification.id
+      ),
+      onSuccess: ({message, result}) {
+        emit(DeleteNotificationState.copy(state
+          ..loading = false
+          ..item = notification
+          ..message = message));
+      },
+      onFailed: (code, {error}) {
+        emit(SingleModel.copy(state
+          ..loading = false
+          ..error = error
+          ..code = code));
+      },
+    );
   }
 }
 
