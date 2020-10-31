@@ -55,6 +55,13 @@ class _NotificationScreenState extends KayleeState<NotificationScreen> {
   }
 
   @override
+  void onReloadWidget(Type widget, Bundle bundle) {
+    if (widget == NotificationScreen) {
+      _notificationListBloc.refresh();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return MultiBlocListener(
       listeners: [

@@ -71,6 +71,7 @@ class _HomeScreenState extends KayleeState<HomeScreen> {
       Logger().e('error _handleFcmNotification', e, s);
     }
     _reloadBloc.reload(widget: NotificationButton);
+    _reloadBloc.reload(widget: NotificationScreen);
     _showNotificationLocal(response: response);
   }
 
@@ -78,6 +79,7 @@ class _HomeScreenState extends KayleeState<HomeScreen> {
   Future _onResumeFcm(message) async {
     // print('[TUNG] ===> _onResumeFcm');
     _reloadBloc.reload(widget: NotificationButton);
+    _reloadBloc.reload(widget: NotificationScreen);
     _onOpenNotification(message);
   }
 
