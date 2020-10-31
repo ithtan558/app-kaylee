@@ -3,6 +3,8 @@ import 'package:kaylee/models/models.dart';
 import 'package:kaylee/screens/screens.dart';
 
 class DeepLinkHelper {
+  DeepLinkHelper._();
+
   static PageIntent handleLink({String link}) {
     final uri = Uri.tryParse(link);
     if (uri.isNotNull) {
