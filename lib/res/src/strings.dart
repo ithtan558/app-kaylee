@@ -287,6 +287,7 @@ class Strings {
   static const String nhapMaDichVu = 'Nhập mã dịch vụ';
   static const String maSanPham = 'Mã sản phẩm';
   static const String nhapMaSanPham = 'Nhập mã sản phẩm';
+  static const String khongTimThayTrang = 'Không tìm thấy trang';
 
   Strings._();
 }
