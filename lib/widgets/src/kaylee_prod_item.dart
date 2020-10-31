@@ -1,4 +1,5 @@
 import 'package:anth_package/anth_package.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/widgets.dart';
@@ -170,16 +171,17 @@ class KayleeProdItemData {
 class KayleeProdItem extends StatelessWidget {
   final KayleeProdItemData data;
 
-  KayleeProdItem({@required this.data});
+  KayleeProdItem({@required this.data}) : super(key: ValueKey(data));
 
   @override
   Widget build(BuildContext context) {
     return KayleeCartView(
       itemHeight: double.infinity,
       child: KayleeImageInfoLayout(
-        imageView: Image.network(
-          data.image,
+        imageView: CachedNetworkImage(
+          imageUrl: data.image,
           fit: BoxFit.cover,
+          memCacheHeight: 256,
         ),
         infoView: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
