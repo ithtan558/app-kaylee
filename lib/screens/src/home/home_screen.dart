@@ -30,6 +30,8 @@ class _HomeScreenState extends KayleeState<HomeScreen> {
   final FlutterLocalNotificationsPlugin notificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
+  ReloadBloc get _reloadBloc => context.bloc<ReloadBloc>();
+
   @override
   void initState() {
     super.initState();
@@ -41,19 +43,23 @@ class _HomeScreenState extends KayleeState<HomeScreen> {
 
     notificationsPlugin.initialize(
       initializationSettings,
-      onSelectNotification: (String payload) async {
-        if (payload.isNullOrEmpty) return;
-        _onOpenNotification(jsonDecode(payload));
-      },
+      onSelectNotification: _openLocalNotification,
     );
 
     context.repository<FirebaseMessaging>().configure(
-          onMessage: _onMessageFcm,
-          onResume: _onOpenNotification,
-          onLaunch: _onOpenNotification,
-        );
+      onMessage: _onMessageFcm,
+      onResume: _onResumeFcm,
+      onLaunch: _onLaunchFcm,
+    );
   }
 
+  ///open local notification
+  Future _openLocalNotification(String payload) async {
+    if (payload.isNullOrEmpty) return;
+    _onOpenNotification(jsonDecode(payload));
+  }
+
+  ///receive notification when app is in foreground
   Future<dynamic> _onMessageFcm(Map<String, dynamic> map) async {
     FcmResponse response;
     try {
@@ -63,10 +69,25 @@ class _HomeScreenState extends KayleeState<HomeScreen> {
     } catch (e, s) {
       Logger().e('error _handleFcmNotification', e, s);
     }
+    _reloadBloc.reload(widget: NotificationButton);
     _showNotificationLocal(response: response);
   }
 
-  Future<dynamic> _onOpenNotification(map) async {
+  ///clicked on notification when app's in background
+  Future _onResumeFcm(message) async {
+    // print('[TUNG] ===> _onResumeFcm');
+    _reloadBloc.reload(widget: NotificationButton);
+    _onOpenNotification(message);
+  }
+
+  ///clicked on notification when app's terminated
+  Future _onLaunchFcm(message) async {
+    // print('[TUNG] ===> _onLaunchFcm');
+    _onOpenNotification(message);
+  }
+
+  ///open notification, navigate to corresponding screen
+  Future _onOpenNotification(map) async {
     FcmResponse response;
     try {
       // print('[TUNG] ===> _onOpenNotification');
@@ -96,7 +117,6 @@ class _HomeScreenState extends KayleeState<HomeScreen> {
         response.notification?.body ?? response.aps?.alert?.body ?? '',
         platformDetail,
         payload: jsonEncode(response));
-    context.bloc<ReloadBloc>().reload(widget: NotificationButton);
   }
 
   @override
