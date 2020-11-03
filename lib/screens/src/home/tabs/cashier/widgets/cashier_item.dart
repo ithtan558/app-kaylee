@@ -7,6 +7,7 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/home/tabs/cashier/bloc/order_item_bloc.dart';
 import 'package:kaylee/screens/src/home/tabs/cashier/cashier_tab.dart';
+import 'package:kaylee/screens/src/home/tabs/history/history_tab.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
@@ -49,6 +50,7 @@ class _CashierItemState extends KayleeState<CashierItem> {
               onPressed: popScreen,
               onDismiss: () {
                 context.bloc<ReloadBloc>().reload(widget: CashierTab);
+                context.bloc<ReloadBloc>().reload(widget: HistoryTab);
               },
             );
           }
