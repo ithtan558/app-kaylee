@@ -1,23 +1,29 @@
 import 'package:anth_package/anth_package.dart' hide Notification, Status;
 import 'package:kaylee/base/crud_interface.dart';
 import 'package:kaylee/models/models.dart';
+import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/services/services.dart';
 
 class NotifyDetailScreenBloc extends Cubit<SingleModel>
     implements CRUDInterface {
   final NotificationService notificationService;
   Notification notification;
+  NotifyDetailScreenView view;
 
   NotifyDetailScreenBloc({this.notificationService, this.notification})
       : super(SingleModel());
 
   void _updateStatus() {
     RequestHandler(
-        request: notificationService.updateStatus(
-            body: NotificationStatusBody(
-      id: notification.id,
-      status: NotificationStatus.read,
-    )));
+      request: notificationService.updateStatus(
+          body: NotificationStatusBody(
+        id: notification.id,
+        status: NotificationStatus.read,
+      )),
+      onSuccess: ({message, result}) {
+        view.updateStatusSuccess();
+      },
+    );
   }
 
   @override

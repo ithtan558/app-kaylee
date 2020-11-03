@@ -5,8 +5,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:kaylee/base/kaylee_state.dart';
+import 'package:kaylee/base/reload_bloc.dart';
 import 'package:kaylee/models/models.dart' as models;
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/notification_button/notification_button.dart';
 import 'package:kaylee/screens/src/notification/detail/bloc/bloc.dart';
 import 'package:kaylee/utils/deeplink_helper.dart';
 import 'package:kaylee/utils/utils.dart';
@@ -27,14 +29,15 @@ class NotifyDetailScreen extends StatefulWidget {
   _NotifyDetailScreenState createState() => new _NotifyDetailScreenState();
 }
 
-class _NotifyDetailScreenState extends KayleeState<NotifyDetailScreen> {
+class _NotifyDetailScreenState extends KayleeState<NotifyDetailScreen>
+    with NotifyDetailScreenView {
   NotifyDetailScreenBloc _bloc;
   StreamSubscription sub;
 
   @override
   void initState() {
     super.initState();
-    _bloc = context.bloc<NotifyDetailScreenBloc>();
+    _bloc = context.bloc<NotifyDetailScreenBloc>()..view = this;
     sub = _bloc.listen((state) {
       if (state.loading) {
         showLoading();
@@ -85,7 +88,7 @@ class _NotifyDetailScreenState extends KayleeState<NotifyDetailScreen> {
               size: 44,
             ),
             onPressed: () {
-              context.pop();
+              popScreen();
             },
           ),
           actions: <Widget>[
@@ -144,4 +147,13 @@ class _NotifyDetailScreenState extends KayleeState<NotifyDetailScreen> {
       ),
     );
   }
+
+  @override
+  void updateStatusSuccess() {
+    context.bloc<ReloadBloc>().reload(widget: NotificationButton);
+  }
+}
+
+mixin NotifyDetailScreenView {
+  void updateStatusSuccess() {}
 }
