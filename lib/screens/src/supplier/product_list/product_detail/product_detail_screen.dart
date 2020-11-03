@@ -162,9 +162,9 @@ class _ProductDetailScreenState extends KayleeState<ProductDetailScreen>
           KayleeAlertDialogAction.dongY(
             isDefaultAction: true,
             onPressed: () {
+              popScreen();
               context.cart.clear();
               onNewAdd2Cart();
-              popScreen();
             },
           ),
           KayleeAlertDialogAction.huy(
