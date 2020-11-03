@@ -28,6 +28,7 @@ class DeepLinkHelper {
               ProductDetailScreenData(
                 product: models.Product(id: productId),
                 supplier: models.Supplier(id: supplierId),
+                openFrom: ProductDetailScreenOpenFrom.notification,
               ),
             ),
           );

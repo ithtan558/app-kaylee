@@ -16,8 +16,17 @@ import 'package:kaylee/widgets/widgets.dart';
 class ProductDetailScreenData {
   Product product;
   Supplier supplier;
+  final ProductDetailScreenOpenFrom openFrom;
 
-  ProductDetailScreenData({this.product, this.supplier});
+  ProductDetailScreenData(
+      {this.product,
+      this.supplier,
+      this.openFrom = ProductDetailScreenOpenFrom.productSupplierList});
+}
+
+enum ProductDetailScreenOpenFrom {
+  productSupplierList,
+  notification,
 }
 
 class ProductDetailScreen extends StatefulWidget {
@@ -149,7 +158,12 @@ class _ProductDetailScreenState extends KayleeState<ProductDetailScreen>
   void onAdd2Cart() {
     context.cart.addProdToCart(bloc.state.item);
     context.bloc<CartBloc>().updateCart();
-    context.popUntilScreenOrFirst(PageIntent(screen: SupplierProdListScreen));
+    if (data.openFrom == ProductDetailScreenOpenFrom.notification) {
+      context.pushToFirst(PageIntent(
+          screen: SupplierProdListScreen, bundle: Bundle(data.supplier)));
+    } else {
+      popScreen();
+    }
   }
 
   @override
