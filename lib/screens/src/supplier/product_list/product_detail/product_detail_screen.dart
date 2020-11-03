@@ -157,8 +157,7 @@ class _ProductDetailScreenState extends KayleeState<ProductDetailScreen>
       context: context,
       view: KayleeAlertDialogView.message(
         message: Message(
-            content:
-                'Bạn có chắc xóa đơn hàng của nhà cung cấp hiện tại và tạo đơn hàng của nhà cung cấp mới?'),
+            content: Strings.banChacChanMuonXoaDonHangNhaCungCapHienTai),
         actions: [
           KayleeAlertDialogAction.dongY(
             isDefaultAction: true,

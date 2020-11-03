@@ -290,6 +290,8 @@ class Strings {
   static const String khongTimThayTrang = 'Không tìm thấy trang';
   static const String banChanChanMuonXoaTatCaThongBao =
       'Bạn đã chắc chắn muốn xóa tất cả thông báo';
+  static const String banChacChanMuonXoaDonHangNhaCungCapHienTai =
+      'Bạn có chắc xóa đơn hàng của nhà cung cấp hiện tại và tạo đơn hàng của nhà cung cấp mới?';
 
   Strings._();
 }
