@@ -146,16 +146,17 @@ class _CustomerService implements CustomerService {
   }
 
   @override
-  Future<ResponseModel<Customer>> updateCustomer({firstName,
-    lastName,
-    birthday,
-    hometownCityId,
-    address,
-    cityId,
-    districtId,
-    wardsId,
-    phone,
-    image,
+  Future<ResponseModel<Customer>> updateCustomer(
+      {firstName,
+      lastName,
+      birthday,
+      hometownCityId,
+      address,
+      cityId,
+      districtId,
+      wardsId,
+      phone,
+      image,
       email,
       id,
       customerId}) async {

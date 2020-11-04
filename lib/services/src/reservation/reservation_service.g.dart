@@ -131,16 +131,17 @@ class _ReservationService implements ReservationService {
   }
 
   @override
-  Future<ResponseModel<dynamic>> updateReservation({firstName,
-    lastName,
-    address,
-    cityId,
-    districtId,
-    wardsId,
-    phone,
-    quantity,
-    note,
-    datetime,
+  Future<ResponseModel<dynamic>> updateReservation(
+      {firstName,
+      lastName,
+      address,
+      cityId,
+      districtId,
+      wardsId,
+      phone,
+      quantity,
+      note,
+      datetime,
       brandId,
       id,
       reservationId}) async {

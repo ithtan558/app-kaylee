@@ -161,16 +161,17 @@ class _EmployeeService implements EmployeeService {
   }
 
   @override
-  Future<ResponseModel<dynamic>> updateEmployee({firstName,
-    lastName,
-    birthday,
-    hometownCityId,
-    address,
-    cityId,
-    districtId,
-    wardsId,
-    roleId,
-    brandId,
+  Future<ResponseModel<dynamic>> updateEmployee(
+      {firstName,
+      lastName,
+      birthday,
+      hometownCityId,
+      address,
+      cityId,
+      districtId,
+      wardsId,
+      roleId,
+      brandId,
       phone,
       image,
       email,
