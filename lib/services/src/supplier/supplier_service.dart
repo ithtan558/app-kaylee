@@ -13,4 +13,9 @@ abstract class SupplierService {
       {@Query('page') int page = 1,
       @Query('limit') int limit = 10,
       @Query('sort') String sort});
+
+  @GET('supplier/{supplierId}')
+  Future<ResponseModel<Supplier>> getSupplierDetail({
+    @Path() int supplierId,
+  });
 }

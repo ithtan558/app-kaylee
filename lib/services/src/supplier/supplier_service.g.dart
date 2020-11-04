@@ -37,4 +37,23 @@ class _SupplierService implements SupplierService {
     final value = ResponseModel<Suppliers>.fromJson(_result.data);
     return value;
   }
+
+  @override
+  Future<ResponseModel<Supplier>> getSupplierDetail({supplierId}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'supplier/$supplierId',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = ResponseModel<Supplier>.fromJson(_result.data);
+    return value;
+  }
 }
