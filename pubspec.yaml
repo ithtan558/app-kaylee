@@ -22,7 +22,7 @@ dependencies:
   sticky_headers: ^0.1.8+1
   image_picker: ^0.6.7+12
   flutter_widget_from_html_core: ^0.5.1+4
-  package_info: ^0.4.3
+  package_info: ^0.4.3+2
   firebase_messaging: ^7.0.3
   flutter_local_notifications: ^3.0.1+2
   flutter_masked_text: ^0.8.0
