@@ -11,11 +11,18 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/supplier/product_list/list/bloc/supplier_prod_cate_list_bloc.dart';
 import 'package:kaylee/screens/src/supplier/product_list/list/bloc/supplier_prod_list_bloc.dart';
+import 'package:kaylee/screens/src/supplier/product_list/list/bloc/supplier_prod_list_screen_bloc.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class SupplierProdListScreen extends StatefulWidget {
   static Widget newInstance() => MultiBlocProvider(providers: [
+        BlocProvider(
+          create: (context) => SupplierProdListScreenBloc(
+            service: context.network.provideSupplierService(),
+            supplier: context.getArguments<Supplier>(),
+          ),
+        ),
         BlocProvider<SupplierProdCateListBloc>(
           create: (context) => SupplierProdCateListBloc(
             productService: context.network.provideProductService(),
@@ -33,14 +40,16 @@ class SupplierProdListScreen extends StatefulWidget {
   SupplierProdListScreen._();
 
   @override
-  _SupplierProdListScreenState createState() =>
-      new _SupplierProdListScreenState();
+  _SupplierProdListScreenState createState() => _SupplierProdListScreenState();
 }
 
 class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
   SupplierProdCateListBloc cateBloc;
   SupplierProdListBloc prodsBloc;
   StreamSubscription cateBlocSub;
+
+  SupplierProdListScreenBloc get _bloc =>
+      context.bloc<SupplierProdListScreenBloc>();
 
   Supplier get supplier => context.getArguments<Supplier>();
 
@@ -49,6 +58,8 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
     super.initState();
     cateBloc = context.bloc<SupplierProdCateListBloc>();
     prodsBloc = context.bloc<SupplierProdListBloc>();
+
+    _bloc.getInfo();
 
     cateBlocSub = cateBloc.listen((state) {
       if (!state.loading) {
@@ -86,10 +97,15 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
   Widget build(BuildContext context) {
     return KayleeTabView(
       appBar: KayleeAppBar(
-        titleWidget: CachedNetworkImage(
-          imageUrl: cateBloc.supplier?.image ?? '',
-          height: Dimens.px30,
-          memCacheHeight: 64,
+        titleWidget:
+        BlocBuilder<SupplierProdListScreenBloc, SingleModel<Supplier>>(
+          builder: (context, state) {
+            return CachedNetworkImage(
+              imageUrl: state.item?.image ?? '',
+              height: Dimens.px30,
+              memCacheHeight: 64,
+            );
+          },
         ),
         actions: <Widget>[
           KayleeAppBarAction.button(
@@ -189,26 +205,31 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
       floatingActionButton: Material(
         color: Colors.transparent,
         type: MaterialType.circle,
-        child: GestureDetector(
-          onTap: () {
-            launch(supplier?.facebook ?? '');
+        child: BlocBuilder<SupplierProdListScreenBloc, SingleModel<Supplier>>(
+          builder: (context, state) {
+            final link = state.item?.facebook;
+            return GestureDetector(
+              onTap: () {
+                launch(link ?? '');
+              },
+              child: Container(
+                height: Dimens.px56,
+                width: Dimens.px56,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white.withOpacity(0.5),
+                  boxShadow: [
+                    BoxShadow(
+                        color: ColorsRes.shadow.withOpacity(0.2),
+                        offset: const Offset(Dimens.px5, Dimens.px5),
+                        blurRadius: Dimens.px10,
+                        spreadRadius: 0)
+                  ],
+                ),
+                child: Image.asset(Images.ic_message),
+              ),
+            );
           },
-          child: Container(
-            height: Dimens.px56,
-            width: Dimens.px56,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.white.withOpacity(0.5),
-              boxShadow: [
-                BoxShadow(
-                    color: ColorsRes.shadow.withOpacity(0.2),
-                    offset: const Offset(Dimens.px5, Dimens.px5),
-                    blurRadius: Dimens.px10,
-                    spreadRadius: 0)
-              ],
-            ),
-            child: Image.asset(Images.ic_message),
-          ),
         ),
       ),
     );
