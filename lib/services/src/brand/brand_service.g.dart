@@ -133,16 +133,17 @@ class _BrandService implements BrandService {
   }
 
   @override
-  Future<ResponseModel<dynamic>> updateBrand({name,
-    phone,
-    location,
-    cityId,
-    districtId,
-    startTime,
-    endTime,
-    wardsId,
-    image,
-    id,
+  Future<ResponseModel<dynamic>> updateBrand(
+      {name,
+      phone,
+      location,
+      cityId,
+      districtId,
+      startTime,
+      endTime,
+      wardsId,
+      image,
+      id,
       brandId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
