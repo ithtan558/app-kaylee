@@ -48,7 +48,7 @@ class RegisterScreenBloc extends BaseBloc {
     } else if (e is PassRegisterScrErrorEvent) {
       yield PassRegisterScrErrorState(e.message);
     } else if (e is EmailRegisterScrErrorEvent) {
-      yield EmailRegisterScrErrorEvent(e.message);
+      yield EmailRegisterScrErrorState(e.message);
     }
   }
 
