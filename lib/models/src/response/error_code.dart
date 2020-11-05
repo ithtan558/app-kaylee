@@ -20,4 +20,5 @@ class ErrorCode {
   static const int BRAND_IDS_CODE = 100019;
   static const int TIME_CODE = 100020;
   static const int PRICE_CODE = 100021;
+  static const int EMAIL_CODE = 100022;
 }
