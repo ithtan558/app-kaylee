@@ -5,7 +5,7 @@ description: Kaylee application.
 # pub.dev using `pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 0.0.15+000015
+version: 0.0.16+000016
 
 environment:
   sdk: ">=2.10.2 <3.0.0"
@@ -42,7 +42,7 @@ dev_dependencies:
   # Tools to write binaries that run builders(In this project, we use it
   # for json_serializable, retrofit)
   build_runner: ^1.10.4
-  retrofit_generator: ^1.4.0
+  retrofit_generator: ^1.4.0+1
 
 
 # For information on the generic Dart part of this file, see the

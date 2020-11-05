@@ -21,7 +21,7 @@ packages:
       path: "../anth_package"
       relative: true
     source: path
-    version: "0.0.6"
+    version: "0.0.7"
   args:
     dependency: transitive
     description:
@@ -180,11 +180,11 @@ packages:
     dependency: transitive
     description:
       path: "."
-      ref: "0.4.12"
-      resolved-ref: "2b9cf08d1bf43c5dc06b43465d0888fcf02a5f5a"
+      ref: "0.4.13"
+      resolved-ref: "25928eb2cf8ee72be493075d2007d57015c0051f"
       url: "https://github.com/tungpham6195/flutter.core_plugin.git"
     source: git
-    version: "0.4.12"
+    version: "0.4.13"
   coverage:
     dependency: transitive
     description:
@@ -596,7 +596,7 @@ packages:
       name: path_provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.6.22"
+    version: "1.6.24"
   path_provider_linux:
     dependency: transitive
     description:
@@ -722,7 +722,7 @@ packages:
       name: retrofit_generator
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.4.0"
+    version: "1.4.0+1"
   rxdart:
     dependency: transitive
     description:
@@ -736,7 +736,7 @@ packages:
       name: shared_preferences
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.12+2"
+    version: "0.5.12+4"
   shared_preferences_linux:
     dependency: transitive
     description:
@@ -958,7 +958,7 @@ packages:
       name: url_launcher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.7.8"
+    version: "5.7.10"
   url_launcher_linux:
     dependency: transitive
     description:
