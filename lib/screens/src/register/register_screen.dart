@@ -38,7 +38,8 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
   final emailTController = TextEditingController();
   final passTController = TextEditingController();
 
-  bool isAcceptPolicy = false;
+  //todo tạm thời chưa data thật cho dialog policy, sẽ bị apple reject => ẩn ui chỗ này
+  bool isAcceptPolicy = true;
 
   RegisterScreenBloc bloc;
 
@@ -199,15 +200,17 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
                         : null,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: Dimens.px16, vertical: Dimens.px16),
-                  child: PolicyCheckBox(
-                    onChecked: (value) {
-                      isAcceptPolicy = value;
-                    },
-                  ),
-                ),
+                //todo tạm thời chưa data thật cho dialog policy, sẽ bị apple reject => ẩn ui chỗ này
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: Dimens.px16)
+                //       .copyWith(top: Dimens.px16),
+                //   child: PolicyCheckBox(
+                //     onChecked: (value) {
+                //       isAcceptPolicy = value;
+                //     },
+                //   ),
+                // ),
+                const SizedBox(height: Dimens.px16),
                 Padding(
                   padding: const EdgeInsets.only(
                       top: Dimens.px14, bottom: Dimens.px8),
