@@ -4,7 +4,6 @@ import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/about/about_screen.dart';
-import 'package:kaylee/screens/src/guide/guide_screen.dart';
 import 'package:kaylee/screens/src/home/tabs/account/widgets/profile_widget.dart';
 import 'package:kaylee/screens/src/notification/list/notification_screen.dart';
 import 'package:kaylee/widgets/widgets.dart';
@@ -42,12 +41,12 @@ class _AccountTabState extends BaseState<AccountTab> {
                 onClick: () {
                   pushScreen(PageIntent(screen: NotificationScreen));
                 }),
-            _buildMenuItem(
-                title: Strings.huongDanSd,
-                icon: Images.ic_acc_guide,
-                onClick: () {
-                  pushScreen(PageIntent(screen: GuideScreen));
-                }),
+            // _buildMenuItem(
+            //     title: Strings.huongDanSd,
+            //     icon: Images.ic_acc_guide,
+            //     onClick: () {
+            //       pushScreen(PageIntent(screen: GuideScreen));
+            //     }),
             _buildMenuItem(
                 title: Strings.thongTinUngDung,
                 icon: Images.ic_acc_about_app,
