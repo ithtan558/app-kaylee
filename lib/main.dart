@@ -15,6 +15,7 @@ import 'package:kaylee/base/kaylee_routing.dart';
 import 'package:kaylee/base/reload_bloc.dart';
 import 'package:kaylee/components/components.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/screens/src/home/tabs/account/widgets/profile_widget.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/notification_button/bloc.dart';
 import 'package:kaylee/utils/utils.dart';
 
@@ -94,8 +95,10 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing, KayleeRouting {
       },
       change: (cubit, change) {
         if (change.nextState is UpdateProfileState) {
-          context.user.updateUserInfo(
-              context.user.getUserInfo()..userInfo = change.nextState.userInfo);
+          final userInfo = change.nextState.userInfo;
+          context.user
+              .updateUserInfo(context.user.getUserInfo()..userInfo = userInfo);
+          context.bloc<ReloadBloc>().reload(widget: ProfileWidget);
         } else if (change.nextState is BaseModel) {
           if (change.nextState.code == ErrorType.UNAUTHORIZED) {
             _appBloc.unauthorized(error: change.nextState.error);
@@ -122,7 +125,9 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing, KayleeRouting {
           context.network.dio.options
             ..headers = {
               NetworkModule.AUTHORIZATION:
-              context.user.getUserInfo().requestToken
+              context.user
+                  .getUserInfo()
+                  .requestToken
             };
           _appBloc.getFcmTopic();
           _appBloc.doneLoggedInSetup();

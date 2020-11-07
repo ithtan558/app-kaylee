@@ -1,12 +1,36 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
-class ProfileWidget extends StatelessWidget {
+class ProfileWidget extends StatefulWidget {
+  @override
+  _ProfileWidgetState createState() => _ProfileWidgetState();
+}
+
+class _ProfileWidgetState extends KayleeState<ProfileWidget> {
+  String image;
+  String name;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserInfo();
+  }
+
+  @override
+  void onReloadWidget(Type widget, Bundle bundle) {
+    if (widget == ProfileWidget) {
+      image = context.user.getUserInfo()?.userInfo?.image ?? '';
+      name = context.user.getUserInfo()?.userInfo?.name ?? '';
+      setState(() {});
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -38,8 +62,7 @@ class ProfileWidget extends StatelessWidget {
                     child: AspectRatio(
                       aspectRatio: 1,
                       child: CachedNetworkImage(
-                        imageUrl:
-                            context.user.getUserInfo()?.userInfo?.image ?? '',
+                        imageUrl: image,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -52,7 +75,7 @@ class ProfileWidget extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           KayleeText.normal26W700(
-                            context.user.getUserInfo()?.userInfo?.name ?? '',
+                            name,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -80,5 +103,16 @@ class ProfileWidget extends StatelessWidget {
             ),
           )),
     );
+  }
+
+  void _loadUserInfo() {
+    image = context.user
+        .getUserInfo()
+        ?.userInfo
+        ?.image ?? '';
+    name = context.user
+        .getUserInfo()
+        ?.userInfo
+        ?.name ?? '';
   }
 }
