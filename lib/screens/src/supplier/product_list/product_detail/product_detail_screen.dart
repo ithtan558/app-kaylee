@@ -119,6 +119,17 @@ class _ProductDetailScreenState extends KayleeState<ProductDetailScreen>
                 child: HtmlWidget(
                   product.description ?? '',
                   textStyle: TextStyles.hint16W400,
+                  customWidgetBuilder: (element) {
+                    if (element.localName == 'img' &&
+                        element.attributes.isNotNull) {
+                      return CachedNetworkImage(
+                        imageUrl: element.attributes['src'] ?? '',
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                      );
+                    }
+                    return null;
+                  },
                 ),
               ),
             ],
