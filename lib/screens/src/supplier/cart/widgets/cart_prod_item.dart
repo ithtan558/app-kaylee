@@ -19,9 +19,34 @@ class CartProdItem extends KayleeCartProdItem {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
-      child: super.build(context),
+    return KayleeDismissible(
+      key: ValueKey(item),
+      confirmDismiss: () async {
+        final result = await showKayleeAlertDialog(
+            context: context,
+            view: KayleeAlertDialogView(
+                title: Strings.banSeXoaSanPham,
+                content: Strings.sanPhamSeBiXoaMatKhoiGioHang,
+                actions: [
+                  KayleeAlertDialogAction.dongY(
+                    onPressed: () {
+                      context.pop(resultBundle: Bundle(true));
+                      onRemoveItem?.call();
+                    },
+                    isDefaultAction: true,
+                  ),
+                  KayleeAlertDialogAction.huy(
+                    onPressed: () {
+                      context.pop(resultBundle: Bundle(false));
+                    },
+                  ),
+                ]));
+        return (result as Bundle)?.args ?? false;
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
+        child: super.build(context),
+      ),
     );
   }
 
