@@ -68,7 +68,7 @@ class _MyOrderDetailScreenState extends KayleeState<MyOrderDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: KayleeAppBar.hyperTextAction(
-        title: Strings.donHang.plus(' #${_bloc.order?.code ?? ''}'),
+        title: Strings.chiTietDH,
         actionTitle: Strings.huyDon,
         onActionClick: () {
           showKayleeAlertDialog(
@@ -104,6 +104,16 @@ class _MyOrderDetailScreenState extends KayleeState<MyOrderDetailScreen> {
                     Padding(
                       padding:
                           const EdgeInsets.symmetric(horizontal: Dimens.px16),
+                      child: _buildInfoText(
+                        icon: Images.ic_list,
+                        title: '#${_bloc.order?.code ?? ''}',
+                        isBold: true,
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: Dimens.px16)
+                              .copyWith(top: Dimens.px16),
                       child: _buildInfoText(
                         icon: Images.ic_person,
                         title: _bloc.order?.informationReceiveName,
@@ -200,7 +210,7 @@ class _MyOrderDetailScreenState extends KayleeState<MyOrderDetailScreen> {
     );
   }
 
-  Widget _buildInfoText({String icon, String title}) {
+  Widget _buildInfoText({String icon, String title, bool isBold = false}) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
