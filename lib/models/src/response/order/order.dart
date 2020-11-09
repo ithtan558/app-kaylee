@@ -117,6 +117,10 @@ OrderStatus parseOrderStatusFromInt(status) {
       return OrderStatus.not_paid;
     case 5:
       return OrderStatus.cancel;
+    case 6:
+      return OrderStatus.accepted;
+    case 7:
+      return OrderStatus.refund;
     default:
       return null;
   }
