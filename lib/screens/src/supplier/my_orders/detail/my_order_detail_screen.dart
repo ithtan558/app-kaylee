@@ -13,14 +13,12 @@ import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class MyOrderDetailScreen extends StatefulWidget {
-  static Widget newInstance() =>
-      BlocProvider(
-          create: (context) =>
-              MyOrderDetailBloc(
-                order: context.getArguments<Order>(),
-                orderService: context.network.provideOrderService(),
-              ),
-          child: MyOrderDetailScreen._());
+  static Widget newInstance() => BlocProvider(
+      create: (context) => MyOrderDetailBloc(
+            order: context.getArguments<Order>(),
+            orderService: context.network.provideOrderService(),
+          ),
+      child: MyOrderDetailScreen._());
 
   MyOrderDetailScreen._();
 
@@ -212,36 +210,20 @@ class _MyOrderDetailScreenState extends KayleeState<MyOrderDetailScreen> {
     );
   }
 
-  Widget _buildInfoText
-
-  (
-
-  {
-
-  String
-
-  icon
-
-  ,
-
-  String
-
-  title
-
-  ) {
-  return Row(
-  crossAxisAlignment: CrossAxisAlignment.center,
-  children: [
-  Padding(
-  padding: const EdgeInsets.only(right: Dimens.px8),
-  child: ImageIcon(
-  AssetImage(icon ?? ''),
-  size: Dimens.px16,
-  color: ColorsRes.hintText,
-  ),
-  ),
-  Expanded(child: KayleeText.normal16W400(title ?? '')),
-  ],
-  );
+  Widget _buildInfoText({String icon, String title}) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(right: Dimens.px8),
+          child: ImageIcon(
+            AssetImage(icon ?? ''),
+            size: Dimens.px16,
+            color: ColorsRes.hintText,
+          ),
+        ),
+        Expanded(child: KayleeText.normal16W400(title ?? '')),
+      ],
+    );
   }
 }
