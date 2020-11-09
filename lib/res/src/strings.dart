@@ -293,5 +293,8 @@ class Strings {
   static const String banChacChanMuonXoaDonHangNhaCungCapHienTai =
       'Bạn có chắc xóa đơn hàng của nhà cung cấp hiện tại và tạo đơn hàng của nhà cung cấp mới?';
 
+  static const String xacNhanDonHang = 'Xác nhận đơn hàng';
+  static const String hoanTra = 'Hoàng trả';
+
   Strings._();
 }

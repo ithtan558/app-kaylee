@@ -134,6 +134,10 @@ int parseToIntFromOrderStatus(OrderStatus status) {
       return 4;
     case OrderStatus.cancel:
       return 5;
+    case OrderStatus.accepted:
+      return 6;
+    case OrderStatus.refund:
+      return 7;
     default:
       return null;
   }
@@ -145,6 +149,8 @@ enum OrderStatus {
   finished,
   not_paid,
   cancel,
+  accepted,
+  refund,
 }
 
 String orderStatus2Title({OrderStatus status}) {
@@ -159,6 +165,10 @@ String orderStatus2Title({OrderStatus status}) {
       return Strings.chuaThanhToan;
     case OrderStatus.cancel:
       return Strings.huy;
+    case OrderStatus.accepted:
+      return Strings.xacNhanDonHang;
+    case OrderStatus.refund:
+      return Strings.hoanTra;
     default:
       return '';
   }
