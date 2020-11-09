@@ -168,7 +168,7 @@ String orderStatus2Title({OrderStatus status}) {
     case OrderStatus.accepted:
       return Strings.xacNhanDonHang;
     case OrderStatus.refund:
-      return Strings.hoanTra;
+      return Strings.traHang;
     default:
       return '';
   }
