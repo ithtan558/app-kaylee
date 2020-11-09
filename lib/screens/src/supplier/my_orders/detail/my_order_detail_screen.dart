@@ -13,12 +13,14 @@ import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class MyOrderDetailScreen extends StatefulWidget {
-  static Widget newInstance() => BlocProvider(
-      create: (context) => MyOrderDetailBloc(
-            order: context.getArguments<Order>(),
-            orderService: context.network.provideOrderService(),
-          ),
-      child: MyOrderDetailScreen._());
+  static Widget newInstance() =>
+      BlocProvider(
+          create: (context) =>
+              MyOrderDetailBloc(
+                order: context.getArguments<Order>(),
+                orderService: context.network.provideOrderService(),
+              ),
+          child: MyOrderDetailScreen._());
 
   MyOrderDetailScreen._();
 
@@ -103,17 +105,16 @@ class _MyOrderDetailScreenState extends KayleeState<MyOrderDetailScreen> {
                   children: [
                     Padding(
                       padding:
-                          const EdgeInsets.symmetric(horizontal: Dimens.px16),
+                      const EdgeInsets.symmetric(horizontal: Dimens.px16),
                       child: _buildInfoText(
                         icon: Images.ic_list,
                         title: '#${_bloc.order?.code ?? ''}',
-                        isBold: true,
                       ),
                     ),
                     Padding(
                       padding:
-                          const EdgeInsets.symmetric(horizontal: Dimens.px16)
-                              .copyWith(top: Dimens.px16),
+                      const EdgeInsets.symmetric(horizontal: Dimens.px16)
+                          .copyWith(top: Dimens.px16),
                       child: _buildInfoText(
                         icon: Images.ic_person,
                         title: _bloc.order?.informationReceiveName,
@@ -149,7 +150,8 @@ class _MyOrderDetailScreenState extends KayleeState<MyOrderDetailScreen> {
                       child: _buildInfoText(
                         icon: Images.ic_list,
                         title:
-                            '${Strings.tinhTrangDonHang}: ${orderStatus2Title(status: _bloc.order.status)}',
+                        '${Strings.tinhTrangDonHang}: ${orderStatus2Title(
+                            status: _bloc.order.status)}',
                       ),
                     ),
                     Padding(
@@ -158,7 +160,7 @@ class _MyOrderDetailScreenState extends KayleeState<MyOrderDetailScreen> {
                       child: _buildInfoText(
                         icon: Images.ic_store,
                         title:
-                            '${Strings.thuongHieu}: ${_bloc.order.supplierName}',
+                        '${Strings.thuongHieu}: ${_bloc.order.supplierName}',
                       ),
                     ),
                     Padding(
@@ -178,11 +180,11 @@ class _MyOrderDetailScreenState extends KayleeState<MyOrderDetailScreen> {
               ),
               SliverList(
                   delegate: SliverChildBuilderDelegate((context, index) {
-                final item = state.item.orderItems.elementAt(index);
-                return OrderProdItem(
-                  orderItem: item,
-                );
-              }, childCount: state.item.orderItems?.length ?? 0)),
+                    final item = state.item.orderItems.elementAt(index);
+                    return OrderProdItem(
+                      orderItem: item,
+                    );
+                  }, childCount: state.item.orderItems?.length ?? 0)),
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.all(Dimens.px16),
@@ -210,20 +212,36 @@ class _MyOrderDetailScreenState extends KayleeState<MyOrderDetailScreen> {
     );
   }
 
-  Widget _buildInfoText({String icon, String title, bool isBold = false}) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(right: Dimens.px8),
-          child: ImageIcon(
-            AssetImage(icon ?? ''),
-            size: Dimens.px16,
-            color: ColorsRes.hintText,
-          ),
-        ),
-        Expanded(child: KayleeText.normal16W400(title ?? '')),
-      ],
-    );
+  Widget _buildInfoText
+
+  (
+
+  {
+
+  String
+
+  icon
+
+  ,
+
+  String
+
+  title
+
+  ) {
+  return Row(
+  crossAxisAlignment: CrossAxisAlignment.center,
+  children: [
+  Padding(
+  padding: const EdgeInsets.only(right: Dimens.px8),
+  child: ImageIcon(
+  AssetImage(icon ?? ''),
+  size: Dimens.px16,
+  color: ColorsRes.hintText,
+  ),
+  ),
+  Expanded(child: KayleeText.normal16W400(title ?? '')),
+  ],
+  );
   }
 }
