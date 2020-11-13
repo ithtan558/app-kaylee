@@ -27,7 +27,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Used to take photo from camera</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Used to pick image from galery</string>
+	<string>Kaylee truy cập hình ảnh của bạn để thực hiện chức năng này</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
