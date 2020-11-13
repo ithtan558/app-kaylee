@@ -176,13 +176,13 @@ class _KayleeBannerImagePickerState extends BaseState<KayleeImagePicker> {
               color: ColorsRes.dialogDimBg,
               child: selectedFile.isNotNull
                   ? Image.file(
-                selectedFile,
-                fit: BoxFit.cover,
-              )
+                      selectedFile,
+                      fit: BoxFit.cover,
+                    )
                   : CachedNetworkImage(
-                imageUrl: widget.controller?.existedImageUrl ?? '',
-                fit: BoxFit.cover,
-              ),
+                      imageUrl: widget.controller?.existedImageUrl ?? '',
+                      fit: BoxFit.cover,
+                    ),
             ),
           ),
           Positioned(
@@ -291,25 +291,33 @@ class _ImageGridState extends BaseState<_ImageGrid> {
   }
 
   Future<void> handlePermission() async {
-    if (await Permission.storage.isGranted) {
+    final Permission permission =
+    Platform.isAndroid ? Permission.storage : Permission.photos;
+    if (await permission.isGranted) {
       final pickedFile = await ImagePicker()
           .getImage(source: ImageSource.gallery, maxHeight: 99, maxWidth: 99);
       final selectedFile = File(pickedFile.path);
       if (widget.onSelect.isNotNull) {
         widget.onSelect(selectedFile);
       }
-    } else if (await Permission.storage.isDenied) {
+    } else if (await permission.isDenied) {
       // print('[TUNG] ===> isDenied');
-      await Permission.storage.request();
-    } else if (await Permission.storage.isRestricted) {
+      if (Platform.isIOS) {
+        await showKayleeGo2SettingDialog(context: context);
+      } else {
+        await permission.request();
+      }
+    } else if (await permission.isRestricted) {
+      ///only support ios
       // print('[TUNG] ===> isRestricted');
       await showKayleeGo2SettingDialog(context: context);
-    } else if (await Permission.storage.isPermanentlyDenied) {
+    } else if (await permission.isPermanentlyDenied) {
+      ///only support android
       // print('[TUNG] ===> isPermanentlyDenied');
       await showKayleeGo2SettingDialog(context: context);
-    } else if (await Permission.storage.isUndetermined) {
+    } else if (await permission.isUndetermined) {
       // print('[TUNG] ===> isUndetermined');
-      await Permission.storage.request();
+      await permission.request();
     }
   }
 
