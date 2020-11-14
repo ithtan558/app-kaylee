@@ -27,7 +27,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Used to take photo from camera</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Kaylee truy cập hình ảnh của bạn để lưu trữ và dùng để hiển thị hình đại diện cho sản phẩm, dịch vụ, khách hàng, tài khoản cá nhân</string>
+	<string>Kaylee truy cập hình ảnh của bạn để lưu trữ và sử dụng để hiển thị hình đại diện cho sản phẩm, dịch vụ, khách hàng, tài khoản cá nhân</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
