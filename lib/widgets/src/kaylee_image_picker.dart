@@ -308,6 +308,7 @@ class _ImageGridState extends BaseState<_ImageGrid> {
         await showKayleeGo2SettingDialog(context: context);
       } else {
         await permission.request();
+        handlePermission();
       }
     } else if (await permission.isRestricted) {
       ///only support ios
@@ -320,6 +321,7 @@ class _ImageGridState extends BaseState<_ImageGrid> {
     } else if (await permission.isUndetermined) {
       // print('[TUNG] ===> isUndetermined');
       await permission.request();
+      handlePermission();
     }
   }
 
