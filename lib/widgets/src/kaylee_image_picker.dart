@@ -242,10 +242,11 @@ class _KayleeBannerImagePickerState extends BaseState<KayleeImagePicker> {
   }
 }
 
-Future showImagePickerDialog({BuildContext context,
-  List<String> images,
-  String selectedExistedImage,
-  void Function(dynamic selectedImage) onSelect}) async {
+Future showImagePickerDialog(
+    {BuildContext context,
+    List<String> images,
+    String selectedExistedImage,
+    void Function(dynamic selectedImage) onSelect}) async {
   await showKayleeBottomSheet(
     context,
     initialChildSize: 145 / 667,
@@ -296,10 +297,11 @@ class _ImageGridState extends BaseState<_ImageGrid> {
     if (await permission.isGranted) {
       final pickedFile = await ImagePicker()
           .getImage(source: ImageSource.gallery, maxHeight: 99, maxWidth: 99);
-      final selectedFile = File(pickedFile.path);
-      if (widget.onSelect.isNotNull) {
-        widget.onSelect(selectedFile);
+      File selectedFile;
+      if (pickedFile.isNotNull) {
+        selectedFile = File(pickedFile.path);
       }
+      widget.onSelect?.call(selectedFile);
     } else if (await permission.isDenied) {
       // print('[TUNG] ===> isDenied');
       if (Platform.isIOS) {
