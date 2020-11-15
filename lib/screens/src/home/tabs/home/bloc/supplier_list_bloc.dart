@@ -57,6 +57,7 @@ class SupplierListBloc extends Cubit<LoadMoreModel<Supplier>>
       ..page = 1
       ..items = []
       ..loading = true;
+    loadSuppliers();
   }
 }
 
