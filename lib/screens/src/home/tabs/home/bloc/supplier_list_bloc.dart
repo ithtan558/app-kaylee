@@ -52,11 +52,15 @@ class SupplierListBloc extends Cubit<LoadMoreModel<Supplier>>
   @override
   void refresh() {
     super.refresh();
-    state
-      ..page = 1
-      ..items = []
-      ..loading = true;
-    loadSuppliers();
+    if (!state.loading) {
+      state
+        ..page = 1
+        ..items = []
+        ..loading = true;
+      loadSuppliers();
+    } else {
+      completeRefresh();
+    }
   }
 }
 
