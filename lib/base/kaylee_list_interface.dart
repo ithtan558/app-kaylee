@@ -11,6 +11,8 @@ abstract class KayleeListInterface {
 
   ///gọi sau khi call api complete
   void completeRefresh();
+
+  bool get loading;
 }
 
 mixin KayleeListInterfaceMixin implements KayleeListInterface {
@@ -40,4 +42,7 @@ mixin KayleeListInterfaceMixin implements KayleeListInterface {
       _completer.complete();
     }
   }
+
+  @override
+  bool get loading => false;
 }
