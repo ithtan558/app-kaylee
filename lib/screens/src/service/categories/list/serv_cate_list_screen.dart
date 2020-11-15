@@ -91,7 +91,10 @@ class _ServCateListScreenState extends KayleeState<ServCateListScreen> {
                         if (state.ended) return Container();
                         return Align(
                           alignment: Alignment.topCenter,
-                          child: KayleeLoadingIndicator(),
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: Dimens.px16),
+                            child: KayleeLoadingIndicator(),
+                          ),
                         );
                       },
                     );
