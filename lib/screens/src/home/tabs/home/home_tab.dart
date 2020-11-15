@@ -40,18 +40,16 @@ class HomeTab extends StatefulWidget {
 class _HomeTabState extends KayleeState<HomeTab>
     with AutomaticKeepAliveClientMixin {
   final scrollController = ScrollController();
-  ScrollOffsetBloc scrollOffsetBloc;
+  ScrollOffsetBloc get scrollOffsetBloc => context.bloc<ScrollOffsetBloc>();
 
-  SupplierListBloc supplierListBloc;
+  SupplierListBloc get supplierListBloc => context.bloc<SupplierListBloc>();
 
   @override
   void initState() {
     super.initState();
-    scrollOffsetBloc = context.bloc<ScrollOffsetBloc>();
     scrollController.addListener(() {
       scrollOffsetBloc.addOffset(scrollController.offset);
     });
-    supplierListBloc = context.bloc<SupplierListBloc>();
     supplierListBloc.loadInitData();
   }
 
@@ -94,7 +92,7 @@ class _HomeTabState extends KayleeState<HomeTab>
                     value: scrollOffsetBloc, child: HomeMenu.newInstance()),
                 Expanded(
                   child: KayleeLoadMoreHandler(
-                    controller: context.bloc<SupplierListBloc>(),
+                    controller: supplierListBloc,
                     child: BlocBuilder<SupplierListBloc, LoadMoreModel>(
                       builder: (context, state) {
                         int itemCount = (state.items?.length ?? 0);
