@@ -23,12 +23,11 @@ class ProdCateListScreen extends StatefulWidget {
 }
 
 class _ProdCateListScreenState extends KayleeState<ProdCateListScreen> {
-  ProCateListScreenBloc _bloc;
+  ProCateListScreenBloc get _bloc => context.bloc<ProCateListScreenBloc>();
 
   @override
   void initState() {
     super.initState();
-    _bloc = context.bloc<ProCateListScreenBloc>();
     _bloc.loadInitData();
   }
 
@@ -48,11 +47,8 @@ class _ProdCateListScreenState extends KayleeState<ProdCateListScreen> {
       body: Column(
         children: [
           Expanded(
-            child: RefreshIndicator(
-              onRefresh: () async {
-                _bloc.refresh();
-                await _bloc.awaitRefresh;
-              },
+            child: KayleeRefreshIndicator(
+              controller: _bloc,
               child: KayleeLoadMoreHandler(
                 controller: context.bloc<ProCateListScreenBloc>(),
                 child: BlocConsumer<ProCateListScreenBloc,
