@@ -98,6 +98,8 @@ class SelectServiceListBloc extends Cubit<LoadMoreModel<Service>>
   @override
   void refresh() {
     super.refresh();
+    if (state.loading) return completeRefresh();
+
     state
       ..page = 1
       ..items = []

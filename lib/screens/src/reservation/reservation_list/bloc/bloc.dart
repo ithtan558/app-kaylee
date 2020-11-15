@@ -102,6 +102,8 @@ class ReservationListBloc extends Cubit<LoadMoreModel<Reservation>>
   @override
   void refresh() {
     super.refresh();
+    if (state.loading) return completeRefresh();
+
     state
       ..page = 1
       ..items = [];

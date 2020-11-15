@@ -62,10 +62,10 @@ class CustomerListScreenBloc extends Cubit<LoadMoreModel<Customer>>
 
   @override
   void loadFilter() {
-      emit(LoadMoreModel.copy(state
-        ..items = null
-        ..page = 1));
-      loadCustomers();
+    emit(LoadMoreModel.copy(state
+      ..items = null
+      ..page = 1));
+    loadCustomers();
   }
 
   @override
@@ -90,6 +90,7 @@ class CustomerListScreenBloc extends Cubit<LoadMoreModel<Customer>>
   @override
   void refresh() {
     super.refresh();
+    if (state.loading) return completeRefresh();
     state
       ..page = 1
       ..items = [];

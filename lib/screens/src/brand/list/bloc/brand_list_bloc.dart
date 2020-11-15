@@ -59,10 +59,10 @@ class BrandListBloc extends Cubit<LoadMoreModel<Brand>>
 
   @override
   void loadFilter() {
-      emit(LoadMoreModel.copy(state
-        ..items = null
-        ..page = 1));
-      loadBrands();
+    emit(LoadMoreModel.copy(state
+      ..items = null
+      ..page = 1));
+    loadBrands();
   }
 
   @override
@@ -92,6 +92,7 @@ class BrandListBloc extends Cubit<LoadMoreModel<Brand>>
   @override
   void refresh() {
     super.refresh();
+    if (state.loading) return completeRefresh();
     state
       ..page = 1
       ..items = [];
