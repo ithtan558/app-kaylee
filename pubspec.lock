@@ -91,7 +91,7 @@ packages:
       name: build_runner
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.10.4"
+    version: "1.10.6"
   build_runner_core:
     dependency: transitive
     description:
@@ -407,7 +407,7 @@ packages:
       name: flutter_widget_from_html
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.1+4"
+    version: "0.5.1+5"
   flutter_widget_from_html_core:
     dependency: transitive
     description:
