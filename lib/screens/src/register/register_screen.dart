@@ -41,13 +41,7 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
   //todo tạm thời chưa data thật cho dialog policy, sẽ bị apple reject => ẩn ui chỗ này
   bool isAcceptPolicy = true;
 
-  RegisterScreenBloc bloc;
-
-  @override
-  void initState() {
-    super.initState();
-    bloc = context.bloc<RegisterScreenBloc>();
-  }
+  RegisterScreenBloc get _bloc => context.bloc<RegisterScreenBloc>();
 
   @override
   void dispose() {
@@ -56,7 +50,11 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
     phoneTController.dispose();
     emailTController.dispose();
     passTController.dispose();
-    bloc.close();
+    nameFocus.dispose();
+    lastNameFocus.dispose();
+    phoneFocus.dispose();
+    emailFocus.dispose();
+    passFocus.dispose();
     super.dispose();
   }
 
@@ -217,7 +215,7 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
                   child: KayLeeRoundedButton.normal(
                       text: Strings.dangKy,
                       onPressed: () {
-                        bloc.register(
+                        _bloc.register(
                             firstName: nameTController.text,
                             lastName: lastNameTController.text,
                             phone: phoneTController.text,
