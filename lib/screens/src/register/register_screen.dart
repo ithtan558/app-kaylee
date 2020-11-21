@@ -9,8 +9,6 @@ import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/register/bloc/bloc.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
-import 'bloc/state.dart';
-
 class RegisterScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<RegisterScreenBloc>(
         create: (context) => RegisterScreenBloc(
@@ -65,54 +63,50 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
         appBar: KayleeAppBar(
           title: Strings.khoiTaoTaiKhoan,
         ),
-        child: BlocConsumer<RegisterScreenBloc, dynamic>(
+        child: BlocConsumer<RegisterScreenBloc, SingleModel>(
           listener: (context, state) async {
-            if (state is LoadingState) {
+            if (state.loading) {
               showLoading();
-            } else if (state is NameRegisterScrErrorState) {
+            } else if (!state.loading) {
               hideLoading();
-              nameFocus.requestFocus();
-            } else if (state is LastNameRegisterScrErrorState) {
-              hideLoading();
-              lastNameFocus.requestFocus();
-            } else if (state is PhoneRegisterScrErrorState) {
-              hideLoading();
-              phoneFocus.requestFocus();
-            } else if (state is EmailRegisterScrErrorState) {
-              hideLoading();
-              emailFocus.requestFocus();
-            } else if (state is PassRegisterScrErrorState) {
-              hideLoading();
-              passFocus.requestFocus();
-            } else if (state is ErrorState) {
-              hideLoading();
-              await showKayleeAlertDialog(
+
+              if (state.code.isNotNull &&
+                  state.code != ErrorType.UNAUTHORIZED) {
+                showKayleeAlertErrorYesDialog(
                   context: context,
-                  view: KayleeAlertDialogView.error(
-                    error: state.error,
-                    actions: [
-                      KayleeAlertDialogAction.dongY(
-                        onPressed: () {
-                          popScreen();
-                        },
-                      )
-                    ],
-                  ));
-            } else if (state is SuccessRegisterScrState) {
-              hideLoading();
-              await showKayleeAlertDialog(
+                  error: state.error,
+                  onPressed: () {
+                    popScreen();
+
+                    if (state is NameErrorModel) {
+                      return nameFocus.requestFocus();
+                    }
+
+                    if (state is LastNameErrorModel) {
+                      return lastNameFocus.requestFocus();
+                    }
+
+                    if (state is PhoneErrorModel) {
+                      return phoneFocus.requestFocus();
+                    }
+                    if (state is EmailErrorModel) {
+                      return emailFocus.requestFocus();
+                    }
+                    if (state is PasswordErrorModel) {
+                      return passFocus.requestFocus();
+                    }
+                  },
+                );
+              } else if (state is RegisterSuccessModel) {
+                showKayleeAlertMessageYesDialog(
                   context: context,
-                  view: KayleeAlertDialogView.message(
-                    message: state.message,
-                    actions: [
-                      KayleeAlertDialogAction.dongY(
-                        onPressed: () {
-                          context.popUntilScreenOrFirst(
-                              PageIntent(screen: LoginScreen));
-                        },
-                      )
-                    ],
-                  ));
+                  message: state.message,
+                  onPressed: () {
+                    context
+                        .popUntilScreenOrFirst(PageIntent(screen: LoginScreen));
+                  },
+                );
+              }
             }
           },
           builder: (context, state) {
@@ -132,8 +126,8 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
                           controller: nameTController,
                           textInputAction: TextInputAction.next,
                           nextFocusNode: lastNameFocus,
-                          error: state is NameRegisterScrErrorState
-                              ? state.message
+                          error: state is NameErrorModel
+                              ? state.error.message
                               : null,
                         ),
                       ),
@@ -146,8 +140,8 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
                           controller: lastNameTController,
                           textInputAction: TextInputAction.next,
                           nextFocusNode: phoneFocus,
-                          error: state is LastNameRegisterScrErrorState
-                              ? state.message
+                          error: state is LastNameErrorModel
+                              ? state.error.message
                               : null,
                         ),
                       )
@@ -165,9 +159,8 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
                     focusNode: phoneFocus,
                     nextFocusNode: emailFocus,
                     textInputAction: TextInputAction.next,
-                    error: state is PhoneRegisterScrErrorState
-                        ? state.message
-                        : null,
+                    error:
+                        state is PhoneErrorModel ? state.error.message : null,
                   ),
                 ),
                 Padding(
@@ -183,9 +176,8 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
                     nextFocusNode: passFocus,
                     textInputType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.next,
-                    error: state is EmailRegisterScrErrorState
-                        ? state.message
-                        : null,
+                    error:
+                    state is EmailErrorModel ? state.error.message : null,
                   ),
                 ),
                 Padding(
@@ -193,8 +185,8 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
                   child: KayleeTextField.password(
                     focusNode: passFocus,
                     controller: passTController,
-                    error: state is PassRegisterScrErrorState
-                        ? state.message
+                    error: state is PasswordErrorModel
+                        ? state.error.message
                         : null,
                   ),
                 ),
