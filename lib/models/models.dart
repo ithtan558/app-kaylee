@@ -1,6 +1,7 @@
 library models;
 
 export 'src/filter.dart';
+export 'src/model_extensions.dart';
 export 'src/personal_info_helper.dart';
 export 'src/request/login/login_body.dart';
 export 'src/request/notification/notification_status_body.dart';
