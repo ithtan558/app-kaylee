@@ -297,6 +297,7 @@ class Strings {
   static const String lyDoHuyDon = 'Lý do huỷ đơn hàng';
   static const String khongCoNhuCau = 'Không còn nhu cầu';
   static const String datLaiDonKhac = 'Đặt lại đơn hàng khác';
+  static const String thayDoiThongTinGiaohang = 'Thay đổi thông tin giao hàng';
   static const String lyDoKhac = 'Lý do khác';
 
   Strings._();
