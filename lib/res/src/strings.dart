@@ -292,9 +292,12 @@ class Strings {
       'Bạn đã chắc chắn muốn xóa tất cả thông báo';
   static const String banChacChanMuonXoaDonHangNhaCungCapHienTai =
       'Bạn có chắc xóa đơn hàng của nhà cung cấp hiện tại và tạo đơn hàng của nhà cung cấp mới?';
-
   static const String xacNhanDonHang = 'Xác nhận đơn hàng';
   static const String traHang = 'Trả hàng';
+  static const String lyDoHuyDon = 'Lý do huỷ đơn hàng';
+  static const String khongCoNhuCau = 'Không còn nhu cầu';
+  static const String datLaiDonKhac = 'Đặt lại đơn hàng khác';
+  static const String lyDoKhac = 'Lý do khác';
 
   Strings._();
 }
