@@ -12,13 +12,6 @@ import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/src/kaylee_rounded_button.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
-enum _Methods {
-  cash,
-  credit,
-  atm,
-  momo,
-}
-
 class PaymentInfoScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<PaymentInfoScreenBloc>(
         create: (context) => PaymentInfoScreenBloc(
@@ -34,7 +27,7 @@ class PaymentInfoScreen extends StatefulWidget {
 }
 
 class _PaymentInfoScreenState extends KayleeState<PaymentInfoScreen> {
-  _Methods selected = _Methods.cash;
+  PaymentMethod selected = PaymentMethod.cash;
   PaymentInfoScreenBloc bloc;
   StreamSubscription sub;
 
@@ -88,22 +81,10 @@ class _PaymentInfoScreenState extends KayleeState<PaymentInfoScreen> {
           shrinkWrap: true,
           itemBuilder: (context, index) {
             if (index != 0) return null;
-            final e = _Methods.values.elementAt(index);
-            return _PaymentMethodCheckBox<_Methods>(
-              title: e == _Methods.cash
-                  ? Strings.tienMat
-                  : e == _Methods.credit
-                      ? Strings.theTinDung
-                      : e == _Methods.atm
-                          ? Strings.theAtm
-                          : e == _Methods.momo ? Strings.momo : null,
-              imageOfPaymentMethod: e == _Methods.cash
-                  ? Images.ic_cash
-                  : e == _Methods.credit
-                      ? Images.ic_card
-                      : e == _Methods.atm
-                          ? Images.ic_card
-                          : e == _Methods.momo ? Images.ic_momo : null,
+            final e = PaymentMethod.values.elementAt(index);
+            return _PaymentMethodCheckBox<PaymentMethod>(
+              title: e.text,
+              imageOfPaymentMethod: e.icon,
               currentValue: selected,
               value: e,
               onChange: (value) {
@@ -120,7 +101,7 @@ class _PaymentInfoScreenState extends KayleeState<PaymentInfoScreen> {
               height: Dimens.px1,
             );
           },
-          itemCount: _Methods.values.length),
+          itemCount: PaymentMethod.values.length),
       bottom: KayLeeRoundedButton.normal(
         text: Strings.xacNhanVaDatHang,
         margin: EdgeInsets.all(Dimens.px8),
@@ -163,15 +144,9 @@ class _PaymentMethodCheckBox<T> extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.only(right: Dimens.px16),
-              child: ImageIcon(
-                AssetImage(currentValue == value
-                    ? Images.ic_radio_active
-                    : Images.ic_radio_inactive),
-                color: currentValue == value
-                    ? ColorsRes.hyper
-                    : ColorsRes.radioInActive,
-                size: Dimens.px24,
-              ),
+              child: currentValue == value
+                  ? RadioActiveIcon()
+                  : RadioInactiveIcon(),
             ),
             Padding(
               padding: const EdgeInsets.only(right: Dimens.px8),
