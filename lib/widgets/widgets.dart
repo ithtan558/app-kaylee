@@ -48,6 +48,8 @@ export 'src/kaylee_text.dart';
 export 'src/kaylee_text_field.dart';
 export 'src/label_divider_view.dart';
 export 'src/policy_checkbox.dart';
+export 'src/radio/radio_active_icon.dart';
+export 'src/radio/radio_inactive_icon.dart';
 
 class Go2RegisterText extends StatelessWidget {
   @override
