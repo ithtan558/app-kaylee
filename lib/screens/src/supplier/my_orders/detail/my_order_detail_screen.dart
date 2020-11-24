@@ -8,6 +8,7 @@ import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/supplier/my_orders/detail/bloc/my_order_detail_bloc.dart';
+import 'package:kaylee/screens/src/supplier/my_orders/detail/widgets/order_cancelation_reason/order_cancelation_reason_dialog.dart';
 import 'package:kaylee/screens/src/supplier/my_orders/detail/widgets/order_prod_item.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
@@ -71,22 +72,29 @@ class _MyOrderDetailScreenState extends KayleeState<MyOrderDetailScreen> {
         title: Strings.chiTietDH,
         actionTitle: Strings.huyDon,
         onActionClick: () {
-          showKayleeAlertDialog(
+          // showKayleeAlertDialog(
+          //     context: context,
+          //     view: KayleeAlertDialogView(
+          //       content: Strings.banDaChacChanHuyDonHangNay,
+          //       actions: [
+          //         KayleeAlertDialogAction.dongY(
+          //           isDefaultAction: true,
+          //           onPressed: () {
+          //             popScreen();
+          //             _bloc.cancelOrder();
+          //           },
+          //         ),
+          //         KayleeAlertDialogAction.huy(
+          //           onPressed: popScreen,
+          //         ),
+          //       ],
+          //     ));
+
+          showKayleeDialog(
               context: context,
-              view: KayleeAlertDialogView(
-                content: Strings.banDaChacChanHuyDonHangNay,
-                actions: [
-                  KayleeAlertDialogAction.dongY(
-                    isDefaultAction: true,
-                    onPressed: () {
-                      popScreen();
-                      _bloc.cancelOrder();
-                    },
-                  ),
-                  KayleeAlertDialogAction.huy(
-                    onPressed: popScreen,
-                  ),
-                ],
+              child: OrderCancellationReasonDialog(
+                onConfirm: (value) {},
+                onCancel: () {},
               ));
         },
       ),
@@ -103,7 +111,7 @@ class _MyOrderDetailScreenState extends KayleeState<MyOrderDetailScreen> {
                   children: [
                     Padding(
                       padding:
-                      const EdgeInsets.symmetric(horizontal: Dimens.px16),
+                          const EdgeInsets.symmetric(horizontal: Dimens.px16),
                       child: _buildInfoText(
                         icon: Images.ic_list,
                         title: '#${_bloc.order?.code ?? ''}',
