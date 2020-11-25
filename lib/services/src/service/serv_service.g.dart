@@ -221,9 +221,7 @@ class _ServService implements ServService {
       _data.files.add(MapEntry(
           'image',
           MultipartFile.fromFileSync(image.path,
-              filename: image.path
-                  .split(Platform.pathSeparator)
-                  .last)));
+              filename: image.path.split(Platform.pathSeparator).last)));
     }
     if (categoryId != null) {
       _data.fields.add(MapEntry('category_id', categoryId.toString()));
