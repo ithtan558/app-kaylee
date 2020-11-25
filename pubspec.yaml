@@ -29,6 +29,7 @@ dependencies:
   cached_network_image: ^2.3.3
   esc_pos_printer: ^4.0.3
   ping_discover_network: ^0.2.0+1
+  wifi: ^0.1.5
   anth_package:
     path: ../anth_package
 #    git:
