@@ -1,8 +1,8 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
+import 'package:kaylee/components/src/printer/printer_module.dart';
 import 'package:kaylee/res/res.dart';
-import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/notification_button/bloc.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
@@ -38,7 +38,8 @@ class _NotificationButtonState extends KayleeState<NotificationButton> {
           height: 56,
           child: FlatButton(
             onPressed: () {
-              context.push(PageIntent(screen: NotificationScreen));
+              // context.push(PageIntent(screen: NotificationScreen));
+              PrinterModule.findAllDevice();
             },
             shape: CircleBorder(),
             child: Image.asset(
