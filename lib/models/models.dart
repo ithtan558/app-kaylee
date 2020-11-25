@@ -44,6 +44,7 @@ export 'src/response/order/order_item/order_item.dart';
 export 'src/response/page_data/page_data.dart';
 export 'src/response/product/list/products.dart';
 export 'src/response/product/product.dart';
+export 'src/response/register/register_result.dart';
 export 'src/response/report/employee/employee_revenue.dart';
 export 'src/response/report/revenue/revenue.dart';
 export 'src/response/report/service/service_revenue.dart';
