@@ -39,7 +39,7 @@ class _NotificationButtonState extends KayleeState<NotificationButton> {
           child: FlatButton(
             onPressed: () {
               // context.push(PageIntent(screen: NotificationScreen));
-              PrinterModule.findAllDevice();
+              PrinterModule.connectDevice();
             },
             shape: CircleBorder(),
             child: Image.asset(

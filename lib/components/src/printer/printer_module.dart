@@ -1,21 +1,29 @@
 import 'package:esc_pos_printer/esc_pos_printer.dart';
 import 'package:esc_pos_utils/esc_pos_utils.dart';
 
+class PrinterDevice {
+  final String ip;
+  final int port;
+
+  PrinterDevice({this.ip, this.port = 9100});
+}
+
 class PrinterModule {
-  static void findAllDevice() async {
+  static void findAllDevice() async {}
+
+  static void connectDevice({PrinterDevice device}) async {
     const PaperSize paper = PaperSize.mm80;
     final profile = await CapabilityProfile.load();
     final printer = NetworkPrinter(paper, profile);
 
     final PosPrintResult res =
-        await printer.connect('192.168.1.123', port: 9100);
+        await printer.connect('192.168.1.240', port: 9100);
+    print('Print result: ${res.msg}');
 
     if (res == PosPrintResult.success) {
       testReceipt(printer);
       printer.disconnect();
     }
-
-    print('Print result: ${res.msg}');
   }
 
   static void testReceipt(NetworkPrinter printer) {
@@ -35,11 +43,30 @@ class PrinterModule {
     printer.text('Align right',
         styles: PosStyles(align: PosAlign.right), linesAfter: 1);
 
+
     printer.text('Text size 200%',
         styles: PosStyles(
           height: PosTextSize.size2,
           width: PosTextSize.size2,
         ));
+
+    printer.row([
+      PosColumn(
+          text: 'Mat hang',
+          styles: PosStyles(
+            align: PosAlign.center,
+            bold: true,
+          ),
+          width: 6
+      ), PosColumn(
+          text: 'Gia',
+          styles: PosStyles(
+            align: PosAlign.center,
+            bold: true,
+          ),
+          width: 6
+      )
+    ]);
 
     printer.feed(2);
     printer.cut();
