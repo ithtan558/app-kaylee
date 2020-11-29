@@ -66,12 +66,18 @@ class _ResetPassVerifyPhoneScreenState
               message: state.message,
               onPressed: () {
                 popScreen();
-                pushScreen(PageIntent(
+                pushScreen(
+                  PageIntent(
                     screen: OtpVerifyScreen,
-                    bundle: Bundle(OtpConfirmScreenData(
-                      phone: _phoneTFController.text,
-                      result: state.item,
-                    ))));
+                    bundle: Bundle(
+                      OtpConfirmScreenData(
+                        phone: _phoneTFController.text,
+                        result: state.item,
+                        type: OtpConfirmScreenDataType.forgotPassword,
+                      ),
+                    ),
+                  ),
+                );
               },
             );
           }
