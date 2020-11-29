@@ -17,12 +17,12 @@ import 'bloc/otp_verify_bloc.dart';
 class VerifyOtpScreenData {
   final int userId;
   final String phone;
-  final OtpConfirmScreenDataType type;
+  final VerifyOtpScreenDataType type;
 
   VerifyOtpScreenData({this.userId, this.phone, this.type});
 }
 
-enum OtpConfirmScreenDataType {
+enum VerifyOtpScreenDataType {
   forgotPassword,
   register,
 }
@@ -33,7 +33,7 @@ class OtpVerifyScreen extends StatefulWidget {
           create: (context) {
             VerifyOtpRepository repository =
                 context.getArguments<VerifyOtpScreenData>().type ==
-                        OtpConfirmScreenDataType.forgotPassword
+                    VerifyOtpScreenDataType.forgotPassword
                     ? context.repos.verifyOtpForForgotPassword
                     : context.repos.verifyOtpForRegister;
             return OtpVerifyBloc(verifyOtpRepository: repository);

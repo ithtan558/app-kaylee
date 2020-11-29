@@ -73,7 +73,7 @@ class _ResetPassVerifyPhoneScreenState
                       VerifyOtpScreenData(
                         phone: _phoneTFController.text,
                         userId: state.item.userId,
-                        type: OtpConfirmScreenDataType.forgotPassword,
+                        type: VerifyOtpScreenDataType.forgotPassword,
                       ),
                     ),
                   ),
