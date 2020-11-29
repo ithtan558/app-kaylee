@@ -11,7 +11,7 @@ import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/src/otp_input_field.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
-import '../blocs/otp_verify_bloc.dart';
+import 'bloc/otp_verify_bloc.dart';
 
 class OtpConfirmScreenData {
   VerifyPhoneResult result;
@@ -20,27 +20,26 @@ class OtpConfirmScreenData {
   OtpConfirmScreenData({this.result, this.phone});
 }
 
-class ResetPassVerifyOtpScreen extends StatefulWidget {
+class OtpVerifyScreen extends StatefulWidget {
   static Widget newInstance() => MultiBlocProvider(providers: [
         BlocProvider(
           create: (context) =>
               OtpVerifyBloc(userService: context.network.provideUserService()),
         ),
-    BlocProvider(
+        BlocProvider(
           create: (context) =>
               SendOtpBloc(userService: context.network.provideUserService()),
         ),
-      ], child: ResetPassVerifyOtpScreen._());
+      ], child: OtpVerifyScreen._());
 
-  ResetPassVerifyOtpScreen._();
+  OtpVerifyScreen._();
 
   @override
-  _ResetPassVerifyOtpScreenState createState() =>
-      new _ResetPassVerifyOtpScreenState();
+  _OtpVerifyScreenState createState() =>
+      new _OtpVerifyScreenState();
 }
 
-class _ResetPassVerifyOtpScreenState
-    extends KayleeState<ResetPassVerifyOtpScreen> {
+class _OtpVerifyScreenState extends KayleeState<OtpVerifyScreen> {
   OtpVerifyBloc get otpVerifyBloc => context.bloc<OtpVerifyBloc>();
 
   SendOtpBloc get sendOtpBloc => context.bloc<SendOtpBloc>();

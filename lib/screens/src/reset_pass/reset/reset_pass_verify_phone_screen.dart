@@ -1,12 +1,10 @@
 import 'package:anth_package/anth_package.dart';
-import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/models/models.dart';
-import 'package:kaylee/res/src/dimens.dart';
-import 'package:kaylee/res/src/strings.dart';
+import 'package:kaylee/res/res.dart';
+import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/reset_pass/blocs/send_otp_bloc.dart';
-import 'package:kaylee/screens/src/reset_pass/otp/reset_pass_verify_otp_screeen.dart';
 import 'package:kaylee/screens/src/reset_pass/widgets/contact_us_text.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
@@ -69,7 +67,7 @@ class _ResetPassVerifyPhoneScreenState
               onPressed: () {
                 popScreen();
                 pushScreen(PageIntent(
-                    screen: ResetPassVerifyOtpScreen,
+                    screen: OtpVerifyScreen,
                     bundle: Bundle(OtpConfirmScreenData(
                       phone: _phoneTFController.text,
                       result: state.item,
