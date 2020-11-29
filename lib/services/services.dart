@@ -1,5 +1,6 @@
 library services;
 
+export 'src/advertise/advertise_service.dart';
 export 'src/brand/brand_service.dart';
 export 'src/campaign/campaign_service.dart';
 export 'src/commission/commission_service.dart';
