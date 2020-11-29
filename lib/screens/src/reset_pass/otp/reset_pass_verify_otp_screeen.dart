@@ -107,7 +107,7 @@ class _ResetPassVerifyOtpScreenState
                 showKayleeAlertMessageYesDialog(
                   context: context,
                   message: state.message,
-                  onDismiss: popScreen,
+                  onPressed: popScreen,
                 );
               }
             }
