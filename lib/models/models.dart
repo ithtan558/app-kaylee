@@ -11,6 +11,7 @@ export 'src/request/register/register_body.dart';
 export 'src/request/update_order_status/update_order_status_body.dart';
 export 'src/request/verify_otp/verify_otp_body.dart';
 export 'src/request/verify_phone/verify_phone_body.dart';
+export 'src/response/banner/banner.dart';
 export 'src/response/brand/brand.dart';
 export 'src/response/brand/list/brands.dart';
 export 'src/response/campaign/campaign.dart';
