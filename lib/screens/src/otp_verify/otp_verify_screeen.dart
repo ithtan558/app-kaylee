@@ -33,7 +33,7 @@ class OtpVerifyScreen extends StatefulWidget {
           create: (context) {
             VerifyOtpRepository repository =
                 context.getArguments<VerifyOtpScreenData>().type ==
-                    VerifyOtpScreenDataType.forgotPassword
+                        VerifyOtpScreenDataType.forgotPassword
                     ? context.repos.verifyOtpForForgotPassword
                     : context.repos.verifyOtpForRegister;
             return OtpVerifyBloc(verifyOtpRepository: repository);
@@ -82,9 +82,16 @@ class _OtpVerifyScreenState extends KayleeState<OtpVerifyScreen> {
                   message: state.message,
                   onPressed: popScreen,
                   onDismiss: () {
-                    pushReplacementScreen(PageIntent(
-                        screen: ResetPassNewPassScreen,
-                        bundle: Bundle(NewPassScreenData(result: state.item))));
+                    if (data.type == VerifyOtpScreenDataType.forgotPassword) {
+                      return pushReplacementScreen(PageIntent(
+                          screen: ResetPassNewPassScreen,
+                          bundle:
+                              Bundle(NewPassScreenData(result: state.item))));
+                    }
+
+                    if (data.type == VerifyOtpScreenDataType.register) {
+                      return context.popUntilScreenOrFirst(PageIntent());
+                    }
                   },
                 );
               }
