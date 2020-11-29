@@ -22,11 +22,11 @@ class OtpConfirmScreenData {
 
 class ResetPassVerifyOtpScreen extends StatefulWidget {
   static Widget newInstance() => MultiBlocProvider(providers: [
-        BlocProvider<OtpVerifyBloc>(
+        BlocProvider(
           create: (context) =>
               OtpVerifyBloc(userService: context.network.provideUserService()),
         ),
-        BlocProvider<SendOtpBloc>(
+    BlocProvider(
           create: (context) =>
               SendOtpBloc(userService: context.network.provideUserService()),
         ),
@@ -41,24 +41,11 @@ class ResetPassVerifyOtpScreen extends StatefulWidget {
 
 class _ResetPassVerifyOtpScreenState
     extends KayleeState<ResetPassVerifyOtpScreen> {
-  OtpVerifyBloc otpVerifyBloc;
-  SendOtpBloc sendOtpBloc;
-  OtpConfirmScreenData data;
+  OtpVerifyBloc get otpVerifyBloc => context.bloc<OtpVerifyBloc>();
 
-  @override
-  void initState() {
-    super.initState();
-    otpVerifyBloc = context.bloc<OtpVerifyBloc>();
-    sendOtpBloc = context.bloc<SendOtpBloc>();
-    data = context.bundle.args as OtpConfirmScreenData;
-  }
+  SendOtpBloc get sendOtpBloc => context.bloc<SendOtpBloc>();
 
-  @override
-  void dispose() {
-    otpVerifyBloc.close();
-    sendOtpBloc.close();
-    super.dispose();
-  }
+  OtpConfirmScreenData get data => context.getArguments<OtpConfirmScreenData>();
 
   @override
   Widget build(BuildContext context) {
