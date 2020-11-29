@@ -5,6 +5,7 @@ import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/home_banner/bloc/home_banner_bloc.dart';
+import 'package:kaylee/utils/deeplink_helper.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
@@ -68,7 +69,11 @@ class _HomeBannerState extends KayleeState<HomeBanner> {
                 children: state.item
                     .map((e) => _buildBanner(
                           image: e.image,
-                          onTap: () {},
+                          onTap: () {
+                            final pageIntent =
+                                DeepLinkHelper.handleLink(link: e.url);
+                            if (pageIntent.isNotNull) pushScreen(pageIntent);
+                          },
                         ))
                     .toList(),
                 onPageChanged: (value) {
