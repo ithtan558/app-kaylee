@@ -70,7 +70,7 @@ class _ResetPassVerifyPhoneScreenState
                   PageIntent(
                     screen: OtpVerifyScreen,
                     bundle: Bundle(
-                      OtpConfirmScreenData(
+                      VerifyOtpScreenData(
                         phone: _phoneTFController.text,
                         result: state.item,
                         type: OtpConfirmScreenDataType.forgotPassword,

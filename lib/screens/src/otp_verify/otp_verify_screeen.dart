@@ -3,6 +3,7 @@ import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/models/models.dart';
+import 'package:kaylee/repositories/repositories.dart';
 import 'package:kaylee/res/src/dimens.dart';
 import 'package:kaylee/res/src/strings.dart';
 import 'package:kaylee/screens/screens.dart';
@@ -13,18 +14,30 @@ import 'package:kaylee/widgets/widgets.dart';
 
 import 'bloc/otp_verify_bloc.dart';
 
-class OtpConfirmScreenData {
-  VerifyPhoneResult result;
-  String phone;
+class VerifyOtpScreenData {
+  final VerifyPhoneResult result;
+  final String phone;
+  final OtpConfirmScreenDataType type;
 
-  OtpConfirmScreenData({this.result, this.phone});
+  VerifyOtpScreenData({this.result, this.phone, this.type});
+}
+
+enum OtpConfirmScreenDataType {
+  forgotPassword,
+  register,
 }
 
 class OtpVerifyScreen extends StatefulWidget {
   static Widget newInstance() => MultiBlocProvider(providers: [
         BlocProvider(
-          create: (context) =>
-              OtpVerifyBloc(userService: context.network.provideUserService()),
+          create: (context) {
+            VerifyOtpRepository repository =
+                context.getArguments<VerifyOtpScreenData>().type ==
+                        OtpConfirmScreenDataType.forgotPassword
+                    ? context.repos.verifyOtpForForgotPassword
+                    : context.repos.verifyOtpForRegister;
+            return OtpVerifyBloc(verifyOtpRepository: repository);
+          },
         ),
         BlocProvider(
           create: (context) =>
@@ -35,8 +48,7 @@ class OtpVerifyScreen extends StatefulWidget {
   OtpVerifyScreen._();
 
   @override
-  _OtpVerifyScreenState createState() =>
-      new _OtpVerifyScreenState();
+  _OtpVerifyScreenState createState() => new _OtpVerifyScreenState();
 }
 
 class _OtpVerifyScreenState extends KayleeState<OtpVerifyScreen> {
@@ -44,7 +56,7 @@ class _OtpVerifyScreenState extends KayleeState<OtpVerifyScreen> {
 
   SendOtpBloc get sendOtpBloc => context.bloc<SendOtpBloc>();
 
-  OtpConfirmScreenData get data => context.getArguments<OtpConfirmScreenData>();
+  VerifyOtpScreenData get data => context.getArguments<VerifyOtpScreenData>();
 
   @override
   Widget build(BuildContext context) {
