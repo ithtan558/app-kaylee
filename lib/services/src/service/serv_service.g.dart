@@ -242,16 +242,17 @@ class _ServService implements ServService {
   }
 
   @override
-  Future<ResponseModel<dynamic>> updateService({name,
-    description,
-    brandIds,
-    time,
-    price,
-    image,
-    categoryId,
-    code,
-    id,
-    serviceId}) async {
+  Future<ResponseModel<dynamic>> updateService(
+      {name,
+      description,
+      brandIds,
+      time,
+      price,
+      image,
+      categoryId,
+      code,
+      id,
+      serviceId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
