@@ -101,9 +101,15 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
                 showKayleeAlertMessageYesDialog(
                   context: context,
                   message: state.message,
-                  onPressed: () {
-                    context
-                        .popUntilScreenOrFirst(PageIntent(screen: LoginScreen));
+                  onPressed: popScreen,
+                  onDismiss: () {
+                    context.push(PageIntent(
+                        screen: OtpVerifyScreen,
+                        bundle: Bundle(VerifyOtpScreenData(
+                          type: VerifyOtpScreenDataType.register,
+                          userId: state.result.userId,
+                          phone: phoneTController.text,
+                        ))));
                   },
                 );
               }
@@ -177,7 +183,7 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
                     textInputType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.next,
                     error:
-                    state is EmailErrorModel ? state.error.message : null,
+                        state is EmailErrorModel ? state.error.message : null,
                   ),
                 ),
                 Padding(
