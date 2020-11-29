@@ -15,6 +15,7 @@ export 'src/filter_button/filter_button.dart';
 export 'src/filter_view/kaylee_filter_list_item.dart';
 export 'src/filter_view/kaylee_filter_view.dart';
 export 'src/hyper_link_text.dart';
+export 'src/indicator.dart';
 export 'src/kaylee_appbar.dart';
 export 'src/kaylee_bottom_bar.dart';
 export 'src/kaylee_cart_prod_item/kaylee_cart_prod_item.dart';
