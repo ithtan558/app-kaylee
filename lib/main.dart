@@ -33,6 +33,12 @@ class KayLeeApp extends StatefulWidget {
           RepositoryProvider<NetworkModule>(
             create: (_) => NetworkModule.init(),
           ),
+          RepositoryProvider<NetworkModule>(
+            create: (_) => NetworkModule.init(),
+          ),
+          RepositoryProvider<RepositoriesModule>(
+            create: (context) => RepositoriesModule.init(context.network),
+          ),
           RepositoryProvider<UserModule>(
             create: (_) => UserModule.init(),
           ),
@@ -125,9 +131,7 @@ class _KayLeeAppState extends BaseState<KayLeeApp> with Routing, KayleeRouting {
           context.network.dio.options
             ..headers = {
               NetworkModule.AUTHORIZATION:
-              context.user
-                  .getUserInfo()
-                  .requestToken
+              context.user.getUserInfo().requestToken
             };
           _appBloc.getFcmTopic();
           _appBloc.doneLoggedInSetup();
