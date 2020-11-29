@@ -29,12 +29,14 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
   final phoneFocus = FocusNode();
   final emailFocus = FocusNode();
   final passFocus = FocusNode();
+  final codeFocus = FocusNode();
 
   final nameTController = TextEditingController();
   final lastNameTController = TextEditingController();
   final phoneTController = TextEditingController();
   final emailTController = TextEditingController();
   final passTController = TextEditingController();
+  final codeTController = TextEditingController();
 
   //todo tạm thời chưa data thật cho dialog policy, sẽ bị apple reject => ẩn ui chỗ này
   bool isAcceptPolicy = true;
@@ -48,11 +50,13 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
     phoneTController.dispose();
     emailTController.dispose();
     passTController.dispose();
+    codeTController.dispose();
     nameFocus.dispose();
     lastNameFocus.dispose();
     phoneFocus.dispose();
     emailFocus.dispose();
     passFocus.dispose();
+    codeFocus.dispose();
     super.dispose();
   }
 
@@ -187,13 +191,27 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
+                  padding: const EdgeInsets.symmetric(horizontal: Dimens.px16)
+                      .copyWith(bottom: Dimens.px16),
                   child: KayleeTextField.password(
                     focusNode: passFocus,
                     controller: passTController,
+                    nextFocusNode: codeFocus,
+                    textInputAction: TextInputAction.next,
                     error: state is PasswordErrorModel
                         ? state.error.message
                         : null,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: Dimens.px16,
+                  ),
+                  child: KayleeTextField.normal(
+                    title: Strings.maGioiThieu,
+                    hint: Strings.maGioiThieuHint,
+                    controller: codeTController,
+                    focusNode: codeFocus,
                   ),
                 ),
                 //todo tạm thời chưa data thật cho dialog policy, sẽ bị apple reject => ẩn ui chỗ này
@@ -219,6 +237,7 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
                             phone: phoneTController.text,
                             email: emailTController.text,
                             password: passTController.text,
+                            code: codeTController.text,
                             isAcceptPolicy: isAcceptPolicy);
                       },
                       margin: EdgeInsets.symmetric(horizontal: Dimens.px8)),
