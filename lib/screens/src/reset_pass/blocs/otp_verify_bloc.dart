@@ -10,7 +10,7 @@ class OtpVerifyBloc extends Cubit<SingleModel<VerifyOtpResult>> {
   void verifyOtp({int userId, String otp}) {
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
-      request: userService?.verifyOtp(VerifyOtpBody(
+      request: userService?.verifyOtpForPass(VerifyOtpBody(
         userId: userId,
         otp: otp,
       )),

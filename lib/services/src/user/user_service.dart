@@ -26,7 +26,8 @@ abstract class UserService {
       @Body() VerifyPhoneBody body);
 
   @POST('forgot/verify-otp')
-  Future<ResponseModel<VerifyOtpResult>> verifyOtp(@Body() VerifyOtpBody body);
+  Future<ResponseModel<VerifyOtpResult>> verifyOtpForPass(
+      @Body() VerifyOtpBody body);
 
   @POST('forgot/update-password')
   Future<ResponseModel> updatePass({@Body() UpdatePassBody body});

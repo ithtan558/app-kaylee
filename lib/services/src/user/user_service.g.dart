@@ -98,7 +98,7 @@ class _UserService implements UserService {
   }
 
   @override
-  Future<ResponseModel<VerifyOtpResult>> verifyOtp(body) async {
+  Future<ResponseModel<VerifyOtpResult>> verifyOtpForPass(body) async {
     ArgumentError.checkNotNull(body, 'body');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
