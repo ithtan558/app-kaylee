@@ -10,6 +10,8 @@ extension KayleeBuildContextExtension on BuildContext {
   CartModule get cart => this.repository<CartModule>();
 
   FcmModule get fcm => this.repository<FcmModule>();
+
+  RepositoriesModule get repos => this.repository<RepositoriesModule>();
 }
 
 extension DateTimeExtension on DateTime {
