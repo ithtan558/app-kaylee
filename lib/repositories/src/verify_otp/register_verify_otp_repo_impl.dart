@@ -7,7 +7,7 @@ class _RegisterVerifyOtpRepoImpl implements VerifyOtpRepository {
   void verifyOtp(
       {int userId, String otp, OnSuccess onSuccess, OnFailed onFailed}) {
     RequestHandler(
-      request: _userService?.verifyOtpForPass(VerifyOtpBody(
+      request: _userService?.verifyPhoneForRegister(VerifyOtpBody(
         userId: userId,
         otp: otp,
       )),
