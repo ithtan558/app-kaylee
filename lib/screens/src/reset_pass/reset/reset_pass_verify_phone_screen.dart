@@ -72,7 +72,7 @@ class _ResetPassVerifyPhoneScreenState
                     bundle: Bundle(
                       VerifyOtpScreenData(
                         phone: _phoneTFController.text,
-                        result: state.item,
+                        userId: state.item.userId,
                         type: OtpConfirmScreenDataType.forgotPassword,
                       ),
                     ),

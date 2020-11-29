@@ -15,11 +15,11 @@ import 'package:kaylee/widgets/widgets.dart';
 import 'bloc/otp_verify_bloc.dart';
 
 class VerifyOtpScreenData {
-  final VerifyPhoneResult result;
+  final int userId;
   final String phone;
   final OtpConfirmScreenDataType type;
 
-  VerifyOtpScreenData({this.result, this.phone, this.type});
+  VerifyOtpScreenData({this.userId, this.phone, this.type});
 }
 
 enum OtpConfirmScreenDataType {
@@ -141,7 +141,7 @@ class _OtpVerifyScreenState extends KayleeState<OtpVerifyScreen> {
                         return OtpInputField(
                           onComplete: (code) {
                             otpVerifyBloc.verifyOtp(
-                                userId: data?.result?.userId, otp: code);
+                                userId: data.userId, otp: code);
                           },
                           error: state.error?.code.isNotNull
                               ? state.error?.message
