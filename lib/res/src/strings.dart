@@ -299,6 +299,8 @@ class Strings {
   static const String datLaiDonKhac = 'Đặt lại đơn hàng khác';
   static const String thayDoiThongTinGiaoHang = 'Thay đổi thông tin giao hàng';
   static const String lyDoKhac = 'Lý do khác';
+  static const String maGioiThieu = 'Mã giới thiệu';
+  static const String maGioiThieuHint = 'Nhập mã giới thiệu';
 
   Strings._();
 }
