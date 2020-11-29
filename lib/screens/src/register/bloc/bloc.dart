@@ -27,9 +27,11 @@ class RegisterScreenBloc extends Cubit<SingleModel<RegisterBody>> {
           password: password,
         )),
         onSuccess: ({message, result}) {
-          emit(RegisterSuccessModel.copy(state
-            ..loading = false
-            ..message = message));
+          emit(RegisterSuccessModel.copy(
+              state
+                ..loading = false
+                ..message = message,
+              result: result));
         },
         onFailed: (code, {error}) {
           switch (error.code) {
@@ -75,7 +77,9 @@ class RegisterScreenBloc extends Cubit<SingleModel<RegisterBody>> {
 }
 
 class RegisterSuccessModel extends SingleModel<RegisterBody> {
-  RegisterSuccessModel.copy(SingleModel old) {
+  final RegisterResult result;
+
+  RegisterSuccessModel.copy(SingleModel old, {this.result}) {
     this
       ..loading = old?.loading
       ..item = old?.item
