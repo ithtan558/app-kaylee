@@ -177,14 +177,3 @@ String orderStatus2Title({OrderStatus status}) {
       return '';
   }
 }
-
-enum CancellationReason {
-  @JsonValue('noNeed')
-  noNeed,
-  @JsonValue('reOrdered')
-  reOrdered,
-  @JsonValue('changeReceivedInfo')
-  changeReceivedInfo,
-  @JsonValue('other')
-  other
-}

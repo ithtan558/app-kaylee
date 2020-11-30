@@ -1,23 +1,6 @@
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 
-extension CancellationReasonExtension on CancellationReason {
-  String get text {
-    switch (this) {
-      case CancellationReason.noNeed:
-        return Strings.khongCoNhuCau;
-      case CancellationReason.reOrdered:
-        return Strings.datLaiDonKhac;
-      case CancellationReason.changeReceivedInfo:
-        return Strings.thayDoiThongTinGiaoHang;
-      case CancellationReason.other:
-        return Strings.lyDoKhac;
-      default:
-        return '';
-    }
-  }
-}
-
 extension PaymentMethodExtension on PaymentMethod {
   String get text {
     switch (this) {
