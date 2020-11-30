@@ -26,7 +26,7 @@ dependencies:
   firebase_messaging: ^7.0.3
   flutter_local_notifications: ^3.0.1+6
   flutter_masked_text: ^0.8.0
-  cached_network_image: ^2.4.0
+  cached_network_image: 2.3.3
   esc_pos_printer: ^4.0.3
   ping_discover_network: ^0.2.0+1
   wifi: ^0.1.5
