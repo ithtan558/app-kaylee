@@ -287,9 +287,9 @@ class KayleeText extends StatelessWidget {
       );
 
   factory KayleeText.normal12W400(String text,
-      {TextAlign textAlign = TextAlign.start,
-        int maxLines,
-        TextOverflow overflow}) =>
+          {TextAlign textAlign = TextAlign.start,
+          int maxLines,
+          TextOverflow overflow}) =>
       KayleeText(
         text,
         textAlign: textAlign,
@@ -475,9 +475,10 @@ class KayleeDateRangeText extends StatelessWidget {
   final void Function() onTap;
   final double textSize;
 
-  KayleeDateRangeText(
-      {@required this.fromDate, this.onTap, @required this.toDate, this.textSize = Dimens
-          .px16});
+  KayleeDateRangeText({@required this.fromDate,
+    this.onTap,
+    @required this.toDate,
+    this.textSize = Dimens.px16});
 
   @override
   Widget build(BuildContext context) {
@@ -490,8 +491,8 @@ class KayleeDateRangeText extends StatelessWidget {
               children: [
                 KayleeDateTimeText.dayMonthYear(
                   fromDate,
-                  textStyle: TextStyles.hyper16W400.copyWith(
-                      fontSize: textSize),
+                  textStyle:
+                  TextStyles.hyper16W400.copyWith(fontSize: textSize),
                 ),
                 KayleeText(
                   ' - ',
@@ -499,8 +500,8 @@ class KayleeDateRangeText extends StatelessWidget {
                 ),
                 KayleeDateTimeText.dayMonthYear(
                   toDate,
-                  textStyle: TextStyles.hyper16W400.copyWith(
-                      fontSize: textSize),
+                  textStyle:
+                  TextStyles.hyper16W400.copyWith(fontSize: textSize),
                 ),
               ],
             ),
@@ -555,21 +556,24 @@ class _KayleeDatePickerTextState extends BaseState<KayleeDatePickerText> {
             selectedRange: dateRange,
             selectedType: rangeType,
             onSelectByType: (value) {
-              dateRange = value.range;
-              widget.controller?.value = dateRange;
-              setState(() {});
-              widget.onSelectRange?.call(dateRange);
+              rangeType = value;
+              _selectDateRange(rangeType.range);
             },
             onSelectByDate: (value) {
-              dateRange = value;
-              widget.controller?.value = dateRange;
-              setState(() {});
-              widget.onSelectRange?.call(dateRange);
+              rangeType = null;
+              _selectDateRange(value);
             },
           ),
         );
       },
     );
+  }
+
+  void _selectDateRange(DateTimeRange value) {
+    dateRange = value;
+    widget.controller?.value = dateRange;
+    setState(() {});
+    widget.onSelectRange?.call(dateRange);
   }
 }
 
