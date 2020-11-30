@@ -42,6 +42,7 @@ class _ProductSupplierVideoState extends State<ProductSupplierVideo>
   void dispose() {
     _videoStreamController.close();
     _controller.dispose();
+    _chewieController.dispose();
     super.dispose();
   }
 
