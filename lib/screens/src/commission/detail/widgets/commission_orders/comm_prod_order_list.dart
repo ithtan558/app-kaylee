@@ -17,7 +17,7 @@ class CommProdOrderList extends StatefulWidget {
   }) =>
       BlocProvider(
           create: (context) => CommProdOrdersBloc(
-            commissionService: context.network.provideCommissionService(),
+                commissionService: context.network.provideCommissionService(),
                 employee: employee,
                 startDate: range.start,
                 endDate: range.end,
@@ -55,8 +55,11 @@ class _CommProdOrderListState extends KayleeState<CommProdOrderList> {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: Dimens.px16),
-          child: LabelDividerView.monthYear(
-            time: _bloc.startDate,
+          child: LabelDividerView.monthYearRange(
+            range: DateTimeRange(
+              start: _bloc.startDate,
+              end: _bloc.endDate,
+            ),
           ),
         ),
         Expanded(
