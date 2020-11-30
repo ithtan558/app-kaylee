@@ -91,11 +91,15 @@ class _MyOrderDetailScreenState extends KayleeState<MyOrderDetailScreen> {
           //     ));
 
           showKayleeDialog(
-              context: context,
-              child: OrderCancellationReasonDialog(
-                onConfirm: (value) {},
-                onCancel: () {},
-              ));
+            context: context,
+            child: OrderCancellationReasonDialog.newInstance(
+              onConfirm: (value) {
+                _bloc.cancelOrder(
+                  cancellationReason: value,
+                );
+              },
+            ),
+          );
         },
       ),
       body: BlocBuilder<MyOrderDetailBloc, SingleModel<Order>>(
@@ -119,8 +123,8 @@ class _MyOrderDetailScreenState extends KayleeState<MyOrderDetailScreen> {
                     ),
                     Padding(
                       padding:
-                      const EdgeInsets.symmetric(horizontal: Dimens.px16)
-                          .copyWith(top: Dimens.px16),
+                          const EdgeInsets.symmetric(horizontal: Dimens.px16)
+                              .copyWith(top: Dimens.px16),
                       child: _buildInfoText(
                         icon: Images.ic_person,
                         title: _bloc.order?.informationReceiveName,
