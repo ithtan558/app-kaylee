@@ -16,6 +16,7 @@ class Order {
     this.code,
     this.amount,
     this.status,
+    this.cancellationReason,
     this.createdAt,
     this.supplierName,
     this.count,
@@ -53,6 +54,8 @@ class Order {
       toJson: parseToIntFromOrderStatus,
       name: 'order_status_id')
   OrderStatus status;
+  @JsonKey(name: 'order_reason_cancel')
+  OrderCancellationReason cancellationReason;
   DateTime createdAt;
 
   String supplierName;
