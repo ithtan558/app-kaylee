@@ -3,14 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/screens/src/supplier/my_orders/detail/widgets/order_cancelation_reason/bloc/order_cancelation_reason_bloc.dart';
 import 'package:kaylee/screens/src/supplier/my_orders/detail/widgets/order_cancelation_reason/widgets/reason_item.dart';
+import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class OrderCancellationReasonDialog extends StatefulWidget {
-  final ValueSetter<CancellationReason> onConfirm;
-  final VoidCallback onCancel;
+  static Widget newInstance({ValueSetter<OrderCancellationReason> onConfirm}) =>
+      BlocProvider(
+        create: (context) => OrderCancellationReasonBloc(
+          service: context.network.provideOrderService(),
+        ),
+        child: OrderCancellationReasonDialog._(
+          onConfirm: onConfirm,
+        ),
+      );
+  final ValueSetter<OrderCancellationReason> onConfirm;
 
-  OrderCancellationReasonDialog({this.onConfirm, this.onCancel});
+  OrderCancellationReasonDialog._({this.onConfirm});
 
   @override
   _OrderCancellationReasonDialogState createState() =>
@@ -19,7 +29,14 @@ class OrderCancellationReasonDialog extends StatefulWidget {
 
 class _OrderCancellationReasonDialogState
     extends KayleeState<OrderCancellationReasonDialog> {
-  CancellationReason _selectedReason = CancellationReason.noNeed;
+  OrderCancellationReasonBloc get _bloc =>
+      context.bloc<OrderCancellationReasonBloc>();
+
+  @override
+  void initState() {
+    super.initState();
+    _bloc.loadReasons();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,27 +56,31 @@ class _OrderCancellationReasonDialogState
           decoration: BoxDecoration(
             border: Border.symmetric(
               horizontal:
-                  BorderSide(width: Dimens.px1, color: ColorsRes.divider),
+              BorderSide(width: Dimens.px1, color: ColorsRes.divider),
             ),
           ),
-          child: ListView.separated(
-            itemBuilder: (context, index) {
-              final reason = CancellationReason.values.elementAt(index);
-              return ReasonItem(
-                reason: reason,
-                selected: reason == _selectedReason,
-                onSelect: () {
-                  setState(() {
-                    _selectedReason = reason;
-                  });
+          child: BlocBuilder<OrderCancellationReasonBloc,
+              SingleModel<Map<int, OrderCancellationReason>>>(
+            builder: (context, state) {
+              if (state.loading) return Center(child: KayleeLoadingIndicator());
+              return ListView.separated(
+                itemBuilder: (context, index) {
+                  final reason = _bloc.state.item.values.elementAt(index);
+                  return ReasonItem(
+                    reason: reason,
+                    onSelect: () {
+                      _bloc.select(selected: reason);
+                    },
+                  );
                 },
+                separatorBuilder: (context, index) =>
+                    Container(
+                      color: ColorsRes.divider,
+                      height: Dimens.px1,
+                    ),
+                itemCount: _bloc.state.item?.length ?? 0,
               );
             },
-            separatorBuilder: (context, index) => Container(
-              color: ColorsRes.divider,
-              height: Dimens.px1,
-            ),
-            itemCount: CancellationReason.values.length,
           ),
         ),
         Padding(
@@ -81,7 +102,7 @@ class _OrderCancellationReasonDialogState
                   margin: const EdgeInsets.only(left: Dimens.px8),
                   onPressed: () {
                     popScreen();
-                    widget.onConfirm?.call(_selectedReason);
+                    widget.onConfirm?.call(_bloc.selected);
                   },
                 ),
               ),
