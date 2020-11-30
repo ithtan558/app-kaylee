@@ -80,7 +80,7 @@ class _KayleeDateRangePickerViewState
                           _onChangeType(type: DateRangeValueType.thisWeek);
                         },
                         selected:
-                        rangeValueType == DateRangeValueType.thisWeek),
+                            rangeValueType == DateRangeValueType.thisWeek),
                     const SizedBox(width: Dimens.px16),
                     _buildTag(
                         title: Strings.tuanTruoc,
@@ -88,7 +88,7 @@ class _KayleeDateRangePickerViewState
                           _onChangeType(type: DateRangeValueType.lastWeek);
                         },
                         selected:
-                        rangeValueType == DateRangeValueType.lastWeek),
+                            rangeValueType == DateRangeValueType.lastWeek),
                   ],
                 ),
               ),
@@ -277,11 +277,17 @@ extension DateRangeValueExtension on DateRangeValueType {
   DateTimeRange get range {
     switch (this) {
       case DateRangeValueType.thisWeek:
-        return DateTimeRange(start: DateTime.now(), end: DateTime.now());
+        final now = DateTime.now();
+        final startDate = now.subtract(Duration(days: now.weekday - 1));
+        final endDate = startDate.add(Duration(days: 6));
+        return DateTimeRange(start: startDate, end: endDate);
       case DateRangeValueType.lastWeek:
-        return DateTimeRange(start: DateTime.now(), end: DateTime.now());
+        final now = DateTime.now();
+        final startDate = now.subtract(Duration(days: 7 + now.weekday - 1));
+        final endDate = startDate.add(Duration(days: 6));
+        return DateTimeRange(start: startDate, end: endDate);
       default:
-        return null;
+        return DateTimeRange(start: DateTime.now(), end: DateTime.now());
     }
   }
 }
