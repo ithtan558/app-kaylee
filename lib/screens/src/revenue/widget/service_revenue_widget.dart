@@ -42,6 +42,7 @@ class _ServiceRevenueWidgetState extends KayleeState<ServiceRevenueWidget>
               ),
             ),
             KayleeDatePickerText(
+              textSize: Dimens.px12,
               onSelectRange: (value) {
                 _serviceRevenueBloc.loadData(
                     startDate: value.start, endDate: value.end);

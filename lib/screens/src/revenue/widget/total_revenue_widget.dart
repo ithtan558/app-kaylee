@@ -40,6 +40,7 @@ class _TotalRevenueWidgetState extends KayleeState<TotalRevenueWidget>
               overflow: TextOverflow.ellipsis,
             )),
             KayleeDatePickerText(
+              textSize: Dimens.px12,
               onSelectRange: (value) {
                 _totalRevenueBloc.loadData(
                     startDate: value.start, endDate: value.end);

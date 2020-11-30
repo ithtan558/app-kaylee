@@ -46,6 +46,7 @@ class _EmployeeRevenueWidgetState extends KayleeState<EmployeeRevenueWidget>
                 _employeeRevenueBloc.loadData(
                     startDate: value.start, endDate: value.end);
               },
+              textSize: Dimens.px12,
               controller: datePickerController,
             ),
           ],
