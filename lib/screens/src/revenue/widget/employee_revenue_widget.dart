@@ -24,7 +24,8 @@ class _EmployeeRevenueWidgetState extends KayleeState<EmployeeRevenueWidget>
   void initState() {
     super.initState();
     _employeeRevenueBloc.loadData(
-      date: datePickerController.value,
+      startDate: datePickerController.value.start,
+      endDate: datePickerController.value.end,
     );
   }
 
@@ -35,14 +36,15 @@ class _EmployeeRevenueWidgetState extends KayleeState<EmployeeRevenueWidget>
           children: [
             Expanded(
               child: KayleeText.normal16W500(
-                'Doanh thu mỗi nhân viên',
+                Strings.doanhThuMoiNhanVien,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
             ),
             KayleeDatePickerText(
-              onSelect: (changed) {
-                _employeeRevenueBloc.loadData(date: changed);
+              onSelectRange: (value) {
+                _employeeRevenueBloc.loadData(
+                    startDate: value.start, endDate: value.end);
               },
               controller: datePickerController,
             ),
