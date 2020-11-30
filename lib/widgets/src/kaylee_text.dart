@@ -275,9 +275,9 @@ class KayleeText extends StatelessWidget {
       );
 
   factory KayleeText.normal18W700(String text,
-      {TextAlign textAlign = TextAlign.start,
-        int maxLines,
-        TextOverflow overflow}) =>
+          {TextAlign textAlign = TextAlign.start,
+          int maxLines,
+          TextOverflow overflow}) =>
       KayleeText(
         text,
         textAlign: textAlign,
@@ -469,64 +469,112 @@ class KayleeDateText extends StatelessWidget {
   }
 }
 
-class KayleeDatePickerText extends StatefulWidget {
-  final ValueChanged<DateTime> onSelect;
-  final KayleeDatePickerTextController controller;
+class KayleeDateRangeText extends StatelessWidget {
+  final DateTime fromDate;
+  final DateTime toDate;
+  final void Function() onTap;
+  final double textSize;
 
-  KayleeDatePickerText({this.onSelect, this.controller});
+  KayleeDateRangeText(
+      {@required this.fromDate, this.onTap, @required this.toDate, this.textSize = Dimens
+          .px16});
+
+  @override
+  Widget build(BuildContext context) {
+    return IntrinsicWidth(
+      child: Row(
+        children: [
+          GestureDetector(
+            onTap: onTap,
+            child: Row(
+              children: [
+                KayleeDateTimeText.dayMonthYear(
+                  fromDate,
+                  textStyle: TextStyles.hyper16W400.copyWith(
+                      fontSize: textSize),
+                ),
+                KayleeText(
+                  ' - ',
+                  style: TextStyles.hyper16W400.copyWith(fontSize: textSize),
+                ),
+                KayleeDateTimeText.dayMonthYear(
+                  toDate,
+                  textStyle: TextStyles.hyper16W400.copyWith(
+                      fontSize: textSize),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: Dimens.px4),
+            child: Image.asset(
+              Images.ic_calendar,
+              width: Dimens.px16,
+              height: Dimens.px16,
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class KayleeDatePickerText extends StatefulWidget {
+  final ValueChanged<DateTimeRange> onSelectRange;
+  final KayleeDatePickerTextController controller;
+  final double textSize;
+
+  KayleeDatePickerText(
+      {this.controller, this.onSelectRange, this.textSize = Dimens.px16});
 
   @override
   _KayleeDatePickerTextState createState() => _KayleeDatePickerTextState();
 }
 
 class _KayleeDatePickerTextState extends BaseState<KayleeDatePickerText> {
-  DateTime selectedDate;
-  DateTime date;
+  DateTimeRange dateRange;
+  DateRangeValueType rangeType;
 
   @override
   void initState() {
     super.initState();
-    date = widget.controller?.value ?? DateTime.now();
+    dateRange = widget.controller?.value ??
+        DateTimeRange(start: DateTime.now(), end: DateTime.now());
   }
 
   @override
   Widget build(BuildContext context) {
-    return KayleeDateText(
-      initDate: date,
+    return KayleeDateRangeText(
+      textSize: widget.textSize,
+      fromDate: dateRange.start,
+      toDate: dateRange.end,
       onTap: () {
-        showPickerPopup(
-            context: context,
-            onDone: () {
-              if (selectedDate.isNotNull) {
-                date = selectedDate;
-                selectedDate = null;
-                widget.controller?.value = date;
-
-                setState(() {});
-                widget.onSelect?.call(date);
-              }
+        showKayleeDialog(
+          context: context,
+          child: KayleeDateRangePickerView(
+            selectedRange: dateRange,
+            selectedType: rangeType,
+            onSelectByType: (value) {
+              dateRange = value.range;
+              widget.controller?.value = dateRange;
+              setState(() {});
+              widget.onSelectRange?.call(dateRange);
             },
-            onDismiss: () {
-              selectedDate = null;
+            onSelectByDate: (value) {
+              dateRange = value;
+              widget.controller?.value = dateRange;
+              setState(() {});
+              widget.onSelectRange?.call(dateRange);
             },
-            builder: (context) {
-              return CupertinoDatePicker(
-                maximumDate: DateTime.now(),
-                mode: CupertinoDatePickerMode.date,
-                initialDateTime: date,
-                onDateTimeChanged: (changed) {
-                  // print('[TUNG] ===> onDateTimeChanged');
-                  selectedDate = changed;
-                },
-              );
-            });
+          ),
+        );
       },
     );
   }
 }
 
 class KayleeDatePickerTextController {
-  DateTime value;
+  DateTimeRange value;
 
   KayleeDatePickerTextController({this.value});
 }
