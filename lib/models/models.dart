@@ -42,6 +42,7 @@ export 'src/response/notification/notification.dart';
 export 'src/response/order/list/orders.dart';
 export 'src/response/order/order.dart';
 export 'src/response/order/order_item/order_item.dart';
+export 'src/response/order_cancellation_reason/order_cancellation_reason.dart';
 export 'src/response/page_data/page_data.dart';
 export 'src/response/product/list/products.dart';
 export 'src/response/product/product.dart';
