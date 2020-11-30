@@ -68,39 +68,24 @@ class _MyOrderDetailScreenState extends KayleeState<MyOrderDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: KayleeAppBar.hyperTextAction(
+      appBar: KayleeAppBar(
         title: Strings.chiTietDH,
-        actionTitle: Strings.huyDon,
-        onActionClick: () {
-          // showKayleeAlertDialog(
-          //     context: context,
-          //     view: KayleeAlertDialogView(
-          //       content: Strings.banDaChacChanHuyDonHangNay,
-          //       actions: [
-          //         KayleeAlertDialogAction.dongY(
-          //           isDefaultAction: true,
-          //           onPressed: () {
-          //             popScreen();
-          //             _bloc.cancelOrder();
-          //           },
-          //         ),
-          //         KayleeAlertDialogAction.huy(
-          //           onPressed: popScreen,
-          //         ),
-          //       ],
-          //     ));
-
-          showKayleeDialog(
-            context: context,
-            child: OrderCancellationReasonDialog.newInstance(
-              onConfirm: (value) {
-                _bloc.cancelOrder(
-                  cancellationReason: value,
+        actions: [
+          if (_bloc.order.status == OrderStatus.waiting)
+            KayleeAppBarAction.hyperText(
+              title: Strings.huyDon,
+              onTap: () {
+                showKayleeDialog(
+                  context: context,
+                  child: OrderCancellationReasonDialog.newInstance(
+                    onConfirm: (value) {
+                      _bloc.cancelOrder(cancellationReason: value);
+                    },
+                  ),
                 );
               },
-            ),
-          );
-        },
+            )
+        ],
       ),
       body: BlocBuilder<MyOrderDetailBloc, SingleModel<Order>>(
         buildWhen: (previous, current) => current is OrderDetailModel,
@@ -199,11 +184,11 @@ class _MyOrderDetailScreenState extends KayleeState<MyOrderDetailScreen> {
               ),
               SliverList(
                   delegate: SliverChildBuilderDelegate((context, index) {
-                    final item = state.item.orderItems.elementAt(index);
-                    return OrderProdItem(
-                      orderItem: item,
-                    );
-                  }, childCount: state.item.orderItems?.length ?? 0)),
+                final item = state.item.orderItems.elementAt(index);
+                return OrderProdItem(
+                  orderItem: item,
+                );
+              }, childCount: state.item.orderItems?.length ?? 0)),
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.all(Dimens.px16),
