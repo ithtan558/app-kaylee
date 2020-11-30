@@ -22,6 +22,7 @@ export 'src/kaylee_cart_prod_item/kaylee_cart_prod_item.dart';
 export 'src/kaylee_cart_view.dart';
 export 'src/kaylee_date_filter.dart';
 export 'src/kaylee_date_picker.dart';
+export 'src/kaylee_date_range_picker_view.dart';
 export 'src/kaylee_dialog.dart';
 export 'src/kaylee_dismissible.dart';
 export 'src/kaylee_flat_button.dart';
