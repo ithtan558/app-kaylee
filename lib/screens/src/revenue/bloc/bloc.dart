@@ -11,12 +11,14 @@ class TotalRevenueBloc extends Cubit<SingleModel<Revenue>>
   }
 
   @override
-  void loadData({Brand brand, DateTime date}) {
-    super.loadData(brand: brand, date: date);
+  void loadData({Brand brand, DateTime startDate, DateTime endDate}) {
+    super.loadData(brand: brand, startDate: startDate, endDate: endDate);
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
       request: _reportService.getTotal(
-          startDate: dateInString, endDate: dateInString, brandId: _brand?.id),
+          startDate: startDateInString,
+          endDate: endDateInString,
+          brandId: _brand?.id),
       onSuccess: ({message, result}) {
         emit(SingleModel.copy(state
           ..loading = false
@@ -41,12 +43,14 @@ class EmployeeRevenueBloc extends Cubit<SingleModel<List<EmployeeRevenue>>>
   }
 
   @override
-  void loadData({Brand brand, DateTime date}) {
-    super.loadData(brand: brand, date: date);
+  void loadData({Brand brand, DateTime startDate, DateTime endDate}) {
+    super.loadData(brand: brand, startDate: startDate, endDate: endDate);
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
       request: _reportService.getTotalByEmployee(
-          startDate: dateInString, endDate: dateInString, brandId: brand?.id),
+          startDate: startDateInString,
+          endDate: endDateInString,
+          brandId: brand?.id),
       onSuccess: ({message, result}) {
         emit(SingleModel.copy(state
           ..loading = false
@@ -71,12 +75,14 @@ class ServiceRevenueBloc extends Cubit<SingleModel<List<ServiceRevenue>>>
   }
 
   @override
-  void loadData({Brand brand, DateTime date}) {
-    super.loadData(brand: brand, date: date);
+  void loadData({Brand brand, DateTime startDate, DateTime endDate}) {
+    super.loadData(brand: brand, startDate: startDate, endDate: endDate);
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
       request: _reportService.getTotalByService(
-          startDate: dateInString, endDate: dateInString, brandId: brand?.id),
+          startDate: startDateInString,
+          endDate: endDateInString,
+          brandId: brand?.id),
       onSuccess: ({message, result}) {
         emit(SingleModel.copy(state
           ..loading = false
@@ -97,13 +103,18 @@ class ServiceRevenueBloc extends Cubit<SingleModel<List<ServiceRevenue>>>
 mixin _ReportBlocHelper {
   ReportService _reportService;
   Brand _brand;
-  DateTime _date;
+  DateTime _startDate;
+  DateTime _endDate;
 
-  String get dateInString => _date?.toFormatString(pattern: dateFormat);
+  String get startDateInString =>
+      _startDate?.toFormatString(pattern: dateFormat);
+
+  String get endDateInString => _endDate?.toFormatString(pattern: dateFormat);
 
   @mustCallSuper
-  void loadData({Brand brand, DateTime date}) {
+  void loadData({Brand brand, DateTime startDate, DateTime endDate}) {
     if (brand.isNotNull) this._brand = brand;
-    if (date.isNotNull) this._date = date;
+    if (startDate.isNotNull) this._startDate = startDate;
+    if (endDate.isNotNull) this._endDate = endDate;
   }
 }
