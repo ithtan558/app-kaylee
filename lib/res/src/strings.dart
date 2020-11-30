@@ -301,6 +301,10 @@ class Strings {
   static const String lyDoKhac = 'Lý do khác';
   static const String maGioiThieu = 'Mã giới thiệu';
   static const String maGioiThieuHint = 'Nhập mã giới thiệu';
+  static const String chonNhanh = 'Chọn nhanh';
+  static const String tuanNay = 'Tuần này';
+  static const String tuanTruoc = 'Tuần trước';
+  static const String chonTheoNgay = 'Chọn theo ngày';
 
   Strings._();
 }
