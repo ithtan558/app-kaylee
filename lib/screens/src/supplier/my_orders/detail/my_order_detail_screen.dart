@@ -160,17 +160,26 @@ class _MyOrderDetailScreenState extends KayleeState<MyOrderDetailScreen> {
                       child: _buildInfoText(
                         icon: Images.ic_list,
                         title:
-                        '${Strings.tinhTrangDonHang}: ${orderStatus2Title(
-                            status: _bloc.order.status)}',
+                            '${Strings.tinhTrangDonHang}: ${orderStatus2Title(status: _bloc.order.status)}',
                       ),
                     ),
+                    if (_bloc.order.cancellationReason.isNotNull)
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: Dimens.px16)
+                            .copyWith(top: Dimens.px8),
+                        child: _buildInfoText(
+                          icon: Images.ic_list,
+                          title:
+                              '${Strings.lyDoHuyDon}: ${_bloc.order.cancellationReason.name}',
+                        ),
+                      ),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: Dimens.px16)
                           .copyWith(top: Dimens.px8),
                       child: _buildInfoText(
                         icon: Images.ic_store,
                         title:
-                        '${Strings.thuongHieu}: ${_bloc.order.supplierName}',
+                            '${Strings.thuongHieu}: ${_bloc.order.supplierName}',
                       ),
                     ),
                     Padding(
