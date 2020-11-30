@@ -7,12 +7,14 @@ import 'package:kaylee/utils/utils.dart';
 class CommProdOrdersBloc extends Cubit<LoadMoreModel<CommissionOrder>>
     implements LoadMoreInterface {
   final CommissionService commissionService;
-  final DateTime date;
+  final DateTime startDate;
+  final DateTime endDate;
   final Employee employee;
 
   CommProdOrdersBloc({
     this.commissionService,
-    this.date,
+    this.startDate,
+    this.endDate,
     this.employee,
   }) : super(LoadMoreModel());
 
@@ -21,8 +23,8 @@ class CommProdOrdersBloc extends Cubit<LoadMoreModel<CommissionOrder>>
     RequestHandler(
       request: commissionService?.getProductOfOrder(
         userId: employee.id,
-        startDate: date.toFormatString(pattern: dateFormat),
-        endDate: date.toFormatString(pattern: dateFormat),
+        startDate: startDate.toFormatString(pattern: dateFormat),
+        endDate: endDate.toFormatString(pattern: dateFormat),
         limit: state.limit,
         page: state.page,
       ),
