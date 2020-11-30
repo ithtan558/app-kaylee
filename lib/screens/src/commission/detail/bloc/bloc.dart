@@ -6,16 +6,21 @@ import 'package:kaylee/utils/utils.dart';
 class CommissionDetailScreenBloc extends Cubit<SingleModel> {
   final CommissionService commissionService;
   Employee employee;
-  DateTime date;
+  DateTime startDate;
+  DateTime endDate;
 
   CommissionDetailScreenBloc({
     this.commissionService,
-    this.date,
+    this.startDate,
+    this.endDate,
     this.employee,
-  }) : super(SingleModel());
+  }) : super(SingleModel()) {
+    endDate = startDate;
+  }
 
-  void loadWithDate({DateTime date}) {
-    this.date = date;
+  void loadWithDate({DateTime startDate, DateTime endDate}) {
+    this.startDate = startDate;
+    this.endDate = endDate;
     loadDetail();
   }
 
@@ -24,8 +29,8 @@ class CommissionDetailScreenBloc extends Cubit<SingleModel> {
     RequestHandler(
       request: commissionService.getDetail(
         userId: employee.id,
-        startDate: date.toFormatString(pattern: dateFormat),
-        endDate: date.toFormatString(pattern: dateFormat),
+        startDate: startDate.toFormatString(pattern: dateFormat),
+        endDate: endDate.toFormatString(pattern: dateFormat),
       ),
       onSuccess: ({message, result}) {
         emit(CommissionDetailModel.copy(
