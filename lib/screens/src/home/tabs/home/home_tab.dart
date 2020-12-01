@@ -124,7 +124,7 @@ class _HomeTabState extends KayleeState<HomeTab>
                               );
                             } else {
                               return SupplierItem(
-                                supplier: state.items.elementAt(index - 1),
+                                supplier: state.items.elementAt(index - 2),
                               );
                             }
                           },
