@@ -5,8 +5,12 @@ import 'package:kaylee/widgets/widgets.dart';
 class KayleeHeaderCard extends StatelessWidget {
   final Widget header;
   final Widget child;
+  final EdgeInsets headerPadding;
 
-  KayleeHeaderCard({this.header, this.child});
+  KayleeHeaderCard(
+      {this.header,
+      this.child,
+      this.headerPadding = const EdgeInsets.all(Dimens.px16)});
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +19,10 @@ class KayleeHeaderCard extends StatelessWidget {
       child: Material(
         clipBehavior: Clip.antiAlias,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
-              padding: EdgeInsets.all(Dimens.px16),
+              padding: headerPadding,
               color: ColorsRes.color2,
               child: header ?? SizedBox(),
             ),

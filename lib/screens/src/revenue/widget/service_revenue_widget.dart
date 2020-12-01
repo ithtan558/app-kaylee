@@ -32,22 +32,24 @@ class _ServiceRevenueWidgetState extends KayleeState<ServiceRevenueWidget>
   @override
   Widget build(BuildContext context) {
     return KayleeHeaderCard(
-        header: Row(
+        headerPadding: const EdgeInsets.symmetric(
+            horizontal: Dimens.px16, vertical: Dimens.px8),
+        header: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
-              child: KayleeText.normal16W500(
-                'Doanh thu theo dịch vụ',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
+            KayleeText.normal16W500(
+              Strings.doanThuTheoDichVu,
             ),
-            KayleeDatePickerText(
-              textSize: Dimens.px12,
-              onSelectRange: (value) {
-                _serviceRevenueBloc.loadData(
-                    startDate: value.start, endDate: value.end);
-              },
-              controller: datePickerController,
+            Padding(
+              padding: const EdgeInsets.only(top: Dimens.px4),
+              child: KayleeDatePickerText(
+                textSize: Dimens.px12,
+                onSelectRange: (value) {
+                  _serviceRevenueBloc.loadData(
+                      startDate: value.start, endDate: value.end);
+                },
+                controller: datePickerController,
+              ),
             ),
           ],
         ),
