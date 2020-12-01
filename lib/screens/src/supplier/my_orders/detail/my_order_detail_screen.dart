@@ -68,35 +68,24 @@ class _MyOrderDetailScreenState extends KayleeState<MyOrderDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: KayleeAppBar.hyperTextAction(
+      appBar: KayleeAppBar(
         title: Strings.chiTietDH,
-        actionTitle: Strings.huyDon,
-        onActionClick: () {
-          // showKayleeAlertDialog(
-          //     context: context,
-          //     view: KayleeAlertDialogView(
-          //       content: Strings.banDaChacChanHuyDonHangNay,
-          //       actions: [
-          //         KayleeAlertDialogAction.dongY(
-          //           isDefaultAction: true,
-          //           onPressed: () {
-          //             popScreen();
-          //             _bloc.cancelOrder();
-          //           },
-          //         ),
-          //         KayleeAlertDialogAction.huy(
-          //           onPressed: popScreen,
-          //         ),
-          //       ],
-          //     ));
-
-          showKayleeDialog(
-              context: context,
-              child: OrderCancellationReasonDialog(
-                onConfirm: (value) {},
-                onCancel: () {},
-              ));
-        },
+        actions: [
+          if (_bloc.order.status == OrderStatus.waiting)
+            KayleeAppBarAction.hyperText(
+              title: Strings.huyDon,
+              onTap: () {
+                showKayleeDialog(
+                  context: context,
+                  child: OrderCancellationReasonDialog.newInstance(
+                    onConfirm: (value) {
+                      _bloc.cancelOrder(cancellationReason: value);
+                    },
+                  ),
+                );
+              },
+            )
+        ],
       ),
       body: BlocBuilder<MyOrderDetailBloc, SingleModel<Order>>(
         buildWhen: (previous, current) => current is OrderDetailModel,
@@ -119,8 +108,8 @@ class _MyOrderDetailScreenState extends KayleeState<MyOrderDetailScreen> {
                     ),
                     Padding(
                       padding:
-                      const EdgeInsets.symmetric(horizontal: Dimens.px16)
-                          .copyWith(top: Dimens.px16),
+                          const EdgeInsets.symmetric(horizontal: Dimens.px16)
+                              .copyWith(top: Dimens.px16),
                       child: _buildInfoText(
                         icon: Images.ic_person,
                         title: _bloc.order?.informationReceiveName,
@@ -156,17 +145,26 @@ class _MyOrderDetailScreenState extends KayleeState<MyOrderDetailScreen> {
                       child: _buildInfoText(
                         icon: Images.ic_list,
                         title:
-                        '${Strings.tinhTrangDonHang}: ${orderStatus2Title(
-                            status: _bloc.order.status)}',
+                            '${Strings.tinhTrangDonHang}: ${orderStatus2Title(status: _bloc.order.status)}',
                       ),
                     ),
+                    if (_bloc.order.cancellationReason.isNotNull)
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: Dimens.px16)
+                            .copyWith(top: Dimens.px8),
+                        child: _buildInfoText(
+                          icon: Images.ic_list,
+                          title:
+                              '${Strings.lyDoHuyDon}: ${_bloc.order.cancellationReason.name}',
+                        ),
+                      ),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: Dimens.px16)
                           .copyWith(top: Dimens.px8),
                       child: _buildInfoText(
                         icon: Images.ic_store,
                         title:
-                        '${Strings.thuongHieu}: ${_bloc.order.supplierName}',
+                            '${Strings.thuongHieu}: ${_bloc.order.supplierName}',
                       ),
                     ),
                     Padding(
@@ -186,11 +184,11 @@ class _MyOrderDetailScreenState extends KayleeState<MyOrderDetailScreen> {
               ),
               SliverList(
                   delegate: SliverChildBuilderDelegate((context, index) {
-                    final item = state.item.orderItems.elementAt(index);
-                    return OrderProdItem(
-                      orderItem: item,
-                    );
-                  }, childCount: state.item.orderItems?.length ?? 0)),
+                final item = state.item.orderItems.elementAt(index);
+                return OrderProdItem(
+                  orderItem: item,
+                );
+              }, childCount: state.item.orderItems?.length ?? 0)),
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.all(Dimens.px16),

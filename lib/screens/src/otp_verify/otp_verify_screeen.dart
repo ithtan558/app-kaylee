@@ -3,6 +3,7 @@ import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/models/models.dart';
+import 'package:kaylee/repositories/repositories.dart';
 import 'package:kaylee/res/src/dimens.dart';
 import 'package:kaylee/res/src/strings.dart';
 import 'package:kaylee/screens/screens.dart';
@@ -11,54 +12,51 @@ import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/src/otp_input_field.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
-import '../blocs/otp_verify_bloc.dart';
+import 'bloc/otp_verify_bloc.dart';
 
-class OtpConfirmScreenData {
-  VerifyPhoneResult result;
-  String phone;
+class VerifyOtpScreenData {
+  final int userId;
+  final String phone;
+  final VerifyOtpScreenDataType type;
 
-  OtpConfirmScreenData({this.result, this.phone});
+  VerifyOtpScreenData({this.userId, this.phone, this.type});
 }
 
-class ResetPassVerifyOtpScreen extends StatefulWidget {
+enum VerifyOtpScreenDataType {
+  forgotPassword,
+  register,
+}
+
+class OtpVerifyScreen extends StatefulWidget {
   static Widget newInstance() => MultiBlocProvider(providers: [
-        BlocProvider<OtpVerifyBloc>(
-          create: (context) =>
-              OtpVerifyBloc(userService: context.network.provideUserService()),
+        BlocProvider(
+          create: (context) {
+            VerifyOtpRepository repository =
+                context.getArguments<VerifyOtpScreenData>().type ==
+                        VerifyOtpScreenDataType.forgotPassword
+                    ? context.repos.verifyOtpForForgotPassword
+                    : context.repos.verifyOtpForRegister;
+            return OtpVerifyBloc(verifyOtpRepository: repository);
+          },
         ),
-        BlocProvider<SendOtpBloc>(
+        BlocProvider(
           create: (context) =>
               SendOtpBloc(userService: context.network.provideUserService()),
         ),
-      ], child: ResetPassVerifyOtpScreen._());
+      ], child: OtpVerifyScreen._());
 
-  ResetPassVerifyOtpScreen._();
+  OtpVerifyScreen._();
 
   @override
-  _ResetPassVerifyOtpScreenState createState() =>
-      new _ResetPassVerifyOtpScreenState();
+  _OtpVerifyScreenState createState() => new _OtpVerifyScreenState();
 }
 
-class _ResetPassVerifyOtpScreenState
-    extends KayleeState<ResetPassVerifyOtpScreen> {
-  OtpVerifyBloc otpVerifyBloc;
-  SendOtpBloc sendOtpBloc;
-  OtpConfirmScreenData data;
+class _OtpVerifyScreenState extends KayleeState<OtpVerifyScreen> {
+  OtpVerifyBloc get otpVerifyBloc => context.bloc<OtpVerifyBloc>();
 
-  @override
-  void initState() {
-    super.initState();
-    otpVerifyBloc = context.bloc<OtpVerifyBloc>();
-    sendOtpBloc = context.bloc<SendOtpBloc>();
-    data = context.bundle.args as OtpConfirmScreenData;
-  }
+  SendOtpBloc get sendOtpBloc => context.bloc<SendOtpBloc>();
 
-  @override
-  void dispose() {
-    otpVerifyBloc.close();
-    sendOtpBloc.close();
-    super.dispose();
-  }
+  VerifyOtpScreenData get data => context.getArguments<VerifyOtpScreenData>();
 
   @override
   Widget build(BuildContext context) {
@@ -84,9 +82,16 @@ class _ResetPassVerifyOtpScreenState
                   message: state.message,
                   onPressed: popScreen,
                   onDismiss: () {
-                    pushReplacementScreen(PageIntent(
-                        screen: ResetPassNewPassScreen,
-                        bundle: Bundle(NewPassScreenData(result: state.item))));
+                    if (data.type == VerifyOtpScreenDataType.forgotPassword) {
+                      return pushReplacementScreen(PageIntent(
+                          screen: ResetPassNewPassScreen,
+                          bundle:
+                              Bundle(NewPassScreenData(result: state.item))));
+                    }
+
+                    if (data.type == VerifyOtpScreenDataType.register) {
+                      return context.popUntilScreenOrFirst(PageIntent());
+                    }
                   },
                 );
               }
@@ -107,7 +112,7 @@ class _ResetPassVerifyOtpScreenState
                 showKayleeAlertMessageYesDialog(
                   context: context,
                   message: state.message,
-                  onDismiss: popScreen,
+                  onPressed: popScreen,
                 );
               }
             }
@@ -143,7 +148,7 @@ class _ResetPassVerifyOtpScreenState
                         return OtpInputField(
                           onComplete: (code) {
                             otpVerifyBloc.verifyOtp(
-                                userId: data?.result?.userId, otp: code);
+                                userId: data.userId, otp: code);
                           },
                           error: state.error?.code.isNotNull
                               ? state.error?.message

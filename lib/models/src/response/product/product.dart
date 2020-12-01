@@ -13,17 +13,19 @@ class Product {
 
   Map<String, dynamic> toJson() => _$ProductToJson(this);
 
-  Product(
-      {this.id,
-      this.code,
-      this.name,
-      this.image,
-      this.imageFile,
-      this.price,
-      this.description,
-      this.brands,
-      this.category,
-      this.quantity});
+  Product({
+    this.id,
+    this.code,
+    this.name,
+    this.image,
+    this.imageFile,
+    this.price,
+    this.description,
+    this.brands,
+    this.category,
+    this.quantity,
+    this.images,
+  });
 
   int id;
   String code;
@@ -34,6 +36,7 @@ class Product {
   int price;
   String description;
   List<Brand> brands;
+  List<ProductImage> images;
 
   String get selectedBrandIds =>
       brands?.where((e) => e.selected)?.map((e) => e.id)?.join(',');

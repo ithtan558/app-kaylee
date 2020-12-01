@@ -5,10 +5,11 @@ import 'package:kaylee/widgets/widgets.dart';
 
 class LabelDividerView extends StatelessWidget {
   final String title;
+  final Widget child;
   final Widget ending;
   final Color bgColor;
 
-  LabelDividerView({this.title, this.ending, this.bgColor});
+  LabelDividerView({this.title, this.ending, this.bgColor, this.child});
 
   factory LabelDividerView.normal({String title, Color bgColor}) =>
       LabelDividerView(
@@ -39,6 +40,28 @@ class LabelDividerView extends StatelessWidget {
     );
   }
 
+  factory LabelDividerView.monthYearRange({DateTimeRange range}) {
+    final isSameMonth = range.start.month == range.end.month;
+    final startDateString = 'Tháng ' +
+        DateFormat(
+                '${DateFormat.NUM_MONTH * 2}${isSameMonth ? '/${DateFormat.YEAR * 4}' : ''}')
+            .format(range.start);
+    String endDateString = isSameMonth
+        ? ''
+        : ' ~> ' +
+            DateFormat('${DateFormat.NUM_MONTH * 2}/${DateFormat.YEAR * 4}')
+                .format(range.end);
+
+    return LabelDividerView(
+      child: KayleeText.normal16W500(
+        (startDateString ?? '') + (endDateString ?? ''),
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+      ),
+      bgColor: ColorsRes.labelDivider1,
+    );
+  }
+
   factory LabelDividerView.hyperLink(
           {String title, String linkText, Function onPress}) =>
       LabelDividerView(
@@ -64,10 +87,12 @@ class LabelDividerView extends StatelessWidget {
               padding: EdgeInsets.only(
                   left: Dimens.px16,
                   right: ending.isNotNull ? Dimens.px8 : Dimens.px16),
-              child: KayleeText(title ?? '',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyles.normal16W500),
+              child: child ??
+                  KayleeText.normal16W500(
+                    title ?? '',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
             ),
           ),
           if (ending.isNotNull) ending

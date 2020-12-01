@@ -13,6 +13,7 @@ class RegisterBody {
     this.phone,
     this.password,
     this.email,
+    this.code,
   });
 
   @JsonKey(includeIfNull: false)
@@ -25,4 +26,6 @@ class RegisterBody {
   String password;
   @JsonKey(includeIfNull: false)
   String email;
+  @JsonKey(includeIfNull: false)
+  String code;
 }

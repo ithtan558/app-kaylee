@@ -98,6 +98,14 @@ class KayleeJsonConverter extends anthPackage.JsonConverterFactory {
       return FcmData.fromJson(json) as T;
     } else if (T == Campaign) {
       return Campaign.fromJson(json) as T;
+    } else if (T == RegisterResult) {
+      return RegisterResult.fromJson(json) as T;
+    } else if (T == Banner) {
+      return Banner.fromJson(json) as T;
+    } else if (T == ProductImage) {
+      return ProductImage.fromJson(json) as T;
+    } else if (T == OrderCancellationReason) {
+      return OrderCancellationReason.fromJson(json) as T;
     }
     return json as T;
   }
@@ -197,6 +205,14 @@ class KayleeJsonConverter extends anthPackage.JsonConverterFactory {
     } else if (json is FcmData) {
       return json.toJson();
     } else if (json is Campaign) {
+      return json.toJson();
+    } else if (json is RegisterResult) {
+      return json.toJson();
+    } else if (json is Banner) {
+      return json.toJson();
+    } else if (json is ProductImage) {
+      return json.toJson();
+    } else if (json is OrderCancellationReason) {
       return json.toJson();
     } else
       return json;

@@ -10,9 +10,20 @@ class UpdateOrderStatusBody {
   UpdateOrderStatusBody({
     this.status,
     this.id,
+    this.reason,
   });
 
   @JsonKey(toJson: parseToIntFromOrderStatus, name: 'order_status_id')
   OrderStatus status;
   int id;
+  @JsonKey(
+    name: 'order_reason_cancel_id',
+    toJson: _orderCancellationReasonToJson,
+    includeIfNull: false,
+  )
+  OrderCancellationReason reason;
+}
+
+int _orderCancellationReasonToJson(OrderCancellationReason reason) {
+  return reason?.id;
 }

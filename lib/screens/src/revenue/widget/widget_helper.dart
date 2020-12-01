@@ -6,7 +6,9 @@ import 'package:kaylee/widgets/widgets.dart';
 
 mixin WidgetHelper<T extends StatefulWidget> on KayleeState<T> {
   KayleeDatePickerTextController datePickerController =
-      KayleeDatePickerTextController(value: DateTime.now());
+      KayleeDatePickerTextController(
+    value: DateTimeRange(start: DateTime.now(), end: DateTime.now()),
+  );
 
   Widget buildLoading() {
     return Container(

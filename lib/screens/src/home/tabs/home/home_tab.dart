@@ -11,6 +11,7 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/home/tabs/home/bloc/scroll_offset_bloc.dart';
 import 'package:kaylee/screens/src/home/tabs/home/bloc/supplier_list_bloc.dart';
+import 'package:kaylee/screens/src/home/tabs/home/widgets/home_banner/home_banner.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/home_menu.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/notification_button/notification_button.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/supplier_item.dart';
@@ -40,9 +41,12 @@ class HomeTab extends StatefulWidget {
 class _HomeTabState extends KayleeState<HomeTab>
     with AutomaticKeepAliveClientMixin {
   final scrollController = ScrollController();
+
   ScrollOffsetBloc get scrollOffsetBloc => context.bloc<ScrollOffsetBloc>();
 
   SupplierListBloc get supplierListBloc => context.bloc<SupplierListBloc>();
+
+  ReloadBloc get _reloadBloc => context.bloc<ReloadBloc>();
 
   @override
   void initState() {
@@ -53,6 +57,14 @@ class _HomeTabState extends KayleeState<HomeTab>
     supplierListBloc.loadInitData();
   }
 
+  final listTitle = Padding(
+    padding: const EdgeInsets.symmetric(
+        vertical: Dimens.px16, horizontal: Dimens.px8),
+    child: Center(
+      child: KayleeText.normalWhite18W700(Strings.dsNhaCc),
+    ),
+  );
+
   @override
   void dispose() {
     scrollController.dispose();
@@ -62,19 +74,15 @@ class _HomeTabState extends KayleeState<HomeTab>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    final listTitle = Padding(
-      padding: const EdgeInsets.only(top: Dimens.px24, bottom: Dimens.px16),
-      child: Center(
-        child: KayleeText.normalWhite18W700(Strings.dsNhaCc),
-      ),
-    );
+
     return AnnotatedRegion(
       value: SystemUiOverlayStyle.light,
       child: Scaffold(
         body: KayleeRefreshIndicator(
           controller: supplierListBloc,
           onRefresh: () async {
-            context.bloc<ReloadBloc>().reload(widget: NotificationButton);
+            _reloadBloc.reload(widget: NotificationButton);
+            _reloadBloc.reload(widget: HomeBanner);
             return;
           },
           child: Container(
@@ -106,6 +114,8 @@ class _HomeTabState extends KayleeState<HomeTab>
                           padding: const EdgeInsets.only(bottom: Dimens.px16),
                           itemBuilder: (c, index) {
                             if (index == 0) {
+                              return HomeBanner.newInstance();
+                            } else if (index == 1) {
                               return listTitle;
                             } else if (expectItemCount != itemCount &&
                                 index > itemCount) {
@@ -118,7 +128,7 @@ class _HomeTabState extends KayleeState<HomeTab>
                               );
                             }
                           },
-                          itemCount: 1 + expectItemCount,
+                          itemCount: 2 + expectItemCount,
                           separatorBuilder: (BuildContext context, int index) {
                             return Container(
                               height: index >= 1 ? Dimens.px16 : 0,

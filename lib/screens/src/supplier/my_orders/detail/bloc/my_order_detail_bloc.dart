@@ -26,7 +26,7 @@ class MyOrderDetailBloc extends Cubit<SingleModel<Order>> {
     );
   }
 
-  void cancelOrder() {
+  void cancelOrder({OrderCancellationReason cancellationReason}) {
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
       request: orderService.updateOrderStatus(
@@ -34,6 +34,7 @@ class MyOrderDetailBloc extends Cubit<SingleModel<Order>> {
           body: UpdateOrderStatusBody(
             id: order.id,
             status: OrderStatus.cancel,
+            reason: cancellationReason,
           )),
       onSuccess: ({message, result}) {
         emit(CancelOrderModel.copy(state

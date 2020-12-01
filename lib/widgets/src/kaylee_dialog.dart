@@ -589,3 +589,25 @@ class _KayleeAmountChangingViewState
     );
   }
 }
+
+Future<dynamic> showKayleeDatePickerDialog(
+    {@required BuildContext context,
+    DateTime initialDateTime,
+    VoidCallback onDone,
+    VoidCallback onDismiss,
+    ValueChanged<DateTime> onDateTimeChanged,
+    DateTime maximumDate}) {
+  return showPickerPopup(
+    context: context,
+    onDone: onDone,
+    onDismiss: onDismiss,
+    builder: (context) {
+      return CupertinoDatePicker(
+        maximumDate: maximumDate,
+        mode: CupertinoDatePickerMode.date,
+        initialDateTime: initialDateTime,
+        onDateTimeChanged: onDateTimeChanged,
+      );
+    },
+  );
+}

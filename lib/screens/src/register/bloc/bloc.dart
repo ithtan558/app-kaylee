@@ -15,6 +15,7 @@ class RegisterScreenBloc extends Cubit<SingleModel<RegisterBody>> {
       String phone,
       String email,
       String password,
+      String code,
       bool isAcceptPolicy = false}) {
     if (isAcceptPolicy) {
       emit(SingleModel.copy(state..loading = true));
@@ -25,11 +26,14 @@ class RegisterScreenBloc extends Cubit<SingleModel<RegisterBody>> {
           phone: phone,
           email: email,
           password: password,
+          code: code,
         )),
         onSuccess: ({message, result}) {
-          emit(RegisterSuccessModel.copy(state
-            ..loading = false
-            ..message = message));
+          emit(RegisterSuccessModel.copy(
+              state
+                ..loading = false
+                ..message = message,
+              result: result));
         },
         onFailed: (code, {error}) {
           switch (error.code) {
@@ -75,7 +79,9 @@ class RegisterScreenBloc extends Cubit<SingleModel<RegisterBody>> {
 }
 
 class RegisterSuccessModel extends SingleModel<RegisterBody> {
-  RegisterSuccessModel.copy(SingleModel old) {
+  final RegisterResult result;
+
+  RegisterSuccessModel.copy(SingleModel old, {this.result}) {
     this
       ..loading = old?.loading
       ..item = old?.item

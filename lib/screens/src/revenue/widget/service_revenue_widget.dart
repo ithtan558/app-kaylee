@@ -24,7 +24,8 @@ class _ServiceRevenueWidgetState extends KayleeState<ServiceRevenueWidget>
   void initState() {
     super.initState();
     _serviceRevenueBloc.loadData(
-      date: datePickerController.value,
+      startDate: datePickerController.value.start,
+      endDate: datePickerController.value.end,
     );
   }
 
@@ -41,8 +42,10 @@ class _ServiceRevenueWidgetState extends KayleeState<ServiceRevenueWidget>
               ),
             ),
             KayleeDatePickerText(
-              onSelect: (changed) {
-                _serviceRevenueBloc.loadData(date: changed);
+              textSize: Dimens.px12,
+              onSelectRange: (value) {
+                _serviceRevenueBloc.loadData(
+                    startDate: value.start, endDate: value.end);
               },
               controller: datePickerController,
             ),

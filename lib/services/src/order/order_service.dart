@@ -50,4 +50,9 @@ abstract class OrderService {
     @Query('limit') int limit,
     @Query('order_status_id') int orderStatusId = 4,
   });
+
+  @GET('order/reason-cancel')
+  Future<ResponseModel<OrderCancellationReason>> getCancellationReason({
+    @Query('type') int type = 1,
+  });
 }

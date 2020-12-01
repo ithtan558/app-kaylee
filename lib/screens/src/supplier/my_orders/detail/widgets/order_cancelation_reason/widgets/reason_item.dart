@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
-import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class ReasonItem extends StatelessWidget {
-  final bool selected;
   final VoidCallback onSelect;
-  final CancellationReason reason;
+  final OrderCancellationReason reason;
 
-  ReasonItem({this.selected = false, this.onSelect, this.reason});
+  ReasonItem({this.onSelect, this.reason});
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +23,10 @@ class ReasonItem extends StatelessWidget {
             children: [
               Expanded(
                 child: KayleeText.normal16W400(
-                  reason.text,
+                  reason.name,
                 ),
               ),
-              selected ? RadioActiveIcon() : RadioInactiveIcon(),
+              reason.selected ? RadioActiveIcon() : RadioInactiveIcon(),
             ],
           ),
         ),

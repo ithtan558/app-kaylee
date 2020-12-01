@@ -16,7 +16,7 @@ class _UserService implements UserService {
   String baseUrl;
 
   @override
-  Future<ResponseModel<dynamic>> register(body) async {
+  Future<ResponseModel<RegisterResult>> register(body) async {
     ArgumentError.checkNotNull(body, 'body');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -31,7 +31,28 @@ class _UserService implements UserService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    final value = ResponseModel<RegisterResult>.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<ResponseModel<VerifyOtpResult>> verifyPhoneForRegister(body) async {
+    ArgumentError.checkNotNull(body, 'body');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(body?.toJson() ?? <String, dynamic>{});
+    _data.removeWhere((k, v) => v == null);
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'register/verify-otp',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = ResponseModel<VerifyOtpResult>.fromJson(_result.data);
     return value;
   }
 
@@ -77,7 +98,7 @@ class _UserService implements UserService {
   }
 
   @override
-  Future<ResponseModel<VerifyOtpResult>> verifyOtp(body) async {
+  Future<ResponseModel<VerifyOtpResult>> verifyOtpForPass(body) async {
     ArgumentError.checkNotNull(body, 'body');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};

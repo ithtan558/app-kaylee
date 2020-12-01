@@ -299,6 +299,13 @@ class Strings {
   static const String datLaiDonKhac = 'Đặt lại đơn hàng khác';
   static const String thayDoiThongTinGiaoHang = 'Thay đổi thông tin giao hàng';
   static const String lyDoKhac = 'Lý do khác';
+  static const String maGioiThieu = 'Mã giới thiệu';
+  static const String maGioiThieuHint = 'Nhập mã giới thiệu';
+  static const String chonNhanh = 'Chọn nhanh';
+  static const String tuanNay = 'Tuần này';
+  static const String tuanTruoc = 'Tuần trước';
+  static const String chonTheoNgay = 'Chọn theo ngày';
+  static const String doanhThuMoiNhanVien = 'Doanh thu mỗi nhân viên';
 
   Strings._();
 }

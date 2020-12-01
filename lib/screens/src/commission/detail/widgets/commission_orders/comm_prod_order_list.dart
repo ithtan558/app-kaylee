@@ -13,13 +13,14 @@ class CommProdOrderList extends StatefulWidget {
   static Widget newInstance({
     ScrollController scrollController,
     Employee employee,
-    DateTime date,
+    DateTimeRange range,
   }) =>
       BlocProvider(
           create: (context) => CommProdOrdersBloc(
                 commissionService: context.network.provideCommissionService(),
                 employee: employee,
-                date: date,
+                startDate: range.start,
+                endDate: range.end,
               ),
           child: CommProdOrderList._(
             scrollController: scrollController,
@@ -54,8 +55,11 @@ class _CommProdOrderListState extends KayleeState<CommProdOrderList> {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: Dimens.px16),
-          child: LabelDividerView.monthYear(
-            time: _bloc.date,
+          child: LabelDividerView.monthYearRange(
+            range: DateTimeRange(
+              start: _bloc.startDate,
+              end: _bloc.endDate,
+            ),
           ),
         ),
         Expanded(

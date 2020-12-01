@@ -1,19 +1,17 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:kaylee/models/models.dart';
-import 'package:kaylee/services/services.dart';
+import 'package:kaylee/repositories/repositories.dart';
 
 class OtpVerifyBloc extends Cubit<SingleModel<VerifyOtpResult>> {
-  UserService userService;
+  VerifyOtpRepository verifyOtpRepository;
 
-  OtpVerifyBloc({this.userService}) : super(SingleModel());
+  OtpVerifyBloc({this.verifyOtpRepository}) : super(SingleModel());
 
   void verifyOtp({int userId, String otp}) {
     emit(SingleModel.copy(state..loading = true));
-    RequestHandler(
-      request: userService?.verifyOtp(VerifyOtpBody(
-        userId: userId,
-        otp: otp,
-      )),
+    verifyOtpRepository.verifyOtp(
+      userId: userId,
+      otp: otp,
       onSuccess: ({message, result}) {
         emit(SingleModel.copy(state
           ..loading = false

@@ -221,9 +221,7 @@ class _ServService implements ServService {
       _data.files.add(MapEntry(
           'image',
           MultipartFile.fromFileSync(image.path,
-              filename: image.path
-                  .split(Platform.pathSeparator)
-                  .last)));
+              filename: image.path.split(Platform.pathSeparator).last)));
     }
     if (categoryId != null) {
       _data.fields.add(MapEntry('category_id', categoryId.toString()));
@@ -244,16 +242,17 @@ class _ServService implements ServService {
   }
 
   @override
-  Future<ResponseModel<dynamic>> updateService({name,
-    description,
-    brandIds,
-    time,
-    price,
-    image,
-    categoryId,
-    code,
-    id,
-    serviceId}) async {
+  Future<ResponseModel<dynamic>> updateService(
+      {name,
+      description,
+      brandIds,
+      time,
+      price,
+      image,
+      categoryId,
+      code,
+      id,
+      serviceId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
@@ -277,9 +276,7 @@ class _ServService implements ServService {
       _data.files.add(MapEntry(
           'image',
           MultipartFile.fromFileSync(image.path,
-              filename: image.path
-                  .split(Platform.pathSeparator)
-                  .last)));
+              filename: image.path.split(Platform.pathSeparator).last)));
     }
     if (categoryId != null) {
       _data.fields.add(MapEntry('category_id', categoryId.toString()));

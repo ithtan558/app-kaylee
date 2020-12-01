@@ -12,7 +12,11 @@ abstract class UserService {
   factory UserService(Dio dio) = _UserService;
 
   @POST('register')
-  Future<ResponseModel> register(@Body() RegisterBody body);
+  Future<ResponseModel<RegisterResult>> register(@Body() RegisterBody body);
+
+  @POST('register/verify-otp')
+  Future<ResponseModel<VerifyOtpResult>> verifyPhoneForRegister(
+      @Body() VerifyOtpBody body);
 
   @POST('login')
   Future<ResponseModel<LoginResult>> login(@Body() LoginBody body);
@@ -22,7 +26,8 @@ abstract class UserService {
       @Body() VerifyPhoneBody body);
 
   @POST('forgot/verify-otp')
-  Future<ResponseModel<VerifyOtpResult>> verifyOtp(@Body() VerifyOtpBody body);
+  Future<ResponseModel<VerifyOtpResult>> verifyOtpForPass(
+      @Body() VerifyOtpBody body);
 
   @POST('forgot/update-password')
   Future<ResponseModel> updatePass({@Body() UpdatePassBody body});

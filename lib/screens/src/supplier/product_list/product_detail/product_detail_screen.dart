@@ -11,6 +11,8 @@ import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/supplier/product_list/product_detail/bloc/bloc.dart';
+import 'package:kaylee/screens/src/supplier/product_list/product_detail/widgets/product_supplier_image.dart';
+import 'package:kaylee/screens/src/supplier/product_list/product_detail/widgets/product_supplier_video.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
@@ -47,6 +49,7 @@ class _ProductDetailScreenState extends KayleeState<ProductDetailScreen>
     implements ProductDetailAction {
   SupplierProdDetailBloc bloc;
   StreamSubscription sub;
+  final _indicatorController = IndicatorController();
 
   ProductDetailScreenData get data =>
       context.getArguments<ProductDetailScreenData>();
@@ -54,7 +57,8 @@ class _ProductDetailScreenState extends KayleeState<ProductDetailScreen>
   @override
   void initState() {
     super.initState();
-    bloc = context.bloc<SupplierProdDetailBloc>()..action = this;
+    bloc = context.bloc<SupplierProdDetailBloc>()
+      ..action = this;
     sub = bloc.listen((state) {
       if (state.loading) {
         showLoading();
@@ -85,15 +89,31 @@ class _ProductDetailScreenState extends KayleeState<ProductDetailScreen>
         builder: (context, state) {
           if (state.item.isNull) return Container();
           final product = state.item;
+          _indicatorController.length = state.item.images?.length ?? 0;
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              AspectRatio(
-                aspectRatio: 1,
-                child: CachedNetworkImage(
-                  imageUrl: product.image ?? '',
-                  fit: BoxFit.cover,
-                  height: 512,
+              Container(
+                height: context.screenSize.width,
+                width: context.screenSize.width,
+                child: PageView(
+                  onPageChanged: (value) {
+                    _indicatorController.jumpTo(index: value);
+                  },
+                  children: state.item.images.map((image) {
+                    if (image.type == ProductImageType.video) {
+                      return ProductSupplierVideo(image);
+                    }
+                    return ProductSupplierImage(image);
+                  }).toList(),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: Dimens.px8),
+                child: Indicator(
+                  controller: _indicatorController,
+                  activeColor: ColorsRes.hyper,
+                  inactiveColor: ColorsRes.textFieldBorder,
                 ),
               ),
               Padding(

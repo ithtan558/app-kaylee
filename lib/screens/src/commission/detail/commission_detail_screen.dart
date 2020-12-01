@@ -26,7 +26,7 @@ class CommissionDetailScreen extends StatefulWidget {
             commissionService: context.network.provideCommissionService(),
             employee:
                 context.getArguments<CommissionDetailScreenData>().employee,
-            date: context.getArguments<CommissionDetailScreenData>().date),
+            startDate: context.getArguments<CommissionDetailScreenData>().date),
         child: CommissionDetailScreen._(),
       );
 
@@ -45,7 +45,7 @@ class _CommissionDetailScreenState extends KayleeState<CommissionDetailScreen> {
   void initState() {
     super.initState();
     _bloc = context.bloc<CommissionDetailScreenBloc>();
-    dateController.value = _bloc.date;
+    // dateController.value = _bloc.date;
     _sub = _bloc.listen((state) {
       if (state.loading) {
         showLoading();
@@ -116,8 +116,9 @@ class _CommissionDetailScreenState extends KayleeState<CommissionDetailScreen> {
               Padding(
                 padding: const EdgeInsets.only(bottom: Dimens.px24),
                 child: KayleeDatePickerText(
-                  onSelect: (value) {
-                    _bloc.loadWithDate(date: value);
+                  onSelectRange: (value) {
+                    _bloc.loadWithDate(
+                        startDate: value.start, endDate: value.end);
                   },
                   controller: dateController,
                 ),
@@ -137,7 +138,8 @@ class _CommissionDetailScreenState extends KayleeState<CommissionDetailScreen> {
                     builder: (context, scrollController) {
                       return CommProdOrderList.newInstance(
                         scrollController: scrollController,
-                        date: _bloc.date,
+                        range: DateTimeRange(
+                            start: _bloc.startDate, end: _bloc.endDate),
                         employee: _bloc.employee,
                       );
                     },
@@ -189,7 +191,8 @@ class _CommissionDetailScreenState extends KayleeState<CommissionDetailScreen> {
                     builder: (context, scrollController) {
                       return CommSerOrderList.newInstance(
                         scrollController: scrollController,
-                        date: _bloc.date,
+                        range: DateTimeRange(
+                            start: _bloc.startDate, end: _bloc.endDate),
                         employee: _bloc.employee,
                       );
                     },

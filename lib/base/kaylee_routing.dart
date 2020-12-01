@@ -12,8 +12,8 @@ mixin KayleeRouting on Routing {
         return RegisterScreen.newInstance();
       case ResetPassVerifyPhoneScreen:
         return ResetPassVerifyPhoneScreen.newInstance();
-      case ResetPassVerifyOtpScreen:
-        return ResetPassVerifyOtpScreen.newInstance();
+      case OtpVerifyScreen:
+        return OtpVerifyScreen.newInstance();
       case NotificationScreen:
         return NotificationScreen.newInstance();
       case SplashScreen:

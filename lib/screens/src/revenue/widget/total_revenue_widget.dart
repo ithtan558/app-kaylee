@@ -22,7 +22,8 @@ class _TotalRevenueWidgetState extends KayleeState<TotalRevenueWidget>
   void initState() {
     super.initState();
     _totalRevenueBloc.loadData(
-      date: datePickerController.value,
+      startDate: datePickerController.value.start,
+      endDate: datePickerController.value.end,
     );
   }
 
@@ -39,8 +40,10 @@ class _TotalRevenueWidgetState extends KayleeState<TotalRevenueWidget>
               overflow: TextOverflow.ellipsis,
             )),
             KayleeDatePickerText(
-              onSelect: (changed) {
-                _totalRevenueBloc.loadData(date: changed);
+              textSize: Dimens.px12,
+              onSelectRange: (value) {
+                _totalRevenueBloc.loadData(
+                    startDate: value.start, endDate: value.end);
               },
               controller: datePickerController,
             ),
@@ -73,13 +76,13 @@ class _TotalRevenueWidgetState extends KayleeState<TotalRevenueWidget>
                       right: Dimens.px16,
                       bottom: Dimens.px16),
                   child: KayleePriceText.noUnitNormal26W700(
-                    state.item.totalValue,
+                    state.item?.totalValue,
                   ),
                 ),
                 Row(
                   children: [
                     buildRevenueText(
-                        title: Strings.tienMat, price: state.item.totalValue),
+                        title: Strings.tienMat, price: state.item?.totalValue),
                     buildRevenueText(title: Strings.taiKhoan, price: 0),
                   ],
                 )
