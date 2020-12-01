@@ -20,6 +20,7 @@ class Brand {
       this.startTime,
       this.endTime,
       this.image,
+      this.logo,
       this.city,
       this.district,
       this.wards,
@@ -33,6 +34,7 @@ class Brand {
   String startTime;
   String endTime;
   String image;
+  String logo;
   @JsonKey(ignore: true)
   File imageFile;
   City city;

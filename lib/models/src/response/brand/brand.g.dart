@@ -15,6 +15,7 @@ Brand _$BrandFromJson(Map<String, dynamic> json) {
     startTime: json['start_time'] as String,
     endTime: json['end_time'] as String,
     image: json['image'] as String,
+    logo: json['logo'] as String,
     city: json['city'] == null
         ? null
         : City.fromJson(json['city'] as Map<String, dynamic>),
@@ -27,7 +28,8 @@ Brand _$BrandFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$BrandToJson(Brand instance) => <String, dynamic>{
+Map<String, dynamic> _$BrandToJson(Brand instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'phone': instance.phone,
@@ -35,6 +37,7 @@ Map<String, dynamic> _$BrandToJson(Brand instance) => <String, dynamic>{
       'start_time': instance.startTime,
       'end_time': instance.endTime,
       'image': instance.image,
+      'logo': instance.logo,
       'city': instance.city,
       'district': instance.district,
       'wards': instance.wards,
