@@ -1,4 +1,6 @@
 PODS:
+  - charset_converter (0.0.1):
+    - Flutter
   - Firebase/CoreOnly (6.26.0):
     - FirebaseCore (= 6.7.2)
   - Firebase/Messaging (6.26.0):
@@ -96,8 +98,11 @@ PODS:
     - Flutter
   - webview_flutter (0.0.1):
     - Flutter
+  - wifi (0.0.1):
+    - Flutter
 
 DEPENDENCIES:
+  - charset_converter (from `.symlinks/plugins/charset_converter/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
   - Flutter (from `Flutter`)
@@ -112,6 +117,7 @@ DEPENDENCIES:
   - video_player (from `.symlinks/plugins/video_player/ios`)
   - wakelock (from `.symlinks/plugins/wakelock/ios`)
   - webview_flutter (from `.symlinks/plugins/webview_flutter/ios`)
+  - wifi (from `.symlinks/plugins/wifi/ios`)
 
 SPEC REPOS:
   trunk:
@@ -131,6 +137,8 @@ SPEC REPOS:
     - Protobuf
 
 EXTERNAL SOURCES:
+  charset_converter:
+    :path: ".symlinks/plugins/charset_converter/ios"
   firebase_core:
     :path: ".symlinks/plugins/firebase_core/ios"
   firebase_messaging:
@@ -159,8 +167,11 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/wakelock/ios"
   webview_flutter:
     :path: ".symlinks/plugins/webview_flutter/ios"
+  wifi:
+    :path: ".symlinks/plugins/wifi/ios"
 
 SPEC CHECKSUMS:
+  charset_converter: 215c7b04932ec2b9ba43be96a9bc34afed3e5322
   Firebase: 7cf5f9c67f03cb3b606d1d6535286e1080e57eb6
   firebase_core: 00e54a4744164a6b5a250b96dd1ad5afaba7a342
   firebase_messaging: 666d9994651b1ecf8c582b52dd913f3fa58c17ef
@@ -187,8 +198,9 @@ SPEC CHECKSUMS:
   sqflite: 4001a31ff81d210346b500c55b17f4d6c7589dd0
   url_launcher: 6fef411d543ceb26efce54b05a0a40bfd74cbbef
   video_player: 9cc823b1d9da7e8427ee591e8438bfbcde500e6e
-  wakelock: 0d4a70faf8950410735e3f61fb15d517c8a6efc4
+  wakelock: bfc7955c418d0db797614075aabbc58a39ab5107
   webview_flutter: d2b4d6c66968ad042ad94cbb791f5b72b4678a96
+  wifi: d7d77c94109e36c4175d845f0a5964eadba71060
 
 PODFILE CHECKSUM: adb00cec7b0eabb3be819164c29b992d03802cb4
 
