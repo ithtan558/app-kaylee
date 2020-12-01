@@ -77,9 +77,10 @@ class _CreateNewOrderScreenState extends KayleeState<CreateNewOrderScreen> {
     super.initState();
 
     _sub = _bloc.listen((state) {
-      if (state.loading)
+      if (state.loading) {
+        primaryFocus.unfocus();
         showLoading();
-      else if (!state.loading) {
+      } else if (!state.loading) {
         hideLoading();
         if (state.code.isNotNull && state.code != ErrorType.UNAUTHORIZED) {
           showKayleeAlertErrorYesDialog(
