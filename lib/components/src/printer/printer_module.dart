@@ -4,9 +4,12 @@ import 'dart:io';
 import 'package:anth_package/anth_package.dart';
 import 'package:esc_pos_printer/esc_pos_printer.dart';
 import 'package:esc_pos_utils/esc_pos_utils.dart';
+import 'package:flutter/material.dart';
 import 'package:image/image.dart';
 import 'package:kaylee/models/models.dart';
+import 'package:kaylee/res/res.dart';
 import 'package:kaylee/utils/utils.dart';
+import 'package:kaylee/widgets/widgets.dart';
 
 const String PRINTER_DEVICE_KEY = 'PRINTER_DEVICE';
 
@@ -48,13 +51,10 @@ class PrinterModule {
 
   static Future<bool> connect({PrinterDevice device}) async {
     final PosPrintResult res =
-    await _printer?.connect(device?.ip, port: device?.port);
+        await _printer?.connect(device?.ip, port: device?.port);
     if (res == PosPrintResult.success) {
       SharedRef.putString(PRINTER_DEVICE_KEY, jsonEncode(device.toJson()));
       return true;
-    } else if (res == PosPrintResult.timeout) {
-      disconnect();
-      return connect(device: device);
     }
     return false;
   }
@@ -248,5 +248,72 @@ class PrinterModule {
 
   static Future<void> disconnect() async {
     _printer?.disconnect();
+  }
+
+  static Future<void> connectPrinter(BuildContext context,
+      {Order order, ValueChanged<bool> loading}) async {
+    await init();
+    await getGenerator();
+
+    final fromSharePref = SharedRef.getString(PRINTER_DEVICE_KEY);
+    final map = Map<String, dynamic>.from(
+        jsonDecode(fromSharePref.isNullOrEmpty ? '{}' : fromSharePref));
+    String ip = PrinterDevice
+        .fromJson(map)
+        .ip;
+    if (map.isEmpty) {
+      await showKayleeAlertDialog(
+          context: context,
+          view: KayleeAlertDialogView(
+            title: 'Kết nối với máy in!',
+            contentWidget: Padding(
+              padding: const EdgeInsets.only(top: Dimens.px8),
+              child: Material(
+                clipBehavior: Clip.antiAlias,
+                borderRadius: BorderRadius.circular(Dimens.px5),
+                child: KayleeTextField.normal(
+                  hint: '192.168.1.123',
+                  controller: TextEditingController(),
+                  textInputType: TextInputType.number,
+                  onChanged: (value) {
+                    ip = value;
+                  },
+                ),
+              ),
+            ),
+            actions: [
+              KayleeAlertDialogAction.huy(
+                onPressed: context.pop,
+              ),
+              KayleeAlertDialogAction(
+                title: Strings.luu,
+                isDefaultAction: true,
+                onPressed: context.pop,
+              ),
+            ],
+          ));
+      if (ip.isNullOrEmpty) {
+        return;
+      }
+    }
+
+    loading?.call(true);
+    if (await connect(device: PrinterDevice(ip: ip))) {
+      loading?.call(false);
+      printOrder(order: order);
+    } else {
+      loading?.call(false);
+      showKayleeAlertDialog(
+          context: context,
+          view: KayleeAlertDialogView(
+            content: 'Không thể kết nối tới máy in',
+            actions: [
+              KayleeAlertDialogAction.dongY(
+                onPressed: context.pop,
+                isDefaultAction: true,
+              )
+            ],
+          ));
+    }
   }
 }
