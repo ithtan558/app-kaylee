@@ -267,7 +267,6 @@ class PrinterModule {
         styles: PosStyles(
           align: PosAlign.center,
         ));
-    _printer.feed(0);
     _printer.cut();
     await disconnect();
   }
