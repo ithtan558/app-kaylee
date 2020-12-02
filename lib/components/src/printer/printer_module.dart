@@ -276,7 +276,6 @@ class PrinterModule {
                 child: KayleeTextField.normal(
                   hint: '192.168.1.123',
                   controller: TextEditingController(),
-                  textInputType: TextInputType.number,
                   onChanged: (value) {
                     ip = value;
                   },
