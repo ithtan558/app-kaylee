@@ -100,61 +100,38 @@ class PrinterModule {
         linesAfter: 1);
     _printer.row([
       PosColumn(
-        width: 6,
+        width: 4,
         text: 'Ngày: ${order.createdAt.toFormatString(pattern: dateFormat2)}'
-            .removeVnAccent(),
+            .removeVnAccent()
+            .trim(),
+        styles: PosStyles(
+          align: PosAlign.left,
+        ),
+      ),
+      PosColumn(
+        width: 4,
+        text: '',
         styles: PosStyles(
           align: PosAlign.left,
         ),
       ),
       PosColumn(
         text: 'Số: ${order.code}'.removeVnAccent(),
-        width: 6,
+        width: 4,
         styles: PosStyles(
-          align: PosAlign.right,
+          align: PosAlign.left,
         ),
       ),
     ]);
-    _printer.row([
-      PosColumn(
-        text: 'Khách hàng: ${order.customer.fullName}'.removeVnAccent(),
-        width: 11,
-      ),
-      PosColumn(
-        text: '',
-        width: 1,
-        styles: PosStyles(
-          align: PosAlign.right,
-        ),
-      )
-    ]);
-    _printer.row([
-      PosColumn(
-        text: 'Nhân viên: ${order.employee.name}'.removeVnAccent(),
-        width: 11,
-      ),
-      PosColumn(
-        text: '',
-        width: 1,
-        styles: PosStyles(
-          align: PosAlign.right,
-        ),
-      )
-    ]);
-    _printer.text('');
+    _printer.text('Khách hàng: ${order.customer.fullName}'.removeVnAccent());
+    _printer.text('Nhân viên: ${order.employee.name}'.removeVnAccent(),
+        linesAfter: 1);
 
     _printer.hr();
     _printer.row([
       PosColumn(
-        text: 'Mặt hàng'.removeVnAccent(),
-        width: 4,
-        styles: PosStyles(
-          bold: true,
-        ),
-      ),
-      PosColumn(
         text: 'SL'.removeVnAccent(),
-        width: 2,
+        width: 3,
         styles: PosStyles(
           bold: true,
           align: PosAlign.right,
@@ -162,7 +139,7 @@ class PrinterModule {
       ),
       PosColumn(
         text: 'Giá'.removeVnAccent(),
-        width: 3,
+        width: 4,
         styles: PosStyles(
           bold: true,
           align: PosAlign.right,
@@ -170,7 +147,7 @@ class PrinterModule {
       ),
       PosColumn(
         text: 'T tiền'.removeVnAccent(),
-        width: 3,
+        width: 5,
         styles: PosStyles(
           bold: true,
           align: PosAlign.right,
@@ -179,30 +156,31 @@ class PrinterModule {
     ]);
     _printer.hr();
     order.orderItems.forEach((product) {
+      _printer.text(product.name.removeVnAccent());
       _printer.row([
         PosColumn(
-            text: product.name.removeVnAccent(), width: 4, styles: PosStyles()),
-        PosColumn(
           text: product.quantity.toString(),
+          width: 3,
           styles: PosStyles(
             align: PosAlign.right,
           ),
         ),
         PosColumn(
           text: CurrencyUtils.formatVNDWithCustomUnit(product.price),
-          width: 3,
+          width: 4,
           styles: PosStyles(
             align: PosAlign.right,
           ),
         ),
         PosColumn(
           text: CurrencyUtils.formatVNDWithCustomUnit(product.total),
-          width: 3,
+          width: 5,
           styles: PosStyles(
             align: PosAlign.right,
           ),
         ),
       ]);
+      _printer.emptyLines(1);
     });
     _printer.hr();
     _printer.text('');
