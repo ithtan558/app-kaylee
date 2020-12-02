@@ -114,7 +114,18 @@ class _CreateNewOrderScreenState extends KayleeState<CreateNewOrderScreen> {
                 KayleeAlertDialogAction(
                   title: Strings.inHoaDon,
                   isDefaultAction: true,
-                  onPressed: popScreen,
+                  onPressed: () {
+                    PrinterModule.connectPrinter(
+                      context,
+                      order: _bloc.order,
+                      loading: (value) {
+                        if (value)
+                          showLoading();
+                        else
+                          hideLoading();
+                      },
+                    );
+                  },
                 ),
                 KayleeAlertDialogAction(
                   title: Strings.veDsDonHang,
@@ -279,7 +290,7 @@ class _CreateNewOrderScreenState extends KayleeState<CreateNewOrderScreen> {
                                 onConfirm: () {
                                   if (openFrom ==
                                       OrderScreenOpenFrom.detailButton) {
-                                    _bloc.payOrder();
+                                    _bloc.payOrderOnly();
                                   } else if (openFrom ==
                                       OrderScreenOpenFrom.addNewButton) {
                                     _cart.updateOrderInfo(OrderRequest(

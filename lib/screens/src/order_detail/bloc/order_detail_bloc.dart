@@ -7,7 +7,7 @@ import 'package:kaylee/services/services.dart';
 class OrderDetailBloc extends Cubit<SingleModel<OrderRequest>>
     with CRUDInterface {
   final OrderService orderService;
-  final Order order;
+  Order order;
   final CartModule cart;
   final Reservation reservation;
 
@@ -18,15 +18,26 @@ class OrderDetailBloc extends Cubit<SingleModel<OrderRequest>>
     this.reservation,
   }) : super(SingleModel());
 
+  ///khi đang tạo, sau đó nhấn thanh toán
   void createOrderAndPay() {
     cart.updateOrderInfo(OrderRequest(isPaid: true));
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
       request: orderService.sendOrder(orderRequest: cart.getOrder()),
       onSuccess: ({message, result}) {
-        emit(DoPaymentOrderState.copy(state
+        final successState = DoPaymentOrderState.copy(state
           ..loading = false
-          ..message = message));
+          ..message = message);
+        order = Order(id: (result as CreateOrderResult).orderId);
+        _getDetail(
+          onSuccess: ({message, result}) {
+            emit(successState);
+          },
+          onFailed: (code, {error}) {
+            emit(DoPaymentOrderState.copy(successState,
+                hidePrinterAction: true));
+          },
+        );
       },
       onFailed: (code, {error}) {
         emit(SingleModel.copy(state
@@ -37,7 +48,8 @@ class OrderDetailBloc extends Cubit<SingleModel<OrderRequest>>
     );
   }
 
-  void payOrder() {
+  ///khi vào lại detail để xem, sau đó nhấn thanh toán
+  void payOrderOnly() {
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
       request: orderService.updateOrderStatus(
@@ -46,10 +58,19 @@ class OrderDetailBloc extends Cubit<SingleModel<OrderRequest>>
             id: cart.getOrder()?.id,
             status: OrderStatus.finished,
           )),
-      onSuccess: ({message, result}) {
-        emit(DoPaymentOrderState.copy(state
+      onSuccess: ({result, message}) {
+        final successState = DoPaymentOrderState.copy(state
           ..loading = false
-          ..message = message));
+          ..message = message);
+        _getDetail(
+          onSuccess: ({result, message}) {
+            emit(successState);
+          },
+          onFailed: (code, {error}) {
+            emit(DoPaymentOrderState.copy(successState,
+                hidePrinterAction: true));
+          },
+        );
       },
       onFailed: (code, {error}) {
         emit(SingleModel.copy(state
@@ -60,6 +81,7 @@ class OrderDetailBloc extends Cubit<SingleModel<OrderRequest>>
     );
   }
 
+  ///chỉ nhân button tạo trên app bar
   @override
   void create() {
     emit(SingleModel.copy(state..loading = true));
@@ -79,17 +101,27 @@ class OrderDetailBloc extends Cubit<SingleModel<OrderRequest>>
     );
   }
 
+  void _getDetail({OnSuccess onSuccess, OnFailed onFailed}) {
+    RequestHandler(
+      request: orderService.getDetail(orderId: order.id),
+      onSuccess: ({message, result}) {
+        final order = (result as Order);
+        order.id = this.order.id;
+        this.order = order;
+        onSuccess?.call(result: result, message: message);
+      },
+      onFailed: onFailed,
+    );
+  }
+
   @override
   void delete() {}
 
   @override
   void get() {
     emit(SingleModel.copy(state..loading = true));
-    RequestHandler(
-      request: orderService.getDetail(orderId: order.id),
+    _getDetail(
       onSuccess: ({message, result}) {
-        final order = (result as Order);
-        order.id = this.order.id;
         cart.updateOrderInfo(OrderRequest.copyFromOrder(order: result));
         emit(SingleModel.copy(state
           ..loading = false
@@ -146,7 +178,9 @@ class CreateOrderState extends SingleModel<OrderRequest> {
 }
 
 class DoPaymentOrderState extends SingleModel<OrderRequest> {
-  DoPaymentOrderState.copy(SingleModel old) {
+  final bool hidePrinterAction;
+
+  DoPaymentOrderState.copy(SingleModel old, {this.hidePrinterAction = false}) {
     this
       ..loading = old?.loading
       ..item = old?.item
