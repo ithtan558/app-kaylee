@@ -76,6 +76,7 @@ class PrinterModule {
 
     final image = copyResize(decodeImage(file.readAsBytesSync()),
         width: 200, height: 200);
+    _printer.reverseFeed(1);
     _printer.imageRaster(image, imageFn: PosImageFn.bitImageRaster);
     _printer.text('');
     _printer.text(
@@ -114,12 +115,35 @@ class PrinterModule {
         ),
       ),
     ]);
-    _printer.text(
-      'Khách hàng: ${order.customer.fullName}'.removeVnAccent(),
-    );
-    _printer.text('Nhân viên: ${order.employee.name}'.removeVnAccent(),
-        linesAfter: 1);
+    _printer.row([
+      PosColumn(
+        text: 'Khách hàng: ${order.customer.fullName}'.removeVnAccent(),
+        width: 11,
+      ),
+      PosColumn(
+        text: '',
+        width: 1,
+        styles: PosStyles(
+          align: PosAlign.right,
+        ),
+      )
+    ]);
+    _printer.row([
+      PosColumn(
+        text: 'Nhân viên: ${order.employee.name}'.removeVnAccent(),
+        width: 11,
+      ),
+      PosColumn(
+        text: '',
+        width: 1,
+        styles: PosStyles(
+          align: PosAlign.right,
+        ),
+      )
+    ]);
+    _printer.text('');
 
+    _printer.hr();
     _printer.row([
       PosColumn(
         text: 'Mặt hàng'.removeVnAccent(),
@@ -152,7 +176,7 @@ class PrinterModule {
         ),
       ),
     ]);
-
+    _printer.hr();
     order.orderItems.forEach((product) {
       _printer.row([
         PosColumn(
@@ -179,6 +203,7 @@ class PrinterModule {
         ),
       ]);
     });
+    _printer.hr();
     _printer.text('');
     _printer.row(
       [
