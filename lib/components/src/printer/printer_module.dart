@@ -78,11 +78,12 @@ class PrinterModule {
         width: 200, height: 200);
     _printer.imageRaster(image, imageFn: PosImageFn.bitImageRaster);
     _printer.text('');
-    _printer.text('DC: ${order.brand.location}',
-        styles: PosStyles(
-          align: PosAlign.center,
-        ),
-        linesAfter: 1);
+    _printer.text(
+      'DC: ${order.brand.location}',
+      styles: PosStyles(
+        align: PosAlign.center,
+      ),
+    );
     _printer.text('DT: ${order.brand.phone}',
         styles: PosStyles(
           align: PosAlign.center,
@@ -241,7 +242,7 @@ class PrinterModule {
         styles: PosStyles(
           align: PosAlign.center,
         ));
-    _printer.feed(2);
+    _printer.feed(0);
     _printer.cut();
     await disconnect();
   }
@@ -258,9 +259,7 @@ class PrinterModule {
     final fromSharePref = SharedRef.getString(PRINTER_DEVICE_KEY);
     final map = Map<String, dynamic>.from(
         jsonDecode(fromSharePref.isNullOrEmpty ? '{}' : fromSharePref));
-    String ip = PrinterDevice
-        .fromJson(map)
-        .ip;
+    String ip = PrinterDevice.fromJson(map).ip;
     if (map.isEmpty) {
       await showKayleeAlertDialog(
           context: context,
