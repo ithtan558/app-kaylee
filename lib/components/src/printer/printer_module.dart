@@ -331,10 +331,20 @@ class PrinterModule {
           view: KayleeAlertDialogView(
             content: 'Không thể kết nối tới máy in',
             actions: [
-              KayleeAlertDialogAction.dongY(
-                onPressed: context.pop,
+              KayleeAlertDialogAction.huy(
+                onPressed: () {
+                  context.pop();
+                },
+              ),
+              KayleeAlertDialogAction(
+                title: 'Thử lại',
+                onPressed: () {
+                  disconnect();
+                  connectPrinter(context, order: order, loading: loading);
+                  context.pop();
+                },
                 isDefaultAction: true,
-              )
+              ),
             ],
           ));
     }
