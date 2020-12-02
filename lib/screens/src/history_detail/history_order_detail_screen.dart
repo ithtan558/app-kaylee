@@ -4,6 +4,7 @@ import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
+import 'package:kaylee/components/components.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/history_detail/bloc/history_order_detail_bloc.dart';
@@ -152,7 +153,18 @@ class _HistoryOrderDetailScreenState
               text: Strings.inLaiHoaDon,
               margin: const EdgeInsets.symmetric(horizontal: Dimens.px8)
                   .copyWith(top: Dimens.px24, bottom: Dimens.px8),
-              onPressed: () {},
+              onPressed: () async {
+                await PrinterModule.connectPrinter(
+                  context,
+                  order: _bloc.state.item,
+                  loading: (value) {
+                    if (value)
+                      showLoading();
+                    else
+                      hideLoading();
+                  },
+                );
+              },
             )
           ],
         ));
