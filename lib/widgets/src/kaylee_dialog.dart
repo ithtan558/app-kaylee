@@ -280,6 +280,7 @@ Future showKayleeAlertErrorYesDialog(
 class KayleeAlertDialogView extends StatelessWidget {
   final String title;
   final String content;
+  final Widget contentWidget;
   final List<KayleeAlertDialogAction> actions;
 
   ///show cupertino dialog với [error] truyền vào
@@ -293,31 +294,32 @@ class KayleeAlertDialogView extends StatelessWidget {
 
   ///show cupertino dialog với [message] truyền vào
   factory KayleeAlertDialogView.message(
-          {Message message, List<KayleeAlertDialogAction> actions}) =>
+      {Message message, List<KayleeAlertDialogAction> actions}) =>
       KayleeAlertDialogView(
         title: message?.title,
         content: message?.content,
         actions: actions,
       );
 
-  KayleeAlertDialogView({this.title, this.content, this.actions});
+  KayleeAlertDialogView(
+      {this.title, this.content, this.actions, this.contentWidget});
 
   @override
   Widget build(BuildContext context) {
     return CupertinoAlertDialog(
       title: title.isNotNull
           ? Text(
-              title,
-            )
+        title,
+      )
           : null,
-      content: content.isNotNull
+      content: contentWidget ?? (content.isNotNull
           ? Padding(
-              padding: const EdgeInsets.only(top: Dimens.px3),
-              child: Text(
-                content,
-              ),
-            )
-          : null,
+        padding: const EdgeInsets.only(top: Dimens.px3),
+        child: Text(
+          content,
+        ),
+      )
+          : null),
       actions: actions ?? [],
     );
   }
