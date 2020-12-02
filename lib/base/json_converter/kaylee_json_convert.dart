@@ -106,6 +106,8 @@ class KayleeJsonConverter extends anthPackage.JsonConverterFactory {
       return ProductImage.fromJson(json) as T;
     } else if (T == OrderCancellationReason) {
       return OrderCancellationReason.fromJson(json) as T;
+    } else if (T == CreateOrderResult) {
+      return CreateOrderResult.fromJson(json) as T;
     }
     return json as T;
   }
@@ -213,6 +215,8 @@ class KayleeJsonConverter extends anthPackage.JsonConverterFactory {
     } else if (json is ProductImage) {
       return json.toJson();
     } else if (json is OrderCancellationReason) {
+      return json.toJson();
+    } else if (json is CreateOrderResult) {
       return json.toJson();
     } else
       return json;
