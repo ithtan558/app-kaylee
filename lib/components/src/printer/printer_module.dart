@@ -153,7 +153,8 @@ class PrinterModule {
         ),
       ),
       PosColumn(
-        text: 'SL',
+        text: 'SL'.removeVnAccent(),
+        width: 2,
         styles: PosStyles(
           bold: true,
           align: PosAlign.right,
