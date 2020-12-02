@@ -9,7 +9,8 @@ abstract class OrderService {
   factory OrderService(Dio dio) = _OrderService;
 
   @POST('order')
-  Future<ResponseModel> sendOrder({@Body() OrderRequest orderRequest});
+  Future<ResponseModel<CreateOrderResult>> sendOrder(
+      {@Body() OrderRequest orderRequest});
 
   @POST('supplier/order')
   Future<ResponseModel> sendOrderToSupplier(

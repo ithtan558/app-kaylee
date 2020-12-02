@@ -16,7 +16,7 @@ class _OrderService implements OrderService {
   String baseUrl;
 
   @override
-  Future<ResponseModel<dynamic>> sendOrder({orderRequest}) async {
+  Future<ResponseModel<CreateOrderResult>> sendOrder({orderRequest}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
@@ -31,7 +31,7 @@ class _OrderService implements OrderService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    final value = ResponseModel<CreateOrderResult>.fromJson(_result.data);
     return value;
   }
 
