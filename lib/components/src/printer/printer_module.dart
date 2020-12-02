@@ -88,7 +88,7 @@ class PrinterModule {
           align: PosAlign.center,
         ),
         linesAfter: 1);
-    _printer.text('Hoá đơn bán hàng'.removeVnAccent(),
+    _printer.text('Hoá đơn bán hàng'.removeVnAccent().toUpperCase(),
         styles: PosStyles(
           align: PosAlign.center,
           width: PosTextSize.size1,
