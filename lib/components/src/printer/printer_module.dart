@@ -80,17 +80,17 @@ class PrinterModule {
     _printer.imageRaster(image, imageFn: PosImageFn.bitImageRaster);
     _printer.text('');
     _printer.text(
-      'DC: ${order.brand.location}',
+      'ĐC: ${order.brand.location}'.removeVnAccent(),
       styles: PosStyles(
         align: PosAlign.center,
       ),
     );
-    _printer.text('DT: ${order.brand.phone}',
+    _printer.text('ĐT: ${order.brand.phone}'.removeVnAccent(),
         styles: PosStyles(
           align: PosAlign.center,
         ),
         linesAfter: 1);
-    _printer.text('Hoá đơn bán hàng'.removeVnAccent().toUpperCase(),
+    _printer.text('Hoá đơn bán hàng'.toUpperCase().removeVnAccent(),
         styles: PosStyles(
           align: PosAlign.center,
           width: PosTextSize.size1,
