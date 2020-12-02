@@ -28,8 +28,7 @@ Brand _$BrandFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$BrandToJson(Brand instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$BrandToJson(Brand instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'phone': instance.phone,
