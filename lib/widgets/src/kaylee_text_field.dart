@@ -92,24 +92,25 @@ class KayleeTextField extends StatelessWidget {
           EdgeInsets contentPadding,
           bool expands,
           TextAlign textAlign,
-          int maxLength}) =>
+          int maxLength,
+          ValueChanged<String> onChanged}) =>
       KayleeTextField(
         key: key,
         title: title,
         textInput: NormalInputField(
-          textInputAction: textInputAction,
-          focusNode: focusNode,
-          nextFocusNode: nextFocusNode,
-          controller: controller,
-          error: error,
-          hint: hint,
-          textInputType: textInputType,
-          fieldHeight: fieldHeight,
-          contentPadding: contentPadding,
-          expands: expands,
-          textAlign: textAlign,
-          maxLength: maxLength,
-        ),
+            textInputAction: textInputAction,
+            focusNode: focusNode,
+            nextFocusNode: nextFocusNode,
+            controller: controller,
+            error: error,
+            hint: hint,
+            textInputType: textInputType,
+            fieldHeight: fieldHeight,
+            contentPadding: contentPadding,
+            expands: expands,
+            textAlign: textAlign,
+            maxLength: maxLength,
+            onChanged: onChanged),
       );
 
   factory KayleeTextField.unitSelection({
@@ -625,6 +626,7 @@ class NormalInputField extends StatefulWidget {
   final int maxLength;
   final Widget suffixWidget;
   final BoxConstraints suffixBoxConstraints;
+  final ValueChanged<String> onChanged;
 
   NormalInputField({
     this.hint,
@@ -643,6 +645,7 @@ class NormalInputField extends StatefulWidget {
     this.maxLength,
     this.suffixWidget,
     this.suffixBoxConstraints,
+    this.onChanged,
   });
 
   @override
@@ -707,6 +710,7 @@ class _NormalInputFieldState extends BaseState<NormalInputField> {
                           FocusScope.of(context).nextFocus();
                       }
                     },
+                    onChanged: widget.onChanged,
                     autofocus: false,
                     obscureText: isPassTField ? !showPass : false,
                     textAlign: widget.textAlign ?? TextAlign.start,
@@ -1212,6 +1216,7 @@ class TextFieldBorderWrapper extends StatelessWidget {
     return Container(
       height: fieldHeight ?? Dimens.px48,
       width: double.infinity,
+      clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         color: bgColor ?? Colors.white,
         borderRadius: BorderRadius.circular(Dimens.px5),
