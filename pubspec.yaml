@@ -32,6 +32,7 @@ dependencies:
   wifi: ^0.1.5
   video_player: ^1.0.1
   chewie: ^0.12.0
+  printing: ^3.7.1
   anth_package:
     path: ../anth_package
 #    git:
@@ -106,3 +107,4 @@ flutter:
           weight: 400
   assets:
     - assets/
+    - fonts/
