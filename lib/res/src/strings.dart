@@ -310,6 +310,11 @@ class Strings {
   static const String In = 'In';
   static const String matHang = 'Mặt hàng';
   static const String camOnQuyKhachHenGapLai = 'Cảm ơn Quý khách. Hẹn gặp lại!';
+  static const String ngay = 'Ngày';
+  static const String so = 'Số';
+  static const String khachHang = 'Khách hàng';
+  static const String nhanVien = 'Nhân viên';
+  static const String hoadDonBanHang = 'Hoá đơn bán hàng';
 
   Strings._();
 }
