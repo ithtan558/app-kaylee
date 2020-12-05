@@ -273,10 +273,11 @@ class _ImageGrid extends StatefulWidget {
   final String selectedExistedImage;
   final void Function(dynamic selectedImage) onSelect;
 
-  _ImageGrid({@required this.controller,
-    this.images,
-    this.selectedExistedImage,
-    this.onSelect});
+  _ImageGrid(
+      {@required this.controller,
+      this.images,
+      this.selectedExistedImage,
+      this.onSelect});
 
   @override
   _ImageGridState createState() => _ImageGridState();
@@ -296,7 +297,8 @@ class _ImageGridState extends BaseState<_ImageGrid> {
     Platform.isAndroid ? Permission.storage : Permission.photos;
     if (await permission.isGranted) {
       final pickedFile = await ImagePicker()
-          .getImage(source: ImageSource.gallery, maxHeight: 99, maxWidth: 99);
+          .getImage(
+          source: ImageSource.gallery, maxWidth: 2020, maxHeight: 2020);
       File selectedFile;
       if (pickedFile.isNotNull) {
         selectedFile = File(pickedFile.path);
