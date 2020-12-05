@@ -308,6 +308,8 @@ class Strings {
   static const String doanhThuMoiNhanVien = 'Doanh thu mỗi nhân viên';
   static const String doanThuTheoDichVu = 'Doanh thu theo dịch vụ';
   static const String In = 'In';
+  static const String matHang = 'Mặt hàng';
+  static const String camOnQuyKhachHenGapLai = 'Cảm ơn Quý khách. Hẹn gặp lại!';
 
   Strings._();
 }
