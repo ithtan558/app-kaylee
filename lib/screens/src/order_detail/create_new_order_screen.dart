@@ -114,16 +114,10 @@ class _CreateNewOrderScreenState extends KayleeState<CreateNewOrderScreen> {
                 KayleeAlertDialogAction(
                   title: Strings.inHoaDon,
                   isDefaultAction: true,
-                  onPressed: () {
-                    PrinterModule.connectPrinter(
-                      context,
+                  onPressed: () async {
+                    showKayleePrintOrderDialog(
+                      context: context,
                       order: _bloc.order,
-                      loading: (value) {
-                        if (value)
-                          showLoading();
-                        else
-                          hideLoading();
-                      },
                     );
                   },
                 ),
