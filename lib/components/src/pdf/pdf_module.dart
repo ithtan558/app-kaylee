@@ -71,6 +71,16 @@ class PdfModule {
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Padding(
+              padding: EdgeInsets.only(bottom: Dimens.px24),
+              child:
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Text('${order.brand.name ?? ''}',
+                    style: theme.header1.merge(TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ))),
+              ]),
+            ),
+            Padding(
               padding: EdgeInsets.only(top: Dimens.px16),
               child:
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
