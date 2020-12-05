@@ -148,7 +148,7 @@ class _MyOrderDetailScreenState extends KayleeState<MyOrderDetailScreen> {
                             '${Strings.tinhTrangDonHang}: ${orderStatus2Title(status: _bloc.order.status)}',
                       ),
                     ),
-                    if (_bloc.order.cancellationReason.isNotNull)
+                    if (_bloc.order.cancellationReason?.name.isNotNullAndEmpty)
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: Dimens.px16)
                             .copyWith(top: Dimens.px8),
