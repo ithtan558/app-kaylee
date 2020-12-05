@@ -3,11 +3,58 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 enum DateRangeValueType {
   thisWeek,
   lastWeek,
+  thisMonth,
+  lastMonth,
+}
+
+extension DateRangeValueTypeExtension on DateRangeValueType {
+  String get text {
+    switch (this) {
+      case DateRangeValueType.thisWeek:
+        return Strings.tuanNay;
+      case DateRangeValueType.lastWeek:
+        return Strings.tuanTruoc;
+      case DateRangeValueType.thisMonth:
+        return Strings.thangNay;
+      case DateRangeValueType.lastMonth:
+        return Strings.thangTruoc;
+      default:
+        return null;
+    }
+  }
+
+  DateTimeRange get range {
+    switch (this) {
+      case DateRangeValueType.thisWeek:
+        final now = DateTime.now();
+        final startDate = now.subtract(Duration(days: now.weekday - 1));
+        final endDate = startDate.add(Duration(days: 6));
+        return DateTimeRange(start: startDate, end: endDate);
+      case DateRangeValueType.lastWeek:
+        final now = DateTime.now();
+        final startDate = now.subtract(Duration(days: 7 + now.weekday - 1));
+        final endDate = startDate.add(Duration(days: 6));
+        return DateTimeRange(start: startDate, end: endDate);
+      case DateRangeValueType.thisMonth:
+        final now = DateTime.now();
+        final startDate = now.findFirstDayOfMonthOfCurrent();
+        final endDate = now.findLastDateOfMonthOfCurrent();
+        return DateTimeRange(start: startDate, end: endDate);
+      case DateRangeValueType.lastMonth:
+        final now = DateTime.now();
+        final startDate = now.findFirstDayOfLastMonthFromCurrent();
+        final endDate = now.findLastDateOfLastMonthFromCurrent();
+        return DateTimeRange(start: startDate, end: endDate);
+      default:
+        return DateTimeRange(start: DateTime.now(), end: DateTime.now());
+    }
+  }
 }
 
 class KayleeDateRangePickerView extends StatefulWidget {
@@ -72,24 +119,24 @@ class _KayleeDateRangePickerViewState
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: Dimens.px24),
-                child: Row(
-                  children: [
-                    _buildTag(
-                        title: Strings.tuanNay,
-                        onTap: () {
-                          _onChangeType(type: DateRangeValueType.thisWeek);
-                        },
-                        selected:
-                            rangeValueType == DateRangeValueType.thisWeek),
-                    const SizedBox(width: Dimens.px16),
-                    _buildTag(
-                        title: Strings.tuanTruoc,
-                        onTap: () {
-                          _onChangeType(type: DateRangeValueType.lastWeek);
-                        },
-                        selected:
-                            rangeValueType == DateRangeValueType.lastWeek),
-                  ],
+                child: Container(
+                  height: Dimens.px32,
+                  child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        final item = DateRangeValueType.values.elementAt(index);
+                        return _buildTag(
+                            title: item.text,
+                            onTap: () {
+                              _onChangeType(type: item);
+                            },
+                            selected: rangeValueType == item);
+                      },
+                      separatorBuilder: (context, index) =>
+                          SizedBox(
+                            width: Dimens.px16,
+                          ),
+                      itemCount: DateRangeValueType.values.length),
                 ),
               ),
               Padding(
@@ -270,24 +317,5 @@ class _KayleeDateRangePickerViewState
         onTap: onTap,
       ),
     );
-  }
-}
-
-extension DateRangeValueExtension on DateRangeValueType {
-  DateTimeRange get range {
-    switch (this) {
-      case DateRangeValueType.thisWeek:
-        final now = DateTime.now();
-        final startDate = now.subtract(Duration(days: now.weekday - 1));
-        final endDate = startDate.add(Duration(days: 6));
-        return DateTimeRange(start: startDate, end: endDate);
-      case DateRangeValueType.lastWeek:
-        final now = DateTime.now();
-        final startDate = now.subtract(Duration(days: 7 + now.weekday - 1));
-        final endDate = startDate.add(Duration(days: 6));
-        return DateTimeRange(start: startDate, end: endDate);
-      default:
-        return DateTimeRange(start: DateTime.now(), end: DateTime.now());
-    }
   }
 }
