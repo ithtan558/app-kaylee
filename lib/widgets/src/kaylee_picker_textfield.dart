@@ -37,7 +37,7 @@ class KayleePickerTextField<T> extends StatefulWidget {
   ///nếu [useForFilter] == true (khi [KayleePickerTextField] đc gắn ở [FilterScreen]) => hiện item 'Tất cả'
   final bool useForFilter;
 
-  final ValueSetter<T> onSelect;
+  final ValueSetter<dynamic> onSelect;
 
   KayleePickerTextField({
     Key key,
