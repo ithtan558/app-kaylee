@@ -70,15 +70,14 @@ class PdfModule {
           padding: EdgeInsets.only(right: Dimens.px24, left: Dimens.px4),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Padding(
-              padding: EdgeInsets.only(bottom: Dimens.px24),
-              child:
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
                 Text('${order.brand.name ?? ''}',
                     style: theme.header1.merge(TextStyle(
                       fontWeight: FontWeight.bold,
                     ))),
-              ]),
+              ],
             ),
             Padding(
               padding: EdgeInsets.only(top: Dimens.px16),
@@ -172,23 +171,32 @@ class PdfModule {
                           ),
                         ),
                         _wrapPaddingAll(
-                          child: Text(
-                            Strings.gia,
-                            style: theme.defaultTextStyle.merge(
-                              TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text(
+                                  Strings.gia,
+                                  style: theme.defaultTextStyle.merge(
+                                    TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ]),
                         ),
                         _wrapPaddingAll(
-                          child: Text(
-                            'T tiền',
-                            style: theme.defaultTextStyle.merge(
-                              TextStyle(
-                                fontWeight: FontWeight.bold,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Text(
+                                'T tiền',
+                                style: theme.defaultTextStyle.merge(
+                                  TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                               ),
-                            ),
+                            ],
                           ),
                         ),
                       ],
