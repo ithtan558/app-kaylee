@@ -155,13 +155,10 @@ class _HistoryOrderDetailScreenState
               margin: const EdgeInsets.symmetric(horizontal: Dimens.px8)
                   .copyWith(top: Dimens.px24, bottom: Dimens.px8),
               onPressed: () async {
-                showKayleeDialog(
-                    context: context,
-                    margin: const EdgeInsets.symmetric(horizontal: Dimens.px24)
-                        .copyWith(bottom: Dimens.px20),
-                    child: PrintBillDialog(
-                      order: _bloc.state.item,
-                    ));
+                showKayleePrintOrderDialog(
+                  context: context,
+                  order: _bloc.order,
+                );
               },
             )
           ],

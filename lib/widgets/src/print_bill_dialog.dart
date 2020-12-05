@@ -111,3 +111,13 @@ class _PrintBillDialogState extends KayleeState<PrintBillDialog> {
     );
   }
 }
+
+Future<void> showKayleePrintOrderDialog({BuildContext context, Order order}) {
+  return showKayleeDialog(
+      context: context,
+      margin: const EdgeInsets.symmetric(horizontal: Dimens.px24)
+          .copyWith(bottom: Dimens.px20),
+      child: PrintBillDialog(
+        order: order,
+      ));
+}
