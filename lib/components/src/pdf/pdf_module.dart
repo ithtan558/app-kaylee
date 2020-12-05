@@ -17,13 +17,13 @@ class PdfModule {
       fontBold: Font.ttf(fonts[FontsStyle.bold]),
       fontBoldItalic: Font.ttf(fonts[FontsStyle.boldItalic]),
       font: Font.ttf(fonts[FontsStyle.medium]),
-      fontSize: 25,
+      fontSize: 30,
     );
     final doc = Document(
       theme: ThemeData(
         defaultTextStyle: defaultTextStyle,
-        header0: defaultTextStyle.merge(TextStyle(fontSize: 30)),
-        header1: defaultTextStyle.merge(TextStyle(fontSize: 35)),
+        header0: defaultTextStyle.merge(TextStyle(fontSize: 35)),
+        header1: defaultTextStyle.merge(TextStyle(fontSize: 40)),
         tableHeader: defaultTextStyle.merge(
           TextStyle(
             fontWeight: FontWeight.bold,
@@ -60,7 +60,7 @@ class PdfModule {
       pageTheme: PageTheme(
         buildBackground: (context) =>
             Container(color: PdfColor.fromInt(0xFFFFFFFF)),
-        pageFormat: PdfPageFormat.a4
+        pageFormat: PdfPageFormat.a3
             .copyWith(marginLeft: 0, marginRight: 0, height: double.infinity),
         clip: true,
         margin: EdgeInsets.zero,
