@@ -307,6 +307,7 @@ class Strings {
   static const String chonTheoNgay = 'Chọn theo ngày';
   static const String doanhThuMoiNhanVien = 'Doanh thu mỗi nhân viên';
   static const String doanThuTheoDichVu = 'Doanh thu theo dịch vụ';
+  static const String In = 'In';
 
   Strings._();
 }
