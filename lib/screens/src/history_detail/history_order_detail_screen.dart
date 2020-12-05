@@ -3,13 +3,14 @@ import 'dart:async';
 import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:kaylee/base/kaylee_state.dart';
-import 'package:kaylee/components/components.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/history_detail/bloc/history_order_detail_bloc.dart';
 import 'package:kaylee/screens/src/history_detail/widgets/history_order_item.dart';
 import 'package:kaylee/utils/utils.dart';
+import 'package:kaylee/widgets/src/print_bill_dialog.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class HistoryOrderDetailScreen extends StatefulWidget {
@@ -154,16 +155,13 @@ class _HistoryOrderDetailScreenState
               margin: const EdgeInsets.symmetric(horizontal: Dimens.px8)
                   .copyWith(top: Dimens.px24, bottom: Dimens.px8),
               onPressed: () async {
-                await PrinterModule.connectPrinter(
-                  context,
-                  order: _bloc.state.item,
-                  loading: (value) {
-                    if (value)
-                      showLoading();
-                    else
-                      hideLoading();
-                  },
-                );
+                showKayleeDialog(
+                    context: context,
+                    margin: const EdgeInsets.symmetric(horizontal: Dimens.px24)
+                        .copyWith(bottom: Dimens.px20),
+                    child: PrintBillDialog(
+                      order: _bloc.state.item,
+                    ));
               },
             )
           ],
