@@ -30,22 +30,26 @@ class _TotalRevenueWidgetState extends KayleeState<TotalRevenueWidget>
   @override
   Widget build(BuildContext context) {
     return KayleeHeaderCard(
-        header: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        headerPadding: const EdgeInsets.symmetric(
+            horizontal: Dimens.px16, vertical: Dimens.px8),
+        header: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
-                child: KayleeText.normal16W500(
+            KayleeText.normal16W500(
               Strings.doanhThu,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-            )),
-            KayleeDatePickerText(
-              textSize: Dimens.px12,
-              onSelectRange: (value) {
-                _totalRevenueBloc.loadData(
-                    startDate: value.start, endDate: value.end);
-              },
-              controller: datePickerController,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: Dimens.px4),
+              child: KayleeDatePickerText(
+                textSize: Dimens.px12,
+                onSelectRange: (value) {
+                  _totalRevenueBloc.loadData(
+                      startDate: value.start, endDate: value.end);
+                },
+                controller: datePickerController,
+              ),
             ),
           ],
         ),
