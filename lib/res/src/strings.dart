@@ -315,6 +315,10 @@ class Strings {
   static const String khachHang = 'Khách hàng';
   static const String nhanVien = 'Nhân viên';
   static const String hoadDonBanHang = 'Hoá đơn bán hàng';
+  static const String ketNoiVoiMayIn = 'Kết nối với máy in!';
+  static const String ipHint = '192.168.1.123';
+  static const String khongTheKetNoiVoiPrinter = 'Không thể kết nối tới máy in';
+  static const String thuLai = 'Thử lại';
 
   Strings._();
 }
