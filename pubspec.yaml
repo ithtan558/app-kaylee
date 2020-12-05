@@ -24,7 +24,7 @@ dependencies:
   flutter_widget_from_html: ^0.5.1+5
   package_info: ^0.4.3+2
   firebase_messaging: ^7.0.3
-  flutter_local_notifications: ^3.0.1+6
+  flutter_local_notifications: ^3.0.1+7
   flutter_masked_text: ^0.8.0
   cached_network_image: 2.3.3
   esc_pos_printer: ^4.0.3
@@ -43,11 +43,11 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   # json serializable
-  json_serializable: ^3.5.0
+  json_serializable: ^3.5.1
 
   # Tools to write binaries that run builders(In this project, we use it
   # for json_serializable, retrofit)
-  build_runner: ^1.10.6
+  build_runner: ^1.10.7
   retrofit_generator: ^1.4.0+2
 
 
