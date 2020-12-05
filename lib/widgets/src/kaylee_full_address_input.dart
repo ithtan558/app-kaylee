@@ -72,6 +72,9 @@ class _KayleeFullAddressInputState extends BaseState<KayleeFullAddressInput> {
               title: widget.title,
               hint: Strings.tinhTpHint,
               controller: cityController,
+              onSelect: (value) {
+                widget.controller.initCity = cityController.value;
+              },
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: Dimens.px8),
@@ -81,6 +84,10 @@ class _KayleeFullAddressInputState extends BaseState<KayleeFullAddressInput> {
                     child: KayleePickerTextField<District>(
                       hint: Strings.quan,
                       controller: districtController,
+                      onSelect: (value) {
+                        widget.controller.initDistrict =
+                            districtController.value;
+                      },
                     ),
                   ),
                   SizedBox(width: Dimens.px8),
@@ -88,6 +95,9 @@ class _KayleeFullAddressInputState extends BaseState<KayleeFullAddressInput> {
                     child: KayleePickerTextField<Ward>(
                       hint: Strings.phuong,
                       controller: wardController,
+                      onSelect: (value) {
+                        widget.controller.initWard = wardController.value;
+                      },
                     ),
                   ),
                 ],
@@ -98,6 +108,9 @@ class _KayleeFullAddressInputState extends BaseState<KayleeFullAddressInput> {
               textInputAction: TextInputAction.done,
               controller: addressTFController,
               focusNode: addressFocus,
+              onChanged: (value) {
+                widget.controller.initAddress = addressTFController.text;
+              },
             ),
           ],
         ),
