@@ -304,6 +304,8 @@ class Strings {
   static const String chonNhanh = 'Chọn nhanh';
   static const String tuanNay = 'Tuần này';
   static const String tuanTruoc = 'Tuần trước';
+  static const String thangNay = 'Tháng này';
+  static const String thangTruoc = 'Tháng trước';
   static const String chonTheoNgay = 'Chọn theo ngày';
   static const String doanhThuMoiNhanVien = 'Doanh thu mỗi nhân viên';
   static const String doanThuTheoDichVu = 'Doanh thu theo dịch vụ';
