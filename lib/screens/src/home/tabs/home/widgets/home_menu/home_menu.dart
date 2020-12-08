@@ -286,21 +286,21 @@ class HomeMenuBloc extends Cubit<HomeMenuState> {
     if (collapsePercent == 1 && !state.isCollapsed) {
       //khi appbar đã collapse và state của appbar trước đó ko phải là collapse
       state.isCollapsed = true;
-      backGroundStateController.add(state.isCollapsed);
+      backGroundStateController.value = state.isCollapsed;
     } else if (collapsePercent < 1 && state.isCollapsed) {
       //khi appbar đang scroll để expand và state của appbar trước đó là collapse
       state.isCollapsed = false;
-      backGroundStateController.add(false);
+      backGroundStateController.value = false;
     }
     emit(HomeMenuState.copy(state
       ..menuRow2CollapsePercent =
-      state.collapsePercent >= 0 && state.collapsePercent < 1
-          ? 1 - state.collapsePercent
-          : 1
+          state.collapsePercent >= 0 && state.collapsePercent < 1
+              ? 1 - state.collapsePercent
+              : 1
       ..collapsePercent = collapsePercent
       ..offset = offs
       ..height =
-      collapsePercent == 1 ? collapseMenuHeight : menuHeight - offs));
+          collapsePercent == 1 ? collapseMenuHeight : menuHeight - offs));
   }
 }
 
