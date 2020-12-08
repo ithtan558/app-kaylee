@@ -55,26 +55,24 @@ class _HomeMenuState extends BaseState<HomeMenu> {
 
   final gradientBg = Container(
       decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            ColorsRes.color1,
-            ColorsRes.button,
-            ColorsRes.button,
-            ColorsRes.color1,
-          ],
-          stops: [0, 0.4, 0.7, 1],
-          begin: Alignment(0.50, -0.87),
-          end: Alignment(-0.50, 0.87),
-          // angle: 210,
-          // scale: undefined,
-        ),
-      ));
+    gradient: LinearGradient(
+      colors: [
+        ColorsRes.color1,
+        ColorsRes.button,
+        ColorsRes.button,
+        ColorsRes.color1,
+      ],
+      stops: [0, 0.4, 0.7, 1],
+      begin: Alignment(0.50, -0.87),
+      end: Alignment(-0.50, 0.87),
+      // angle: 210,
+      // scale: undefined,
+    ),
+  ));
 
   @override
   Widget build(BuildContext context) {
-    final userInfo = context.user
-        .getUserInfo()
-        .userInfo;
+    final userInfo = context.user.getUserInfo().userInfo;
     final menuItems = [
       if (userInfo.userRole != UserRole.EMPLOYEE)
         HomeMenuItem(
@@ -120,7 +118,7 @@ class _HomeMenuState extends BaseState<HomeMenu> {
           context.push(PageIntent(screen: ReservationListScreen));
         },
       ),
-      if (userInfo.userRole != UserRole.EMPLOYEE)
+      if (userInfo.userRole != UserRole.EMPLOYEE) ...[
         HomeMenuItem(
           title: Strings.hoaHongNv,
           icon: Images.ic_commission,
@@ -128,7 +126,6 @@ class _HomeMenuState extends BaseState<HomeMenu> {
             context.push(PageIntent(screen: CommissionListScreen));
           },
         ),
-      if (userInfo.userRole != UserRole.EMPLOYEE)
         HomeMenuItem(
           title: Strings.doanhThuBanHang,
           icon: Images.ic_revenue,
@@ -136,6 +133,7 @@ class _HomeMenuState extends BaseState<HomeMenu> {
             context.push(PageIntent(screen: RevenueScreen));
           },
         ),
+      ]
     ];
     final menuRow1 = menuItems.getRange(0, 4);
     final row2Items = menuItems.sublist(menuRow1.length, menuItems.length);
@@ -217,7 +215,7 @@ class _HomeMenuState extends BaseState<HomeMenu> {
           ],
         ),
       ),
-      if(row2Items.isNotNullAndEmpty)
+      if (row2Items.isNotNullAndEmpty)
         Positioned.fill(
             top: Dimens.px56 + Dimens.px32 + homeMenuItemHeight,
             bottom: Dimens.px24,
