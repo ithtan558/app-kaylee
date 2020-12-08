@@ -25,21 +25,20 @@ class HomeMenu extends StatefulWidget {
 }
 
 class _HomeMenuState extends BaseState<HomeMenu> {
-  ScrollOffsetBloc scrollOffsetBloc;
+  ScrollOffsetBloc get _scrollOffsetBloc => context.bloc<ScrollOffsetBloc>();
   final menuScrollController = ScrollController();
-  HomeMenuBloc homeMenuCubit;
+
+  HomeMenuBloc get _homeMenuBloc => context.bloc<HomeMenuBloc>();
   StreamSubscription _sub;
 
   @override
   void initState() {
     super.initState();
-    scrollOffsetBloc = context.bloc<ScrollOffsetBloc>();
-    homeMenuCubit = context.bloc<HomeMenuBloc>();
-    _sub = scrollOffsetBloc.listen((offset) {
-      homeMenuCubit.updateHomeMenuState(
+    _sub = _scrollOffsetBloc.listen((offset) {
+      _homeMenuBloc.updateHomeMenuState(
           offset: offset, collapseMenuHeight: collapseMenuHeight);
       if (menuScrollController.offset > 0 &&
-          homeMenuCubit.state.collapsePercent < 1) {
+          _homeMenuBloc.state.collapsePercent < 1) {
         menuScrollController.animateTo(0,
             duration: Duration(milliseconds: 100), curve: Curves.linear);
       }
@@ -168,7 +167,7 @@ class _HomeMenuState extends BaseState<HomeMenu> {
               child: BackdropFilter(
             filter: ImageFilter.blur(sigmaY: 70, sigmaX: 100),
             child: StreamBuilder<bool>(
-              stream: homeMenuCubit.backGroundStateController.stream,
+              stream: _homeMenuBloc.backGroundStateController.stream,
               builder: (context, snapshot) {
                 return AnimatedOpacity(
                   duration: Duration(milliseconds: 250),
@@ -198,7 +197,7 @@ class _HomeMenuState extends BaseState<HomeMenu> {
               child: Container(
                 height: homeMenuItemHeight,
                 child: StreamBuilder<bool>(
-                    stream: homeMenuCubit.backGroundStateController.stream,
+                    stream: _homeMenuBloc.backGroundStateController.stream,
                     builder: (context, snapshot) {
                       return ListView(
                         scrollDirection: Axis.horizontal,
@@ -311,11 +310,12 @@ class HomeMenuState {
   bool isCollapsed;
   double menuRow2CollapsePercent;
 
-  HomeMenuState({this.collapsePercent = 0,
-    this.height = 0,
-    this.offset = 0,
-    this.isCollapsed = false,
-    this.menuRow2CollapsePercent = 1});
+  HomeMenuState(
+      {this.collapsePercent = 0,
+      this.height = 0,
+      this.offset = 0,
+      this.isCollapsed = false,
+      this.menuRow2CollapsePercent = 1});
 
   HomeMenuState.copy(HomeMenuState old) {
     this
