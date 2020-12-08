@@ -264,7 +264,7 @@ class HomeMenuBloc extends Cubit<HomeMenuState> {
   final backGroundStateController = BehaviorSubject<bool>();
 
   HomeMenuBloc() : super(HomeMenuState(height: menuHeight)) {
-    backGroundStateController?.value = false;
+    backGroundStateController.value = false;
   }
 
   @override
