@@ -166,20 +166,20 @@ class _HomeMenuState extends BaseState<HomeMenu> {
           ),
           Positioned.fill(
               child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaY: 70, sigmaX: 100),
-                child: StreamBuilder<bool>(
-                  stream: homeMenuCubit.backGroundStateController.stream,
-                  builder: (context, snapshot) {
-                    return AnimatedOpacity(
-                      duration: Duration(milliseconds: 250),
-                      opacity: snapshot.data ?? false ? 0.6 : 0.3,
-                      child: Container(
-                        color: Colors.black,
-                      ),
-                    );
-                  },
-                ),
-              ))
+            filter: ImageFilter.blur(sigmaY: 70, sigmaX: 100),
+            child: StreamBuilder<bool>(
+              stream: homeMenuCubit.backGroundStateController.stream,
+              builder: (context, snapshot) {
+                return AnimatedOpacity(
+                  duration: Duration(milliseconds: 250),
+                  opacity: snapshot.data ?? false ? 0.6 : 0.3,
+                  child: Container(
+                    color: Colors.black,
+                  ),
+                );
+              },
+            ),
+          ))
         ]),
       ),
       Positioned.fill(
@@ -265,7 +265,7 @@ class HomeMenuBloc extends Cubit<HomeMenuState> {
   final backGroundStateController = BehaviorSubject<bool>();
 
   HomeMenuBloc() : super(HomeMenuState(height: menuHeight)) {
-    backGroundStateController?.add(false);
+    backGroundStateController?.value = false;
   }
 
   @override
