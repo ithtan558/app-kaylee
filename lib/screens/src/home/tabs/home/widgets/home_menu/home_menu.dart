@@ -28,6 +28,8 @@ class _HomeMenuState extends BaseState<HomeMenu> {
   ScrollOffsetBloc get _scrollOffsetBloc => context.bloc<ScrollOffsetBloc>();
   final menuScrollController = ScrollController();
 
+  UserInfo get userInfo => context.user.getUserInfo().userInfo;
+
   HomeMenuBloc get _homeMenuBloc => context.bloc<HomeMenuBloc>();
   StreamSubscription _sub;
 
@@ -71,7 +73,9 @@ class _HomeMenuState extends BaseState<HomeMenu> {
 
   @override
   Widget build(BuildContext context) {
-    final userInfo = context.user.getUserInfo().userInfo;
+    if (userInfo.userRole == UserRole.EMPLOYEE) {
+      _homeMenuBloc.updateMenuHeight(homeMenuItemHeight + Dimens.px56);
+    }
     final menuItems = [
       if (userInfo.userRole != UserRole.EMPLOYEE)
         HomeMenuItem(
@@ -182,6 +186,7 @@ class _HomeMenuState extends BaseState<HomeMenu> {
         ]),
       ),
       Positioned.fill(
+        top: userInfo.userRole == UserRole.EMPLOYEE ? Dimens.px56 : 0,
         child: Column(
           children: [
             Expanded(
@@ -262,6 +267,8 @@ class _HomeMenuState extends BaseState<HomeMenu> {
 class HomeMenuBloc extends Cubit<HomeMenuState> {
   static const double menuHeight = 348;
   final backGroundStateController = BehaviorSubject<bool>();
+  double height;
+  bool canUpdateHeight = true;
 
   HomeMenuBloc() : super(HomeMenuState(height: menuHeight)) {
     backGroundStateController.value = false;
@@ -273,12 +280,20 @@ class HomeMenuBloc extends Cubit<HomeMenuState> {
     return super.close();
   }
 
-  void updateHomeMenuState({double offset, double collapseMenuHeight}) {
+  void updateMenuHeight(double height) {
+    if (height.isNull || this.height.isNotNull) return;
+    this.height = menuHeight - height;
+    updateHomeMenuState();
+    canUpdateHeight = false;
+  }
+
+  void updateHomeMenuState({double offset = 0, double collapseMenuHeight = 0}) {
+    if (!canUpdateHeight) return;
     //offset của listview
     final offs = offset;
     //appbar chỉ collapse tới khi offset của listview = height lúc expand - height lúc collpased
     final double scrollingDistance =
-        HomeMenuBloc.menuHeight - collapseMenuHeight;
+        (height ?? menuHeight) - collapseMenuHeight;
     //percent collapse của appbar khi user scroll
     final double collapsePercent =
         offs < scrollingDistance ? offs / scrollingDistance : 1;
@@ -298,8 +313,9 @@ class HomeMenuBloc extends Cubit<HomeMenuState> {
               : 1
       ..collapsePercent = collapsePercent
       ..offset = offs
-      ..height =
-          collapsePercent == 1 ? collapseMenuHeight : menuHeight - offs));
+      ..height = collapsePercent == 1
+          ? collapseMenuHeight
+          : (height ?? menuHeight) - offs));
   }
 }
 
