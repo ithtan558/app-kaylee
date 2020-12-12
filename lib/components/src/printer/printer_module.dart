@@ -44,7 +44,7 @@ class PrinterModule {
     final fromSharePref = SharedRef.getString(PRINTER_DEVICE_KEY);
     final map = Map<String, dynamic>.from(
         jsonDecode(fromSharePref.isNullOrEmpty ? '{}' : fromSharePref));
-    if (map.isEmpty) return null;
+    if (map.isEmpty) return PrinterDevice();
     return PrinterDevice.fromJson(map);
   }
 
