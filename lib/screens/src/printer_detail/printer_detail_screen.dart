@@ -20,6 +20,7 @@ class _PrinterDetailScreenState extends KayleeState<PrinterDetailScreen> {
   @override
   void initState() {
     super.initState();
+    PrinterModule.init();
     _ipTFController.text = PrinterModule.getPrinterDevice().ip;
   }
 
@@ -54,20 +55,37 @@ class _PrinterDetailScreenState extends KayleeState<PrinterDetailScreen> {
           text: Strings.luu,
           margin: const EdgeInsets.symmetric(horizontal: Dimens.px16)
               .copyWith(bottom: Dimens.px16),
-          onPressed: () {
-            PrinterModule.savePrinterDevice(
-              device: PrinterDevice(
-                ip: _ipTFController.text,
-              ),
+          onPressed: () async {
+            final device = PrinterDevice(
+              ip: _ipTFController.text,
             );
-            showKayleeAlertMessageYesDialog(
-              context: context,
-              message: Message(content: Strings.luuThanhCong),
-              onPressed: popScreen,
-            );
+            PrinterModule.savePrinterDevice(device: device);
+            tryToConnectPrinterDevice(context: context, device: device);
           },
         ),
       ),
     );
+  }
+
+  void tryToConnectPrinterDevice(
+      {BuildContext context, PrinterDevice device}) async {
+    showLoading();
+    final connected = await PrinterModule.connect(device: device);
+    hideLoading();
+    if (connected) {
+      showKayleeAlertMessageYesDialog(
+        context: context,
+        message: Message(content: Strings.luuThanhCong),
+        onPressed: popScreen,
+      );
+    } else {
+      showKayleeDialogNotAbleToConnectPrinter(
+        context: context,
+        onTryAgain: () async {
+          await PrinterModule.disconnect();
+          tryToConnectPrinterDevice(context: context, device: device);
+        },
+      );
+    }
   }
 }

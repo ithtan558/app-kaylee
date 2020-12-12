@@ -144,28 +144,38 @@ class PrinterModule {
       printOrder(order: order, billImage: image);
     } else {
       loading?.call(false);
-      showKayleeAlertDialog(
-          context: context,
-          view: KayleeAlertDialogView(
-            content: Strings.khongTheKetNoiVoiPrinter,
-            actions: [
-              KayleeAlertDialogAction.huy(
-                onPressed: () {
-                  context.pop();
-                },
-              ),
-              KayleeAlertDialogAction(
-                title: Strings.thuLai,
-                onPressed: () {
-                  disconnect();
-                  connectPrinter(context,
-                      order: order, loading: loading, image: image);
-                  context.pop();
-                },
-                isDefaultAction: true,
-              ),
-            ],
-          ));
+      showKayleeDialogNotAbleToConnectPrinter(
+        context: context,
+        onTryAgain: () {
+          disconnect();
+          connectPrinter(context, order: order, loading: loading, image: image);
+        },
+      );
     }
   }
+}
+
+Future<void> showKayleeDialogNotAbleToConnectPrinter(
+    {BuildContext context, VoidCallback onTryAgain}) {
+  return showKayleeAlertDialog(
+    context: context,
+    view: KayleeAlertDialogView(
+      content: Strings.khongTheKetNoiVoiPrinter,
+      actions: [
+        KayleeAlertDialogAction.huy(
+          onPressed: () {
+            context.pop();
+          },
+        ),
+        KayleeAlertDialogAction(
+          title: Strings.thuLai,
+          onPressed: () {
+            onTryAgain?.call();
+            context.pop();
+          },
+          isDefaultAction: true,
+        ),
+      ],
+    ),
+  );
 }
