@@ -61,7 +61,7 @@ class _AccountTabState extends BaseState<AccountTab> {
                 }),
             _buildMenuItem(
                 title: Strings.caiDatMayIn,
-                icon: Images.ic_acc_about_app,
+                icon: Images.ic_acc_guide,
                 onClick: () {
                   pushScreen(PageIntent(screen: PrinterDetailScreen));
                 }),
