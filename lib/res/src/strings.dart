@@ -321,6 +321,9 @@ class Strings {
   static const String ipHint = '192.168.1.123';
   static const String khongTheKetNoiVoiPrinter = 'Không thể kết nối tới máy in';
   static const String thuLai = 'Thử lại';
+  static const String caiDatMayIn='Cài đặt máy in';
+  static const String diaChiIp='Địa chỉ IP';
+  static const luuThanhCong='Lưu thành công';
 
   Strings._();
 }
