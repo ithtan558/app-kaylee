@@ -80,6 +80,7 @@ class _PrinterDetailScreenState extends KayleeState<PrinterDetailScreen> {
         onPressed: popScreen,
       );
     } else {
+      hideLoading();
       showKayleeDialogNotAbleToConnectPrinter(
         context: context,
         onTryAgain: () async {
