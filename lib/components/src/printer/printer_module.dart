@@ -69,6 +69,18 @@ class PrinterModule {
     return false;
   }
 
+  static Future<void> printConnectionInfo() async {
+    if (_printer.isNull) return;
+    final device = getPrinterDevice();
+    if (device.isNull) {
+      await disconnect();
+      return;
+    }
+    _printer.text('Connected ${device.ip}:${device.port}');
+    _printer.cut();
+    await disconnect();
+  }
+
   static void printOrder({Order order, Image billImage}) async {
     if (order.isNull) return;
     if (_printer.isNull) return;

@@ -71,8 +71,9 @@ class _PrinterDetailScreenState extends KayleeState<PrinterDetailScreen> {
       {BuildContext context, PrinterDevice device}) async {
     showLoading();
     final connected = await PrinterModule.connect(device: device);
-    hideLoading();
     if (connected) {
+      await PrinterModule.printConnectionInfo();
+      hideLoading();
       showKayleeAlertMessageYesDialog(
         context: context,
         message: Message(content: Strings.luuThanhCong),
