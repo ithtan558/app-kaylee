@@ -86,6 +86,8 @@ mixin KayleeRouting on Routing {
         return ServCateListScreen.newInstance();
       case CreateNewServCateScreen:
         return CreateNewServCateScreen.newInstance();
+      case PrinterDetailScreen:
+        return PrinterDetailScreen.newInstance();
       default:
         return SplashScreen.newInstance();
     }

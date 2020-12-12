@@ -17,6 +17,7 @@ export 'src/notification/detail/notify_detail_screen.dart';
 export 'src/notification/list/notification_screen.dart';
 export 'src/order_detail/create_new_order_screen.dart';
 export 'src/otp_verify/otp_verify_screeen.dart';
+export 'src/printer_detail/printer_detail_screen.dart';
 export 'src/product/categories/detail/create_new_prod_cate_screen.dart';
 export 'src/product/categories/list/prod_cate_list_screen.dart';
 export 'src/product/create_new/create_new_prod_screen.dart';

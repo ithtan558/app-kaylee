@@ -60,6 +60,12 @@ class _AccountTabState extends BaseState<AccountTab> {
                   pushScreen(PageIntent(screen: MyOrdersScreen));
                 }),
             _buildMenuItem(
+                title: Strings.caiDatMayIn,
+                icon: Images.ic_acc_about_app,
+                onClick: () {
+                  pushScreen(PageIntent(screen: PrinterDetailScreen));
+                }),
+            _buildMenuItem(
                 title: Strings.dangXuat,
                 icon: Images.ic_acc_logout,
                 showBtmDivider: false,

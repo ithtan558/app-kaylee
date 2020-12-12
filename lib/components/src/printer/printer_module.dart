@@ -40,6 +40,18 @@ class PrinterModule {
     _printer = NetworkPrinter(paper, _profile);
   }
 
+  static PrinterDevice getPrinterDevice() {
+    final fromSharePref = SharedRef.getString(PRINTER_DEVICE_KEY);
+    final map = Map<String, dynamic>.from(
+        jsonDecode(fromSharePref.isNullOrEmpty ? '{}' : fromSharePref));
+    if (map.isEmpty) return null;
+    return PrinterDevice.fromJson(map);
+  }
+
+  static void savePrinterDevice({PrinterDevice device}) {
+    SharedRef.putString(PRINTER_DEVICE_KEY, jsonEncode(device.toJson()));
+  }
+
   static Future<Generator> getGenerator() async {
     if (_generator.isNull) {
       _generator = Generator(PaperSize.mm80, _profile);
@@ -51,7 +63,7 @@ class PrinterModule {
     final PosPrintResult res =
         await _printer?.connect(device?.ip, port: device?.port);
     if (res == PosPrintResult.success) {
-      SharedRef.putString(PRINTER_DEVICE_KEY, jsonEncode(device.toJson()));
+      savePrinterDevice(device: device);
       return true;
     }
     return false;
@@ -88,11 +100,9 @@ class PrinterModule {
     await init();
     await getGenerator();
 
-    final fromSharePref = SharedRef.getString(PRINTER_DEVICE_KEY);
-    final map = Map<String, dynamic>.from(
-        jsonDecode(fromSharePref.isNullOrEmpty ? '{}' : fromSharePref));
-    String ip = PrinterDevice.fromJson(map).ip;
-    if (map.isEmpty) {
+    final device = getPrinterDevice();
+    String ip = device?.ip;
+    if (device.isNull) {
       await showKayleeAlertDialog(
           context: context,
           view: KayleeAlertDialogView(
@@ -105,6 +115,7 @@ class PrinterModule {
                 child: KayleeTextField.normal(
                   hint: Strings.ipHint,
                   controller: TextEditingController(),
+                  maxLength: 15,
                   onChanged: (value) {
                     ip = value;
                   },
