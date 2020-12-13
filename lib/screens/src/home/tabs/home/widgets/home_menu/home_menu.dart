@@ -32,27 +32,8 @@ class _HomeMenuState extends BaseState<HomeMenu> {
 
   HomeMenuBloc get _homeMenuBloc => context.bloc<HomeMenuBloc>();
   StreamSubscription _sub;
-
-  @override
-  void initState() {
-    super.initState();
-    _sub = _scrollOffsetBloc.listen((offset) {
-      _homeMenuBloc.updateHomeMenuState(
-          offset: offset, collapseMenuHeight: collapseMenuHeight);
-      if (menuScrollController.offset > 0 &&
-          _homeMenuBloc.state.collapsePercent < 1) {
-        menuScrollController.animateTo(0,
-            duration: Duration(milliseconds: 100), curve: Curves.linear);
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    menuScrollController.dispose();
-    _sub.cancel();
-    super.dispose();
-  }
+  Widget menuRow2;
+  List<Widget> menuItems;
 
   final gradientBg = Container(
       decoration: const BoxDecoration(
@@ -72,12 +53,10 @@ class _HomeMenuState extends BaseState<HomeMenu> {
   ));
 
   @override
-  Widget build(BuildContext context) {
-    if (userInfo.role == UserRole.EMPLOYEE) {
-      _homeMenuBloc.updateMenuHeight(homeMenuItemHeight + Dimens.px56);
-    }
-    final menuItems = [
-      if (userInfo.role != UserRole.EMPLOYEE)
+  void initState() {
+    super.initState();
+    menuItems = <Widget>[
+      if (userInfo.role != UserRole.EMPLOYEE) ...[
         HomeMenuItem(
           title: Strings.qlChiNhanh,
           icon: Images.ic_store,
@@ -85,21 +64,20 @@ class _HomeMenuState extends BaseState<HomeMenu> {
             context.push(PageIntent(screen: BrandListScreen));
           },
         ),
-      HomeMenuItem(
-        title: Strings.dsDichVu,
-        icon: Images.ic_service_list,
-        onTap: () {
-          context.push(PageIntent(screen: ServiceListScreen));
-        },
-      ),
-      HomeMenuItem(
-        title: Strings.dsSanPham,
-        icon: Images.ic_product,
-        onTap: () {
-          context.push(PageIntent(screen: ProdListScreen));
-        },
-      ),
-      if (userInfo.role != UserRole.EMPLOYEE)
+        HomeMenuItem(
+          title: Strings.dsDichVu,
+          icon: Images.ic_service_list,
+          onTap: () {
+            context.push(PageIntent(screen: ServiceListScreen));
+          },
+        ),
+        HomeMenuItem(
+          title: Strings.dsSanPham,
+          icon: Images.ic_product,
+          onTap: () {
+            context.push(PageIntent(screen: ProdListScreen));
+          },
+        ),
         HomeMenuItem(
           title: Strings.qlNhanVien,
           icon: Images.ic_person,
@@ -107,21 +85,20 @@ class _HomeMenuState extends BaseState<HomeMenu> {
             context.push(PageIntent(screen: StaffListScreen));
           },
         ),
-      HomeMenuItem(
-        title: Strings.dsKhachHang,
-        icon: Images.ic_user_list,
-        onTap: () {
-          context.push(PageIntent(screen: CustomerListScreen));
-        },
-      ),
-      HomeMenuItem(
-        title: Strings.dsLichHen,
-        icon: Images.ic_booking,
-        onTap: () {
-          context.push(PageIntent(screen: ReservationListScreen));
-        },
-      ),
-      if (userInfo.role != UserRole.EMPLOYEE) ...[
+        HomeMenuItem(
+          title: Strings.dsKhachHang,
+          icon: Images.ic_user_list,
+          onTap: () {
+            context.push(PageIntent(screen: CustomerListScreen));
+          },
+        ),
+        HomeMenuItem(
+          title: Strings.dsLichHen,
+          icon: Images.ic_booking,
+          onTap: () {
+            context.push(PageIntent(screen: ReservationListScreen));
+          },
+        ),
         HomeMenuItem(
           title: Strings.hoaHongNv,
           icon: Images.ic_commission,
@@ -138,9 +115,37 @@ class _HomeMenuState extends BaseState<HomeMenu> {
         ),
       ]
     ];
-    final menuRow1 = menuItems.getRange(0, 4);
-    final row2Items = menuItems.sublist(menuRow1.length, menuItems.length);
-    final menuRow2 = Column(
+
+    _sub = _scrollOffsetBloc.listen((offset) {
+      _homeMenuBloc.updateHomeMenuState(
+          offset: offset, collapseMenuHeight: collapseMenuHeight);
+      if (menuScrollController.offset > 0 &&
+          _homeMenuBloc.state.collapsePercent < 1) {
+        menuScrollController.animateTo(0,
+            duration: Duration(milliseconds: 100), curve: Curves.linear);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    menuScrollController.dispose();
+    _sub.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (userInfo.role == UserRole.EMPLOYEE) {
+      _homeMenuBloc
+          .updateMenuHeight(homeMenuItemHeight * 2 + Dimens.px56 + Dimens.px6);
+    }
+    final row2Items = menuItems.isNullOrEmpty
+        ? <Widget>[]
+        : menuItems.sublist(menuItems
+        .getRange(0, 4)
+        .length, menuItems.length);
+    menuRow2 ??= Column(
       children: [
         Expanded(
           child: Container(),
