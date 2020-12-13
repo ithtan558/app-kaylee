@@ -138,13 +138,11 @@ class _HomeMenuState extends BaseState<HomeMenu> {
   Widget build(BuildContext context) {
     if (userInfo.role == UserRole.EMPLOYEE) {
       _homeMenuBloc
-          .updateMenuHeight(homeMenuItemHeight * 2 + Dimens.px56 + Dimens.px6);
+          .updateMenuHeight(homeMenuItemHeight * 2 + Dimens.px56 + Dimens.px7);
     }
     final row2Items = menuItems.isNullOrEmpty
         ? <Widget>[]
-        : menuItems.sublist(menuItems
-        .getRange(0, 4)
-        .length, menuItems.length);
+        : menuItems.sublist(menuItems.getRange(0, 4).length, menuItems.length);
     menuRow2 ??= Column(
       children: [
         Expanded(
@@ -191,7 +189,6 @@ class _HomeMenuState extends BaseState<HomeMenu> {
         ]),
       ),
       Positioned.fill(
-        top: userInfo.role == UserRole.EMPLOYEE ? Dimens.px56 : 0,
         child: Column(
           children: [
             Expanded(
