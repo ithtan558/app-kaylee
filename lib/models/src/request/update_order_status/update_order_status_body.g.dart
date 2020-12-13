@@ -9,7 +9,7 @@ part of 'update_order_status_body.dart';
 Map<String, dynamic> _$UpdateOrderStatusBodyToJson(
     UpdateOrderStatusBody instance) {
   final val = <String, dynamic>{
-    'order_status_id': parseToIntFromOrderStatus(instance.status),
+    'order_status_id': _$OrderStatusEnumMap[instance.status],
     'id': instance.id,
   };
 
@@ -23,3 +23,15 @@ Map<String, dynamic> _$UpdateOrderStatusBodyToJson(
       _orderCancellationReasonToJson(instance.reason));
   return val;
 }
+
+const _$OrderStatusEnumMap = {
+  OrderStatus.ordered: 1,
+  OrderStatus.waiting: 2,
+  OrderStatus.finished: 3,
+  OrderStatus.not_paid: 4,
+  OrderStatus.cancel: 5,
+  OrderStatus.accepted: 6,
+  OrderStatus.refund: 7,
+  OrderStatus.refundSalon: 8,
+  OrderStatus.unknown: null,
+};

@@ -13,7 +13,7 @@ class UpdateOrderStatusBody {
     this.reason,
   });
 
-  @JsonKey(toJson: parseToIntFromOrderStatus, name: 'order_status_id')
+  @JsonKey(name: 'order_status_id')
   OrderStatus status;
   int id;
   @JsonKey(
