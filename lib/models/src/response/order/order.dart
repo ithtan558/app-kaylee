@@ -49,10 +49,7 @@ class Order {
 
   ///số tiền thanh toán
   int amount;
-  @JsonKey(
-      fromJson: parseOrderStatusFromInt,
-      toJson: parseToIntFromOrderStatus,
-      name: 'order_status_id')
+  @JsonKey(name: 'order_status_id', unknownEnumValue: OrderStatus.unknown)
   OrderStatus status;
   @JsonKey(name: 'order_reason_cancel')
   OrderCancellationReason cancellationReason;
@@ -108,57 +105,17 @@ class Order {
   List<OrderItem> orderItems;
 }
 
-OrderStatus parseOrderStatusFromInt(status) {
-  switch (status) {
-    case 1:
-      return OrderStatus.ordered;
-    case 2:
-      return OrderStatus.waiting;
-    case 3:
-      return OrderStatus.finished;
-    case 4:
-      return OrderStatus.not_paid;
-    case 5:
-      return OrderStatus.cancel;
-    case 6:
-      return OrderStatus.accepted;
-    case 7:
-      return OrderStatus.refund;
-    default:
-      return null;
-  }
-}
-
-int parseToIntFromOrderStatus(OrderStatus status) {
-  switch (status) {
-    case OrderStatus.ordered:
-      return 1;
-    case OrderStatus.waiting:
-      return 2;
-    case OrderStatus.finished:
-      return 3;
-    case OrderStatus.not_paid:
-      return 4;
-    case OrderStatus.cancel:
-      return 5;
-    case OrderStatus.accepted:
-      return 6;
-    case OrderStatus.refund:
-      return 7;
-    default:
-      return null;
-  }
-}
-
 enum OrderStatus {
-  ordered,
-  waiting,
-  finished,
-  not_paid,
-  cancel,
-  accepted,
-  refund,
-}
+@JsonValue(1)
+  ordered,@JsonValue(2)
+waiting,@JsonValue(3)
+finished,@JsonValue(4)
+not_paid,@JsonValue(5)
+cancel,@JsonValue(6)
+accepted,@JsonValue(7)
+refund,@JsonValue(8)
+refundSalon,@JsonValue(null)
+unknown,}
 
 String orderStatus2Title({OrderStatus status}) {
   switch (status) {
@@ -170,6 +127,7 @@ String orderStatus2Title({OrderStatus status}) {
       return Strings.hoanThanh;
     case OrderStatus.not_paid:
       return Strings.chuaThanhToan;
+    case OrderStatus.refundSalon:
     case OrderStatus.cancel:
       return Strings.huy;
     case OrderStatus.accepted:
