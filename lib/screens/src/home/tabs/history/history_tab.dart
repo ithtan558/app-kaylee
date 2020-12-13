@@ -76,7 +76,7 @@ class _HistoryTabState extends KayleeState<HistoryTab>
                 padding: EdgeInsets.all(Dimens.px16),
                 itemBuilder: (c, index) {
                   final item = state.items.elementAt(index);
-                  return HistoryItem(
+                  return HistoryItem.newInstance(
                     order: item,
                   );
                 },
