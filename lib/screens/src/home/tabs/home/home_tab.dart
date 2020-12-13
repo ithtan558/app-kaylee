@@ -5,11 +5,13 @@ import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kaylee/base/kaylee_state.dart';
+import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/home/tabs/home/bloc/scroll_offset_bloc.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/home_menu.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/supplier_list/supplier_list.dart';
+import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/src/kaylee_text.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
@@ -32,6 +34,8 @@ class _HomeTabState extends KayleeState<HomeTab>
     with AutomaticKeepAliveClientMixin {
   ScrollOffsetBloc get scrollOffsetBloc => context.bloc<ScrollOffsetBloc>();
 
+  UserInfo get userInfo => context.user.getUserInfo().userInfo;
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -51,13 +55,14 @@ class _HomeTabState extends KayleeState<HomeTab>
             children: <Widget>[
               BlocProvider<ScrollOffsetBloc>.value(
                   value: scrollOffsetBloc, child: HomeMenu.newInstance()),
-              Expanded(
-                child: SupplierList.newInstance(
-                  onScroll: (offset) {
-                    scrollOffsetBloc.addOffset(offset);
-                  },
+              if (userInfo.role != UserRole.EMPLOYEE)
+                Expanded(
+                  child: SupplierList.newInstance(
+                    onScroll: (offset) {
+                      scrollOffsetBloc.addOffset(offset);
+                    },
+                  ),
                 ),
-              ),
             ],
           ),
         ),
