@@ -31,7 +31,8 @@ UserInfo _$UserInfoFromJson(Map<String, dynamic> json) {
     wards: json['wards'] == null
         ? null
         : Ward.fromJson(json['wards'] as Map<String, dynamic>),
-    role: _$enumDecodeNullable(_$UserRoleEnumMap, json['role_id']),
+    role: _$enumDecodeNullable(_$UserRoleEnumMap, json['role_id'],
+        unknownValue: UserRole.EMPLOYEE),
   );
 }
 
