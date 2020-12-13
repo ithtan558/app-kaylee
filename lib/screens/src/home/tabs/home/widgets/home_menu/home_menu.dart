@@ -73,11 +73,11 @@ class _HomeMenuState extends BaseState<HomeMenu> {
 
   @override
   Widget build(BuildContext context) {
-    if (userInfo.userRole == UserRole.EMPLOYEE) {
+    if (userInfo.role == UserRole.EMPLOYEE) {
       _homeMenuBloc.updateMenuHeight(homeMenuItemHeight + Dimens.px56);
     }
     final menuItems = [
-      if (userInfo.userRole != UserRole.EMPLOYEE)
+      if (userInfo.role != UserRole.EMPLOYEE)
         HomeMenuItem(
           title: Strings.qlChiNhanh,
           icon: Images.ic_store,
@@ -99,7 +99,7 @@ class _HomeMenuState extends BaseState<HomeMenu> {
           context.push(PageIntent(screen: ProdListScreen));
         },
       ),
-      if (userInfo.userRole != UserRole.EMPLOYEE)
+      if (userInfo.role != UserRole.EMPLOYEE)
         HomeMenuItem(
           title: Strings.qlNhanVien,
           icon: Images.ic_person,
@@ -121,7 +121,7 @@ class _HomeMenuState extends BaseState<HomeMenu> {
           context.push(PageIntent(screen: ReservationListScreen));
         },
       ),
-      if (userInfo.userRole != UserRole.EMPLOYEE) ...[
+      if (userInfo.role != UserRole.EMPLOYEE) ...[
         HomeMenuItem(
           title: Strings.hoaHongNv,
           icon: Images.ic_commission,
@@ -186,7 +186,7 @@ class _HomeMenuState extends BaseState<HomeMenu> {
         ]),
       ),
       Positioned.fill(
-        top: userInfo.userRole == UserRole.EMPLOYEE ? Dimens.px56 : 0,
+        top: userInfo.role == UserRole.EMPLOYEE ? Dimens.px56 : 0,
         child: Column(
           children: [
             Expanded(
