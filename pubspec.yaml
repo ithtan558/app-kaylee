@@ -47,7 +47,7 @@ dev_dependencies:
 
   # Tools to write binaries that run builders(In this project, we use it
   # for json_serializable, retrofit)
-  build_runner: ^1.10.9
+  build_runner: ^1.10.11
   retrofit_generator: ^1.4.0+2
 
 
