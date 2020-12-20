@@ -33,7 +33,7 @@ class DeepLinkHelper {
             ),
           );
         }
-      } else if (uri.path == 'notification/detail') {
+      } else if (uri.path == '/notification/detail') {
         final notificationId =
             int.tryParse(uri.queryParameters['notification_id']);
         if (notificationId.isNotNull) {
