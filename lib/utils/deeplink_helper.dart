@@ -47,12 +47,20 @@ class DeepLinkHelper {
             ),
           );
         }
+      } else if (uri.path == '/supplier') {
+        final supplierId = int.tryParse(uri.queryParameters['supplier_id']);
+        if (supplierId.isNotNull) {
+          return PageIntent(
+            screen: SupplierProdListScreen,
+            bundle: Bundle(models.Supplier(id: supplierId)),
+          );
+        }
       }
     }
     return null;
   }
 
-  ///[ifNOtFound] trả về page chỉ định khi [link] ko xác định đc trang cần navigate tới
+  ///[ifNOtFound]: khi [link] ko xác định đc trang cần navigate tới => return screen đc chỉ định
   static PageIntent handleNotificationLink(
       {String link, PageIntent ifNOtFound}) {
     return handleLink(link: link) ?? ifNOtFound;
