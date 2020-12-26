@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:anth_package/anth_package.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
@@ -137,11 +138,26 @@ class _SupplierProductDetailScreenState
                     left: Dimens.px16,
                     right: Dimens.px16,
                     bottom: Dimens.px16),
-                child: HtmlWidget(
-                  product.description ?? '',
-                  textStyle: TextStyles.normal16W400,
-                  webView: true,
-                ),
+                child: HtmlWidget(product.description ?? '',
+                    textStyle: TextStyles.normal16W400,
+                    customWidgetBuilder: (element) {
+                  if (element.localName == 'img') {
+                    double width =
+                        double.tryParse(element.attributes['width'] ?? '');
+                    double height =
+                        double.tryParse(element.attributes['height'] ?? '');
+                    if (width.isNotNull &&
+                        height.isNotNull &&
+                        height > context.screenSize.width) {
+                      return CachedNetworkImage(
+                        imageUrl: element.attributes['src'] ?? '',
+                        width: width,
+                        fit: BoxFit.cover,
+                      );
+                    }
+                  }
+                  return null;
+                }),
               ),
             ],
           );
