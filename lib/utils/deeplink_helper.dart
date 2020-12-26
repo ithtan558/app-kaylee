@@ -23,9 +23,9 @@ class DeepLinkHelper {
         final supplierId = int.tryParse(uri.queryParameters['supplier_id']);
         if (productId.isNotNull && supplierId.isNotNull) {
           return PageIntent(
-            screen: ProductDetailScreen,
+            screen: SupplierProductDetailScreen,
             bundle: Bundle(
-              ProductDetailScreenData(
+              SupplierProductDetailScreenData(
                 product: models.Product(id: productId),
                 supplier: models.Supplier(id: supplierId),
                 openFrom: ProductDetailScreenOpenFrom.notification,
@@ -33,7 +33,7 @@ class DeepLinkHelper {
             ),
           );
         }
-      } else if (uri.path == 'notification/detail') {
+      } else if (uri.path == '/notification/detail') {
         final notificationId =
             int.tryParse(uri.queryParameters['notification_id']);
         if (notificationId.isNotNull) {
@@ -47,12 +47,20 @@ class DeepLinkHelper {
             ),
           );
         }
+      } else if (uri.path == '/supplier') {
+        final supplierId = int.tryParse(uri.queryParameters['supplier_id']);
+        if (supplierId.isNotNull) {
+          return PageIntent(
+            screen: SupplierProdListScreen,
+            bundle: Bundle(models.Supplier(id: supplierId)),
+          );
+        }
       }
     }
     return null;
   }
 
-  ///[ifNOtFound] trả về page chỉ định khi [link] ko xác định đc trang cần navigate tới
+  ///[ifNOtFound]: khi [link] ko xác định đc trang cần navigate tới => return screen đc chỉ định
   static PageIntent handleNotificationLink(
       {String link, PageIntent ifNOtFound}) {
     return handleLink(link: link) ?? ifNOtFound;

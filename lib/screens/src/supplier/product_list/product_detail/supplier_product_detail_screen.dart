@@ -4,7 +4,7 @@ import 'package:anth_package/anth_package.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/models/models.dart';
@@ -16,12 +16,12 @@ import 'package:kaylee/screens/src/supplier/product_list/product_detail/widgets/
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
-class ProductDetailScreenData {
+class SupplierProductDetailScreenData {
   Product product;
   Supplier supplier;
   final ProductDetailScreenOpenFrom openFrom;
 
-  ProductDetailScreenData(
+  SupplierProductDetailScreenData(
       {this.product,
       this.supplier,
       this.openFrom = ProductDetailScreenOpenFrom.productSupplierList});
@@ -32,33 +32,35 @@ enum ProductDetailScreenOpenFrom {
   notification,
 }
 
-class ProductDetailScreen extends StatefulWidget {
+class SupplierProductDetailScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<SupplierProdDetailBloc>(
       create: (context) => SupplierProdDetailBloc(
           productService: context.network.provideProductService(),
-          product: context.getArguments<ProductDetailScreenData>().product),
-      child: ProductDetailScreen._());
+          product:
+              context.getArguments<SupplierProductDetailScreenData>().product),
+      child: SupplierProductDetailScreen._());
 
-  ProductDetailScreen._();
+  SupplierProductDetailScreen._();
 
   @override
-  _ProductDetailScreenState createState() => new _ProductDetailScreenState();
+  _SupplierProductDetailScreenState createState() =>
+      new _SupplierProductDetailScreenState();
 }
 
-class _ProductDetailScreenState extends KayleeState<ProductDetailScreen>
+class _SupplierProductDetailScreenState
+    extends KayleeState<SupplierProductDetailScreen>
     implements ProductDetailAction {
   SupplierProdDetailBloc bloc;
   StreamSubscription sub;
   final _indicatorController = IndicatorController();
 
-  ProductDetailScreenData get data =>
-      context.getArguments<ProductDetailScreenData>();
+  SupplierProductDetailScreenData get data =>
+      context.getArguments<SupplierProductDetailScreenData>();
 
   @override
   void initState() {
     super.initState();
-    bloc = context.bloc<SupplierProdDetailBloc>()
-      ..action = this;
+    bloc = context.bloc<SupplierProdDetailBloc>()..action = this;
     sub = bloc.listen((state) {
       if (state.loading) {
         showLoading();
@@ -136,21 +138,27 @@ class _ProductDetailScreenState extends KayleeState<ProductDetailScreen>
                     left: Dimens.px16,
                     right: Dimens.px16,
                     bottom: Dimens.px16),
-                child: HtmlWidget(
-                  product.description ?? '',
-                  textStyle: TextStyles.hint16W400,
-                  customWidgetBuilder: (element) {
-                    if (element.localName == 'img' &&
-                        element.attributes.isNotNull) {
+                child: HtmlWidget(product.description ?? '',
+                    textStyle: TextStyles.normal16W400,
+                    customWidgetBuilder: (element) {
+                  if (element.localName == 'img') {
+                    double width =
+                        double.tryParse(element.attributes['width'] ?? '');
+                    double height =
+                        double.tryParse(element.attributes['height'] ?? '');
+                    //chỉ tự render khi image.height > width của device
+                    if (width.isNotNull &&
+                        height.isNotNull &&
+                        height > context.screenSize.width) {
                       return CachedNetworkImage(
                         imageUrl: element.attributes['src'] ?? '',
-                        width: double.infinity,
+                        width: width,
                         fit: BoxFit.cover,
                       );
                     }
-                    return null;
-                  },
-                ),
+                  }
+                  return null;
+                }),
               ),
             ],
           );

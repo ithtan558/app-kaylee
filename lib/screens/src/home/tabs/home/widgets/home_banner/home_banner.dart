@@ -67,11 +67,12 @@ class _HomeBannerState extends KayleeState<HomeBanner> {
               child: PageView(
                 controller: _pageController,
                 children: state.item
-                    .map((e) => _buildBanner(
-                          image: e.image,
+                    .map((banner) => _buildBanner(
+                          image: banner.image,
                           onTap: () {
+                            final url = banner.url;
                             final pageIntent =
-                                DeepLinkHelper.handleLink(link: e.url);
+                                DeepLinkHelper.handleLink(link: url);
                             if (pageIntent.isNotNull) pushScreen(pageIntent);
                           },
                         ))

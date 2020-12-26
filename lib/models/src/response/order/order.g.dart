@@ -11,7 +11,8 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
     id: json['id'] as int,
     code: json['code'] as String,
     amount: json['amount'] as int,
-    status: parseOrderStatusFromInt(json['order_status_id']),
+    status: _$enumDecodeNullable(_$OrderStatusEnumMap, json['order_status_id'],
+        unknownValue: OrderStatus.unknown),
     cancellationReason: json['order_reason_cancel'] == null
         ? null
         : OrderCancellationReason.fromJson(
@@ -61,7 +62,7 @@ Map<String, dynamic> _$OrderToJson(Order instance) => <String, dynamic>{
       'id': instance.id,
       'code': instance.code,
       'amount': instance.amount,
-      'order_status_id': parseToIntFromOrderStatus(instance.status),
+      'order_status_id': _$OrderStatusEnumMap[instance.status],
       'order_reason_cancel': instance.cancellationReason?.toJson(),
       'created_at': instance.createdAt?.toIso8601String(),
       'supplier_name': instance.supplierName,
@@ -86,8 +87,50 @@ Map<String, dynamic> _$OrderToJson(Order instance) => <String, dynamic>{
       'information_receive_address': instance.informationReceiveAddress,
       'information_receive_city_name': instance.informationReceiveCityName,
       'information_receive_district_name':
-          instance.informationReceiveDistrictName,
+      instance.informationReceiveDistrictName,
       'information_receive_wards_name': instance.informationReceiveWardsName,
       'information_receive_note': instance.informationReceiveNote,
       'order_details': instance.orderItems?.map((e) => e?.toJson())?.toList(),
     };
+
+T _$enumDecode<T>(Map<T, dynamic> enumValues,
+    dynamic source, {
+      T unknownValue,
+    }) {
+  if (source == null) {
+    throw ArgumentError('A value must be provided. Supported values: '
+        '${enumValues.values.join(', ')}');
+  }
+
+  final value = enumValues.entries
+      .singleWhere((e) => e.value == source, orElse: () => null)
+      ?.key;
+
+  if (value == null && unknownValue == null) {
+    throw ArgumentError('`$source` is not one of the supported values: '
+        '${enumValues.values.join(', ')}');
+  }
+  return value ?? unknownValue;
+}
+
+T _$enumDecodeNullable<T>(Map<T, dynamic> enumValues,
+    dynamic source, {
+      T unknownValue,
+    }) {
+  if (source == null) {
+    return null;
+  }
+  return _$enumDecode<T>(enumValues, source, unknownValue: unknownValue);
+}
+
+const _$OrderStatusEnumMap = {
+  OrderStatus.ordered: 1,
+  OrderStatus.waiting: 2,
+  OrderStatus.finished: 3,
+  OrderStatus.not_paid: 4,
+  OrderStatus.cancel: 5,
+  OrderStatus.accepted: 6,
+  OrderStatus.refund: 7,
+  OrderStatus.refundSalon: 8,
+  OrderStatus.unknown: null,
+};

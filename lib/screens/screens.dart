@@ -40,5 +40,5 @@ export 'src/supplier/my_orders/detail/my_order_detail_screen.dart';
 export 'src/supplier/my_orders/list/my_orders_screen.dart';
 export 'src/supplier/payment_info/payment_info_screen.dart';
 export 'src/supplier/product_list/list/supplier_prod_list_screen.dart';
-export 'src/supplier/product_list/product_detail/product_detail_screen.dart';
+export 'src/supplier/product_list/product_detail/supplier_product_detail_screen.dart';
 export 'src/supplier/receiver_info/receiver_info_screen.dart';

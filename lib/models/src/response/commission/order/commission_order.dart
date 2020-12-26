@@ -27,10 +27,7 @@ class CommissionOrder {
   String code;
   String name;
   int amount;
-  @JsonKey(
-      fromJson: parseOrderStatusFromInt,
-      toJson: parseToIntFromOrderStatus,
-      name: 'order_status_id')
+  @JsonKey(name: 'order_status_id', unknownEnumValue: OrderStatus.unknown)
   OrderStatus orderStatus;
   String createdAt;
 
