@@ -23,9 +23,9 @@ class DeepLinkHelper {
         final supplierId = int.tryParse(uri.queryParameters['supplier_id']);
         if (productId.isNotNull && supplierId.isNotNull) {
           return PageIntent(
-            screen: ProductDetailScreen,
+            screen: SupplierProductDetailScreen,
             bundle: Bundle(
-              ProductDetailScreenData(
+              SupplierProductDetailScreenData(
                 product: models.Product(id: productId),
                 supplier: models.Supplier(id: supplierId),
                 openFrom: ProductDetailScreenOpenFrom.notification,

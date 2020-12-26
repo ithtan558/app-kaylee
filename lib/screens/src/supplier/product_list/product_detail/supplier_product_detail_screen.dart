@@ -16,12 +16,12 @@ import 'package:kaylee/screens/src/supplier/product_list/product_detail/widgets/
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
-class ProductDetailScreenData {
+class SupplierProductDetailScreenData {
   Product product;
   Supplier supplier;
   final ProductDetailScreenOpenFrom openFrom;
 
-  ProductDetailScreenData(
+  SupplierProductDetailScreenData(
       {this.product,
       this.supplier,
       this.openFrom = ProductDetailScreenOpenFrom.productSupplierList});
@@ -32,33 +32,35 @@ enum ProductDetailScreenOpenFrom {
   notification,
 }
 
-class ProductDetailScreen extends StatefulWidget {
+class SupplierProductDetailScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<SupplierProdDetailBloc>(
       create: (context) => SupplierProdDetailBloc(
           productService: context.network.provideProductService(),
-          product: context.getArguments<ProductDetailScreenData>().product),
-      child: ProductDetailScreen._());
+          product:
+              context.getArguments<SupplierProductDetailScreenData>().product),
+      child: SupplierProductDetailScreen._());
 
-  ProductDetailScreen._();
+  SupplierProductDetailScreen._();
 
   @override
-  _ProductDetailScreenState createState() => new _ProductDetailScreenState();
+  _SupplierProductDetailScreenState createState() =>
+      new _SupplierProductDetailScreenState();
 }
 
-class _ProductDetailScreenState extends KayleeState<ProductDetailScreen>
+class _SupplierProductDetailScreenState
+    extends KayleeState<SupplierProductDetailScreen>
     implements ProductDetailAction {
   SupplierProdDetailBloc bloc;
   StreamSubscription sub;
   final _indicatorController = IndicatorController();
 
-  ProductDetailScreenData get data =>
-      context.getArguments<ProductDetailScreenData>();
+  SupplierProductDetailScreenData get data =>
+      context.getArguments<SupplierProductDetailScreenData>();
 
   @override
   void initState() {
     super.initState();
-    bloc = context.bloc<SupplierProdDetailBloc>()
-      ..action = this;
+    bloc = context.bloc<SupplierProdDetailBloc>()..action = this;
     sub = bloc.listen((state) {
       if (state.loading) {
         showLoading();

@@ -179,8 +179,8 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
                         name: item.name, image: item.image, price: item.price),
                     onTap: () {
                       pushScreen(PageIntent(
-                          screen: ProductDetailScreen,
-                          bundle: Bundle(ProductDetailScreenData(
+                          screen: SupplierProductDetailScreen,
+                          bundle: Bundle(SupplierProductDetailScreenData(
                             supplier: supplier,
                             product: item,
                           ))));

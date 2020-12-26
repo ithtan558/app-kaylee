@@ -38,8 +38,8 @@ mixin KayleeRouting on Routing {
         return StaffListScreen.newInstance();
       case CustomerListScreen:
         return CustomerListScreen.newInstance();
-      case ProductDetailScreen:
-        return ProductDetailScreen.newInstance();
+      case SupplierProductDetailScreen:
+        return SupplierProductDetailScreen.newInstance();
       case CartScreen:
         return CartScreen.newInstance();
       case ReceiverInfoScreen:
