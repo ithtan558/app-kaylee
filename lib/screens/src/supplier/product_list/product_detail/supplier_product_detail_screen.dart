@@ -1,10 +1,9 @@
 import 'dart:async';
 
 import 'package:anth_package/anth_package.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/models/models.dart';
@@ -140,18 +139,8 @@ class _SupplierProductDetailScreenState
                     bottom: Dimens.px16),
                 child: HtmlWidget(
                   product.description ?? '',
-                  textStyle: TextStyles.hint16W400,
-                  customWidgetBuilder: (element) {
-                    if (element.localName == 'img' &&
-                        element.attributes.isNotNull) {
-                      return CachedNetworkImage(
-                        imageUrl: element.attributes['src'] ?? '',
-                        width: double.infinity,
-                        fit: BoxFit.cover,
-                      );
-                    }
-                    return null;
-                  },
+                  textStyle: TextStyles.normal16W400,
+                  webView: true,
                 ),
               ),
             ],
