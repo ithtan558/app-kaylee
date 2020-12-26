@@ -146,6 +146,7 @@ class _SupplierProductDetailScreenState
                         double.tryParse(element.attributes['width'] ?? '');
                     double height =
                         double.tryParse(element.attributes['height'] ?? '');
+                    //chỉ tự render khi image.height > width của device
                     if (width.isNotNull &&
                         height.isNotNull &&
                         height > context.screenSize.width) {
