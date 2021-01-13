@@ -84,10 +84,11 @@ class _PrintBillDialogState extends KayleeState<PrintBillDialog> {
                       onPressed: () async {
                         if (snapshot.hasData) {
                           showLoading();
-                          await for (var page in Printing.raster(
-                            snapshot.data.save(),
+                          final raster = Printing.raster(
+                            await snapshot.data.save(),
                             dpi: 50,
-                          )) {
+                          );
+                          await for (var page in raster) {
                             ui.Image image =
                                 await page.toImage(); // ...or page.toPng()
                             final byteData = await image.toByteData(
