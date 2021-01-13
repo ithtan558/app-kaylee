@@ -201,13 +201,9 @@ class PdfModule {
                         ),
                       ],
                       decoration: BoxDecoration(
-                          border: BoxBorder(
+                          border: Border.all(
                               width: Dimens.px3,
                               style: BorderStyle.dashed,
-                              top: true,
-                              left: true,
-                              bottom: true,
-                              right: true,
                               color: PdfColor.fromInt(0xff000000)))),
                   ...?_getProductTableRow(order.orderItems),
                 ],
@@ -269,13 +265,22 @@ class PdfModule {
               ),
             ],
             decoration: BoxDecoration(
-              border: BoxBorder(
-                width: Dimens.px3,
-                style: BorderStyle.dashed,
-                left: true,
-                right: true,
-                bottom: true,
-                color: PdfColor.fromInt(0xff000000),
+              border: Border(
+                left: BorderSide(
+                  width: Dimens.px3,
+                  style: BorderStyle.dashed,
+                  color: PdfColor.fromInt(0xff000000),
+                ),
+                right: BorderSide(
+                  width: Dimens.px3,
+                  style: BorderStyle.dashed,
+                  color: PdfColor.fromInt(0xff000000),
+                ),
+                bottom: BorderSide(
+                  width: Dimens.px3,
+                  style: BorderStyle.dashed,
+                  color: PdfColor.fromInt(0xff000000),
+                ),
               ),
             ),
           ),
