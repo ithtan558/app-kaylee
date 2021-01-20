@@ -27,7 +27,7 @@ dependencies:
   wifi: ^0.1.5
   video_player: ^1.0.1
   chewie: ^0.12.1+1
-  printing: ^3.7.2
+  printing: ^4.0.0
   anth_package:
     path: ../anth_package
 #    git:
