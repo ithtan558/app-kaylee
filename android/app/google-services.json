@@ -23,6 +23,59 @@
           }
         },
         {
+          "client_id": "165119837573-r044clbsnbr7fa509lh5kti66nqtcd8l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kaylee.android",
+            "certificate_hash": "08565ef0a7099cc9cb6711e0bc1e00aa3ab7521f"
+          }
+        },
+        {
+          "client_id": "165119837573-bl4n9hsr8edjfb159prh8k46q0iqemhn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAagbsoVR_2xZ2-l0FZCYr98wEn0QhPV3Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "165119837573-bl4n9hsr8edjfb159prh8k46q0iqemhn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "165119837573-qmsmfn7hs270ca3g3ri3ubj7uudieg6q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.kaylee.ios",
+                "app_store_id": "1530411047"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:165119837573:android:39fa739ca474c60e55f0ec",
+        "android_client_info": {
+          "package_name": "com.kaylee.android.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "165119837573-falca3dspbkqfcug9f900g8ia20f6lko.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kaylee.android.dev",
+            "certificate_hash": "63ef0eacbeec91e565980b9d0e69748c76d765f9"
+          }
+        },
+        {
           "client_id": "165119837573-bl4n9hsr8edjfb159prh8k46q0iqemhn.apps.googleusercontent.com",
           "client_type": 3
         }
