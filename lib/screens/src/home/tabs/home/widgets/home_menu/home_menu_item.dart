@@ -51,6 +51,5 @@ class HomeMenuItem extends StatelessWidget {
         ),
       ),
     );
-    ;
   }
 }
