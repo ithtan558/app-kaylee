@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:image_picker/image_picker.dart' as imagePicker;
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/widgets.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -296,9 +296,10 @@ class _ImageGridState extends BaseState<_ImageGrid> {
     final Permission permission =
     Platform.isAndroid ? Permission.storage : Permission.photos;
     if (await permission.isGranted) {
-      final pickedFile = await ImagePicker()
-          .getImage(
-          source: ImageSource.gallery, maxWidth: 2020, maxHeight: 2020);
+      final pickedFile = await imagePicker.ImagePicker().getImage(
+          source: imagePicker.ImageSource.gallery,
+          maxWidth: 2020,
+          maxHeight: 2020);
       File selectedFile;
       if (pickedFile.isNotNull) {
         selectedFile = File(pickedFile.path);
