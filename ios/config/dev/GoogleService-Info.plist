@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>165119837573-scdamjnp5h1medqrvnl1uguc16s55fc2.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.165119837573-scdamjnp5h1medqrvnl1uguc16s55fc2</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>165119837573-19765lad551jb70hiobotnh2f0535jlc.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAIy1h5tC5kNMDpWwBcuHweXR42WjShV8o</string>
+	<key>GCM_SENDER_ID</key>
+	<string>165119837573</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.kaylee.ios.dev</string>
+	<key>PROJECT_ID</key>
+	<string>kaylee-d2522</string>
+	<key>STORAGE_BUCKET</key>
+	<string>kaylee-d2522.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:165119837573:ios:7056aef3764d27b355f0ec</string>
+	<key>DATABASE_URL</key>
+	<string>https://kaylee-d2522.firebaseio.com</string>
+</dict>
+</plist>
