@@ -68,19 +68,9 @@ class _SupplierListState extends State<SupplierList> {
         controller: _bloc,
         child: BlocBuilder<SupplierListBloc, LoadMoreModel>(
           builder: (context, state) {
-            int itemCount = (state.items?.length ?? 0);
-            final limit = 10;
-            //số lượng item rỗng, muốn thêm vào sau list supplier
-            //=> mục đích để cho listview scroll đc, refresh đc
-            final addingEmptyItemCount = limit - itemCount;
-
-            //nếu số lượng item supplier lớn hơn limit( tức 10 item) thì lấy item count là số item supplier
-            //nếu số lượng item < limit thì lấy sô item supplier hiện tại + số lượng còn thiếu => để cho listview luôn có số lượng item >= 10
-            final expectItemCount = itemCount +
-                (addingEmptyItemCount > 0 ? addingEmptyItemCount : 0);
             return KayleeListView(
               controller: scrollController,
-              physics: BouncingScrollPhysics(),
+              physics: AlwaysScrollableScrollPhysics(),
               padding: const EdgeInsets.only(bottom: Dimens.px16),
               itemBuilder: (c, index) {
                 if (index == 0) {
@@ -89,17 +79,14 @@ class _SupplierListState extends State<SupplierList> {
                 } else if (index == 1) {
                   //index cho title của list `Danh sách nhà cung cấp
                   return listTitle;
-                } else if (index - 2 >= 0 && index - 2 < itemCount) {
+                } else {
                   //index của item supplier
                   return SupplierItem(
                     supplier: state.items.elementAt(index - 2),
                   );
-                } else {
-                  //index của những item rỗng
-                  return Container(height: Dimens.px46);
                 }
               },
-              itemCount: 2 + expectItemCount,
+              itemCount: 2 + (state.items?.length ?? 0),
               separatorBuilder: (BuildContext context, int index) {
                 return Container(
                   height: index > 1 ? Dimens.px16 : 0,
