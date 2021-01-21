@@ -26,7 +26,7 @@ dependencies:
   ping_discover_network: ^0.2.0+1
   wifi: ^0.1.5
   video_player: ^1.0.1
-  chewie: ^0.12.1+1
+  chewie: ^0.12.2
   printing: ^4.0.0
   anth_package:
     path: ../anth_package

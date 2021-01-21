@@ -168,7 +168,7 @@ packages:
       name: chewie
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.12.1+1"
+    version: "0.12.2"
   cli_util:
     dependency: transitive
     description:
@@ -207,11 +207,9 @@ packages:
   core_plugin:
     dependency: transitive
     description:
-      path: "."
-      ref: "0.5.1"
-      resolved-ref: cecb9cf92c6473bb86e3fd610491246c30e20dd2
-      url: "https://github.com/tungpham6195/flutter.core_plugin.git"
-    source: git
+      path: "../../../FlutterProjects/my_packages/flutter.core_plugin"
+      relative: true
+    source: path
     version: "0.5.1"
   coverage:
     dependency: transitive
