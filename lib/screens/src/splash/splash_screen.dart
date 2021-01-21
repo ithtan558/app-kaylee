@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:anth_package/anth_package.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/res/res.dart';
@@ -29,7 +30,17 @@ class _SplashScreenState extends BaseState<SplashScreen> {
   void initState() {
     super.initState();
     bloc = context.bloc<SplashScreenBloc>();
-    bloc.config();
+    RemoteConfig.instance.then((value) async {
+      value.setDefaults(context.appConfig.defaultConfig);
+      await value.setConfigSettings(RemoteConfigSettings(
+        debugMode: kDebugMode,
+      ));
+      await value.fetch(expiration: Duration(hours: 23));
+      await value.activateFetched();
+      context.appConfig.setupConfig(value.getAll());
+      context.network.dio.options.baseUrl = context.appConfig.baseUrl;
+      bloc.config();
+    });
     _sub = context.bloc<AppBloc>().listen((state) {
       if (state is DoneSetupLoggedInState) {
         if (ModalRoute.of(context).isCurrent) {
@@ -79,7 +90,7 @@ class _SplashScreenState extends BaseState<SplashScreen> {
                         ),
                         Container(
                           margin:
-                          const EdgeInsets.symmetric(vertical: Dimens.px32),
+                              const EdgeInsets.symmetric(vertical: Dimens.px32),
                           child: Go2RegisterText(),
                         )
                       ],
