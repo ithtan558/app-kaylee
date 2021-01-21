@@ -3,10 +3,11 @@ import 'dart:io';
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kaylee/main.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/widgets.dart';
 import 'package:permission_handler/permission_handler.dart';
+
+BuildContext dialogContext;
 
 Future<T> showKayleeBottomSheet<T>(BuildContext context,
     {@required ScrollableWidgetBuilder builder,
@@ -294,7 +295,7 @@ class KayleeAlertDialogView extends StatelessWidget {
 
   ///show cupertino dialog với [message] truyền vào
   factory KayleeAlertDialogView.message(
-      {Message message, List<KayleeAlertDialogAction> actions}) =>
+          {Message message, List<KayleeAlertDialogAction> actions}) =>
       KayleeAlertDialogView(
         title: message?.title,
         content: message?.content,
@@ -309,17 +310,18 @@ class KayleeAlertDialogView extends StatelessWidget {
     return CupertinoAlertDialog(
       title: title.isNotNull
           ? Text(
-        title,
-      )
+              title,
+            )
           : null,
-      content: contentWidget ?? (content.isNotNull
-          ? Padding(
-        padding: const EdgeInsets.only(top: Dimens.px3),
-        child: Text(
-          content,
-        ),
-      )
-          : null),
+      content: contentWidget ??
+          (content.isNotNull
+              ? Padding(
+                  padding: const EdgeInsets.only(top: Dimens.px3),
+                  child: Text(
+                    content,
+                  ),
+                )
+              : null),
       actions: actions ?? [],
     );
   }
