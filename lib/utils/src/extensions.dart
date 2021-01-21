@@ -1,5 +1,6 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/application_config.dart';
 import 'package:kaylee/components/components.dart';
 
 extension KayleeBuildContextExtension on BuildContext {
@@ -12,6 +13,8 @@ extension KayleeBuildContextExtension on BuildContext {
   FcmModule get fcm => this.repository<FcmModule>();
 
   RepositoriesModule get repos => this.repository<RepositoriesModule>();
+
+  ApplicationConfig get appConfig => this.repository<ApplicationConfig>();
 }
 
 extension DateTimeExtension on DateTime {
