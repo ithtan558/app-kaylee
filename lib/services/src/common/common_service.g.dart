@@ -29,12 +29,15 @@ class _CommonService implements CommonService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<Content>.fromJson(_result.data);
+    final value = ResponseModel<Content>.fromJson(
+      _result.data,
+      (json) => Content.fromJson(json),
+    );
     return value;
   }
 
   @override
-  Future<ResponseModel<City>> getCity() async {
+  Future<ResponseModel<List<City>>> getCity() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
@@ -46,12 +49,16 @@ class _CommonService implements CommonService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<City>.fromJson(_result.data);
+    final value = ResponseModel<List<City>>.fromJson(
+        _result.data,
+        (json) => (json as List<dynamic>)
+            .map<City>((i) => City.fromJson(i as Map<String, dynamic>))
+            .toList());
     return value;
   }
 
   @override
-  Future<ResponseModel<District>> getDistrict(city) async {
+  Future<ResponseModel<List<District>>> getDistrict(city) async {
     ArgumentError.checkNotNull(city, 'city');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -65,12 +72,16 @@ class _CommonService implements CommonService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<District>.fromJson(_result.data);
+    final value = ResponseModel<List<District>>.fromJson(
+        _result.data,
+        (json) => (json as List<dynamic>)
+            .map<District>((i) => District.fromJson(i as Map<String, dynamic>))
+            .toList());
     return value;
   }
 
   @override
-  Future<ResponseModel<Ward>> getWard(district) async {
+  Future<ResponseModel<List<Ward>>> getWard(district) async {
     ArgumentError.checkNotNull(district, 'district');
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -84,7 +95,11 @@ class _CommonService implements CommonService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<Ward>.fromJson(_result.data);
+    final value = ResponseModel<List<Ward>>.fromJson(
+        _result.data,
+        (json) => (json as List<dynamic>)
+            .map<Ward>((i) => Ward.fromJson(i as Map<String, dynamic>))
+            .toList());
     return value;
   }
 }

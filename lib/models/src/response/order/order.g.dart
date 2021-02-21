@@ -87,16 +87,17 @@ Map<String, dynamic> _$OrderToJson(Order instance) => <String, dynamic>{
       'information_receive_address': instance.informationReceiveAddress,
       'information_receive_city_name': instance.informationReceiveCityName,
       'information_receive_district_name':
-      instance.informationReceiveDistrictName,
+          instance.informationReceiveDistrictName,
       'information_receive_wards_name': instance.informationReceiveWardsName,
       'information_receive_note': instance.informationReceiveNote,
       'order_details': instance.orderItems?.map((e) => e?.toJson())?.toList(),
     };
 
-T _$enumDecode<T>(Map<T, dynamic> enumValues,
-    dynamic source, {
-      T unknownValue,
-    }) {
+T _$enumDecode<T>(
+  Map<T, dynamic> enumValues,
+  dynamic source, {
+  T unknownValue,
+}) {
   if (source == null) {
     throw ArgumentError('A value must be provided. Supported values: '
         '${enumValues.values.join(', ')}');
@@ -113,10 +114,11 @@ T _$enumDecode<T>(Map<T, dynamic> enumValues,
   return value ?? unknownValue;
 }
 
-T _$enumDecodeNullable<T>(Map<T, dynamic> enumValues,
-    dynamic source, {
-      T unknownValue,
-    }) {
+T _$enumDecodeNullable<T>(
+  Map<T, dynamic> enumValues,
+  dynamic source, {
+  T unknownValue,
+}) {
   if (source == null) {
     return null;
   }

@@ -2,11 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
 
 class KayleeGridView extends StatelessWidget {
+  static SliverGridDelegateWithFixedCrossAxisCount gridDelegate(
+          {int crossAxisCount = 3,
+          double crossAxisSpacing = Dimens.px16,
+          double mainAxisSpacing = Dimens.px16,
+          double childAspectRatio = 1}) =>
+      SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: crossAxisCount,
+          crossAxisSpacing: crossAxisSpacing,
+          mainAxisSpacing: mainAxisSpacing,
+          childAspectRatio: childAspectRatio);
+
   final EdgeInsets padding;
   final ScrollPhysics physics;
   final bool shrinkWrap;
   final int crossAxisCount;
-  final int mainAxisSpacing;
+  final double crossAxisSpacing;
+  final double mainAxisSpacing;
   final IndexedWidgetBuilder itemBuilder;
   final int itemCount;
   final double childAspectRatio;
@@ -18,6 +30,7 @@ class KayleeGridView extends StatelessWidget {
       this.physics,
       this.shrinkWrap,
       this.crossAxisCount,
+      this.crossAxisSpacing,
       this.mainAxisSpacing,
       this.childAspectRatio,
       this.itemCount,
@@ -29,12 +42,13 @@ class KayleeGridView extends StatelessWidget {
     return GridView.builder(
       padding: padding ?? EdgeInsets.all(Dimens.px16),
       physics: physics,
+      gridDelegate: gridDelegate(
+        childAspectRatio: childAspectRatio ?? 1,
+        crossAxisCount: crossAxisCount ?? 3,
+        crossAxisSpacing: crossAxisSpacing ?? Dimens.px16,
+        mainAxisSpacing: mainAxisSpacing ?? Dimens.px16,
+      ),
       shrinkWrap: shrinkWrap ?? false,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: crossAxisCount ?? 3,
-          crossAxisSpacing: crossAxisCount ?? Dimens.px16,
-          mainAxisSpacing: mainAxisSpacing ?? Dimens.px16,
-          childAspectRatio: childAspectRatio ?? 1),
       itemBuilder: (context, index) {
         if (index == length - 1) {
           //build loading

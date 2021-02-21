@@ -31,7 +31,7 @@ class MyOrdersScreenBloc extends Cubit<LoadMoreModel<Order>>
         endDate: date.toFormatString(pattern: dateFormat),
       ),
       onSuccess: ({message, result}) {
-        final orders = (result as Orders).items;
+        final orders = (result as PageData<Order>).items;
         completeRefresh();
         emit(LoadMoreModel.copy(state
           ..loading = false

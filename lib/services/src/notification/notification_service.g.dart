@@ -29,12 +29,15 @@ class _NotificationService implements NotificationService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<NotificationCount>.fromJson(_result.data);
+    final value = ResponseModel<NotificationCount>.fromJson(
+      _result.data,
+      (json) => NotificationCount.fromJson(json),
+    );
     return value;
   }
 
   @override
-  Future<ResponseModel<Notifications>> getNotifications(
+  Future<ResponseModel<PageData<Notification>>> getNotifications(
       {page, limit, sort, keyword}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
@@ -53,12 +56,18 @@ class _NotificationService implements NotificationService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<Notifications>.fromJson(_result.data);
+    final value = ResponseModel<PageData<Notification>>.fromJson(
+      _result.data,
+      (json) => PageData<Notification>.fromJson(
+        json,
+        (json) => Notification.fromJson(json),
+      ),
+    );
     return value;
   }
 
   @override
-  Future<ResponseModel<Notifications>> deleteAll() async {
+  Future<ResponseModel<dynamic>> deleteAll() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
@@ -71,7 +80,10 @@ class _NotificationService implements NotificationService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<Notifications>.fromJson(_result.data);
+    final value = ResponseModel<dynamic>.fromJson(
+      _result.data,
+      (json) => json as dynamic,
+    );
     return value;
   }
 
@@ -90,7 +102,10 @@ class _NotificationService implements NotificationService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    final value = ResponseModel<dynamic>.fromJson(
+      _result.data,
+      (json) => json as dynamic,
+    );
     return value;
   }
 
@@ -108,7 +123,10 @@ class _NotificationService implements NotificationService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<Notification>.fromJson(_result.data);
+    final value = ResponseModel<Notification>.fromJson(
+      _result.data,
+      (json) => Notification.fromJson(json),
+    );
     return value;
   }
 
@@ -119,7 +137,6 @@ class _NotificationService implements NotificationService {
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(body?.toJson() ?? <String, dynamic>{});
-    _data.removeWhere((k, v) => v == null);
     final _result = await _dio.request<Map<String, dynamic>>(
         'notification/update-status',
         queryParameters: queryParameters,
@@ -129,7 +146,10 @@ class _NotificationService implements NotificationService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    final value = ResponseModel<dynamic>.fromJson(
+      _result.data,
+      (json) => json as dynamic,
+    );
     return value;
   }
 }

@@ -16,7 +16,7 @@ class _EmployeeService implements EmployeeService {
   String baseUrl;
 
   @override
-  Future<ResponseModel<Employees>> getEmployees(
+  Future<ResponseModel<PageData<Employee>>> getEmployees(
       {page, limit, keyword, sort, brandId, cityId, districtIds}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
@@ -38,12 +38,19 @@ class _EmployeeService implements EmployeeService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<Employees>.fromJson(_result.data);
+    final value = ResponseModel<PageData<Employee>>.fromJson(
+      _result.data,
+      (json) => PageData<Employee>.fromJson(
+        json,
+        (json) => Employee.fromJson(json),
+      ),
+    );
     return value;
   }
 
   @override
-  Future<ResponseModel<Employee>> findEmployees({keyword, brandId}) async {
+  Future<ResponseModel<List<Employee>>> findEmployees(
+      {keyword, brandId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'keyword': keyword,
@@ -60,7 +67,11 @@ class _EmployeeService implements EmployeeService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<Employee>.fromJson(_result.data);
+    final value = ResponseModel<List<Employee>>.fromJson(
+        _result.data,
+        (json) => (json as List<dynamic>)
+            .map<Employee>((i) => Employee.fromJson(i as Map<String, dynamic>))
+            .toList());
     return value;
   }
 
@@ -79,7 +90,10 @@ class _EmployeeService implements EmployeeService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<Employee>.fromJson(_result.data);
+    final value = ResponseModel<Employee>.fromJson(
+      _result.data,
+      (json) => Employee.fromJson(json),
+    );
     return value;
   }
 
@@ -156,7 +170,10 @@ class _EmployeeService implements EmployeeService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    final value = ResponseModel<dynamic>.fromJson(
+      _result.data,
+      (json) => json as dynamic,
+    );
     return value;
   }
 
@@ -239,7 +256,10 @@ class _EmployeeService implements EmployeeService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    final value = ResponseModel<dynamic>.fromJson(
+      _result.data,
+      (json) => json as dynamic,
+    );
     return value;
   }
 
@@ -258,7 +278,10 @@ class _EmployeeService implements EmployeeService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    final value = ResponseModel<dynamic>.fromJson(
+      _result.data,
+      (json) => json as dynamic,
+    );
     return value;
   }
 }

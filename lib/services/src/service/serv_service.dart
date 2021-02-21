@@ -11,10 +11,10 @@ abstract class ServService {
   factory ServService(Dio dio) = _ServService;
 
   @GET('service-category/all')
-  Future<ResponseModel<ServiceCate>> getCategories();
+  Future<ResponseModel<List<ServiceCate>>> getCategories();
 
   @GET('service-category')
-  Future<ResponseModel<ServCategories>> getCategoryList({
+  Future<ResponseModel<PageData<ServiceCate>>> getCategoryList({
     @Query('page') int page,
     @Query('limit') int limit,
     @Query('sort') String sort,
@@ -44,7 +44,7 @@ abstract class ServService {
   Future<ResponseModel> deleteServiceCate({@Path() int cateId});
 
   @GET('service')
-  Future<ResponseModel<Services>> getServices({
+  Future<ResponseModel<PageData<Service>>> getServices({
     @Query('keyword') String keyword,
     @Query('page') int page,
     @Query('limit') int limit,

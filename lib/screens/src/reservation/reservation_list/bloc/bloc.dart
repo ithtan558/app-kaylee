@@ -34,7 +34,7 @@ class ReservationListBloc extends Cubit<LoadMoreModel<Reservation>>
         page: state.page,
       ),
       onSuccess: ({message, result}) {
-        final reservations = (result as Reservations).items;
+        final reservations = (result as PageData<Reservation>).items;
         completeRefresh();
         emit(LoadMoreModel.copy(state
           ..loading = false

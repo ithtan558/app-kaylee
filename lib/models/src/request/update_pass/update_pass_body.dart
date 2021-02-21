@@ -3,7 +3,11 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'update_pass_body.g.dart';
 
-@JsonSerializable(fieldRename: FieldRename.snake, createFactory: false)
+@JsonSerializable(
+  fieldRename: FieldRename.snake,
+  createFactory: false,
+  includeIfNull: false,
+)
 class UpdatePassBody {
   Map<String, dynamic> toJson() => _$UpdatePassBodyToJson(this);
 

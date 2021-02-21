@@ -42,7 +42,7 @@ class _CustomerListScreenState extends KayleeState<CustomerListScreen> {
             context: context, error: state.error, onPressed: popScreen);
       }
     });
-    customersBloc.loadCustomers();
+    customersBloc.load();
   }
 
   @override
@@ -69,45 +69,30 @@ class _CustomerListScreenState extends KayleeState<CustomerListScreen> {
           )
         ],
       ),
-      body: KayleeRefreshIndicator(
-        controller: customersBloc,
-        child: KayleeLoadMoreHandler(
-          controller: context.bloc<CustomerListScreenBloc>(),
-          child: BlocBuilder<CustomerListScreenBloc, LoadMoreModel<Customer>>(
-            buildWhen: (previous, current) {
-              return !current.loading;
-            },
-            builder: (context, state) {
-              return KayleeGridView(
-                padding: EdgeInsets.all(Dimens.px16),
-                childAspectRatio: 103 / 229,
-                itemBuilder: (c, index) {
-                  final item = state.items.elementAt(index);
-                  return CustomerItem(
-                    customer: item,
-                    onTap: () {
-                      pushScreen(PageIntent(
-                          screen: CreateNewCustomerScreen,
-                          bundle: Bundle(NewCustomerScreenData(
-                              openFrom: CustomerScreenOpenFrom.customerListItem,
-                              customer: item))));
-                    },
-                  );
-                },
-                itemCount: state.items?.length,
-                loadingBuilder: (context) {
-                  if (state.ended) return Container();
-                  return Align(
-                    alignment: Alignment.topCenter,
-                    child: CupertinoActivityIndicator(
-                      radius: Dimens.px16,
-                    ),
-                  );
+      body: BlocBuilder<CustomerListScreenBloc, LoadMoreModel<Customer>>(
+        builder: (context, state) {
+          return PaginationRefreshGridView(
+            controller: customersBloc,
+            padding: EdgeInsets.all(Dimens.px16),
+            gridDelegate:
+                KayleeGridView.gridDelegate(childAspectRatio: 103 / 229),
+            itemBuilder: (c, index, item) {
+              return CustomerItem(
+                customer: item,
+                onTap: () {
+                  pushScreen(PageIntent(
+                      screen: CreateNewCustomerScreen,
+                      bundle: Bundle(NewCustomerScreenData(
+                          openFrom: CustomerScreenOpenFrom.customerListItem,
+                          customer: item))));
                 },
               );
             },
-          ),
-        ),
+            loadingIndicatorBuilder: (context) => CupertinoActivityIndicator(
+              radius: Dimens.px16,
+            ),
+          );
+        },
       ),
       floatingActionButton: KayleeFloatButton(
         onTap: () {

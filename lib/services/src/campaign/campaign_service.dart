@@ -9,5 +9,5 @@ abstract class CampaignService {
   factory CampaignService(Dio dio) = _CampaignService;
 
   @GET('campaign/all')
-  Future<ResponseModel<Campaign>> getAllCampaign();
+  Future<ResponseModel<List<Campaign>>> getAllCampaign();
 }

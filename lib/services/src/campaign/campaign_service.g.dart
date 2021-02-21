@@ -16,7 +16,7 @@ class _CampaignService implements CampaignService {
   String baseUrl;
 
   @override
-  Future<ResponseModel<Campaign>> getAllCampaign() async {
+  Future<ResponseModel<List<Campaign>>> getAllCampaign() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
@@ -28,7 +28,11 @@ class _CampaignService implements CampaignService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<Campaign>.fromJson(_result.data);
+    final value = ResponseModel<List<Campaign>>.fromJson(
+        _result.data,
+        (json) => (json as List<dynamic>)
+            .map<Campaign>((i) => Campaign.fromJson(i as Map<String, dynamic>))
+            .toList());
     return value;
   }
 }

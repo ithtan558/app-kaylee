@@ -19,7 +19,7 @@ class CashierTabBloc extends Cubit<LoadMoreModel<Order>>
         page: state.page,
       ),
       onSuccess: ({message, result}) {
-        final orders = (result as Orders).items;
+        final orders = (result as PageData<Order>).items;
         completeRefresh();
         emit(LoadMoreModel.copy(state
           ..loading = false

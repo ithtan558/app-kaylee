@@ -27,7 +27,7 @@ class SelectServiceListBloc extends Cubit<LoadMoreModel<Service>>
         page: state.page,
       ),
       onSuccess: ({message, result}) {
-        final services = (result as Services).items;
+        final services = (result as PageData<Service>).items;
         services?.forEach((element) {
           final selected = _selectedServices.singleWhere(
             (selected) => selected.id == element.id,

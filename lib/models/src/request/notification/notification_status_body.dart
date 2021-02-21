@@ -3,7 +3,10 @@ import 'package:kaylee/models/models.dart';
 
 part 'notification_status_body.g.dart';
 
-@JsonSerializable(createFactory: false)
+@JsonSerializable(
+  createFactory: false,
+  includeIfNull: false,
+)
 class NotificationStatusBody {
   Map<String, dynamic> toJson() => _$NotificationStatusBodyToJson(this);
 

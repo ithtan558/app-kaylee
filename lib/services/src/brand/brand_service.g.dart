@@ -16,7 +16,7 @@ class _BrandService implements BrandService {
   String baseUrl;
 
   @override
-  Future<ResponseModel<Brand>> getAllBrands() async {
+  Future<ResponseModel<List<Brand>>> getAllBrands() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
@@ -28,12 +28,16 @@ class _BrandService implements BrandService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<Brand>.fromJson(_result.data);
+    final value = ResponseModel<List<Brand>>.fromJson(
+        _result.data,
+        (json) => (json as List<dynamic>)
+            .map<Brand>((i) => Brand.fromJson(i as Map<String, dynamic>))
+            .toList());
     return value;
   }
 
   @override
-  Future<ResponseModel<Brands>> getBrands(
+  Future<ResponseModel<PageData<Brand>>> getBrands(
       {keyword, page, limit, cityId, districtIds}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
@@ -53,7 +57,13 @@ class _BrandService implements BrandService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<Brands>.fromJson(_result.data);
+    final value = ResponseModel<PageData<Brand>>.fromJson(
+      _result.data,
+      (json) => PageData<Brand>.fromJson(
+        json,
+        (json) => Brand.fromJson(json),
+      ),
+    );
     return value;
   }
 
@@ -71,7 +81,10 @@ class _BrandService implements BrandService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<Brand>.fromJson(_result.data);
+    final value = ResponseModel<Brand>.fromJson(
+      _result.data,
+      (json) => Brand.fromJson(json),
+    );
     return value;
   }
 
@@ -128,7 +141,10 @@ class _BrandService implements BrandService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    final value = ResponseModel<dynamic>.fromJson(
+      _result.data,
+      (json) => json as dynamic,
+    );
     return value;
   }
 
@@ -190,7 +206,10 @@ class _BrandService implements BrandService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    final value = ResponseModel<dynamic>.fromJson(
+      _result.data,
+      (json) => json as dynamic,
+    );
     return value;
   }
 
@@ -209,7 +228,10 @@ class _BrandService implements BrandService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    final value = ResponseModel<dynamic>.fromJson(
+      _result.data,
+      (json) => json as dynamic,
+    );
     return value;
   }
 }

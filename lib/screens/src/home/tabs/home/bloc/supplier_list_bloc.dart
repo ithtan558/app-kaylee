@@ -22,7 +22,7 @@ class SupplierListBloc extends Cubit<LoadMoreModel<Supplier>>
       request:
           supplierService.getSuppliers(page: state.page, limit: state.limit),
       onSuccess: ({message, result}) {
-        final supp = (result as Suppliers).items;
+        final supp = (result as PageData<Supplier>).items;
         completeRefresh();
         emit(LoadMoreModel.copy(state
           ..loading = false

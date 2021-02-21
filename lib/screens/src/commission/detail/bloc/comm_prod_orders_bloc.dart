@@ -29,7 +29,7 @@ class CommProdOrdersBloc extends Cubit<LoadMoreModel<CommissionOrder>>
         page: state.page,
       ),
       onSuccess: ({message, result}) {
-        final orders = (result as CommissionOrders).items;
+        final orders = (result as PageData<CommissionOrder>).items;
         emit(LoadMoreModel.copy(state
           ..loading = false
           ..addAll(orders)

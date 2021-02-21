@@ -22,7 +22,6 @@ class _UserService implements UserService {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body?.toJson() ?? <String, dynamic>{});
-    _data.removeWhere((k, v) => v == null);
     final _result = await _dio.request<Map<String, dynamic>>('register',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -31,7 +30,10 @@ class _UserService implements UserService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<RegisterResult>.fromJson(_result.data);
+    final value = ResponseModel<RegisterResult>.fromJson(
+      _result.data,
+      (json) => RegisterResult.fromJson(json),
+    );
     return value;
   }
 
@@ -42,7 +44,6 @@ class _UserService implements UserService {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body?.toJson() ?? <String, dynamic>{});
-    _data.removeWhere((k, v) => v == null);
     final _result = await _dio.request<Map<String, dynamic>>(
         'register/verify-otp',
         queryParameters: queryParameters,
@@ -52,7 +53,10 @@ class _UserService implements UserService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<VerifyOtpResult>.fromJson(_result.data);
+    final value = ResponseModel<VerifyOtpResult>.fromJson(
+      _result.data,
+      (json) => VerifyOtpResult.fromJson(json),
+    );
     return value;
   }
 
@@ -63,7 +67,6 @@ class _UserService implements UserService {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body?.toJson() ?? <String, dynamic>{});
-    _data.removeWhere((k, v) => v == null);
     final _result = await _dio.request<Map<String, dynamic>>('login',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -72,7 +75,10 @@ class _UserService implements UserService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<LoginResult>.fromJson(_result.data);
+    final value = ResponseModel<LoginResult>.fromJson(
+      _result.data,
+      (json) => LoginResult.fromJson(json),
+    );
     return value;
   }
 
@@ -83,7 +89,6 @@ class _UserService implements UserService {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body?.toJson() ?? <String, dynamic>{});
-    _data.removeWhere((k, v) => v == null);
     final _result = await _dio.request<Map<String, dynamic>>(
         'forgot/verify-phone-and-send-otp',
         queryParameters: queryParameters,
@@ -93,7 +98,10 @@ class _UserService implements UserService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<VerifyPhoneResult>.fromJson(_result.data);
+    final value = ResponseModel<VerifyPhoneResult>.fromJson(
+      _result.data,
+      (json) => VerifyPhoneResult.fromJson(json),
+    );
     return value;
   }
 
@@ -104,7 +112,6 @@ class _UserService implements UserService {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body?.toJson() ?? <String, dynamic>{});
-    _data.removeWhere((k, v) => v == null);
     final _result = await _dio.request<Map<String, dynamic>>(
         'forgot/verify-otp',
         queryParameters: queryParameters,
@@ -114,7 +121,10 @@ class _UserService implements UserService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<VerifyOtpResult>.fromJson(_result.data);
+    final value = ResponseModel<VerifyOtpResult>.fromJson(
+      _result.data,
+      (json) => VerifyOtpResult.fromJson(json),
+    );
     return value;
   }
 
@@ -125,7 +135,6 @@ class _UserService implements UserService {
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(body?.toJson() ?? <String, dynamic>{});
-    _data.removeWhere((k, v) => v == null);
     final _result = await _dio.request<Map<String, dynamic>>(
         'forgot/update-password',
         queryParameters: queryParameters,
@@ -135,7 +144,10 @@ class _UserService implements UserService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    final value = ResponseModel<dynamic>.fromJson(
+      _result.data,
+      (json) => json as dynamic,
+    );
     return value;
   }
 
@@ -152,7 +164,10 @@ class _UserService implements UserService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<UserInfo>.fromJson(_result.data);
+    final value = ResponseModel<UserInfo>.fromJson(
+      _result.data,
+      (json) => UserInfo.fromJson(json),
+    );
     return value;
   }
 
@@ -205,7 +220,10 @@ class _UserService implements UserService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    final value = ResponseModel<dynamic>.fromJson(
+      _result.data,
+      (json) => json as dynamic,
+    );
     return value;
   }
 }

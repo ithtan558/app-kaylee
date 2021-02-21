@@ -37,7 +37,7 @@ class ServiceListBloc extends Cubit<LoadMoreModel<Service>>
         endPrice: getFilter()?.endPrice,
       ),
       onSuccess: ({message, result}) {
-        final services = (result as Services).items;
+        final services = (result as PageData<Service>).items;
         completeRefresh();
         emit(LoadMoreModel.copy(state
           ..loading = false

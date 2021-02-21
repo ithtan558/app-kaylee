@@ -16,7 +16,7 @@ class _ServService implements ServService {
   String baseUrl;
 
   @override
-  Future<ResponseModel<ServiceCate>> getCategories() async {
+  Future<ResponseModel<List<ServiceCate>>> getCategories() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
@@ -29,12 +29,17 @@ class _ServService implements ServService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<ServiceCate>.fromJson(_result.data);
+    final value = ResponseModel<List<ServiceCate>>.fromJson(
+        _result.data,
+        (json) => (json as List<dynamic>)
+            .map<ServiceCate>(
+                (i) => ServiceCate.fromJson(i as Map<String, dynamic>))
+            .toList());
     return value;
   }
 
   @override
-  Future<ResponseModel<ServCategories>> getCategoryList(
+  Future<ResponseModel<PageData<ServiceCate>>> getCategoryList(
       {page, limit, sort}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
@@ -52,7 +57,13 @@ class _ServService implements ServService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<ServCategories>.fromJson(_result.data);
+    final value = ResponseModel<PageData<ServiceCate>>.fromJson(
+      _result.data,
+      (json) => PageData<ServiceCate>.fromJson(
+        json,
+        (json) => ServiceCate.fromJson(json),
+      ),
+    );
     return value;
   }
 
@@ -71,7 +82,10 @@ class _ServService implements ServService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<ServiceCate>.fromJson(_result.data);
+    final value = ResponseModel<ServiceCate>.fromJson(
+      _result.data,
+      (json) => ServiceCate.fromJson(json),
+    );
     return value;
   }
 
@@ -98,7 +112,10 @@ class _ServService implements ServService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    final value = ResponseModel<dynamic>.fromJson(
+      _result.data,
+      (json) => json as dynamic,
+    );
     return value;
   }
 
@@ -130,7 +147,10 @@ class _ServService implements ServService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    final value = ResponseModel<dynamic>.fromJson(
+      _result.data,
+      (json) => json as dynamic,
+    );
     return value;
   }
 
@@ -149,12 +169,15 @@ class _ServService implements ServService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    final value = ResponseModel<dynamic>.fromJson(
+      _result.data,
+      (json) => json as dynamic,
+    );
     return value;
   }
 
   @override
-  Future<ResponseModel<Services>> getServices(
+  Future<ResponseModel<PageData<Service>>> getServices(
       {keyword,
       page,
       limit,
@@ -184,7 +207,13 @@ class _ServService implements ServService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<Services>.fromJson(_result.data);
+    final value = ResponseModel<PageData<Service>>.fromJson(
+      _result.data,
+      (json) => PageData<Service>.fromJson(
+        json,
+        (json) => Service.fromJson(json),
+      ),
+    );
     return value;
   }
 
@@ -237,7 +266,10 @@ class _ServService implements ServService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    final value = ResponseModel<dynamic>.fromJson(
+      _result.data,
+      (json) => json as dynamic,
+    );
     return value;
   }
 
@@ -296,7 +328,10 @@ class _ServService implements ServService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    final value = ResponseModel<dynamic>.fromJson(
+      _result.data,
+      (json) => json as dynamic,
+    );
     return value;
   }
 
@@ -315,7 +350,10 @@ class _ServService implements ServService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<Service>.fromJson(_result.data);
+    final value = ResponseModel<Service>.fromJson(
+      _result.data,
+      (json) => Service.fromJson(json),
+    );
     return value;
   }
 
@@ -334,7 +372,10 @@ class _ServService implements ServService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<Service>.fromJson(_result.data);
+    final value = ResponseModel<Service>.fromJson(
+      _result.data,
+      (json) => Service.fromJson(json),
+    );
     return value;
   }
 }

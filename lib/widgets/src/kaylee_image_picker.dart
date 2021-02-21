@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:core_plugin/core_plugin.dart';
+import 'package:core_plugin/core_plugin.dart' hide ImageSource;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart' as imagePicker;
 import 'package:kaylee/res/res.dart';

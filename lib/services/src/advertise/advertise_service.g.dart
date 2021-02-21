@@ -16,7 +16,7 @@ class _AdvertiseService implements AdvertiseService {
   String baseUrl;
 
   @override
-  Future<ResponseModel<Banner>> getAllBanners() async {
+  Future<ResponseModel<List<Banner>>> getAllBanners() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
@@ -28,7 +28,11 @@ class _AdvertiseService implements AdvertiseService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<Banner>.fromJson(_result.data);
+    final value = ResponseModel<List<Banner>>.fromJson(
+        _result.data,
+        (json) => (json as List<dynamic>)
+            .map<Banner>((i) => Banner.fromJson(i as Map<String, dynamic>))
+            .toList());
     return value;
   }
 }

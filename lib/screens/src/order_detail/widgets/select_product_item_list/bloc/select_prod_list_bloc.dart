@@ -27,7 +27,7 @@ class SelectProdListBloc extends Cubit<LoadMoreModel<Product>>
         page: state.page,
       ),
       onSuccess: ({message, result}) {
-        final prods = (result as Products).items;
+        final prods = (result as PageData<Product>).items;
         prods?.forEach((element) {
           final selected = _selectedProds.singleWhere(
             (selected) => selected.id == element.id,

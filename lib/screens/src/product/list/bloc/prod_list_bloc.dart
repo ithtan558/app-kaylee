@@ -31,7 +31,7 @@ class ProdListBloc extends Cubit<LoadMoreModel<Product>>
         page: state.page,
       ),
       onSuccess: ({message, result}) {
-        final prods = (result as Products).items;
+        final prods = (result as PageData<Product>).items;
         completeRefresh();
         emit(LoadMoreModel.copy(state
           ..loading = false

@@ -35,12 +35,15 @@ class _CommissionService implements CommissionService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<Commission>.fromJson(_result.data);
+    final value = ResponseModel<Commission>.fromJson(
+      _result.data,
+      (json) => Commission.fromJson(json),
+    );
     return value;
   }
 
   @override
-  Future<ResponseModel<CommissionOrders>> getProductOfOrder(
+  Future<ResponseModel<PageData<CommissionOrder>>> getProductOfOrder(
       {startDate, endDate, userId, page, limit}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
@@ -61,12 +64,18 @@ class _CommissionService implements CommissionService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<CommissionOrders>.fromJson(_result.data);
+    final value = ResponseModel<PageData<CommissionOrder>>.fromJson(
+      _result.data,
+      (json) => PageData<CommissionOrder>.fromJson(
+        json,
+        (json) => CommissionOrder.fromJson(json),
+      ),
+    );
     return value;
   }
 
   @override
-  Future<ResponseModel<CommissionOrders>> getServiceOfOrder(
+  Future<ResponseModel<PageData<CommissionOrder>>> getServiceOfOrder(
       {startDate, endDate, userId, page, limit}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
@@ -87,7 +96,13 @@ class _CommissionService implements CommissionService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<CommissionOrders>.fromJson(_result.data);
+    final value = ResponseModel<PageData<CommissionOrder>>.fromJson(
+      _result.data,
+      (json) => PageData<CommissionOrder>.fromJson(
+        json,
+        (json) => CommissionOrder.fromJson(json),
+      ),
+    );
     return value;
   }
 
@@ -106,7 +121,10 @@ class _CommissionService implements CommissionService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<CommissionSetting>.fromJson(_result.data);
+    final value = ResponseModel<CommissionSetting>.fromJson(
+      _result.data,
+      (json) => CommissionSetting.fromJson(json),
+    );
     return value;
   }
 
@@ -130,7 +148,10 @@ class _CommissionService implements CommissionService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    final value = ResponseModel<dynamic>.fromJson(
+      _result.data,
+      (json) => json as dynamic,
+    );
     return value;
   }
 }

@@ -11,7 +11,7 @@ abstract class CustomerService {
   factory CustomerService(Dio dio) = _CustomerService;
 
   @GET('customer')
-  Future<ResponseModel<Customers>> getCustomers({
+  Future<ResponseModel<PageData<Customer>>> getCustomers({
     @Query('page') int page,
     @Query('limit') int limit,
     @Query('keyword') String keyword,
@@ -22,7 +22,7 @@ abstract class CustomerService {
   });
 
   @GET('customer/get-by-phone-and-name')
-  Future<ResponseModel<Customer>> findCustomer({
+  Future<ResponseModel<List<Customer>>> findCustomer({
     @Query('keyword') String keyword,
   });
 
@@ -67,5 +67,5 @@ abstract class CustomerService {
   Future<ResponseModel> deleteCustomer({@Path() int customerId});
 
   @GET('customer-type/all')
-  Future<ResponseModel<CustomerType>> getCustomerType();
+  Future<ResponseModel<List<CustomerType>>> getCustomerType();
 }

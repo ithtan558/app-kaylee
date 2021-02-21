@@ -11,5 +11,5 @@ abstract class AdvertiseService {
   factory AdvertiseService(Dio dio) = _AdvertiseService;
 
   @GET(_advertise + '/all')
-  Future<ResponseModel<Banner>> getAllBanners();
+  Future<ResponseModel<List<Banner>>> getAllBanners();
 }

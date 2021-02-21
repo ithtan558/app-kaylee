@@ -9,7 +9,7 @@ abstract class ReservationService {
   factory ReservationService(Dio dio) = _ReservationService;
 
   @GET('reservation')
-  Future<ResponseModel<Reservations>> getReservations(
+  Future<ResponseModel<PageData<Reservation>>> getReservations(
       {@Query('keyword') String keyword,
       @Query('brand_id') int brandId,
       @Query('status') int status,

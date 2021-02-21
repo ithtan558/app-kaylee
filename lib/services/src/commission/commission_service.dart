@@ -16,7 +16,7 @@ abstract class CommissionService {
   });
 
   @GET('commission/product/list-order')
-  Future<ResponseModel<CommissionOrders>> getProductOfOrder({
+  Future<ResponseModel<PageData<CommissionOrder>>> getProductOfOrder({
     @Query('start_date') String startDate,
     @Query('end_date') String endDate,
     @Query('user_id') int userId,
@@ -25,7 +25,7 @@ abstract class CommissionService {
   });
 
   @GET('commission/service/list-order')
-  Future<ResponseModel<CommissionOrders>> getServiceOfOrder({
+  Future<ResponseModel<PageData<CommissionOrder>>> getServiceOfOrder({
     @Query('start_date') String startDate,
     @Query('end_date') String endDate,
     @Query('user_id') int userId,

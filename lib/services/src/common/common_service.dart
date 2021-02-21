@@ -12,11 +12,11 @@ abstract class CommonService {
   Future<ResponseModel<Content>> getContent(@Path() String hashtag);
 
   @GET('city/all')
-  Future<ResponseModel<City>> getCity();
+  Future<ResponseModel<List<City>>> getCity();
 
   @GET('district/list-by-city/{city}')
-  Future<ResponseModel<District>> getDistrict(@Path() int city);
+  Future<ResponseModel<List<District>>> getDistrict(@Path() int city);
 
   @GET('wards/list-by-district/{district}')
-  Future<ResponseModel<Ward>> getWard(@Path() int district);
+  Future<ResponseModel<List<Ward>>> getWard(@Path() int district);
 }

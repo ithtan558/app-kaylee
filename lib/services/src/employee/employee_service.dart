@@ -11,7 +11,7 @@ abstract class EmployeeService {
   factory EmployeeService(Dio dio) = _EmployeeService;
 
   @GET('employee')
-  Future<ResponseModel<Employees>> getEmployees({
+  Future<ResponseModel<PageData<Employee>>> getEmployees({
     @Query('page') int page,
     @Query('limit') int limit,
     @Query('keyword') String keyword,
@@ -22,7 +22,7 @@ abstract class EmployeeService {
   });
 
   @GET('employee/get-by-phone-and-name')
-  Future<ResponseModel<Employee>> findEmployees({
+  Future<ResponseModel<List<Employee>>> findEmployees({
     @Query('keyword') String keyword,
     @Query('brand_id') int brandId,
   });

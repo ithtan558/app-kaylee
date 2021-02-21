@@ -19,7 +19,7 @@ class HistoryTabBloc extends Cubit<LoadMoreModel<Order>>
         limit: state.limit,
       ),
       onSuccess: ({message, result}) {
-        final orders = (result as Orders).items;
+        final orders = (result as PageData<Order>).items;
         completeRefresh();
         emit(LoadMoreModel.copy(state
           ..loading = false

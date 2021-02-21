@@ -9,5 +9,5 @@ abstract class RoleService {
   factory RoleService(Dio dio) = _RoleService;
 
   @GET('role/all')
-  Future<ResponseModel<Role>> getRoles();
+  Future<ResponseModel<List<Role>>> getRoles();
 }

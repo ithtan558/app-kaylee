@@ -16,7 +16,7 @@ class _CustomerService implements CustomerService {
   String baseUrl;
 
   @override
-  Future<ResponseModel<Customers>> getCustomers(
+  Future<ResponseModel<PageData<Customer>>> getCustomers(
       {page, limit, keyword, sort, typeId, cityId, districtIds}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
@@ -38,12 +38,18 @@ class _CustomerService implements CustomerService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<Customers>.fromJson(_result.data);
+    final value = ResponseModel<PageData<Customer>>.fromJson(
+      _result.data,
+      (json) => PageData<Customer>.fromJson(
+        json,
+        (json) => Customer.fromJson(json),
+      ),
+    );
     return value;
   }
 
   @override
-  Future<ResponseModel<Customer>> findCustomer({keyword}) async {
+  Future<ResponseModel<List<Customer>>> findCustomer({keyword}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'keyword': keyword};
     queryParameters.removeWhere((k, v) => v == null);
@@ -57,7 +63,11 @@ class _CustomerService implements CustomerService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<Customer>.fromJson(_result.data);
+    final value = ResponseModel<List<Customer>>.fromJson(
+        _result.data,
+        (json) => (json as List<dynamic>)
+            .map<Customer>((i) => Customer.fromJson(i as Map<String, dynamic>))
+            .toList());
     return value;
   }
 
@@ -76,7 +86,10 @@ class _CustomerService implements CustomerService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<Customer>.fromJson(_result.data);
+    final value = ResponseModel<Customer>.fromJson(
+      _result.data,
+      (json) => Customer.fromJson(json),
+    );
     return value;
   }
 
@@ -141,7 +154,10 @@ class _CustomerService implements CustomerService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<Customer>.fromJson(_result.data);
+    final value = ResponseModel<Customer>.fromJson(
+      _result.data,
+      (json) => Customer.fromJson(json),
+    );
     return value;
   }
 
@@ -212,7 +228,10 @@ class _CustomerService implements CustomerService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<Customer>.fromJson(_result.data);
+    final value = ResponseModel<Customer>.fromJson(
+      _result.data,
+      (json) => Customer.fromJson(json),
+    );
     return value;
   }
 
@@ -231,12 +250,15 @@ class _CustomerService implements CustomerService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    final value = ResponseModel<dynamic>.fromJson(
+      _result.data,
+      (json) => json as dynamic,
+    );
     return value;
   }
 
   @override
-  Future<ResponseModel<CustomerType>> getCustomerType() async {
+  Future<ResponseModel<List<CustomerType>>> getCustomerType() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
@@ -249,7 +271,12 @@ class _CustomerService implements CustomerService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<CustomerType>.fromJson(_result.data);
+    final value = ResponseModel<List<CustomerType>>.fromJson(
+        _result.data,
+        (json) => (json as List<dynamic>)
+            .map<CustomerType>(
+                (i) => CustomerType.fromJson(i as Map<String, dynamic>))
+            .toList());
     return value;
   }
 }

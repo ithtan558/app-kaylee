@@ -19,11 +19,11 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "0.1.1"
-      resolved-ref: f8c12bbf49c3a8837b254b5e4f11d39221bcc84a
+      ref: "0.2.0"
+      resolved-ref: ce00c11597f1af2e49a7b5b90c1b20de7b7ee2a7
       url: "https://tungpham6195@bitbucket.org/anth-freelance/anth_package.git"
     source: git
-    version: "0.1.1"
+    version: "0.2.0"
   archive:
     dependency: transitive
     description:
@@ -107,7 +107,7 @@ packages:
       name: build_runner
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.10.13"
+    version: "1.11.1"
   build_runner_core:
     dependency: transitive
     description:
@@ -210,11 +210,11 @@ packages:
     dependency: transitive
     description:
       path: "."
-      ref: "0.5.2"
-      resolved-ref: "54b718193deb811c4e593a3091c52cb21885be85"
+      ref: "0.6.5"
+      resolved-ref: "2bcee05c3ed869d979f5216ce76013890729fcfb"
       url: "https://github.com/tungpham6195/flutter.core_plugin.git"
     source: git
-    version: "0.5.2"
+    version: "0.6.5"
   coverage:
     dependency: transitive
     description:
@@ -277,7 +277,7 @@ packages:
       name: equatable
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.5"
+    version: "1.2.6"
   esc_pos_printer:
     dependency: "direct main"
     description:
@@ -373,7 +373,7 @@ packages:
       name: flutter_bloc
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.1.1"
+    version: "6.1.2"
   flutter_blurhash:
     dependency: transitive
     description:
@@ -388,20 +388,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
-  flutter_layout_grid:
-    dependency: transitive
-    description:
-      name: flutter_layout_grid
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.10.2"
   flutter_local_notifications:
     dependency: transitive
     description:
       name: flutter_local_notifications
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.3"
+    version: "4.0.1"
   flutter_local_notifications_platform_interface:
     dependency: transitive
     description:
@@ -451,14 +444,14 @@ packages:
       name: flutter_widget_from_html
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.1+5"
+    version: "0.5.2"
   flutter_widget_from_html_core:
     dependency: transitive
     description:
       name: flutter_widget_from_html_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.1+4"
+    version: "0.5.2"
   flutter_widgets:
     dependency: transitive
     description:
@@ -542,7 +535,7 @@ packages:
       name: image_picker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.7+21"
+    version: "0.6.7+22"
   image_picker_platform_interface:
     dependency: transitive
     description:
@@ -682,7 +675,7 @@ packages:
       name: package_info
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.3+2"
+    version: "0.4.3+4"
   path:
     dependency: transitive
     description:
@@ -759,14 +752,14 @@ packages:
       name: permission_handler
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.0.1+1"
+    version: "5.1.0+2"
   permission_handler_platform_interface:
     dependency: transitive
     description:
       name: permission_handler_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.1"
+    version: "2.0.2"
   petitparser:
     dependency: transitive
     description:
@@ -815,7 +808,7 @@ packages:
       name: printing
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.0"
+    version: "4.1.0"
   process:
     dependency: transitive
     description:
@@ -871,7 +864,7 @@ packages:
       name: retrofit_generator
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.4.1+1"
+    version: "1.4.1+2"
   rxdart:
     dependency: transitive
     description:
@@ -1086,7 +1079,7 @@ packages:
       name: timezone
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.7"
+    version: "0.6.1"
   timing:
     dependency: transitive
     description:

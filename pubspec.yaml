@@ -5,7 +5,7 @@ description: Kaylee application.
 # pub.dev using `pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 0.0.32+000032
+version: 0.2.0+00200
 
 environment:
   sdk: ">=2.10.4 <3.0.0"
@@ -18,21 +18,21 @@ dependencies:
 
   cupertino_icons: ^1.0.0
 
-  permission_handler: ^5.0.1+1
+  permission_handler: ^5.1.0+2
   sticky_headers: ^0.1.8+1
-  image_picker: ^0.6.7+21
+  image_picker: ^0.6.7+22
   flutter_masked_text: ^0.8.0
   esc_pos_printer: ^4.0.3
   ping_discover_network: ^0.2.0+1
   wifi: ^0.1.5
   video_player: ^1.0.1
   chewie: ^0.12.2
-  printing: ^4.0.0
+  printing: ^4.1.0
   anth_package:
     #    path: ../anth_package
     git:
       url: https://tungpham6195@bitbucket.org/anth-freelance/anth_package.git
-      ref: 0.1.1
+      ref: 0.2.0
 
 dev_dependencies:
   flutter_test:
@@ -42,8 +42,8 @@ dev_dependencies:
 
   # Tools to write binaries that run builders(In this project, we use it
   # for json_serializable, retrofit)
-  build_runner: ^1.10.13
-  retrofit_generator: ^1.4.1+1
+  build_runner: ^1.11.1
+  retrofit_generator: ^1.4.1+2
 
 
 # For information on the generic Dart part of this file, see the

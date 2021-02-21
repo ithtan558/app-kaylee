@@ -21,7 +21,7 @@ abstract class OrderService {
       {@Body() OrderRequest orderRequest, @Path() int orderId});
 
   @GET('order')
-  Future<ResponseModel<Orders>> getOrderSupplier({
+  Future<ResponseModel<PageData<Order>>> getOrderSupplier({
     @Query('page') int page,
     @Query('limit') int limit,
     @Query('start_date') String startDate,
@@ -39,14 +39,14 @@ abstract class OrderService {
       {@Path() int orderId, @Body() UpdateOrderStatusBody body});
 
   @GET('order')
-  Future<ResponseModel<Orders>> getOrderHistory({
+  Future<ResponseModel<PageData<Order>>> getOrderHistory({
     @Query('page') int page,
     @Query('limit') int limit,
     @Query('is_history') int isHistory = 1,
   });
 
   @GET('order')
-  Future<ResponseModel<Orders>> getOrderCashier({
+  Future<ResponseModel<PageData<Order>>> getOrderCashier({
     @Query('page') int page,
     @Query('limit') int limit,
     @Query('order_status_id') int orderStatusId = 4,

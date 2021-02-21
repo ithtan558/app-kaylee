@@ -16,7 +16,7 @@ class _SupplierService implements SupplierService {
   String baseUrl;
 
   @override
-  Future<ResponseModel<Suppliers>> getSuppliers(
+  Future<ResponseModel<PageData<Supplier>>> getSuppliers(
       {page = 1, limit = 10, sort}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
@@ -34,7 +34,13 @@ class _SupplierService implements SupplierService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<Suppliers>.fromJson(_result.data);
+    final value = ResponseModel<PageData<Supplier>>.fromJson(
+      _result.data,
+      (json) => PageData<Supplier>.fromJson(
+        json,
+        (json) => Supplier.fromJson(json),
+      ),
+    );
     return value;
   }
 
@@ -53,7 +59,10 @@ class _SupplierService implements SupplierService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<Supplier>.fromJson(_result.data);
+    final value = ResponseModel<Supplier>.fromJson(
+      _result.data,
+      (json) => Supplier.fromJson(json),
+    );
     return value;
   }
 }

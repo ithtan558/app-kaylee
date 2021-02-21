@@ -22,7 +22,6 @@ class _OrderService implements OrderService {
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(orderRequest?.toJson() ?? <String, dynamic>{});
-    _data.removeWhere((k, v) => v == null);
     final _result = await _dio.request<Map<String, dynamic>>('order',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -31,7 +30,10 @@ class _OrderService implements OrderService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<CreateOrderResult>.fromJson(_result.data);
+    final value = ResponseModel<CreateOrderResult>.fromJson(
+      _result.data,
+      (json) => CreateOrderResult.fromJson(json),
+    );
     return value;
   }
 
@@ -42,7 +44,6 @@ class _OrderService implements OrderService {
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(orderRequest?.toJson() ?? <String, dynamic>{});
-    _data.removeWhere((k, v) => v == null);
     final _result = await _dio.request<Map<String, dynamic>>('supplier/order',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -51,7 +52,10 @@ class _OrderService implements OrderService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    final value = ResponseModel<dynamic>.fromJson(
+      _result.data,
+      (json) => json as dynamic,
+    );
     return value;
   }
 
@@ -62,7 +66,6 @@ class _OrderService implements OrderService {
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(orderRequest?.toJson() ?? <String, dynamic>{});
-    _data.removeWhere((k, v) => v == null);
     final _result = await _dio.request<Map<String, dynamic>>('order/$orderId',
         queryParameters: queryParameters,
         options: RequestOptions(
@@ -71,12 +74,15 @@ class _OrderService implements OrderService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    final value = ResponseModel<dynamic>.fromJson(
+      _result.data,
+      (json) => json as dynamic,
+    );
     return value;
   }
 
   @override
-  Future<ResponseModel<Orders>> getOrderSupplier(
+  Future<ResponseModel<PageData<Order>>> getOrderSupplier(
       {page, limit, startDate, endDate, isHistoryBySupplier = 1}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
@@ -96,7 +102,13 @@ class _OrderService implements OrderService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<Orders>.fromJson(_result.data);
+    final value = ResponseModel<PageData<Order>>.fromJson(
+      _result.data,
+      (json) => PageData<Order>.fromJson(
+        json,
+        (json) => Order.fromJson(json),
+      ),
+    );
     return value;
   }
 
@@ -114,7 +126,10 @@ class _OrderService implements OrderService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<Order>.fromJson(_result.data);
+    final value = ResponseModel<Order>.fromJson(
+      _result.data,
+      (json) => Order.fromJson(json),
+    );
     return value;
   }
 
@@ -125,7 +140,6 @@ class _OrderService implements OrderService {
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(body?.toJson() ?? <String, dynamic>{});
-    _data.removeWhere((k, v) => v == null);
     final _result = await _dio.request<Map<String, dynamic>>(
         'order/update-status/$orderId',
         queryParameters: queryParameters,
@@ -135,12 +149,15 @@ class _OrderService implements OrderService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    final value = ResponseModel<dynamic>.fromJson(
+      _result.data,
+      (json) => json as dynamic,
+    );
     return value;
   }
 
   @override
-  Future<ResponseModel<Orders>> getOrderHistory(
+  Future<ResponseModel<PageData<Order>>> getOrderHistory(
       {page, limit, isHistory = 1}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
@@ -158,12 +175,18 @@ class _OrderService implements OrderService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<Orders>.fromJson(_result.data);
+    final value = ResponseModel<PageData<Order>>.fromJson(
+      _result.data,
+      (json) => PageData<Order>.fromJson(
+        json,
+        (json) => Order.fromJson(json),
+      ),
+    );
     return value;
   }
 
   @override
-  Future<ResponseModel<Orders>> getOrderCashier(
+  Future<ResponseModel<PageData<Order>>> getOrderCashier(
       {page, limit, orderStatusId = 4}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
@@ -181,7 +204,13 @@ class _OrderService implements OrderService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<Orders>.fromJson(_result.data);
+    final value = ResponseModel<PageData<Order>>.fromJson(
+      _result.data,
+      (json) => PageData<Order>.fromJson(
+        json,
+        (json) => Order.fromJson(json),
+      ),
+    );
     return value;
   }
 
@@ -201,7 +230,10 @@ class _OrderService implements OrderService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<OrderCancellationReason>.fromJson(_result.data);
+    final value = ResponseModel<OrderCancellationReason>.fromJson(
+      _result.data,
+      (json) => OrderCancellationReason.fromJson(json),
+    );
     return value;
   }
 }

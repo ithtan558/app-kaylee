@@ -17,7 +17,7 @@ class ProCateListScreenBloc extends Cubit<LoadMoreModel<ProdCate>>
       request:
           productService.getCategoryList(limit: state.limit, page: state.page),
       onSuccess: ({message, result}) {
-        final categories = (result as ProdCategories).items;
+        final categories = (result as PageData<ProdCate>).items;
         completeRefresh();
         emit(LoadMoreModel.copy(state
           ..loading = false

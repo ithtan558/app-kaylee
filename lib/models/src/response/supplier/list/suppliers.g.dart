@@ -13,8 +13,10 @@ Suppliers _$SuppliersFromJson(Map<String, dynamic> json) {
     ..total = json['total'] as int
     ..pages = json['pages'] as int
     ..items = (json['items'] as List)
-        ?.map((e) =>
-            e == null ? null : Supplier.fromJson(e as Map<String, dynamic>))
+        ?.map((e) => (e as List)
+            ?.map((e) =>
+                e == null ? null : Supplier.fromJson(e as Map<String, dynamic>))
+            ?.toList())
         ?.toList();
 }
 
@@ -23,5 +25,7 @@ Map<String, dynamic> _$SuppliersToJson(Suppliers instance) => <String, dynamic>{
       'limit': instance.limit,
       'total': instance.total,
       'pages': instance.pages,
-      'items': instance.items?.map((e) => e?.toJson())?.toList(),
+      'items': instance.items
+          ?.map((e) => e?.map((e) => e?.toJson())?.toList())
+          ?.toList(),
     };

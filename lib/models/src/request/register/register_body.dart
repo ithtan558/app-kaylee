@@ -3,7 +3,11 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'register_body.g.dart';
 
-@JsonSerializable(fieldRename: FieldRename.snake, createFactory: false)
+@JsonSerializable(
+  fieldRename: FieldRename.snake,
+  createFactory: false,
+  includeIfNull: false,
+)
 class RegisterBody {
   Map<String, dynamic> toJson() => _$RegisterBodyToJson(this);
 
@@ -16,16 +20,10 @@ class RegisterBody {
     this.code,
   });
 
-  @JsonKey(includeIfNull: false)
   String firstName;
-  @JsonKey(includeIfNull: false)
   String lastName;
-  @JsonKey(includeIfNull: false)
   String phone;
-  @JsonKey(includeIfNull: false)
   String password;
-  @JsonKey(includeIfNull: false)
   String email;
-  @JsonKey(includeIfNull: false)
   String code;
 }

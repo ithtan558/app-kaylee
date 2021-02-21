@@ -17,7 +17,7 @@ class ServCateListScreenBloc extends Cubit<LoadMoreModel<ServiceCate>>
       request:
           servService.getCategoryList(limit: state.limit, page: state.page),
       onSuccess: ({message, result}) {
-        final categories = (result as ServCategories).items;
+        final categories = (result as PageData<ServiceCate>).items;
         completeRefresh();
         emit(LoadMoreModel.copy(state
           ..loading = false

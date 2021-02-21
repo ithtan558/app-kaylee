@@ -33,7 +33,7 @@ class StaffListScreenBloc extends Cubit<LoadMoreModel<Employee>>
         districtIds: _filter?.district?.id?.toString(),
       ),
       onSuccess: ({message, result}) {
-        final employees = (result as Employees).items;
+        final employees = (result as PageData<Employee>).items;
         completeRefresh();
         emit(LoadMoreModel.copy(state
           ..loading = false
@@ -62,10 +62,10 @@ class StaffListScreenBloc extends Cubit<LoadMoreModel<Employee>>
 
   @override
   void loadFilter() {
-      emit(LoadMoreModel.copy(state
-        ..items = null
-        ..page = 1));
-      loadEmployees();
+    emit(LoadMoreModel.copy(state
+      ..items = null
+      ..page = 1));
+    loadEmployees();
   }
 
   @override

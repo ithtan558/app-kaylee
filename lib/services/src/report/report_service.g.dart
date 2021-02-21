@@ -33,12 +33,15 @@ class _ReportService implements ReportService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<Revenue>.fromJson(_result.data);
+    final value = ResponseModel<Revenue>.fromJson(
+      _result.data,
+      (json) => Revenue.fromJson(json),
+    );
     return value;
   }
 
   @override
-  Future<ResponseModel<EmployeeRevenue>> getTotalByEmployee(
+  Future<ResponseModel<List<EmployeeRevenue>>> getTotalByEmployee(
       {startDate, endDate, brandId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
@@ -57,12 +60,17 @@ class _ReportService implements ReportService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<EmployeeRevenue>.fromJson(_result.data);
+    final value = ResponseModel<List<EmployeeRevenue>>.fromJson(
+        _result.data,
+        (json) => (json as List<dynamic>)
+            .map<EmployeeRevenue>(
+                (i) => EmployeeRevenue.fromJson(i as Map<String, dynamic>))
+            .toList());
     return value;
   }
 
   @override
-  Future<ResponseModel<ServiceRevenue>> getTotalByService(
+  Future<ResponseModel<List<ServiceRevenue>>> getTotalByService(
       {startDate, endDate, brandId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
@@ -81,7 +89,12 @@ class _ReportService implements ReportService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<ServiceRevenue>.fromJson(_result.data);
+    final value = ResponseModel<List<ServiceRevenue>>.fromJson(
+        _result.data,
+        (json) => (json as List<dynamic>)
+            .map<ServiceRevenue>(
+                (i) => ServiceRevenue.fromJson(i as Map<String, dynamic>))
+            .toList());
     return value;
   }
 }

@@ -16,7 +16,7 @@ class _RoleService implements RoleService {
   String baseUrl;
 
   @override
-  Future<ResponseModel<Role>> getRoles() async {
+  Future<ResponseModel<List<Role>>> getRoles() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
@@ -28,7 +28,11 @@ class _RoleService implements RoleService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<Role>.fromJson(_result.data);
+    final value = ResponseModel<List<Role>>.fromJson(
+        _result.data,
+        (json) => (json as List<dynamic>)
+            .map<Role>((i) => Role.fromJson(i as Map<String, dynamic>))
+            .toList());
     return value;
   }
 }

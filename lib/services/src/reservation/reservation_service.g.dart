@@ -16,7 +16,7 @@ class _ReservationService implements ReservationService {
   String baseUrl;
 
   @override
-  Future<ResponseModel<Reservations>> getReservations(
+  Future<ResponseModel<PageData<Reservation>>> getReservations(
       {keyword, brandId, status, datetime, sort, page, limit}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
@@ -38,7 +38,13 @@ class _ReservationService implements ReservationService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<Reservations>.fromJson(_result.data);
+    final value = ResponseModel<PageData<Reservation>>.fromJson(
+      _result.data,
+      (json) => PageData<Reservation>.fromJson(
+        json,
+        (json) => Reservation.fromJson(json),
+      ),
+    );
     return value;
   }
 
@@ -64,7 +70,10 @@ class _ReservationService implements ReservationService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    final value = ResponseModel<dynamic>.fromJson(
+      _result.data,
+      (json) => json as dynamic,
+    );
     return value;
   }
 
@@ -126,7 +135,10 @@ class _ReservationService implements ReservationService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    final value = ResponseModel<dynamic>.fromJson(
+      _result.data,
+      (json) => json as dynamic,
+    );
     return value;
   }
 
@@ -194,7 +206,10 @@ class _ReservationService implements ReservationService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    final value = ResponseModel<dynamic>.fromJson(
+      _result.data,
+      (json) => json as dynamic,
+    );
     return value;
   }
 
@@ -212,7 +227,10 @@ class _ReservationService implements ReservationService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<Reservation>.fromJson(_result.data);
+    final value = ResponseModel<Reservation>.fromJson(
+      _result.data,
+      (json) => Reservation.fromJson(json),
+    );
     return value;
   }
 }

@@ -12,7 +12,7 @@ abstract class NotificationService {
   Future<ResponseModel<NotificationCount>> getNotificationCount();
 
   @GET('notification')
-  Future<ResponseModel<Notifications>> getNotifications({
+  Future<ResponseModel<PageData<Notification>>> getNotifications({
     @Query('page') int page,
     @Query('limit') int limit,
     @Query('sort') String sort,
@@ -20,7 +20,7 @@ abstract class NotificationService {
   });
 
   @DELETE('notification/delete/all')
-  Future<ResponseModel<Notifications>> deleteAll();
+  Future<ResponseModel> deleteAll();
 
   @DELETE('notification/delete/{id}')
   Future<ResponseModel> delete({@Path() int id});

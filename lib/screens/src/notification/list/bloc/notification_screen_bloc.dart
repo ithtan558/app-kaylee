@@ -89,7 +89,8 @@ class NotificationListBloc extends Cubit<LoadMoreModel<models.Notification>>
         keyword: this.keyword,
       ),
       onSuccess: ({message, result}) {
-        final notifications = (result as models.Notifications).items;
+        final notifications =
+            (result as models.PageData<models.Notification>).items;
         completeRefresh();
         emit(LoadMoreModel.copy(state
           ..loading = false

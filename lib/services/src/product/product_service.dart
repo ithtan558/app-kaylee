@@ -11,7 +11,7 @@ abstract class ProductService {
   factory ProductService(Dio dio) = _ProductService;
 
   @GET('product')
-  Future<ResponseModel<Products>> getProducts(
+  Future<ResponseModel<PageData<Product>>> getProducts(
       {@Query('supplier_id') int supplierId,
       @Query('keyword') String keyword,
       @Query('sort') String sort,
@@ -20,11 +20,11 @@ abstract class ProductService {
       @Query('limit') int limit});
 
   @GET('product-category/all')
-  Future<ResponseModel<ProdCate>> getCategories(
+  Future<ResponseModel<List<ProdCate>>> getCategories(
       {@Query('supplier_id') int supplierId});
 
   @GET('product-category')
-  Future<ResponseModel<ProdCategories>> getCategoryList({
+  Future<ResponseModel<PageData<ProdCate>>> getCategoryList({
     @Query('page') int page,
     @Query('limit') int limit,
     @Query('sort') String sort,

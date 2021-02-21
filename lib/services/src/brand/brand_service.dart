@@ -13,10 +13,10 @@ abstract class BrandService {
   factory BrandService(Dio dio) = _BrandService;
 
   @GET(_brandPath + '/all')
-  Future<ResponseModel<Brand>> getAllBrands();
+  Future<ResponseModel<List<Brand>>> getAllBrands();
 
   @GET(_brandPath)
-  Future<ResponseModel<Brands>> getBrands({
+  Future<ResponseModel<PageData<Brand>>> getBrands({
     @Query('keyword') String keyword,
     @Query('page') int page,
     @Query('limit') int limit,

@@ -1,7 +1,5 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:kaylee/base/kaylee_filter_interface.dart';
-import 'package:kaylee/base/kaylee_list_interface.dart';
-import 'package:kaylee/base/loadmore_interface.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/services/services.dart';
 
@@ -11,27 +9,29 @@ class BrandFilter extends Filter {
 }
 
 class BrandListBloc extends Cubit<LoadMoreModel<Brand>>
-    with KayleeListInterfaceMixin
-    implements LoadMoreInterface, KayleeFilterInterface<BrandFilter> {
+    with PaginationMixin<Brand>
+    implements KayleeFilterInterface<BrandFilter> {
   BrandService brandService;
 
   BrandListBloc({this.brandService}) : super(LoadMoreModel());
 
   BrandFilter _filter;
 
-  void loadBrands() {
+  @override
+  void load() {
+    super.load();
     state.loading = true;
     RequestHandler(
       request: brandService?.getBrands(
         keyword: _filter?.keyword,
         cityId: _filter?.city?.id,
         districtIds: _filter?.district?.id?.toString(),
-        limit: state.limit,
-        page: state.page,
+        limit: limit,
+        page: page,
       ),
       onSuccess: ({message, result}) {
-        final brands = (result as Brands).items;
-        completeRefresh();
+        final brands = (result as PageData<Brand>).items;
+        addMore(nextItems: brands);
         emit(LoadMoreModel.copy(state
           ..loading = false
           ..addAll(brands)
@@ -39,7 +39,7 @@ class BrandListBloc extends Cubit<LoadMoreModel<Brand>>
           ..error = null));
       },
       onFailed: (code, {error}) {
-        completeRefresh();
+        completeLoading();
         emit(LoadMoreModel.copy(state
           ..loading = false
           ..code = code
@@ -49,20 +49,10 @@ class BrandListBloc extends Cubit<LoadMoreModel<Brand>>
   }
 
   @override
-  void loadMore() {
-    state.page++;
-    loadBrands();
-  }
-
-  @override
-  bool loadWhen() => !state.loading && !state.ended;
-
-  @override
   void loadFilter() {
-    emit(LoadMoreModel.copy(state
-      ..items = null
-      ..page = 1));
-    loadBrands();
+    reset();
+    emit(LoadMoreModel.copy(state));
+    load();
   }
 
   @override
@@ -84,18 +74,7 @@ class BrandListBloc extends Cubit<LoadMoreModel<Brand>>
     return _filter;
   }
 
-  @override
   void loadInitData() {
-    loadBrands();
-  }
-
-  @override
-  void refresh() {
-    super.refresh();
-    if (state.loading) return completeRefresh();
-    state
-      ..page = 1
-      ..items = [];
-    loadBrands();
+    load();
   }
 }

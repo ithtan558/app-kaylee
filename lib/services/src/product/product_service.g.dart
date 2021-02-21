@@ -16,7 +16,7 @@ class _ProductService implements ProductService {
   String baseUrl;
 
   @override
-  Future<ResponseModel<Products>> getProducts(
+  Future<ResponseModel<PageData<Product>>> getProducts(
       {supplierId, keyword, sort, categoryId, page, limit}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
@@ -37,12 +37,18 @@ class _ProductService implements ProductService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<Products>.fromJson(_result.data);
+    final value = ResponseModel<PageData<Product>>.fromJson(
+      _result.data,
+      (json) => PageData<Product>.fromJson(
+        json,
+        (json) => Product.fromJson(json),
+      ),
+    );
     return value;
   }
 
   @override
-  Future<ResponseModel<ProdCate>> getCategories({supplierId}) async {
+  Future<ResponseModel<List<ProdCate>>> getCategories({supplierId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'supplier_id': supplierId};
     queryParameters.removeWhere((k, v) => v == null);
@@ -56,12 +62,16 @@ class _ProductService implements ProductService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<ProdCate>.fromJson(_result.data);
+    final value = ResponseModel<List<ProdCate>>.fromJson(
+        _result.data,
+        (json) => (json as List<dynamic>)
+            .map<ProdCate>((i) => ProdCate.fromJson(i as Map<String, dynamic>))
+            .toList());
     return value;
   }
 
   @override
-  Future<ResponseModel<ProdCategories>> getCategoryList(
+  Future<ResponseModel<PageData<ProdCate>>> getCategoryList(
       {page, limit, sort}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
@@ -79,7 +89,13 @@ class _ProductService implements ProductService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<ProdCategories>.fromJson(_result.data);
+    final value = ResponseModel<PageData<ProdCate>>.fromJson(
+      _result.data,
+      (json) => PageData<ProdCate>.fromJson(
+        json,
+        (json) => ProdCate.fromJson(json),
+      ),
+    );
     return value;
   }
 
@@ -98,7 +114,10 @@ class _ProductService implements ProductService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<ProdCate>.fromJson(_result.data);
+    final value = ResponseModel<ProdCate>.fromJson(
+      _result.data,
+      (json) => ProdCate.fromJson(json),
+    );
     return value;
   }
 
@@ -125,7 +144,10 @@ class _ProductService implements ProductService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    final value = ResponseModel<dynamic>.fromJson(
+      _result.data,
+      (json) => json as dynamic,
+    );
     return value;
   }
 
@@ -157,7 +179,10 @@ class _ProductService implements ProductService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    final value = ResponseModel<dynamic>.fromJson(
+      _result.data,
+      (json) => json as dynamic,
+    );
     return value;
   }
 
@@ -176,7 +201,10 @@ class _ProductService implements ProductService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    final value = ResponseModel<dynamic>.fromJson(
+      _result.data,
+      (json) => json as dynamic,
+    );
     return value;
   }
 
@@ -194,7 +222,10 @@ class _ProductService implements ProductService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<Product>.fromJson(_result.data);
+    final value = ResponseModel<Product>.fromJson(
+      _result.data,
+      (json) => Product.fromJson(json),
+    );
     return value;
   }
 
@@ -237,7 +268,10 @@ class _ProductService implements ProductService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    final value = ResponseModel<dynamic>.fromJson(
+      _result.data,
+      (json) => json as dynamic,
+    );
     return value;
   }
 
@@ -291,7 +325,10 @@ class _ProductService implements ProductService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    final value = ResponseModel<dynamic>.fromJson(
+      _result.data,
+      (json) => json as dynamic,
+    );
     return value;
   }
 
@@ -310,7 +347,10 @@ class _ProductService implements ProductService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<dynamic>.fromJson(_result.data);
+    final value = ResponseModel<dynamic>.fromJson(
+      _result.data,
+      (json) => json as dynamic,
+    );
     return value;
   }
 }
