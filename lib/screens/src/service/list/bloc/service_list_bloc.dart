@@ -1,8 +1,6 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/foundation.dart';
 import 'package:kaylee/base/kaylee_filter_interface.dart';
-import 'package:kaylee/base/kaylee_list_interface.dart';
-import 'package:kaylee/base/loadmore_interface.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/services/services.dart';
 
@@ -14,8 +12,8 @@ class ServiceFilter extends Filter {
 }
 
 class ServiceListBloc extends Cubit<LoadMoreModel<Service>>
-    with KayleeListInterfaceMixin
-    implements LoadMoreInterface, KayleeFilterInterface<ServiceFilter> {
+    with PaginationMixin<Service>
+    implements KayleeFilterInterface<ServiceFilter> {
   final ServService servService;
   int cateId;
   ServiceFilter _filter;
@@ -25,7 +23,9 @@ class ServiceListBloc extends Cubit<LoadMoreModel<Service>>
   ServiceListBloc({@required this.servService})
       : super(LoadMoreModel(items: []));
 
-  void loadServices() {
+  @override
+  void load() {
+    super.load();
     RequestHandler(
       request: servService.getServices(
         categoryId: this.cateId,
@@ -38,19 +38,12 @@ class ServiceListBloc extends Cubit<LoadMoreModel<Service>>
       ),
       onSuccess: ({message, result}) {
         final services = (result as PageData<Service>).items;
-        completeRefresh();
-        emit(LoadMoreModel.copy(state
-          ..loading = false
-          ..addAll(services)
-          ..code = null
-          ..error = null));
+        addMore(nextItems: services);
+        emit(state.success());
       },
       onFailed: (code, {error}) {
-        completeRefresh();
-        emit(LoadMoreModel.copy(state
-          ..loading = false
-          ..code = code
-          ..error = error));
+        completeLoading();
+        emit(state.failure(code: code, error: error));
       },
     );
   }
@@ -62,27 +55,20 @@ class ServiceListBloc extends Cubit<LoadMoreModel<Service>>
   }
 
   void changeTab({int cateId}) {
+    if (loading) return;
     if (cateId.isNotNull) {
       ///user đổi category
       this.cateId = cateId;
 
       //reset page và item về ban đầu
+      reset();
       emit(LoadMoreModel.copy(state
         ..loading = true
         ..page = 1
         ..items = null));
-      loadServices();
+      load();
     }
   }
-
-  @override
-  void loadMore() {
-    state.page++;
-    loadServices();
-  }
-
-  @override
-  bool loadWhen() => !state.loading && !state.ended;
 
   @override
   ServiceFilter getFilter() => _filter;
@@ -92,10 +78,11 @@ class ServiceListBloc extends Cubit<LoadMoreModel<Service>>
 
   @override
   void loadFilter() {
-      emit(LoadMoreModel.copy(state
-        ..items = null
-        ..page = 1));
-      loadServices();
+    reset();
+    emit(LoadMoreModel.copy(state
+      ..items = null
+      ..page = 1));
+    load();
   }
 
   @override
@@ -107,17 +94,5 @@ class ServiceListBloc extends Cubit<LoadMoreModel<Service>>
   ServiceFilter updateFilter() {
     if (isEmptyFilter) _filter = ServiceFilter();
     return _filter;
-  }
-
-  @override
-  void refresh() {
-    super.refresh();
-    if (state.loading) return completeRefresh();
-
-    state
-      ..page = 1
-      ..items = []
-      ..loading = true;
-    loadServices();
   }
 }

@@ -33,16 +33,15 @@ class ServiceListScreen extends StatefulWidget {
 }
 
 class _ServiceListScreenState extends KayleeState<ServiceListScreen> {
-  ServiceCateBloc cateBloc;
+  ServiceCateBloc get cateBloc => context.bloc<ServiceCateBloc>();
   StreamSubscription sub;
+
+  ServiceListBloc get serviceListBloc => context.bloc<ServiceListBloc>();
   StreamSubscription serviceListBlocSub;
-  ServiceListBloc serviceListBloc;
 
   @override
   void initState() {
     super.initState();
-    cateBloc = context.bloc<ServiceCateBloc>();
-    serviceListBloc = context.bloc<ServiceListBloc>();
 
     sub = cateBloc.listen((state) {
       if (!state.loading) {
@@ -115,57 +114,46 @@ class _ServiceListScreenState extends KayleeState<ServiceListScreen> {
                 );
               },
             ),
-            pageView: KayleeRefreshIndicator(
-              controller: serviceListBloc,
-              child: KayleeLoadMoreHandler(
-                controller: serviceListBloc,
-                child: BlocConsumer<ServiceListBloc, LoadMoreModel<Service>>(
-                  listener: (context, state) {
-                    if (state.code.isNotNull &&
-                        state.code != ErrorType.UNAUTHORIZED) {
-                      showKayleeAlertErrorYesDialog(
-                        context: context,
-                        error: state.error,
-                        onPressed: () {
-                          popScreen();
-                        },
-                      );
-                    }
-                  },
-                  builder: (context, state) {
-                    return KayleeGridView(
-                      padding: EdgeInsets.all(Dimens.px16),
-                      childAspectRatio: 103 / 195,
-                      itemBuilder: (c, index) {
-                        final item = state.items.elementAt(index);
-                        return KayleeProdItemView.canTap(
-                          data: KayleeProdItemData(
-                              name: item.name,
-                              image: item.image,
-                              price: item.price),
-                          onTap: () {
-                            pushScreen(PageIntent(
-                                screen: CreateNewServiceScreen,
-                                bundle: Bundle(NewServiceScreenData(
-                                    openFrom: ServiceScreenOpenFrom.serviceItem,
-                                    service: item))));
-                          },
-                        );
-                      },
-                      itemCount: state.items?.length,
-                      loadingBuilder: (context) {
-                        if (state.ended) return Container();
-                        return Align(
-                          alignment: Alignment.topCenter,
-                          child: CupertinoActivityIndicator(
-                            radius: Dimens.px16,
-                          ),
-                        );
+            pageView: BlocConsumer<ServiceListBloc, LoadMoreModel<Service>>(
+              listener: (context, state) {
+                if (state.code.isNotNull &&
+                    state.code != ErrorType.UNAUTHORIZED) {
+                  showKayleeAlertErrorYesDialog(
+                    context: context,
+                    error: state.error,
+                    onPressed: () {
+                      popScreen();
+                    },
+                  );
+                }
+              },
+              builder: (context, state) {
+                return PaginationRefreshGridView(
+                  controller: serviceListBloc,
+                  padding: EdgeInsets.all(Dimens.px16),
+                  gridDelegate:
+                      KayleeGridView.gridDelegate(childAspectRatio: 103 / 195),
+                  itemBuilder: (context, index, item) {
+                    return KayleeProdItemView.canTap(
+                      data: KayleeProdItemData(
+                          name: item.name,
+                          image: item.image,
+                          price: item.price),
+                      onTap: () {
+                        pushScreen(PageIntent(
+                            screen: CreateNewServiceScreen,
+                            bundle: Bundle(NewServiceScreenData(
+                                openFrom: ServiceScreenOpenFrom.serviceItem,
+                                service: item))));
                       },
                     );
                   },
-                ),
-              ),
+                  loadingIndicatorBuilder: (context) =>
+                      CupertinoActivityIndicator(
+                    radius: Dimens.px16,
+                  ),
+                );
+              },
             ),
           ),
         ),
