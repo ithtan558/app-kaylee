@@ -8,7 +8,7 @@ import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/customer/create_new/bloc/customer_detail_screen_bloc.dart';
-import 'package:kaylee/screens/src/order_detail/widgets/select_customer_field.dart';
+import 'package:kaylee/screens/src/order_detail/widgets/select_customer/select_customer_field.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 

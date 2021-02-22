@@ -12,7 +12,7 @@ import 'package:kaylee/screens/src/home/tabs/cashier/cashier_tab.dart';
 import 'package:kaylee/screens/src/home/tabs/history/history_tab.dart';
 import 'package:kaylee/screens/src/order_detail/bloc/order_detail_bloc.dart';
 import 'package:kaylee/screens/src/order_detail/widgets/payment_method_dialog.dart';
-import 'package:kaylee/screens/src/order_detail/widgets/select_customer_field.dart';
+import 'package:kaylee/screens/src/order_detail/widgets/select_customer/select_customer_field.dart';
 import 'package:kaylee/screens/src/order_detail/widgets/select_order_item_list.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
