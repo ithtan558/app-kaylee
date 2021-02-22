@@ -128,7 +128,7 @@ class _ServiceListScreenState extends KayleeState<ServiceListScreen> {
                 }
               },
               builder: (context, state) {
-                return PaginationRefreshGridView(
+                return PaginationRefreshGridView<Service>(
                   controller: serviceListBloc,
                   padding: EdgeInsets.all(Dimens.px16),
                   gridDelegate:

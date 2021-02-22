@@ -24,17 +24,12 @@ class BrandListScreen extends StatefulWidget {
 }
 
 class _BrandListScreenState extends KayleeState<BrandListScreen> {
-  BrandListBloc brandListBloc;
+  BrandListBloc get brandListBloc => context.bloc<BrandListBloc>();
 
   @override
   void initState() {
     super.initState();
-    brandListBloc = context.bloc<BrandListBloc>()..loadInitData();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
+    brandListBloc.loadInitData();
   }
 
   @override
@@ -68,9 +63,9 @@ class _BrandListScreenState extends KayleeState<BrandListScreen> {
           }
         },
         builder: (context, state) {
-          return PaginationRefreshListView(
+          return PaginationRefreshListView<Brand>(
             controller: brandListBloc,
-            itemBuilder: (BuildContext context, int index, item) {
+            itemBuilder: (context, int index, item) {
               return BrandItem(
                 brand: item,
               );

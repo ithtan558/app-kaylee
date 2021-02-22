@@ -71,7 +71,7 @@ class _CustomerListScreenState extends KayleeState<CustomerListScreen> {
       ),
       body: BlocBuilder<CustomerListScreenBloc, LoadMoreModel<Customer>>(
         builder: (context, state) {
-          return PaginationRefreshGridView(
+          return PaginationRefreshGridView<Customer>(
             controller: customersBloc,
             padding: EdgeInsets.all(Dimens.px16),
             gridDelegate:
