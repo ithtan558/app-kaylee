@@ -30,7 +30,7 @@ class _PolicyCheckBoxState extends BaseState<PolicyCheckBox> {
             setState(() {
               isChecked = !isChecked;
             });
-            if (widget.onChecked.isNotNull) widget.onChecked(isChecked);
+            widget.onChecked?.call(isChecked);
           },
           child: Image.asset(
             isChecked ? Images.ic_checked : Images.ic_notcheck,
