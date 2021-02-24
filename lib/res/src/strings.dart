@@ -175,7 +175,7 @@ class Strings {
   static const String danhSachDichVu = 'Danh sách dịch vụ';
   static const String nhanVienThucThien = 'Nhân viên thực hiện';
   static const String chonNhanVienTrongDs = 'Chọn nhân viên trong danh sách';
-  static const String chuSuDungDichVu = 'Chưa sử dụng dịch vụ';
+  static const String chuaSuDungDichVu = 'Chưa sử dụng dịch vụ';
   static const String thanhToan = 'Thanh toán';
   static const String giamGia = 'Giảm giá';
   static const String themDichVu = 'Thêm dịch vụ';
