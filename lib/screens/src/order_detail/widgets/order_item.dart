@@ -78,18 +78,14 @@ class _OrderItemState extends BaseState<OrderItem> {
                   ),
                   Expanded(
                       child: KayleeText.normal16W400(
-                        widget.data.name,
-                        maxLines: 1,
+                    widget.data.name,
+                    maxLines: 1,
                   )),
                   KayleePriceUnitText(widget.data.price)
                 ],
               ),
             ),
-            Container(
-              width: double.infinity,
-              height: 1,
-              decoration: new BoxDecoration(color: ColorsRes.textFieldBorder),
-            )
+            KayleeHorizontalDivider(),
           ],
         ),
       ),
