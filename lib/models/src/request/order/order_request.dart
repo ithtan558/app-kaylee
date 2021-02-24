@@ -19,6 +19,10 @@ int _parseCartEmployee(dynamic input) {
     return null;
 }
 
+List<int> _parseCartEmployees(List<Employee> input) {
+  return input.map((e) => e.id).toList();
+}
+
 int _parseSupplierId(Supplier supplier) {
   return supplier?.id;
 }
@@ -51,6 +55,7 @@ class OrderRequest {
                 ))
             .toList(),
         employee: order.employee,
+        employees: order.employees,
         supplier: Supplier(
           id: order.supplierId,
           name: order.supplierName,
@@ -62,6 +67,7 @@ class OrderRequest {
   OrderRequest(
       {this.cartItems,
       this.employee,
+      this.employees,
       this.cartSuppInfo,
       this.supplier,
       this.customer,
@@ -82,30 +88,26 @@ class OrderRequest {
       0;
 
   @JsonKey(ignore: true)
-  List<Product> get products =>
-      cartItems
-          ?.where((cartItem) => cartItem.productId.isNotNull)
-          ?.map((cartItem) =>
-          Product(
+  List<Product> get products => cartItems
+      ?.where((cartItem) => cartItem.productId.isNotNull)
+      ?.map((cartItem) => Product(
             id: cartItem.productId,
             name: cartItem.name,
             price: cartItem.price,
             quantity: cartItem.quantity,
           ))
-          ?.toList();
+      ?.toList();
 
   @JsonKey(ignore: true)
-  List<Service> get services =>
-      cartItems
-          ?.where((cartItem) => cartItem.serviceId.isNotNull)
-          ?.map((cartItem) =>
-          Service(
+  List<Service> get services => cartItems
+      ?.where((cartItem) => cartItem.serviceId.isNotNull)
+      ?.map((cartItem) => Service(
             id: cartItem.serviceId,
             name: cartItem.name,
             price: cartItem.price,
             quantity: cartItem.quantity,
           ))
-          ?.toList();
+      ?.toList();
 
   ///khi order supplier
   @JsonKey(name: 'cart_supplier_information')
@@ -121,6 +123,8 @@ class OrderRequest {
   ///khi order cho customer, thì nó là employee_id
   @JsonKey(toJson: _parseCartEmployee, name: 'cart_employee')
   dynamic employee;
+  @JsonKey(toJson: _parseCartEmployees, name: 'cart_employees')
+  List<Employee> employees;
 
   @JsonKey(name: 'cart_discount')
   int discount;
