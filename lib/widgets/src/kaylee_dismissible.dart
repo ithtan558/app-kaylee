@@ -8,47 +8,77 @@ class KayleeDismissible extends StatelessWidget {
   final Widget child;
   final void Function(DismissDirection direction) onDismissed;
   final AsyncValueGetter<bool> confirmDismiss;
+  final Widget secondaryBackground;
 
   KayleeDismissible(
       {@required Key key,
       @required this.child,
       this.onDismissed,
-      this.confirmDismiss})
+      this.confirmDismiss,
+      this.secondaryBackground})
       : super(key: key);
+
+  factory KayleeDismissible.iconOnly({
+    @required Key key,
+    @required Widget child,
+    void Function(DismissDirection direction) onDismissed,
+    AsyncValueGetter<bool> confirmDismiss,
+  }) {
+    return KayleeDismissible(
+      key: key,
+      child: child,
+      onDismissed: onDismissed,
+      confirmDismiss: confirmDismiss,
+      secondaryBackground: Container(
+        color: ColorsRes.errorBorder,
+        alignment: Alignment.centerRight,
+        padding: EdgeInsets.only(right: Dimens.px24),
+        child: Image.asset(
+          Images.ic_delete,
+          width: Dimens.px24,
+          height: Dimens.px24,
+          color: Colors.white,
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Dismissible(
       key: key,
       direction: DismissDirection.endToStart,
-      background: Container(),
+      background: Container(
+        color: Colors.black,
+      ),
       confirmDismiss: (direction) async {
         if (confirmDismiss.isNotNull) {
           return await confirmDismiss();
         }
         return true;
       },
-      secondaryBackground: Container(
-        padding: EdgeInsets.symmetric(horizontal: Dimens.px24),
-        alignment: Alignment.centerRight,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              Images.ic_delete,
-              width: Dimens.px32,
-              height: Dimens.px32,
+      secondaryBackground: secondaryBackground ??
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: Dimens.px24),
+            alignment: Alignment.centerRight,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  Images.ic_delete,
+                  width: Dimens.px32,
+                  height: Dimens.px32,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: Dimens.px4),
+                  child: KayleeText.error16W400(
+                    Strings.xoa,
+                    maxLines: 1,
+                  ),
+                )
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: Dimens.px4),
-              child: KayleeText.error16W400(
-                Strings.xoa,
-                maxLines: 1,
-              ),
-            )
-          ],
-        ),
-      ),
+          ),
       onDismissed: onDismissed,
       child: child,
     );
