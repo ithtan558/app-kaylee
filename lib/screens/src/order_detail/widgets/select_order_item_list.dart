@@ -13,8 +13,6 @@ import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class SelectOrderItemList extends StatefulWidget {
-  SelectOrderItemList();
-
   @override
   _SelectOrderItemListState createState() => _SelectOrderItemListState();
 }
