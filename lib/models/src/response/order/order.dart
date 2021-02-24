@@ -42,6 +42,8 @@ class Order {
     this.informationReceiveWardsName,
     this.informationReceiveNote,
     this.orderItems,
+    this.employee,
+    this.employees,
   });
 
   int id;
@@ -91,6 +93,7 @@ class Order {
   String employeeLastName;
 
   Employee employee;
+  List<Employee> employees;
 
   Brand brand;
   String brandName;
@@ -106,16 +109,25 @@ class Order {
 }
 
 enum OrderStatus {
-@JsonValue(1)
-  ordered,@JsonValue(2)
-waiting,@JsonValue(3)
-finished,@JsonValue(4)
-not_paid,@JsonValue(5)
-cancel,@JsonValue(6)
-accepted,@JsonValue(7)
-refund,@JsonValue(8)
-refundSalon,@JsonValue(null)
-unknown,}
+  @JsonValue(1)
+  ordered,
+  @JsonValue(2)
+  waiting,
+  @JsonValue(3)
+  finished,
+  @JsonValue(4)
+  not_paid,
+  @JsonValue(5)
+  cancel,
+  @JsonValue(6)
+  accepted,
+  @JsonValue(7)
+  refund,
+  @JsonValue(8)
+  refundSalon,
+  @JsonValue(null)
+  unknown,
+}
 
 String orderStatus2Title({OrderStatus status}) {
   switch (status) {

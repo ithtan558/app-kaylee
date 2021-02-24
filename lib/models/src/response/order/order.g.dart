@@ -53,9 +53,14 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
         ?.map((e) =>
             e == null ? null : OrderItem.fromJson(e as Map<String, dynamic>))
         ?.toList(),
-  )..employee = json['employee'] == null
-      ? null
-      : Employee.fromJson(json['employee'] as Map<String, dynamic>);
+    employee: json['employee'] == null
+        ? null
+        : Employee.fromJson(json['employee'] as Map<String, dynamic>),
+    employees: (json['employees'] as List)
+        ?.map((e) =>
+            e == null ? null : Employee.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
+  );
 }
 
 Map<String, dynamic> _$OrderToJson(Order instance) => <String, dynamic>{
@@ -80,6 +85,7 @@ Map<String, dynamic> _$OrderToJson(Order instance) => <String, dynamic>{
       'employee_first_name': instance.employeeFirstName,
       'employee_last_name': instance.employeeLastName,
       'employee': instance.employee?.toJson(),
+      'employees': instance.employees?.map((e) => e?.toJson())?.toList(),
       'brand': instance.brand?.toJson(),
       'brand_name': instance.brandName,
       'information_receive_name': instance.informationReceiveName,
