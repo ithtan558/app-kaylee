@@ -325,6 +325,11 @@ class Strings {
   static const String diaChiIp = 'Địa chỉ IP';
   static const String luuThanhCong = 'Lưu thành công';
   static const String chonXong = 'Chọn xong';
+  static const String hintTimNhanVienTheoTenHoacSdt =
+      'Tìm theo tên nhân viên/Số điện thoại';
+  static const String themNhanVien = 'Thêm nhân viên';
+  static const String nhanVienPhucVu = 'Nhân viên phục vụ';
+  static const String chuaChonNhanVienPhucVu = 'Chưa chọn nhân viên phục vụ';
 
   Strings._();
 }
