@@ -53,7 +53,7 @@ class _SelectEmployeeListState extends KayleeState<SelectEmployeeList> {
               child: SelectEmployeeDialog.newInstance(
                 onSelect: (value) {
                   widget.controller.employees = value;
-                  widget.onSelect.call(widget.controller.employees);
+                  widget.onSelect?.call(widget.controller.employees);
                   setState(() {});
                 },
                 brand: _brandTFModel.brand,
