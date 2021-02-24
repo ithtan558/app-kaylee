@@ -19,7 +19,7 @@ class OrderItem extends StatefulWidget {
 class _OrderItemState extends BaseState<OrderItem> {
   @override
   Widget build(BuildContext context) {
-    return KayleeDismissible(
+    return KayleeDismissible.iconOnly(
       key: ValueKey(widget.data),
       confirmDismiss: () async {
         final result = await showKayleeAlertDialog(
