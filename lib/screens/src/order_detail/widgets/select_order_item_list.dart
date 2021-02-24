@@ -111,7 +111,7 @@ class _SelectOrderItemListState extends KayleeState<SelectOrderItemList> {
               return Padding(
                 padding: const EdgeInsets.all(Dimens.px16),
                 child: KayleeText.hint16W400(
-                  Strings.chuSuDungDichVu,
+                  Strings.chuaSuDungDichVu,
                 ),
               );
             return SizedBox();
