@@ -6,14 +6,6 @@ part of 'order_request_item.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-OrderRequestItem _$OrderRequestItemFromJson(Map<String, dynamic> json) {
-  return OrderRequestItem(
-    serviceId: json['service_id'] as int,
-    productId: json['product_id'] as int,
-    quantity: json['quantity'] as int,
-  );
-}
-
 Map<String, dynamic> _$OrderRequestItemToJson(OrderRequestItem instance) {
   final val = <String, dynamic>{};
 
@@ -23,8 +15,8 @@ Map<String, dynamic> _$OrderRequestItemToJson(OrderRequestItem instance) {
     }
   }
 
-  writeNotNull('service_id', instance.serviceId);
-  writeNotNull('product_id', instance.productId);
+  writeNotNull('service_id', _parseProductAndServiceId(instance.serviceId));
+  writeNotNull('product_id', _parseProductAndServiceId(instance.productId));
   writeNotNull('quantity', instance.quantity);
   return val;
 }
