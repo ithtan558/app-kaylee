@@ -6,7 +6,8 @@ part 'order_request.g.dart';
 
 Map<String, dynamic> _parseCartCustomer(Customer customer) {
   if (customer.isNull) return null;
-  final cartCustomer = CartCustomer.fromJson(customer.toJson());
+  final cartCustomer =
+      CartCustomer.fromJson(Customer(id: customer?.id).toJson());
   return cartCustomer.toJson();
 }
 
