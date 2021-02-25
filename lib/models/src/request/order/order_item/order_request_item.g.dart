@@ -11,8 +11,6 @@ OrderRequestItem _$OrderRequestItemFromJson(Map<String, dynamic> json) {
     serviceId: json['service_id'] as int,
     productId: json['product_id'] as int,
     quantity: json['quantity'] as int,
-    price: json['price'] as int,
-    name: json['name'] as String,
   );
 }
 
@@ -28,7 +26,5 @@ Map<String, dynamic> _$OrderRequestItemToJson(OrderRequestItem instance) {
   writeNotNull('service_id', instance.serviceId);
   writeNotNull('product_id', instance.productId);
   writeNotNull('quantity', instance.quantity);
-  writeNotNull('price', instance.price);
-  writeNotNull('name', instance.name);
   return val;
 }

@@ -22,7 +22,9 @@ class OrderRequestItem {
   int serviceId;
   int productId;
   int quantity;
+  @JsonKey(ignore: true)
   int price;
+  @JsonKey(ignore: true)
   String name;
 
   bool get isService => serviceId.isNotNull;
