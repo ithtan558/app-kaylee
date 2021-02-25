@@ -135,7 +135,26 @@ class PdfModule {
             Padding(
               padding: EdgeInsets.only(top: Dimens.px8),
               child: Text(
-                '${Strings.nhanVien}: ${order.employee?.name ?? ''}',
+                '${Strings.nhanVienThucThien}:',
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: Dimens.px8),
+              child: Column(
+                children: List.generate(order.employees?.length ?? 0, (index) {
+                  final employee = order.employees.elementAt(index);
+                  return Row(
+                    children: [
+                      Expanded(
+                          child: Text(
+                        employee.name +
+                            (employee.role?.name.isNotNullAndEmpty
+                                ? ' - ${employee.role.name}'
+                                : ''),
+                      ))
+                    ],
+                  );
+                }).toList(),
               ),
             ),
             Padding(
