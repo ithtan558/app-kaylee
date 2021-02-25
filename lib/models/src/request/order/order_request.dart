@@ -56,10 +56,6 @@ class OrderRequest {
             .toList(),
         employee: order.employee,
         employees: order.employees,
-        supplier: Supplier(
-          id: order.supplierId,
-          name: order.supplierName,
-        ),
         brand: order.brand,
         isPaid: order.isPaid);
   }
