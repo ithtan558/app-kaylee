@@ -4,7 +4,7 @@ import 'package:kaylee/models/models.dart';
 
 part 'order_request.g.dart';
 
-_parseCartCustomer(Customer customer) {
+Map<String, dynamic> _parseCartCustomer(Customer customer) {
   if (customer.isNull) return null;
   final cartCustomer = CartCustomer.fromJson(customer.toJson());
   return cartCustomer.toJson();
