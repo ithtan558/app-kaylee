@@ -41,7 +41,7 @@ class KayleeListView extends StatelessWidget {
       itemCount: length,
       separatorBuilder: (context, index) {
         if (index == length - 2) return Container();
-        return separatorBuilder?.call(context, index);
+        return separatorBuilder?.call(context, index) ?? SizedBox.shrink();
       },
     );
   }
