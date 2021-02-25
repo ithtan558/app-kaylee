@@ -4,11 +4,9 @@ import 'package:kaylee/models/models.dart';
 
 part 'order_request_item.g.dart';
 
-@JsonSerializable(fieldRename: FieldRename.snake, includeIfNull: false)
+@JsonSerializable(
+    fieldRename: FieldRename.snake, includeIfNull: false, createFactory: false)
 class OrderRequestItem {
-  factory OrderRequestItem.fromJson(Map<String, dynamic> json) =>
-      _$OrderRequestItemFromJson(json);
-
   Map<String, dynamic> toJson() => _$OrderRequestItemToJson(this);
 
   OrderRequestItem({
@@ -19,7 +17,9 @@ class OrderRequestItem {
     this.name,
   });
 
+  @JsonKey(toJson: _parseProductAndServiceId)
   int serviceId;
+  @JsonKey(toJson: _parseProductAndServiceId)
   int productId;
   int quantity;
   @JsonKey(ignore: true)
@@ -27,9 +27,11 @@ class OrderRequestItem {
   @JsonKey(ignore: true)
   String name;
 
-  bool get isService => serviceId.isNotNull;
+  @JsonKey(ignore: true)
+  bool get isService => serviceId.isNotNull && serviceId != 0;
 
-  bool get isProduct => productId.isNotNull;
+  @JsonKey(ignore: true)
+  bool get isProduct => productId.isNotNull && productId != 0;
 
   factory OrderRequestItem.copyFromProduct({Product product}) =>
       OrderRequestItem(
@@ -46,4 +48,8 @@ class OrderRequestItem {
         price: service.price,
         name: service.name,
       );
+}
+
+int _parseProductAndServiceId(int input) {
+  return input.isNull || input == 0 ? null : input;
 }
