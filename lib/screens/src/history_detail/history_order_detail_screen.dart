@@ -8,6 +8,7 @@ import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/history_detail/bloc/history_order_detail_bloc.dart';
+import 'package:kaylee/screens/src/history_detail/widgets/history_employee/history_employee_list.dart';
 import 'package:kaylee/screens/src/history_detail/widgets/history_order_item.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/src/print_bill_dialog.dart';
@@ -91,16 +92,13 @@ class _HistoryOrderDetailScreenState
                                   initText: state.item.brand?.name,
                                 ),
                               ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: Dimens.px16),
-                                child: KayleeTextField.staticWidget(
-                                  title: Strings.nhanVienThucThien,
-                                  initText: state.item.employee?.name,
-                                ),
-                              ),
                             ],
                           ),
+                        ),
+                      ),
+                      SliverToBoxAdapter(
+                        child: HistoryEmployeeList(
+                          employees: state.item.employees,
                         ),
                       ),
                       SliverToBoxAdapter(
