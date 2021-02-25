@@ -20,10 +20,14 @@ class SelectedEmployeeItem extends StatelessWidget {
       key: ValueKey(employee),
       child: Padding(
         padding: const EdgeInsets.all(Dimens.px16),
-        child: KayleeText.normal16W400(employee.name +
-            (employee.role?.name.isNullOrEmpty
-                ? ''
-                : ' - ${employee.role?.name}')),
+        child: KayleeText.normal16W400(
+          employee.name +
+              (employee.role?.name.isNullOrEmpty
+                  ? ''
+                  : ' - ${employee.role?.name}'),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
       ),
       onDismissed: (_) => onRemoveItem?.call(employee),
     );
