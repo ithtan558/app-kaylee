@@ -13,6 +13,7 @@ import 'package:kaylee/screens/src/home/tabs/history/history_tab.dart';
 import 'package:kaylee/screens/src/order_detail/bloc/order_detail_bloc.dart';
 import 'package:kaylee/screens/src/order_detail/widgets/payment_method_dialog.dart';
 import 'package:kaylee/screens/src/order_detail/widgets/select_customer/select_customer_field.dart';
+import 'package:kaylee/screens/src/order_detail/widgets/select_employee/select_employee_list.dart';
 import 'package:kaylee/screens/src/order_detail/widgets/select_order_item_list.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
@@ -58,7 +59,7 @@ class CreateNewOrderScreen extends StatefulWidget {
 class _CreateNewOrderScreenState extends KayleeState<CreateNewOrderScreen> {
   OrderScreenOpenFrom openFrom;
   final brandController = PickInputController<Brand>();
-  final employeeController = PickInputController<Employee>();
+  final employeeController = SelectEmployeeController();
   final customerController = SelectCustomerController();
   final discountController = TextEditingController();
   final pickerTextFieldModel = KayleePickerTextFieldModel();
@@ -175,13 +176,13 @@ class _CreateNewOrderScreenState extends KayleeState<CreateNewOrderScreen> {
                 openFrom == OrderScreenOpenFrom.addNewFromReservation) {
               _cart.updateOrderInfo(OrderRequest(
                 brand: brandController.value,
-                employee: employeeController.value,
+                employees: employeeController.employees,
               ));
               _bloc.create();
             } else {
               _cart.updateOrderInfo(OrderRequest(
                 brand: brandController.value,
-                employee: employeeController.value,
+                employees: employeeController.employees,
               ));
               _bloc.update();
             }
@@ -191,7 +192,7 @@ class _CreateNewOrderScreenState extends KayleeState<CreateNewOrderScreen> {
           listener: (context, state) {
             customerController.customer = _order?.customer;
             brandController.value = _order?.brand;
-            employeeController.value = _order?.employee;
+            employeeController.employees = _order?.employees;
             discountController.text = _order?.discount?.toString();
           },
           builder: (context, state) {
@@ -226,18 +227,15 @@ class _CreateNewOrderScreenState extends KayleeState<CreateNewOrderScreen> {
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: Dimens.px16,
-                              right: Dimens.px16,
-                              bottom: Dimens.px16),
-                          child: RepositoryProvider.value(
-                            value: pickerTextFieldModel,
-                            child: KayleePickerTextField(
-                              title: Strings.nhanVienThucThien,
-                              hint: Strings.chonNhanVienTrongDs,
-                              controller: employeeController,
-                            ),
+                        RepositoryProvider.value(
+                          value: pickerTextFieldModel,
+                          child: SelectEmployeeList(
+                            controller: employeeController,
+                            onSelect: (value) {
+                              _cart.updateOrderInfo(OrderRequest(
+                                employees: employeeController.employees,
+                              ));
+                            },
                           ),
                         ),
                         SelectOrderItemList(),
@@ -289,7 +287,7 @@ class _CreateNewOrderScreenState extends KayleeState<CreateNewOrderScreen> {
                                       OrderScreenOpenFrom.addNewButton) {
                                     _cart.updateOrderInfo(OrderRequest(
                                       brand: brandController.value,
-                                      employee: employeeController.value,
+                                      employee: employeeController.employees,
                                     ));
                                     _bloc.createOrderAndPay();
                                   }
