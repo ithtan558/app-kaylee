@@ -26,6 +26,7 @@ class SelectEmployeeItem extends StatelessWidget {
               padding: const EdgeInsets.only(right: Dimens.px8),
               child: KayleeCheckBox(checked: selected)),
           Expanded(
+            flex: 3,
             child: KayleeText.normal16W400(
               employee.name,
               maxLines: 1,
@@ -33,11 +34,14 @@ class SelectEmployeeItem extends StatelessWidget {
               textAlign: TextAlign.start,
             ),
           ),
-          KayleeText.normal16W400(
-            employee.role?.name ?? '',
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.end,
+          Expanded(
+            flex: 2,
+            child: KayleeText.normal16W400(
+              employee.role?.name ?? '',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.end,
+            ),
           )
         ],
       ),
