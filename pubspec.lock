@@ -20,7 +20,7 @@ packages:
     description:
       path: "."
       ref: "0.2.0"
-      resolved-ref: fc6de35c68fd625fe410a3de788374f366d4a2e6
+      resolved-ref: c0b0774d8022a93469b7fa45328c7d09f7369298
       url: "https://tungpham6195@bitbucket.org/anth-freelance/anth_package.git"
     source: git
     version: "0.2.0"
