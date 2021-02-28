@@ -294,18 +294,11 @@ class _ImageGridState extends BaseState<_ImageGrid> {
 
   Future<void> handlePermission() async {
     final Permission permission =
-    Platform.isAndroid ? Permission.storage : Permission.photos;
-    if (await permission.isGranted) {
-      final pickedFile = await imagePicker.ImagePicker().getImage(
-          source: imagePicker.ImageSource.gallery,
-          maxWidth: 2020,
-          maxHeight: 2020);
-      File selectedFile;
-      if (pickedFile.isNotNull) {
-        selectedFile = File(pickedFile.path);
-      }
-      widget.onSelect?.call(selectedFile);
-    } else if (await permission.isDenied) {
+        Platform.isAndroid ? Permission.storage : Permission.photosAddOnly;
+    final status = await permission.request();
+    if (status.isGranted) {
+      _openGallery();
+    } else if (status.isDenied) {
       // print('[TUNG] ===> isDenied');
       if (Platform.isIOS) {
         await showKayleeGo2SettingDialog(context: context);
@@ -313,11 +306,11 @@ class _ImageGridState extends BaseState<_ImageGrid> {
         await permission.request();
         handlePermission();
       }
-    } else if (await permission.isRestricted) {
+    } else if (status.isRestricted) {
       ///only support ios
       // print('[TUNG] ===> isRestricted');
       await showKayleeGo2SettingDialog(context: context);
-    } else if (await permission.isPermanentlyDenied) {
+    } else if (status.isPermanentlyDenied) {
       ///only support android
       // print('[TUNG] ===> isPermanentlyDenied');
       await showKayleeGo2SettingDialog(context: context);
@@ -325,7 +318,23 @@ class _ImageGridState extends BaseState<_ImageGrid> {
       // print('[TUNG] ===> isUndetermined');
       await permission.request();
       handlePermission();
+    } else if (status.isLimited) {
+      //only support ios
+      //when user select option for only 1 time
+      _openGallery();
     }
+  }
+
+  void _openGallery() async {
+    final pickedFile = await imagePicker.ImagePicker().getImage(
+        source: imagePicker.ImageSource.gallery,
+        maxWidth: 2020,
+        maxHeight: 2020);
+    File selectedFile;
+    if (pickedFile.isNotNull) {
+      selectedFile = File(pickedFile.path);
+    }
+    widget.onSelect?.call(selectedFile);
   }
 
   @override
@@ -404,7 +413,7 @@ class _BorderWrapper extends StatelessWidget {
       );
 
   factory _BorderWrapper.dynamic(
-      {Widget child, void Function() onTap, bool isSelected = false}) =>
+          {Widget child, void Function() onTap, bool isSelected = false}) =>
       _BorderWrapper(
         child: child,
         onTap: onTap,
