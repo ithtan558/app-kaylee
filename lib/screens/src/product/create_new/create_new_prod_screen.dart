@@ -85,7 +85,8 @@ class _CreateNewProdScreenState extends KayleeState<CreateNewProdScreen> {
             }
           }
         } else if (state is NewProdDetailModel ||
-            state is DeleteProdDetailModel) {
+            state is DeleteProdDetailModel ||
+            state is UpdateProdDetailModel) {
           showKayleeAlertMessageYesDialog(
             context: context,
             message: state.message,
@@ -93,15 +94,6 @@ class _CreateNewProdScreenState extends KayleeState<CreateNewProdScreen> {
             onDismiss: () {
               context.bloc<ReloadBloc>().reload(widget: ProdListScreen);
               popScreen();
-            },
-          );
-        } else if (state is UpdateProdDetailModel) {
-          showKayleeAlertMessageYesDialog(
-            context: context,
-            message: state.message,
-            onPressed: popScreen,
-            onDismiss: () {
-              context.bloc<ReloadBloc>().reload(widget: ProdListScreen);
             },
           );
         }
