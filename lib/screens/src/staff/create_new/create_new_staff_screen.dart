@@ -83,7 +83,8 @@ class _CreateNewStaffScreenState extends KayleeState<CreateNewStaffScreen> {
             },
           );
         } else if (state is NewStaffDetailModel ||
-            state is DeleteStaffDetailModel) {
+            state is DeleteStaffDetailModel ||
+            state is UpdateStaffDetailModel) {
           showKayleeAlertMessageYesDialog(
             context: context,
             message: state.message,
@@ -91,15 +92,6 @@ class _CreateNewStaffScreenState extends KayleeState<CreateNewStaffScreen> {
             onDismiss: () {
               context.bloc<ReloadBloc>().reload(widget: StaffListScreen);
               popScreen();
-            },
-          );
-        } else if (state is UpdateStaffDetailModel) {
-          showKayleeAlertMessageYesDialog(
-            context: context,
-            message: state.message,
-            onPressed: popScreen,
-            onDismiss: () {
-              context.bloc<ReloadBloc>().reload(widget: StaffListScreen);
             },
           );
         }
