@@ -20,7 +20,7 @@ int _parseCartEmployee(dynamic input) {
 }
 
 List<int> _parseCartEmployees(List<Employee> input) {
-  return input.map((e) => e.id).toList();
+  return input?.map((e) => e.id)?.toList();
 }
 
 int _parseSupplierId(Supplier supplier) {
