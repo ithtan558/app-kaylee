@@ -85,7 +85,8 @@ class _CreateNewServiceScreenState extends KayleeState<CreateNewServiceScreen> {
             },
           );
         } else if (state is NewServiceDetailModel ||
-            state is DeleteServiceDetailModel) {
+            state is DeleteServiceDetailModel ||
+            state is UpdateServiceDetailModel) {
           showKayleeAlertMessageYesDialog(
             context: context,
             message: state.message,
@@ -93,15 +94,6 @@ class _CreateNewServiceScreenState extends KayleeState<CreateNewServiceScreen> {
             onDismiss: () {
               context.bloc<ReloadBloc>().reload(widget: ServiceListScreen);
               popScreen();
-            },
-          );
-        } else if (state is UpdateServiceDetailModel) {
-          showKayleeAlertMessageYesDialog(
-            context: context,
-            message: state.message,
-            onPressed: popScreen,
-            onDismiss: () {
-              context.bloc<ReloadBloc>().reload(widget: ServiceListScreen);
             },
           );
         }
