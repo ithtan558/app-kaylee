@@ -44,7 +44,7 @@ class _ServiceListScreenState extends KayleeState<ServiceListScreen> {
     super.initState();
 
     sub = cateBloc.listen((state) {
-      if (!state.loading) {
+      if (!cateBloc.loading) {
         hideLoading();
         if (state.code.isNotNull && state.code != ErrorType.UNAUTHORIZED) {
           showKayleeAlertErrorYesDialog(
@@ -56,14 +56,14 @@ class _ServiceListScreenState extends KayleeState<ServiceListScreen> {
           );
         } else {
           serviceListBloc.loadInitDataWithCate(
-              cateId: state.item
+              cateId: cateBloc.items
                   ?.firstWhere(
                     (element) => true,
                     orElse: () => null,
                   )
                   ?.id);
         }
-      } else if (state.loading) {
+      } else if (cateBloc.loading) {
         showLoading();
       }
     });
@@ -100,16 +100,16 @@ class _ServiceListScreenState extends KayleeState<ServiceListScreen> {
             ),
             tabBar: BlocBuilder<ServiceCateBloc, SingleModel<List<Category>>>(
               buildWhen: (previous, current) {
-                return !current.loading;
+                return !cateBloc.loading;
               },
               builder: (context, state) {
-                final categories = state.item;
+                final categories = cateBloc.items;
                 return KayleeTabBar(
                   itemCount: categories?.length,
                   mapTitle: (index) => categories.elementAt(index).name,
-                  onSelected: (value) {
+                  onSelected: (index) {
                     serviceListBloc.changeTab(
-                        cateId: cateBloc.state.item.elementAt(value).id);
+                        cateId: cateBloc.items.elementAt(index).id);
                   },
                 );
               },
@@ -130,6 +130,10 @@ class _ServiceListScreenState extends KayleeState<ServiceListScreen> {
               builder: (context, state) {
                 return PaginationRefreshGridView<Service>(
                   controller: serviceListBloc,
+                  onRefresh: () async {
+                    await cateBloc.refresh();
+                    await serviceListBloc.refresh();
+                  },
                   padding: EdgeInsets.all(Dimens.px16),
                   gridDelegate:
                       KayleeGridView.gridDelegate(childAspectRatio: 103 / 195),
