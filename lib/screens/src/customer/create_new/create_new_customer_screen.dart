@@ -83,7 +83,8 @@ class _CreateNewCustomerScreenState
             },
           );
         } else if (state is NewCustomerDetailModel ||
-            state is DeleteCustomerDetailModel) {
+            state is DeleteCustomerDetailModel ||
+            state is UpdateCustomerDetailModel) {
           showKayleeAlertMessageYesDialog(
             context: context,
             message: state.message,
@@ -91,15 +92,6 @@ class _CreateNewCustomerScreenState
             onDismiss: () {
               context.bloc<ReloadBloc>().reload(widget: CustomerListScreen);
               popScreen();
-            },
-          );
-        } else if (state is UpdateCustomerDetailModel) {
-          showKayleeAlertMessageYesDialog(
-            context: context,
-            message: state.message,
-            onPressed: popScreen,
-            onDismiss: () {
-              context.bloc<ReloadBloc>().reload(widget: CustomerListScreen);
             },
           );
         }
