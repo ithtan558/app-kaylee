@@ -3,36 +3,30 @@ import 'package:flutter/cupertino.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/services/services.dart';
 
-class ServiceCateBloc extends Cubit<SingleModel<List<Category>>> {
+class ServiceCateBloc extends Cubit<SingleModel<List<Category>>>
+    with PaginationMixin<Category> {
   ServService servService;
 
   ServiceCateBloc({@required this.servService}) : super(SingleModel());
 
-  void _loadServiceCate() {
+  @override
+  void load() {
+    super.load();
     RequestHandler(
       request: servService.getCategories(),
       onSuccess: ({message, result}) {
-        emit(SingleModel.copy(state
-          ..item = result
-          ..loading = false
-          ..code = null
-          ..error = null));
+        addMore(nextItems: result);
+        emit(state.success());
       },
       onFailed: (code, {error}) {
-        emit(SingleModel.copy(state
-          ..loading = false
-          ..code = code
-          ..error = error));
+        completeLoading();
+        emit(state.failure(code: code, error: error));
       },
     );
   }
 
   void loadInitData() {
-    emit(SingleModel.copy(state..loading = true));
-    _loadServiceCate();
-  }
-
-  void refresh() {
-    _loadServiceCate();
+    emit(state.copy());
+    load();
   }
 }
