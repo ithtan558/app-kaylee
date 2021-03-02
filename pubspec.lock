@@ -211,7 +211,7 @@ packages:
     description:
       path: "."
       ref: "0.6.5"
-      resolved-ref: "4649b0fe6928a6509964edaa17389b6290de6a21"
+      resolved-ref: d837e6e0f179a207cef91951abd0c2ef7bd43dae
       url: "https://github.com/tungpham6195/flutter.core_plugin.git"
     source: git
     version: "0.6.5"
