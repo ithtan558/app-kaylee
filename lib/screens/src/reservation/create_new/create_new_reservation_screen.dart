@@ -83,7 +83,8 @@ class _CreateNewReservationScreenState
             },
           );
         } else if (state is CancelReservationModel ||
-            state is NewReservationModel) {
+            state is NewReservationModel ||
+            state is UpdateReservationModel) {
           showKayleeAlertMessageYesDialog(
             context: context,
             message: state.message,
@@ -91,15 +92,6 @@ class _CreateNewReservationScreenState
             onDismiss: () {
               context.bloc<ReloadBloc>().reload(widget: ReservationListScreen);
               popScreen();
-            },
-          );
-        } else if (state is UpdateReservationModel) {
-          showKayleeAlertMessageYesDialog(
-            context: context,
-            message: state.message,
-            onPressed: popScreen,
-            onDismiss: () {
-              context.bloc<ReloadBloc>().reload(widget: ReservationListScreen);
             },
           );
         }
