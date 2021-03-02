@@ -71,7 +71,9 @@ class _CreateNewBrandScreenState extends KayleeState<CreateNewBrandScreen> {
               }
             },
           );
-        } else if (state is DeleteBrandModel || state is NewBrandModel) {
+        } else if (state is DeleteBrandModel ||
+            state is NewBrandModel ||
+            state is UpdateBrandModel) {
           showKayleeAlertMessageYesDialog(
             context: context,
             message: state.message,
@@ -79,15 +81,6 @@ class _CreateNewBrandScreenState extends KayleeState<CreateNewBrandScreen> {
             onDismiss: () {
               context.bloc<ReloadBloc>().reload(widget: BrandListScreen);
               popScreen();
-            },
-          );
-        } else if (state is UpdateBrandModel) {
-          showKayleeAlertMessageYesDialog(
-            context: context,
-            message: state.message,
-            onPressed: popScreen,
-            onDismiss: () {
-              context.bloc<ReloadBloc>().reload(widget: BrandListScreen);
             },
           );
         }
