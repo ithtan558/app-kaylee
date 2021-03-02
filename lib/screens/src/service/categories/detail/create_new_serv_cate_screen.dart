@@ -63,26 +63,9 @@ class _CreateNewServCateScreenState
             error: state.error,
             onPressed: popScreen,
           );
-        } else if (state is DeleteServCateModel) {
-          showKayleeAlertMessageYesDialog(
-            context: context,
-            message: state.message,
-            onPressed: popScreen,
-            onDismiss: () {
-              context.bloc<ReloadBloc>().reload(widget: ServCateListScreen);
-              popScreen();
-            },
-          );
-        } else if (state is UpdateServCateModel) {
-          showKayleeAlertMessageYesDialog(
-            context: context,
-            message: state.message,
-            onPressed: popScreen,
-            onDismiss: () {
-              context.bloc<ReloadBloc>().reload(widget: ServCateListScreen);
-            },
-          );
-        } else if (state is NewServCateModel) {
+        } else if (state is DeleteServCateModel ||
+            state is NewServCateModel ||
+            state is UpdateServCateModel) {
           showKayleeAlertMessageYesDialog(
             context: context,
             message: state.message,
