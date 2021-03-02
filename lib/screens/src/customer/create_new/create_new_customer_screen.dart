@@ -249,6 +249,17 @@ class _CreateNewCustomerScreenState
                       left: Dimens.px16,
                       right: Dimens.px16,
                       bottom: Dimens.px16),
+                  child: KayleeTextField.phoneInput(
+                    textInputAction: TextInputAction.next,
+                    controller: phoneTfController,
+                    focusNode: phoneFocus,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: Dimens.px16,
+                      right: Dimens.px16,
+                      bottom: Dimens.px16),
                   child: KayleePickerTextField<DateTime>(
                     title: Strings.ngayThangNamSinh,
                     hint: Strings.chonNgayThangNam,
@@ -274,18 +285,6 @@ class _CreateNewCustomerScreenState
                   child: KayleeFullAddressInput(
                     title: Strings.diaChiHienTai,
                     controller: addressController,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: Dimens.px16,
-                      right: Dimens.px16,
-                      bottom: Dimens.px16),
-                  child: KayleeTextField.phoneInput(
-                    textInputAction: TextInputAction.next,
-                    controller: phoneTfController,
-                    focusNode: phoneFocus,
-                    nextFocusNode: emailFocus,
                   ),
                 ),
                 Padding(
