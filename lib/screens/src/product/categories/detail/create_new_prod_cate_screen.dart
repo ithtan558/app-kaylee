@@ -62,33 +62,14 @@ class _CreateNewProdCateScreenState
             error: state.error,
             onPressed: popScreen,
           );
-        } else if (state is DeleteProductCateModel) {
+        } else if (state is DeleteProductCateModel ||
+            state is NewProductCateModel ||
+            state is UpdateProductCateModel) {
           context.bloc<ReloadBloc>().reload(widget: ProdCateListScreen);
           showKayleeAlertMessageYesDialog(
             context: context,
             message: state.message,
             onPressed: popScreen,
-            onDismiss: () {
-              context.bloc<ReloadBloc>().reload(widget: ProdCateListScreen);
-              popScreen();
-            },
-          );
-        } else if (state is UpdateProductCateModel) {
-          showKayleeAlertMessageYesDialog(
-            context: context,
-            message: state.message,
-            onPressed: popScreen,
-            onDismiss: () {
-              context.bloc<ReloadBloc>().reload(widget: ProdCateListScreen);
-            },
-          );
-        } else if (state is NewProductCateModel) {
-          showKayleeAlertMessageYesDialog(
-            context: context,
-            message: state.message,
-            onPressed: () {
-              popScreen();
-            },
             onDismiss: () {
               context.bloc<ReloadBloc>().reload(widget: ProdCateListScreen);
               popScreen();
