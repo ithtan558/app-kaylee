@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/base/reload_bloc.dart';
-import 'package:kaylee/main.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/widgets/widgets.dart';
@@ -72,6 +71,7 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
         // print('[TUNG] ===> hideLoading');
         Navigator.removeRoute(context, dialog);
         dialogContext = null;
+        isShowLoading = false;
       }
     } else if (isShowLoading) {
       isShowLoading = false;
