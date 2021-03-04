@@ -86,7 +86,7 @@ class KayleeTextField extends StatelessWidget {
           FocusNode focusNode,
           FocusNode nextFocusNode,
           TextEditingController controller,
-          TextInputAction textInputAction,
+          TextInputAction textInputAction = TextInputAction.done,
           TextInputType textInputType,
           String error,
           EdgeInsets contentPadding,
@@ -202,7 +202,7 @@ class KayleeTextField extends StatelessWidget {
           FocusNode focusNode,
           FocusNode nextFocusNode,
           TextEditingController controller,
-          TextInputAction textInputAction,
+          TextInputAction textInputAction = TextInputAction.done,
           String error}) =>
       KayleeTextField(
         key: key,
@@ -414,12 +414,13 @@ class SearchInputField extends StatefulWidget {
   final ValueChanged<String> onDoneTyping;
   final VoidCallback onClear;
 
-  SearchInputField({this.hint,
-    this.controller,
-    this.focusNode,
-    this.onChanged,
-    this.onDoneTyping,
-    this.onClear});
+  SearchInputField(
+      {this.hint,
+      this.controller,
+      this.focusNode,
+      this.onChanged,
+      this.onDoneTyping,
+      this.onClear});
 
   @override
   _SearchInputFieldState createState() => new _SearchInputFieldState();
@@ -783,14 +784,15 @@ class PhoneInputField extends StatefulWidget {
   final TextInputAction textInputAction;
   final bool isStaticTField;
 
-  PhoneInputField({this.error,
-    this.focusNode,
-    this.controller,
-    this.nextFocusNode,
-    this.textInputAction = TextInputAction.done,
-    this.isStaticTField = false,
-    this.initText,
-    this.hint});
+  PhoneInputField(
+      {this.error,
+      this.focusNode,
+      this.controller,
+      this.nextFocusNode,
+      this.textInputAction = TextInputAction.done,
+      this.isStaticTField = false,
+      this.initText,
+      this.hint});
 
   @override
   _PhoneInputFieldState createState() => _PhoneInputFieldState();
@@ -836,19 +838,19 @@ class _PhoneInputFieldState extends State<PhoneInputField> {
           children: [
             Container(
               margin:
-              const EdgeInsets.only(left: Dimens.px10, right: Dimens.px13),
+                  const EdgeInsets.only(left: Dimens.px10, right: Dimens.px13),
               child: const Text('+84'),
             ),
             Container(
                 color: ColorsRes.textFieldBorder,
                 width: Dimens.px1,
                 margin:
-                const EdgeInsets.only(top: Dimens.px4, bottom: Dimens.px2)),
+                    const EdgeInsets.only(top: Dimens.px4, bottom: Dimens.px2)),
             Expanded(
               child: TextField(
                 focusNode: widget.focusNode,
                 controller:
-                widget.isStaticTField ? tfController : widget.controller,
+                    widget.isStaticTField ? tfController : widget.controller,
                 keyboardType: TextInputType.phone,
                 enabled: !widget.isStaticTField,
                 textInputAction: widget.textInputAction,
@@ -889,12 +891,13 @@ class WebsiteInputField extends StatefulWidget {
   final FocusNode domainFocus;
   final TextInputAction textInputAction;
 
-  WebsiteInputField({this.error,
-    this.websiteFocus,
-    this.domainFocus,
-    this.websiteTfController,
-    this.domainTfController,
-    this.textInputAction});
+  WebsiteInputField(
+      {this.error,
+      this.websiteFocus,
+      this.domainFocus,
+      this.websiteTfController,
+      this.domainTfController,
+      this.textInputAction});
 
   @override
   _WebsiteInputFieldState createState() => _WebsiteInputFieldState();
@@ -1009,9 +1012,9 @@ class _SelectInputTextFieldState extends BaseState<SelectInputTextField> {
           children: [
             Expanded(
                 child: KayleeText.normal16W400(
-                  widget.content ?? '',
-                  maxLines: 1,
-                )),
+              widget.content ?? '',
+              maxLines: 1,
+            )),
             KayleeFlatButton.withTextField(
               title: widget.buttonText,
               onPress: widget.onPress,
@@ -1031,11 +1034,12 @@ class UnitInputField extends StatefulWidget {
   final ValueChanged<String> onChange;
   final TextEditingController controller;
 
-  UnitInputField({this.hint,
-    this.error,
-    this.textInputAction,
-    this.onChange,
-    this.controller});
+  UnitInputField(
+      {this.hint,
+      this.error,
+      this.textInputAction,
+      this.onChange,
+      this.controller});
 
   @override
   _UnitInputFieldState createState() => _UnitInputFieldState();
@@ -1158,9 +1162,9 @@ class _PriceWithUnderLineBorderTextFieldState
             contentPadding: const EdgeInsets.symmetric(horizontal: Dimens.px8),
             disabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(
-                  width: Dimens.px1,
-                  color: ColorsRes.hintText,
-                )),
+              width: Dimens.px1,
+              color: ColorsRes.hintText,
+            )),
             suffixIcon: Padding(
               padding: const EdgeInsets.only(right: Dimens.px8),
               child: KayleeText.hint16W400(
