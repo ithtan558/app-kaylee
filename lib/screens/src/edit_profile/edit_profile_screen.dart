@@ -28,10 +28,8 @@ class EditProfileScreen extends StatefulWidget {
 
 class _EditProfileScreenState extends KayleeState<EditProfileScreen> {
   final imagePickerController = ImagePickerController();
-  final lastNameTfController = TextEditingController();
-  final firstNameTfController = TextEditingController();
-  final lastNameFocus = FocusNode();
-  final firstNameFocus = FocusNode();
+  final nameTfController = TextEditingController();
+  final nameFocus = FocusNode();
   final birthDayController = PickInputController<DateTime>();
   final addressController = KayleeFullAddressController();
 
@@ -64,11 +62,8 @@ class _EditProfileScreenState extends KayleeState<EditProfileScreen> {
 
   @override
   void dispose() {
-    lastNameTfController.dispose();
-    firstNameTfController.dispose();
-
-    lastNameFocus.dispose();
-    firstNameFocus.dispose();
+    nameTfController.dispose();
+    nameFocus.dispose();
     _sub.cancel();
     super.dispose();
   }
@@ -90,8 +85,7 @@ class _EditProfileScreenState extends KayleeState<EditProfileScreen> {
                       onPressed: () {
                         popScreen();
                         _bloc.userInfo
-                          ..firstName = firstNameTfController.text
-                          ..lastName = lastNameTfController.text
+                          ..name = nameTfController.text
                           ..birthday = birthDayController.value.toString()
                           ..address = addressController.address
                           ..city = addressController.city
@@ -114,9 +108,7 @@ class _EditProfileScreenState extends KayleeState<EditProfileScreen> {
         child: BlocConsumer<EditProfileBloc, SingleModel<UserInfo>>(
           listener: (context, state) {
             imagePickerController.existedImageUrl = state.item?.image;
-            firstNameTfController.text = state.item?.firstName;
-            lastNameTfController.text = state.item?.lastName;
-
+            nameTfController.text = state.item?.name;
             birthDayController.value = state.item?.birthdayInDateTime;
             addressController
               ..initAddress = state.item?.address
@@ -134,29 +126,11 @@ class _EditProfileScreenState extends KayleeState<EditProfileScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: Dimens.px16),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: KayleeTextField.normal(
-                          title: Strings.ho,
-                          hint: Strings.hoHint,
-                          controller: lastNameTfController,
-                          textInputAction: TextInputAction.next,
-                          focusNode: lastNameFocus,
-                          nextFocusNode: firstNameFocus,
-                        ),
-                      ),
-                      SizedBox(width: Dimens.px8),
-                      Expanded(
-                        child: KayleeTextField.normal(
-                          title: Strings.ten,
-                          hint: Strings.tenHint,
-                          controller: firstNameTfController,
-                          textInputAction: TextInputAction.done,
-                          focusNode: firstNameFocus,
-                        ),
-                      ),
-                    ],
+                  child: KayleeTextField.normal(
+                    title: Strings.hoTen,
+                    hint: Strings.hoTenHint,
+                    controller: nameTfController,
+                    focusNode: nameFocus,
                   ),
                 ),
                 Padding(

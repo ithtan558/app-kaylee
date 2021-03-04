@@ -10,8 +10,7 @@ UserInfo _$UserInfoFromJson(Map<String, dynamic> json) {
   return UserInfo(
     id: json['id'] as int,
     brandId: json['brand_id'] as int,
-    firstName: json['first_name'] as String,
-    lastName: json['last_name'] as String,
+    name: json['name'] as String,
     email: json['email'] as String,
     phone: json['phone'] as String,
     username: json['username'] as String,
@@ -36,11 +35,11 @@ UserInfo _$UserInfoFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$UserInfoToJson(UserInfo instance) => <String, dynamic>{
+Map<String, dynamic> _$UserInfoToJson(UserInfo instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'brand_id': instance.brandId,
-      'first_name': instance.firstName,
-      'last_name': instance.lastName,
+      'name': instance.name,
       'email': instance.email,
       'phone': instance.phone,
       'username': instance.username,

@@ -10,8 +10,7 @@ class RegisterScreenBloc extends Cubit<SingleModel<RegisterBody>> {
       : super(SingleModel(item: RegisterBody()));
 
   void register(
-      {String firstName,
-      String lastName,
+      {String name,
       String phone,
       String email,
       String password,
@@ -21,8 +20,7 @@ class RegisterScreenBloc extends Cubit<SingleModel<RegisterBody>> {
       emit(SingleModel.copy(state..loading = true));
       RequestHandler(
         request: userService.register(RegisterBody(
-          firstName: firstName,
-          lastName: lastName,
+          name: name,
           phone: phone,
           email: email,
           password: password,
@@ -37,13 +35,8 @@ class RegisterScreenBloc extends Cubit<SingleModel<RegisterBody>> {
         },
         onFailed: (code, {error}) {
           switch (error.code) {
-            case ErrorCode.FIRST_NAME_CODE:
+            case ErrorCode.NAME_CODE:
               return emit(NameErrorModel.copy(state
-                ..loading = false
-                ..error = error
-                ..code = code));
-            case ErrorCode.LAST_NAME_CODE:
-              return emit(LastNameErrorModel.copy(state
                 ..loading = false
                 ..error = error
                 ..code = code));
@@ -91,16 +84,6 @@ class RegisterSuccessModel extends SingleModel<RegisterBody> {
 
 class NameErrorModel extends SingleModel<RegisterBody> {
   NameErrorModel.copy(SingleModel old) {
-    this
-      ..loading = old?.loading
-      ..item = old?.item
-      ..error = old?.error
-      ..code = old?.code;
-  }
-}
-
-class LastNameErrorModel extends SingleModel<RegisterBody> {
-  LastNameErrorModel.copy(SingleModel old) {
     this
       ..loading = old?.loading
       ..item = old?.item

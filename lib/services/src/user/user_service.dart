@@ -38,8 +38,7 @@ abstract class UserService {
   @POST('update')
   @MultiPart()
   Future<ResponseModel> update({
-    @Part(name: 'first_name') String firstName,
-    @Part(name: 'last_name') String lastName,
+    @Part() String name,
     @Part() String birthday,
     @Part() String address,
     @Part(name: 'city_id') int cityId,

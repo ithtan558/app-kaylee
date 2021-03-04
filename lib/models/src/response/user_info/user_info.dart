@@ -16,8 +16,7 @@ class UserInfo {
   UserInfo(
       {this.id,
       this.brandId,
-      this.firstName,
-      this.lastName,
+      this.name,
       this.email,
       this.phone,
       this.username,
@@ -33,11 +32,7 @@ class UserInfo {
 
   int id;
   int brandId;
-  String firstName;
-  String lastName;
-
-  String get name =>
-      (lastName.isNullOrEmpty ? '' : (lastName + ' ')) + (firstName ?? '');
+  String name;
   String email;
   String phone;
   String username;
@@ -66,9 +61,12 @@ class UserInfo {
 }
 
 enum UserRole {
-@JsonValue(1)
-SUPER_ADMIN,@JsonValue(2)
-MANAGER,@JsonValue(3)
-BRAND_MANAGER,@JsonValue(4)
-EMPLOYEE,
+  @JsonValue(1)
+  SUPER_ADMIN,
+  @JsonValue(2)
+  MANAGER,
+  @JsonValue(3)
+  BRAND_MANAGER,
+  @JsonValue(4)
+  EMPLOYEE,
 }

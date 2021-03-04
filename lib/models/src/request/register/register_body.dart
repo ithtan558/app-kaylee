@@ -12,16 +12,14 @@ class RegisterBody {
   Map<String, dynamic> toJson() => _$RegisterBodyToJson(this);
 
   RegisterBody({
-    this.firstName,
-    this.lastName,
+    this.name,
     this.phone,
     this.password,
     this.email,
     this.code,
   });
 
-  String firstName;
-  String lastName;
+  String name;
   String phone;
   String password;
   String email;

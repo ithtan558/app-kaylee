@@ -31,8 +31,7 @@ class EditProfileBloc extends Cubit<SingleModel<UserInfo>> {
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
       request: userService.update(
-        firstName: userInfo.firstName,
-        lastName: userInfo.lastName,
+        name: userInfo.name,
         birthday: userInfo.birthday,
         address: userInfo.address,
         cityId: userInfo.city?.id,

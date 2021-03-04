@@ -25,14 +25,12 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends KayleeState<RegisterScreen> {
   final nameFocus = FocusNode();
-  final lastNameFocus = FocusNode();
   final phoneFocus = FocusNode();
   final emailFocus = FocusNode();
   final passFocus = FocusNode();
   final codeFocus = FocusNode();
 
   final nameTController = TextEditingController();
-  final lastNameTController = TextEditingController();
   final phoneTController = TextEditingController();
   final emailTController = TextEditingController();
   final passTController = TextEditingController();
@@ -46,13 +44,11 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
   @override
   void dispose() {
     nameTController.dispose();
-    lastNameTController.dispose();
     phoneTController.dispose();
     emailTController.dispose();
     passTController.dispose();
     codeTController.dispose();
     nameFocus.dispose();
-    lastNameFocus.dispose();
     phoneFocus.dispose();
     emailFocus.dispose();
     passFocus.dispose();
@@ -85,11 +81,6 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
                     if (state is NameErrorModel) {
                       return nameFocus.requestFocus();
                     }
-
-                    if (state is LastNameErrorModel) {
-                      return lastNameFocus.requestFocus();
-                    }
-
                     if (state is PhoneErrorModel) {
                       return phoneFocus.requestFocus();
                     }
@@ -125,37 +116,13 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
                 Padding(
                   padding: const EdgeInsets.symmetric(
                       horizontal: Dimens.px16, vertical: Dimens.px16),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: KayleeTextField.normal(
-                          title: Strings.ten,
-                          hint: Strings.tenHint,
-                          focusNode: nameFocus,
-                          controller: nameTController,
-                          textInputAction: TextInputAction.next,
-                          nextFocusNode: lastNameFocus,
-                          error: state is NameErrorModel
-                              ? state.error.message
-                              : null,
-                        ),
-                      ),
-                      SizedBox(width: Dimens.px15),
-                      Expanded(
-                        child: KayleeTextField.normal(
-                          title: Strings.ho,
-                          hint: Strings.hoHint,
-                          focusNode: lastNameFocus,
-                          controller: lastNameTController,
-                          textInputAction: TextInputAction.next,
-                          nextFocusNode: phoneFocus,
-                          error: state is LastNameErrorModel
-                              ? state.error.message
-                              : null,
-                        ),
-                      )
-                    ],
+                  child: KayleeTextField.normal(
+                    title: Strings.hoTen,
+                    hint: Strings.hoTenHint,
+                    focusNode: nameFocus,
+                    controller: nameTController,
+                    textInputAction: TextInputAction.next,
+                    error: state is NameErrorModel ? state.error.message : null,
                   ),
                 ),
                 Padding(
@@ -232,8 +199,7 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
                       text: Strings.dangKy,
                       onPressed: () {
                         _bloc.register(
-                            firstName: nameTController.text,
-                            lastName: lastNameTController.text,
+                            name: nameTController.text,
                             phone: phoneTController.text,
                             email: emailTController.text,
                             password: passTController.text,
