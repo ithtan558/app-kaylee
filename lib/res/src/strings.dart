@@ -3,6 +3,7 @@ class Strings {
   static const String tenHint = 'Vd. Nguyễn';
   static const String ho = 'Họ';
   static const String hoHint = 'Vd. Như';
+  static const String hoTenHint = 'Vd. Như Nguyễn';
   static const String quocGia = 'Quốc gia';
   static const String quocGiaHint = 'Chọn quốc gia trong danh sách';
   static const String email = 'Email';
