@@ -69,7 +69,7 @@ class _CreateNewStaffScreenState extends KayleeState<CreateNewStaffScreen> {
             onPressed: () {
               popScreen();
               switch (state.error.code) {
-                case ErrorCode.FIRST_NAME_CODE:
+                case ErrorCode.NAME_CODE:
                   return nameFocus.requestFocus();
                 case ErrorCode.PHONE_CODE:
                   return phoneFocus.requestFocus();
