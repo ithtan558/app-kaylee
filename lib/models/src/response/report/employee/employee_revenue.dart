@@ -12,15 +12,13 @@ class EmployeeRevenue {
 
   EmployeeRevenue({
     this.amount,
-    this.firstName,
-    this.lastName,
+    this.name,
     this.phone,
   });
 
   int amount;
-  String firstName;
-  String lastName;
+  String name;
 
-  Employee get employee => Employee(firstName: firstName, lastName: lastName);
+  Employee get employee => Employee(name: name);
   String phone;
 }

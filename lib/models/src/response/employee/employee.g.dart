@@ -9,8 +9,7 @@ part of 'employee.dart';
 Employee _$EmployeeFromJson(Map<String, dynamic> json) {
   return Employee(
     id: json['id'] as int,
-    firstName: json['first_name'] as String,
-    lastName: json['last_name'] as String,
+    name: json['name'] as String,
     image: json['image'] as String,
     role: json['role'] == null
         ? null
@@ -38,10 +37,10 @@ Employee _$EmployeeFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$EmployeeToJson(Employee instance) => <String, dynamic>{
+Map<String, dynamic> _$EmployeeToJson(Employee instance) =>
+    <String, dynamic>{
       'id': instance.id,
-      'first_name': instance.firstName,
-      'last_name': instance.lastName,
+      'name': instance.name,
       'image': instance.image,
       'role': instance.role,
       'birthday': instance.birthday,

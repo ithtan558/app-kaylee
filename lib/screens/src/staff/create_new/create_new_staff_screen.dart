@@ -38,10 +38,8 @@ class _CreateNewStaffScreenState extends KayleeState<CreateNewStaffScreen> {
   NewStaffScreenOpenFrom openFrom;
   StaffDetailScreenBloc bloc;
   StreamSubscription staffDetailScreenBlocSub;
-  final firstNameTfController = TextEditingController();
-  final firstNameFocus = FocusNode();
-  final lastNameTfController = TextEditingController();
-  final lastNameFocus = FocusNode();
+  final nameTfController = TextEditingController();
+  final nameFocus = FocusNode();
   final homeTownCityController = PickInputController<City>();
   final addressController = KayleeFullAddressController();
   final phoneTfController = TextEditingController();
@@ -72,9 +70,7 @@ class _CreateNewStaffScreenState extends KayleeState<CreateNewStaffScreen> {
               popScreen();
               switch (state.error.code) {
                 case ErrorCode.FIRST_NAME_CODE:
-                  return firstNameFocus.requestFocus();
-                case ErrorCode.LAST_NAME_CODE:
-                  return lastNameFocus.requestFocus();
+                  return nameFocus.requestFocus();
                 case ErrorCode.PHONE_CODE:
                   return phoneFocus.requestFocus();
                 case ErrorCode.PASSWORD_CODE:
@@ -108,10 +104,8 @@ class _CreateNewStaffScreenState extends KayleeState<CreateNewStaffScreen> {
   @override
   void dispose() {
     staffDetailScreenBlocSub.cancel();
-    firstNameTfController.dispose();
-    firstNameFocus.dispose();
-    lastNameTfController.dispose();
-    lastNameFocus.dispose();
+    nameTfController.dispose();
+    nameFocus.dispose();
     phoneTfController.dispose();
     phoneFocus.dispose();
     emailTfController.dispose();
@@ -144,8 +138,7 @@ class _CreateNewStaffScreenState extends KayleeState<CreateNewStaffScreen> {
                         onPressed: () {
                           popScreen();
                           bloc.state.item
-                            ..firstName = firstNameTfController.text
-                            ..lastName = lastNameTfController.text
+                            ..name = nameTfController.text
                             ..birthday = birthDayController.value.toString()
                             ..hometownCity = homeTownCityController.value
                             ..address = addressController.address
@@ -169,8 +162,7 @@ class _CreateNewStaffScreenState extends KayleeState<CreateNewStaffScreen> {
                   ));
             } else {
               bloc.state.item = Employee(
-                  firstName: firstNameTfController.text,
-                  lastName: lastNameTfController.text,
+                  name: nameTfController.text,
                   birthday: birthDayController.value?.toString(),
                   hometownCity: homeTownCityController.value,
                   address: addressController.address,
@@ -191,8 +183,7 @@ class _CreateNewStaffScreenState extends KayleeState<CreateNewStaffScreen> {
         child: BlocConsumer<StaffDetailScreenBloc, SingleModel<Employee>>(
           listener: (context, state) {
             imagePickerController.existedImageUrl = state.item?.image;
-            firstNameTfController.text = state.item?.firstName;
-            lastNameTfController.text = state.item?.lastName;
+            nameTfController.text = state.item?.name;
             birthDayController.value = state.item?.birthDayInDateTime;
             homeTownCityController.value = state.item?.hometownCity;
             addressController
@@ -216,28 +207,12 @@ class _CreateNewStaffScreenState extends KayleeState<CreateNewStaffScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: Dimens.px16),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: KayleeTextField.normal(
-                          title: Strings.ho,
-                          hint: Strings.hoHint,
-                          textInputAction: TextInputAction.next,
-                          focusNode: lastNameFocus,
-                          nextFocusNode: firstNameFocus,
-                          controller: lastNameTfController,
-                        ),
-                      ),
-                      SizedBox(width: Dimens.px8),
-                      Expanded(
-                        child: KayleeTextField.normal(
-                            title: Strings.ten,
-                            hint: Strings.tenHint,
-                            textInputAction: TextInputAction.done,
-                            focusNode: firstNameFocus,
-                            controller: firstNameTfController),
-                      ),
-                    ],
+                  child: KayleeTextField.normal(
+                    title: Strings.hoTen,
+                    hint: Strings.hoTenHint,
+                    textInputAction: TextInputAction.next,
+                    focusNode: nameFocus,
+                    controller: nameTfController,
                   ),
                 ),
                 Padding(

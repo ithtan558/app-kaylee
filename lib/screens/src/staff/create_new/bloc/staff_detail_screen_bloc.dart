@@ -15,8 +15,7 @@ class StaffDetailScreenBloc extends Cubit<SingleModel<Employee>>
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
       request: employeeService.newEmployee(
-        firstName: state.item?.firstName,
-        lastName: state.item?.lastName,
+        name: state.item?.name,
         birthday: state.item?.birthday,
         hometownCityId: state.item?.hometownCity?.id,
         address: state.item?.address,
@@ -93,8 +92,7 @@ class StaffDetailScreenBloc extends Cubit<SingleModel<Employee>>
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
       request: employeeService.updateEmployee(
-        firstName: state.item?.firstName,
-        lastName: state.item?.lastName,
+        name: state.item?.name,
         birthday: state.item?.birthday,
         hometownCityId: state.item?.hometownCity?.id,
         address: state.item?.address,

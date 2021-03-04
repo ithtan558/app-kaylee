@@ -15,8 +15,7 @@ class Employee {
 
   Employee(
       {this.id,
-      this.firstName,
-      this.lastName,
+      this.name,
       this.image,
       this.imageFile,
       this.role,
@@ -32,11 +31,7 @@ class Employee {
       this.password});
 
   int id;
-  String firstName;
-  String lastName;
-
-  String get name =>
-      (lastName.isNullOrEmpty ? '' : (lastName + ' ')) + (firstName ?? '');
+  String name;
   String image;
   @JsonKey(ignore: true)
   File imageFile;

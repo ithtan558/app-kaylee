@@ -759,8 +759,7 @@ class _PickerViewBloc<T> extends Cubit<SingleModel<List<T>>> {
       request: employeeService.findEmployees(brandId: brandId),
       onSuccess: ({message, result}) {
         if (useForFilter ?? false) {
-          (result as List<Employee>)
-              .insert(0, Employee(firstName: Strings.tatCa));
+          (result as List<Employee>).insert(0, Employee(name: Strings.tatCa));
         }
 
         emit(SingleModel.copy(state

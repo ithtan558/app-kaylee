@@ -33,8 +33,7 @@ abstract class EmployeeService {
   @POST('employee')
   @MultiPart()
   Future<ResponseModel> newEmployee({
-    @Part(name: 'first_name') String firstName,
-    @Part(name: 'last_name') String lastName,
+    @Part() String name,
     @Part() String birthday,
     @Part(name: 'hometown_city_id') int hometownCityId,
     @Part() String address,
@@ -52,8 +51,7 @@ abstract class EmployeeService {
   @POST('employee/{employeeId}')
   @MultiPart()
   Future<ResponseModel> updateEmployee({
-    @Part(name: 'first_name') String firstName,
-    @Part(name: 'last_name') String lastName,
+    @Part() String name,
     @Part() String birthday,
     @Part(name: 'hometown_city_id') int hometownCityId,
     @Part() String address,

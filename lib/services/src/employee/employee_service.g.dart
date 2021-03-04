@@ -99,8 +99,7 @@ class _EmployeeService implements EmployeeService {
 
   @override
   Future<ResponseModel<dynamic>> newEmployee(
-      {firstName,
-      lastName,
+      {name,
       birthday,
       hometownCityId,
       address,
@@ -117,11 +116,8 @@ class _EmployeeService implements EmployeeService {
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = FormData();
-    if (firstName != null) {
-      _data.fields.add(MapEntry('first_name', firstName));
-    }
-    if (lastName != null) {
-      _data.fields.add(MapEntry('last_name', lastName));
+    if (name != null) {
+      _data.fields.add(MapEntry('name', name));
     }
     if (birthday != null) {
       _data.fields.add(MapEntry('birthday', birthday));
@@ -179,8 +175,7 @@ class _EmployeeService implements EmployeeService {
 
   @override
   Future<ResponseModel<dynamic>> updateEmployee(
-      {firstName,
-      lastName,
+      {name,
       birthday,
       hometownCityId,
       address,
@@ -199,11 +194,8 @@ class _EmployeeService implements EmployeeService {
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = FormData();
-    if (firstName != null) {
-      _data.fields.add(MapEntry('first_name', firstName));
-    }
-    if (lastName != null) {
-      _data.fields.add(MapEntry('last_name', lastName));
+    if (name != null) {
+      _data.fields.add(MapEntry('name', name));
     }
     if (birthday != null) {
       _data.fields.add(MapEntry('birthday', birthday));
