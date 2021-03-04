@@ -19,8 +19,7 @@ class Reservation {
       this.brandId,
       this.brandName,
       this.code,
-      this.firstName,
-      this.lastName,
+      this.name,
       this.phone,
       this.address,
       this.status,
@@ -38,8 +37,7 @@ class Reservation {
   int brandId;
   String brandName;
   int customerId;
-  String firstName;
-  String lastName;
+  String name;
   String phone;
   String address;
   @JsonKey(
@@ -52,11 +50,7 @@ class Reservation {
   String note;
 
   @JsonKey(ignore: true)
-  Customer get customer => Customer(
-        id: customerId,
-        firstName: firstName,
-        lastName: lastName,
-      );
+  Customer get customer => Customer(id: customerId, name: name);
 
   Brand brand;
   City city;

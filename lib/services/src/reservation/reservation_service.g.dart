@@ -79,8 +79,7 @@ class _ReservationService implements ReservationService {
 
   @override
   Future<ResponseModel<dynamic>> newReservation(
-      {firstName,
-      lastName,
+      {name,
       address,
       cityId,
       districtId,
@@ -94,11 +93,8 @@ class _ReservationService implements ReservationService {
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = FormData();
-    if (firstName != null) {
-      _data.fields.add(MapEntry('first_name', firstName));
-    }
-    if (lastName != null) {
-      _data.fields.add(MapEntry('last_name', lastName));
+    if (name != null) {
+      _data.fields.add(MapEntry('name', name));
     }
     if (address != null) {
       _data.fields.add(MapEntry('address', address));
@@ -144,8 +140,7 @@ class _ReservationService implements ReservationService {
 
   @override
   Future<ResponseModel<dynamic>> updateReservation(
-      {firstName,
-      lastName,
+      {name,
       address,
       cityId,
       districtId,
@@ -161,11 +156,8 @@ class _ReservationService implements ReservationService {
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = FormData();
-    if (firstName != null) {
-      _data.fields.add(MapEntry('first_name', firstName));
-    }
-    if (lastName != null) {
-      _data.fields.add(MapEntry('last_name', lastName));
+    if (name != null) {
+      _data.fields.add(MapEntry('name', name));
     }
     if (address != null) {
       _data.fields.add(MapEntry('address', address));

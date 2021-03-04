@@ -41,10 +41,8 @@ class _CreateNewCustomerScreenState
   CustomerScreenOpenFrom openFrom;
   CustomerDetailScreenBloc bloc;
   StreamSubscription customerDetailScreenBlocSub;
-  final firstNameTfController = TextEditingController();
-  final firstNameFocus = FocusNode();
-  final lastNameTfController = TextEditingController();
-  final lastNameFocus = FocusNode();
+  final nameTfController = TextEditingController();
+  final nameFocus = FocusNode();
   final homeTownCityController = PickInputController<City>();
   final addressController = KayleeFullAddressController();
   final phoneTfController = TextEditingController();
@@ -70,11 +68,8 @@ class _CreateNewCustomerScreenState
             onPressed: () {
               popScreen();
               switch (state.error.code) {
-                case ErrorCode.FIRST_NAME_CODE:
-                  firstNameFocus.requestFocus();
-                  break;
-                case ErrorCode.LAST_NAME_CODE:
-                  lastNameFocus.requestFocus();
+                case ErrorCode.NAME_CODE:
+                  nameFocus.requestFocus();
                   break;
                 case ErrorCode.PHONE_CODE:
                   phoneFocus.requestFocus();
@@ -107,10 +102,8 @@ class _CreateNewCustomerScreenState
   @override
   void dispose() {
     customerDetailScreenBlocSub.cancel();
-    firstNameTfController.dispose();
-    firstNameFocus.dispose();
-    lastNameTfController.dispose();
-    lastNameFocus.dispose();
+    nameTfController.dispose();
+    nameFocus.dispose();
     phoneTfController.dispose();
     phoneFocus.dispose();
     emailTfController.dispose();
@@ -143,8 +136,7 @@ class _CreateNewCustomerScreenState
                         onPressed: () {
                           popScreen();
                           bloc.state.item
-                            ..firstName = firstNameTfController.text
-                            ..lastName = lastNameTfController.text
+                            ..name = nameTfController.text
                             ..birthday = birthDayController.value
                             ..hometownCity = homeTownCityController.value
                             ..address = addressController.address
@@ -165,8 +157,7 @@ class _CreateNewCustomerScreenState
                   ));
             } else {
               bloc.state.item = Customer(
-                  firstName: firstNameTfController.text,
-                  lastName: lastNameTfController.text,
+                  name: nameTfController.text,
                   birthday: birthDayController.value,
                   hometownCity: homeTownCityController.value,
                   address: addressController.address,
@@ -183,8 +174,7 @@ class _CreateNewCustomerScreenState
         child: BlocConsumer<CustomerDetailScreenBloc, SingleModel<Customer>>(
           listener: (context, state) {
             imagePickerController.existedImageUrl = state.item?.image;
-            firstNameTfController.text = state.item?.firstName;
-            lastNameTfController.text = state.item?.lastName;
+            nameTfController.text = state.item?.name;
             birthDayController.value = state.item?.birthday;
             homeTownCityController.value = state.item?.hometownCity;
             addressController
@@ -211,29 +201,11 @@ class _CreateNewCustomerScreenState
                       left: Dimens.px16,
                       right: Dimens.px16,
                       bottom: Dimens.px16),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: KayleeTextField.normal(
-                          title: Strings.ho,
-                          hint: Strings.hoHint,
-                          textInputAction: TextInputAction.next,
-                          focusNode: lastNameFocus,
-                          controller: lastNameTfController,
-                          nextFocusNode: firstNameFocus,
-                        ),
-                      ),
-                      SizedBox(width: Dimens.px8),
-                      Expanded(
-                        child: KayleeTextField.normal(
-                          title: Strings.ten,
-                          hint: Strings.tenHint,
-                          textInputAction: TextInputAction.done,
-                          focusNode: firstNameFocus,
-                          controller: firstNameTfController,
-                        ),
-                      ),
-                    ],
+                  child: KayleeTextField.normal(
+                    title: Strings.hoTen,
+                    hint: Strings.hoTenHint,
+                    focusNode: nameFocus,
+                    controller: nameTfController,
                   ),
                 ),
                 Padding(
@@ -300,8 +272,7 @@ class _CreateNewCustomerScreenState
                       context.bloc<ReloadBloc>().reload(
                           widget: SelectCustomerField,
                           bundle: Bundle(Customer(
-                              firstName: firstNameTfController.text,
-                              lastName: lastNameTfController.text,
+                              name: nameTfController.text,
                               birthday: birthDayController.value,
                               hometownCity: homeTownCityController.value,
                               address: addressController.address,

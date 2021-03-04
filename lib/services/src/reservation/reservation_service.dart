@@ -30,8 +30,7 @@ abstract class ReservationService {
   @POST('reservation')
   @MultiPart()
   Future<ResponseModel> newReservation({
-    @Part(name: 'first_name') String firstName,
-    @Part(name: 'last_name') String lastName,
+    @Part() String name,
     @Part() String address,
     @Part(name: 'city_id') int cityId,
     @Part(name: 'district_id') int districtId,
@@ -46,8 +45,7 @@ abstract class ReservationService {
   @POST('reservation/{reservationId}')
   @MultiPart()
   Future<ResponseModel> updateReservation({
-    @Part(name: 'first_name') String firstName,
-    @Part(name: 'last_name') String lastName,
+    @Part() String name,
     @Part() String address,
     @Part(name: 'city_id') int cityId,
     @Part(name: 'district_id') int districtId,

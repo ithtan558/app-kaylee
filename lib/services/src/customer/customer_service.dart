@@ -32,8 +32,7 @@ abstract class CustomerService {
   @POST('customer')
   @MultiPart()
   Future<ResponseModel<Customer>> newCustomer({
-    @Part(name: 'first_name') String firstName,
-    @Part(name: 'last_name') String lastName,
+    @Part() String name,
     @Part() String birthday,
     @Part(name: 'hometown_city_id') int hometownCityId,
     @Part() String address,
@@ -48,8 +47,7 @@ abstract class CustomerService {
   @POST('customer/{customerId}')
   @MultiPart()
   Future<ResponseModel<Customer>> updateCustomer({
-    @Part(name: 'first_name') String firstName,
-    @Part(name: 'last_name') String lastName,
+    @Part() String name,
     @Part() String birthday,
     @Part(name: 'hometown_city_id') int hometownCityId,
     @Part() String address,

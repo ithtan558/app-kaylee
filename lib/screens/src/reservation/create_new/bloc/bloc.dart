@@ -18,8 +18,7 @@ class ReservationDetailBloc extends Cubit<SingleModel<Reservation>>
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
       request: service.newReservation(
-        firstName: state.item?.firstName,
-        lastName: state.item?.lastName,
+        name: state.item?.name,
         address: state.item?.address,
         cityId: state.item?.city?.id,
         districtId: state.item?.district?.id,
@@ -90,8 +89,7 @@ class ReservationDetailBloc extends Cubit<SingleModel<Reservation>>
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
       request: service.updateReservation(
-        firstName: state.item?.firstName,
-        lastName: state.item?.lastName,
+        name: state.item?.name,
         address: state.item?.address,
         cityId: state.item?.city?.id,
         districtId: state.item?.district?.id,

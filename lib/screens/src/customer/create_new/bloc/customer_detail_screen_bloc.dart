@@ -16,8 +16,7 @@ class CustomerDetailScreenBloc extends Cubit<SingleModel<Customer>>
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
       request: customerService.newCustomer(
-        firstName: state.item?.firstName,
-        lastName: state.item?.lastName,
+        name: state.item?.name,
         birthday: state.item?.birthday?.toFormatString(pattern: dateFormat),
         hometownCityId: state.item?.hometownCity?.id,
         address: state.item?.address,
@@ -85,8 +84,7 @@ class CustomerDetailScreenBloc extends Cubit<SingleModel<Customer>>
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
       request: customerService.updateCustomer(
-        firstName: state.item?.firstName,
-        lastName: state.item?.lastName,
+        name: state.item?.name,
         birthday: state.item?.birthday?.toFormatString(pattern: dateFormat),
         hometownCityId: state.item?.hometownCity?.id,
         address: state.item?.address,

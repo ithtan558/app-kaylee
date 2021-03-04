@@ -95,8 +95,7 @@ class _CustomerService implements CustomerService {
 
   @override
   Future<ResponseModel<Customer>> newCustomer(
-      {firstName,
-      lastName,
+      {name,
       birthday,
       hometownCityId,
       address,
@@ -110,11 +109,8 @@ class _CustomerService implements CustomerService {
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = FormData();
-    if (firstName != null) {
-      _data.fields.add(MapEntry('first_name', firstName));
-    }
-    if (lastName != null) {
-      _data.fields.add(MapEntry('last_name', lastName));
+    if (name != null) {
+      _data.fields.add(MapEntry('name', name));
     }
     if (birthday != null) {
       _data.fields.add(MapEntry('birthday', birthday));
@@ -163,8 +159,7 @@ class _CustomerService implements CustomerService {
 
   @override
   Future<ResponseModel<Customer>> updateCustomer(
-      {firstName,
-      lastName,
+      {name,
       birthday,
       hometownCityId,
       address,
@@ -180,11 +175,8 @@ class _CustomerService implements CustomerService {
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _data = FormData();
-    if (firstName != null) {
-      _data.fields.add(MapEntry('first_name', firstName));
-    }
-    if (lastName != null) {
-      _data.fields.add(MapEntry('last_name', lastName));
+    if (name != null) {
+      _data.fields.add(MapEntry('name', name));
     }
     if (birthday != null) {
       _data.fields.add(MapEntry('birthday', birthday));

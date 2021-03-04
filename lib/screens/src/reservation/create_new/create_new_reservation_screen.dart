@@ -44,10 +44,8 @@ class _CreateNewReservationScreenState
   ReservationDetailBloc get _bloc => context.bloc<ReservationDetailBloc>();
 
   final brandController = PickInputController<Brand>();
-  final lastNameTfController = TextEditingController();
-  final lastNameFocus = FocusNode();
-  final firstNameTfController = TextEditingController();
-  final firstNameFocus = FocusNode();
+  final nameTfController = TextEditingController();
+  final nameFocus = FocusNode();
   final phoneTfController = TextEditingController();
   final phoneFocus = FocusNode();
   final addressController = KayleeFullAddressController();
@@ -75,10 +73,8 @@ class _CreateNewReservationScreenState
               switch (state.error.code) {
                 case ErrorCode.PHONE_CODE:
                   return phoneFocus.requestFocus();
-                case ErrorCode.LAST_NAME_CODE:
-                  return lastNameFocus.requestFocus();
-                case ErrorCode.FIRST_NAME_CODE:
-                  return firstNameFocus.requestFocus();
+                case ErrorCode.NAME_CODE:
+                  return nameFocus.requestFocus();
               }
             },
           );
@@ -111,10 +107,8 @@ class _CreateNewReservationScreenState
     noteFocus.dispose();
     phoneTfController.dispose();
     phoneFocus.dispose();
-    lastNameTfController.dispose();
-    lastNameFocus.dispose();
-    firstNameTfController.dispose();
-    firstNameFocus.dispose();
+    nameTfController.dispose();
+    nameFocus.dispose();
 
     super.dispose();
   }
@@ -146,8 +140,7 @@ class _CreateNewReservationScreenState
                                 popScreen();
 
                                 _bloc.state.item
-                                  ..firstName = firstNameTfController.text
-                                  ..lastName = lastNameTfController.text
+                                  ..name = nameTfController.text
                                   ..address = addressController.address
                                   ..city = addressController.city
                                   ..district = addressController.district
@@ -170,8 +163,7 @@ class _CreateNewReservationScreenState
                         ));
                   } else {
                     _bloc.state.item = Reservation(
-                        firstName: firstNameTfController.text,
-                        lastName: lastNameTfController.text,
+                        name: nameTfController.text,
                         address: addressController.address,
                         city: addressController.city,
                         district: addressController.district,
@@ -193,8 +185,7 @@ class _CreateNewReservationScreenState
         child: BlocConsumer<ReservationDetailBloc, SingleModel<Reservation>>(
           listener: (context, state) {
             brandController.value = state.item?.brand;
-            firstNameTfController.text = state.item?.firstName;
-            lastNameTfController.text = state.item?.lastName;
+            nameTfController.text = state.item?.name;
             addressController.initAddress = state.item?.address;
             addressController.initCity = state.item?.city;
             addressController.initDistrict = state.item?.district;
@@ -221,30 +212,12 @@ class _CreateNewReservationScreenState
                 ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: Dimens.px16),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: KayleeTextField.normal(
-                          title: Strings.ho,
-                          hint: Strings.hoHint,
-                          controller: lastNameTfController,
-                          textInputAction: TextInputAction.next,
-                          focusNode: lastNameFocus,
-                          nextFocusNode: firstNameFocus,
-                        ),
-                      ),
-                      SizedBox(width: Dimens.px8),
-                      Expanded(
-                        child: KayleeTextField.normal(
-                          title: Strings.ten,
-                          hint: Strings.tenHint,
-                          controller: firstNameTfController,
-                          textInputAction: TextInputAction.next,
-                          focusNode: firstNameFocus,
-                          nextFocusNode: phoneFocus,
-                        ),
-                      ),
-                    ],
+                  child: KayleeTextField.normal(
+                    title: Strings.hoTen,
+                    hint: Strings.hoTenHint,
+                    controller: nameTfController,
+                    focusNode: nameFocus,
+                    nextFocusNode: phoneFocus,
                   ),
                 ),
                 Padding(
