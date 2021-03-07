@@ -215,7 +215,7 @@ class _OrderService implements OrderService {
   }
 
   @override
-  Future<ResponseModel<OrderCancellationReason>> getCancellationReason(
+  Future<ResponseModel<List<OrderCancellationReason>>> getCancellationReason(
       {type = 1}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'type': type};
@@ -230,10 +230,12 @@ class _OrderService implements OrderService {
             extra: _extra,
             baseUrl: baseUrl),
         data: _data);
-    final value = ResponseModel<OrderCancellationReason>.fromJson(
-      _result.data,
-      (json) => OrderCancellationReason.fromJson(json),
-    );
+    final value = ResponseModel<List<OrderCancellationReason>>.fromJson(
+        _result.data,
+        (json) => (json as List<dynamic>)
+            .map<OrderCancellationReason>((i) =>
+                OrderCancellationReason.fromJson(i as Map<String, dynamic>))
+            .toList());
     return value;
   }
 }
