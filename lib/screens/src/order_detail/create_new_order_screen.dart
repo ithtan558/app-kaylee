@@ -168,7 +168,7 @@ class _CreateNewOrderScreenState extends KayleeState<CreateNewOrderScreen> {
               ? Strings.taoDonHangMoi
               : Strings.chinhSuaDonHang,
           actionTitle: openFrom == OrderScreenOpenFrom.addNewButton ||
-              openFrom == OrderScreenOpenFrom.addNewFromReservation
+                  openFrom == OrderScreenOpenFrom.addNewFromReservation
               ? Strings.tao
               : Strings.luu,
           onActionClick: () {
@@ -238,7 +238,10 @@ class _CreateNewOrderScreenState extends KayleeState<CreateNewOrderScreen> {
                             },
                           ),
                         ),
-                        SelectOrderItemList(),
+                        RepositoryProvider.value(
+                          value: pickerTextFieldModel,
+                          child: SelectOrderItemList(),
+                        ),
                         if (openFrom !=
                             OrderScreenOpenFrom.addNewFromReservation) ...[
                           LabelDividerView(title: Strings.giamGia),

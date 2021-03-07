@@ -12,10 +12,12 @@ import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class SelectServiceList extends StatefulWidget {
-  static Widget newInstance(
-          {List<Service> initialValue,
-          ValueChanged<List<Service>> onConfirm,
-          VoidCallback onCancel}) =>
+  static Widget newInstance({
+    List<Service> initialValue,
+    ValueChanged<List<Service>> onConfirm,
+    VoidCallback onCancel,
+    Brand brand,
+  }) =>
       MultiBlocProvider(
           providers: [
             BlocProvider(
@@ -27,6 +29,7 @@ class SelectServiceList extends StatefulWidget {
               create: (context) => SelectServiceListBloc(
                 servService: context.network.provideServService(),
                 initialData: initialValue,
+                brand: brand,
               ),
             ),
           ],
@@ -186,18 +189,18 @@ class _SelectServiceListState extends KayleeState<SelectServiceList> {
                               (state.items?.length ?? 0) > 0;
                       return enable
                           ? KayLeeRoundedButton.normal(
-                        text: Strings.xacNhan,
-                        margin: const EdgeInsets.only(left: Dimens.px8),
-                        onPressed: () {
-                          widget.onConfirm
-                              ?.call(serviceListBloc.selectedServices);
-                          popScreen();
-                        },
-                      )
+                              text: Strings.xacNhan,
+                              margin: const EdgeInsets.only(left: Dimens.px8),
+                              onPressed: () {
+                                widget.onConfirm
+                                    ?.call(serviceListBloc.selectedServices);
+                                popScreen();
+                              },
+                            )
                           : KayLeeRoundedButton.button3(
-                        text: Strings.xacNhan,
-                        margin: const EdgeInsets.only(left: Dimens.px8),
-                      );
+                              text: Strings.xacNhan,
+                              margin: const EdgeInsets.only(left: Dimens.px8),
+                            );
                     },
                   ),
                 ),
