@@ -51,8 +51,7 @@ Map<String, dynamic> _$CartSuppInfoToJson(CartSuppInfo instance) {
 CartCustomer _$CartCustomerFromJson(Map<String, dynamic> json) {
   return CartCustomer(
     id: json['id'] as int,
-    firstName: json['first_name'] as String,
-    lastName: json['last_name'] as String,
+    name: json['name'] as String,
     phone: json['phone'] as String,
     address: json['address'] as String,
     hometownCity: json['hometown_city_id'] == null
@@ -81,8 +80,7 @@ Map<String, dynamic> _$CartCustomerToJson(CartCustomer instance) {
   }
 
   writeNotNull('id', instance.id);
-  writeNotNull('first_name', instance.firstName);
-  writeNotNull('last_name', instance.lastName);
+  writeNotNull('name', instance.name);
   writeNotNull('phone', instance.phone);
   writeNotNull('address', instance.address);
   writeNotNull('hometown_city_id', _parseCity(instance.hometownCity));

@@ -179,8 +179,7 @@ class CartCustomer {
 
   CartCustomer({
     this.id,
-    this.firstName,
-    this.lastName,
+    this.name,
     this.phone,
     this.address,
     this.hometownCity,
@@ -191,11 +190,7 @@ class CartCustomer {
   });
 
   int id;
-  String firstName;
-  String lastName;
-
-  String get name =>
-      (lastName.isNullOrEmpty ? '' : (lastName + ' ')) + (firstName ?? '');
+  String name;
   String phone;
   String address;
   @JsonKey(toJson: _parseCity, name: 'hometown_city_id')
