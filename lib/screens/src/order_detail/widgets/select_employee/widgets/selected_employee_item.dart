@@ -21,7 +21,7 @@ class SelectedEmployeeItem extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(Dimens.px16),
         child: KayleeText.normal16W400(
-          employee.name +
+          '${employee.name}' +
               (employee.role?.name.isNullOrEmpty
                   ? ''
                   : ' - ${employee.role?.name}'),
