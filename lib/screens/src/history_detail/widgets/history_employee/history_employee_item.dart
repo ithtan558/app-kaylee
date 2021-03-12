@@ -13,7 +13,7 @@ class HistoryEmployeeItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return KayleeRoundBorder(
       child: KayleeText.normal16W400(
-        employee.name +
+        '${employee.name}' +
             (employee.role?.name.isNullOrEmpty
                 ? ''
                 : ' - ${employee.role?.name}'),
