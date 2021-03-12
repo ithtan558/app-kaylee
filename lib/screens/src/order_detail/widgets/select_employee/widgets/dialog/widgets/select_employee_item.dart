@@ -28,7 +28,7 @@ class SelectEmployeeItem extends StatelessWidget {
           Expanded(
             flex: 3,
             child: KayleeText.normal16W400(
-              employee.name,
+              '${employee.name}',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.start,
