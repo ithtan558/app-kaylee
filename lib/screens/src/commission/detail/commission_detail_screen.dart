@@ -102,7 +102,7 @@ class _CommissionDetailScreenState extends KayleeState<CommissionDetailScreen> {
               Padding(
                 padding: const EdgeInsets.only(top: Dimens.px16),
                 child: KayleeText.normal16W500(
-                  _bloc.employee.name,
+                  '${_bloc.employee.name}',
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -177,16 +177,10 @@ class _CommissionDetailScreenState extends KayleeState<CommissionDetailScreen> {
                   showKayleeBottomSheet(
                     context,
                     initialChildSize: 1 -
-                        (MediaQuery
-                            .of(parentContext)
-                            .padding
-                            .top /
+                        (MediaQuery.of(parentContext).padding.top /
                             context.screenSize.height),
                     maxChildSize: 1 -
-                        (MediaQuery
-                            .of(parentContext)
-                            .padding
-                            .top /
+                        (MediaQuery.of(parentContext).padding.top /
                             context.screenSize.height),
                     builder: (context, scrollController) {
                       return CommSerOrderList.newInstance(
