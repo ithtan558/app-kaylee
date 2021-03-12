@@ -147,7 +147,7 @@ class PdfModule {
                     children: [
                       Expanded(
                           child: Text(
-                        employee.name +
+                        '${employee.name}' +
                             (employee.role?.name.isNotNullAndEmpty
                                 ? ' - ${employee.role.name}'
                                 : ''),
