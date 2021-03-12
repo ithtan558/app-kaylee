@@ -16,7 +16,10 @@ class SelectEmployeeBloc extends Cubit<SingleModel<List<Employee>>> {
   void loadEmployee({String keyword}) {
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
-      request: employeeService.findEmployees(keyword: keyword),
+      request: employeeService.findEmployees(
+        keyword: keyword,
+        brandId: brand.id,
+      ),
       onSuccess: ({message, result}) {
         emit(SingleModel.copy(state
           ..loading = false

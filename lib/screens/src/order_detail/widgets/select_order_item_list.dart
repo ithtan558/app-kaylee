@@ -24,6 +24,9 @@ class _SelectOrderItemListState extends KayleeState<SelectOrderItemList> {
 
   OrderRequest get order => cart.getOrder();
 
+  KayleePickerTextFieldModel get _brandTFModel =>
+      context.repository<KayleePickerTextFieldModel>();
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -33,6 +36,19 @@ class _SelectOrderItemListState extends KayleeState<SelectOrderItemList> {
           title: Strings.danhSachDichVu,
           buttonText: Strings.themDichVu,
           onPress: () {
+            if (_brandTFModel.brand.isNull) {
+              showKayleeAlertDialog(
+                  context: context,
+                  view: KayleeAlertDialogView(
+                    content: Strings.batBuocChonChiNhanh,
+                    actions: [
+                      KayleeAlertDialogAction.dongY(
+                        onPressed: popScreen,
+                      )
+                    ],
+                  ));
+              return;
+            }
             showKayleeDialog(
               context: context,
               showShadow: true,
@@ -65,6 +81,7 @@ class _SelectOrderItemListState extends KayleeState<SelectOrderItemList> {
                                 _cartBloc.updateCart();
                               },
                               initialValue: order?.services,
+                              brand: _brandTFModel.brand,
                             ),
                           );
                         },
@@ -85,6 +102,7 @@ class _SelectOrderItemListState extends KayleeState<SelectOrderItemList> {
                                 _cartBloc.updateCart();
                               },
                               initialValue: order?.products,
+                              brand: _brandTFModel.brand,
                             ),
                           );
                         },

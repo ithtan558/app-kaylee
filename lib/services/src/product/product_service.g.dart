@@ -17,7 +17,7 @@ class _ProductService implements ProductService {
 
   @override
   Future<ResponseModel<PageData<Product>>> getProducts(
-      {supplierId, keyword, sort, categoryId, page, limit}) async {
+      {supplierId, keyword, sort, categoryId, page, limit, brandIds}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'supplier_id': supplierId,
@@ -25,7 +25,8 @@ class _ProductService implements ProductService {
       r'sort': sort,
       r'category_id': categoryId,
       r'page': page,
-      r'limit': limit
+      r'limit': limit,
+      r'brand_ids': brandIds
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};

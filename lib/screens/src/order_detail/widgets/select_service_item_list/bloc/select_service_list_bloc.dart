@@ -13,9 +13,13 @@ class SelectServiceListBloc extends Cubit<LoadMoreModel<Service>>
   final List<Service> _selectedServices = [];
 
   List<Service> get selectedServices => _selectedServices;
+  final Brand brand;
 
-  SelectServiceListBloc({@required this.servService, List<Service> initialData})
-      : super(LoadMoreModel(items: [])) {
+  SelectServiceListBloc({
+    @required this.servService,
+    List<Service> initialData,
+    this.brand,
+  }) : super(LoadMoreModel(items: [])) {
     if (initialData.isNotNullAndEmpty) _selectedServices.addAll(initialData);
   }
 
@@ -25,6 +29,7 @@ class SelectServiceListBloc extends Cubit<LoadMoreModel<Service>>
         categoryId: this.cateId,
         limit: state.limit,
         page: state.page,
+        brandIds: brand.id.toString(),
       ),
       onSuccess: ({message, result}) {
         final services = (result as PageData<Service>).items;

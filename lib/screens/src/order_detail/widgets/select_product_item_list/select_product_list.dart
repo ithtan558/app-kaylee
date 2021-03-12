@@ -15,7 +15,7 @@ class SelectProdList extends StatefulWidget {
   static Widget newInstance({
     List<Product> initialValue,
     ValueChanged<List<Product>> onConfirm,
-    VoidCallback onCancel,
+    Brand brand,
   }) =>
       MultiBlocProvider(
           providers: [
@@ -28,17 +28,16 @@ class SelectProdList extends StatefulWidget {
               create: (context) => SelectProdListBloc(
                 productService: context.network.provideProductService(),
                 initialData: initialValue,
+                brand: brand,
               ),
             ),
           ],
           child: SelectProdList._(
             onConfirm: onConfirm,
-            onCancel: onCancel,
           ));
   final ValueChanged<List<Product>> onConfirm;
-  final VoidCallback onCancel;
 
-  SelectProdList._({this.onConfirm, this.onCancel});
+  SelectProdList._({this.onConfirm});
 
   @override
   _SelectProdListState createState() => _SelectProdListState();
@@ -101,15 +100,10 @@ class _SelectProdListState extends KayleeState<SelectProdList> {
           return KayleeTabBar(
             padding: const EdgeInsets.symmetric(horizontal: Dimens.px8),
             itemCount: categories?.length,
-            mapTitle: (index) =>
-            categories
-                .elementAt(index)
-                .name,
+            mapTitle: (index) => categories.elementAt(index).name,
             onSelected: (value) {
               prodsListBloc.changeTab(
-                  cateId: cateBloc.state.item
-                      .elementAt(value)
-                      .id);
+                  cateId: cateBloc.state.item.elementAt(value).id);
             },
           );
         },
@@ -174,7 +168,6 @@ class _SelectProdListState extends KayleeState<SelectProdList> {
                     text: Strings.huy,
                     margin: const EdgeInsets.only(right: Dimens.px8),
                     onPressed: () {
-                      widget.onCancel?.call();
                       popScreen();
                     },
                   ),
@@ -188,18 +181,18 @@ class _SelectProdListState extends KayleeState<SelectProdList> {
                               (state.items?.length ?? 0) > 0;
                       return enable
                           ? KayLeeRoundedButton.normal(
-                        text: Strings.xacNhan,
-                        margin: const EdgeInsets.only(left: Dimens.px8),
-                        onPressed: () {
-                          widget.onConfirm
-                              ?.call(prodsListBloc.selectedProds);
-                          popScreen();
-                        },
-                      )
+                              text: Strings.xacNhan,
+                              margin: const EdgeInsets.only(left: Dimens.px8),
+                              onPressed: () {
+                                widget.onConfirm
+                                    ?.call(prodsListBloc.selectedProds);
+                                popScreen();
+                              },
+                            )
                           : KayLeeRoundedButton.button3(
-                        text: Strings.xacNhan,
-                        margin: const EdgeInsets.only(left: Dimens.px8),
-                      );
+                              text: Strings.xacNhan,
+                              margin: const EdgeInsets.only(left: Dimens.px8),
+                            );
                     },
                   ),
                 ),

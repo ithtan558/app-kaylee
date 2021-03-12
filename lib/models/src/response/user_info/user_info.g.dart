@@ -35,8 +35,7 @@ UserInfo _$UserInfoFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$UserInfoToJson(UserInfo instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$UserInfoToJson(UserInfo instance) => <String, dynamic>{
       'id': instance.id,
       'brand_id': instance.brandId,
       'name': instance.name,

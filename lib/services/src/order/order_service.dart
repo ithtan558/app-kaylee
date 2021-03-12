@@ -53,7 +53,7 @@ abstract class OrderService {
   });
 
   @GET('order/reason-cancel')
-  Future<ResponseModel<OrderCancellationReason>> getCancellationReason({
+  Future<ResponseModel<List<OrderCancellationReason>>> getCancellationReason({
     @Query('type') int type = 1,
   });
 }
