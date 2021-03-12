@@ -28,6 +28,10 @@ dependencies:
   video_player: ^1.0.1
   chewie: ^0.12.2
   printing: ^4.1.0
+  bluetooth_print:
+    git:
+      url: https://github.com/tungpham6195/bluetooth_print.git
+      ref: tungpham6195/device-not-found-on-android-10
   anth_package:
     #    path: ../anth_package
     git:
