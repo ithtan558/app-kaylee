@@ -19,8 +19,7 @@ class PrinterDeviceItem extends StatelessWidget {
         onTap?.call();
       },
       child: Padding(
-        padding:
-            const EdgeInsets.symmetric(horizontal: Dimens.px16, vertical: 8),
+        padding: const EdgeInsets.symmetric(vertical: 8),
         child: Row(
           children: [
             KayleeCheckBox(checked: device.selected),
