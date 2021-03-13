@@ -12,19 +12,38 @@ import 'package:kaylee/widgets/widgets.dart';
 const String PRINTER_DEVICE_KEY = 'PRINTER_DEVICE';
 
 class PrinterDevice {
+  ///for wifi device
   final String ip;
   final int port;
 
-  PrinterDevice({this.ip, this.port = 9100});
+  ///for bluetooth device
+  final String name;
+  final String address;
+  final int type;
+
+  PrinterDevice(
+      {this.ip, this.port = 9100, this.name, this.address, this.type});
+
+  factory PrinterDevice.wifi({String ip, int port}) =>
+      PrinterDevice(ip: ip, port: port);
+
+  factory PrinterDevice.bluetooth({String name, String address, int type}) =>
+      PrinterDevice(name: name, address: address, type: type);
 
   factory PrinterDevice.fromJson(json) => PrinterDevice(
         ip: json['ip'] as String,
         port: json['port'] as int,
+        name: json['name'] as String,
+        address: json['address'] as String,
+        type: json['type'] as int,
       );
 
   Map<String, dynamic> toJson() => {
         'ip': ip,
         'port': port,
+        'name': name,
+        'address': address,
+        'type': type,
       };
 }
 
@@ -44,7 +63,7 @@ class PrinterModule {
     final fromSharePref = SharedRef.getString(PRINTER_DEVICE_KEY);
     final map = Map<String, dynamic>.from(
         jsonDecode(fromSharePref.isNullOrEmpty ? '{}' : fromSharePref));
-    if (map.isEmpty) return PrinterDevice();
+    if (map.isEmpty) return PrinterDevice.wifi();
     return PrinterDevice.fromJson(map);
   }
 
@@ -191,3 +210,25 @@ Future<void> showKayleeDialogNotAbleToConnectPrinter(
     ),
   );
 }
+
+// Future<void> showPrinterSelectionDialog(
+//     {BuildContext context, VoidCallback onSelectWifi, VoidCallback onSelectBluetooth})async{
+//   return showKayleeAlertDialog(context: context,view: KayleeAlertDialogView(
+//     content: Strings.chon,
+//     actions: [
+//       KayleeAlertDialogAction.huy(
+//         onPressed: () {
+//           context.pop();
+//         },
+//       ),
+//       KayleeAlertDialogAction(
+//         title: Strings.thuLai,
+//         onPressed: () {
+//           onTryAgain?.call();
+//           context.pop();
+//         },
+//         isDefaultAction: true,
+//       ),
+//     ],
+//   ),);
+// }
