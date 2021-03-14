@@ -29,25 +29,32 @@ class _PrinterDetailScreenState extends KayleeState<PrinterDetailScreen> {
 
   PrinterDetailBloc get _bloc => context.bloc<PrinterDetailBloc>();
   StreamSubscription _bluetoothSub;
+  bool showingBluetoothDialogSuccess = false;
 
   @override
   void initState() {
     super.initState();
     _bloc.initState();
+    BluetoothPrinterModule.bluetoothPrint
+        .startScan(timeout: Duration(milliseconds: 100));
     _bluetoothSub =
         BluetoothPrinterModule.listenConnectionState().listen((state) async {
       print('cur device status: $state');
       hideLoading();
       switch (state) {
         case BluetoothPrint.CONNECTED:
-          showKayleeAlertMessageYesDialog(
-              context: context,
-              message: Message(content: Strings.ketNoiThanhCong),
-              onPressed: () async {
-                popScreen();
-                BluetoothPrinterModule.printConnectionInfo(
-                    device: _bloc.connectedDevice);
-              });
+          if (!showingBluetoothDialogSuccess) {
+            showingBluetoothDialogSuccess = true;
+            showKayleeAlertMessageYesDialog(
+                context: context,
+                message: Message(content: Strings.ketNoiThanhCong),
+                onPressed: () {
+                  popScreen();
+                  showingBluetoothDialogSuccess = false;
+                  BluetoothPrinterModule.printConnectionInfo(
+                      device: _bloc.connectedDevice);
+                });
+          }
           break;
         default:
           break;
@@ -146,11 +153,6 @@ class _PrinterDetailScreenState extends KayleeState<PrinterDetailScreen> {
                               .copyWith(bottom: Dimens.px16),
                       onPressed: () async {
                         _bloc.saveDefaultDevice();
-                        // final device = PrinterDevice(
-                        //   ip: _ipTFController.text,
-                        // );
-                        // PrinterModule.savePrinterDevice(device: device);
-                        // tryToConnectPrinterDevice(context: context, device: device);
                       },
                     );
                   }

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:anth_package/anth_package.dart';
@@ -26,7 +27,7 @@ class BluetoothPrinterModule {
   }
 
   static Future<bool> printConnectionInfo({PrinterDevice device}) async {
-    if (await bluetoothPrint.isConnected) {
+    if (Platform.isIOS || await bluetoothPrint.isConnected) {
       final list = [
         LineText(
             type: LineText.TYPE_TEXT,
@@ -55,7 +56,7 @@ class BluetoothPrinterModule {
     VoidCallback onLoading,
   }) async {
     onLoading?.call();
-    if (await bluetoothPrint.isConnected) {
+    if (Platform.isIOS || await bluetoothPrint.isConnected) {
       if (data.isNull) {
         if (_tempData.isNull)
           return;

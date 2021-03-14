@@ -25,10 +25,13 @@ class _PrintBillDialogState extends KayleeState<PrintBillDialog> {
   Order get _order => widget.order;
   PrinterDevice printerDevice;
   StreamSubscription bluetoothSub;
+  bool showingBluetoothDialogSuccess = false;
 
   @override
   void initState() {
     super.initState();
+    BluetoothPrinterModule.bluetoothPrint
+        .startScan(timeout: Duration(milliseconds: 100));
     printerDevice = PrinterModule.connectedDevice;
     bluetoothSub =
         BluetoothPrinterModule.listenConnectionState().listen((state) async {
@@ -36,12 +39,18 @@ class _PrintBillDialogState extends KayleeState<PrintBillDialog> {
       hideLoading();
       switch (state) {
         case BluetoothPrint.CONNECTED:
-          showKayleeAlertMessageYesDialog(
-              context: context,
-              message: Message(
-                content: Strings.ketNoiThanhCong,
-              ),
-              onPressed: popScreen);
+          if (!showingBluetoothDialogSuccess) {
+            showingBluetoothDialogSuccess = true;
+            showKayleeAlertMessageYesDialog(
+                context: context,
+                message: Message(
+                  content: Strings.ketNoiThanhCong,
+                ),
+                onPressed: () {
+                  popScreen();
+                  showingBluetoothDialogSuccess = false;
+                });
+          }
           break;
         default:
           break;
@@ -78,9 +87,9 @@ class _PrintBillDialogState extends KayleeState<PrintBillDialog> {
                 height: context.screenSize.height,
                 child: snapshot.hasData
                     ? PdfPreview(
-                  build: (format) => snapshot.data.save(),
-                  useActions: false,
-                )
+                        build: (format) => snapshot.data.save(),
+                        useActions: false,
+                      )
                     : null,
               ),
             ),
@@ -88,9 +97,9 @@ class _PrintBillDialogState extends KayleeState<PrintBillDialog> {
               decoration: const BoxDecoration(
                   border: Border(
                       top: BorderSide(
-                        color: ColorsRes.divider,
-                        width: Dimens.px1,
-                      ))),
+                color: ColorsRes.divider,
+                width: Dimens.px1,
+              ))),
               padding: const EdgeInsets.only(
                   left: Dimens.px8,
                   right: Dimens.px8,
