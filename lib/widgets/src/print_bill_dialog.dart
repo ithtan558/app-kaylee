@@ -20,7 +20,6 @@ class PrintBillDialog extends StatefulWidget {
 
 class _PrintBillDialogState extends KayleeState<PrintBillDialog> {
   Order get _order => widget.order;
-  BluetoothPrinterModule bluetoothPrinterModule = BluetoothPrinterModule();
   PrinterDevice printerDevice;
 
   @override
@@ -104,7 +103,7 @@ class _PrintBillDialogState extends KayleeState<PrintBillDialog> {
                             return getPdfRasterForRol57(
                               data: snapshot.data.save(),
                               onPrint: (data) async {
-                                await bluetoothPrinterModule.print(data: data);
+                                await BluetoothPrinterModule.print(data: data);
                                 hideLoading();
                               },
                             );
