@@ -5,6 +5,7 @@ import 'package:anth_package/anth_package.dart';
 import 'package:bluetooth_print/bluetooth_print.dart';
 import 'package:bluetooth_print/bluetooth_print_model.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/components/src/printer/model/printer_device.dart';
 import 'package:kaylee/components/src/printer/printer_module.dart';
 
 class BluetoothPrinterModule {
