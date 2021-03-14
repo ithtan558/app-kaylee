@@ -168,7 +168,8 @@ class _PrinterDetailScreenState extends KayleeState<PrinterDetailScreen> {
     );
   }
 
-  void tryToConnectPrinterDevice({BuildContext context, PrinterDevice device}) async {
+  void tryToConnectPrinterDevice(
+      {BuildContext context, PrinterDevice device}) async {
     showLoading();
     final connected = await PrinterModule.printConnectionInfo(device: device);
     hideLoading();
