@@ -14,7 +14,6 @@ const String PRINTER_DEVICES_KEY = 'PRINTER_DEVICES_KEY';
 
 class PrinterModule {
   static NetworkPrinter _printer;
-  static Generator _generator;
   static CapabilityProfile _profile;
 
   static Future<void> init() async {
