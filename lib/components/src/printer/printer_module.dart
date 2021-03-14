@@ -5,47 +5,12 @@ import 'package:esc_pos_printer/esc_pos_printer.dart';
 import 'package:esc_pos_utils/esc_pos_utils.dart';
 import 'package:flutter/material.dart' hide Image;
 import 'package:image/image.dart';
+import 'package:kaylee/components/src/printer/model/printer_device.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
-const String PRINTER_DEVICE_KEY = 'PRINTER_DEVICE';
-
-class PrinterDevice {
-  ///for wifi device
-  final String ip;
-  final int port;
-
-  ///for bluetooth device
-  final String name;
-  final String address;
-  final int type;
-
-  PrinterDevice(
-      {this.ip, this.port = 9100, this.name, this.address, this.type});
-
-  factory PrinterDevice.wifi({String ip, int port}) =>
-      PrinterDevice(ip: ip, port: port);
-
-  factory PrinterDevice.bluetooth({String name, String address, int type}) =>
-      PrinterDevice(name: name, address: address, type: type);
-
-  factory PrinterDevice.fromJson(json) => PrinterDevice(
-        ip: json['ip'] as String,
-        port: json['port'] as int,
-        name: json['name'] as String,
-        address: json['address'] as String,
-        type: json['type'] as int,
-      );
-
-  Map<String, dynamic> toJson() => {
-        'ip': ip,
-        'port': port,
-        'name': name,
-        'address': address,
-        'type': type,
-      };
-}
+const String PRINTER_DEVICES_KEY = 'PRINTER_DEVICES_KEY';
 
 class PrinterModule {
   static NetworkPrinter _printer;
@@ -59,48 +24,31 @@ class PrinterModule {
     _printer = NetworkPrinter(paper, _profile);
   }
 
-  static PrinterDevice getPrinterDevice() {
-    final fromSharePref = SharedRef.getString(PRINTER_DEVICE_KEY);
-    final map = Map<String, dynamic>.from(
-        jsonDecode(fromSharePref.isNullOrEmpty ? '{}' : fromSharePref));
-    if (map.isEmpty) return PrinterDevice.wifi();
-    return PrinterDevice.fromJson(map);
-  }
-
-  static void savePrinterDevice({PrinterDevice device}) {
-    SharedRef.putString(PRINTER_DEVICE_KEY, jsonEncode(device.toJson()));
-  }
-
-  static Future<Generator> getGenerator() async {
-    if (_generator.isNull) {
-      _generator = Generator(PaperSize.mm80, _profile);
-    }
-    return _generator;
-  }
-
   static Future<bool> connect({PrinterDevice device}) async {
+    if (device.isNull) return false;
     final PosPrintResult res =
         await _printer?.connect(device?.ip, port: device?.port);
     if (res == PosPrintResult.success) {
-      savePrinterDevice(device: device);
       return true;
     }
     return false;
   }
 
-  static Future<void> printConnectionInfo() async {
-    if (_printer.isNull) return;
-    final device = getPrinterDevice();
-    if (device.isNull) {
+  static Future<bool> printConnectionInfo({PrinterDevice device}) async {
+    if (_printer.isNull) return false;
+
+    final connected = await connect(device: device);
+    if (connected) {
+      _printer.text('Connected ${device.ip}:${device.port}');
+      _printer.cut();
       await disconnect();
-      return;
+      return true;
     }
-    _printer.text('Connected ${device.ip}:${device.port}');
-    _printer.cut();
     await disconnect();
+    return false;
   }
 
-  static void printOrder({Order order, Image billImage}) async {
+  static void _printOrder({Order order, Image billImage}) async {
     if (order.isNull) return;
     if (_printer.isNull) return;
     // final dio = Dio();
@@ -129,50 +77,16 @@ class PrinterModule {
   static Future<void> connectPrinter(BuildContext context,
       {Order order, ValueChanged<bool> loading, Image image}) async {
     await init();
-    await getGenerator();
 
-    final device = getPrinterDevice();
-    String ip = device?.ip;
-    if (device.isNull) {
-      await showKayleeAlertDialog(
-          context: context,
-          view: KayleeAlertDialogView(
-            title: Strings.ketNoiVoiMayIn,
-            contentWidget: Padding(
-              padding: const EdgeInsets.only(top: Dimens.px8),
-              child: Material(
-                clipBehavior: Clip.antiAlias,
-                borderRadius: BorderRadius.circular(Dimens.px5),
-                child: KayleeTextField.normal(
-                  hint: Strings.ipHint,
-                  controller: TextEditingController(),
-                  maxLength: 15,
-                  onChanged: (value) {
-                    ip = value;
-                  },
-                ),
-              ),
-            ),
-            actions: [
-              KayleeAlertDialogAction.huy(
-                onPressed: context.pop,
-              ),
-              KayleeAlertDialogAction(
-                title: Strings.luu,
-                isDefaultAction: true,
-                onPressed: context.pop,
-              ),
-            ],
-          ));
-      if (ip.isNullOrEmpty) {
-        return;
-      }
-    }
+    final device = connectedDevice;
 
     loading?.call(true);
-    if (await connect(device: PrinterDevice(ip: ip))) {
+
+    final connected = await connect(device: device);
+    if (connected) {
       loading?.call(false);
-      printOrder(order: order, billImage: image);
+      _printOrder(order: order, billImage: image);
+      return;
     } else {
       loading?.call(false);
       showKayleeDialogNotAbleToConnectPrinter(
@@ -182,7 +96,20 @@ class PrinterModule {
           connectPrinter(context, order: order, loading: loading, image: image);
         },
       );
+      return;
     }
+  }
+
+  static PrinterDevice get connectedDevice {
+    final fromSharePref = SharedRef.getString(PRINTER_DEVICES_KEY);
+    final map =
+        jsonDecode(fromSharePref.isNullOrEmpty ? '[]' : fromSharePref) as List;
+    final devices = map.map((e) => PrinterDevice.fromJson(e)).toList();
+    final device = devices.firstWhere(
+      (element) => element.selected,
+      orElse: () => null,
+    );
+    return device;
   }
 }
 
@@ -201,8 +128,8 @@ Future<void> showKayleeDialogNotAbleToConnectPrinter(
         KayleeAlertDialogAction(
           title: Strings.thuLai,
           onPressed: () {
-            onTryAgain?.call();
             context.pop();
+            onTryAgain?.call();
           },
           isDefaultAction: true,
         ),
