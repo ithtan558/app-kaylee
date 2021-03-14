@@ -111,7 +111,11 @@ class _PrinterDetailScreenState extends KayleeState<PrinterDetailScreen> {
             }
             if (state is PrinterDetailStateSavedDefaultDeviceBluetooth) {
               showLoading();
-              BluetoothPrinterModule.connect(device: _bloc.connectedDevice);
+              final result = await BluetoothPrinterModule.printConnectionInfo(
+                  device: _bloc.connectedDevice);
+              if (result) {
+                hideLoading();
+              }
               return;
             }
             if (state is PrinterDetailStateSavedDefaultDeviceWifi) {
