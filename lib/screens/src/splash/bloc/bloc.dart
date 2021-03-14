@@ -1,4 +1,6 @@
 import 'package:anth_package/anth_package.dart';
+import 'package:kaylee/components/components.dart';
+import 'package:kaylee/components/src/printer/bluetooth_printer_module.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/services/services.dart';
 
@@ -20,11 +22,13 @@ class SplashScreenBloc extends BaseBloc {
     }
   }
 
-  void config() {
-    SharedRef.init().then((value) {
-      add(LoadedSharedPrefSplashScrEvent());
-      return 1;
-    });
+  void config() async {
+    await Future.wait([
+      SharedRef.init(),
+      PrinterModule.init(),
+      BluetoothPrinterModule.init(),
+    ]);
+    add(LoadedSharedPrefSplashScrEvent());
   }
 
   void pushToHomeScreen() {
