@@ -23,17 +23,19 @@ class PrinterDeviceItem extends StatelessWidget {
         child: Row(
           children: [
             KayleeCheckBox(checked: device.selected),
-            Padding(
-              padding: const EdgeInsets.only(left: Dimens.px16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  KayleeText.normal16W500(device.deviceName),
-                  Padding(
-                    padding: const EdgeInsets.only(top: Dimens.px8),
-                    child: KayleeText.normal16W400(device.deviceAddress),
-                  ),
-                ],
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(left: Dimens.px16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    KayleeText.normal16W500(device.deviceName),
+                    Padding(
+                      padding: const EdgeInsets.only(top: Dimens.px8),
+                      child: KayleeText.normal16W400(device.deviceAddress),
+                    ),
+                  ],
+                ),
               ),
             )
           ],
