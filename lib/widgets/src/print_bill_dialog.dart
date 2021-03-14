@@ -1,10 +1,8 @@
-import 'dart:ui' as ui;
-
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart' hide TextStyle;
-import 'package:image/image.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/components/components.dart';
+import 'package:kaylee/components/src/printer/bluetooth_printer_module.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/widgets.dart';
@@ -22,16 +20,21 @@ class PrintBillDialog extends StatefulWidget {
 
 class _PrintBillDialogState extends KayleeState<PrintBillDialog> {
   Order get _order => widget.order;
+  BluetoothPrinterModule bluetoothPrinterModule = BluetoothPrinterModule();
+  PrinterDevice printerDevice;
 
   @override
   void initState() {
     super.initState();
+    printerDevice = PrinterModule.connectedDevice;
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<pw.Document>(
-      future: PdfModule.generateDocumentForOrder(order: _order),
+      future: (printerDevice?.isBluetooth ?? false)
+          ? PdfModule.generateDocumentForOrderForRoll57(order: _order)
+          : PdfModule.generateDocumentForOrder(order: _order),
       builder: (context, snapshot) {
         return Column(
           children: [
@@ -84,20 +87,27 @@ class _PrintBillDialogState extends KayleeState<PrintBillDialog> {
                       onPressed: () async {
                         if (snapshot.hasData) {
                           showLoading();
-                          final raster = Printing.raster(
-                            await snapshot.data.save(),
-                            dpi: 50,
-                          );
-                          await for (var page in raster) {
-                            ui.Image image =
-                                await page.toImage(); // ...or page.toPng()
-                            final byteData = await image.toByteData(
-                                format: ui.ImageByteFormat.png);
-                            await PrinterModule.connectPrinter(context,
-                                order: _order,
-                                image:
-                                    decodeImage(byteData.buffer.asUint8List()));
-                            hideLoading();
+                          //print with wifi
+                          if ((printerDevice?.isWifi ?? false)) {
+                            return getPdfRasterForRol80(
+                              data: snapshot.data.save(),
+                              onPrint: (data) async {
+                                await PrinterModule.connectPrinter(context,
+                                    order: _order, image: data);
+                                hideLoading();
+                              },
+                            );
+                          }
+
+                          //print with bluetooth
+                          if ((printerDevice?.isBluetooth ?? false)) {
+                            return getPdfRasterForRol57(
+                              data: snapshot.data.save(),
+                              onPrint: (data) async {
+                                await bluetoothPrinterModule.print(data: data);
+                                hideLoading();
+                              },
+                            );
                           }
                         }
                       },
