@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:anth_package/anth_package.dart';
+import 'package:bluetooth_print/bluetooth_print.dart';
 import 'package:flutter/material.dart' hide TextStyle;
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/components/components.dart';
@@ -21,11 +24,35 @@ class PrintBillDialog extends StatefulWidget {
 class _PrintBillDialogState extends KayleeState<PrintBillDialog> {
   Order get _order => widget.order;
   PrinterDevice printerDevice;
+  StreamSubscription bluetoothSub;
 
   @override
   void initState() {
     super.initState();
     printerDevice = PrinterModule.connectedDevice;
+    bluetoothSub =
+        BluetoothPrinterModule.listenConnectionState().listen((state) async {
+      print('cur device status: $state');
+      hideLoading();
+      switch (state) {
+        case BluetoothPrint.CONNECTED:
+          showKayleeAlertMessageYesDialog(
+              context: context,
+              message: Message(
+                content: Strings.ketNoiThanhCong,
+              ),
+              onPressed: popScreen);
+          break;
+        default:
+          break;
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    bluetoothSub.cancel();
+    super.dispose();
   }
 
   @override
@@ -51,9 +78,9 @@ class _PrintBillDialogState extends KayleeState<PrintBillDialog> {
                 height: context.screenSize.height,
                 child: snapshot.hasData
                     ? PdfPreview(
-                        build: (format) => snapshot.data.save(),
-                        useActions: false,
-                      )
+                  build: (format) => snapshot.data.save(),
+                  useActions: false,
+                )
                     : null,
               ),
             ),
@@ -61,9 +88,9 @@ class _PrintBillDialogState extends KayleeState<PrintBillDialog> {
               decoration: const BoxDecoration(
                   border: Border(
                       top: BorderSide(
-                color: ColorsRes.divider,
-                width: Dimens.px1,
-              ))),
+                        color: ColorsRes.divider,
+                        width: Dimens.px1,
+                      ))),
               padding: const EdgeInsets.only(
                   left: Dimens.px8,
                   right: Dimens.px8,
@@ -85,9 +112,9 @@ class _PrintBillDialogState extends KayleeState<PrintBillDialog> {
                       text: Strings.In,
                       onPressed: () async {
                         if (snapshot.hasData) {
-                          showLoading();
                           //print with wifi
                           if ((printerDevice?.isWifi ?? false)) {
+                            showLoading();
                             return getPdfRasterForRol80(
                               data: snapshot.data.save(),
                               onPrint: (data) async {
@@ -103,8 +130,16 @@ class _PrintBillDialogState extends KayleeState<PrintBillDialog> {
                             return getPdfRasterForRol57(
                               data: snapshot.data.save(),
                               onPrint: (data) async {
-                                await BluetoothPrinterModule.print(data: data);
-                                hideLoading();
+                                BluetoothPrinterModule.printOrder(
+                                  onLoading: () {
+                                    showLoading();
+                                  },
+                                  context: context,
+                                  data: data,
+                                  onFinished: () {
+                                    hideLoading();
+                                  },
+                                );
                               },
                             );
                           }
