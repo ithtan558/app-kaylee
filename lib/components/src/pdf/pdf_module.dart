@@ -1,15 +1,20 @@
 import 'dart:async';
+import 'dart:typed_data';
+import 'dart:ui' as ui;
 
 import 'package:anth_package/anth_package.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:image/image.dart' as image;
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
+import 'package:printing/printing.dart';
 
 class PdfModule {
-  static Future<Document> generateDocument() async {
+  static Future<Document> generateDocument({double ratio = 1}) async {
     final fonts = await loadFonts();
     final defaultTextStyle = TextStyle(
       fontNormal: Font.ttf(fonts[FontsStyle.normal]),
@@ -17,13 +22,13 @@ class PdfModule {
       fontBold: Font.ttf(fonts[FontsStyle.bold]),
       fontBoldItalic: Font.ttf(fonts[FontsStyle.boldItalic]),
       font: Font.ttf(fonts[FontsStyle.medium]),
-      fontSize: 30,
+      fontSize: 30 / ratio,
     );
     final doc = Document(
       theme: ThemeData(
         defaultTextStyle: defaultTextStyle,
-        header0: defaultTextStyle.merge(TextStyle(fontSize: 35)),
-        header1: defaultTextStyle.merge(TextStyle(fontSize: 40)),
+        header0: defaultTextStyle.merge(TextStyle(fontSize: 35 / ratio)),
+        header1: defaultTextStyle.merge(TextStyle(fontSize: 40 / ratio)),
         tableHeader: defaultTextStyle.merge(
           TextStyle(
             fontWeight: FontWeight.bold,
@@ -53,34 +58,37 @@ class PdfModule {
     };
   }
 
-  static Future<Document> generateDocumentForOrder({Order order}) async {
-    final doc = await generateDocument();
+  static Future<Document> generateDocumentForOrder(
+      {Order order,
+      double ratio = 1,
+      EdgeInsets padding,
+      PdfPageFormat format}) async {
+    final doc = await generateDocument(ratio: ratio);
     final theme = doc.theme;
     doc.addPage(Page(
       pageTheme: PageTheme(
         buildBackground: (context) =>
             Container(color: PdfColor.fromInt(0xFFFFFFFF)),
-        pageFormat: PdfPageFormat.a3
+        pageFormat: (format ?? PdfPageFormat.a3)
             .copyWith(marginLeft: 0, marginRight: 0, height: double.infinity),
         clip: true,
         margin: EdgeInsets.zero,
       ),
       build: (context) {
         return Padding(
-          padding: EdgeInsets.only(right: Dimens.px24, left: Dimens.px4),
+          padding:
+              padding ?? EdgeInsets.only(right: Dimens.px24, left: Dimens.px4),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text('${order.brand.name ?? ''}',
-                    style: theme.header1.merge(TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ))),
+                    style: theme.header1.copyWith(fontWeight: FontWeight.bold)),
               ],
             ),
             Padding(
-              padding: EdgeInsets.only(top: Dimens.px16),
+              padding: EdgeInsets.only(top: Dimens.px16 / ratio),
               child:
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Text(
@@ -89,7 +97,7 @@ class PdfModule {
               ]),
             ),
             Padding(
-              padding: EdgeInsets.only(top: Dimens.px16),
+              padding: EdgeInsets.only(top: Dimens.px16 / ratio),
               child:
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Text(
@@ -98,7 +106,7 @@ class PdfModule {
               ]),
             ),
             Padding(
-              padding: EdgeInsets.only(top: Dimens.px16),
+              padding: EdgeInsets.only(top: Dimens.px16 / ratio),
               child:
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Text(
@@ -112,7 +120,7 @@ class PdfModule {
               ]),
             ),
             Padding(
-              padding: EdgeInsets.only(top: Dimens.px16),
+              padding: EdgeInsets.only(top: Dimens.px16 / ratio),
               child: Row(
                 children: [
                   Text(
@@ -127,19 +135,19 @@ class PdfModule {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(top: Dimens.px8),
+              padding: EdgeInsets.only(top: Dimens.px8 / ratio),
               child: Text(
                 '${Strings.khachHang}: ${order.customer?.name ?? ''}',
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(top: Dimens.px8),
+              padding: EdgeInsets.only(top: Dimens.px8 / ratio),
               child: Text(
                 '${Strings.nhanVienThucThien}:',
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(top: Dimens.px8),
+              padding: EdgeInsets.only(top: Dimens.px8 / ratio),
               child: Column(
                 children: List.generate(order.employees?.length ?? 0, (index) {
                   final employee = order.employees.elementAt(index);
@@ -158,7 +166,7 @@ class PdfModule {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(top: Dimens.px16),
+              padding: EdgeInsets.only(top: Dimens.px16 / ratio),
               child: Table(
                 columnWidths: {
                   0: FlexColumnWidth(4),
@@ -170,67 +178,67 @@ class PdfModule {
                   TableRow(
                       children: [
                         _wrapPaddingAll(
-                          child: Text(
-                            Strings.matHang,
-                            style: theme.defaultTextStyle.merge(
-                              TextStyle(
-                                fontWeight: FontWeight.bold,
+                            child: Text(
+                              Strings.matHang,
+                              style: theme.defaultTextStyle.merge(
+                                TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
-                          ),
-                        ),
+                            ratio: ratio),
                         _wrapPaddingAll(
-                          child: Text(
-                            'SL',
-                            style: theme.defaultTextStyle.merge(
-                              TextStyle(
-                                fontWeight: FontWeight.bold,
+                            child: Text(
+                              'SL',
+                              style: theme.defaultTextStyle.merge(
+                                TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
-                          ),
-                        ),
+                            ratio: ratio),
                         _wrapPaddingAll(
-                          child: Row(
+                            child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    Strings.gia,
+                                    style: theme.defaultTextStyle.merge(
+                                      TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ]),
+                            ratio: ratio),
+                        _wrapPaddingAll(
+                            child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 Text(
-                                  Strings.gia,
+                                  'T tiền',
                                   style: theme.defaultTextStyle.merge(
                                     TextStyle(
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 ),
-                              ]),
-                        ),
-                        _wrapPaddingAll(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Text(
-                                'T tiền',
-                                style: theme.defaultTextStyle.merge(
-                                  TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                              ],
+                            ),
+                            ratio: ratio),
                       ],
                       decoration: BoxDecoration(
                           border: Border.all(
-                              width: Dimens.px3,
+                              width: Dimens.px3 / ratio,
                               style: BorderStyle.dashed,
                               color: PdfColor.fromInt(0xff000000)))),
-                  ...?_getProductTableRow(order.orderItems),
+                  ...?_getProductTableRow(order.orderItems, ratio: ratio),
                 ],
               ),
             ),
-            ..._getPaymentInfo(order, theme: theme),
+            ..._getPaymentInfo(order, theme: theme, ratio: ratio),
             Padding(
-              padding: EdgeInsets.only(top: Dimens.px24),
+              padding: EdgeInsets.only(top: Dimens.px24 / ratio),
               child:
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Text(Strings.camOnQuyKhachHenGapLai,
@@ -246,13 +254,24 @@ class PdfModule {
     return doc;
   }
 
-  static List<TableRow> _getProductTableRow(List<OrderItem> products) {
+  static Future<Document> generateDocumentForOrderForRoll57(
+      {Order order, double ratio = 1}) async {
+    return generateDocumentForOrder(
+        order: order,
+        ratio: 5.6,
+        padding: EdgeInsets.only(right: Dimens.px56),
+        format: PdfPageFormat.roll57);
+  }
+
+  static List<TableRow> _getProductTableRow(List<OrderItem> products,
+      {double ratio = 1}) {
     Widget _getProductCell(String text, {TextAlign textAlign}) {
       return _wrapPaddingAll(
         child: Text(
           text ?? '',
           textAlign: textAlign,
         ),
+        ratio: ratio,
       );
     }
 
@@ -286,17 +305,17 @@ class PdfModule {
             decoration: BoxDecoration(
               border: Border(
                 left: BorderSide(
-                  width: Dimens.px3,
+                  width: Dimens.px3 / ratio,
                   style: BorderStyle.dashed,
                   color: PdfColor.fromInt(0xff000000),
                 ),
                 right: BorderSide(
-                  width: Dimens.px3,
+                  width: Dimens.px3 / ratio,
                   style: BorderStyle.dashed,
                   color: PdfColor.fromInt(0xff000000),
                 ),
                 bottom: BorderSide(
-                  width: Dimens.px3,
+                  width: Dimens.px3 / ratio,
                   style: BorderStyle.dashed,
                   color: PdfColor.fromInt(0xff000000),
                 ),
@@ -307,10 +326,11 @@ class PdfModule {
         ?.toList();
   }
 
-  static List<Widget> _getPaymentInfo(Order order, {ThemeData theme}) {
+  static List<Widget> _getPaymentInfo(Order order,
+      {ThemeData theme, double ratio = 1}) {
     return [
       Padding(
-        padding: EdgeInsets.only(top: Dimens.px30),
+        padding: EdgeInsets.only(top: Dimens.px30 / ratio),
         child: _getAmountText(
             title: Strings.tong,
             content: CurrencyUtils.formatVNDWithCustomUnit(order.total ?? 0),
@@ -318,7 +338,7 @@ class PdfModule {
                 .merge(TextStyle(fontWeight: FontWeight.bold))),
       ),
       Padding(
-        padding: EdgeInsets.only(top: Dimens.px8),
+        padding: EdgeInsets.only(top: Dimens.px8 / ratio),
         child: _getAmountText(
             title: Strings.giamGia,
             content: CurrencyUtils.formatVNDWithCustomUnit(order.discount ?? 0),
@@ -326,7 +346,7 @@ class PdfModule {
                 .merge(TextStyle(fontWeight: FontWeight.bold))),
       ),
       Padding(
-        padding: EdgeInsets.only(top: Dimens.px8),
+        padding: EdgeInsets.only(top: Dimens.px8 / ratio),
         child: _getAmountText(
           title: Strings.thanhTien,
           content: CurrencyUtils.formatVNDWithCustomUnit(order.amount ?? 0),
@@ -353,12 +373,52 @@ class PdfModule {
     );
   }
 
-  static Widget _wrapPaddingAll({double padding = Dimens.px8, Widget child}) {
+  static Widget _wrapPaddingAll(
+      {double padding = Dimens.px8, Widget child, double ratio = 1}) {
     return Padding(
-      padding: EdgeInsets.all(padding),
+      padding: EdgeInsets.all(padding / ratio),
       child: child,
     );
   }
 }
 
 enum FontsStyle { normal, normalItalic, medium, mediumItalic, bold, boldItalic }
+
+void getPdfRaster(
+    {Future<Uint8List> data,
+    double dpi,
+    ValueSetter<Uint8List> onPrint}) async {
+  final raster = Printing.raster(
+    await data,
+    dpi: dpi,
+  );
+
+  await for (var page in raster) {
+    ui.Image image = await page.toImage(); // ...or page.toPng()
+    final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    onPrint?.call(byteData.buffer.asUint8List());
+  }
+}
+
+///get raster cho khổ 57
+void getPdfRasterForRol57(
+    {Future<Uint8List> data, ValueSetter<Uint8List> onPrint}) {
+  return getPdfRaster(
+      data: data,
+      dpi: 300,
+      onPrint: (value) {
+        onPrint?.call(image.encodeJpg(image.decodeImage(value)));
+      });
+}
+
+///get raster cho khổ 80
+void getPdfRasterForRol80(
+    {Future<Uint8List> data, ValueSetter<image.Image> onPrint}) {
+  return getPdfRaster(
+    data: data,
+    dpi: 50,
+    onPrint: (value) {
+      onPrint?.call(image.decodeImage(value));
+    },
+  );
+}
