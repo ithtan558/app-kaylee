@@ -29,14 +29,19 @@ class _PrinterDetailScreenState extends KayleeState<PrinterDetailScreen> {
 
   PrinterDetailBloc get _bloc => context.bloc<PrinterDetailBloc>();
   StreamSubscription _bluetoothSub;
+  StreamSubscription _bluetoothScanningSub;
   bool showingBluetoothDialogSuccess = false;
 
   @override
   void initState() {
     super.initState();
-    _bloc.initState();
-    BluetoothPrinterModule.bluetoothPrint
-        .startScan(timeout: Duration(milliseconds: 100));
+    _bluetoothScanningSub =
+        BluetoothPrinterModule.bluetoothPrint.isScanning.listen((isScanning) {
+      if (!isScanning) {
+        _bloc.initState();
+      }
+    });
+    BluetoothPrinterModule.findDevices();
     _bluetoothSub =
         BluetoothPrinterModule.listenConnectionState().listen((state) async {
       print('cur device status: $state');
@@ -68,6 +73,7 @@ class _PrinterDetailScreenState extends KayleeState<PrinterDetailScreen> {
   @override
   void dispose() {
     _bluetoothSub.cancel();
+    _bluetoothScanningSub.cancel();
     _ipTFController.dispose();
     super.dispose();
   }
@@ -132,6 +138,9 @@ class _PrinterDetailScreenState extends KayleeState<PrinterDetailScreen> {
               Expanded(
                   child: BlocBuilder<PrinterDetailBloc, PrinterDetailState>(
                 builder: (context, state) {
+                  if (state is PrinterDetailStateLoadingDevices ||
+                      state is PrinterDetailStateInitial)
+                    return KayleeLoadingIndicator();
                   return KayleeListView(
                     itemBuilder: (context, index) {
                       final device = _bloc.devices.elementAt(index);
