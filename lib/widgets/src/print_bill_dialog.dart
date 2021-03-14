@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:anth_package/anth_package.dart';
 import 'package:bluetooth_print/bluetooth_print.dart';
+import 'package:bluetooth_print/bluetooth_print_model.dart';
 import 'package:flutter/material.dart' hide TextStyle;
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/components/components.dart';
@@ -30,9 +31,12 @@ class _PrintBillDialogState extends KayleeState<PrintBillDialog> {
   @override
   void initState() {
     super.initState();
-    BluetoothPrinterModule.bluetoothPrint
-        .startScan(timeout: Duration(milliseconds: 100));
+
     printerDevice = PrinterModule.connectedDevice;
+    if (printerDevice.isBluetooth) {
+      BluetoothPrinterModule.bluetoothPrint
+          .startScan(timeout: Duration(seconds: 2));
+    }
     bluetoothSub =
         BluetoothPrinterModule.listenConnectionState().listen((state) async {
       print('cur device status: $state');
@@ -116,45 +120,85 @@ class _PrintBillDialogState extends KayleeState<PrintBillDialog> {
                   ),
                   SizedBox(width: Dimens.px8),
                   Expanded(
-                    child: KayLeeRoundedButton.normal(
-                      margin: EdgeInsets.zero,
-                      text: Strings.In,
-                      onPressed: () async {
-                        if (snapshot.hasData) {
-                          //print with wifi
-                          if ((printerDevice?.isWifi ?? false)) {
-                            showLoading();
-                            return getPdfRasterForRol80(
-                              data: snapshot.data.save(),
-                              onPrint: (data) async {
-                                await PrinterModule.connectPrinter(context,
-                                    order: _order, image: data);
-                                hideLoading();
-                              },
-                            );
-                          }
-
-                          //print with bluetooth
-                          if ((printerDevice?.isBluetooth ?? false)) {
-                            return getPdfRasterForRol57(
-                              data: snapshot.data.save(),
-                              onPrint: (data) async {
-                                BluetoothPrinterModule.printOrder(
-                                  onLoading: () {
-                                    showLoading();
-                                  },
-                                  context: context,
-                                  data: data,
-                                  onFinished: () {
-                                    hideLoading();
+                    child: (printerDevice?.isBluetooth ?? false)
+                        ? StreamBuilder<List<BluetoothDevice>>(
+                            stream: BluetoothPrinterModule
+                                .bluetoothPrint.scanResults,
+                            initialData: [],
+                            builder: (context, buttonSnapshot) {
+                              if (snapshot.hasData &&
+                                  buttonSnapshot.hasData &&
+                                  buttonSnapshot.data.isNotNullAndEmpty) {
+                                return KayLeeRoundedButton.normal(
+                                  margin: EdgeInsets.zero,
+                                  text: Strings.In,
+                                  onPressed: () async {
+                                    //print with bluetooth
+                                    return getPdfRasterForRol57(
+                                      data: snapshot.data.save(),
+                                      onPrint: (data) async {
+                                        BluetoothPrinterModule.printOrder(
+                                          onLoading: () {
+                                            showLoading();
+                                          },
+                                          context: context,
+                                          data: data,
+                                          onFinished: () {
+                                            hideLoading();
+                                          },
+                                        );
+                                      },
+                                    );
                                   },
                                 );
-                              },
-                            );
-                          }
-                        }
-                      },
-                    ),
+                              }
+                              return KayLeeRoundedButton.button3(
+                                text: Strings.In,
+                                margin: EdgeInsets.zero,
+                              );
+                            },
+                          )
+                        : KayLeeRoundedButton.normal(
+                            margin: EdgeInsets.zero,
+                            text: Strings.In,
+                            onPressed: () async {
+                              if (snapshot.hasData) {
+                                //print with wifi
+                                if ((printerDevice?.isWifi ?? false)) {
+                                  showLoading();
+                                  return getPdfRasterForRol80(
+                                    data: snapshot.data.save(),
+                                    onPrint: (data) async {
+                                      await PrinterModule.connectPrinter(
+                                          context,
+                                          order: _order,
+                                          image: data);
+                                      hideLoading();
+                                    },
+                                  );
+                                }
+
+                                //print with bluetooth
+                                if ((printerDevice?.isBluetooth ?? false)) {
+                                  return getPdfRasterForRol57(
+                                    data: snapshot.data.save(),
+                                    onPrint: (data) async {
+                                      BluetoothPrinterModule.printOrder(
+                                        onLoading: () {
+                                          showLoading();
+                                        },
+                                        context: context,
+                                        data: data,
+                                        onFinished: () {
+                                          hideLoading();
+                                        },
+                                      );
+                                    },
+                                  );
+                                }
+                              }
+                            },
+                          ),
                   )
                 ],
               ),
