@@ -332,6 +332,12 @@ class Strings {
   static const String themNhanVien = 'Thêm nhân viên';
   static const String nhanVienPhucVu = 'Nhân viên phục vụ';
   static const String chuaChonNhanVienPhucVu = 'Chưa chọn nhân viên phục vụ';
+  static const String luaChonLoaThietBi = 'Lựa chọn loại thiết bị';
+  static const String wifi = 'Wifi';
+  static const String bluetooth = 'Bluetooth';
+  static const String datLamMacDinh = 'Đặt làm mặc định';
+  static const String chon = 'Chọn';
+  static const String ketNoiThanhCong = 'Kết nối máy in thành công';
 
   Strings._();
 }
