@@ -11,6 +11,7 @@ import 'package:kaylee/components/src/printer/printer_module.dart';
 
 class BluetoothPrinterModule {
   static BluetoothPrint bluetoothPrint;
+  static bool connected = false;
 
   static Future<void> init() async {
     bluetoothPrint = BluetoothPrint.instance;
@@ -27,7 +28,7 @@ class BluetoothPrinterModule {
   }
 
   static Future<bool> printConnectionInfo({PrinterDevice device}) async {
-    if (Platform.isIOS || await bluetoothPrint.isConnected) {
+    if ((Platform.isIOS && connected) || await bluetoothPrint.isConnected) {
       final list = [
         LineText(
             type: LineText.TYPE_TEXT,
@@ -56,7 +57,7 @@ class BluetoothPrinterModule {
     VoidCallback onLoading,
   }) async {
     onLoading?.call();
-    if (Platform.isIOS || await bluetoothPrint.isConnected) {
+    if ((Platform.isIOS && connected) || await bluetoothPrint.isConnected) {
       if (data.isNull) {
         if (_tempData.isNull)
           return;

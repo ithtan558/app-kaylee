@@ -43,6 +43,9 @@ class _PrinterDetailScreenState extends KayleeState<PrinterDetailScreen> {
       hideLoading();
       switch (state) {
         case BluetoothPrint.CONNECTED:
+          if (!BluetoothPrinterModule.connected) {
+            BluetoothPrinterModule.connected = true;
+          }
           if (!showingBluetoothDialogSuccess) {
             showingBluetoothDialogSuccess = true;
             showKayleeAlertMessageYesDialog(
