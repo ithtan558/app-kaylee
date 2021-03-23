@@ -54,7 +54,7 @@ class KayleeDismissible extends StatelessWidget {
         color: Colors.black,
       ),
       confirmDismiss: (direction) async {
-        return confirmDismiss?.call();
+        return confirmDismiss?.call() ?? true;
       },
       secondaryBackground: secondaryBackground ??
           Container(
