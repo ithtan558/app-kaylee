@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:app_settings/app_settings.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
@@ -10,6 +11,11 @@ abstract class SystemSettingModule {
   factory SystemSettingModule.init() = _SystemSettingModuleImpl._;
 
   Future<void> showKayleeGo2SettingDialog({
+    @required BuildContext context,
+    bool barrierDismissible = true,
+  });
+
+  Future<void> showKayleeBluetoothSettingDialog({
     @required BuildContext context,
     bool barrierDismissible = true,
   });
@@ -52,5 +58,20 @@ class _SystemSettingModuleImpl extends SystemSettingModule {
           guides: guides,
           onGoToSetting: onGoToSetting,
         ));
+  }
+
+  @override
+  Future<void> showKayleeBluetoothSettingDialog(
+      {BuildContext context, bool barrierDismissible = true}) {
+    return showKayleeRequestSettingDialog(
+      context: context,
+      barrierDismissible: barrierDismissible,
+      title: Strings.thietBiChuaBatBluetooth,
+      message: Strings.quyenTruyBluetoothContent,
+      guides: Platform.isAndroid
+          ? Strings.androidBluetoothSettingGuide
+          : Strings.iOsBluetoothSettingGuide,
+      onGoToSetting: AppSettings.openBluetoothSettings,
+    );
   }
 }
