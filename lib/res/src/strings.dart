@@ -341,8 +341,8 @@ class Strings {
   static String thietBiChuaBatBluetooth = 'Thiết bị chưa bật Bluetooth';
   static String quyenTruyBluetoothContent =
       'Vui lòng bật Bluetooth để kết nối với máy in.';
-  static const String androidBluetoothSettingGuide = 'Vào Cài đặt > Bluetooth';
-  static const String iOsBluetoothSettingGuide =
+  static const String iOsBluetoothSettingGuide = 'Vào Cài đặt > Bluetooth';
+  static const String androidBluetoothSettingGuide =
       'Vào Cài đặt > Kết nối > Bluetooth';
 
   Strings._();
