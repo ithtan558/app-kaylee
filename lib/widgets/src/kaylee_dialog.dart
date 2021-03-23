@@ -1,4 +1,3 @@
-
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -88,7 +87,6 @@ Future<T> showKayleeBottomSheet<T>(BuildContext context,
       barrierColor: ColorsRes.dialogDimBg);
 }
 
-
 Future<void> showKayleeDialog({
   @required BuildContext context,
   bool barrierDismissible = true,
@@ -155,6 +153,7 @@ Future showKayleeAlertDialog(
       .then((value) {
     dialogContext = null;
     onDismiss?.call();
+    return value;
   });
 }
 
