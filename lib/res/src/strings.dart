@@ -346,7 +346,7 @@ class Strings {
       'Vào Cài đặt > Kết nối > Bluetooth';
   static const String banSeXoaPrinter = 'Bạn sẽ xoá máy in này?';
   static const String printerBiXoaMatKhoiThietBi =
-      'Máy in này sẽ bị xoá khỏi thiết bị của bạn, bạn có chắc thực hiện thao tác này?';
+      'Máy in này sẽ bị xoá khỏi thiết bị, bạn có chắc thực hiện thao tác này?';
 
   Strings._();
 }
