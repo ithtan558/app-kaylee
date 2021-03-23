@@ -338,6 +338,12 @@ class Strings {
   static const String datLamMacDinh = 'Đặt làm mặc định';
   static const String chon = 'Chọn';
   static const String ketNoiThanhCong = 'Kết nối máy in thành công';
+  static String thietBiChuaBatBluetooth = 'Thiết bị chưa bật Bluetooth';
+  static String quyenTruyBluetoothContent =
+      'Vui lòng bật Bluetooth để kết nối với máy in.';
+  static const String androidBluetoothSettingGuide = 'Vào Cài đặt > Bluetooth';
+  static const String iOsBluetoothSettingGuide =
+      'Vào Cài đặt > Kết nối > Bluetooth';
 
   Strings._();
 }
