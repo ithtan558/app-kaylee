@@ -43,9 +43,12 @@ class StoredPrinterDeviceItem extends StatelessWidget {
 
         return (result as Bundle)?.args ?? false;
       },
-      child: PrinterDeviceItem(
-        device: device,
-        onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
+        child: PrinterDeviceItem(
+          device: device,
+          onTap: onTap,
+        ),
       ),
     );
   }
