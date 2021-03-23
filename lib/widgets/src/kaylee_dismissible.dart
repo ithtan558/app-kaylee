@@ -18,6 +18,7 @@ class KayleeDismissible extends StatelessWidget {
       this.secondaryBackground})
       : super(key: key);
 
+  ///delete icon without text
   factory KayleeDismissible.iconOnly({
     @required Key key,
     @required Widget child,
