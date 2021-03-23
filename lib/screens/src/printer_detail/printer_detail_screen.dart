@@ -12,6 +12,7 @@ import 'package:kaylee/screens/src/printer_detail/blocs/printer_detail_bloc.dart
 import 'package:kaylee/screens/src/printer_detail/widgets/bluetooth_select_device_dialog.dart';
 import 'package:kaylee/screens/src/printer_detail/widgets/printer_device_item.dart';
 import 'package:kaylee/screens/src/printer_detail/widgets/wifi_printer_device_input_dialog.dart';
+import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class PrinterDetailScreen extends StatefulWidget {
@@ -109,14 +110,7 @@ class _PrinterDetailScreenState extends KayleeState<PrinterDetailScreen> {
               return;
             }
             if (state is PrinterDetailStateOnSelectBluetooth) {
-              showKayleeDialog(
-                  context: context,
-                  child: BluetoothSelectDeviceDialog(
-                    onSelected: (device) {
-                      _bloc.onAddBluetooth(device: device);
-                    },
-                  ));
-              return;
+              return _bloc.checkBluetoothEnable();
             }
             if (state is PrinterDetailStateSavedDefaultDeviceBluetooth) {
               showLoading();
@@ -138,12 +132,20 @@ class _PrinterDetailScreenState extends KayleeState<PrinterDetailScreen> {
             }
 
             if (state is PrinterDetailStateBluetoothEnable) {
-              return hideLoading();
+              hideLoading();
+              return showKayleeDialog(
+                  context: context,
+                  child: BluetoothSelectDeviceDialog(
+                    onSelected: (device) {
+                      _bloc.onAddBluetooth(device: device);
+                    },
+                  ));
             }
 
             if (state is PrinterDetailStateBluetoothNotEnable) {
               hideLoading();
-              return;
+              return context.systemSetting
+                  .showKayleeBluetoothSettingDialog(context: context);
             }
           },
           child: Column(
