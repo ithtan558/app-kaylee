@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
@@ -57,9 +55,7 @@ class _RequestSettingDialogState extends State<RequestSettingDialog> {
             padding: const EdgeInsets.only(
                 right: Dimens.px16, left: Dimens.px16, bottom: Dimens.px16),
             child: KayleeText.normal16W400(
-              Platform.isAndroid
-                  ? Strings.androidStoragePermissionGuide
-                  : Strings.iOsStoragePermissionGuide,
+              widget.guides,
               textAlign: TextAlign.center,
               maxLines: 2,
             ),
