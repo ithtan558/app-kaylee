@@ -20,7 +20,7 @@ class StoredPrinterDeviceItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return KayleeDismissible.iconOnly(
       key: key,
-      onDismissed: (direction) => onRemoveItem?.call,
+      onDismissed: (direction) => onRemoveItem?.call(),
       confirmDismiss: () async {
         final result = await showKayleeAlertDialog(
             context: context,
