@@ -15,6 +15,9 @@ extension KayleeBuildContextExtension on BuildContext {
   RepositoriesModule get repos => this.repository<RepositoriesModule>();
 
   ApplicationConfig get appConfig => this.repository<ApplicationConfig>();
+
+  SystemSettingModule get systemSetting =>
+      this.repository<SystemSettingModule>();
 }
 
 extension DateTimeExtension on DateTime {

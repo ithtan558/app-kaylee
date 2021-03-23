@@ -43,6 +43,9 @@ class KayLeeApplication extends StatefulWidget {
           RepositoryProvider<ApplicationConfig>.value(
             value: appConfig,
           ),
+          RepositoryProvider<SystemSettingModule>.value(
+            value: SystemSettingModule.init(),
+          ),
         ],
         child: MultiBlocProvider(providers: [
           BlocProvider(
