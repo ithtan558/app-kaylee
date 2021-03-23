@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:core_plugin/core_plugin.dart';
 import 'package:kaylee/components/components.dart';
+import 'package:kaylee/components/src/printer/bluetooth_printer_module.dart';
 
 part 'printer_detail_state.dart';
 
@@ -95,4 +96,13 @@ class PrinterDetailBloc extends Cubit<PrinterDetailState> {
         (element) => element.selected,
         orElse: () => null,
       );
+
+  void checkBluetoothEnable() async {
+    emit(PrinterDetailStateBluetoothCheckingEnable());
+    final result = await BluetoothPrinterModule.bluetoothPrint.isOn;
+    if (result)
+      return emit(PrinterDetailStateBluetoothEnable());
+    else
+      return emit(PrinterDetailStateBluetoothNotEnable());
+  }
 }

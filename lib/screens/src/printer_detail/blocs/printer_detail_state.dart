@@ -28,3 +28,9 @@ class PrinterDetailStateSavedDefaultDeviceWifi
 class PrinterDetailStateOnSelectingDevice extends PrinterDetailState {}
 
 class PrinterDetailStateOnNoSelectingDevice extends PrinterDetailState {}
+
+class PrinterDetailStateBluetoothNotEnable extends PrinterDetailState {}
+
+class PrinterDetailStateBluetoothCheckingEnable extends PrinterDetailState {}
+
+class PrinterDetailStateBluetoothEnable extends PrinterDetailState {}
