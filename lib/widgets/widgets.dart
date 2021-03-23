@@ -11,6 +11,7 @@ import 'package:kaylee/widgets/src/hyper_link_text.dart';
 
 export 'src/brand_select_textfield/brand_select_textfield.dart';
 export 'src/category_item.dart';
+export 'src/dialog/request_setting/request_setting_dialog.dart';
 export 'src/filter_button/filter_button.dart';
 export 'src/filter_view/kaylee_filter_list_item.dart';
 export 'src/filter_view/kaylee_filter_view.dart';

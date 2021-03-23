@@ -4,6 +4,7 @@ import 'package:anth_package/anth_package.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/widgets/src/dialog/request_setting/request_setting_dialog.dart';
 import 'package:kaylee/widgets/widgets.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -94,79 +95,34 @@ Future<void> showKayleeGo2SettingDialog({
   @required BuildContext context,
   bool barrierDismissible = true,
 }) {
+  return showKayleeRequestSettingDialog(
+    context: context,
+    barrierDismissible: barrierDismissible,
+    title: Strings.quyenTruyCapHinhAnh,
+    message: Strings.quyenTruyCapHinhAnhContent,
+    guides: Platform.isAndroid
+        ? Strings.androidStoragePermissionGuide
+        : Strings.iOsStoragePermissionGuide,
+    onGoToSetting: openAppSettings,
+  );
+}
+
+Future<void> showKayleeRequestSettingDialog({
+  @required BuildContext context,
+  bool barrierDismissible = true,
+  String title,
+  String message,
+  String guides,
+  VoidCallback onGoToSetting,
+}) {
   return showKayleeDialog(
       context: context,
       barrierDismissible: barrierDismissible,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(
-              right: Dimens.px16,
-              left: Dimens.px16,
-              bottom: Dimens.px16,
-              top: Dimens.px24,
-            ),
-            child: KayleeText.normal18W700(
-              Strings.quyenTruyCapHinhAnh,
-              textAlign: TextAlign.center,
-              maxLines: 1,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-                right: Dimens.px16, left: Dimens.px16, bottom: Dimens.px16),
-            child: KayleeText.normal16W400(
-              Strings.quyenTruyCapHinhAnhContent,
-              textAlign: TextAlign.center,
-              maxLines: 2,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-                right: Dimens.px16, left: Dimens.px16, bottom: Dimens.px16),
-            child: KayleeText.normal16W400(
-              Platform.isAndroid
-                  ? Strings.androidStoragePermissionGuide
-                  : Strings.iOsStoragePermissionGuide,
-              textAlign: TextAlign.center,
-              maxLines: 2,
-            ),
-          ),
-          Container(
-            width: double.infinity,
-            height: Dimens.px1,
-            color: ColorsRes.divider,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: Dimens.px16),
-            child: Row(
-              children: [
-                Expanded(
-                  child: KayLeeRoundedButton.button2(
-                    text: Strings.huy,
-                    onPressed: () {
-                      context.pop();
-                    },
-                    margin: const EdgeInsets.only(
-                        right: Dimens.px8, left: Dimens.px16),
-                  ),
-                ),
-                Expanded(
-                  child: KayLeeRoundedButton.normal(
-                    text: Strings.caiDatNgay,
-                    onPressed: () {
-                      context.pop();
-                      openAppSettings();
-                    },
-                    margin: const EdgeInsets.only(
-                        left: Dimens.px8, right: Dimens.px16),
-                  ),
-                )
-              ],
-            ),
-          )
-        ],
+      child: RequestSettingDialog(
+        title: title,
+        message: message,
+        guides: guides,
+        onGoToSetting: onGoToSetting,
       ));
 }
 
