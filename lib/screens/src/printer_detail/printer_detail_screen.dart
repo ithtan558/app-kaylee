@@ -132,6 +132,19 @@ class _PrinterDetailScreenState extends KayleeState<PrinterDetailScreen> {
                   device: _bloc.connectedDevice, context: context);
               return;
             }
+
+            if (state is PrinterDetailStateBluetoothCheckingEnable) {
+              return showLoading();
+            }
+
+            if (state is PrinterDetailStateBluetoothEnable) {
+              return hideLoading();
+            }
+
+            if (state is PrinterDetailStateBluetoothNotEnable) {
+              hideLoading();
+              return;
+            }
           },
           child: Column(
             children: [
@@ -184,6 +197,11 @@ class _PrinterDetailScreenState extends KayleeState<PrinterDetailScreen> {
         ),
       ),
     );
+  }
+
+  void checkBluetoothEnable() async {
+    final result = await BluetoothPrinterModule.bluetoothPrint.isOn;
+    print('[TUNG] ===> checkBluetoothEnable $result');
   }
 
   void tryToConnectPrinterDevice(

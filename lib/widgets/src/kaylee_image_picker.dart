@@ -5,6 +5,7 @@ import 'package:core_plugin/core_plugin.dart' hide ImageSource;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart' as imagePicker;
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -301,7 +302,8 @@ class _ImageGridState extends BaseState<_ImageGrid> {
     } else if (status.isDenied) {
       // print('[TUNG] ===> isDenied');
       if (Platform.isIOS) {
-        await showKayleeGo2SettingDialog(context: context);
+        await context.systemSetting
+            .showKayleeGo2SettingDialog(context: context);
       } else {
         await permission.request();
         handlePermission();
@@ -309,11 +311,11 @@ class _ImageGridState extends BaseState<_ImageGrid> {
     } else if (status.isRestricted) {
       ///only support ios
       // print('[TUNG] ===> isRestricted');
-      await showKayleeGo2SettingDialog(context: context);
+      await context.systemSetting.showKayleeGo2SettingDialog(context: context);
     } else if (status.isPermanentlyDenied) {
       ///only support android
       // print('[TUNG] ===> isPermanentlyDenied');
-      await showKayleeGo2SettingDialog(context: context);
+      await context.systemSetting.showKayleeGo2SettingDialog(context: context);
     } else if (await permission.isUndetermined) {
       // print('[TUNG] ===> isUndetermined');
       await permission.request();
