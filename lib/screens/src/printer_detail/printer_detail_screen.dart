@@ -205,11 +205,6 @@ class _PrinterDetailScreenState extends KayleeState<PrinterDetailScreen> {
     );
   }
 
-  void checkBluetoothEnable() async {
-    final result = await BluetoothPrinterModule.bluetoothPrint.isOn;
-    print('[TUNG] ===> checkBluetoothEnable $result');
-  }
-
   void tryToConnectPrinterDevice(
       {BuildContext context, PrinterDevice device}) async {
     showLoading();
