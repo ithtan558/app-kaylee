@@ -10,7 +10,7 @@ import 'package:kaylee/components/src/printer/bluetooth_printer_module.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/printer_detail/blocs/printer_detail_bloc.dart';
 import 'package:kaylee/screens/src/printer_detail/widgets/bluetooth_select_device_dialog.dart';
-import 'package:kaylee/screens/src/printer_detail/widgets/printer_device_item.dart';
+import 'package:kaylee/screens/src/printer_detail/widgets/stored_printer_device_item.dart';
 import 'package:kaylee/screens/src/printer_detail/widgets/wifi_printer_device_input_dialog.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
@@ -157,12 +157,16 @@ class _PrinterDetailScreenState extends KayleeState<PrinterDetailScreen> {
                       state is PrinterDetailStateInitial)
                     return KayleeLoadingIndicator();
                   return KayleeListView(
+                    padding: const EdgeInsets.symmetric(vertical: Dimens.px16),
                     itemBuilder: (context, index) {
                       final device = _bloc.devices.elementAt(index);
-                      return PrinterDeviceItem(
+                      return StoredPrinterDeviceItem(
                         device: device,
                         onTap: () {
                           _bloc.select(device: device);
+                        },
+                        onRemoveItem: () {
+                          _bloc.removeDevice(device: device);
                         },
                       );
                     },
