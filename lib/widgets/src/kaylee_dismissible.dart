@@ -6,6 +6,8 @@ import 'package:kaylee/widgets/widgets.dart';
 
 class KayleeDismissible extends StatelessWidget {
   final Widget child;
+
+  ///called when this widget is completely removed from the listview
   final void Function(DismissDirection direction) onDismissed;
   final AsyncValueGetter<bool> confirmDismiss;
   final Widget secondaryBackground;
