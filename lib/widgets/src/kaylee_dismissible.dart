@@ -1,4 +1,3 @@
-import 'package:anth_package/anth_package.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
@@ -55,10 +54,7 @@ class KayleeDismissible extends StatelessWidget {
         color: Colors.black,
       ),
       confirmDismiss: (direction) async {
-        if (confirmDismiss.isNotNull) {
-          return await confirmDismiss();
-        }
-        return true;
+        return confirmDismiss?.call();
       },
       secondaryBackground: secondaryBackground ??
           Container(
