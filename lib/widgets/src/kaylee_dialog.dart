@@ -1,12 +1,9 @@
-import 'dart:io';
 
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
-import 'package:kaylee/widgets/src/dialog/request_setting/request_setting_dialog.dart';
 import 'package:kaylee/widgets/widgets.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 BuildContext dialogContext;
 
@@ -91,40 +88,6 @@ Future<T> showKayleeBottomSheet<T>(BuildContext context,
       barrierColor: ColorsRes.dialogDimBg);
 }
 
-Future<void> showKayleeGo2SettingDialog({
-  @required BuildContext context,
-  bool barrierDismissible = true,
-}) {
-  return showKayleeRequestSettingDialog(
-    context: context,
-    barrierDismissible: barrierDismissible,
-    title: Strings.quyenTruyCapHinhAnh,
-    message: Strings.quyenTruyCapHinhAnhContent,
-    guides: Platform.isAndroid
-        ? Strings.androidStoragePermissionGuide
-        : Strings.iOsStoragePermissionGuide,
-    onGoToSetting: openAppSettings,
-  );
-}
-
-Future<void> showKayleeRequestSettingDialog({
-  @required BuildContext context,
-  bool barrierDismissible = true,
-  String title,
-  String message,
-  String guides,
-  VoidCallback onGoToSetting,
-}) {
-  return showKayleeDialog(
-      context: context,
-      barrierDismissible: barrierDismissible,
-      child: RequestSettingDialog(
-        title: title,
-        message: message,
-        guides: guides,
-        onGoToSetting: onGoToSetting,
-      ));
-}
 
 Future<void> showKayleeDialog({
   @required BuildContext context,
