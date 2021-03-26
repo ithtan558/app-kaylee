@@ -15,7 +15,8 @@ mixin IosBluetoothPrinterMixin on BluetoothPrinterMixin {
 
   void _initBluetoothStateListener() {
     _bluetoothSub = BluetoothPrint.instance.state.listen((state) async {
-      print('cur device status: $state');
+      print('[TUNG] ===> _initBluetoothStateListener cur device status: '
+          '${state == BluetoothPrint.CONNECTED ? 'Connected' : state == BluetoothPrint.DISCONNECTED ? 'Disconnected' : state}');
       switch (state) {
         case BluetoothPrint.CONNECTED:
           if (!BluetoothPrinterModule.connected) {
@@ -71,8 +72,7 @@ mixin IosBluetoothPrinterMixin on BluetoothPrinterMixin {
     emit(PrinterDetailStateRequestingConnectBluetooth());
     print('[TUNG] ===> requestConnectingBluetoothDevice start');
     try {
-      final result = await BluetoothPrint.instance
-          .connect(BluetoothDevice.fromJson(defaultDevice.toJson()));
+      final result = await connect();
       print('[TUNG] ===> requestConnectingBluetoothDevice result $result');
     } catch (e) {}
     _startRequestConnectingTimeOut();
@@ -142,7 +142,7 @@ mixin IosBluetoothPrinterMixin on BluetoothPrinterMixin {
 
   void requestDisconnectingBluetoothDevice() async {
     emit(PrinterDetailStateRequestingDisconnectBluetooth());
-    final result = await BluetoothPrint.instance.disconnect();
+    final result = await connect();
     print('[TUNG] ===> requestDisconnectingBluetoothDevice result $result');
     _startRequestDisconnectingTimeOut();
   }
