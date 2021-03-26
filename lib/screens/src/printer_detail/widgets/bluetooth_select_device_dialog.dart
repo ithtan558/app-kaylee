@@ -1,4 +1,5 @@
 import 'package:anth_package/anth_package.dart';
+import 'package:bluetooth_print/bluetooth_print.dart';
 import 'package:bluetooth_print/bluetooth_print_model.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
@@ -29,6 +30,12 @@ class _BluetoothSelectDeviceDialogState
   void initState() {
     super.initState();
     BluetoothPrinterModule.findDevices();
+  }
+
+  @override
+  void dispose() {
+    BluetoothPrint.instance.stopScan();
+    super.dispose();
   }
 
   @override
