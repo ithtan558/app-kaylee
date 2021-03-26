@@ -11,7 +11,7 @@ import 'package:kaylee/screens/src/history_detail/bloc/history_order_detail_bloc
 import 'package:kaylee/screens/src/history_detail/widgets/history_employee/history_employee_list.dart';
 import 'package:kaylee/screens/src/history_detail/widgets/history_order_item.dart';
 import 'package:kaylee/utils/utils.dart';
-import 'package:kaylee/widgets/src/print_bill_dialog.dart';
+import 'package:kaylee/widgets/src/print_bill_dialog/print_bill_dialog.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class HistoryOrderDetailScreen extends StatefulWidget {
