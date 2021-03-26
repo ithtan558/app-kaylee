@@ -13,8 +13,10 @@ mixin BluetoothPrinterMixin on PrinterDetailBase {
           align: LineText.ALIGN_LEFT,
           linefeed: 1)
     ];
-    final result = await BluetoothPrint.instance.printReceipt(Map(), list);
-    print('[TUNG] ===> printConnectionInfo printReceipt result $result');
+    try {
+      final result = await BluetoothPrint.instance.printReceipt(Map(), list);
+      print('[TUNG] ===> printConnectionInfo printReceipt result $result');
+    } catch (e) {}
     emit(PrinterDetailStateFinishPrintingConnectionInfo());
   }
 
@@ -43,8 +45,6 @@ mixin BluetoothPrinterMixin on PrinterDetailBase {
     emit(PrinterDetailStateSavedDefaultDeviceBluetooth());
     startConnectingBluetoothDevice();
   }
-
-  void startConnectingBluetoothDevice();
 
   Future connect() async {
     if (defaultDevice.isNull) return;
