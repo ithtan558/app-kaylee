@@ -136,6 +136,8 @@ abstract class PrinterDetailBase extends Cubit<PrinterDetailState> {
 
   Future startScanBluetoothDevice();
 
+  void startConnectingBluetoothDevice();
+
   void saveDefaultDevice() {
     _updateSharedPref();
     final device = _selectedDevice;
