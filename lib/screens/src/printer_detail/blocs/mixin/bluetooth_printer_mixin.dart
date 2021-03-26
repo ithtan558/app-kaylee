@@ -55,6 +55,7 @@ mixin BluetoothPrinterMixin on PrinterDetailBase {
   @override
   Future<void> close() async {
     _bluetoothSub?.cancel();
+    await BluetoothPrint.instance.stopScan();
     return super.close();
   }
 }
