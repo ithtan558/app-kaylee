@@ -29,7 +29,7 @@ class _BluetoothSelectDeviceDialogState
   @override
   void initState() {
     super.initState();
-    BluetoothPrinterModule.findDevices();
+    BluetoothPrint.instance.startScan(timeout: Duration(seconds: 4));
   }
 
   @override
@@ -58,7 +58,7 @@ class _BluetoothSelectDeviceDialogState
           ),
           Expanded(
             child: StreamBuilder<List<BluetoothDevice>>(
-              stream: BluetoothPrinterModule.bluetoothPrint.scanResults,
+              stream: BluetoothPrint.instance.scanResults,
               builder: (c, snapshot) {
                 if (!snapshot.hasData) {
                   return Center(
