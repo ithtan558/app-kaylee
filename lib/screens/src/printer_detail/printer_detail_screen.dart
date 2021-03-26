@@ -112,7 +112,7 @@ class _PrinterDetailScreenState extends KayleeState<PrinterDetailScreen> {
               }
               if (state is PrinterDetailStateCannotConnectBluetoothDevice) {
                 hideLoading();
-                showKayleeAlertErrorYesDialog(
+                return showKayleeAlertErrorYesDialog(
                   context: context,
                   error: Error(
                       message: Strings.khongTheKetNoiVoiPrinterVuilongRestart),
