@@ -37,7 +37,6 @@ mixin BluetoothPrinterMixin on PrinterDetailBase {
   @override
   void onRemoveBluetoothDevice() async {
     emit(PrinterDetailStateRemovingConnectionBluetoothDevice());
-    final result = await BluetoothPrint.instance.disconnect();
     emit(PrinterDetailStateRemovedConnectionBluetoothDevice());
   }
 
