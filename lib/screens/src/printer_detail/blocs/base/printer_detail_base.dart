@@ -8,17 +8,11 @@ import 'package:kaylee/components/components.dart';
 import 'package:kaylee/components/src/printer/bluetooth_printer_module.dart';
 
 part '../android_printer_detail_bloc.dart';
-
 part '../ios_printer_detail_bloc.dart';
-
 part '../mixin/android/android_bluetooth_printer_mixin.dart';
-
 part '../mixin/bluetooth_printer_mixin.dart';
-
 part '../mixin/ios/ios_bluetooth_printer_mixin.dart';
-
 part '../mixin/wifi_printer_mixin.dart';
-
 part '../state/printer_detail_state.dart';
 
 abstract class PrinterDetailBase extends Cubit<PrinterDetailState> {
@@ -85,7 +79,9 @@ abstract class PrinterDetailBase extends Cubit<PrinterDetailState> {
   }
 
   void removeDevice({PrinterDevice device}) {
-    final isDefault = defaultDevice.deviceAddress == device.deviceAddress;
+    final isDefault = defaultDevice.isNull
+        ? false
+        : defaultDevice.deviceAddress == device.deviceAddress;
     devices.removeWhere((e) {
       return e.isEqual(device);
     });
