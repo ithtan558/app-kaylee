@@ -153,6 +153,16 @@ class _PrinterDetailScreenState extends KayleeState<PrinterDetailScreen> {
               if (state is PrinterDetailStateRemovedConnectionBluetoothDevice) {
                 return hideLoading();
               }
+
+              if (state is PrinterDetailStateLostConnectionBluetoothDevice) {
+                return showKayleeAlertErrorYesDialog(
+                  context: context,
+                  error: Error(
+                      message:
+                          Strings.khongGiuDuocKetNoiVoiPrinterVuilongRestart),
+                  onPressed: popScreen,
+                );
+              }
             },
             child: Column(
               children: [

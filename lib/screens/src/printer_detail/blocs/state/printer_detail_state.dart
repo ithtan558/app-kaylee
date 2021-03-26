@@ -67,3 +67,6 @@ class PrinterDetailStateRemovingConnectionBluetoothDevice
 
 class PrinterDetailStateRemovedConnectionBluetoothDevice
     extends PrinterDetailState {}
+
+class PrinterDetailStateLostConnectionBluetoothDevice
+    extends PrinterDetailState {}

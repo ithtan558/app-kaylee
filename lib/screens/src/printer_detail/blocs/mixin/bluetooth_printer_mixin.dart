@@ -16,7 +16,9 @@ mixin BluetoothPrinterMixin on PrinterDetailBase {
     try {
       final result = await BluetoothPrint.instance.printReceipt(Map(), list);
       print('[TUNG] ===> printConnectionInfo printReceipt result $result');
-    } catch (e) {}
+    } catch (e) {
+      return lostConnectionToBluetoothDevice();
+    }
     emit(PrinterDetailStateFinishPrintingConnectionInfo());
   }
 
@@ -56,5 +58,9 @@ mixin BluetoothPrinterMixin on PrinterDetailBase {
     _bluetoothSub?.cancel();
     await BluetoothPrint.instance.stopScan();
     return super.close();
+  }
+
+  void lostConnectionToBluetoothDevice() {
+    emit(PrinterDetailStateLostConnectionBluetoothDevice());
   }
 }
