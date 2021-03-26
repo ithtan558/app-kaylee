@@ -20,20 +20,12 @@ mixin AndroidBluetoothPrinterMixin on BluetoothPrinterMixin {
           '${state == BluetoothPrint.CONNECTED ? 'Connected' : state == BluetoothPrint.DISCONNECTED ? 'Disconnected' : state}');
       switch (state) {
         case BluetoothPrint.CONNECTED:
-          if (!BluetoothPrinterModule.connected) {
-            BluetoothPrinterModule.connected =
-                !BluetoothPrinterModule.connected;
-          }
           _stopRequestDisconnectingTimeOut();
           _stopRequestConnectingTimeOut();
           print('[TUNG] ===> before connectedBluetoothDevice ${this.state}');
           _stateChanges = state;
           return connectedBluetoothDevice();
         case BluetoothPrint.DISCONNECTED:
-          if (BluetoothPrinterModule.connected) {
-            BluetoothPrinterModule.connected =
-                !BluetoothPrinterModule.connected;
-          }
           if (_stateChanges == BluetoothPrint.CONNECTED) return;
           print(
               '[TUNG] ===> before PrinterDetailStateRequestingDisconnectBluetooth requestConnectingBluetoothDevice ${this.state}');
