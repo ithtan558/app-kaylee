@@ -36,7 +36,9 @@ class BluetoothPrinterModule {
         content: base64Image,
         align: LineText.ALIGN_LEFT,
         linefeed: 1));
-    await bluetoothPrint.printReceipt(Map(), list);
+    try {
+      await bluetoothPrint.printReceipt(Map(), list);
+    } catch (e) {}
     _tempData = null;
     onFinished?.call();
     return;
