@@ -43,4 +43,10 @@ mixin BluetoothPrinterMixin on PrinterDetailBase {
   }
 
   void startConnectingBluetoothDevice();
+
+  Future connect() async {
+    if (defaultDevice.isNull) return;
+    final d = BluetoothDevice.fromJson(defaultDevice.toJson());
+    return BluetoothPrint.instance.connect(d);
+  }
 }
