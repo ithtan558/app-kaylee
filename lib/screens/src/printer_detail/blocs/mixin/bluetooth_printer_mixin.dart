@@ -31,6 +31,13 @@ mixin BluetoothPrinterMixin on PrinterDetailBase {
     return BluetoothPrint.instance.startScan(timeout: Duration(seconds: 1));
   }
 
+  @override
+  void onRemoveBluetoothDevice() async {
+    emit(PrinterDetailStateRemovingConnectionBluetoothDevice());
+    final result = await BluetoothPrint.instance.disconnect();
+    emit(PrinterDetailStateRemovedConnectionBluetoothDevice());
+  }
+
   void savedBluetoothDeviceAsDefault() {
     emit(PrinterDetailStateSavedDefaultDeviceBluetooth());
     startConnectingBluetoothDevice();

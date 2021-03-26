@@ -155,11 +155,4 @@ mixin IosBluetoothPrinterMixin on BluetoothPrinterMixin {
     await _bluetoothSub.cancel();
     return super.close();
   }
-
-  @override
-  void onRemoveBluetoothDevice() async {
-    emit(PrinterDetailStateRemovingConnectionBluetoothDevice());
-    final result = await BluetoothPrint.instance.disconnect();
-    emit(PrinterDetailStateRemovedConnectionBluetoothDevice());
-  }
 }
