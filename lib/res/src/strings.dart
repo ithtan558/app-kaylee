@@ -347,6 +347,8 @@ class Strings {
   static const String banSeXoaPrinter = 'Bạn sẽ xoá máy in này?';
   static const String printerBiXoaMatKhoiThietBi =
       'Máy in này sẽ bị xoá khỏi thiết bị, bạn có chắc thực hiện thao tác này?';
+  static const String khongTheKetNoiVoiPrinterVuilongRestart =
+      'Không thể kết nối tới máy in. Vui lòng khởi động lại app và máy in';
 
   Strings._();
 }

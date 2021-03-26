@@ -21,7 +21,7 @@ class BluetoothPrinterModule {
     return bluetoothPrint.startScan(timeout: Duration(seconds: 4));
   }
 
-  static Future<void> connect({PrinterDevice device}) async {
+  static Future connect({PrinterDevice device}) async {
     if (device.isNull) return;
     final d = BluetoothDevice.fromJson(device.toJson());
     return bluetoothPrint.connect(d);
@@ -36,9 +36,15 @@ class BluetoothPrinterModule {
             align: LineText.ALIGN_LEFT,
             linefeed: 1)
       ];
-      bluetoothPrint.printReceipt(Map(), list);
+      final result = await bluetoothPrint.printReceipt(Map(), list);
+      print('[TUNG] ===> printConnectionInfo printReceipt result $result');
+      await Future.delayed(Duration(milliseconds: 4 * 1000), () {});
+      await bluetoothPrint.disconnect();
+      final connected = await bluetoothPrint.isConnected;
+      print('[TUNG] ===> device status connection $connected');
       return true;
     } else {
+      print('[TUNG] ===> state is disconnected');
       await connect(device: device);
       return false;
     }
@@ -74,6 +80,8 @@ class BluetoothPrinterModule {
       await bluetoothPrint.printReceipt(Map(), list);
       _tempData = null;
       onFinished?.call();
+      await Future.delayed(Duration(seconds: 3), () {});
+      await bluetoothPrint.disconnect();
       return;
     } else {
       onFinished?.call();
