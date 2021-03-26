@@ -121,7 +121,7 @@ class _PrinterDetailScreenState extends KayleeState<PrinterDetailScreen> {
               }
               if (state is PrinterDetailStateSavedDefaultDeviceWifi) {
                 tryToConnectPrinterDevice(
-                    device: _bloc.connectedDevice, context: context);
+                    device: _bloc.defaultDevice, context: context);
                 return;
               }
 

@@ -7,8 +7,7 @@ mixin BluetoothPrinterMixin on PrinterDetailBase {
     final list = [
       LineText(
           type: LineText.TYPE_TEXT,
-          content:
-              'Connected ${connectedDevice?.name}:${connectedDevice?.address}',
+          content: 'Connected ${defaultDevice?.name}:${defaultDevice?.address}',
           align: LineText.ALIGN_LEFT,
           linefeed: 1)
     ];

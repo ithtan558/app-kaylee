@@ -24,7 +24,7 @@ abstract class PrinterDetailBase extends Cubit<PrinterDetailState> {
 
   List<PrinterDevice> devices = [];
 
-  PrinterDevice get connectedDevice => devices.firstWhere(
+  PrinterDevice get _selectedDevice => devices.firstWhere(
         (element) => element.selected,
         orElse: () => null,
       );
@@ -138,11 +138,11 @@ abstract class PrinterDetailBase extends Cubit<PrinterDetailState> {
 
   void saveDefaultDevice() {
     _updateSharedPref();
-    final selectedDevice = connectedDevice;
-    if (selectedDevice.isNotNull) {
-      if (selectedDevice.isBluetooth) {
+    final device = _selectedDevice;
+    if (device.isNotNull) {
+      if (device.isBluetooth) {
         return savedBluetoothDeviceAsDefault();
-      } else if (selectedDevice.isWifi) {
+      } else if (device.isWifi) {
         return savedWifiDeviceAsDefault();
       }
     }

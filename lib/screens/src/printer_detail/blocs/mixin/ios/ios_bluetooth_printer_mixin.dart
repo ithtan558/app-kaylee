@@ -72,7 +72,7 @@ mixin IosBluetoothPrinterMixin on BluetoothPrinterMixin {
     print('[TUNG] ===> requestConnectingBluetoothDevice start');
     try {
       final result = await BluetoothPrint.instance
-          .connect(BluetoothDevice.fromJson(connectedDevice.toJson()));
+          .connect(BluetoothDevice.fromJson(defaultDevice.toJson()));
       print('[TUNG] ===> requestConnectingBluetoothDevice result $result');
     } catch (e) {}
     _startRequestConnectingTimeOut();
@@ -142,8 +142,7 @@ mixin IosBluetoothPrinterMixin on BluetoothPrinterMixin {
 
   void requestDisconnectingBluetoothDevice() async {
     emit(PrinterDetailStateRequestingDisconnectBluetooth());
-    final result =
-        await BluetoothPrinterModule.connect(device: connectedDevice);
+    final result = await BluetoothPrint.instance.disconnect();
     print('[TUNG] ===> requestDisconnectingBluetoothDevice result $result');
     _startRequestDisconnectingTimeOut();
   }
