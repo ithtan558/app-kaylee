@@ -1,6 +1,8 @@
 part of '../base/printer_detail_base.dart';
 
 mixin BluetoothPrinterMixin on PrinterDetailBase {
+  StreamSubscription _bluetoothSub;
+
   @override
   void printBluetoothConnectionInfo() async {
     emit(PrinterDetailStatePrintingConnectionInfo());
@@ -48,5 +50,11 @@ mixin BluetoothPrinterMixin on PrinterDetailBase {
     if (defaultDevice.isNull) return;
     final d = BluetoothDevice.fromJson(defaultDevice.toJson());
     return BluetoothPrint.instance.connect(d);
+  }
+
+  @override
+  Future<void> close() async {
+    _bluetoothSub?.cancel();
+    return super.close();
   }
 }

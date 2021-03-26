@@ -1,8 +1,6 @@
 part of '../../base/printer_detail_base.dart';
 
 mixin AndroidBluetoothPrinterMixin on BluetoothPrinterMixin {
-  StreamSubscription _bluetoothSub;
-
   @override
   void init() {
     _initBluetoothStateListener();
@@ -151,7 +149,6 @@ mixin AndroidBluetoothPrinterMixin on BluetoothPrinterMixin {
   Future<void> close() async {
     _stopRequestConnectingTimeOut();
     _stopRequestDisconnectingTimeOut();
-    await _bluetoothSub.cancel();
     return super.close();
   }
 }
