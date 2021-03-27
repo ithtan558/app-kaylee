@@ -23,6 +23,7 @@ mixin BluetoothPrinterMixin on PrinterDetailBase {
   }
 
   void checkBluetoothEnable() async {
+    print('[TUNG] ===> start checkBluetoothEnable ');
     emit(PrinterDetailStateBluetoothCheckingEnable());
     final result = await BluetoothPrinterModule.bluetoothPrint.isOn;
     print('[TUNG] ===> checkBluetoothEnable ${result}');
