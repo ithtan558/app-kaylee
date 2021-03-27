@@ -29,7 +29,6 @@ class BrandItem extends StatelessWidget {
                   child: CachedNetworkImage(
                     imageUrl: brand.image ?? '',
                     fit: BoxFit.cover,
-                    memCacheHeight: 418,
                   ),
                 ),
               ),
