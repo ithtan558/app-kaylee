@@ -36,11 +36,11 @@ class BluetoothPrinterModule {
         content: base64Image,
         align: LineText.ALIGN_LEFT,
         linefeed: 1));
-    try {
-      await bluetoothPrint.printReceipt(Map(), list);
-    } catch (e) {}
-    _tempData = null;
     onFinished?.call();
+    _tempData = null;
+    try {
+      bluetoothPrint.printReceipt(Map(), list);
+    } catch (e) {}
     return;
   }
 
