@@ -14,8 +14,8 @@ mixin BluetoothPrinterMixin on PrinterDetailBase {
           linefeed: 1)
     ];
     try {
-      final result = await BluetoothPrint.instance.printReceipt(Map(), list);
-      print('[TUNG] ===> printConnectionInfo printReceipt result $result');
+      BluetoothPrint.instance.printReceipt(Map(), list);
+      print('[TUNG] ===> printConnectionInfo printReceipt result ');
     } catch (e) {
       return lostConnectionToBluetoothDevice();
     }
