@@ -13,7 +13,9 @@ class BrandListBloc extends Cubit<LoadMoreModel<Brand>>
     implements KayleeFilterInterface<BrandFilter> {
   BrandService brandService;
 
-  BrandListBloc({this.brandService}) : super(LoadMoreModel());
+  BrandListBloc({this.brandService}) : super(LoadMoreModel()) {
+    page = 1;
+  }
 
   BrandFilter _filter;
 

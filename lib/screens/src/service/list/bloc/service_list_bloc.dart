@@ -21,7 +21,9 @@ class ServiceListBloc extends Cubit<LoadMoreModel<Service>>
   ///phải set [LoadMoreModel.items] = empty vì lúc init screen, phải chờ load category trước,
   ///thì lúc này KayleeGridView phải ẩn loading indicator đi
   ServiceListBloc({@required this.servService})
-      : super(LoadMoreModel(items: []));
+      : super(LoadMoreModel(items: [])) {
+    page = 1;
+  }
 
   @override
   void load() {
