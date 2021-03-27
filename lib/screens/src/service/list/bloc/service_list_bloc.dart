@@ -29,8 +29,8 @@ class ServiceListBloc extends Cubit<LoadMoreModel<Service>>
     RequestHandler(
       request: servService.getServices(
         categoryId: this.cateId,
-        limit: state.limit,
-        page: state.page,
+        limit: limit,
+        page: page,
         keyword: getFilter()?.keyword,
         brandIds: getFilter()?.brand?.id?.toString(),
         startPrice: getFilter()?.startPrice,
