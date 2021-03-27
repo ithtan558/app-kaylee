@@ -52,11 +52,17 @@ mixin IosBluetoothPrinterMixin on BluetoothPrinterMixin {
 
   void connectedBluetoothDevice() async {
     await Future.delayed(Duration(seconds: 2));
-    emit(PrinterDetailStateConnectedBluetooth());
+    if (_startConnectTime.isNotNull) {
+      emit(PrinterDetailStateConnectedBluetooth());
+    }
+    _startConnectTime = null;
   }
+
+  DateTime _startConnectTime;
 
   @override
   void startConnectingBluetoothDevice() async {
+    _startConnectTime = DateTime.now();
     _stateChanges = -1;
     emit(PrinterDetailStateStartingConnectBluetoothDeviceProcess());
     if (await BluetoothPrint.instance.isConnected) {

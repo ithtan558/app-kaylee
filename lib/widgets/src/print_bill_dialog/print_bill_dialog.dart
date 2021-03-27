@@ -56,26 +56,36 @@ class _PrintBillDialogState extends KayleeState<PrintBillDialog> {
         if (state is PrinterDetailStateConnectedBluetooth) {
           hideLoading();
           print('[TUNG] ===> PrinterDetailStateConnectedBluetooth hideLoading');
-          if (!showingBluetoothDialogSuccess) {
-            showingBluetoothDialogSuccess = true;
-            showKayleeAlertMessageYesDialog(
-                context: context,
-                message: Message(content: Strings.ketNoiThanhCong),
-                onPressed: () {
-                  popScreen();
-                  showingBluetoothDialogSuccess = false;
-                  BluetoothPrinterModule.printOrder(
-                    onLoading: () {
-                      // showLoading();
-                    },
-                    context: context,
-                    data: _data,
-                    onFinished: () {
-                      // hideLoading();
-                    },
-                  );
-                });
-          }
+          BluetoothPrinterModule.printOrder(
+            onLoading: () {
+              // showLoading();
+            },
+            context: context,
+            data: _data,
+            onFinished: () {
+              // hideLoading();
+            },
+          );
+          // if (!showingBluetoothDialogSuccess) {
+          //   showingBluetoothDialogSuccess = true;
+          //   showKayleeAlertMessageYesDialog(
+          //       context: context,
+          //       message: Message(content: Strings.ketNoiThanhCong),
+          //       onPressed: () {
+          //         popScreen();
+          //         showingBluetoothDialogSuccess = false;
+          //         BluetoothPrinterModule.printOrder(
+          //           onLoading: () {
+          //             // showLoading();
+          //           },
+          //           context: context,
+          //           data: _data,
+          //           onFinished: () {
+          //             // hideLoading();
+          //           },
+          //         );
+          //       });
+          // }
           return;
         }
         if (state is PrinterDetailStateCannotConnectBluetoothDevice) {
@@ -94,8 +104,7 @@ class _PrintBillDialogState extends KayleeState<PrintBillDialog> {
         }
 
         if (state is PrinterDetailStateBluetoothEnable) {
-          if ((Platform.isIOS && BluetoothPrinterModule.connected) ||
-              await BluetoothPrint.instance.isConnected) {
+          if (Platform.isAndroid && await BluetoothPrint.instance.isConnected) {
             hideLoading();
             BluetoothPrinterModule.printOrder(
               onLoading: () {
