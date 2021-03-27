@@ -20,7 +20,6 @@ class StaffItem extends StatelessWidget {
             imageView: CachedNetworkImage(
               imageUrl: employee?.image ?? '',
               fit: BoxFit.cover,
-              memCacheHeight: 256,
             ),
             infoView: Column(
               crossAxisAlignment: CrossAxisAlignment.center,

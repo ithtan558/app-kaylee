@@ -103,7 +103,6 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
             return CachedNetworkImage(
               imageUrl: state.item?.image ?? '',
               height: Dimens.px30,
-              memCacheHeight: 64,
             );
           },
         ),

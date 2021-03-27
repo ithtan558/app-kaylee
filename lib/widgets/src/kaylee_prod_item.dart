@@ -181,7 +181,6 @@ class KayleeProdItem extends StatelessWidget {
         imageView: CachedNetworkImage(
           imageUrl: data.image,
           fit: BoxFit.cover,
-          memCacheHeight: 256,
         ),
         infoView: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

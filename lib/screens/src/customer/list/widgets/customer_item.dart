@@ -22,8 +22,6 @@ class CustomerItem extends StatelessWidget {
                 imageView: KayleeNetworkImage.normal(
                   customer?.image ?? '',
                   fit: BoxFit.cover,
-                  memCacheHeight: 256,
-                  memCacheWidth: 256,
                 ),
                 infoView: Padding(
                   padding: const EdgeInsets.only(top: Dimens.px16),
