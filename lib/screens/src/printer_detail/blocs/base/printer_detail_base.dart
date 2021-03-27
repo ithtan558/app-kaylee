@@ -45,7 +45,8 @@ abstract class PrinterDetailBase extends Cubit<PrinterDetailState> {
     final map =
         jsonDecode(fromSharePref.isNullOrEmpty ? '[]' : fromSharePref) as List;
     devices = map.map((e) => PrinterDevice.fromJson(e)).toList();
-    await startScanBluetoothDevice();
+    //todo remove vì chưa setup xong bluetooth
+    // await startScanBluetoothDevice();
     emit(PrinterDetailStateLoadedDevices());
   }
 

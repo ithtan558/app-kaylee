@@ -263,13 +263,14 @@ Future showDeviceOption({
             context.pop();
           },
         ),
-        KayleeAlertDialogAction(
-          title: Strings.bluetooth,
-          onPressed: () {
-            onSelectBluetooth?.call();
-            context.pop();
-          },
-        ),
+        //todo remove vì chưa setup xong bluetooth
+        // KayleeAlertDialogAction(
+        //   title: Strings.bluetooth,
+        //   onPressed: () {
+        //     onSelectBluetooth?.call();
+        //     context.pop();
+        //   },
+        // ),
         KayleeAlertDialogAction.huy(
           onPressed: () {
             context.pop();

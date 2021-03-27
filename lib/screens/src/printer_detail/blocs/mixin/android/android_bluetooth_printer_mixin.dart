@@ -3,7 +3,8 @@ part of '../../base/printer_detail_base.dart';
 mixin AndroidBluetoothPrinterMixin on BluetoothPrinterMixin {
   @override
   void init() {
-    _initBluetoothStateListener();
+    //todo remove vì chưa setup xong bluetooth
+    // _initBluetoothStateListener();
   }
 
   ///-1: start
