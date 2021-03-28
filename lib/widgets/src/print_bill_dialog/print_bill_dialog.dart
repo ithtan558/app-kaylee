@@ -3,7 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:anth_package/anth_package.dart';
-import 'package:bluetooth_print/bluetooth_print.dart';
+// import 'package:bluetooth_print/bluetooth_print.dart';
 import 'package:flutter/material.dart' hide TextStyle;
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/components/components.dart';
@@ -104,21 +104,21 @@ class _PrintBillDialogState extends KayleeState<PrintBillDialog> {
         }
 
         if (state is PrinterDetailStateBluetoothEnable) {
-          if (Platform.isAndroid && await BluetoothPrint.instance.isConnected) {
-            hideLoading();
-            BluetoothPrinterModule.printOrder(
-              onLoading: () {
-                // showLoading();
-              },
-              context: context,
-              data: _data,
-              onFinished: () {
-                // hideLoading();
-              },
-            );
-          } else {
-            _bloc.startConnectingBluetoothDevice();
-          }
+          // if (Platform.isAndroid && await BluetoothPrint.instance.isConnected) {
+          //   hideLoading();
+          //   BluetoothPrinterModule.printOrder(
+          //     onLoading: () {
+          //       // showLoading();
+          //     },
+          //     context: context,
+          //     data: _data,
+          //     onFinished: () {
+          //       // hideLoading();
+          //     },
+          //   );
+          // } else {
+          //   _bloc.startConnectingBluetoothDevice();
+          // }
           return;
         }
 

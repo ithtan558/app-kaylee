@@ -6,36 +6,36 @@ mixin BluetoothPrinterMixin on PrinterDetailBase {
   @override
   void printBluetoothConnectionInfo() async {
     emit(PrinterDetailStatePrintingConnectionInfo());
-    final list = [
-      LineText(
-          type: LineText.TYPE_TEXT,
-          content: 'Connected ${defaultDevice?.name}:${defaultDevice?.address}',
-          align: LineText.ALIGN_LEFT,
-          linefeed: 1)
-    ];
-    try {
-      BluetoothPrint.instance.printReceipt(Map(), list);
-      print('[TUNG] ===> printConnectionInfo printReceipt result ');
-    } catch (e) {
-      return lostConnectionToBluetoothDevice();
-    }
+    // final list = [
+    //   LineText(
+    //       type: LineText.TYPE_TEXT,
+    //       content: 'Connected ${defaultDevice?.name}:${defaultDevice?.address}',
+    //       align: LineText.ALIGN_LEFT,
+    //       linefeed: 1)
+    // ];
+    // try {
+    //   BluetoothPrint.instance.printReceipt(Map(), list);
+    //   print('[TUNG] ===> printConnectionInfo printReceipt result ');
+    // } catch (e) {
+    //   return lostConnectionToBluetoothDevice();
+    // }
     emit(PrinterDetailStateFinishPrintingConnectionInfo());
   }
 
   void checkBluetoothEnable() async {
     print('[TUNG] ===> start checkBluetoothEnable ');
     emit(PrinterDetailStateBluetoothCheckingEnable());
-    final result = await BluetoothPrinterModule.bluetoothPrint.isOn;
-    print('[TUNG] ===> checkBluetoothEnable ${result}');
-    if (result)
-      return emit(PrinterDetailStateBluetoothEnable());
-    else
-      return emit(PrinterDetailStateBluetoothNotEnable());
+    // final result = await BluetoothPrinterModule.bluetoothPrint.isOn;
+    // print('[TUNG] ===> checkBluetoothEnable ${result}');
+    // if (result)
+    //   return emit(PrinterDetailStateBluetoothEnable());
+    // else
+    //   return emit(PrinterDetailStateBluetoothNotEnable());
   }
 
   @override
   Future startScanBluetoothDevice() {
-    return BluetoothPrint.instance.startScan(timeout: Duration(seconds: 1));
+    // return BluetoothPrint.instance.startScan(timeout: Duration(seconds: 1));
   }
 
   @override
@@ -51,14 +51,14 @@ mixin BluetoothPrinterMixin on PrinterDetailBase {
 
   Future connect() async {
     if (defaultDevice.isNull) return;
-    final d = BluetoothDevice.fromJson(defaultDevice.toJson());
-    return BluetoothPrint.instance.connect(d);
+    // final d = BluetoothDevice.fromJson(defaultDevice.toJson());
+    // return BluetoothPrint.instance.connect(d);
   }
 
   @override
   Future<void> close() async {
     _bluetoothSub?.cancel();
-    await BluetoothPrint.instance.stopScan();
+    // await BluetoothPrint.instance.stopScan();
     return super.close();
   }
 
