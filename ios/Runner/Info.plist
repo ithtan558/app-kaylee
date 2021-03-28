@@ -32,7 +32,7 @@
 	<key>NSAppleMusicUsageDescription</key>
 	<string>...</string>
 	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>Kaylee yêu cầu sử dụng bluetooth cho việc tìm kiếm và kết nối với máy in của bạn để sử dụng cho chức năng in hoá đơn</string>
+<!--	<string>Kaylee yêu cầu sử dụng bluetooth cho việc tìm kiếm và kết nối với máy in của bạn để sử dụng cho chức năng in hoá đơn</string>-->
 	<key>NSCalendarsUsageDescription</key>
 	<string>...</string>
 	<key>NSCameraUsageDescription</key>
