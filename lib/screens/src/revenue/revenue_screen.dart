@@ -73,11 +73,12 @@ class _RevenueScreenState extends KayleeState<RevenueScreen> {
               );
             }
             if (index == 1) return TotalRevenueWidget();
+            return SizedBox.shrink();
+            //tạm thời ẩn đi, sẽ show sau
             if (index == 2) return EmployeeRevenueWidget();
             return ServiceRevenueWidget();
           },
-          separatorBuilder: (_, index) =>
-              Container(
+          separatorBuilder: (_, index) => Container(
                 height: Dimens.px16,
               ),
           itemCount: 4),
