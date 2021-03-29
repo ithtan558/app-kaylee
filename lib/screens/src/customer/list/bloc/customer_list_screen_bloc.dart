@@ -17,7 +17,9 @@ class CustomerListScreenBloc extends Cubit<LoadMoreModel<Customer>>
   CustomerFilter _filter;
 
   CustomerListScreenBloc({@required this.customerService})
-      : super(LoadMoreModel());
+      : super(LoadMoreModel()) {
+    page = 1;
+  }
 
   @override
   void load() {

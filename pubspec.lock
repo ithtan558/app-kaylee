@@ -19,11 +19,11 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "0.2.0"
-      resolved-ref: c0b0774d8022a93469b7fa45328c7d09f7369298
+      ref: "0.2.1"
+      resolved-ref: "808f28017aa85dd2e3b9c732d1c097af483eb4f9"
       url: "https://tungpham6195@bitbucket.org/anth-freelance/anth_package.git"
     source: git
-    version: "0.2.0"
+    version: "0.2.1"
   app_settings:
     dependency: "direct main"
     description:
@@ -73,15 +73,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "7.1.0"
-  bluetooth_print:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: "tungpham6195/device-not-found-on-android-10"
-      resolved-ref: "3e517998f3d01e45ae1ad0a3ad74ce878767b082"
-      url: "https://github.com/tungpham6195/bluetooth_print.git"
-    source: git
-    version: "2.0.0"
   boolean_selector:
     dependency: transitive
     description:
@@ -226,11 +217,11 @@ packages:
     dependency: transitive
     description:
       path: "."
-      ref: "0.6.5"
-      resolved-ref: d837e6e0f179a207cef91951abd0c2ef7bd43dae
+      ref: "0.6.6"
+      resolved-ref: e7077e5d345b15f4a2f3e3607ebc37a893d40919
       url: "https://github.com/tungpham6195/flutter.core_plugin.git"
     source: git
-    version: "0.6.5"
+    version: "0.6.6"
   coverage:
     dependency: transitive
     description:

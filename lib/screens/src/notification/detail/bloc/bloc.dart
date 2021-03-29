@@ -63,9 +63,7 @@ class NotifyDetailScreenBloc extends Cubit<SingleModel>
   void delete() {
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
-      request: notificationService.delete(id: 1
-        // notification.id
-      ),
+      request: notificationService.delete(id: notification.id),
       onSuccess: ({message, result}) {
         emit(DeleteNotificationState.copy(state
           ..loading = false

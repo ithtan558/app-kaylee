@@ -11,7 +11,8 @@ class NotifyItem extends StatefulWidget {
   final Function() onTap;
   final models.Notification notification;
 
-  NotifyItem({this.index, this.onDeleted, this.onTap, this.notification});
+  NotifyItem({this.index, this.onDeleted, this.onTap, this.notification})
+      : super(key: ValueKey(notification));
 
   @override
   _NotifyItemState createState() => new _NotifyItemState();
@@ -22,19 +23,9 @@ class _NotifyItemState extends BaseState<NotifyItem> {
       widget.notification.status == models.NotificationStatus.read;
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return KayleeDismissible(
-      key: ValueKey(widget.notification),
+      key: widget.key,
       onDismissed: (_) {
         if (widget.onDeleted != null) {
           widget.onDeleted?.call();

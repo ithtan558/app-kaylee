@@ -1,18 +1,23 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:bluetooth_print/bluetooth_print.dart';
-import 'package:bluetooth_print/bluetooth_print_model.dart';
+// import 'package:bluetooth_print/bluetooth_print.dart';
+// import 'package:bluetooth_print/bluetooth_print_model.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:kaylee/components/components.dart';
-import 'package:kaylee/components/src/printer/bluetooth_printer_module.dart';
 
 part '../android_printer_detail_bloc.dart';
+
 part '../ios_printer_detail_bloc.dart';
+
 part '../mixin/android/android_bluetooth_printer_mixin.dart';
+
 part '../mixin/bluetooth_printer_mixin.dart';
+
 part '../mixin/ios/ios_bluetooth_printer_mixin.dart';
+
 part '../mixin/wifi_printer_mixin.dart';
+
 part '../state/printer_detail_state.dart';
 
 abstract class PrinterDetailBase extends Cubit<PrinterDetailState> {
@@ -45,7 +50,8 @@ abstract class PrinterDetailBase extends Cubit<PrinterDetailState> {
     final map =
         jsonDecode(fromSharePref.isNullOrEmpty ? '[]' : fromSharePref) as List;
     devices = map.map((e) => PrinterDevice.fromJson(e)).toList();
-    await startScanBluetoothDevice();
+    //todo remove vì chưa setup xong bluetooth
+    // await startScanBluetoothDevice();
     emit(PrinterDetailStateLoadedDevices());
   }
 
