@@ -104,7 +104,8 @@ class _PrintBillDialogState extends KayleeState<PrintBillDialog> {
         }
 
         if (state is PrinterDetailStateBluetoothEnable) {
-          if (Platform.isAndroid && await BluetoothPrint.instance.isConnected) {
+          if ((Platform.isIOS && BluetoothPrinterModule.connected) ||
+              await BluetoothPrint.instance.isConnected) {
             hideLoading();
             BluetoothPrinterModule.printOrder(
               onLoading: () {
@@ -117,7 +118,10 @@ class _PrintBillDialogState extends KayleeState<PrintBillDialog> {
               },
             );
           } else {
-            _bloc.startConnectingBluetoothDevice();
+            if (!(Platform.isIOS && BluetoothPrinterModule.connected) &&
+                !(await BluetoothPrint.instance.isConnected)) {
+              _bloc.startConnectingBluetoothDevice();
+            }
           }
           return;
         }
