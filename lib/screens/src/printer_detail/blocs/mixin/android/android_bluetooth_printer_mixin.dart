@@ -78,13 +78,25 @@ mixin AndroidBluetoothPrinterMixin on BluetoothPrinterMixin {
     _requestConnectingTimeOut =
         Timer.periodic(Duration(seconds: 1), (timer) async {
       print('[TUNG] ===> _requestConnectingTimeOut ${timer.tick}');
-      if (timer.tick == 6) {
-        if (state is! PrinterDetailStateConnectedBluetooth &&
-            state is! PrinterDetailStatePrintingConnectionInfo &&
-            state is! PrinterDetailStateFinishPrintingConnectionInfo) {
+      final readyForCheckingConnection =
+          state is! PrinterDetailStateConnectedBluetooth &&
+              state is! PrinterDetailStatePrintingConnectionInfo &&
+              state is! PrinterDetailStateFinishPrintingConnectionInfo;
+      if (timer.tick == 3) {
+        if (readyForCheckingConnection) {
           if (await BluetoothPrint.instance.isConnected) {
             print(
-                '[TUNG] ===> _requestConnectingTimeOut connectedBluetoothDevice');
+                '[TUNG] ===> _requestConnectingTimeOut connectedBluetoothDevice for first time');
+            return connectedBluetoothDevice();
+          }
+        }
+        return;
+      }
+      if (timer.tick == 6) {
+        if (readyForCheckingConnection) {
+          if (await BluetoothPrint.instance.isConnected) {
+            print(
+                '[TUNG] ===> _requestConnectingTimeOut connectedBluetoothDevice second time');
             return connectedBluetoothDevice();
           }
           print(
