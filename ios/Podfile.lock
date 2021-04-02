@@ -1,6 +1,8 @@
 PODS:
   - "app_settings (3.0.0+1)":
     - Flutter
+  - bluetooth_print (0.0.1):
+    - Flutter
   - charset_converter (0.0.1):
     - Flutter
   - Firebase/CoreOnly (6.33.0):
@@ -123,6 +125,7 @@ PODS:
 
 DEPENDENCIES:
   - app_settings (from `.symlinks/plugins/app_settings/ios`)
+  - bluetooth_print (from `.symlinks/plugins/bluetooth_print/ios`)
   - charset_converter (from `.symlinks/plugins/charset_converter/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
@@ -164,6 +167,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   app_settings:
     :path: ".symlinks/plugins/app_settings/ios"
+  bluetooth_print:
+    :path: ".symlinks/plugins/bluetooth_print/ios"
   charset_converter:
     :path: ".symlinks/plugins/charset_converter/ios"
   firebase_core:
@@ -207,6 +212,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   app_settings: d103828c9f5d515c4df9ee754dabd443f7cedcf3
+  bluetooth_print: da8f47e8881a0b1f0fd8d73cd6fa84c9bd41ac28
   charset_converter: 215c7b04932ec2b9ba43be96a9bc34afed3e5322
   Firebase: 8db6f2d1b2c5e2984efba4949a145875a8f65fe5
   firebase_core: 5d6a02f3d85acd5f8321c2d6d62877626a670659
