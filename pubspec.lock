@@ -73,6 +73,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "7.1.0"
+  bluetooth_print:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: "tungpham6195/device-not-found-on-android-10"
+      resolved-ref: "3e517998f3d01e45ae1ad0a3ad74ce878767b082"
+      url: "https://github.com/tungpham6195/bluetooth_print.git"
+    source: git
+    version: "2.0.0"
   boolean_selector:
     dependency: transitive
     description:
