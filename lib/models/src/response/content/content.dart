@@ -8,6 +8,7 @@ class Content {
   static const POLICY_HASHTAG = 'dieu-kien-va-dieu-khoan';
   static const CONTACT_US_HASHTAG = 'lien-he-voi-chung-toi';
   static const USER_GUIDE_HASHTAG = 'huong-dan-su-dung';
+  static const EXPIRATION_HASHTAG = 'gia-han-su-dung';
 
   factory Content.fromJson(Map<String, dynamic> json) =>
       _$ContentFromJson(json);
