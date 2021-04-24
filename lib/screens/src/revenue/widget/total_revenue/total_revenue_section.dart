@@ -3,20 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
-import 'package:kaylee/screens/src/revenue/bloc/bloc.dart';
+import 'package:kaylee/screens/src/revenue/widget/total_revenue/bloc/total_revenue_section_bloc.dart';
 import 'package:kaylee/screens/src/revenue/widget/widget_helper.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
-class TotalRevenueWidget extends StatefulWidget {
-  TotalRevenueWidget();
+class TotalRevenueSection extends StatefulWidget {
+  TotalRevenueSection();
 
   @override
-  _TotalRevenueWidgetState createState() => _TotalRevenueWidgetState();
+  _TotalRevenueSectionState createState() => _TotalRevenueSectionState();
 }
 
-class _TotalRevenueWidgetState extends KayleeState<TotalRevenueWidget>
-    with WidgetHelper<TotalRevenueWidget> {
-  TotalRevenueBloc get _totalRevenueBloc => context.bloc<TotalRevenueBloc>();
+class _TotalRevenueSectionState extends KayleeState<TotalRevenueSection>
+    with WidgetHelper<TotalRevenueSection> {
+  TotalRevenueSectionBloc get _totalRevenueBloc =>
+      context.bloc<TotalRevenueSectionBloc>();
 
   @override
   void initState() {
@@ -53,7 +54,7 @@ class _TotalRevenueWidgetState extends KayleeState<TotalRevenueWidget>
             ),
           ],
         ),
-        child: BlocConsumer<TotalRevenueBloc, SingleModel<Revenue>>(
+        child: BlocConsumer<TotalRevenueSectionBloc, SingleModel<Revenue>>(
           listener: (context, state) {
             showErrorDialog(code: state.code, error: state.error);
           },

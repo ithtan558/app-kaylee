@@ -3,27 +3,27 @@ import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
-import 'package:kaylee/screens/src/revenue/bloc/bloc.dart';
+import 'package:kaylee/screens/src/revenue/widget/employee_revenue/bloc/employee_revenue_section_bloc.dart';
 import 'package:kaylee/screens/src/revenue/widget/revenue_item.dart';
 import 'package:kaylee/screens/src/revenue/widget/widget_helper.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
-class ServiceRevenueWidget extends StatefulWidget {
-  ServiceRevenueWidget();
+class EmployeeRevenueSection extends StatefulWidget {
+  EmployeeRevenueSection();
 
   @override
-  _ServiceRevenueWidgetState createState() => _ServiceRevenueWidgetState();
+  _EmployeeRevenueSectionState createState() => _EmployeeRevenueSectionState();
 }
 
-class _ServiceRevenueWidgetState extends KayleeState<ServiceRevenueWidget>
-    with WidgetHelper<ServiceRevenueWidget> {
-  ServiceRevenueBloc get _serviceRevenueBloc =>
-      context.bloc<ServiceRevenueBloc>();
+class _EmployeeRevenueSectionState extends KayleeState<EmployeeRevenueSection>
+    with WidgetHelper<EmployeeRevenueSection> {
+  EmployeeRevenueSectionBloc get _employeeRevenueBloc =>
+      context.bloc<EmployeeRevenueSectionBloc>();
 
   @override
   void initState() {
     super.initState();
-    _serviceRevenueBloc.loadData(
+    _employeeRevenueBloc.loadData(
       startDate: datePickerController.value.start,
       endDate: datePickerController.value.end,
     );
@@ -38,23 +38,23 @@ class _ServiceRevenueWidgetState extends KayleeState<ServiceRevenueWidget>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             KayleeText.normal16W500(
-              Strings.doanThuTheoDichVu,
+              Strings.doanhThuMoiNhanVien,
             ),
             Padding(
               padding: const EdgeInsets.only(top: Dimens.px4),
               child: KayleeDatePickerText(
-                textSize: Dimens.px12,
                 onSelectRange: (value) {
-                  _serviceRevenueBloc.loadData(
+                  _employeeRevenueBloc.loadData(
                       startDate: value.start, endDate: value.end);
                 },
+                textSize: Dimens.px12,
                 controller: datePickerController,
               ),
             ),
           ],
         ),
-        child:
-            BlocConsumer<ServiceRevenueBloc, SingleModel<List<ServiceRevenue>>>(
+        child: BlocConsumer<EmployeeRevenueSectionBloc,
+            SingleModel<List<EmployeeRevenue>>>(
           listener: (context, state) {
             showErrorDialog(code: state.code, error: state.error);
           },
@@ -67,7 +67,7 @@ class _ServiceRevenueWidgetState extends KayleeState<ServiceRevenueWidget>
                 itemBuilder: (c, index) {
                   final item = state.item.elementAt(index);
                   return RevenueItem(
-                    title: item.name,
+                    title: item.employee.name,
                     price: item.amount,
                   );
                 },

@@ -2,30 +2,32 @@ import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/res/res.dart';
-import 'package:kaylee/screens/src/revenue/bloc/bloc.dart';
 import 'package:kaylee/screens/src/revenue/widget/brand_selection_button.dart';
-import 'package:kaylee/screens/src/revenue/widget/employee_revenue_widget.dart';
+import 'package:kaylee/screens/src/revenue/widget/employee_revenue/bloc/employee_revenue_section_bloc.dart';
+import 'package:kaylee/screens/src/revenue/widget/employee_revenue/employee_revenue_section.dart';
 import 'package:kaylee/screens/src/revenue/widget/product_revenue/bloc/product_revenue_section_bloc.dart';
 import 'package:kaylee/screens/src/revenue/widget/product_revenue/product_revenue_section.dart';
-import 'package:kaylee/screens/src/revenue/widget/service_revenue_widget.dart';
-import 'package:kaylee/screens/src/revenue/widget/total_revenue_widget.dart';
+import 'package:kaylee/screens/src/revenue/widget/service_revenue/bloc/service_revenue_section_bloc.dart';
+import 'package:kaylee/screens/src/revenue/widget/service_revenue/service_revenue_section.dart';
+import 'package:kaylee/screens/src/revenue/widget/total_revenue/bloc/total_revenue_section_bloc.dart';
+import 'package:kaylee/screens/src/revenue/widget/total_revenue/total_revenue_section.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class RevenueScreen extends StatefulWidget {
   static Widget newInstance() => MultiBlocProvider(providers: [
         BlocProvider(
-          create: (context) => TotalRevenueBloc(
+          create: (context) => TotalRevenueSectionBloc(
             reportService: context.network.provideReportService(),
           ),
         ),
         BlocProvider(
-          create: (context) => EmployeeRevenueBloc(
+          create: (context) => EmployeeRevenueSectionBloc(
             reportService: context.network.provideReportService(),
           ),
         ),
         BlocProvider(
-          create: (context) => ServiceRevenueBloc(
+          create: (context) => ServiceRevenueSectionBloc(
             reportService: context.network.provideReportService(),
           ),
         ),
@@ -43,13 +45,17 @@ class RevenueScreen extends StatefulWidget {
 }
 
 class _RevenueScreenState extends KayleeState<RevenueScreen> {
-  TotalRevenueBloc get _totalRevenueBloc => context.bloc<TotalRevenueBloc>();
+  TotalRevenueSectionBloc get _totalRevenueBloc =>
+      context.bloc<TotalRevenueSectionBloc>();
 
-  EmployeeRevenueBloc get _employeeRevenueBloc =>
-      context.bloc<EmployeeRevenueBloc>();
+  EmployeeRevenueSectionBloc get _employeeRevenueBloc =>
+      context.bloc<EmployeeRevenueSectionBloc>();
 
-  ServiceRevenueBloc get _serviceRevenueBloc =>
-      context.bloc<ServiceRevenueBloc>();
+  ServiceRevenueSectionBloc get _serviceRevenueBloc =>
+      context.bloc<ServiceRevenueSectionBloc>();
+
+  ProductRevenueSectionBloc get _productRevenueBloc =>
+      context.bloc<ProductRevenueSectionBloc>();
 
   @override
   void initState() {
@@ -76,12 +82,13 @@ class _RevenueScreenState extends KayleeState<RevenueScreen> {
                   _totalRevenueBloc.loadData(brand: value);
                   _employeeRevenueBloc.loadData(brand: value);
                   _serviceRevenueBloc.loadData(brand: value);
+                  _productRevenueBloc.loadData(brand: value);
                 },
               );
             }
-            if (index == 1) return TotalRevenueWidget();
-            if (index == 2) return EmployeeRevenueWidget();
-            if (index == 3) return ServiceRevenueWidget();
+            if (index == 1) return TotalRevenueSection();
+            if (index == 2) return EmployeeRevenueSection();
+            if (index == 3) return ServiceRevenueSection();
             return ProductRevenueWidget();
           },
           separatorBuilder: (_, index) => Container(
