@@ -311,6 +311,7 @@ class Strings {
   static const String chonTheoNgay = 'Chọn theo ngày';
   static const String doanhThuMoiNhanVien = 'Doanh thu mỗi nhân viên';
   static const String doanThuTheoDichVu = 'Doanh thu theo dịch vụ';
+  static const doanThuTheoSanPham = 'Doanh thu theo sản phẩm';
   static const String In = 'In';
   static const String matHang = 'Mặt hàng';
   static const String camOnQuyKhachHenGapLai = 'Cảm ơn Quý khách. Hẹn gặp lại!';
