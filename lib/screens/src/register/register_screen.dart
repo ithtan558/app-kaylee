@@ -146,7 +146,16 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
                       right: Dimens.px16,
                       bottom: Dimens.px16),
                   child: KayleeTextField.normal(
-                    title: Strings.email,
+                    titleWidget: Text.rich(
+                      TextSpan(text: Strings.email, children: [
+                        TextSpan(
+                            text: ' (${Strings.khongBatBuoc})',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: Dimens.px13)),
+                      ]),
+                      style: TextStyles.normal16W500,
+                    ),
                     hint: Strings.emailHint,
                     controller: emailTController,
                     focusNode: emailFocus,
@@ -175,7 +184,16 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
                     horizontal: Dimens.px16,
                   ),
                   child: KayleeTextField.normal(
-                    title: Strings.maGioiThieu,
+                    titleWidget: Text.rich(
+                      TextSpan(text: Strings.maGioiThieu, children: [
+                        TextSpan(
+                            text: ' (${Strings.khongBatBuoc})',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: Dimens.px13)),
+                      ]),
+                      style: TextStyles.normal16W500,
+                    ),
                     hint: Strings.maGioiThieuHint,
                     controller: codeTController,
                     focusNode: codeFocus,

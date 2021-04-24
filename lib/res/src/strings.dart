@@ -351,6 +351,7 @@ class Strings {
       'Không thể kết nối tới máy in. Vui lòng khởi động lại app và máy in';
   static const String khongGiuDuocKetNoiVoiPrinterVuilongRestart =
       'Máy in của bạn không giữ được kết nối. Vui lòng khởi động lại app và máy in';
+  static const khongBatBuoc = 'Không bắt buộc';
 
   Strings._();
 }

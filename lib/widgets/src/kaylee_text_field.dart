@@ -13,9 +13,11 @@ import 'package:kaylee/widgets/widgets.dart';
 
 class KayleeTextField extends StatelessWidget {
   final String title;
+  final Widget titleWidget;
   final Widget textInput;
 
-  KayleeTextField({Key key, this.title, this.textInput}) : super(key: key);
+  KayleeTextField({Key key, this.title, this.textInput, this.titleWidget})
+      : super(key: key);
 
   factory KayleeTextField.withUnit({
     Key key,
@@ -81,6 +83,7 @@ class KayleeTextField extends StatelessWidget {
   factory KayleeTextField.normal(
           {Key key,
           String title,
+          Widget titleWidget,
           String hint,
           double fieldHeight,
           FocusNode focusNode,
@@ -97,6 +100,7 @@ class KayleeTextField extends StatelessWidget {
       KayleeTextField(
         key: key,
         title: title,
+        titleWidget: titleWidget,
         textInput: NormalInputField(
             textInputAction: textInputAction,
             focusNode: focusNode,
@@ -282,10 +286,10 @@ class KayleeTextField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (!title.isNullOrEmpty)
+        if (!title.isNullOrEmpty || titleWidget.isNotNull)
           Container(
             margin: EdgeInsets.only(bottom: Dimens.px8),
-            child: KayleeText.normal16W500(title),
+            child: titleWidget ?? KayleeText.normal16W500(title),
           ),
         if (textInput.isNotNull) textInput,
       ],
