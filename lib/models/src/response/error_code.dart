@@ -21,4 +21,6 @@ class ErrorCode {
   static const int TIME_CODE = 100020;
   static const int PRICE_CODE = 100021;
   static const int EMAIL_CODE = 100022;
+  static const int EXPIRATION_CODE = 100031;
+  static const int EXPIRE_WARNING_CODE = 100031;
 }
