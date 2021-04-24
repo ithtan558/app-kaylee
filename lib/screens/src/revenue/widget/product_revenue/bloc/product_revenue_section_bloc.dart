@@ -1,6 +1,6 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:kaylee/models/models.dart';
-import 'package:kaylee/screens/src/revenue/bloc/bloc.dart';
+import 'package:kaylee/screens/src/revenue/widget/report_bloc_helper.dart';
 import 'package:kaylee/services/services.dart';
 
 class ProductRevenueSectionBloc extends Cubit<SingleModel<List<ServiceRevenue>>>
