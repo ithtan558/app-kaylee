@@ -5,6 +5,8 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/revenue/bloc/bloc.dart';
 import 'package:kaylee/screens/src/revenue/widget/brand_selection_button.dart';
 import 'package:kaylee/screens/src/revenue/widget/employee_revenue_widget.dart';
+import 'package:kaylee/screens/src/revenue/widget/product_revenue/bloc/product_revenue_section_bloc.dart';
+import 'package:kaylee/screens/src/revenue/widget/product_revenue/product_revenue_section.dart';
 import 'package:kaylee/screens/src/revenue/widget/service_revenue_widget.dart';
 import 'package:kaylee/screens/src/revenue/widget/total_revenue_widget.dart';
 import 'package:kaylee/utils/utils.dart';
@@ -24,6 +26,11 @@ class RevenueScreen extends StatefulWidget {
         ),
         BlocProvider(
           create: (context) => ServiceRevenueBloc(
+            reportService: context.network.provideReportService(),
+          ),
+        ),
+        BlocProvider(
+          create: (context) => ProductRevenueSectionBloc(
             reportService: context.network.provideReportService(),
           ),
         ),
@@ -73,15 +80,14 @@ class _RevenueScreenState extends KayleeState<RevenueScreen> {
               );
             }
             if (index == 1) return TotalRevenueWidget();
-            return SizedBox.shrink();
-            //tạm thời ẩn đi, sẽ show sau
             if (index == 2) return EmployeeRevenueWidget();
-            return ServiceRevenueWidget();
+            if (index == 3) return ServiceRevenueWidget();
+            return ProductRevenueWidget();
           },
           separatorBuilder: (_, index) => Container(
                 height: Dimens.px16,
               ),
-          itemCount: 4),
+          itemCount: 5),
     );
   }
 }
