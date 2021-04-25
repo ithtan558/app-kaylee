@@ -97,4 +97,33 @@ class _ReportService implements ReportService {
             .toList());
     return value;
   }
+
+  @override
+  Future<ResponseModel<List<ServiceRevenue>>> getTotalByProduct(
+      {startDate, endDate, brandId}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'start_date': startDate,
+      r'end_date': endDate,
+      r'brand_id': brandId
+    };
+    queryParameters.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'report/get-total-by-product-date',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = ResponseModel<List<ServiceRevenue>>.fromJson(
+        _result.data,
+        (json) => (json as List<dynamic>)
+            .map<ServiceRevenue>(
+                (i) => ServiceRevenue.fromJson(i as Map<String, dynamic>))
+            .toList());
+    return value;
+  }
 }
