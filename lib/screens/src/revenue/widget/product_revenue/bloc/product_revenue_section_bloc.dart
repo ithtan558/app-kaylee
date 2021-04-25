@@ -15,7 +15,7 @@ class ProductRevenueSectionBloc extends Cubit<SingleModel<List<ServiceRevenue>>>
     super.loadData(brand: brand, startDate: startDate, endDate: endDate);
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
-      request: reportService.getTotalByService(
+      request: reportService.getTotalByProduct(
           startDate: startDateInString,
           endDate: endDateInString,
           brandId: brand?.id),
