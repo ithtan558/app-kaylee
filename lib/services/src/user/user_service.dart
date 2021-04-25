@@ -46,4 +46,10 @@ abstract class UserService {
     @Part(name: 'wards_id') int wardsId,
     @Part() File image,
   });
+
+  @POST('check-expired')
+  Future<ResponseModel> checkExpire();
+
+  @POST('click-warning')
+  Future<ResponseModel> clickWarning();
 }
