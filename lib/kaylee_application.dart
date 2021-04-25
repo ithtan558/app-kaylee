@@ -89,23 +89,13 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
     super.initState();
 
     Bloc.observer = KayleeBlocObserver(
-      transition: (currentState, nextState) {
-        if (nextState is BaseModel) {
-          if (nextState.code == ErrorType.UNAUTHORIZED) {
-            _appBloc.unauthorized(error: nextState.error);
-          }
-        }
-      },
+      transition: (currentState, nextState) {},
       change: (cubit, change) {
         if (change.nextState is UpdateProfileState) {
           final userInfo = change.nextState.userInfo;
           context.user
               .updateUserInfo(context.user.getUserInfo()..userInfo = userInfo);
           context.bloc<ReloadBloc>().reload(widget: ProfileWidget);
-        } else if (change.nextState is BaseModel) {
-          if (change.nextState.code == ErrorType.UNAUTHORIZED) {
-            _appBloc.unauthorized(error: change.nextState.error);
-          }
         }
       },
     );
@@ -124,6 +114,18 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
         if (responseModel.warning.isNotNull &&
             responseModel.warning.code == ErrorCode.EXPIRE_WARNING_CODE) {
           _appBloc.expirationWarning(error: responseModel.warning);
+        }
+      },
+      onError: (error) {
+        final responseModel =
+            ResponseModel.fromJson(error.response.data, (json) => null);
+        if (error.response.statusCode == HttpStatus.unauthorized) {
+          if (responseModel.error.code.isNotNull &&
+              responseModel.error.code == ErrorCode.EXPIRATION_CODE) {
+            _appBloc.expired(error: responseModel.error);
+          } else {
+            _appBloc.unauthorized(error: responseModel.error);
+          }
         }
       },
     ));

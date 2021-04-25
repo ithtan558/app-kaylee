@@ -23,6 +23,13 @@ class AppBloc extends Cubit {
 
   Stream get expirationWarningStream => _expirationWarningController.stream;
 
+  ///handle expiration
+  bool isShowingExpirationScreen = false;
+
+  final _expirationController = PublishSubject<ExpirationState>();
+
+  Stream get expirationStream => _expirationController.stream;
+
   void loggedIn(LoginResult result) {
     emit(LoggedInState(result: result));
   }
@@ -35,6 +42,10 @@ class AppBloc extends Cubit {
 
   void expirationWarning({Error error}) {
     _expirationWarningController.add(ExpirationWarningState(error: error));
+  }
+
+  void expired({Error error}) {
+    _expirationController.add(ExpirationState(error: error));
   }
 
   void notifyUpdateProfile({UserInfo userInfo}) {
@@ -71,6 +82,7 @@ class AppBloc extends Cubit {
   @override
   Future<void> close() {
     _unauthorizedController.close();
+    _expirationController.close();
     _expirationWarningController.close();
     return super.close();
   }
@@ -96,6 +108,12 @@ class ExpirationWarningState {
   Error error;
 
   ExpirationWarningState({this.error});
+}
+
+class ExpirationState {
+  Error error;
+
+  ExpirationState({this.error});
 }
 
 class CartBloc extends Cubit<CartState> {

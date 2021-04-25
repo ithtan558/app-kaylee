@@ -16,6 +16,7 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
   AppBloc get appBloc => context.bloc<AppBloc>();
   StreamSubscription appBlocSub;
   StreamSubscription expirationWarningSub;
+  StreamSubscription expirationSub;
   StreamSubscription _reloadBlocSub;
 
   @override
@@ -23,6 +24,7 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
     super.initState();
     _listenUnauthorStream();
     _listenExpirationWarningStream();
+    _listenExpirationStream();
     _reloadBlocSub = context.bloc<ReloadBloc>().listen((state) {
       onReloadWidget(state.widget, state.bundle);
     });
@@ -33,6 +35,7 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
     appBlocSub?.cancel();
     _reloadBlocSub?.cancel();
     expirationWarningSub?.cancel();
+    expirationSub?.cancel();
     super.dispose();
   }
 
@@ -150,6 +153,21 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
             appBloc.isShowingExpirationWarningDialog = false;
           },
         );
+      }
+    });
+  }
+
+  void _listenExpirationStream() async {
+    expirationSub = appBloc.expirationStream.listen((state) {
+      if (state is ExpirationState && !appBloc.isShowingExpirationScreen) {
+        appBloc.isShowingExpirationScreen = true;
+        context
+            .push(PageIntent(
+                screen: ExpirationScreen,
+                bundle: Bundle(ExpirationScreenArgument(isExpired: true))))
+            .then((value) {
+          appBloc.isShowingExpirationScreen = false;
+        });
       }
     });
   }
