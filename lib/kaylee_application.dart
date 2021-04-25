@@ -87,7 +87,6 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
   @override
   void initState() {
     super.initState();
-
     Bloc.observer = KayleeBlocObserver(
       change: (cubit, change) {
         if (change.nextState is UpdateProfileState) {
