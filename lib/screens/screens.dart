@@ -8,6 +8,7 @@ export 'src/commission/list/commission_list_screen.dart';
 export 'src/customer/create_new/create_new_customer_screen.dart';
 export 'src/customer/list/customer_list_screen.dart';
 export 'src/edit_profile/edit_profile_screen.dart';
+export 'src/expiration/expiration_screen.dart';
 export 'src/filter/filter_screen.dart';
 export 'src/guide/guide_screen.dart';
 export 'src/history_detail/history_order_detail_screen.dart';

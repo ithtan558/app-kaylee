@@ -88,6 +88,8 @@ mixin KayleeRouting on Routing {
         return CreateNewServCateScreen.newInstance();
       case PrinterDetailScreen:
         return PrinterDetailScreen.newInstance();
+      case ExpirationScreen:
+        return ExpirationScreen.newInstance();
       default:
         return SplashScreen.newInstance();
     }
