@@ -7,6 +7,7 @@ import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/base/reload_bloc.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
+import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
@@ -121,7 +122,6 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
 
   void _listenExpirationWarningStream() async {
     expirationWarningSub = appBloc.expirationWarningStream.listen((state) {
-      print('[TUNG] ===> expirationWarningSub');
       if (state is ExpirationWarningState &&
           !appBloc.isShowingExpirationWarningDialog) {
         if (dialogContext.isNotNull) {
@@ -140,6 +140,7 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
               KayleeAlertDialogAction.dongY(
                 onPressed: () {
                   popScreen();
+                  context.network.provideUserService().clickWarning();
                 },
                 isDefaultAction: true,
               )
