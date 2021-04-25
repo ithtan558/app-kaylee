@@ -13,6 +13,7 @@ import 'package:kaylee/base/kaylee_observer.dart';
 import 'package:kaylee/base/kaylee_routing.dart';
 import 'package:kaylee/base/reload_bloc.dart';
 import 'package:kaylee/components/components.dart';
+import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/home/tabs/account/widgets/profile_widget.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/notification_button/bloc.dart';
@@ -115,6 +116,17 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
         // print('[TUNG] ===> invoke ios notification permission $settings');
       });
     }
+
+    context.network.dio.interceptors.add(InterceptorsWrapper(
+      onResponse: (response) {
+        final responseModel =
+            ResponseModel.fromJson(response.data, (json) => null);
+        if (responseModel.warning.isNotNull &&
+            responseModel.warning.code == ErrorCode.EXPIRE_WARNING_CODE) {
+          _appBloc.expirationWarning(error: responseModel.warning);
+        }
+      },
+    ));
   }
 
   @override

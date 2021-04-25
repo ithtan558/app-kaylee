@@ -16,6 +16,13 @@ class AppBloc extends Cubit {
 
   Stream get unauthorizedStream => _unauthorizedController.stream;
 
+  ///handle warning expiration
+  bool isShowingExpirationWarningDialog = false;
+
+  final _expirationWarningController = PublishSubject<ExpirationWarningState>();
+
+  Stream get expirationWarningStream => _expirationWarningController.stream;
+
   void loggedIn(LoginResult result) {
     emit(LoggedInState(result: result));
   }
@@ -24,6 +31,10 @@ class AppBloc extends Cubit {
 
   void unauthorized({Error error}) {
     _unauthorizedController.add(UnauthorizedState(error: error));
+  }
+
+  void expirationWarning({Error error}) {
+    _expirationWarningController.add(ExpirationWarningState(error: error));
   }
 
   void notifyUpdateProfile({UserInfo userInfo}) {
@@ -60,6 +71,7 @@ class AppBloc extends Cubit {
   @override
   Future<void> close() {
     _unauthorizedController.close();
+    _expirationWarningController.close();
     return super.close();
   }
 }
@@ -78,6 +90,12 @@ class UnauthorizedState {
   Error error;
 
   UnauthorizedState({this.error});
+}
+
+class ExpirationWarningState {
+  Error error;
+
+  ExpirationWarningState({this.error});
 }
 
 class CartBloc extends Cubit<CartState> {

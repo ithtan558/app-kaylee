@@ -11,15 +11,17 @@ import 'package:kaylee/widgets/widgets.dart';
 
 abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
   bool isShowLoading = false;
-  AppBloc appBloc;
+
+  AppBloc get appBloc => context.bloc<AppBloc>();
   StreamSubscription appBlocSub;
+  StreamSubscription expirationWarningSub;
   StreamSubscription _reloadBlocSub;
 
   @override
   void initState() {
     super.initState();
-    appBloc = context.bloc<AppBloc>();
     _listenUnauthorStream();
+    _listenExpirationWarningStream();
     _reloadBlocSub = context.bloc<ReloadBloc>().listen((state) {
       onReloadWidget(state.widget, state.bundle);
     });
@@ -29,6 +31,7 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
   void dispose() {
     appBlocSub?.cancel();
     _reloadBlocSub?.cancel();
+    expirationWarningSub?.cancel();
     super.dispose();
   }
 
@@ -110,6 +113,40 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
           ),
           onDismiss: () {
             appBloc.isShowingLoginDialog = false;
+          },
+        );
+      }
+    });
+  }
+
+  void _listenExpirationWarningStream() async {
+    expirationWarningSub = appBloc.expirationWarningStream.listen((state) {
+      print('[TUNG] ===> expirationWarningSub');
+      if (state is ExpirationWarningState &&
+          !appBloc.isShowingExpirationWarningDialog) {
+        if (dialogContext.isNotNull) {
+          final dialog = ModalRoute.of(dialogContext);
+          if (dialog.isFirst && dialog.isActive) {
+            Navigator.removeRoute(context, ModalRoute.of(dialogContext));
+            dialogContext = null;
+          }
+        }
+        appBloc.isShowingExpirationWarningDialog = true;
+        showKayleeAlertDialog(
+          context: context,
+          view: KayleeAlertDialogView.error(
+            error: state.error,
+            actions: [
+              KayleeAlertDialogAction.dongY(
+                onPressed: () {
+                  popScreen();
+                },
+                isDefaultAction: true,
+              )
+            ],
+          ),
+          onDismiss: () {
+            appBloc.isShowingExpirationWarningDialog = false;
           },
         );
       }
