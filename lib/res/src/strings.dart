@@ -353,6 +353,7 @@ class Strings {
   static const String khongGiuDuocKetNoiVoiPrinterVuilongRestart =
       'Máy in của bạn không giữ được kết nối. Vui lòng khởi động lại app và máy in';
   static const khongBatBuoc = 'Không bắt buộc';
+  static const giaHanSuDung = 'Gia hạn sử dụng';
 
   Strings._();
 }
