@@ -1,19 +1,27 @@
 import 'package:anth_package/anth_package.dart';
 
 class ReloadBloc extends Cubit<ReloadState> {
-  ReloadBloc() : super(ReloadState());
+  ReloadBloc() : super(ReloadOneState());
 
   void reload({Type widget, Bundle bundle}) {
-    emit(ReloadState(
+    emit(ReloadOneState(
       widget: widget,
       bundle: bundle,
     ));
   }
+
+  void forceReloadAllState() {
+    emit(ReloadAllState());
+  }
 }
 
-class ReloadState {
+abstract class ReloadState {}
+
+class ReloadOneState extends ReloadState {
   final Type widget;
   final Bundle bundle;
 
-  ReloadState({this.widget, this.bundle});
+  ReloadOneState({this.widget, this.bundle});
 }
+
+class ReloadAllState extends ReloadState {}

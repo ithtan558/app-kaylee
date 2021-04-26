@@ -26,7 +26,11 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
     _listenExpirationWarningStream();
     _listenExpirationStream();
     _reloadBlocSub = context.bloc<ReloadBloc>().listen((state) {
-      onReloadWidget(state.widget, state.bundle);
+      if (state is ReloadOneState) {
+        onReloadWidget(state.widget, state.bundle);
+      } else if (state is ReloadAllState) {
+        onForceReloadingWidget();
+      }
     });
   }
 
@@ -41,6 +45,8 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
 
   ///ko cần thiết phải gọi super khi override lại ở sub-class
   void onReloadWidget(Type widget, Bundle bundle) {}
+
+  void onForceReloadingWidget() {}
 
   void showLoading({bool canDismiss = false, VoidCallback onDismiss}) {
     if (dialogContext.isNull ||
