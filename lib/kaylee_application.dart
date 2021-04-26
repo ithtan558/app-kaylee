@@ -109,6 +109,9 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
       onResponse: (response) {
         final responseModel =
             ResponseModel.fromJson(response.data, (json) => null);
+        if (response.request.path == 'check-expired') {
+          return context.bloc<ReloadBloc>().forceReloadAllState();
+        }
         if (responseModel.warning.isNotNull &&
             responseModel.warning.code == ErrorCode.EXPIRE_WARNING_CODE) {
           _appBloc.expirationWarning(error: responseModel.warning);
