@@ -9,7 +9,7 @@ import 'package:kaylee/widgets/widgets.dart';
 class SupplierItem extends StatelessWidget {
   final Supplier supplier;
 
-  SupplierItem({@required this.supplier});
+  SupplierItem({@required this.supplier}) : super(key: ValueKey(supplier));
 
   final imageRatio = 96 / 30;
 
