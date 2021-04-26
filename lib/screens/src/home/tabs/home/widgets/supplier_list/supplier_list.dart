@@ -1,5 +1,6 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/base/reload_bloc.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/home/tabs/home/bloc/supplier_list_bloc.dart';
@@ -26,7 +27,7 @@ class SupplierList extends StatefulWidget {
   _SupplierListState createState() => _SupplierListState();
 }
 
-class _SupplierListState extends State<SupplierList> {
+class _SupplierListState extends KayleeState<SupplierList> {
   SupplierListBloc get _bloc => context.bloc<SupplierListBloc>();
 
   ReloadBloc get _reloadBloc => context.bloc<ReloadBloc>();
