@@ -1,3 +1,4 @@
+import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/app_bloc.dart';
@@ -66,6 +67,12 @@ class _AccountTabState extends BaseState<AccountTab> {
                   pushScreen(PageIntent(screen: PrinterDetailScreen));
                 }),
             _buildMenuItem(
+                title: Strings.giaHanUngDung,
+                icon: Images.ic_acc_guide,
+                onClick: () {
+                  pushScreen(PageIntent(screen: ExpirationScreen));
+                }),
+            _buildMenuItem(
                 title: Strings.dangXuat,
                 icon: Images.ic_acc_logout,
                 showBtmDivider: false,
@@ -80,12 +87,11 @@ class _AccountTabState extends BaseState<AccountTab> {
     );
   }
 
-  _buildMenuItem(
-      {String title,
-      String icon,
-      bool showEndingIcon = true,
-      bool showBtmDivider = true,
-      Function() onClick}) {
+  _buildMenuItem({String title,
+    String icon,
+    bool showEndingIcon = true,
+    bool showBtmDivider = true,
+    Function() onClick}) {
     return Column(
       children: <Widget>[
         InkWell(

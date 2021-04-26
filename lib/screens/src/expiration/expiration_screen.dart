@@ -13,7 +13,7 @@ import 'package:kaylee/widgets/widgets.dart';
 class ExpirationScreenArgument {
   final bool isExpired;
 
-  ExpirationScreenArgument({this.isExpired});
+  ExpirationScreenArgument({this.isExpired = false});
 }
 
 class ExpirationScreen extends StatefulWidget {
@@ -35,7 +35,8 @@ class _ExpirationScreenState extends KayleeState<ExpirationScreen> {
   StreamSubscription _sub;
 
   ExpirationScreenArgument get argument =>
-      context.getArguments<ExpirationScreenArgument>();
+      context.getArguments<ExpirationScreenArgument>() ??
+      ExpirationScreenArgument();
 
   @override
   void initState() {
