@@ -4,6 +4,7 @@ import 'package:anth_package/anth_package.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
@@ -267,9 +268,7 @@ String _getTitle<T>(dynamic item) {
     final minutes = item.isNotNull && item.inMinutes > 0
         ? item.inMinutes - hour * Duration.minutesPerHour
         : 0;
-    return '${hour > 0 ? '$hour giờ ' : ''}${minutes > 0
-        ? '$minutes phút'
-        : ''}';
+    return '${hour > 0 ? '$hour giờ ' : ''}${minutes > 0 ? '$minutes phút' : ''}';
   } else if (item is DateTime) {
     final formatter = DateFormat('dd/MM/yyyy');
     return formatter.format(item);
@@ -413,7 +412,7 @@ class _PickerView<T> extends StatefulWidget {
   _PickerViewState<T> createState() => _PickerViewState<T>();
 }
 
-class _PickerViewState<T> extends BaseState<_PickerView> {
+class _PickerViewState<T> extends KayleeState<_PickerView> {
   _PickerViewBloc<T> bloc;
   KayleePickerTextFieldModel parentBloc;
   FixedExtentScrollController scrollController;
@@ -437,6 +436,9 @@ class _PickerViewState<T> extends BaseState<_PickerView> {
       employeeService: context.network.provideEmployeeService(),
       useForFilter: widget.useForFilter,
     );
+  }
+
+  void loadData() {
     if (T == City) {
       bloc.loadCity();
     } else if (T == District) {
@@ -458,6 +460,11 @@ class _PickerViewState<T> extends BaseState<_PickerView> {
     } else if (T == ReservationStatus) {
       bloc.loadReservationStatus();
     }
+  }
+
+  @override
+  void onReloadWidget(Type widget, Bundle bundle) {
+    loadData();
   }
 
   @override
@@ -636,8 +643,7 @@ class _PickerViewBloc<T> extends Cubit<SingleModel<List<T>>> {
       onSuccess: ({message, result}) {
         if (useForFilter ?? false) {
           (result as List<ProdCate>)
-              .insert(0, ProdCate()
-            ..name = Strings.tatCa);
+              .insert(0, ProdCate()..name = Strings.tatCa);
         }
 
         emit(SingleModel.copy(state
@@ -662,8 +668,7 @@ class _PickerViewBloc<T> extends Cubit<SingleModel<List<T>>> {
       onSuccess: ({message, result}) {
         if (useForFilter ?? false) {
           (result as List<ServiceCate>)
-              .insert(0, ServiceCate()
-            ..name = Strings.tatCa);
+              .insert(0, ServiceCate()..name = Strings.tatCa);
         }
 
         emit(SingleModel.copy(state
