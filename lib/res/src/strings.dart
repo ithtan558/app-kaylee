@@ -354,6 +354,7 @@ class Strings {
       'Máy in của bạn không giữ được kết nối. Vui lòng khởi động lại app và máy in';
   static const khongBatBuoc = 'Không bắt buộc';
   static const giaHanSuDung = 'Gia hạn sử dụng';
+  static const giaHanUngDung = 'Gia hạn ứng dụng';
 
   Strings._();
 }
