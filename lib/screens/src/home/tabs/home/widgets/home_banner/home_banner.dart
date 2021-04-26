@@ -130,4 +130,9 @@ class _HomeBannerState extends KayleeState<HomeBanner> {
       ),
     );
   }
+
+  @override
+  void onForceReloadingWidget() {
+    _bloc.loadBanners();
+  }
 }

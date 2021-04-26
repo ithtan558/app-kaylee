@@ -53,8 +53,7 @@ class _ServiceRevenueSectionState extends KayleeState<ServiceRevenueSection>
             ),
           ],
         ),
-        child:
-        BlocConsumer<ServiceRevenueSectionBloc,
+        child: BlocConsumer<ServiceRevenueSectionBloc,
             SingleModel<List<ServiceRevenue>>>(
           listener: (context, state) {
             showErrorDialog(code: state.code, error: state.error);
@@ -80,5 +79,10 @@ class _ServiceRevenueSectionState extends KayleeState<ServiceRevenueSection>
                 itemCount: state.item?.length ?? 0);
           },
         ));
+  }
+
+  @override
+  void onForceReloadingWidget() {
+    _serviceRevenueBloc.refresh();
   }
 }

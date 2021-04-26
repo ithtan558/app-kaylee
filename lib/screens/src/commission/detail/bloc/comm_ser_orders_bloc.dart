@@ -1,10 +1,12 @@
 import 'package:anth_package/anth_package.dart';
+import 'package:kaylee/base/kaylee_list_interface.dart';
 import 'package:kaylee/base/loadmore_interface.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/services/services.dart';
 import 'package:kaylee/utils/utils.dart';
 
 class CommSerOrdersBloc extends Cubit<LoadMoreModel<CommissionOrder>>
+    with KayleeListInterfaceMixin
     implements LoadMoreInterface {
   final CommissionService commissionService;
   final DateTime startDate;
@@ -48,6 +50,17 @@ class CommSerOrdersBloc extends Cubit<LoadMoreModel<CommissionOrder>>
   @override
   void loadMore() {
     state.page++;
+    loadOrders();
+  }
+
+  @override
+  void refresh() {
+    super.refresh();
+    if (state.loading) return completeRefresh();
+
+    state
+      ..page = 1
+      ..items = [];
     loadOrders();
   }
 

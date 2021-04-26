@@ -40,6 +40,11 @@ class _ServCateListScreenState extends KayleeState<ServCateListScreen> {
   }
 
   @override
+  void onForceReloadingWidget() {
+    _bloc.refresh();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: KayleeAppBar(

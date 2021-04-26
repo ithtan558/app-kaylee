@@ -4,6 +4,7 @@ import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
@@ -26,7 +27,7 @@ class CommissionListScreen extends StatefulWidget {
   _CommissionListScreenState createState() => new _CommissionListScreenState();
 }
 
-class _CommissionListScreenState extends BaseState<CommissionListScreen> {
+class _CommissionListScreenState extends KayleeState<CommissionListScreen> {
   CommissionListScreenBloc commissionListScreenBloc;
   StreamSubscription commissionBlocSub;
   final dateFilterController = KayleeDateFilterController();
@@ -113,5 +114,10 @@ class _CommissionListScreenState extends BaseState<CommissionListScreen> {
         ],
       ),
     );
+  }
+
+  @override
+  void onForceReloadingWidget() {
+    commissionListScreenBloc.refresh();
   }
 }

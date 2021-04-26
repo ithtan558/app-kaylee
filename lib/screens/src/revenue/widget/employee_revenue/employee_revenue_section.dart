@@ -80,4 +80,9 @@ class _EmployeeRevenueSectionState extends KayleeState<EmployeeRevenueSection>
           },
         ));
   }
+
+  @override
+  void onForceReloadingWidget() {
+    _employeeRevenueBloc.refresh();
+  }
 }

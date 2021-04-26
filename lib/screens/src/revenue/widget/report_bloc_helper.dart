@@ -23,4 +23,8 @@ mixin ReportBlocHelper {
     if (startDate.isNotNull) this._startDate = startDate;
     if (endDate.isNotNull) this._endDate = endDate;
   }
+
+  void refresh() {
+    loadData();
+  }
 }

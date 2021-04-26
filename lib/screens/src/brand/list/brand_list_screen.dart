@@ -96,4 +96,9 @@ class _BrandListScreenState extends KayleeState<BrandListScreen> {
       ),
     );
   }
+
+  @override
+  void onForceReloadingWidget() {
+    brandListBloc.refresh();
+  }
 }

@@ -117,4 +117,9 @@ class _CommProdOrderListState extends KayleeState<CommProdOrderList> {
       ],
     );
   }
+
+  @override
+  void onForceReloadingWidget() {
+    _bloc.refresh();
+  }
 }

@@ -99,4 +99,9 @@ class _SupplierListState extends KayleeState<SupplierList> {
       ),
     );
   }
+
+  @override
+  void onForceReloadingWidget() {
+    _bloc.refresh();
+  }
 }

@@ -61,6 +61,11 @@ class _CommissionDetailScreenState extends KayleeState<CommissionDetailScreen> {
   }
 
   @override
+  void onForceReloadingWidget() {
+    _bloc.loadDetail();
+  }
+
+  @override
   void dispose() {
     _sub.cancel();
     super.dispose();

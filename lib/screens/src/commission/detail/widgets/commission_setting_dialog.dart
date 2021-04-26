@@ -175,4 +175,9 @@ class _CommissionSettingDialogState
       ),
     );
   }
+
+  @override
+  void onForceReloadingWidget() {
+    _bloc.loadSetting();
+  }
 }

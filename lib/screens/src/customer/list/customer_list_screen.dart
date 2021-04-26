@@ -59,6 +59,11 @@ class _CustomerListScreenState extends KayleeState<CustomerListScreen> {
   }
 
   @override
+  void onForceReloadingWidget() {
+    customersBloc.refresh();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: KayleeAppBar(

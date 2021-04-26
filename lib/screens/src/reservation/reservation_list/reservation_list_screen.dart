@@ -43,6 +43,11 @@ class _ReservationListScreenState extends KayleeState<ReservationListScreen> {
   }
 
   @override
+  void onForceReloadingWidget() {
+    _bloc.refresh();
+  }
+
+  @override
   void dispose() {
     super.dispose();
   }
@@ -68,34 +73,34 @@ class _ReservationListScreenState extends KayleeState<ReservationListScreen> {
           ),
           Expanded(
               child: KayleeRefreshIndicator(
-                controller: _bloc,
-                child: KayleeLoadMoreHandler(
-                  controller: _bloc,
-                  child:
+            controller: _bloc,
+            child: KayleeLoadMoreHandler(
+              controller: _bloc,
+              child:
                   BlocBuilder<ReservationListBloc, LoadMoreModel<Reservation>>(
-                    builder: (context, state) {
-                      return KayleeListView(
-                          padding: const EdgeInsets.all(Dimens.px16),
-                          itemBuilder: (context, index) {
-                            final item = state.items.elementAt(index);
-                            return ReservationItem.newInstance(
-                              reservation: item,
-                            );
-                          },
-                          separatorBuilder: (context, index) =>
+                builder: (context, state) {
+                  return KayleeListView(
+                      padding: const EdgeInsets.all(Dimens.px16),
+                      itemBuilder: (context, index) {
+                        final item = state.items.elementAt(index);
+                        return ReservationItem.newInstance(
+                          reservation: item,
+                        );
+                      },
+                      separatorBuilder: (context, index) =>
                           const SizedBox(height: Dimens.px16),
-                          loadingBuilder: (context) {
-                            if (state.ended) return Container();
-                            return Align(
-                              alignment: Alignment.topCenter,
-                              child: KayleeLoadingIndicator(),
-                            );
-                          },
-                          itemCount: state.items?.length);
-                    },
-                  ),
-                ),
-              )),
+                      loadingBuilder: (context) {
+                        if (state.ended) return Container();
+                        return Align(
+                          alignment: Alignment.topCenter,
+                          child: KayleeLoadingIndicator(),
+                        );
+                      },
+                      itemCount: state.items?.length);
+                },
+              ),
+            ),
+          )),
         ],
       ),
       floatingActionButton: KayleeFloatButton(

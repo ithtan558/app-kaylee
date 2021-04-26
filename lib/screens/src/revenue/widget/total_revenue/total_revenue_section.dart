@@ -117,4 +117,9 @@ class _TotalRevenueSectionState extends KayleeState<TotalRevenueSection>
       ),
     );
   }
+
+  @override
+  void onForceReloadingWidget() {
+    _totalRevenueBloc.refresh();
+  }
 }

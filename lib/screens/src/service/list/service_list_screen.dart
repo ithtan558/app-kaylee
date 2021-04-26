@@ -192,4 +192,9 @@ class _ServiceListScreenState extends KayleeState<ServiceListScreen> {
       serviceListBloc.refresh();
     }
   }
+
+  @override
+  void onForceReloadingWidget() {
+    cateBloc.refresh();
+  }
 }

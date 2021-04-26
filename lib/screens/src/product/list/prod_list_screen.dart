@@ -92,6 +92,11 @@ class _ProdListScreenState extends KayleeState<ProdListScreen> {
   }
 
   @override
+  void onForceReloadingWidget() {
+    cateBloc.refresh();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Stack(
       children: [

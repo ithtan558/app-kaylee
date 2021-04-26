@@ -80,4 +80,9 @@ class _ProductRevenueWidgetState extends KayleeState<ProductRevenueWidget>
           },
         ));
   }
+
+  @override
+  void onForceReloadingWidget() {
+    _productRevenueBloc.refresh();
+  }
 }

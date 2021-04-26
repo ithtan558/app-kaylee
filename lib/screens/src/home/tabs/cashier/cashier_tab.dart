@@ -45,6 +45,11 @@ class _CashierTabState extends KayleeState<CashierTab>
   }
 
   @override
+  void onForceReloadingWidget() {
+    _cashierTabBloc.refresh();
+  }
+
+  @override
   Widget build(BuildContext context) {
     super.build(context);
     return KayleeFilterView(

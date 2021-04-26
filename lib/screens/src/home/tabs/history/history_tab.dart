@@ -27,13 +27,12 @@ class HistoryTab extends StatefulWidget {
 
 class _HistoryTabState extends KayleeState<HistoryTab>
     with AutomaticKeepAliveClientMixin {
-  HistoryTabBloc _bloc;
+  HistoryTabBloc get _bloc => context.bloc<HistoryTabBloc>();
   StreamSubscription _sub;
 
   @override
   void initState() {
     super.initState();
-    _bloc = context.bloc<HistoryTabBloc>();
     _sub = _bloc.listen((state) {
       if (state.code.isNotNull && state.code != ErrorType.UNAUTHORIZED) {
         showKayleeAlertErrorYesDialog(
@@ -53,6 +52,11 @@ class _HistoryTabState extends KayleeState<HistoryTab>
     if (widget == HistoryTab) {
       _bloc.refresh();
     }
+  }
+
+  @override
+  void onForceReloadingWidget() {
+    _bloc.refresh();
   }
 
   @override

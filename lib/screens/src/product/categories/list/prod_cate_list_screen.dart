@@ -116,4 +116,9 @@ class _ProdCateListScreenState extends KayleeState<ProdCateListScreen> {
       ),
     );
   }
+
+  @override
+  void onForceReloadingWidget() {
+    _bloc.refresh();
+  }
 }

@@ -114,4 +114,9 @@ class _CommSerOrderListState extends KayleeState<CommSerOrderList> {
       ],
     );
   }
+
+  @override
+  void onForceReloadingWidget() {
+    _bloc.refresh();
+  }
 }
