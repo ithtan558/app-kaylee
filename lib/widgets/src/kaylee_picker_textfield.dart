@@ -436,6 +436,7 @@ class _PickerViewState<T> extends KayleeState<_PickerView> {
       employeeService: context.network.provideEmployeeService(),
       useForFilter: widget.useForFilter,
     );
+    loadData();
   }
 
   void loadData() {
@@ -470,7 +471,7 @@ class _PickerViewState<T> extends KayleeState<_PickerView> {
   @override
   void dispose() {
     bloc.close();
-    scrollController.dispose();
+    scrollController?.dispose();
     super.dispose();
   }
 
