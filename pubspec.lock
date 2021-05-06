@@ -19,11 +19,11 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "0.2.1"
-      resolved-ref: "808f28017aa85dd2e3b9c732d1c097af483eb4f9"
+      ref: "0.2.2"
+      resolved-ref: "03f2fc3b028388863e05dcdf21d209c67182ae48"
       url: "https://tungpham6195@bitbucket.org/anth-freelance/anth_package.git"
     source: git
-    version: "0.2.1"
+    version: "0.2.2"
   app_settings:
     dependency: "direct main"
     description:
