@@ -5,10 +5,10 @@ description: Kaylee application.
 # pub.dev using `pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.9+10009
+version: 2.0.0+20000
 
 environment:
-  sdk: ">=2.10.4 <3.0.0"
+  sdk: ">=2.12.2 <3.0.0"
 
 dependencies:
   flutter_localizations:
@@ -16,41 +16,53 @@ dependencies:
   flutter:
     sdk: flutter
 
-  cupertino_icons: ^1.0.0
-
-  permission_handler: ^5.1.0+2
-  sticky_headers: ^0.1.8+1
-  image_picker: ^0.6.7+22
+  permission_handler: ^7.1.0
+  image_picker: ^0.7.4
   flutter_masked_text: ^0.8.0
-  esc_pos_printer: ^4.0.3
+  #  esc_pos_printer: ^4.0.3
+  esc_pos_printer:
+    git:
+      url: https://github.com/CastawayLabs/esc_pos_printer.git
+      ref: master
   ping_discover_network: ^0.2.0+1
   wifi: ^0.1.5
-  video_player: ^1.0.1
-  chewie: ^0.12.2
-  printing: ^4.1.0
+  video_player: ^2.1.1
+  chewie: ^1.0.0
+  printing: ^5.2.1
   bluetooth_print:
     git:
       url: https://github.com/tungpham6195/bluetooth_print.git
       ref: tungpham6195/device-not-found-on-android-10
-  app_settings: ^4.0.4
+  app_settings: ^4.1.0
   anth_package:
-    #    path: ../anth_package
-    git:
-      url: https://tungpham6195@bitbucket.org/anth-freelance/anth_package.git
-      ref: 0.2.2
+    path: ../anth_package
+#    git:
+#      url: https://tungpham6195@bitbucket.org/anth-freelance/anth_package.git
+#      ref: 0.2.2
 dependency_overrides:
-  rxdart: 0.24.0
+  rxdart: 0.26.0
+  #tạm thời dùng master
+  retrofit:
+    git:
+      url: https://github.com/trevorwang/retrofit.dart.git
+      path: annotation
+      ref: master
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   # json serializable
-  json_serializable: ^3.5.1
+  json_serializable: ^4.1.1
 
   # Tools to write binaries that run builders(In this project, we use it
   # for json_serializable, retrofit)
-  build_runner: ^1.11.1
-  retrofit_generator: ^1.4.1+2
+  build_runner: ^2.0.2
+  #tạm thời dùng master
+  retrofit_generator:
+    git:
+      url: https://github.com/trevorwang/retrofit.dart.git
+      path: generator
+      ref: master
 
 
 # For information on the generic Dart part of this file, see the
