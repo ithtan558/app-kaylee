@@ -194,9 +194,8 @@ class _LoginScreenState extends KayleeState<LoginScreen> {
                             bloc.doLogin(LoginBody(
                               account: _phoneTController.text,
                               password: _passTController.text,
-                              token: await context
-                                  .repository<FirebaseMessaging>()
-                                  .getToken(),
+                              token:
+                                  await FirebaseMessaging.instance.getToken(),
                             ));
                           },
                           margin: EdgeInsets.zero,

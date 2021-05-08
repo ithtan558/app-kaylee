@@ -11,12 +11,12 @@ class LoginBody {
   Map<String, dynamic> toJson() => _$LoginBodyToJson(this);
 
   LoginBody({
-    this.account,
-    this.password,
+    required this.account,
+    required this.password,
     this.token,
   });
 
   String account;
   String password;
-  String token;
+  String? token;
 }

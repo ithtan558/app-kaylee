@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:anth_package/anth_package.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/app_bloc.dart';
@@ -29,8 +30,8 @@ class _SplashScreenState extends BaseState<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    bloc = context.bloc<SplashScreenBloc>();
-    RemoteConfig.instance.then((value) async {
+    bloc = context.read<SplashScreenBloc>();
+    RemoteConfig.instance.fetchAndActivate().then((value) async {
       value.setDefaults(context.appConfig.defaultConfig);
       await value.setConfigSettings(RemoteConfigSettings(
         debugMode: kDebugMode,
