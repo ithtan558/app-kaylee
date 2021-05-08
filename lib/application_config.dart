@@ -1,4 +1,5 @@
 import 'package:anth_package/anth_package.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 
 abstract class ApplicationConfig {
   Map<String, dynamic> get defaultConfig;
@@ -25,7 +26,7 @@ class DevelopmentAppConfig extends _BaseAppConfig {
 }
 
 abstract class _BaseAppConfig implements ApplicationConfig {
-  Map<String, RemoteConfigValue> _config;
+  late Map<String, RemoteConfigValue> _config;
 
   String get _baseUrlKey;
 
@@ -39,7 +40,7 @@ abstract class _BaseAppConfig implements ApplicationConfig {
   @override
   String get baseUrl {
     final value = _config.value(_baseUrlKey)?.asString();
-    return value.isNullOrEmpty ? _defaultBaseUrlValue : value;
+    return value == null || value.isEmpty ? _defaultBaseUrlValue : value;
   }
 
   @override

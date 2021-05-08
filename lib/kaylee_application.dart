@@ -20,7 +20,7 @@ import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/notification
 import 'package:kaylee/utils/utils.dart';
 
 class KayLeeApplication extends StatefulWidget {
-  static Widget newInstance({ApplicationConfig appConfig}) =>
+  static Widget newInstance({required ApplicationConfig appConfig}) =>
       MultiRepositoryProvider(
         providers: [
           RepositoryProvider<NetworkModule>(
@@ -34,9 +34,6 @@ class KayLeeApplication extends StatefulWidget {
           ),
           RepositoryProvider<CartModule>(
             create: (_) => CartModule.init(),
-          ),
-          RepositoryProvider<FirebaseMessaging>(
-            create: (_) => FirebaseMessaging(),
           ),
           RepositoryProvider<FcmModule>(
             create: (_) => FcmModule.init(),
@@ -77,10 +74,7 @@ class KayLeeApplication extends StatefulWidget {
 
 class _KayLeeApplicationState extends BaseState<KayLeeApplication>
     with Routing, KayleeRouting {
-  FirebaseMessaging get firebaseMessaging =>
-      context.repository<FirebaseMessaging>();
-
-  AppBloc get _appBloc => context.bloc<AppBloc>();
+  AppBloc get _appBloc => context.read<AppBloc>();
 
   FcmModule get fcm => context.fcm;
 
@@ -93,39 +87,41 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
           final userInfo = change.nextState.userInfo;
           context.user
               .updateUserInfo(context.user.getUserInfo()..userInfo = userInfo);
-          context.bloc<ReloadBloc>().reload(widget: ProfileWidget);
+          context.read<ReloadBloc>().reload(widget: ProfileWidget);
         }
       },
     );
 
     if (Platform.isIOS) {
-      firebaseMessaging.requestNotificationPermissions();
-      firebaseMessaging.onIosSettingsRegistered.listen((settings) {
-        // print('[TUNG] ===> invoke ios notification permission $settings');
+      FirebaseMessaging.instance.requestPermission().then((settings) {
+        print(
+            '[TUNG] ===> invoke ios notification permission ${settings.authorizationStatus}');
       });
     }
 
     context.network.dio.interceptors.add(InterceptorsWrapper(
-      onResponse: (response) {
+      onResponse: (response, handler) {
         final responseModel =
             ResponseModel.fromJson(response.data, (json) => null);
-        if (response.request.path == 'check-expired') {
-          return context.bloc<ReloadBloc>().forceReloadAllState();
+        if (response.requestOptions.path == 'check-expired') {
+          return context.read<ReloadBloc>().forceReloadAllState();
         }
-        if (responseModel.warning.isNotNull &&
-            responseModel.warning.code == ErrorCode.EXPIRE_WARNING_CODE) {
-          _appBloc.expirationWarning(error: responseModel.warning);
+
+        if (responseModel.warning != null &&
+            responseModel.warning!.code == ErrorCode.EXPIRE_WARNING_CODE) {
+          _appBloc.expirationWarning(error: responseModel.warning!);
         }
       },
-      onError: (error) {
+      onError: (error, handler) {
         final responseModel =
-            ResponseModel.fromJson(error.response.data, (json) => null);
-        if (error.response.statusCode == HttpStatus.unauthorized) {
-          if (responseModel.error.code.isNotNull &&
-              responseModel.error.code == ErrorCode.EXPIRATION_CODE) {
-            _appBloc.expired(error: responseModel.error);
+            ResponseModel.fromJson(error.response?.data, (json) => null);
+        if (error.response != null &&
+            error.response!.statusCode == HttpStatus.unauthorized) {
+          if (responseModel.error?.code != null &&
+              responseModel.error!.code == ErrorCode.EXPIRATION_CODE) {
+            _appBloc.expired(error: responseModel.error!);
           } else {
-            _appBloc.unauthorized(error: responseModel.error);
+            _appBloc.unauthorized(error: responseModel.error!);
           }
         }
       },
@@ -154,11 +150,11 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
           Future(() {
             final oldTopics = fcm.getTopics();
             oldTopics.forEach((campaign) {
-              firebaseMessaging.unsubscribeFromTopic(campaign.key);
+              FirebaseMessaging.instance.unsubscribeFromTopic(campaign.key);
             });
             fcm.overrideTopics(campaigns: state.campaigns);
             fcm.getTopics().forEach((campaign) {
-              firebaseMessaging.subscribeToTopic(campaign.key);
+              FirebaseMessaging.instance.subscribeToTopic(campaign.key);
             });
             return 1;
           });
@@ -170,7 +166,7 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
         builder: (context, child) => MediaQuery(
             data: MediaQuery.of(context)
                 .copyWith(textScaleFactor: 1, boldText: false),
-            child: child),
+            child: child!),
         navigatorObservers: [
           KayleeObserver(),
         ],
@@ -193,7 +189,7 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
           }),
           textTheme: context.theme.textTheme
             ..bodyText2
-                .copyWith(
+                ?.copyWith(
                     fontFamily: Fonts.HelveticaNeue,
                     fontStyle: FontStyle.normal,
                     letterSpacing: 0)
