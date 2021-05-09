@@ -16,7 +16,7 @@ Map<String, dynamic> _$OrderRequestToJson(OrderRequest instance) {
   }
 
   writeNotNull(
-      'cart_items', instance.cartItems?.map((e) => e?.toJson())?.toList());
+      'cart_items', instance.cartItems?.map((e) => e.toJson()).toList());
   writeNotNull('cart_supplier_information', instance.cartSuppInfo?.toJson());
   writeNotNull('supplier_id', _parseSupplierId(instance.supplier));
   writeNotNull('cart_customer', _parseCartCustomer(instance.customer));
@@ -50,10 +50,10 @@ Map<String, dynamic> _$CartSuppInfoToJson(CartSuppInfo instance) {
 
 CartCustomer _$CartCustomerFromJson(Map<String, dynamic> json) {
   return CartCustomer(
-    id: json['id'] as int,
-    name: json['name'] as String,
-    phone: json['phone'] as String,
-    address: json['address'] as String,
+    id: json['id'] as int?,
+    name: json['name'] as String?,
+    phone: json['phone'] as String?,
+    address: json['address'] as String?,
     hometownCity: json['hometown_city_id'] == null
         ? null
         : City.fromJson(json['hometown_city_id'] as Map<String, dynamic>),
@@ -66,7 +66,7 @@ CartCustomer _$CartCustomerFromJson(Map<String, dynamic> json) {
     ward: json['wards_id'] == null
         ? null
         : Ward.fromJson(json['wards_id'] as Map<String, dynamic>),
-    note: json['note'] as String,
+    note: json['note'] as String?,
   );
 }
 
