@@ -13,7 +13,7 @@ abstract class UserModule {
 
   LoginResult getUserInfo();
 
-  void forceGetUserInfo({ValueSetter<LoginResult> callback});
+  void forceGetUserInfo({ValueSetter<LoginResult>? callback});
 
   void updateUserInfo(LoginResult auth);
 
@@ -21,7 +21,7 @@ abstract class UserModule {
 }
 
 class _UserModuleImpl extends UserModule {
-  LoginResult loginResult;
+  late LoginResult loginResult;
 
   _UserModuleImpl._() : super._() {
     forceGetUserInfo();
@@ -46,7 +46,7 @@ class _UserModuleImpl extends UserModule {
   }
 
   @override
-  void forceGetUserInfo({ValueSetter<LoginResult> callback}) {
+  void forceGetUserInfo({ValueSetter<LoginResult>? callback}) {
     final json = SharedRef.getString(_SHARE_REF_AUTHENTICATE);
     loginResult = LoginResult.fromJson(jsonDecode(json ?? '{}'));
     if (callback != null) {
