@@ -7,32 +7,41 @@ part of 'advertise_service.dart';
 // **************************************************************************
 
 class _AdvertiseService implements AdvertiseService {
-  _AdvertiseService(this._dio, {this.baseUrl}) {
-    ArgumentError.checkNotNull(_dio, '_dio');
-  }
+  _AdvertiseService(this._dio, {this.baseUrl});
 
   final Dio _dio;
 
-  String baseUrl;
+  String? baseUrl;
 
   @override
   Future<ResponseModel<List<Banner>>> getAllBanners() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>('ads/all',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ResponseModel<List<Banner>>>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, 'ads/all',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<List<Banner>>.fromJson(
-        _result.data,
+        _result.data!,
         (json) => (json as List<dynamic>)
             .map<Banner>((i) => Banner.fromJson(i as Map<String, dynamic>))
             .toList());
     return value;
+  }
+
+  RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
+    if (T != dynamic &&
+        !(requestOptions.responseType == ResponseType.bytes ||
+            requestOptions.responseType == ResponseType.stream)) {
+      if (T == String) {
+        requestOptions.responseType = ResponseType.plain;
+      } else {
+        requestOptions.responseType = ResponseType.json;
+      }
+    }
+    return requestOptions;
   }
 }

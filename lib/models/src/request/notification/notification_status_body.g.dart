@@ -8,7 +8,9 @@ part of 'notification_status_body.dart';
 
 Map<String, dynamic> _$NotificationStatusBodyToJson(
     NotificationStatusBody instance) {
-  final val = <String, dynamic>{};
+  final val = <String, dynamic>{
+    'id': instance.id,
+  };
 
   void writeNotNull(String key, dynamic value) {
     if (value != null) {
@@ -16,7 +18,6 @@ Map<String, dynamic> _$NotificationStatusBodyToJson(
     }
   }
 
-  writeNotNull('id', instance.id);
   writeNotNull('status', parse2Status(instance.status));
   return val;
 }

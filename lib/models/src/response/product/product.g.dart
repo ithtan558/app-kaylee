@@ -14,18 +14,14 @@ Product _$ProductFromJson(Map<String, dynamic> json) {
     image: json['image'] as String,
     price: json['price'] as int,
     description: json['description'] as String,
-    brands: (json['brands'] as List)
-        ?.map(
-            (e) => e == null ? null : Brand.fromJson(e as Map<String, dynamic>))
-        ?.toList(),
-    category: json['category'] == null
-        ? null
-        : ProdCate.fromJson(json['category'] as Map<String, dynamic>),
+    brands: (json['brands'] as List<dynamic>)
+        .map((e) => Brand.fromJson(e as Map<String, dynamic>))
+        .toList(),
+    category: ProdCate.fromJson(json['category'] as Map<String, dynamic>),
     quantity: json['quantity'] as int,
-    images: (json['images'] as List)
-        ?.map((e) =>
-            e == null ? null : ProductImage.fromJson(e as Map<String, dynamic>))
-        ?.toList(),
+    images: (json['images'] as List<dynamic>)
+        .map((e) => ProductImage.fromJson(e as Map<String, dynamic>))
+        .toList(),
   );
 }
 

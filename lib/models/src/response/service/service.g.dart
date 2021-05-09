@@ -14,13 +14,10 @@ Service _$ServiceFromJson(Map<String, dynamic> json) {
     price: json['price'] as int,
     description: json['description'] as String,
     image: json['image'] as String,
-    brands: (json['brands'] as List)
-        ?.map(
-            (e) => e == null ? null : Brand.fromJson(e as Map<String, dynamic>))
-        ?.toList(),
-    category: json['category'] == null
-        ? null
-        : ServiceCate.fromJson(json['category'] as Map<String, dynamic>),
+    brands: (json['brands'] as List<dynamic>)
+        .map((e) => Brand.fromJson(e as Map<String, dynamic>))
+        .toList(),
+    category: ServiceCate.fromJson(json['category'] as Map<String, dynamic>),
     quantity: json['quantity'] as int,
     code: json['code'] as String,
   );

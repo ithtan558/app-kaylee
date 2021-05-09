@@ -18,9 +18,9 @@ FcmResponse _$FcmResponseFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$FcmResponseToJson(FcmResponse instance) =>
     <String, dynamic>{
-      'notification': instance.notification?.toJson(),
-      'aps': instance.aps?.toJson(),
-      'data': instance.androidData?.toJson(),
+      'notification': instance.notification.toJson(),
+      'aps': instance.aps.toJson(),
+      'data': instance.androidData.toJson(),
       'link': instance.link,
       'click_action': instance.clickAction,
     };
@@ -56,6 +56,7 @@ FcmAps _$FcmApsFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$FcmApsToJson(FcmAps instance) => <String, dynamic>{
-      'alert': instance.alert?.toJson(),
+Map<String, dynamic> _$FcmApsToJson(FcmAps instance) =>
+    <String, dynamic>{
+      'alert': instance.alert.toJson(),
     };

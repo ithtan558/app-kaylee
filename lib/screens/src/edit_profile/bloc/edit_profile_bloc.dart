@@ -6,7 +6,7 @@ class EditProfileBloc extends Cubit<SingleModel<UserInfo>> {
   final UserService userService;
   UserInfo userInfo;
 
-  EditProfileBloc({this.userService, this.userInfo})
+  EditProfileBloc({required this.userService, required this.userInfo})
       : super(SingleModel(item: userInfo));
 
   void loadProfile() {

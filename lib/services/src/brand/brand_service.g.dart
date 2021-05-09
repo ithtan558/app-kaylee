@@ -7,29 +7,25 @@ part of 'brand_service.dart';
 // **************************************************************************
 
 class _BrandService implements BrandService {
-  _BrandService(this._dio, {this.baseUrl}) {
-    ArgumentError.checkNotNull(_dio, '_dio');
-  }
+  _BrandService(this._dio, {this.baseUrl});
 
   final Dio _dio;
 
-  String baseUrl;
+  String? baseUrl;
 
   @override
   Future<ResponseModel<List<Brand>>> getAllBrands() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>('brand/all',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ResponseModel<List<Brand>>>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, 'brand/all',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<List<Brand>>.fromJson(
-        _result.data,
+        _result.data!,
         (json) => (json as List<dynamic>)
             .map<Brand>((i) => Brand.fromJson(i as Map<String, dynamic>))
             .toList());
@@ -38,7 +34,11 @@ class _BrandService implements BrandService {
 
   @override
   Future<ResponseModel<PageData<Brand>>> getBrands(
-      {keyword, page, limit, cityId, districtIds}) async {
+      {required keyword,
+      required page,
+      required limit,
+      required cityId,
+      required districtIds}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'keyword': keyword,
@@ -47,102 +47,74 @@ class _BrandService implements BrandService {
       r'city_id': cityId,
       r'district_ids': districtIds
     };
-    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>('brand',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ResponseModel<PageData<Brand>>>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, 'brand',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<PageData<Brand>>.fromJson(
-      _result.data,
-      (json) => PageData<Brand>.fromJson(
-        json,
-        (json) => Brand.fromJson(json),
-      ),
+      _result.data!,
+      (json) => PageData<Brand>.fromJson(json),
     );
     return value;
   }
 
   @override
-  Future<ResponseModel<Brand>> getBrand({brandId}) async {
+  Future<ResponseModel<Brand>> getBrand({required brandId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>('brand/$brandId',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ResponseModel<Brand>>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, 'brand/$brandId',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<Brand>.fromJson(
-      _result.data,
-      (json) => Brand.fromJson(json),
+      _result.data!,
+      (json) => Brand.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }
 
   @override
   Future<ResponseModel<dynamic>> newBrand(
-      {name,
-      phone,
-      location,
-      cityId,
-      districtId,
-      startTime,
-      endTime,
-      wardsId,
-      image}) async {
+      {required name,
+      required phone,
+      required location,
+      required cityId,
+      required districtId,
+      required startTime,
+      required endTime,
+      required wardsId,
+      required image}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    queryParameters.removeWhere((k, v) => v == null);
     final _data = FormData();
-    if (name != null) {
-      _data.fields.add(MapEntry('name', name));
-    }
-    if (phone != null) {
-      _data.fields.add(MapEntry('phone', phone));
-    }
-    if (location != null) {
-      _data.fields.add(MapEntry('location', location));
-    }
-    if (cityId != null) {
-      _data.fields.add(MapEntry('city_id', cityId.toString()));
-    }
-    if (districtId != null) {
-      _data.fields.add(MapEntry('district_id', districtId.toString()));
-    }
-    if (startTime != null) {
-      _data.fields.add(MapEntry('start_time', startTime));
-    }
-    if (endTime != null) {
-      _data.fields.add(MapEntry('end_time', endTime));
-    }
-    if (wardsId != null) {
-      _data.fields.add(MapEntry('wards_id', wardsId.toString()));
-    }
+    _data.fields.add(MapEntry('name', name));
+    _data.fields.add(MapEntry('phone', phone));
+    _data.fields.add(MapEntry('location', location));
+    _data.fields.add(MapEntry('city_id', cityId.toString()));
+    _data.fields.add(MapEntry('district_id', districtId.toString()));
+    _data.fields.add(MapEntry('start_time', startTime));
+    _data.fields.add(MapEntry('end_time', endTime));
+    _data.fields.add(MapEntry('wards_id', wardsId.toString()));
     if (image != null) {
       _data.files.add(MapEntry(
           'image',
           MultipartFile.fromFileSync(image.path,
               filename: image.path.split(Platform.pathSeparator).last)));
     }
-    final _result = await _dio.request<Map<String, dynamic>>('brand',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'POST',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ResponseModel<dynamic>>(
+            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, 'brand',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<dynamic>.fromJson(
-      _result.data,
+      _result.data!,
       (json) => json as dynamic,
     );
     return value;
@@ -150,88 +122,76 @@ class _BrandService implements BrandService {
 
   @override
   Future<ResponseModel<dynamic>> updateBrand(
-      {name,
-      phone,
-      location,
-      cityId,
-      districtId,
-      startTime,
-      endTime,
-      wardsId,
-      image,
-      id,
-      brandId}) async {
+      {required name,
+      required phone,
+      required location,
+      required cityId,
+      required districtId,
+      required startTime,
+      required endTime,
+      required wardsId,
+      required image,
+      required id,
+      required brandId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    queryParameters.removeWhere((k, v) => v == null);
     final _data = FormData();
-    if (name != null) {
-      _data.fields.add(MapEntry('name', name));
-    }
-    if (phone != null) {
-      _data.fields.add(MapEntry('phone', phone));
-    }
-    if (location != null) {
-      _data.fields.add(MapEntry('location', location));
-    }
-    if (cityId != null) {
-      _data.fields.add(MapEntry('city_id', cityId.toString()));
-    }
-    if (districtId != null) {
-      _data.fields.add(MapEntry('district_id', districtId.toString()));
-    }
-    if (startTime != null) {
-      _data.fields.add(MapEntry('start_time', startTime));
-    }
-    if (endTime != null) {
-      _data.fields.add(MapEntry('end_time', endTime));
-    }
-    if (wardsId != null) {
-      _data.fields.add(MapEntry('wards_id', wardsId.toString()));
-    }
+    _data.fields.add(MapEntry('name', name));
+    _data.fields.add(MapEntry('phone', phone));
+    _data.fields.add(MapEntry('location', location));
+    _data.fields.add(MapEntry('city_id', cityId.toString()));
+    _data.fields.add(MapEntry('district_id', districtId.toString()));
+    _data.fields.add(MapEntry('start_time', startTime));
+    _data.fields.add(MapEntry('end_time', endTime));
+    _data.fields.add(MapEntry('wards_id', wardsId.toString()));
     if (image != null) {
       _data.files.add(MapEntry(
           'image',
           MultipartFile.fromFileSync(image.path,
               filename: image.path.split(Platform.pathSeparator).last)));
     }
-    if (id != null) {
-      _data.fields.add(MapEntry('id', id.toString()));
-    }
-    final _result = await _dio.request<Map<String, dynamic>>('brand/$brandId',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'POST',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
+    _data.fields.add(MapEntry('id', id.toString()));
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ResponseModel<dynamic>>(
+            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, 'brand/$brandId',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<dynamic>.fromJson(
-      _result.data,
+      _result.data!,
       (json) => json as dynamic,
     );
     return value;
   }
 
   @override
-  Future<ResponseModel<dynamic>> deleteBrand({brandId}) async {
+  Future<ResponseModel<dynamic>> deleteBrand({required brandId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>(
-        'brand/delete/$brandId',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'DELETE',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ResponseModel<dynamic>>(Options(
+                method: 'DELETE', headers: <String, dynamic>{}, extra: _extra)
+            .compose(_dio.options, 'brand/delete/$brandId',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<dynamic>.fromJson(
-      _result.data,
+      _result.data!,
       (json) => json as dynamic,
     );
     return value;
+  }
+
+  RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
+    if (T != dynamic &&
+        !(requestOptions.responseType == ResponseType.bytes ||
+            requestOptions.responseType == ResponseType.stream)) {
+      if (T == String) {
+        requestOptions.responseType = ResponseType.plain;
+      } else {
+        requestOptions.responseType = ResponseType.json;
+      }
+    }
+    return requestOptions;
   }
 }

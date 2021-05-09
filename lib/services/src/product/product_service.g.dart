@@ -7,17 +7,21 @@ part of 'product_service.dart';
 // **************************************************************************
 
 class _ProductService implements ProductService {
-  _ProductService(this._dio, {this.baseUrl}) {
-    ArgumentError.checkNotNull(_dio, '_dio');
-  }
+  _ProductService(this._dio, {this.baseUrl});
 
   final Dio _dio;
 
-  String baseUrl;
+  String? baseUrl;
 
   @override
   Future<ResponseModel<PageData<Product>>> getProducts(
-      {supplierId, keyword, sort, categoryId, page, limit, brandIds}) async {
+      {required supplierId,
+      required keyword,
+      required sort,
+      required categoryId,
+      required page,
+      required limit,
+      required brandIds}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'supplier_id': supplierId,
@@ -28,43 +32,34 @@ class _ProductService implements ProductService {
       r'limit': limit,
       r'brand_ids': brandIds
     };
-    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>('product',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ResponseModel<PageData<Product>>>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, 'product',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<PageData<Product>>.fromJson(
-      _result.data,
-      (json) => PageData<Product>.fromJson(
-        json,
-        (json) => Product.fromJson(json),
-      ),
+      _result.data!,
+      (json) => PageData<Product>.fromJson(json),
     );
     return value;
   }
 
   @override
-  Future<ResponseModel<List<ProdCate>>> getCategories({supplierId}) async {
+  Future<ResponseModel<List<ProdCate>>> getCategories(
+      {required supplierId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'supplier_id': supplierId};
-    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>(
-        'product-category/all',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ResponseModel<List<ProdCate>>>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, 'product-category/all',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<List<ProdCate>>.fromJson(
-        _result.data,
+        _result.data!,
         (json) => (json as List<dynamic>)
             .map<ProdCate>((i) => ProdCate.fromJson(i as Map<String, dynamic>))
             .toList());
@@ -73,80 +68,62 @@ class _ProductService implements ProductService {
 
   @override
   Future<ResponseModel<PageData<ProdCate>>> getCategoryList(
-      {page, limit, sort}) async {
+      {required page, required limit, required sort}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'page': page,
       r'limit': limit,
       r'sort': sort
     };
-    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>('product-category',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ResponseModel<PageData<ProdCate>>>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, 'product-category',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<PageData<ProdCate>>.fromJson(
-      _result.data,
-      (json) => PageData<ProdCate>.fromJson(
-        json,
-        (json) => ProdCate.fromJson(json),
-      ),
+      _result.data!,
+      (json) => PageData<ProdCate>.fromJson(json),
     );
     return value;
   }
 
   @override
-  Future<ResponseModel<ProdCate>> getProdCateDetail({cateId}) async {
+  Future<ResponseModel<ProdCate>> getProdCateDetail({required cateId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>(
-        'product-category/$cateId',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ResponseModel<ProdCate>>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, 'product-category/$cateId',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<ProdCate>.fromJson(
-      _result.data,
-      (json) => ProdCate.fromJson(json),
+      _result.data!,
+      (json) => ProdCate.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }
 
   @override
-  Future<ResponseModel<dynamic>> newProdCate({name, code, sequence}) async {
+  Future<ResponseModel<dynamic>> newProdCate(
+      {required name, required code, required sequence}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    queryParameters.removeWhere((k, v) => v == null);
     final _data = FormData();
-    if (name != null) {
-      _data.fields.add(MapEntry('name', name));
-    }
-    if (code != null) {
-      _data.fields.add(MapEntry('code', code));
-    }
-    if (sequence != null) {
-      _data.fields.add(MapEntry('sequence', sequence.toString()));
-    }
-    final _result = await _dio.request<Map<String, dynamic>>('product-category',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'POST',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
+    _data.fields.add(MapEntry('name', name));
+    _data.fields.add(MapEntry('code', code));
+    _data.fields.add(MapEntry('sequence', sequence.toString()));
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ResponseModel<dynamic>>(
+            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, 'product-category',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<dynamic>.fromJson(
-      _result.data,
+      _result.data!,
       (json) => json as dynamic,
     );
     return value;
@@ -154,123 +131,99 @@ class _ProductService implements ProductService {
 
   @override
   Future<ResponseModel<dynamic>> updateProdCate(
-      {name, code, sequence, id, cateId}) async {
+      {required name,
+      required code,
+      required sequence,
+      required id,
+      required cateId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    queryParameters.removeWhere((k, v) => v == null);
     final _data = FormData();
-    if (name != null) {
-      _data.fields.add(MapEntry('name', name));
-    }
-    if (code != null) {
-      _data.fields.add(MapEntry('code', code));
-    }
-    if (sequence != null) {
-      _data.fields.add(MapEntry('sequence', sequence.toString()));
-    }
-    if (id != null) {
-      _data.fields.add(MapEntry('id', id.toString()));
-    }
-    final _result = await _dio.request<Map<String, dynamic>>(
-        'product-category/$cateId',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'POST',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
+    _data.fields.add(MapEntry('name', name));
+    _data.fields.add(MapEntry('code', code));
+    _data.fields.add(MapEntry('sequence', sequence.toString()));
+    _data.fields.add(MapEntry('id', id.toString()));
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ResponseModel<dynamic>>(
+            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, 'product-category/$cateId',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<dynamic>.fromJson(
-      _result.data,
+      _result.data!,
       (json) => json as dynamic,
     );
     return value;
   }
 
   @override
-  Future<ResponseModel<dynamic>> deleteProdCate({cateId}) async {
+  Future<ResponseModel<dynamic>> deleteProdCate({required cateId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>(
-        'product-category/delete/$cateId',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'DELETE',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ResponseModel<dynamic>>(Options(
+                method: 'DELETE', headers: <String, dynamic>{}, extra: _extra)
+            .compose(_dio.options, 'product-category/delete/$cateId',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<dynamic>.fromJson(
-      _result.data,
+      _result.data!,
       (json) => json as dynamic,
     );
     return value;
   }
 
   @override
-  Future<ResponseModel<Product>> getProduct({proId}) async {
+  Future<ResponseModel<Product>> getProduct({required proId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>('product/$proId',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ResponseModel<Product>>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, 'product/$proId',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<Product>.fromJson(
-      _result.data,
-      (json) => Product.fromJson(json),
+      _result.data!,
+      (json) => Product.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }
 
   @override
   Future<ResponseModel<dynamic>> newProduct(
-      {name, description, brandIds, price, image, categoryId, code}) async {
+      {required name,
+      required description,
+      required brandIds,
+      required price,
+      required image,
+      required categoryId,
+      required code}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    queryParameters.removeWhere((k, v) => v == null);
     final _data = FormData();
-    if (name != null) {
-      _data.fields.add(MapEntry('name', name));
-    }
-    if (description != null) {
-      _data.fields.add(MapEntry('description', description));
-    }
-    if (brandIds != null) {
-      _data.fields.add(MapEntry('brand_ids', brandIds));
-    }
-    if (price != null) {
-      _data.fields.add(MapEntry('price', price.toString()));
-    }
+    _data.fields.add(MapEntry('name', name));
+    _data.fields.add(MapEntry('description', description));
+    _data.fields.add(MapEntry('brand_ids', brandIds));
+    _data.fields.add(MapEntry('price', price.toString()));
     if (image != null) {
       _data.files.add(MapEntry(
           'image',
           MultipartFile.fromFileSync(image.path,
               filename: image.path.split(Platform.pathSeparator).last)));
     }
-    if (categoryId != null) {
-      _data.fields.add(MapEntry('category_id', categoryId.toString()));
-    }
-    if (code != null) {
-      _data.fields.add(MapEntry('code', code));
-    }
-    final _result = await _dio.request<Map<String, dynamic>>('product',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'POST',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
+    _data.fields.add(MapEntry('category_id', categoryId.toString()));
+    _data.fields.add(MapEntry('code', code));
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ResponseModel<dynamic>>(
+            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, 'product',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<dynamic>.fromJson(
-      _result.data,
+      _result.data!,
       (json) => json as dynamic,
     );
     return value;
@@ -278,80 +231,72 @@ class _ProductService implements ProductService {
 
   @override
   Future<ResponseModel<dynamic>> updateProduct(
-      {name,
-      description,
-      brandIds,
-      price,
-      image,
-      categoryId,
-      code,
-      id,
-      prodId}) async {
+      {required name,
+      required description,
+      required brandIds,
+      required price,
+      required image,
+      required categoryId,
+      required code,
+      required id,
+      required prodId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    queryParameters.removeWhere((k, v) => v == null);
     final _data = FormData();
-    if (name != null) {
-      _data.fields.add(MapEntry('name', name));
-    }
-    if (description != null) {
-      _data.fields.add(MapEntry('description', description));
-    }
-    if (brandIds != null) {
-      _data.fields.add(MapEntry('brand_ids', brandIds));
-    }
-    if (price != null) {
-      _data.fields.add(MapEntry('price', price.toString()));
-    }
+    _data.fields.add(MapEntry('name', name));
+    _data.fields.add(MapEntry('description', description));
+    _data.fields.add(MapEntry('brand_ids', brandIds));
+    _data.fields.add(MapEntry('price', price.toString()));
     if (image != null) {
       _data.files.add(MapEntry(
           'image',
           MultipartFile.fromFileSync(image.path,
               filename: image.path.split(Platform.pathSeparator).last)));
     }
-    if (categoryId != null) {
-      _data.fields.add(MapEntry('category_id', categoryId.toString()));
-    }
-    if (code != null) {
-      _data.fields.add(MapEntry('code', code));
-    }
-    if (id != null) {
-      _data.fields.add(MapEntry('id', id.toString()));
-    }
-    final _result = await _dio.request<Map<String, dynamic>>('product/$prodId',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'POST',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
+    _data.fields.add(MapEntry('category_id', categoryId.toString()));
+    _data.fields.add(MapEntry('code', code));
+    _data.fields.add(MapEntry('id', id.toString()));
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ResponseModel<dynamic>>(
+            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, 'product/$prodId',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<dynamic>.fromJson(
-      _result.data,
+      _result.data!,
       (json) => json as dynamic,
     );
     return value;
   }
 
   @override
-  Future<ResponseModel<dynamic>> deleteProduct({prodId}) async {
+  Future<ResponseModel<dynamic>> deleteProduct({required prodId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>(
-        'product/delete/$prodId',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'DELETE',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ResponseModel<dynamic>>(Options(
+                method: 'DELETE', headers: <String, dynamic>{}, extra: _extra)
+            .compose(_dio.options, 'product/delete/$prodId',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<dynamic>.fromJson(
-      _result.data,
+      _result.data!,
       (json) => json as dynamic,
     );
     return value;
+  }
+
+  RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
+    if (T != dynamic &&
+        !(requestOptions.responseType == ResponseType.bytes ||
+            requestOptions.responseType == ResponseType.stream)) {
+      if (T == String) {
+        requestOptions.responseType = ResponseType.plain;
+      } else {
+        requestOptions.responseType = ResponseType.json;
+      }
+    }
+    return requestOptions;
   }
 }

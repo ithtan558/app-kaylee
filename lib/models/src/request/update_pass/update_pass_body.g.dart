@@ -6,17 +6,9 @@ part of 'update_pass_body.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Map<String, dynamic> _$UpdatePassBodyToJson(UpdatePassBody instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('user_id', instance.userId);
-  writeNotNull('token_reset_password', instance.tokenResetPassword);
-  writeNotNull('password', instance.password);
-  return val;
-}
+Map<String, dynamic> _$UpdatePassBodyToJson(UpdatePassBody instance) =>
+    <String, dynamic>{
+      'user_id': instance.userId,
+      'token_reset_password': instance.tokenResetPassword,
+      'password': instance.password,
+    };

@@ -18,19 +18,11 @@ UserInfo _$UserInfoFromJson(Map<String, dynamic> json) {
     address: json['address'] as String,
     gender: json['gender'] as int,
     image: json['image'] as String,
-    hometownCity: json['hometown_city'] == null
-        ? null
-        : City.fromJson(json['hometown_city'] as Map<String, dynamic>),
-    city: json['city'] == null
-        ? null
-        : City.fromJson(json['city'] as Map<String, dynamic>),
-    district: json['district'] == null
-        ? null
-        : District.fromJson(json['district'] as Map<String, dynamic>),
-    wards: json['wards'] == null
-        ? null
-        : Ward.fromJson(json['wards'] as Map<String, dynamic>),
-    role: _$enumDecodeNullable(_$UserRoleEnumMap, json['role_id'],
+    hometownCity: City.fromJson(json['hometown_city'] as Map<String, dynamic>),
+    city: City.fromJson(json['city'] as Map<String, dynamic>),
+    district: District.fromJson(json['district'] as Map<String, dynamic>),
+    wards: Ward.fromJson(json['wards'] as Map<String, dynamic>),
+    role: _$enumDecode(_$UserRoleEnumMap, json['role_id'],
         unknownValue: UserRole.EMPLOYEE),
   );
 }
@@ -46,43 +38,37 @@ Map<String, dynamic> _$UserInfoToJson(UserInfo instance) => <String, dynamic>{
       'address': instance.address,
       'gender': instance.gender,
       'image': instance.image,
-      'hometown_city': instance.hometownCity?.toJson(),
-      'city': instance.city?.toJson(),
-      'district': instance.district?.toJson(),
-      'wards': instance.wards?.toJson(),
+      'hometown_city': instance.hometownCity.toJson(),
+      'city': instance.city.toJson(),
+      'district': instance.district.toJson(),
+      'wards': instance.wards.toJson(),
       'role_id': _$UserRoleEnumMap[instance.role],
     };
 
-T _$enumDecode<T>(
-  Map<T, dynamic> enumValues,
-  dynamic source, {
-  T unknownValue,
+K _$enumDecode<K, V>(
+  Map<K, V> enumValues,
+  Object? source, {
+  K? unknownValue,
 }) {
   if (source == null) {
-    throw ArgumentError('A value must be provided. Supported values: '
-        '${enumValues.values.join(', ')}');
+    throw ArgumentError(
+      'A value must be provided. Supported values: '
+      '${enumValues.values.join(', ')}',
+    );
   }
 
-  final value = enumValues.entries
-      .singleWhere((e) => e.value == source, orElse: () => null)
-      ?.key;
-
-  if (value == null && unknownValue == null) {
-    throw ArgumentError('`$source` is not one of the supported values: '
-        '${enumValues.values.join(', ')}');
-  }
-  return value ?? unknownValue;
-}
-
-T _$enumDecodeNullable<T>(
-  Map<T, dynamic> enumValues,
-  dynamic source, {
-  T unknownValue,
-}) {
-  if (source == null) {
-    return null;
-  }
-  return _$enumDecode<T>(enumValues, source, unknownValue: unknownValue);
+  return enumValues.entries.singleWhere(
+    (e) => e.value == source,
+    orElse: () {
+      if (unknownValue == null) {
+        throw ArgumentError(
+          '`$source` is not one of the supported values: '
+          '${enumValues.values.join(', ')}',
+        );
+      }
+      return MapEntry(unknownValue, enumValues.values.first);
+    },
+  ).key;
 }
 
 const _$UserRoleEnumMap = {

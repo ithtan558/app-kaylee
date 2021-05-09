@@ -7,62 +7,64 @@ part of 'supplier_service.dart';
 // **************************************************************************
 
 class _SupplierService implements SupplierService {
-  _SupplierService(this._dio, {this.baseUrl}) {
-    ArgumentError.checkNotNull(_dio, '_dio');
-  }
+  _SupplierService(this._dio, {this.baseUrl});
 
   final Dio _dio;
 
-  String baseUrl;
+  String? baseUrl;
 
   @override
   Future<ResponseModel<PageData<Supplier>>> getSuppliers(
-      {page = 1, limit = 10, sort}) async {
+      {page = 1, limit = 10, required sort}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'page': page,
       r'limit': limit,
       r'sort': sort
     };
-    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>('supplier',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ResponseModel<PageData<Supplier>>>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, 'supplier',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<PageData<Supplier>>.fromJson(
-      _result.data,
-      (json) => PageData<Supplier>.fromJson(
-        json,
-        (json) => Supplier.fromJson(json),
-      ),
+      _result.data!,
+      (json) => PageData<Supplier>.fromJson(json),
     );
     return value;
   }
 
   @override
-  Future<ResponseModel<Supplier>> getSupplierDetail({supplierId}) async {
+  Future<ResponseModel<Supplier>> getSupplierDetail(
+      {required supplierId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>(
-        'supplier/$supplierId',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ResponseModel<Supplier>>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, 'supplier/$supplierId',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<Supplier>.fromJson(
-      _result.data,
-      (json) => Supplier.fromJson(json),
+      _result.data!,
+      (json) => Supplier.fromJson(json as Map<String, dynamic>),
     );
     return value;
+  }
+
+  RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
+    if (T != dynamic &&
+        !(requestOptions.responseType == ResponseType.bytes ||
+            requestOptions.responseType == ResponseType.stream)) {
+      if (T == String) {
+        requestOptions.responseType = ResponseType.plain;
+      } else {
+        requestOptions.responseType = ResponseType.json;
+      }
+    }
+    return requestOptions;
   }
 }

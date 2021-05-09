@@ -12,7 +12,9 @@ PageData<T> _$PageDataFromJson<T>(Map<String, dynamic> json) {
     limit: json['limit'] as int,
     total: json['total'] as int,
     pages: json['pages'] as int,
-    items: (json['items'] as List)?.map(Converter<T>().fromJson)?.toList(),
+    items: (json['items'] as List<dynamic>)
+        .map((e) => Converter<T>().fromJson(e as Object))
+        .toList(),
   );
 }
 
@@ -22,5 +24,5 @@ Map<String, dynamic> _$PageDataToJson<T>(PageData<T> instance) =>
       'limit': instance.limit,
       'total': instance.total,
       'pages': instance.pages,
-      'items': instance.items?.map(Converter<T>().toJson)?.toList(),
+      'items': instance.items.map(Converter<T>().toJson).toList(),
     };

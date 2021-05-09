@@ -7,61 +7,53 @@ part of 'report_service.dart';
 // **************************************************************************
 
 class _ReportService implements ReportService {
-  _ReportService(this._dio, {this.baseUrl}) {
-    ArgumentError.checkNotNull(_dio, '_dio');
-  }
+  _ReportService(this._dio, {this.baseUrl});
 
   final Dio _dio;
 
-  String baseUrl;
+  String? baseUrl;
 
   @override
-  Future<ResponseModel<Revenue>> getTotal({startDate, endDate, brandId}) async {
+  Future<ResponseModel<Revenue>> getTotal(
+      {required startDate, required endDate, required brandId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'start_date': startDate,
       r'end_date': endDate,
       r'brand_id': brandId
     };
-    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>('report/get-total',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ResponseModel<Revenue>>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, 'report/get-total',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<Revenue>.fromJson(
-      _result.data,
-      (json) => Revenue.fromJson(json),
+      _result.data!,
+      (json) => Revenue.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }
 
   @override
   Future<ResponseModel<List<EmployeeRevenue>>> getTotalByEmployee(
-      {startDate, endDate, brandId}) async {
+      {required startDate, required endDate, required brandId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'start_date': startDate,
       r'end_date': endDate,
       r'brand_id': brandId
     };
-    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>(
-        'report/get-total-by-employee-date',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ResponseModel<List<EmployeeRevenue>>>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, 'report/get-total-by-employee-date',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<List<EmployeeRevenue>>.fromJson(
-        _result.data,
+        _result.data!,
         (json) => (json as List<dynamic>)
             .map<EmployeeRevenue>(
                 (i) => EmployeeRevenue.fromJson(i as Map<String, dynamic>))
@@ -71,26 +63,22 @@ class _ReportService implements ReportService {
 
   @override
   Future<ResponseModel<List<ServiceRevenue>>> getTotalByService(
-      {startDate, endDate, brandId}) async {
+      {required startDate, required endDate, required brandId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'start_date': startDate,
       r'end_date': endDate,
       r'brand_id': brandId
     };
-    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>(
-        'report/get-total-by-service-date',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ResponseModel<List<ServiceRevenue>>>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, 'report/get-total-by-service-date',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<List<ServiceRevenue>>.fromJson(
-        _result.data,
+        _result.data!,
         (json) => (json as List<dynamic>)
             .map<ServiceRevenue>(
                 (i) => ServiceRevenue.fromJson(i as Map<String, dynamic>))
@@ -100,30 +88,39 @@ class _ReportService implements ReportService {
 
   @override
   Future<ResponseModel<List<ServiceRevenue>>> getTotalByProduct(
-      {startDate, endDate, brandId}) async {
+      {required startDate, required endDate, required brandId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'start_date': startDate,
       r'end_date': endDate,
       r'brand_id': brandId
     };
-    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>(
-        'report/get-total-by-product-date',
-        queryParameters: queryParameters,
-        options: RequestOptions(
-            method: 'GET',
-            headers: <String, dynamic>{},
-            extra: _extra,
-            baseUrl: baseUrl),
-        data: _data);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ResponseModel<List<ServiceRevenue>>>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, 'report/get-total-by-product-date',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<List<ServiceRevenue>>.fromJson(
-        _result.data,
+        _result.data!,
         (json) => (json as List<dynamic>)
             .map<ServiceRevenue>(
                 (i) => ServiceRevenue.fromJson(i as Map<String, dynamic>))
             .toList());
     return value;
+  }
+
+  RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
+    if (T != dynamic &&
+        !(requestOptions.responseType == ResponseType.bytes ||
+            requestOptions.responseType == ResponseType.stream)) {
+      if (T == String) {
+        requestOptions.responseType = ResponseType.plain;
+      } else {
+        requestOptions.responseType = ResponseType.json;
+      }
+    }
+    return requestOptions;
   }
 }
