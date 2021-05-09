@@ -6,21 +6,21 @@ abstract class CartModule {
 
   CartModule._();
 
-  OrderRequest _order;
+  OrderRequest? _order;
 
   bool isExist();
 
-  void updateOrderInfo(OrderRequest order);
+  void updateOrderInfo(OrderRequest? order);
 
-  void updateItems(List<dynamic> items);
+  void updateItems(List<dynamic>? items);
 
-  void addProdToCart(dynamic item);
+  void addProdToCart(Object? item);
 
   void updateItem(OrderRequestItem item);
 
   void removeProd(OrderRequestItem item);
 
-  OrderRequest getOrder();
+  OrderRequest? getOrder();
 
   void clear();
 }
@@ -29,36 +29,32 @@ class _CartModuleImpl extends CartModule {
   _CartModuleImpl._() : super._();
 
   @override
-  OrderRequest getOrder() {
+  OrderRequest? getOrder() {
     return _order;
   }
 
   @override
-  void updateOrderInfo(OrderRequest order) {
-    if (_order.isNull) {
-      _order = OrderRequest();
-    }
-    this._order
-      ..id = order?.id ?? this._order.id
-      ..cartItems = order?.cartItems ?? this._order.cartItems
-      ..cartSuppInfo = order?.cartSuppInfo ?? this._order.cartSuppInfo
-      ..customer = order?.customer ?? this._order.customer
-      ..supplier = order?.supplier ?? this._order.supplier
-      ..employee = order?.employee ?? this._order.employee
-      ..employees = order?.employees ?? this._order.employees
-      ..brand = order?.brand ?? this._order.brand
-      ..isPaid = order?.isPaid ?? this._order.isPaid
-      ..discount = order?.discount ?? this._order.discount;
+  void updateOrderInfo(OrderRequest? order) {
+    _order ??= OrderRequest();
+    this._order!
+      ..id = order?.id ?? _order!.id
+      ..cartItems = order?.cartItems ?? _order!.cartItems
+      ..cartSuppInfo = order?.cartSuppInfo ?? _order!.cartSuppInfo
+      ..customer = order?.customer ?? _order!.customer
+      ..supplier = order?.supplier ?? _order!.supplier
+      ..employee = order?.employee ?? _order!.employee
+      ..employees = order?.employees ?? _order!.employees
+      ..brand = order?.brand ?? _order!.brand
+      ..isPaid = order?.isPaid ?? _order!.isPaid
+      ..discount = order?.discount ?? _order!.discount;
   }
 
   @override
-  void updateItems(List<dynamic> items) {
-    if (_order.isNull) {
-      _order = OrderRequest();
-    }
-    this._order.cartItems ??= [];
+  void updateItems(List<dynamic>? items) {
+    _order ??= OrderRequest();
+    _order!.cartItems ??= [];
 
-    if (items.isNullOrEmpty) return;
+    if (items == null || items.isEmpty) return;
     List<OrderRequestItem> newItems = items
         .map((e) => e is Service
             ? OrderRequestItem.copyFromService(service: e)
@@ -67,45 +63,40 @@ class _CartModuleImpl extends CartModule {
 
     List<OrderRequestItem> notContainItems = [];
     if (items is List<Service>) {
-      _order.cartItems
+      _order!.cartItems!
           .where((cartItem) => cartItem.isService)
           .forEach((cartItem) {
-        final newItem = newItems.singleWhere(
-          (newItem) => newItem.serviceId == cartItem.serviceId,
-          orElse: () => null,
-        );
-        if (newItem.isNull) {
+        try {
+          newItems
+              .firstWhere((newItem) => newItem.serviceId == cartItem.serviceId);
           notContainItems.add(cartItem);
-        }
+        } catch (_) {}
       });
 
       notContainItems.forEach((notContainItem) {
-        _order.cartItems.removeWhere((cartItem) =>
+        _order!.cartItems!.removeWhere((cartItem) =>
             cartItem.isService &&
             cartItem.serviceId == notContainItem.serviceId);
       });
     } else if (items is List<Product>) {
-      _order.cartItems
-          .where((cartItem) => cartItem.isProduct)
+      (_order!.cartItems!.where((cartItem) => cartItem.isProduct))
           .forEach((cartItem) {
-        final newItem = newItems.singleWhere(
-          (newItem) => newItem.productId == cartItem.productId,
-          orElse: () => null,
-        );
-        if (newItem.isNull) {
+        try {
+          newItems.singleWhere(
+              (newItem) => newItem.productId == cartItem.productId);
           notContainItems.add(cartItem);
-        }
+        } catch (_) {}
       });
 
       notContainItems.forEach((notContainItem) {
-        _order.cartItems.removeWhere((cartItem) =>
+        _order!.cartItems!.removeWhere((cartItem) =>
             cartItem.isProduct &&
             cartItem.productId == notContainItem.productId);
       });
     }
 
     newItems.forEach((newItem) {
-      final oldItemIndex = _order.cartItems.indexWhere(
+      final oldItemIndex = _order!.cartItems!.indexWhere(
         (cartItem) =>
             (cartItem.serviceId.isNotNull &&
                 newItem.serviceId.isNotNull &&
@@ -115,10 +106,10 @@ class _CartModuleImpl extends CartModule {
                 cartItem.productId == newItem.productId),
       );
       if (oldItemIndex < 0) {
-        return _order.cartItems.add(newItem);
+        return _order!.cartItems!.add(newItem);
       }
-      _order.cartItems.removeAt(oldItemIndex);
-      _order.cartItems.insert(oldItemIndex, newItem);
+      _order!.cartItems!.removeAt(oldItemIndex);
+      _order!.cartItems!.insert(oldItemIndex, newItem);
     });
   }
 
@@ -128,79 +119,68 @@ class _CartModuleImpl extends CartModule {
   }
 
   @override
-  void addProdToCart(dynamic item) {
-    if (item == null) return;
-
-    if (_order.isNull) {
-      _order = OrderRequest();
-    }
-
-    this._order.cartItems ??= [];
+  void addProdToCart(Object? item) {
+    _order ??= OrderRequest();
+    _order!.cartItems ??= [];
 
     if (item is Service) {
-      final requestItem = OrderRequestItem.copyFromService(
-        service: item,
-      );
-      final existedItem = this._order.cartItems.singleWhere((e) {
-        return e.serviceId == requestItem.serviceId;
-      }, orElse: () => null);
-      if (existedItem.isNull) {
-        this._order.cartItems?.add(requestItem);
-      } else {
-        final index = this._order.cartItems.indexWhere((e) {
+      final requestItem = OrderRequestItem.copyFromService(service: item);
+      try {
+        final existedItem = _order!.cartItems!.singleWhere((e) {
+          return e.serviceId == requestItem.serviceId;
+        });
+        final index = _order!.cartItems!.indexWhere((e) {
           return e.serviceId == requestItem.serviceId;
         });
         if (index >= 0) {
-          this._order.cartItems.removeAt(index);
-          this._order.cartItems.insert(
+          _order!.cartItems!.removeAt(index);
+          _order!.cartItems!.insert(
               index,
               requestItem
                 ..quantity = requestItem.quantity + existedItem.quantity);
         }
+      } catch (_) {
+        _order!.cartItems!.add(requestItem);
       }
     } else if (item is Product) {
-      final requestItem = OrderRequestItem.copyFromProduct(
-        product: item,
-      );
-      final existedItem = this._order.cartItems.singleWhere((e) {
-        return e.productId == requestItem.productId;
-      }, orElse: () => null);
-      if (existedItem.isNull) {
-        this._order.cartItems?.add(requestItem);
-      } else {
-        final index = this._order.cartItems.indexWhere((e) {
+      final requestItem = OrderRequestItem.copyFromProduct(product: item);
+      try {
+        final existedItem = _order!.cartItems!.singleWhere((e) {
+          return e.productId == requestItem.productId;
+        });
+        final index = _order!.cartItems!.indexWhere((e) {
           return e.productId == requestItem.productId;
         });
         if (index >= 0) {
-          this._order.cartItems.removeAt(index);
-          this._order.cartItems.insert(
+          _order!.cartItems!.removeAt(index);
+          _order!.cartItems!.insert(
               index,
               requestItem
                 ..quantity = requestItem.quantity + existedItem.quantity);
         }
+      } catch (_) {
+        _order!.cartItems!.add(requestItem);
       }
     }
   }
 
   @override
   void updateItem(OrderRequestItem item) {
-    if (item == null) return;
-
-    if (_order.isNull) {
+    if (_order == null) {
       return;
     }
 
-    final index = this._order.cartItems.indexWhere((e) {
+    final index = _order!.cartItems!.indexWhere((e) {
       return (item.serviceId.isNotNull &&
               e.serviceId.isNotNull &&
-              e.serviceId == item?.serviceId) ||
+              e.serviceId == item.serviceId) ||
           (item.productId.isNotNull &&
               e.productId.isNotNull &&
-              e.productId == item?.productId);
+              e.productId == item.productId);
     });
     if (index < 0) return;
-    this._order.cartItems.removeAt(index);
-    this._order.cartItems.insert(index, item);
+    _order!.cartItems!.removeAt(index);
+    _order!.cartItems!.insert(index, item);
   }
 
   @override
@@ -210,17 +190,15 @@ class _CartModuleImpl extends CartModule {
 
   @override
   void removeProd(OrderRequestItem item) {
-    if (item == null) return;
-
-    if (_order.isNull) {
+    if (_order == null) {
       return;
     }
-    this._order.cartItems.removeWhere((e) {
-      return (e.serviceId.isNotNull && e.serviceId == item?.serviceId) ||
-          (item.productId.isNotNull && e.productId == item?.productId);
+    _order!.cartItems!.removeWhere((e) {
+      return (e.serviceId.isNotNull && e.serviceId == item.serviceId) ||
+          (item.productId.isNotNull && e.productId == item.productId);
     });
 
-    if (this._order.cartItems.isEmpty) {
+    if (_order!.cartItems!.isEmpty) {
       clear();
     }
   }
