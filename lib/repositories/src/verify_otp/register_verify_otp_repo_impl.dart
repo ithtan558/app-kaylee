@@ -1,13 +1,18 @@
 part of 'verify_otp_repository.dart';
 
 class _RegisterVerifyOtpRepoImpl implements VerifyOtpRepository {
+  final UserService _userService;
+
   _RegisterVerifyOtpRepoImpl(this._userService);
 
   @override
   void verifyOtp(
-      {int userId, String otp, OnSuccess onSuccess, OnFailed onFailed}) {
+      {required int userId,
+      required String otp,
+      required onSuccess,
+      required onFailed}) {
     RequestHandler(
-      request: _userService?.verifyPhoneForRegister(VerifyOtpBody(
+      request: _userService.verifyPhoneForRegister(VerifyOtpBody(
         userId: userId,
         otp: otp,
       )),
@@ -15,7 +20,4 @@ class _RegisterVerifyOtpRepoImpl implements VerifyOtpRepository {
       onFailed: onFailed,
     );
   }
-
-  @override
-  UserService _userService;
 }
