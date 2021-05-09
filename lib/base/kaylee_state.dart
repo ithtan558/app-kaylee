@@ -14,9 +14,9 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
   bool isShowLoading = false;
 
   AppBloc get appBloc => context.read<AppBloc>();
-  late StreamSubscription appBlocSub;
-  late StreamSubscription expirationWarningSub;
-  late StreamSubscription expirationSub;
+  late StreamSubscription _appBlocSub;
+  late StreamSubscription _expirationWarningSub;
+  late StreamSubscription _expirationSub;
   late StreamSubscription _reloadBlocSub;
 
   @override
@@ -25,7 +25,7 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
     _listenUnAuthorStream();
     _listenExpirationWarningStream();
     _listenExpirationStream();
-    _reloadBlocSub = context.read<ReloadBloc>().listen((state) {
+    _reloadBlocSub = context.read<ReloadBloc>().stream.listen((state) {
       if (state is ReloadOneState) {
         onReloadWidget(state.widget, state.bundle);
       } else if (state is ReloadAllState) {
@@ -36,15 +36,15 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
 
   @override
   void dispose() {
-    appBlocSub.cancel();
+    _appBlocSub.cancel();
     _reloadBlocSub.cancel();
-    expirationWarningSub.cancel();
-    expirationSub.cancel();
+    _expirationWarningSub.cancel();
+    _expirationSub.cancel();
     super.dispose();
   }
 
   ///ko cần thiết phải gọi super khi override lại ở sub-class
-  void onReloadWidget(Type widget, Bundle bundle) {}
+  void onReloadWidget(Type widget, Bundle? bundle) {}
 
   void onForceReloadingWidget() {}
 
@@ -93,8 +93,8 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
     }
   }
 
-  void _listenUnAuthorStream() async {
-    appBlocSub = appBloc.unauthorizedStream.listen((state) {
+  void _listenUnAuthorStream() {
+    _appBlocSub = appBloc.unauthorizedStream.listen((state) {
       if (state is UnauthorizedState && !appBloc.isShowingLoginDialog) {
         if (dialogContext != null) {
           final dialog = ModalRoute.of(dialogContext!);
@@ -130,8 +130,8 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
     });
   }
 
-  void _listenExpirationWarningStream() async {
-    expirationWarningSub = appBloc.expirationWarningStream.listen((state) {
+  void _listenExpirationWarningStream() {
+    _expirationWarningSub = appBloc.expirationWarningStream.listen((state) {
       if (state is ExpirationWarningState &&
           !appBloc.isShowingExpirationWarningDialog) {
         if (dialogContext != null) {
@@ -164,8 +164,8 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
     });
   }
 
-  void _listenExpirationStream() async {
-    expirationSub = appBloc.expirationStream.listen((state) {
+  void _listenExpirationStream() {
+    _expirationSub = appBloc.expirationStream.listen((state) {
       if (state is ExpirationState && !appBloc.isShowingExpirationScreen) {
         appBloc.isShowingExpirationScreen = true;
         context
