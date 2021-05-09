@@ -5,12 +5,12 @@ import 'package:kaylee/services/services.dart';
 class SendOtpBloc extends Cubit<SingleModel<VerifyPhoneResult>> {
   UserService userService;
 
-  SendOtpBloc({this.userService}) : super(SingleModel());
+  SendOtpBloc({required this.userService}) : super(SingleModel());
 
-  void verifyPhone({String phone}) {
+  void verifyPhone({required String phone}) {
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
-      request: userService?.verifyPhone(VerifyPhoneBody(phone: phone)),
+      request: userService.verifyPhone(VerifyPhoneBody(phone: phone)),
       onSuccess: ({message, result}) {
         emit(SingleModel.copy(state
           ..loading = false

@@ -16,16 +16,16 @@ class OrderCancellationReason {
     this.selected = false,
   });
 
-  final int id;
-  final String name;
-  final String code;
+  final int? id;
+  final String? name;
+  final String? code;
   @JsonKey(ignore: true)
   bool selected;
 
   OrderCancellationReason copyWith({
-    int id,
-    String name,
-    String code,
+    int? id,
+    String? name,
+    String? code,
   }) =>
       OrderCancellationReason(
         id: id ?? this.id,

@@ -17,7 +17,7 @@ class UpdatePassBody {
     this.password,
   });
 
-  int userId;
-  String tokenResetPassword;
-  String password;
+  int? userId;
+  String? tokenResetPassword;
+  String? password;
 }

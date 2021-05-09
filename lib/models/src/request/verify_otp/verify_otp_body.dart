@@ -17,6 +17,6 @@ class VerifyOtpBody {
     this.otp,
   });
 
-  int userId;
-  String otp;
+  int? userId;
+  String? otp;
 }

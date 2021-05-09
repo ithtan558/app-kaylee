@@ -19,8 +19,7 @@ Suppliers _$SuppliersFromJson(Map<String, dynamic> json) {
         .toList();
 }
 
-Map<String, dynamic> _$SuppliersToJson(Suppliers instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$SuppliersToJson(Suppliers instance) => <String, dynamic>{
       'page': instance.page,
       'limit': instance.limit,
       'total': instance.total,

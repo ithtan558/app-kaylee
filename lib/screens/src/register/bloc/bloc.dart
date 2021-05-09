@@ -6,15 +6,15 @@ import 'package:kaylee/services/services.dart';
 class RegisterScreenBloc extends Cubit<SingleModel<RegisterBody>> {
   UserService userService;
 
-  RegisterScreenBloc({this.userService})
+  RegisterScreenBloc({required this.userService})
       : super(SingleModel(item: RegisterBody()));
 
   void register(
-      {String name,
-      String phone,
-      String email,
-      String password,
-      String code,
+      {String? name,
+      String? phone,
+      String? email,
+      String? password,
+      String? code,
       bool isAcceptPolicy = false}) {
     if (isAcceptPolicy) {
       emit(SingleModel.copy(state..loading = true));
@@ -34,7 +34,7 @@ class RegisterScreenBloc extends Cubit<SingleModel<RegisterBody>> {
               result: result));
         },
         onFailed: (code, {error}) {
-          switch (error.code) {
+          switch (error?.code) {
             case ErrorCode.NAME_CODE:
               return emit(NameErrorModel.copy(state
                 ..loading = false
@@ -72,52 +72,52 @@ class RegisterScreenBloc extends Cubit<SingleModel<RegisterBody>> {
 }
 
 class RegisterSuccessModel extends SingleModel<RegisterBody> {
-  final RegisterResult result;
+  final RegisterResult? result;
 
   RegisterSuccessModel.copy(SingleModel old, {this.result}) {
     this
-      ..loading = old?.loading
-      ..item = old?.item
-      ..message = old?.message;
+      ..loading = old.loading
+      ..item = old.item
+      ..message = old.message;
   }
 }
 
 class NameErrorModel extends SingleModel<RegisterBody> {
   NameErrorModel.copy(SingleModel old) {
     this
-      ..loading = old?.loading
-      ..item = old?.item
-      ..error = old?.error
-      ..code = old?.code;
+      ..loading = old.loading
+      ..item = old.item
+      ..error = old.error
+      ..code = old.code;
   }
 }
 
 class PhoneErrorModel extends SingleModel<RegisterBody> {
   PhoneErrorModel.copy(SingleModel old) {
     this
-      ..loading = old?.loading
-      ..item = old?.item
-      ..error = old?.error
-      ..code = old?.code;
+      ..loading = old.loading
+      ..item = old.item
+      ..error = old.error
+      ..code = old.code;
   }
 }
 
 class EmailErrorModel extends SingleModel<RegisterBody> {
   EmailErrorModel.copy(SingleModel old) {
     this
-      ..loading = old?.loading
-      ..item = old?.item
-      ..error = old?.error
-      ..code = old?.code;
+      ..loading = old.loading
+      ..item = old.item
+      ..error = old.error
+      ..code = old.code;
   }
 }
 
 class PasswordErrorModel extends SingleModel<RegisterBody> {
   PasswordErrorModel.copy(SingleModel old) {
     this
-      ..loading = old?.loading
-      ..item = old?.item
-      ..error = old?.error
-      ..code = old?.code;
+      ..loading = old.loading
+      ..item = old.item
+      ..error = old.error
+      ..code = old.code;
   }
 }

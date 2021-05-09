@@ -8,19 +8,21 @@ part of 'product.dart';
 
 Product _$ProductFromJson(Map<String, dynamic> json) {
   return Product(
-    id: json['id'] as int,
-    code: json['code'] as String,
-    name: json['name'] as String,
-    image: json['image'] as String,
-    price: json['price'] as int,
-    description: json['description'] as String,
-    brands: (json['brands'] as List<dynamic>)
-        .map((e) => Brand.fromJson(e as Map<String, dynamic>))
+    id: json['id'] as int?,
+    code: json['code'] as String?,
+    name: json['name'] as String?,
+    image: json['image'] as String?,
+    price: json['price'] as int?,
+    description: json['description'] as String?,
+    brands: (json['brands'] as List<dynamic>?)
+        ?.map((e) => Brand.fromJson(e as Map<String, dynamic>))
         .toList(),
-    category: ProdCate.fromJson(json['category'] as Map<String, dynamic>),
-    quantity: json['quantity'] as int,
-    images: (json['images'] as List<dynamic>)
-        .map((e) => ProductImage.fromJson(e as Map<String, dynamic>))
+    category: json['category'] == null
+        ? null
+        : ProdCate.fromJson(json['category'] as Map<String, dynamic>),
+    quantity: json['quantity'] as int?,
+    images: (json['images'] as List<dynamic>?)
+        ?.map((e) => ProductImage.fromJson(e as Map<String, dynamic>))
         .toList(),
   );
 }

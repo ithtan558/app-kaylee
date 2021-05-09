@@ -17,6 +17,6 @@ Map<String, dynamic> _$OrderRequestItemToJson(OrderRequestItem instance) {
 
   writeNotNull('service_id', _parseProductAndServiceId(instance.serviceId));
   writeNotNull('product_id', _parseProductAndServiceId(instance.productId));
-  val['quantity'] = instance.quantity;
+  writeNotNull('quantity', instance.quantity);
   return val;
 }

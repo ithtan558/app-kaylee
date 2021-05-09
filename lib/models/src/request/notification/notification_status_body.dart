@@ -12,7 +12,6 @@ class NotificationStatusBody {
 
   NotificationStatusBody({this.id, this.status});
 
-  int id;
-  @JsonKey(fromJson: parseStatusFromInt, toJson: parse2Status)
-  NotificationStatus status;
+  int? id;
+  NotificationStatus? status;
 }

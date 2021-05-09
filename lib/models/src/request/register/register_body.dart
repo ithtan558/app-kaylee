@@ -19,9 +19,9 @@ class RegisterBody {
     this.code,
   });
 
-  String name;
-  String phone;
-  String password;
-  String email;
-  String code;
+  String? name;
+  String? phone;
+  String? password;
+  String? email;
+  String? code;
 }

@@ -78,7 +78,7 @@ class OrderRequest {
   int get totalAmount =>
       cartItems?.fold(0, (previous, e) {
         int price = 0;
-        price = previous! + e.price * e.quantity;
+        price = previous! + (e.price ?? 0) * (e.quantity ?? 0);
         return price;
       }) ??
       0;

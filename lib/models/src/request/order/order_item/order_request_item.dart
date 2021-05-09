@@ -18,14 +18,14 @@ class OrderRequestItem {
   });
 
   @JsonKey(toJson: _parseProductAndServiceId)
-  int serviceId;
+  int? serviceId;
   @JsonKey(toJson: _parseProductAndServiceId)
-  int productId;
-  int quantity;
+  int? productId;
+  int? quantity;
   @JsonKey(ignore: true)
-  int price;
+  int? price;
   @JsonKey(ignore: true)
-  String name;
+  String? name;
 
   @JsonKey(ignore: true)
   bool get isService => serviceId.isNotNull && serviceId != 0;
@@ -33,7 +33,7 @@ class OrderRequestItem {
   @JsonKey(ignore: true)
   bool get isProduct => productId.isNotNull && productId != 0;
 
-  factory OrderRequestItem.copyFromProduct({Product product}) =>
+  factory OrderRequestItem.copyFromProduct({required Product product}) =>
       OrderRequestItem(
         productId: product.id,
         quantity: product.quantity,
@@ -41,7 +41,7 @@ class OrderRequestItem {
         name: product.name,
       );
 
-  factory OrderRequestItem.copyFromService({Service service}) =>
+  factory OrderRequestItem.copyFromService({required Service service}) =>
       OrderRequestItem(
         serviceId: service.id,
         quantity: service.quantity,
@@ -50,6 +50,6 @@ class OrderRequestItem {
       );
 }
 
-int _parseProductAndServiceId(int input) {
-  return input.isNull || input == 0 ? null : input;
+int? _parseProductAndServiceId(int? input) {
+  return input == null || input == 0 ? null : input;
 }

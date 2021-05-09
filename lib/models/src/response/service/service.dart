@@ -27,23 +27,24 @@ class Service {
     this.code,
   });
 
-  int id;
-  String name;
-  int time;
+  int? id;
+  String? name;
+  int? time;
 
-  Duration get timeInDuration => time.isNull ? null : Duration(minutes: time);
-  int price;
-  String description;
-  String image;
+  Duration? get timeInDuration =>
+      time == null ? null : Duration(minutes: time!);
+  int? price;
+  String? description;
+  String? image;
   @JsonKey(ignore: true)
-  File imageFile;
-  List<Brand> brands;
+  File? imageFile;
+  List<Brand>? brands;
 
-  String get selectedBrandIds =>
-      brands?.where((e) => e.selected)?.map((e) => e.id)?.join(',');
-  ServiceCate category;
-  int quantity;
-  String code;
+  String? get selectedBrandIds =>
+      ((brands?.where((e) => e.selected))?.map((e) => e.id))?.join(',');
+  ServiceCate? category;
+  int? quantity;
+  String? code;
   @JsonKey(ignore: true)
   bool selected = false;
 }

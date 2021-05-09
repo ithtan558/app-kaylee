@@ -12,8 +12,8 @@ class VerifyPhoneBody {
   Map<String, dynamic> toJson() => _$VerifyPhoneBodyToJson(this);
 
   VerifyPhoneBody({
-    this.phone,
+    required this.phone,
   });
 
-  String phone;
+  final String phone;
 }

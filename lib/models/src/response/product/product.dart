@@ -27,21 +27,21 @@ class Product {
     this.images,
   });
 
-  int id;
-  String code;
-  String name;
-  String image;
+  int? id;
+  String? code;
+  String? name;
+  String? image;
   @JsonKey(ignore: true)
-  File imageFile;
-  int price;
-  String description;
-  List<Brand> brands;
-  List<ProductImage> images;
+  File? imageFile;
+  int? price;
+  String? description;
+  List<Brand>? brands;
+  List<ProductImage>? images;
 
-  String get selectedBrandIds =>
-      brands?.where((e) => e.selected)?.map((e) => e.id)?.join(',');
-  ProdCate category;
-  int quantity;
+  String? get selectedBrandIds =>
+      ((brands?.where((e) => e.selected))?.map((e) => e.id))?.join(',');
+  ProdCate? category;
+  int? quantity;
   @JsonKey(ignore: true)
   bool selected = false;
 }

@@ -14,16 +14,16 @@ class UpdateOrderStatusBody {
   });
 
   @JsonKey(name: 'order_status_id')
-  OrderStatus status;
-  int id;
+  OrderStatus? status;
+  int? id;
   @JsonKey(
     name: 'order_reason_cancel_id',
     toJson: _orderCancellationReasonToJson,
     includeIfNull: false,
   )
-  OrderCancellationReason reason;
+  OrderCancellationReason? reason;
 }
 
-int _orderCancellationReasonToJson(OrderCancellationReason reason) {
+int? _orderCancellationReasonToJson(OrderCancellationReason? reason) {
   return reason?.id;
 }

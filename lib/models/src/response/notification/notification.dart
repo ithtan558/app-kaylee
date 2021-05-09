@@ -20,31 +20,18 @@ class Notification {
     this.date,
   });
 
-  int id;
-  String title;
-  String description;
-  String content;
-  @JsonKey(fromJson: parseStatusFromInt, toJson: parse2Status)
-  NotificationStatus status;
-  String createdAt;
-  String date;
-}
-
-int parse2Status(NotificationStatus status) {
-  if (status == NotificationStatus.read)
-    return 2;
-  else
-    return 1;
-}
-
-NotificationStatus parseStatusFromInt(int status) {
-  if (status == 2)
-    return NotificationStatus.read;
-  else
-    return NotificationStatus.notRead;
+  int? id;
+  String? title;
+  String? description;
+  String? content;
+  NotificationStatus? status;
+  String? createdAt;
+  String? date;
 }
 
 enum NotificationStatus {
+@JsonValue(1)
   notRead,
+  @JsonValue(2)
   read,
 }
