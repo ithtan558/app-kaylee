@@ -13,19 +13,19 @@ import 'package:kaylee/widgets/widgets.dart';
 abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
   bool isShowLoading = false;
 
-  AppBloc get appBloc => context.bloc<AppBloc>();
-  StreamSubscription appBlocSub;
-  StreamSubscription expirationWarningSub;
-  StreamSubscription expirationSub;
-  StreamSubscription _reloadBlocSub;
+  AppBloc get appBloc => context.read<AppBloc>();
+  late StreamSubscription appBlocSub;
+  late StreamSubscription expirationWarningSub;
+  late StreamSubscription expirationSub;
+  late StreamSubscription _reloadBlocSub;
 
   @override
   void initState() {
     super.initState();
-    _listenUnauthorStream();
+    _listenUnAuthorStream();
     _listenExpirationWarningStream();
     _listenExpirationStream();
-    _reloadBlocSub = context.bloc<ReloadBloc>().listen((state) {
+    _reloadBlocSub = context.read<ReloadBloc>().listen((state) {
       if (state is ReloadOneState) {
         onReloadWidget(state.widget, state.bundle);
       } else if (state is ReloadAllState) {
@@ -36,10 +36,10 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
 
   @override
   void dispose() {
-    appBlocSub?.cancel();
-    _reloadBlocSub?.cancel();
-    expirationWarningSub?.cancel();
-    expirationSub?.cancel();
+    appBlocSub.cancel();
+    _reloadBlocSub.cancel();
+    expirationWarningSub.cancel();
+    expirationSub.cancel();
     super.dispose();
   }
 
@@ -48,10 +48,11 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
 
   void onForceReloadingWidget() {}
 
-  void showLoading({bool canDismiss = false, VoidCallback onDismiss}) {
+  void showLoading({bool canDismiss = false, VoidCallback? onDismiss}) {
     if (dialogContext.isNull ||
-        ModalRoute.of(context).settings.name != 'loading dialog' ||
-        (!ModalRoute.of(context).isFirst && !ModalRoute.of(context).isActive) &&
+        (ModalRoute.of(context)?.settings)?.name != 'loading dialog' ||
+        (!(ModalRoute.of(context)?.isFirst ?? true) &&
+                !(ModalRoute.of(context)?.isActive ?? true)) &&
             !isShowLoading) {
       isShowLoading = true;
       showGeneralDialog(
@@ -72,15 +73,15 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
           )).then((value) {
         dialogContext = null;
         isShowLoading = false;
-        if (onDismiss.isNotNull) onDismiss();
+        if (onDismiss.isNotNull) onDismiss?.call();
       });
     }
   }
 
   void hideLoading() {
-    if (dialogContext.isNotNull) {
-      final dialog = ModalRoute.of(dialogContext);
-      if (dialog.isActive && dialog.settings.name == 'loading dialog') {
+    if (dialogContext != null) {
+      final dialog = ModalRoute.of(dialogContext!);
+      if (dialog!.isActive && dialog.settings.name == 'loading dialog') {
         // print('[TUNG] ===> hideLoading');
         Navigator.removeRoute(context, dialog);
         dialogContext = null;
@@ -92,13 +93,13 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
     }
   }
 
-  void _listenUnauthorStream() async {
+  void _listenUnAuthorStream() async {
     appBlocSub = appBloc.unauthorizedStream.listen((state) {
       if (state is UnauthorizedState && !appBloc.isShowingLoginDialog) {
-        if (dialogContext.isNotNull) {
-          final dialog = ModalRoute.of(dialogContext);
-          if (dialog.isFirst && dialog.isActive) {
-            Navigator.removeRoute(context, ModalRoute.of(dialogContext));
+        if (dialogContext != null) {
+          final dialog = ModalRoute.of(dialogContext!);
+          if (dialog!.isFirst && dialog.isActive) {
+            Navigator.removeRoute(context, dialog);
             dialogContext = null;
           }
         }
@@ -133,10 +134,10 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
     expirationWarningSub = appBloc.expirationWarningStream.listen((state) {
       if (state is ExpirationWarningState &&
           !appBloc.isShowingExpirationWarningDialog) {
-        if (dialogContext.isNotNull) {
-          final dialog = ModalRoute.of(dialogContext);
-          if (dialog.isFirst && dialog.isActive) {
-            Navigator.removeRoute(context, ModalRoute.of(dialogContext));
+        if (dialogContext != null) {
+          final dialog = ModalRoute.of(dialogContext!);
+          if (dialog!.isFirst && dialog.isActive) {
+            Navigator.removeRoute(context, dialog);
             dialogContext = null;
           }
         }

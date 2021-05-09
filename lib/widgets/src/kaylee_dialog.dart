@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
-BuildContext dialogContext;
+BuildContext? dialogContext;
 
 Future<T> showKayleeBottomSheet<T>(BuildContext context,
     {@required ScrollableWidgetBuilder builder,
