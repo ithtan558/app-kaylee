@@ -4,10 +4,10 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class RequestSettingDialog extends StatefulWidget {
-  final String title;
-  final String message;
-  final String guides;
-  final VoidCallback onGoToSetting;
+  final String? title;
+  final String? message;
+  final String? guides;
+  final VoidCallback? onGoToSetting;
 
   RequestSettingDialog({
     this.title,
@@ -27,7 +27,7 @@ class _RequestSettingDialogState extends State<RequestSettingDialog> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         SizedBox(height: Dimens.px24),
-        if (widget.title.isNotNullAndEmpty)
+        if (widget.title != null && widget.title!.isNotEmpty)
           Padding(
             padding: const EdgeInsets.only(
               right: Dimens.px16,
@@ -35,27 +35,27 @@ class _RequestSettingDialogState extends State<RequestSettingDialog> {
               bottom: Dimens.px16,
             ),
             child: KayleeText.normal18W700(
-              widget.title,
+              widget.title!,
               textAlign: TextAlign.center,
               maxLines: 1,
             ),
           ),
-        if (widget.message.isNotNullAndEmpty)
+        if (widget.message != null && widget.message!.isNotEmpty)
           Padding(
             padding: const EdgeInsets.only(
                 right: Dimens.px16, left: Dimens.px16, bottom: Dimens.px16),
             child: KayleeText.normal16W400(
-              widget.message,
+              widget.message!,
               textAlign: TextAlign.center,
               maxLines: 2,
             ),
           ),
-        if (widget.guides.isNotNullAndEmpty)
+        if (widget.guides != null && widget.guides!.isNotEmpty)
           Padding(
             padding: const EdgeInsets.only(
                 right: Dimens.px16, left: Dimens.px16, bottom: Dimens.px16),
             child: KayleeText.normal16W400(
-              widget.guides,
+              widget.guides!,
               textAlign: TextAlign.center,
               maxLines: 2,
             ),

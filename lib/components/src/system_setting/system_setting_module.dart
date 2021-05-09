@@ -11,12 +11,12 @@ abstract class SystemSettingModule {
   factory SystemSettingModule.init() = _SystemSettingModuleImpl._;
 
   Future<void> showKayleeGo2SettingDialog({
-    @required BuildContext context,
+    required BuildContext context,
     bool barrierDismissible = true,
   });
 
   Future<void> showKayleeBluetoothSettingDialog({
-    @required BuildContext context,
+    required BuildContext context,
     bool barrierDismissible = true,
   });
 
@@ -28,7 +28,7 @@ class _SystemSettingModuleImpl extends SystemSettingModule {
 
   @override
   Future<void> showKayleeGo2SettingDialog(
-      {BuildContext context, bool barrierDismissible = true}) {
+      {required BuildContext context, bool barrierDismissible = true}) {
     return showKayleeRequestSettingDialog(
       context: context,
       barrierDismissible: barrierDismissible,
@@ -42,12 +42,12 @@ class _SystemSettingModuleImpl extends SystemSettingModule {
   }
 
   Future<void> showKayleeRequestSettingDialog({
-    @required BuildContext context,
+    required BuildContext context,
     bool barrierDismissible = true,
-    String title,
-    String message,
-    String guides,
-    VoidCallback onGoToSetting,
+    String? title,
+    String? message,
+    String? guides,
+    VoidCallback? onGoToSetting,
   }) {
     return showKayleeDialog(
         context: context,
@@ -62,7 +62,7 @@ class _SystemSettingModuleImpl extends SystemSettingModule {
 
   @override
   Future<void> showKayleeBluetoothSettingDialog(
-      {BuildContext context, bool barrierDismissible = true}) {
+      {required BuildContext context, bool barrierDismissible = true}) {
     return showKayleeRequestSettingDialog(
       context: context,
       barrierDismissible: barrierDismissible,
