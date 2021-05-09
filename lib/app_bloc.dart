@@ -7,8 +7,8 @@ class AppBloc extends Cubit {
   final CampaignService campaignService;
 
   AppBloc({
-    this.userService,
-    this.campaignService,
+    required this.userService,
+    required this.campaignService,
   }) : super(InitState());
 
   bool isShowingLoginDialog = false;
@@ -36,19 +36,19 @@ class AppBloc extends Cubit {
 
   void loggedOut() => emit(LoggedOutState());
 
-  void unauthorized({Error error}) {
+  void unauthorized({required Error error}) {
     _unauthorizedController.add(UnauthorizedState(error: error));
   }
 
-  void expirationWarning({Error error}) {
+  void expirationWarning({required Error error}) {
     _expirationWarningController.add(ExpirationWarningState(error: error));
   }
 
-  void expired({Error error}) {
+  void expired({required Error error}) {
     _expirationController.add(ExpirationState(error: error));
   }
 
-  void notifyUpdateProfile({UserInfo userInfo}) {
+  void notifyUpdateProfile({required UserInfo userInfo}) {
     RequestHandler(
       request: userService.getProfile(),
       onSuccess: ({message, result}) {
@@ -70,9 +70,8 @@ class AppBloc extends Cubit {
     RequestHandler(
       request: campaignService.getAllCampaign(),
       onSuccess: ({message, result}) {
-        final campaigns = (result as List<Campaign>)
-            .where((campaign) => campaign.isNotNull)
-            .toList();
+        final campaigns = ((result as List<Campaign>?)
+            ?.where((campaign) => campaign.isNotNull))?.toList();
         emit(LoadedTopicState(campaigns: campaigns));
       },
       onFailed: (code, {error}) {},
@@ -91,7 +90,7 @@ class AppBloc extends Cubit {
 class LoggedInState {
   LoginResult result;
 
-  LoggedInState({this.result});
+  LoggedInState({required this.result});
 }
 
 class LoggedOutState {}
@@ -101,19 +100,19 @@ class DoneSetupLoggedInState {}
 class UnauthorizedState {
   Error error;
 
-  UnauthorizedState({this.error});
+  UnauthorizedState({required this.error});
 }
 
 class ExpirationWarningState {
   Error error;
 
-  ExpirationWarningState({this.error});
+  ExpirationWarningState({required this.error});
 }
 
 class ExpirationState {
   Error error;
 
-  ExpirationState({this.error});
+  ExpirationState({required this.error});
 }
 
 class CartBloc extends Cubit<CartState> {
@@ -127,11 +126,11 @@ class CartState {}
 class UpdateProfileState {
   final UserInfo userInfo;
 
-  UpdateProfileState({this.userInfo});
+  UpdateProfileState({required this.userInfo});
 }
 
 class LoadedTopicState {
-  List<Campaign> campaigns;
+  List<Campaign>? campaigns;
 
-  LoadedTopicState({this.campaigns});
+  LoadedTopicState({required this.campaigns});
 }
