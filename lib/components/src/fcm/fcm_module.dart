@@ -12,7 +12,7 @@ abstract class FcmModule {
 
   List<Campaign> getTopics();
 
-  void overrideTopics({List<Campaign> campaigns});
+  void overrideTopics({List<Campaign>? campaigns});
 }
 
 class _FcmModuleImpl extends FcmModule {
@@ -21,14 +21,14 @@ class _FcmModuleImpl extends FcmModule {
   @override
   List<Campaign> getTopics() {
     final json = SharedRef.getString(_SHARE_REF_CAMPAIGN);
-    if (json.isNullOrEmpty) return [];
+    if (json == null || json.isEmpty) return [];
     return (jsonDecode(json) as List)
         .map((json) => Campaign.fromJson(json))
         .toList();
   }
 
   @override
-  void overrideTopics({List<Campaign> campaigns}) {
+  void overrideTopics({List<Campaign>? campaigns}) {
     final json = jsonEncode(campaigns ?? []);
     SharedRef.putString(_SHARE_REF_CAMPAIGN, json);
   }
