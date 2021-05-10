@@ -7,7 +7,7 @@ class KayleeListView extends StatelessWidget {
   final bool shrinkWrap;
   final int mainAxisSpacing;
   final IndexedWidgetBuilder itemBuilder;
-  final int itemCount;
+  final int? itemCount;
   final IndexedWidgetBuilder separatorBuilder;
   final WidgetBuilder loadingBuilder;
   final ScrollController controller;

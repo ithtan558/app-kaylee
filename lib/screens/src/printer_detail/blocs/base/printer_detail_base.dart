@@ -63,7 +63,7 @@ abstract class PrinterDetailBase extends Cubit<PrinterDetailState> {
     emit(PrinterDetailStateLoadedDevices());
   }
 
-  void onAddWifi({String ip}) {
+  void onAddWifi({required String ip}) {
     if (ip.isNullOrEmpty) return;
     final device = PrinterDevice.wifi(ip: ip);
     _addDevice(device);

@@ -137,7 +137,8 @@ class _CartModuleImpl extends CartModule {
           _order!.cartItems!.insert(
               index,
               requestItem
-                ..quantity = requestItem.quantity + existedItem.quantity);
+                ..quantity =
+                    (requestItem.quantity ?? 0) + (existedItem.quantity ?? 0));
         }
       } catch (_) {
         _order!.cartItems!.add(requestItem);
@@ -156,7 +157,8 @@ class _CartModuleImpl extends CartModule {
           _order!.cartItems!.insert(
               index,
               requestItem
-                ..quantity = requestItem.quantity + existedItem.quantity);
+                ..quantity =
+                    (requestItem.quantity ?? 0) + (existedItem.quantity ?? 0));
         }
       } catch (_) {
         _order!.cartItems!.add(requestItem);

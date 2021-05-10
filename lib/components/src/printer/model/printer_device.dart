@@ -2,15 +2,15 @@ import 'package:anth_package/anth_package.dart';
 
 class PrinterDevice {
   ///for wifi device
-  final String ip;
-  final int port;
+  final String? ip;
+  final int? port;
 
-  bool get isWifi => ip.isNotNull;
+  bool get isWifi => ip != null;
 
   ///for bluetooth device
-  final String name;
-  final String address;
-  final int type;
+  final String? name;
+  final String? address;
+  final int? type;
 
   bool selected;
 
@@ -22,7 +22,7 @@ class PrinterDevice {
           ? '$name - Bluetooth'
           : '';
 
-  String get deviceAddress => isWifi
+  String? get deviceAddress => isWifi
       ? ip
       : isBluetooth
           ? address
@@ -45,7 +45,7 @@ class PrinterDevice {
       this.type,
       this.selected = false});
 
-  factory PrinterDevice.wifi({String ip, int port = 9100}) =>
+  factory PrinterDevice.wifi({required String ip, int port = 9100}) =>
       PrinterDevice(ip: ip, port: port);
 
   factory PrinterDevice.bluetooth(
