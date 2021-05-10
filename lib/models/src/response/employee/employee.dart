@@ -30,27 +30,27 @@ class Employee {
       this.brand,
       this.password});
 
-  int id;
-  String name;
-  String image;
+  int? id;
+  String? name;
+  String? image;
   @JsonKey(ignore: true)
-  File imageFile;
-  Role role;
-  String birthday;
+  File? imageFile;
+  Role? role;
+  String? birthday;
 
-  DateTime get birthDayInDateTime {
-    if (birthday.isNull) return null;
-    DateTime date = DateTime.tryParse(birthday);
+  DateTime? get birthDayInDateTime {
+    if (birthday == null) return null;
+    DateTime? date = DateTime.tryParse(birthday!);
     return ((date?.year ?? -1) < 0) ? null : date;
   }
 
-  String phone;
-  String email;
-  String address;
-  City city;
-  District district;
-  Ward wards;
-  City hometownCity;
-  Brand brand;
-  String password;
+  String? phone;
+  String? email;
+  String? address;
+  City? city;
+  District? district;
+  Ward? wards;
+  City? hometownCity;
+  Brand? brand;
+  String? password;
 }
