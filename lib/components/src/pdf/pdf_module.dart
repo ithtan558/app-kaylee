@@ -17,11 +17,11 @@ class PdfModule {
   static Future<Document> generateDocument({double ratio = 1}) async {
     final fonts = await loadFonts();
     final defaultTextStyle = TextStyle(
-      fontNormal: Font.ttf(fonts[FontsStyle.normal]),
-      fontItalic: Font.ttf(fonts[FontsStyle.normalItalic]),
-      fontBold: Font.ttf(fonts[FontsStyle.bold]),
-      fontBoldItalic: Font.ttf(fonts[FontsStyle.boldItalic]),
-      font: Font.ttf(fonts[FontsStyle.medium]),
+      fontNormal: Font.ttf(fonts[FontsStyle.normal]!),
+      fontItalic: Font.ttf(fonts[FontsStyle.normalItalic]!),
+      fontBold: Font.ttf(fonts[FontsStyle.bold]!),
+      fontBoldItalic: Font.ttf(fonts[FontsStyle.boldItalic]!),
+      font: Font.ttf(fonts[FontsStyle.medium]!),
       fontSize: 30 / ratio,
     );
     final doc = Document(
@@ -59,10 +59,10 @@ class PdfModule {
   }
 
   static Future<Document> generateDocumentForOrder(
-      {Order order,
+      {required Order order,
       double ratio = 1,
-      EdgeInsets padding,
-      PdfPageFormat format}) async {
+      EdgeInsets? padding,
+      PdfPageFormat? format}) async {
     final doc = await generateDocument(ratio: ratio);
     final theme = doc.theme;
     doc.addPage(Page(
@@ -84,7 +84,8 @@ class PdfModule {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text('${order.brand.name ?? ''}',
-                    style: theme.header1.copyWith(fontWeight: FontWeight.bold)),
+                    style:
+                        theme!.header1.copyWith(fontWeight: FontWeight.bold)),
               ],
             ),
             Padding(
@@ -111,7 +112,7 @@ class PdfModule {
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Text(
                   Strings.hoadDonBanHang.toUpperCase(),
-                  style: doc.theme.header0.merge(
+                  style: doc.theme!.header0.merge(
                     TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
@@ -150,14 +151,15 @@ class PdfModule {
               padding: EdgeInsets.only(top: Dimens.px8 / ratio),
               child: Column(
                 children: List.generate(order.employees?.length ?? 0, (index) {
-                  final employee = order.employees.elementAt(index);
+                  final employee = order.employees!.elementAt(index);
                   return Row(
                     children: [
                       Expanded(
                           child: Text(
                         '${employee.name}' +
-                            (employee.role?.name.isNotNullAndEmpty
-                                ? ' - ${employee.role.name}'
+                            (employee.role?.name != null &&
+                                    employee.role!.name.isNotEmpty
+                                ? ' - ${employee.role!.name}'
                                 : ''),
                       ))
                     ],
@@ -255,7 +257,7 @@ class PdfModule {
   }
 
   static Future<Document> generateDocumentForOrderForRoll57(
-      {Order order, double ratio = 1}) async {
+      {required Order order, double ratio = 1}) async {
     return generateDocumentForOrder(
         order: order,
         ratio: 5.6,
@@ -263,9 +265,9 @@ class PdfModule {
         format: PdfPageFormat.roll57);
   }
 
-  static List<TableRow> _getProductTableRow(List<OrderItem> products,
+  static List<TableRow>? _getProductTableRow(List<OrderItem>? products,
       {double ratio = 1}) {
-    Widget _getProductCell(String text, {TextAlign textAlign}) {
+    Widget _getProductCell(String text, {TextAlign? textAlign}) {
       return _wrapPaddingAll(
         child: Text(
           text ?? '',
@@ -275,59 +277,57 @@ class PdfModule {
       );
     }
 
-    return products
-        ?.map(
-          (product) => TableRow(
+    return (products?.map(
+      (product) => TableRow(
+        children: [
+          _getProductCell(
+            product.name ?? '',
+          ),
+          _getProductCell(
+            '${product.quantity}',
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
               _getProductCell(
-                product.name ?? '',
-              ),
-              _getProductCell(
-                '${product.quantity}',
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  _getProductCell(
-                    CurrencyUtils.formatVNDWithCustomUnit(product.price ?? 0),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  _getProductCell(
-                      CurrencyUtils.formatVNDWithCustomUnit(product.total ?? 0),
-                      textAlign: TextAlign.right),
-                ],
+                CurrencyUtils.formatVNDWithCustomUnit(product.price ?? 0),
               ),
             ],
-            decoration: BoxDecoration(
-              border: Border(
-                left: BorderSide(
-                  width: Dimens.px3 / ratio,
-                  style: BorderStyle.dashed,
-                  color: PdfColor.fromInt(0xff000000),
-                ),
-                right: BorderSide(
-                  width: Dimens.px3 / ratio,
-                  style: BorderStyle.dashed,
-                  color: PdfColor.fromInt(0xff000000),
-                ),
-                bottom: BorderSide(
-                  width: Dimens.px3 / ratio,
-                  style: BorderStyle.dashed,
-                  color: PdfColor.fromInt(0xff000000),
-                ),
-              ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              _getProductCell(
+                  CurrencyUtils.formatVNDWithCustomUnit(product.total ?? 0),
+                  textAlign: TextAlign.right),
+            ],
+          ),
+        ],
+        decoration: BoxDecoration(
+          border: Border(
+            left: BorderSide(
+              width: Dimens.px3 / ratio,
+              style: BorderStyle.dashed,
+              color: PdfColor.fromInt(0xff000000),
+            ),
+            right: BorderSide(
+              width: Dimens.px3 / ratio,
+              style: BorderStyle.dashed,
+              color: PdfColor.fromInt(0xff000000),
+            ),
+            bottom: BorderSide(
+              width: Dimens.px3 / ratio,
+              style: BorderStyle.dashed,
+              color: PdfColor.fromInt(0xff000000),
             ),
           ),
-        )
-        ?.toList();
+        ),
+      ),
+    ))?.toList();
   }
 
   static List<Widget> _getPaymentInfo(Order order,
-      {ThemeData theme, double ratio = 1}) {
+      {required ThemeData theme, double ratio = 1}) {
     return [
       Padding(
         padding: EdgeInsets.only(top: Dimens.px30 / ratio),
@@ -357,7 +357,7 @@ class PdfModule {
   }
 
   static Widget _getAmountText(
-      {String title, String content, TextStyle style}) {
+      {String? title, String? content, TextStyle? style}) {
     return Row(
       children: [
         Text(
@@ -374,7 +374,7 @@ class PdfModule {
   }
 
   static Widget _wrapPaddingAll(
-      {double padding = Dimens.px8, Widget child, double ratio = 1}) {
+      {double padding = Dimens.px8, Widget? child, double ratio = 1}) {
     return Padding(
       padding: EdgeInsets.all(padding / ratio),
       child: child,
@@ -385,9 +385,9 @@ class PdfModule {
 enum FontsStyle { normal, normalItalic, medium, mediumItalic, bold, boldItalic }
 
 void getPdfRaster(
-    {Future<Uint8List> data,
-    double dpi,
-    ValueSetter<Uint8List> onPrint}) async {
+    {required Future<Uint8List> data,
+    required double dpi,
+    required ValueSetter<Uint8List?> onPrint}) async {
   final raster = Printing.raster(
     await data,
     dpi: dpi,
@@ -396,29 +396,42 @@ void getPdfRaster(
   await for (var page in raster) {
     ui.Image image = await page.toImage(); // ...or page.toPng()
     final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-    onPrint?.call(byteData.buffer.asUint8List());
+    onPrint.call((byteData?.buffer)?.asUint8List());
   }
 }
 
 ///get raster cho khổ 57
 void getPdfRasterForRol57(
-    {Future<Uint8List> data, ValueSetter<Uint8List> onPrint}) {
+    {required Future<Uint8List> data,
+    required ValueSetter<Uint8List> onPrint}) {
   return getPdfRaster(
       data: data,
       dpi: 300,
       onPrint: (value) {
-        onPrint?.call(image.encodeJpg(image.decodeImage(value)));
+        if (value != null) {
+          final decodedImage = image.decodeImage(value);
+          if (decodedImage != null) {
+            final jpgEncoded = image.encodeJpg(decodedImage);
+            onPrint.call(Uint8List.fromList(jpgEncoded));
+          }
+        }
       });
 }
 
 ///get raster cho khổ 80
 void getPdfRasterForRol80(
-    {Future<Uint8List> data, ValueSetter<image.Image> onPrint}) {
+    {required Future<Uint8List> data,
+    required ValueSetter<image.Image> onPrint}) {
   return getPdfRaster(
     data: data,
     dpi: 50,
     onPrint: (value) {
-      onPrint?.call(image.decodeImage(value));
+      if (value != null) {
+        final decodedImage = image.decodeImage(value);
+        if (decodedImage != null) {
+          onPrint.call(decodedImage);
+        }
+      }
     },
   );
 }
