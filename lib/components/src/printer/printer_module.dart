@@ -13,8 +13,8 @@ import 'package:kaylee/widgets/widgets.dart';
 const String PRINTER_DEVICES_KEY = 'PRINTER_DEVICES_KEY';
 
 class PrinterModule {
-  static NetworkPrinter _printer;
-  static CapabilityProfile _profile;
+  static late NetworkPrinter _printer;
+  static late CapabilityProfile _profile;
 
   static Future<void> init() async {
     if (_printer.isNotNull) return;
@@ -23,22 +23,20 @@ class PrinterModule {
     _printer = NetworkPrinter(paper, _profile);
   }
 
-  static Future<bool> connect({PrinterDevice device}) async {
-    if (device.isNull) return false;
+  static Future<bool> connect({PrinterDevice? device}) async {
+    if (device == null) return false;
     final PosPrintResult res =
-        await _printer?.connect(device?.ip, port: device?.port);
+        await _printer.connect(device.ip!, port: device.port!);
     if (res == PosPrintResult.success) {
       return true;
     }
     return false;
   }
 
-  static Future<bool> printConnectionInfo({PrinterDevice device}) async {
-    if (_printer.isNull) return false;
-
+  static Future<bool> printConnectionInfo({PrinterDevice? device}) async {
     final connected = await connect(device: device);
     if (connected) {
-      _printer.text('Connected ${device.ip}:${device.port}');
+      _printer.text('Connected ${device!.ip}:${device.port}');
       _printer.cut();
       await disconnect();
       return true;
@@ -47,9 +45,7 @@ class PrinterModule {
     return false;
   }
 
-  static void _printOrder({Order order, Image billImage}) async {
-    if (order.isNull) return;
-    if (_printer.isNull) return;
+  static void _printOrder({required Image billImage}) async {
     // final dio = Dio();
     // final uri = Uri.parse(order.brand.logo);
     // var tempDir = await getTemporaryDirectory();
@@ -70,11 +66,13 @@ class PrinterModule {
   }
 
   static Future<void> disconnect() async {
-    _printer?.disconnect();
+    _printer.disconnect();
   }
 
   static Future<void> connectPrinter(BuildContext context,
-      {Order order, ValueChanged<bool> loading, Image image}) async {
+      {required Order order,
+      ValueChanged<bool>? loading,
+      required Image image}) async {
     await init();
 
     final device = connectedDevice;
@@ -84,7 +82,7 @@ class PrinterModule {
     final connected = await connect(device: device);
     if (connected) {
       loading?.call(false);
-      _printOrder(order: order, billImage: image);
+      _printOrder(billImage: image);
       return;
     } else {
       loading?.call(false);
@@ -101,19 +99,19 @@ class PrinterModule {
 
   static PrinterDevice get connectedDevice {
     final fromSharePref = SharedRef.getString(PRINTER_DEVICES_KEY);
-    final map =
-        jsonDecode(fromSharePref.isNullOrEmpty ? '[]' : fromSharePref) as List;
+    final map = jsonDecode(fromSharePref == null || fromSharePref.isEmpty
+        ? '[]'
+        : fromSharePref) as List;
     final devices = map.map((e) => PrinterDevice.fromJson(e)).toList();
     final device = devices.firstWhere(
       (element) => element.selected,
-      orElse: () => null,
     );
     return device;
   }
 }
 
 Future<void> showKayleeDialogNotAbleToConnectPrinter(
-    {BuildContext context, VoidCallback onTryAgain}) {
+    {required BuildContext context, VoidCallback? onTryAgain}) {
   return showKayleeAlertDialog(
     context: context,
     view: KayleeAlertDialogView(

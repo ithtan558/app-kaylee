@@ -49,7 +49,7 @@ class PrinterDevice {
       PrinterDevice(ip: ip, port: port);
 
   factory PrinterDevice.bluetooth(
-          {String name, String address, int type = 0}) =>
+          {String? name, String? address, int? type = 0}) =>
       PrinterDevice(name: name, address: address, type: type);
 
   factory PrinterDevice.fromJson(json) => PrinterDevice(

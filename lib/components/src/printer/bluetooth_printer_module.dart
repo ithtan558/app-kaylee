@@ -4,36 +4,33 @@ import 'dart:typed_data';
 import 'package:anth_package/anth_package.dart';
 import 'package:bluetooth_print/bluetooth_print.dart';
 import 'package:bluetooth_print/bluetooth_print_model.dart';
-
 // import 'package:bluetooth_print/bluetooth_print.dart';
 // import 'package:bluetooth_print/bluetooth_print_model.dart';
 import 'package:flutter/material.dart';
 
 class BluetoothPrinterModule {
-  static BluetoothPrint bluetoothPrint;
+  static late BluetoothPrint bluetoothPrint;
   static bool connected = false;
 
   static Future<void> init() async {
     bluetoothPrint = BluetoothPrint.instance;
   }
 
-  static Uint8List _tempData;
+  static Uint8List? _tempData;
 
   static Future printOrder({
-    BuildContext context,
-    Uint8List data,
-    VoidCallback onFinished,
-    VoidCallback onLoading,
+    required BuildContext context,
+    Uint8List? data,
+    VoidCallback? onFinished,
+    VoidCallback? onLoading,
   }) async {
     onLoading?.call();
-    if (data.isNull) {
-      if (_tempData.isNull)
-        return;
-      else
-        data = _tempData;
-    }
-    String base64Image = base64Encode(data);
-    List<LineText> list = List();
+    if (data == null && _tempData == null) {
+      return;
+    } else
+      data = _tempData;
+    String base64Image = base64Encode(data!);
+    List<LineText> list = [];
     list.add(LineText(
         type: LineText.TYPE_IMAGE,
         content: base64Image,
