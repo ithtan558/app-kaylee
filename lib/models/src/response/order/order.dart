@@ -46,66 +46,66 @@ class Order {
     this.employees,
   });
 
-  int id;
-  String code;
+  int? id;
+  String? code;
 
   ///số tiền thanh toán
-  int amount;
+  int? amount;
   @JsonKey(name: 'order_status_id', unknownEnumValue: OrderStatus.unknown)
-  OrderStatus status;
+  OrderStatus? status;
   @JsonKey(name: 'order_reason_cancel')
-  OrderCancellationReason cancellationReason;
-  DateTime createdAt;
+  OrderCancellationReason? cancellationReason;
+  DateTime? createdAt;
 
-  String supplierName;
-  int count;
+  String? supplierName;
+  int? count;
 
   @JsonKey(fromJson: parseBoolFromInt, toJson: parseBoolToInt)
-  bool isPaid;
+  bool? isPaid;
 
   /*begin: customer info*/
-  String name;
-  String phone;
-  String email;
-  Customer customer;
+  String? name;
+  String? phone;
+  String? email;
+  Customer? customer;
 
   /*end: customer info*/
 
-  String note;
+  String? note;
 
-  int subTotal;
+  int? subTotal;
 
   ///số tiền giảm giá
-  int discount;
+  int? discount;
 
   ///tính % giảm giá (từ 0 -> 100, kiểu Integer) dựa trên số tiền giảm giá [discount] và số tiền thanh toán [amount]
   @JsonKey(ignore: true)
   int get discountPercent {
     if (amount == 0) return 0;
-    return discount * 100 ~/ (discount + amount);
+    return (discount ?? 0) * 100 ~/ ((discount ?? 0) + amount!);
   }
 
   @JsonKey(ignore: true)
   int get total => (discount ?? 0) + (amount ?? 0);
-  int taxValue;
-  int supplierId;
-  String employeeFirstName;
-  String employeeLastName;
+  int? taxValue;
+  int? supplierId;
+  String? employeeFirstName;
+  String? employeeLastName;
 
-  Employee employee;
-  List<Employee> employees;
+  Employee? employee;
+  List<Employee>? employees;
 
-  Brand brand;
-  String brandName;
-  String informationReceiveName;
-  String informationReceivePhone;
-  String informationReceiveAddress;
-  String informationReceiveCityName;
-  String informationReceiveDistrictName;
-  String informationReceiveWardsName;
-  String informationReceiveNote;
+  Brand? brand;
+  String? brandName;
+  String? informationReceiveName;
+  String? informationReceivePhone;
+  String? informationReceiveAddress;
+  String? informationReceiveCityName;
+  String? informationReceiveDistrictName;
+  String? informationReceiveWardsName;
+  String? informationReceiveNote;
   @JsonKey(name: 'order_details')
-  List<OrderItem> orderItems;
+  List<OrderItem>? orderItems;
 }
 
 enum OrderStatus {
@@ -129,7 +129,7 @@ enum OrderStatus {
   unknown,
 }
 
-String orderStatus2Title({OrderStatus status}) {
+String orderStatus2Title({OrderStatus? status}) {
   switch (status) {
     case OrderStatus.ordered:
       return Strings.daTiepNhan;
