@@ -139,7 +139,6 @@ mixin IosBluetoothPrinterMixin on BluetoothPrinterMixin {
 
   void requestDisconnectingBluetoothDevice() async {
     emit(PrinterDetailStateRequestingDisconnectBluetooth());
-
     final result = await connect();
     print('[TUNG] ===> requestDisconnectingBluetoothDevice result $result');
     _startRequestDisconnectingTimeOut();
