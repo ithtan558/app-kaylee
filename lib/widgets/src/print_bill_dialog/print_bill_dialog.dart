@@ -17,7 +17,7 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
 class PrintBillDialog extends StatefulWidget {
-  static Widget newInstance({Order order}) => BlocProvider(
+  static Widget newInstance({required Order order}) => BlocProvider(
         create: (context) => Platform.isAndroid
             ? AndroidPrinterDetailBloc()
             : IosPrinterDetailBloc(),
@@ -28,7 +28,7 @@ class PrintBillDialog extends StatefulWidget {
 
   final Order order;
 
-  PrintBillDialog._({this.order});
+  PrintBillDialog._({required this.order});
 
   @override
   _PrintBillDialogState createState() => _PrintBillDialogState();
@@ -38,7 +38,7 @@ class _PrintBillDialogState extends KayleeState<PrintBillDialog> {
   Order get _order => widget.order;
   bool showingBluetoothDialogSuccess = false;
 
-  PrinterDetailBase get _bloc => context.bloc<PrinterDetailBase>();
+  PrinterDetailBase get _bloc => context.read<PrinterDetailBase>();
 
   @override
   void initState() {
@@ -46,16 +46,14 @@ class _PrintBillDialogState extends KayleeState<PrintBillDialog> {
     _bloc.initState();
   }
 
-  Uint8List _data;
+  late Uint8List _data;
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<PrinterDetailBase, PrinterDetailState>(
       listener: (context, state) async {
-        print('[TUNG] ===> PrinterDetailState $PrintBillDialog $state');
         if (state is PrinterDetailStateConnectedBluetooth) {
           hideLoading();
-          print('[TUNG] ===> PrinterDetailStateConnectedBluetooth hideLoading');
           BluetoothPrinterModule.printOrder(
             onLoading: () {
               // showLoading();
@@ -154,7 +152,7 @@ class _PrintBillDialogState extends KayleeState<PrintBillDialog> {
                   height: context.screenSize.height,
                   child: snapshot.hasData
                       ? PdfPreview(
-                          build: (format) => snapshot.data.save(),
+                    build: (format) => snapshot.data!.save(),
                           useActions: false,
                         )
                       : null,
@@ -195,7 +193,7 @@ class _PrintBillDialogState extends KayleeState<PrintBillDialog> {
                                     onPressed: () async {
                                       //print with bluetooth
                                       return getPdfRasterForRol57(
-                                        data: snapshot.data.save(),
+                                        data: snapshot.data!.save(),
                                         onPrint: (data) async {
                                           _data = data;
                                           _bloc.checkBluetoothEnable();
@@ -222,7 +220,7 @@ class _PrintBillDialogState extends KayleeState<PrintBillDialog> {
     );
   }
 
-  Widget _buildWifiPrintButton({AsyncSnapshot<pw.Document> snapshot}) {
+  Widget _buildWifiPrintButton({required AsyncSnapshot<pw.Document> snapshot}) {
     return KayLeeRoundedButton.normal(
       margin: EdgeInsets.zero,
       text: Strings.In,
@@ -231,7 +229,7 @@ class _PrintBillDialogState extends KayleeState<PrintBillDialog> {
           //print with wifi
           showLoading();
           return getPdfRasterForRol80(
-            data: snapshot.data.save(),
+            data: snapshot.data!.save(),
             onPrint: (data) async {
               await PrinterModule.connectPrinter(context,
                   order: _order, image: data);
@@ -244,7 +242,8 @@ class _PrintBillDialogState extends KayleeState<PrintBillDialog> {
   }
 }
 
-Future<void> showKayleePrintOrderDialog({BuildContext context, Order order}) {
+Future<void> showKayleePrintOrderDialog(
+    {required BuildContext context, required Order order}) {
   return showKayleeDialog(
       context: context,
       margin: const EdgeInsets.symmetric(horizontal: Dimens.px24)
