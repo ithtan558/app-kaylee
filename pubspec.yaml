@@ -6,7 +6,6 @@ description: Kaylee application.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 version: 1.0.9+10009
-version: 1.0.6+10006
 
 environment:
   sdk: ">=2.10.4 <3.0.0"
