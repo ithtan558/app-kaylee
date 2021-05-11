@@ -9,7 +9,7 @@ import 'package:kaylee/services/services.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class PolicyCheckBox extends StatefulWidget {
-  final ValueSetter<bool> onChecked;
+  final ValueSetter<bool>? onChecked;
 
   PolicyCheckBox({this.onChecked});
 
@@ -65,10 +65,10 @@ class _PolicyCheckBoxState extends BaseState<PolicyCheckBox> {
 }
 
 class _PolicyView extends StatefulWidget {
-  static Widget newInstance({ScrollController scrollController}) =>
+  static Widget newInstance({required ScrollController scrollController}) =>
       BlocProvider(
         create: (context) => _PolicyViewBloc(
-            context.repository<NetworkModule>().provideCommonService()),
+            context.read<NetworkModule>().provideCommonService()),
         child: _PolicyView._(
           scrollController: scrollController,
         ),
@@ -76,25 +76,23 @@ class _PolicyView extends StatefulWidget {
 
   final ScrollController scrollController;
 
-  _PolicyView._({this.scrollController});
+  _PolicyView._({required this.scrollController});
 
   @override
   _PolicyViewState createState() => _PolicyViewState();
 }
 
 class _PolicyViewState extends BaseState<_PolicyView> {
-  _PolicyViewBloc bloc;
+  _PolicyViewBloc get bloc => context.read<_PolicyViewBloc>();
 
   @override
   void initState() {
     super.initState();
-    bloc = context.bloc<_PolicyViewBloc>();
     bloc.loadPolicy();
   }
 
   @override
   void dispose() {
-    bloc.close();
     super.dispose();
   }
 
@@ -110,7 +108,7 @@ class _PolicyViewState extends BaseState<_PolicyView> {
           return Column(
             children: [
               KayleeText.normal16W500(
-                state.content?.name,
+                state.content?.name ?? '',
                 overflow: TextOverflow.visible,
                 maxLines: 1,
               ),
@@ -124,7 +122,7 @@ class _PolicyViewState extends BaseState<_PolicyView> {
                         right: Dimens.px16,
                         bottom: Dimens.px16),
                     child: HtmlWidget(
-                      state.content.content,
+                      state.content?.content ?? '',
                       textStyle: TextStyles.normal16W400,
                     ),
                   ),
@@ -187,13 +185,13 @@ class _PolicyViewBloc extends BaseBloc {
 }
 
 class _SuccessPolicyViewEvent {
-  Content content;
+  Content? content;
 
   _SuccessPolicyViewEvent(this.content);
 }
 
 class _SuccessPolicyViewState {
-  Content content;
+  Content? content;
 
   _SuccessPolicyViewState(this.content);
 }
