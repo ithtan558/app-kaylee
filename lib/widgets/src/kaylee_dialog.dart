@@ -6,15 +6,15 @@ import 'package:kaylee/widgets/widgets.dart';
 
 BuildContext? dialogContext;
 
-Future<T> showKayleeBottomSheet<T>(BuildContext context,
-    {@required ScrollableWidgetBuilder builder,
+Future<T?> showKayleeBottomSheet<T>(BuildContext context,
+    {required ScrollableWidgetBuilder builder,
     double maxChildSize = 1,
     bool expand = true,
     double initialChildSize = 0.5,
     double minChildSize = 0.25}) {
-  final maxSize = maxChildSize ?? 1;
-  final initSize = initialChildSize ?? 0.5;
-  final minSize = minChildSize ?? 0.25;
+  final maxSize = maxChildSize;
+  final initSize = initialChildSize;
+  final minSize = minChildSize;
   return showModalBottomSheet<T>(
       context: context,
       shape: const RoundedRectangleBorder(
@@ -72,8 +72,7 @@ Future<T> showKayleeBottomSheet<T>(BuildContext context,
                                 borderRadius:
                                     BorderRadius.circular(Dimens.px3))),
                         Expanded(
-                          child:
-                              builder(context, scrollController) ?? Container(),
+                          child: builder(context, scrollController),
                         )
                       ],
                     ),
@@ -88,22 +87,21 @@ Future<T> showKayleeBottomSheet<T>(BuildContext context,
 }
 
 Future<void> showKayleeDialog({
-  @required BuildContext context,
+  required BuildContext context,
   bool barrierDismissible = true,
   bool showFullScreen = false,
   bool showShadow = false,
-  BorderRadius borderRadius,
-  EdgeInsets margin,
-  Widget child,
-  ValueSetter onDismiss,
+  BorderRadius? borderRadius,
+  EdgeInsets margin = const EdgeInsets.symmetric(horizontal: Dimens.px24),
+  Widget? child,
+  ValueSetter? onDismiss,
 }) {
   return showGeneralDialog(
           context: context,
           barrierLabel: '',
           pageBuilder: (c, anim1, anim2) {
             final c = Container(
-              margin:
-                  margin ?? const EdgeInsets.symmetric(horizontal: Dimens.px24),
+              margin: margin,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 boxShadow: [
@@ -139,10 +137,10 @@ Future<void> showKayleeDialog({
 }
 
 Future showKayleeAlertDialog(
-    {@required BuildContext context,
-    KayleeAlertDialogView view,
-    VoidCallback onDismiss,
-    RouteSettings routeSettings}) {
+    {required BuildContext context,
+    KayleeAlertDialogView? view,
+    VoidCallback? onDismiss,
+    RouteSettings? routeSettings}) {
   return showCupertinoDialog(
           context: context,
           builder: (c) {
@@ -159,52 +157,44 @@ Future showKayleeAlertDialog(
 
 ///show cupertino dialog với [message], chỉ có 1 action 'Đồng ý'
 Future showKayleeAlertMessageYesDialog(
-    {@required BuildContext context,
-    Message message,
-    VoidCallback onPressed,
-    VoidCallback onDismiss}) {
+    {required BuildContext context,
+    Message? message,
+    VoidCallback? onPressed,
+    VoidCallback? onDismiss}) {
   return showKayleeAlertDialog(
       context: context,
       view: KayleeAlertDialogView.message(
         message: message,
-        actions: [
-          KayleeAlertDialogAction.dongY(
-            onPressed: onPressed,
-          )
-        ],
+        actions: [KayleeAlertDialogAction.dongY(onPressed: onPressed)],
       ),
       onDismiss: onDismiss);
 }
 
 ///show cupertino dialog với [error], chỉ có 1 action 'Đồng ý'
 Future showKayleeAlertErrorYesDialog(
-    {@required BuildContext context,
-    Error error,
-    VoidCallback onPressed,
-    VoidCallback onDismiss}) {
+    {required BuildContext context,
+    Error? error,
+    VoidCallback? onPressed,
+    VoidCallback? onDismiss}) {
   return showKayleeAlertDialog(
       context: context,
       view: KayleeAlertDialogView.error(
         error: error,
-        actions: [
-          KayleeAlertDialogAction.dongY(
-            onPressed: onPressed,
-          )
-        ],
+        actions: [KayleeAlertDialogAction.dongY(onPressed: onPressed)],
       ),
       onDismiss: onDismiss);
 }
 
 ///view cupertino dialog để hiện thị trong [showKayleeAlertDialog]
 class KayleeAlertDialogView extends StatelessWidget {
-  final String title;
-  final String content;
-  final Widget contentWidget;
-  final List<KayleeAlertDialogAction> actions;
+  final String? title;
+  final String? content;
+  final Widget? contentWidget;
+  final List<KayleeAlertDialogAction>? actions;
 
   ///show cupertino dialog với [error] truyền vào
   factory KayleeAlertDialogView.error(
-          {Error error, List<KayleeAlertDialogAction> actions}) =>
+          {Error? error, List<KayleeAlertDialogAction>? actions}) =>
       KayleeAlertDialogView(
         title: error?.title,
         content: error?.message,
@@ -213,7 +203,7 @@ class KayleeAlertDialogView extends StatelessWidget {
 
   ///show cupertino dialog với [message] truyền vào
   factory KayleeAlertDialogView.message(
-          {Message message, List<KayleeAlertDialogAction> actions}) =>
+          {Message? message, List<KayleeAlertDialogAction>? actions}) =>
       KayleeAlertDialogView(
         title: message?.title,
         content: message?.content,
@@ -226,18 +216,12 @@ class KayleeAlertDialogView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoAlertDialog(
-      title: title.isNotNull
-          ? Text(
-              title,
-            )
-          : null,
+      title: title != null ? Text(title!) : null,
       content: contentWidget ??
-          (content.isNotNull
+          (content != null
               ? Padding(
                   padding: const EdgeInsets.only(top: Dimens.px3),
-                  child: Text(
-                    content,
-                  ),
+                  child: Text(content!),
                 )
               : null),
       actions: actions ?? [],
@@ -248,17 +232,17 @@ class KayleeAlertDialogView extends StatelessWidget {
 ///action button trong [KayleeAlertDialogAction]
 class KayleeAlertDialogAction extends StatelessWidget {
   final String title;
-  final void Function() onPressed;
+  final VoidCallback? onPressed;
   final bool isDefaultAction;
 
-  factory KayleeAlertDialogAction.huy({void Function() onPressed}) =>
+  factory KayleeAlertDialogAction.huy({VoidCallback? onPressed}) =>
       KayleeAlertDialogAction(
         title: Strings.huy,
         onPressed: onPressed,
       );
 
   factory KayleeAlertDialogAction.dongY(
-          {void Function() onPressed, bool isDefaultAction = false}) =>
+          {VoidCallback? onPressed, bool isDefaultAction = false}) =>
       KayleeAlertDialogAction(
         title: Strings.dongY,
         onPressed: onPressed,
@@ -266,19 +250,15 @@ class KayleeAlertDialogAction extends StatelessWidget {
       );
 
   KayleeAlertDialogAction(
-      {@required this.title, this.onPressed, this.isDefaultAction = false});
+      {required this.title, this.onPressed, this.isDefaultAction = false});
 
   @override
   Widget build(BuildContext context) {
     return CupertinoDialogAction(
-      child: Text(
-        title ?? '',
-      ),
-      isDefaultAction: isDefaultAction ?? false,
+      child: Text(title),
+      isDefaultAction: isDefaultAction,
       onPressed: () {
-        if (onPressed.isNotNull) {
-          onPressed();
-        }
+        onPressed?.call();
       },
     );
   }
@@ -287,10 +267,10 @@ class KayleeAlertDialogAction extends StatelessWidget {
 ///vd: show date time picker
 ///[onDismiss] trả callback khi dialog dismiss hoặc user click 'Huỷ'
 Future showPickerPopup(
-    {@required BuildContext context,
-    @required WidgetBuilder builder,
-    VoidCallback onDone,
-    VoidCallback onDismiss}) {
+    {required BuildContext context,
+    required WidgetBuilder builder,
+    VoidCallback? onDone,
+    VoidCallback? onDismiss}) {
   final screenHeight = context.screenSize.height;
   return showCupertinoModalPopup(
       context: context,
@@ -370,39 +350,44 @@ Future showPickerPopup(
             ),
           ),
         );
-      }).then((value) {
+      }).then((_) {
     onDismiss?.call();
   });
 }
 
 ///change amount dialog
 Future showKayleeAmountChangingDialog({
-  @required BuildContext context,
-  String title,
-  int initAmount,
-  ValueSetter<int> onAmountChange,
-  VoidCallback onRemoveItem,
+  required BuildContext context,
+  required String title,
+  required int initAmount,
+  ValueSetter<int>? onAmountChange,
+  VoidCallback? onRemoveItem,
 }) {
   return showKayleeDialog(
-      context: context,
-      borderRadius: BorderRadius.circular(Dimens.px5),
-      margin: const EdgeInsets.symmetric(horizontal: Dimens.px16),
-      child: _KayleeAmountChangingView(
-        title: title,
-        initAmount: initAmount,
-        onAmountChange: onAmountChange,
-        onRemoveItem: onRemoveItem,
-      ));
+    context: context,
+    borderRadius: BorderRadius.circular(Dimens.px5),
+    margin: const EdgeInsets.symmetric(horizontal: Dimens.px16),
+    child: _KayleeAmountChangingView(
+      title: title,
+      initAmount: initAmount,
+      onAmountChange: onAmountChange,
+      onRemoveItem: onRemoveItem,
+    ),
+  );
 }
 
 class _KayleeAmountChangingView extends StatefulWidget {
   final String title;
   final int initAmount;
-  final ValueSetter<int> onAmountChange;
-  final VoidCallback onRemoveItem;
+  final ValueSetter<int>? onAmountChange;
+  final VoidCallback? onRemoveItem;
 
-  _KayleeAmountChangingView(
-      {this.title, this.initAmount, this.onAmountChange, this.onRemoveItem});
+  _KayleeAmountChangingView({
+    required this.title,
+    required this.initAmount,
+    this.onAmountChange,
+    this.onRemoveItem,
+  });
 
   @override
   _KayleeAmountChangingViewState createState() =>
@@ -487,14 +472,12 @@ class _KayleeAmountChangingViewState
                       RoundedRectangleBorder(borderRadius: BorderRadius.zero),
                   onPressed: () {
                     if (current <= 0) {
-                      if (widget.onRemoveItem.isNotNull) {
-                        widget.onRemoveItem();
-                      }
+                      widget.onRemoveItem?.call();
                     } else {
-                      if (widget.onAmountChange.isNotNull &&
+                      if (
                           //chỉ khi amount trước và hiện tại khác nhau mới trả callback
                           current != widget.initAmount) {
-                        widget.onAmountChange(current);
+                        widget.onAmountChange?.call(current);
                       }
                     }
                     popScreen();
@@ -513,12 +496,12 @@ class _KayleeAmountChangingViewState
 }
 
 Future<dynamic> showKayleeDatePickerDialog(
-    {@required BuildContext context,
-    DateTime initialDateTime,
-    VoidCallback onDone,
-    VoidCallback onDismiss,
-    ValueChanged<DateTime> onDateTimeChanged,
-    DateTime maximumDate}) {
+    {required BuildContext context,
+    DateTime? initialDateTime,
+    VoidCallback? onDone,
+    VoidCallback? onDismiss,
+    required ValueChanged<DateTime> onDateTimeChanged,
+    DateTime? maximumDate}) {
   return showPickerPopup(
     context: context,
     onDone: onDone,
