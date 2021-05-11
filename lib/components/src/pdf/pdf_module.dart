@@ -83,7 +83,7 @@ class PdfModule {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('${order.brand.name ?? ''}',
+                Text('${order.brand?.name ?? ''}',
                     style:
                         theme!.header1.copyWith(fontWeight: FontWeight.bold)),
               ],
@@ -93,7 +93,7 @@ class PdfModule {
               child:
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Text(
-                  'ĐC: ${order.brand.location ?? ''}',
+                  'ĐC: ${order.brand?.location ?? ''}',
                 ),
               ]),
             ),
@@ -102,7 +102,7 @@ class PdfModule {
               child:
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Text(
-                  'ĐT: ${order.brand.phone}',
+                  'ĐT: ${order.brand?.phone}',
                 ),
               ]),
             ),
