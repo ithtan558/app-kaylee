@@ -1,3 +1,3 @@
 class Filter {
-  String keyword;
+  String? keyword;
 }
