@@ -20,7 +20,8 @@ int? _parseCartEmployee(Object? input) {
 }
 
 List<int>? _parseCartEmployees(List<Employee>? input) {
-  return (input?.map((e) => e.id))?.toList();
+  return ((input?.where((element) => element.id != null))?.map((e) => e.id!))
+      ?.toList();
 }
 
 int? _parseSupplierId(Supplier? supplier) {
@@ -45,15 +46,13 @@ class OrderRequest {
         id: order.id,
         customer: order.customer,
         discount: order.discountPercent,
-        cartItems: order.orderItems
-            .map((e) => OrderRequestItem(
-                  serviceId: e.serviceId,
-                  productId: e.productId,
-                  quantity: e.quantity,
-                  price: e.price,
-                  name: e.name,
-                ))
-            .toList(),
+        cartItems: (order.orderItems?.map((e) => OrderRequestItem(
+              serviceId: e.serviceId,
+              productId: e.productId,
+              quantity: e.quantity,
+              price: e.price,
+              name: e.name,
+            )))?.toList(),
         employee: order.employee,
         employees: order.employees,
         brand: order.brand,
