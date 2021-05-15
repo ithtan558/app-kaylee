@@ -15,7 +15,7 @@ class Campaign {
     this.content,
   });
 
-  int id;
-  String key;
-  String content;
+  int? id;
+  String? key;
+  String? content;
 }

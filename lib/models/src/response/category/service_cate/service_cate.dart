@@ -11,5 +11,19 @@ class ServiceCate extends Category {
 
   Map<String, dynamic> toJson() => _$ServiceCateToJson(this);
 
-  ServiceCate();
+  ServiceCate({
+    int? id,
+    String? code,
+    String? name,
+    String? description,
+    int? sequence,
+    String? image,
+  }) : super(
+          id: id,
+          code: code,
+          name: name,
+          description: description,
+          sequence: sequence,
+          image: image,
+        );
 }

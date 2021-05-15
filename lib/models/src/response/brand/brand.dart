@@ -27,19 +27,19 @@ class Brand {
       this.imageFile,
       this.selected = false});
 
-  int id;
-  String name;
-  String phone;
-  String location;
-  String startTime;
-  String endTime;
-  String image;
-  String logo;
+  int? id;
+  String? name;
+  String? phone;
+  String? location;
+  String? startTime;
+  String? endTime;
+  String? image;
+  String? logo;
   @JsonKey(ignore: true)
-  File imageFile;
-  City city;
-  District district;
-  Ward wards;
+  File? imageFile;
+  City? city;
+  District? district;
+  Ward? wards;
 
   StartTime get start => StartTime(time: this.startTime);
 

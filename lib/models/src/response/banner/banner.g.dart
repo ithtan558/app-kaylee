@@ -8,12 +8,12 @@ part of 'banner.dart';
 
 Banner _$BannerFromJson(Map<String, dynamic> json) {
   return Banner(
-    id: json['id'] as int,
-    title: json['title'] as String,
-    image: json['image'] as String,
-    description: json['description'] as String,
-    url: json['url'] as String,
-    type: json['type'] as int,
+    id: json['id'] as int?,
+    title: json['title'] as String?,
+    image: json['image'] as String?,
+    description: json['description'] as String?,
+    url: json['url'] as String?,
+    type: json['type'] as int?,
   );
 }
 

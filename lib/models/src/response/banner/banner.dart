@@ -17,20 +17,20 @@ class Banner {
     this.type,
   });
 
-  final int id;
-  final String title;
-  final String image;
-  final String description;
-  final String url;
-  final int type;
+  final int? id;
+  final String? title;
+  final String? image;
+  final String? description;
+  final String? url;
+  final int? type;
 
   Banner copyWith({
-    int id,
-    String title,
-    String image,
-    String description,
-    String url,
-    int type,
+    int? id,
+    String? title,
+    String? image,
+    String? description,
+    String? url,
+    int? type,
   }) =>
       Banner(
         id: id ?? this.id,

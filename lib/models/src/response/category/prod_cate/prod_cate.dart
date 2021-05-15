@@ -11,5 +11,19 @@ class ProdCate extends Category {
 
   Map<String, dynamic> toJson() => _$ProdCateToJson(this);
 
-  ProdCate();
+  ProdCate({
+    int? id,
+    String? code,
+    String? name,
+    String? description,
+    int? sequence,
+    String? image,
+  }) : super(
+          id: id,
+          code: code,
+          name: name,
+          description: description,
+          sequence: sequence,
+          image: image,
+        );
 }

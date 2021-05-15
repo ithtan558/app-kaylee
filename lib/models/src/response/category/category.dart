@@ -8,10 +8,10 @@ class Category {
     this.image,
   });
 
-  int id;
-  String code;
-  String name;
-  String description;
-  int sequence;
-  String image;
+  int? id;
+  String? code;
+  String? name;
+  String? description;
+  int? sequence;
+  String? image;
 }
