@@ -8,9 +8,9 @@ part of 'district.dart';
 
 District _$DistrictFromJson(Map<String, dynamic> json) {
   return District(
-    id: json['id'] as int,
-    name: json['name'] as String,
-    cityId: json['city_id'] as int,
+    id: json['id'] as int?,
+    name: json['name'] as String?,
+    cityId: json['city_id'] as int?,
   );
 }
 

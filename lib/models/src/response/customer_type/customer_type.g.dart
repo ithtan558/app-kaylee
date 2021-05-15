@@ -8,9 +8,9 @@ part of 'customer_type.dart';
 
 CustomerType _$CustomerTypeFromJson(Map<String, dynamic> json) {
   return CustomerType(
-    id: json['id'] as int,
-    code: json['code'] as String,
-    name: json['name'] as String,
+    id: json['id'] as int?,
+    code: json['code'] as String?,
+    name: json['name'] as String?,
   );
 }
 

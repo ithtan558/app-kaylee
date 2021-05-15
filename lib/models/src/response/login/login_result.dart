@@ -16,7 +16,8 @@ class LoginResult {
     this.userInfo,
   });
 
-  String token;
+  String? token;
+
   String get requestToken => 'Bearer $token';
-  UserInfo userInfo;
+  UserInfo? userInfo;
 }

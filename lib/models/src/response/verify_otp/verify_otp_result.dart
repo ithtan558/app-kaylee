@@ -15,6 +15,6 @@ class VerifyOtpResult {
     this.userId,
   });
 
-  String tokenResetPassword;
-  int userId;
+  String? tokenResetPassword;
+  int? userId;
 }

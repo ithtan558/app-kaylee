@@ -18,9 +18,9 @@ class Supplier {
     this.facebook,
   });
 
-  int id;
-  String name;
-  String description;
-  String image;
-  String facebook;
+  int? id;
+  String? name;
+  String? description;
+  String? image;
+  String? facebook;
 }

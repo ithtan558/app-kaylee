@@ -8,12 +8,12 @@ part of 'content.dart';
 
 Content _$ContentFromJson(Map<String, dynamic> json) {
   return Content(
-    id: json['id'] as int,
-    name: json['name'] as String,
-    code: json['code'] as String,
-    description: json['description'] as String,
-    content: json['content'] as String,
-    image: json['image'] as String,
+    id: json['id'] as int?,
+    name: json['name'] as String?,
+    code: json['code'] as String?,
+    description: json['description'] as String?,
+    content: json['content'] as String?,
+    image: json['image'] as String?,
   );
 }
 

@@ -26,37 +26,37 @@ class CreateOrderResult {
     this.orderId,
   });
 
-  final int clientId;
-  final int brandId;
-  final int employeeId;
-  final int customerId;
-  final int orderStatusId;
-  final int isPaid;
-  final int supplierId;
-  final String name;
-  final String phone;
-  final String note;
-  final int amount;
-  final int discount;
-  final int createdBy;
+  final int? clientId;
+  final int? brandId;
+  final int? employeeId;
+  final int? customerId;
+  final int? orderStatusId;
+  final int? isPaid;
+  final int? supplierId;
+  final String? name;
+  final String? phone;
+  final String? note;
+  final int? amount;
+  final int? discount;
+  final int? createdBy;
   @JsonKey(name: 'id')
-  final int orderId;
+  final int? orderId;
 
   CreateOrderResult copyWith({
-    int clientId,
-    int brandId,
-    int employeeId,
-    int customerId,
-    int orderStatusId,
-    int isPaid,
-    int supplierId,
-    String name,
-    String phone,
-    String note,
-    int amount,
-    int discount,
-    int createdBy,
-    int orderId,
+    int? clientId,
+    int? brandId,
+    int? employeeId,
+    int? customerId,
+    int? orderStatusId,
+    int? isPaid,
+    int? supplierId,
+    String? name,
+    String? phone,
+    String? note,
+    int? amount,
+    int? discount,
+    int? createdBy,
+    int? orderId,
   }) =>
       CreateOrderResult(
         clientId: clientId ?? this.clientId,

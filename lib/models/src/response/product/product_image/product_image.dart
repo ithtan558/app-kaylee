@@ -14,12 +14,12 @@ class ProductImage {
     this.value,
   });
 
-  final ProductImageType type;
-  final String value;
+  final ProductImageType? type;
+  final String? value;
 
   ProductImage copyWith({
-    int type,
-    String value,
+    ProductImageType? type,
+    String? value,
   }) =>
       ProductImage(
         type: type ?? this.type,

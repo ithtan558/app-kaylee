@@ -8,8 +8,8 @@ part of 'commission_detail.dart';
 
 CommissionDetail _$CommissionDetailFromJson(Map<String, dynamic> json) {
   return CommissionDetail(
-    total: json['total'] as int,
-    commission: json['commission'] as int,
+    total: json['total'] as int?,
+    commission: json['commission'] as int?,
   );
 }
 

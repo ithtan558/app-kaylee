@@ -8,10 +8,10 @@ part of 'ward.dart';
 
 Ward _$WardFromJson(Map<String, dynamic> json) {
   return Ward(
-    id: json['id'] as int,
-    name: json['name'] as String,
-    cityId: json['city_id'] as int,
-    districtId: json['district_id'] as int,
+    id: json['id'] as int?,
+    name: json['name'] as String?,
+    cityId: json['city_id'] as int?,
+    districtId: json['district_id'] as int?,
   );
 }
 

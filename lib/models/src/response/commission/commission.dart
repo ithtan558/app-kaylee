@@ -17,7 +17,7 @@ class Commission {
     this.commissionService,
   });
 
-  int commissionTotal;
-  CommissionDetail commissionProduct;
-  CommissionDetail commissionService;
+  int? commissionTotal;
+  CommissionDetail? commissionProduct;
+  CommissionDetail? commissionService;
 }

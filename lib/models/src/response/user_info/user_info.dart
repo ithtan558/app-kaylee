@@ -30,34 +30,34 @@ class UserInfo {
       this.wards,
       this.role});
 
-  int id;
-  int brandId;
-  String name;
-  String email;
-  String phone;
-  String username;
-  String birthday;
+  int? id;
+  int? brandId;
+  String? name;
+  String? email;
+  String? phone;
+  String? username;
+  String? birthday;
 
-  DateTime get birthdayInDateTime {
-    if (birthday.isNull) return null;
-    DateTime date = DateTime.tryParse(birthday);
+  DateTime? get birthdayInDateTime {
+    if (birthday == null) return null;
+    DateTime? date = DateTime.tryParse(birthday!);
     return ((date?.year ?? -1) < 0) ? null : date;
   }
 
-  String address;
-  int gender;
-  String image;
+  String? address;
+  int? gender;
+  String? image;
   @JsonKey(ignore: true)
-  File imageFile;
-  City hometownCity;
-  City city;
-  District district;
-  Ward wards;
+  File? imageFile;
+  City? hometownCity;
+  City? city;
+  District? district;
+  Ward? wards;
   @JsonKey(
     name: 'role_id',
     unknownEnumValue: UserRole.EMPLOYEE,
   )
-  UserRole role;
+  UserRole? role;
 }
 
 enum UserRole {

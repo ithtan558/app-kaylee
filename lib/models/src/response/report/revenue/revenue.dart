@@ -14,5 +14,5 @@ class Revenue {
     this.totalValue,
   });
 
-  int totalValue;
+  int? totalValue;
 }

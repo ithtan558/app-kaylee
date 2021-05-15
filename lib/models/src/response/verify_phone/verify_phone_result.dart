@@ -13,5 +13,5 @@ class VerifyPhoneResult {
     this.userId,
   });
 
-  int userId;
+  int? userId;
 }

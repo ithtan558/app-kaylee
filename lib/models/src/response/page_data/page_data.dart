@@ -18,10 +18,10 @@ class PageData<T> {
     this.items,
   });
 
-  int page;
-  int limit;
-  int total;
-  int pages;
+  int? page;
+  int? limit;
+  int? total;
+  int? pages;
   @Converter()
-  List<T> items;
+  List<T>? items;
 }

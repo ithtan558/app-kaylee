@@ -23,16 +23,14 @@ class CommissionOrder {
     this.commissionService,
   });
 
-  int id;
-  String code;
-  String name;
-  int amount;
+  int? id;
+  String? code;
+  String? name;
+  int? amount;
   @JsonKey(name: 'order_status_id', unknownEnumValue: OrderStatus.unknown)
-  OrderStatus orderStatus;
-  String createdAt;
-
-  DateTime get createdAtDateTime => DateTime.tryParse(createdAt);
-  String supplierName;
-  int commissionProduct;
-  int commissionService;
+  OrderStatus? orderStatus;
+  DateTime? createdAt;
+  String? supplierName;
+  int? commissionProduct;
+  int? commissionService;
 }

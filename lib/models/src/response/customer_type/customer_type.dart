@@ -16,7 +16,7 @@ class CustomerType {
     this.name,
   });
 
-  int id;
-  String code;
-  String name;
+  int? id;
+  String? code;
+  String? name;
 }

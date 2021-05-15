@@ -8,13 +8,13 @@ part of 'order_item.dart';
 
 OrderItem _$OrderItemFromJson(Map<String, dynamic> json) {
   return OrderItem(
-    serviceId: json['service_id'] as int,
-    productId: json['product_id'] as int,
-    quantity: json['quantity'] as int,
-    price: json['price'] as int,
-    total: json['total'] as int,
-    name: json['name'] as String,
-    note: json['note'] as String,
+    serviceId: json['service_id'] as int?,
+    productId: json['product_id'] as int?,
+    quantity: json['quantity'] as int?,
+    price: json['price'] as int?,
+    total: json['total'] as int?,
+    name: json['name'] as String?,
+    note: json['note'] as String?,
   );
 }
 

@@ -8,9 +8,9 @@ part of 'commission_setting.dart';
 
 CommissionSetting _$CommissionSettingFromJson(Map<String, dynamic> json) {
   return CommissionSetting(
-    id: json['id'] as int,
-    commissionProduct: json['commission_product'] as int,
-    commissionService: json['commission_service'] as int,
+    id: json['id'] as int?,
+    commissionProduct: json['commission_product'] as int?,
+    commissionService: json['commission_service'] as int?,
   );
 }
 

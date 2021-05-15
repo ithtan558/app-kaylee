@@ -62,8 +62,7 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$OrderToJson(Order instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$OrderToJson(Order instance) => <String, dynamic>{
       'id': instance.id,
       'code': instance.code,
       'amount': instance.amount,

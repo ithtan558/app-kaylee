@@ -24,10 +24,10 @@ class Content {
     this.image,
   });
 
-  int id;
-  String name;
-  String code;
-  String description;
-  String content;
-  String image;
+  int? id;
+  String? name;
+  String? code;
+  String? description;
+  String? content;
+  String? image;
 }

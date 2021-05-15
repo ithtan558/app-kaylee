@@ -11,14 +11,14 @@ class FcmResponse {
   Map<String, dynamic> toJson() => _$FcmResponseToJson(this);
 
   @JsonKey(fromJson: _parseFcmNotificationFromJson)
-  FcmNotification notification;
+  FcmNotification? notification;
   @JsonKey(fromJson: _parseFcmApsFromJson)
-  FcmAps aps;
+  FcmAps? aps;
   @JsonKey(name: 'data', fromJson: _parseFcmDataFromJson)
-  final FcmData androidData;
-  final String link;
+  final FcmData? androidData;
+  final String? link;
   @JsonKey(name: 'click_action')
-  final String clickAction;
+  final String? clickAction;
 
   @JsonKey(ignore: true)
   FcmData get iosData => FcmData(link: link, clickAction: clickAction);
@@ -32,17 +32,17 @@ class FcmResponse {
   });
 }
 
-FcmNotification _parseFcmNotificationFromJson(json) {
+FcmNotification? _parseFcmNotificationFromJson(json) {
   return json == null
       ? null
       : FcmNotification.fromJson(json.cast<String, dynamic>());
 }
 
-FcmAps _parseFcmApsFromJson(json) {
+FcmAps? _parseFcmApsFromJson(json) {
   return json == null ? null : FcmAps.fromJson(json.cast<String, dynamic>());
 }
 
-FcmData _parseFcmDataFromJson(json) {
+FcmData? _parseFcmDataFromJson(json) {
   return json == null ? null : FcmData.fromJson(json.cast<String, dynamic>());
 }
 
@@ -53,8 +53,8 @@ class FcmNotification {
       _$FcmNotificationFromJson(json);
 
   Map<String, dynamic> toJson() => _$FcmNotificationToJson(this);
-  final String title;
-  final String body;
+  final String? title;
+  final String? body;
 
   FcmNotification({this.title, this.body});
 }
@@ -66,9 +66,8 @@ class FcmData {
 
   Map<String, dynamic> toJson() => _$FcmDataToJson(this);
 
-  final String link;
-  @JsonKey(name: 'click_action')
-  final String clickAction;
+  final String? link;
+  final String? clickAction;
 
   FcmData({
     this.link,
@@ -84,7 +83,7 @@ class FcmAps {
   Map<String, dynamic> toJson() => _$FcmApsToJson(this);
 
   @JsonKey(fromJson: _parseFcmNotificationFromJson)
-  final FcmNotification alert;
+  final FcmNotification? alert;
 
   FcmAps({this.alert});
 }

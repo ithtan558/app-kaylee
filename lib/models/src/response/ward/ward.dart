@@ -16,8 +16,8 @@ class Ward {
     this.districtId,
   });
 
-  int id;
-  String name;
-  int cityId;
-  int districtId;
+  int? id;
+  String? name;
+  int? cityId;
+  int? districtId;
 }

@@ -8,8 +8,8 @@ part of 'verify_otp_result.dart';
 
 VerifyOtpResult _$VerifyOtpResultFromJson(Map<String, dynamic> json) {
   return VerifyOtpResult(
-    tokenResetPassword: json['token_reset_password'] as String,
-    userId: json['user_id'] as int,
+    tokenResetPassword: json['token_reset_password'] as String?,
+    userId: json['user_id'] as int?,
   );
 }
 

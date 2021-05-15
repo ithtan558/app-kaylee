@@ -9,7 +9,7 @@ class RegisterResult {
 
   Map<String, dynamic> toJson() => _$RegisterResultToJson(this);
 
-  final int userId;
+  final int? userId;
 
   RegisterResult({this.userId});
 }

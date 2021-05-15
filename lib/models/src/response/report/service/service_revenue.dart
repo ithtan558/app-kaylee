@@ -17,8 +17,8 @@ class ServiceRevenue {
     this.amount,
   });
 
-  int price;
-  String quantity;
-  String name;
-  int amount;
+  int? price;
+  String? quantity;
+  String? name;
+  int? amount;
 }

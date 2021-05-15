@@ -16,7 +16,7 @@ class CommissionSetting {
     this.commissionService,
   });
 
-  int id;
-  int commissionProduct;
-  int commissionService;
+  int? id;
+  int? commissionProduct;
+  int? commissionService;
 }

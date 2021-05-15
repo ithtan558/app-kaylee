@@ -20,11 +20,11 @@ class OrderItem {
     this.note,
   });
 
-  int serviceId;
-  int productId;
-  int quantity;
-  int price;
-  int total;
-  String name;
-  String note;
+  int? serviceId;
+  int? productId;
+  int? quantity;
+  int? price;
+  int? total;
+  String? name;
+  String? note;
 }

@@ -16,9 +16,9 @@ class EmployeeRevenue {
     this.phone,
   });
 
-  int amount;
-  String name;
+  int? amount;
+  String? name;
 
   Employee get employee => Employee(name: name);
-  String phone;
+  String? phone;
 }

@@ -32,51 +32,36 @@ class Reservation {
       this.district,
       this.wards});
 
-  int id;
-  String code;
-  int brandId;
-  String brandName;
-  int customerId;
-  String name;
-  String phone;
-  String address;
-  @JsonKey(
-    fromJson: _parseReservationStatusFromJson,
-    toJson: _parseReservationStatusToJson,
-  )
-  ReservationStatus status;
-  DateTime datetime;
-  int quantity;
-  String note;
+  int? id;
+  String? code;
+  int? brandId;
+  String? brandName;
+  int? customerId;
+  String? name;
+  String? phone;
+  String? address;
+  ReservationStatus? status;
+  DateTime? datetime;
+  int? quantity;
+  String? note;
 
   @JsonKey(ignore: true)
   Customer get customer => Customer(id: customerId, name: name);
 
-  Brand brand;
-  City city;
-  District district;
-  Ward wards;
+  Brand? brand;
+  City? city;
+  District? district;
+  Ward? wards;
 }
 
-ReservationStatus _parseReservationStatusFromJson(int json) {
-  try {
-    return ReservationStatus.values.elementAt(json - 1);
-  } catch (e) {
-    return null;
-  }
-}
-
-int _parseReservationStatusToJson(ReservationStatus status) {
-  try {
-    return status.index + 1;
-  } catch (e) {
-    return null;
-  }
-}
 
 enum ReservationStatus {
+@JsonValue(1)
   booked,
+  @JsonValue(1)
   came,
+  @JsonValue(3)
   ordered,
+  @JsonValue(4)
   canceled,
 }

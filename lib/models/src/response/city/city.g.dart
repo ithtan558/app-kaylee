@@ -8,8 +8,8 @@ part of 'city.dart';
 
 City _$CityFromJson(Map<String, dynamic> json) {
   return City(
-    id: json['id'] as int,
-    name: json['name'] as String,
+    id: json['id'] as int?,
+    name: json['name'] as String?,
   );
 }
 

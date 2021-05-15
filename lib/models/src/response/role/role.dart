@@ -16,8 +16,8 @@ class Role {
     this.description,
   });
 
-  int id;
-  String name;
-  String code;
-  String description;
+  int? id;
+  String? name;
+  String? code;
+  String? description;
 }

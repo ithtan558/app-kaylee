@@ -14,6 +14,6 @@ class CommissionDetail {
     this.commission,
   });
 
-  int total;
-  int commission;
+  int? total;
+  int? commission;
 }

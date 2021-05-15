@@ -28,17 +28,17 @@ class Customer {
     this.hometownCity,
   });
 
-  int id;
-  String name;
-  String phone;
-  String image;
+  int? id;
+  String? name;
+  String? phone;
+  String? image;
   @JsonKey(ignore: true)
-  File imageFile;
-  DateTime birthday;
-  String email;
-  String address;
-  City city;
-  District district;
-  Ward wards;
-  City hometownCity;
+  File? imageFile;
+  DateTime? birthday;
+  String? email;
+  String? address;
+  City? city;
+  District? district;
+  Ward? wards;
+  City? hometownCity;
 }

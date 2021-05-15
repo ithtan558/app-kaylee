@@ -15,9 +15,9 @@ class District {
     this.cityId,
   });
 
-  int id;
-  String name;
-  int cityId;
+  int? id;
+  String? name;
+  int? cityId;
   @JsonKey(ignore: true)
   bool selected = false;
 }
