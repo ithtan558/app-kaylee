@@ -8,10 +8,10 @@ part of 'service_revenue.dart';
 
 ServiceRevenue _$ServiceRevenueFromJson(Map<String, dynamic> json) {
   return ServiceRevenue(
-    price: json['price'] as int,
-    quantity: json['quantity'] as String,
-    name: json['name'] as String,
-    amount: json['amount'] as int,
+    price: json['price'] as int?,
+    quantity: json['quantity'] as String?,
+    name: json['name'] as String?,
+    amount: json['amount'] as int?,
   );
 }
 

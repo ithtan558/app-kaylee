@@ -8,9 +8,9 @@ part of 'employee_revenue.dart';
 
 EmployeeRevenue _$EmployeeRevenueFromJson(Map<String, dynamic> json) {
   return EmployeeRevenue(
-    amount: json['amount'] as int,
-    name: json['name'] as String,
-    phone: json['phone'] as String,
+    amount: json['amount'] as int?,
+    name: json['name'] as String?,
+    phone: json['phone'] as String?,
   );
 }
 

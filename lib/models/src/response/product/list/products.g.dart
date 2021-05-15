@@ -8,22 +8,24 @@ part of 'products.dart';
 
 Products _$ProductsFromJson(Map<String, dynamic> json) {
   return Products()
-    ..page = json['page'] as int
-    ..limit = json['limit'] as int
-    ..total = json['total'] as int
-    ..pages = json['pages'] as int
-    ..items = (json['items'] as List<dynamic>)
-        .map((e) => (e as List<dynamic>)
+    ..page = json['page'] as int?
+    ..limit = json['limit'] as int?
+    ..total = json['total'] as int?
+    ..pages = json['pages'] as int?
+    ..items = (json['items'] as List<dynamic>?)
+        ?.map((e) => (e as List<dynamic>)
             .map((e) => Product.fromJson(e as Map<String, dynamic>))
             .toList())
         .toList();
 }
 
-Map<String, dynamic> _$ProductsToJson(Products instance) => <String, dynamic>{
+Map<String, dynamic> _$ProductsToJson(Products instance) =>
+    <String, dynamic>{
       'page': instance.page,
       'limit': instance.limit,
       'total': instance.total,
       'pages': instance.pages,
-      'items':
-          instance.items.map((e) => e.map((e) => e.toJson()).toList()).toList(),
+      'items': instance.items
+          ?.map((e) => e.map((e) => e.toJson()).toList())
+          .toList(),
     };

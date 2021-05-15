@@ -8,21 +8,29 @@ part of 'user_info.dart';
 
 UserInfo _$UserInfoFromJson(Map<String, dynamic> json) {
   return UserInfo(
-    id: json['id'] as int,
-    brandId: json['brand_id'] as int,
-    name: json['name'] as String,
-    email: json['email'] as String,
-    phone: json['phone'] as String,
-    username: json['username'] as String,
-    birthday: json['birthday'] as String,
-    address: json['address'] as String,
-    gender: json['gender'] as int,
-    image: json['image'] as String,
-    hometownCity: City.fromJson(json['hometown_city'] as Map<String, dynamic>),
-    city: City.fromJson(json['city'] as Map<String, dynamic>),
-    district: District.fromJson(json['district'] as Map<String, dynamic>),
-    wards: Ward.fromJson(json['wards'] as Map<String, dynamic>),
-    role: _$enumDecode(_$UserRoleEnumMap, json['role_id'],
+    id: json['id'] as int?,
+    brandId: json['brand_id'] as int?,
+    name: json['name'] as String?,
+    email: json['email'] as String?,
+    phone: json['phone'] as String?,
+    username: json['username'] as String?,
+    birthday: json['birthday'] as String?,
+    address: json['address'] as String?,
+    gender: json['gender'] as int?,
+    image: json['image'] as String?,
+    hometownCity: json['hometown_city'] == null
+        ? null
+        : City.fromJson(json['hometown_city'] as Map<String, dynamic>),
+    city: json['city'] == null
+        ? null
+        : City.fromJson(json['city'] as Map<String, dynamic>),
+    district: json['district'] == null
+        ? null
+        : District.fromJson(json['district'] as Map<String, dynamic>),
+    wards: json['wards'] == null
+        ? null
+        : Ward.fromJson(json['wards'] as Map<String, dynamic>),
+    role: _$enumDecodeNullable(_$UserRoleEnumMap, json['role_id'],
         unknownValue: UserRole.EMPLOYEE),
   );
 }
@@ -38,10 +46,10 @@ Map<String, dynamic> _$UserInfoToJson(UserInfo instance) => <String, dynamic>{
       'address': instance.address,
       'gender': instance.gender,
       'image': instance.image,
-      'hometown_city': instance.hometownCity.toJson(),
-      'city': instance.city.toJson(),
-      'district': instance.district.toJson(),
-      'wards': instance.wards.toJson(),
+      'hometown_city': instance.hometownCity?.toJson(),
+      'city': instance.city?.toJson(),
+      'district': instance.district?.toJson(),
+      'wards': instance.wards?.toJson(),
       'role_id': _$UserRoleEnumMap[instance.role],
     };
 
@@ -69,6 +77,17 @@ K _$enumDecode<K, V>(
       return MapEntry(unknownValue, enumValues.values.first);
     },
   ).key;
+}
+
+K? _$enumDecodeNullable<K, V>(
+  Map<K, V> enumValues,
+  dynamic source, {
+  K? unknownValue,
+}) {
+  if (source == null) {
+    return null;
+  }
+  return _$enumDecode<K, V>(enumValues, source, unknownValue: unknownValue);
 }
 
 const _$UserRoleEnumMap = {

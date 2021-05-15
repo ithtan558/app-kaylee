@@ -8,10 +8,10 @@ part of 'role.dart';
 
 Role _$RoleFromJson(Map<String, dynamic> json) {
   return Role(
-    id: json['id'] as int,
-    name: json['name'] as String,
-    code: json['code'] as String,
-    description: json['description'] as String,
+    id: json['id'] as int?,
+    name: json['name'] as String?,
+    code: json['code'] as String?,
+    description: json['description'] as String?,
   );
 }
 

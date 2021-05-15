@@ -8,8 +8,8 @@ part of 'product_image.dart';
 
 ProductImage _$ProductImageFromJson(Map<String, dynamic> json) {
   return ProductImage(
-    type: _$enumDecode(_$ProductImageTypeEnumMap, json['type']),
-    value: json['value'] as String,
+    type: _$enumDecodeNullable(_$ProductImageTypeEnumMap, json['type']),
+    value: json['value'] as String?,
   );
 }
 
@@ -43,6 +43,17 @@ K _$enumDecode<K, V>(
       return MapEntry(unknownValue, enumValues.values.first);
     },
   ).key;
+}
+
+K? _$enumDecodeNullable<K, V>(
+  Map<K, V> enumValues,
+  dynamic source, {
+  K? unknownValue,
+}) {
+  if (source == null) {
+    return null;
+  }
+  return _$enumDecode<K, V>(enumValues, source, unknownValue: unknownValue);
 }
 
 const _$ProductImageTypeEnumMap = {

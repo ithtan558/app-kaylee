@@ -8,11 +8,11 @@ part of 'supplier.dart';
 
 Supplier _$SupplierFromJson(Map<String, dynamic> json) {
   return Supplier(
-    id: json['id'] as int,
-    name: json['name'] as String,
-    description: json['description'] as String,
-    image: json['image'] as String,
-    facebook: json['facebook'] as String,
+    id: json['id'] as int?,
+    name: json['name'] as String?,
+    description: json['description'] as String?,
+    image: json['image'] as String?,
+    facebook: json['facebook'] as String?,
   );
 }
 

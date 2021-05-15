@@ -8,7 +8,7 @@ part of 'register_result.dart';
 
 RegisterResult _$RegisterResultFromJson(Map<String, dynamic> json) {
   return RegisterResult(
-    userId: json['user_id'] as int,
+    userId: json['user_id'] as int?,
   );
 }
 

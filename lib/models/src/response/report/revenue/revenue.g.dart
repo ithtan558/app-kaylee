@@ -8,7 +8,7 @@ part of 'revenue.dart';
 
 Revenue _$RevenueFromJson(Map<String, dynamic> json) {
   return Revenue(
-    totalValue: json['total_value'] as int,
+    totalValue: json['total_value'] as int?,
   );
 }
 
