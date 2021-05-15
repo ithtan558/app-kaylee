@@ -86,7 +86,7 @@ class _CommSerOrderListState extends KayleeState<CommSerOrderList> {
                   itemBuilder: (c, index) {
                     final item = state.items.elementAt(index);
                     return CommOrderItem(
-                      date: item.createdAtDateTime,
+                      date: item.createdAt,
                       code: item.code,
                       name: item.name,
                       commissionAmount: item.commissionService,
