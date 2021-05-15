@@ -150,11 +150,13 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
           Future(() {
             final oldTopics = fcm.getTopics();
             oldTopics.forEach((campaign) {
-              FirebaseMessaging.instance.unsubscribeFromTopic(campaign.key);
+              if (campaign.key?.isNotEmpty ?? false)
+                FirebaseMessaging.instance.unsubscribeFromTopic(campaign.key!);
             });
             fcm.overrideTopics(campaigns: state.campaigns);
             fcm.getTopics().forEach((campaign) {
-              FirebaseMessaging.instance.subscribeToTopic(campaign.key);
+              if (campaign.key?.isNotEmpty ?? false)
+                FirebaseMessaging.instance.subscribeToTopic(campaign.key!);
             });
             return 1;
           });
