@@ -158,7 +158,7 @@ class PdfModule {
                           child: Text(
                         '${employee.name}' +
                             (employee.role?.name != null &&
-                                    employee.role!.name.isNotEmpty
+                                    employee.role!.name!.isNotEmpty
                                 ? ' - ${employee.role!.name}'
                                 : ''),
                       ))
