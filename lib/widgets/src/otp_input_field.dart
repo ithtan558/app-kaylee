@@ -8,9 +8,9 @@ import 'package:kaylee/widgets/widgets.dart';
 
 class OtpInputField extends StatefulWidget {
   final ValueSetter<String> onComplete;
-  final String error;
+  final String? error;
 
-  OtpInputField({this.onComplete, this.error});
+  OtpInputField({required this.onComplete, this.error});
 
   @override
   _OtpInputFieldState createState() => new _OtpInputFieldState();
@@ -45,13 +45,13 @@ class _OtpInputFieldState extends BaseState<OtpInputField> {
 
   void validateTField(
       TextEditingController currentTfController, FocusNode nextFocus,
-      {TextEditingController previousTfController,
-      TextEditingController nextTfController}) {
+      {TextEditingController? previousTfController,
+      TextEditingController? nextTfController}) {
     if (tfController1.text.isNotEmpty &&
         tfController2.text.isNotEmpty &&
         tfController3.text.isNotEmpty &&
         tfController4.text.isNotEmpty) {
-      nextFocus?.requestFocus();
+      nextFocus.requestFocus();
     }
   }
 
@@ -107,19 +107,19 @@ class _OtpInputFieldState extends BaseState<OtpInputField> {
             ],
           ),
         ),
-        if (widget.error.isNotNullAndEmpty)
-          KayleeText.error12W400(widget.error),
+        if (widget.error?.isNotEmpty ?? false)
+          KayleeText.error12W400(widget.error!),
       ],
     );
   }
 }
 
 class _PinTextField extends StatefulWidget {
-  final FocusNode nextFocus;
-  final FocusNode currentFocus;
-  final TextInputAction textInputAction;
-  final TextEditingController tfController;
-  final void Function() onComplete;
+  final FocusNode? nextFocus;
+  final FocusNode? currentFocus;
+  final TextInputAction? textInputAction;
+  final TextEditingController? tfController;
+  final VoidCallback? onComplete;
   final bool autoFocus;
 
   _PinTextField(
@@ -128,7 +128,7 @@ class _PinTextField extends StatefulWidget {
       this.textInputAction = TextInputAction.next,
       this.tfController,
       this.onComplete,
-      this.autoFocus});
+      this.autoFocus = false});
 
   @override
   _PinTextFieldState createState() => _PinTextFieldState();
@@ -154,7 +154,7 @@ class _PinTextFieldState extends BaseState<_PinTextField> {
       child: Stack(
         alignment: Alignment.center,
         children: <Widget>[
-          if (widget.tfController?.text?.isEmpty)
+          if ((widget.tfController?.text)?.isEmpty ?? true)
             Container(
                 width: Dimens.px16,
                 height: Dimens.px16,
@@ -167,15 +167,13 @@ class _PinTextFieldState extends BaseState<_PinTextField> {
             textInputAction: widget.textInputAction,
             keyboardType: TextInputType.number,
             style: TextStyles.normal26W700,
-            autofocus: widget.autoFocus ?? false,
+            autofocus: widget.autoFocus,
             onChanged: (pin) {
               setState(() {});
               if (pin.isEmpty) {
                 widget.currentFocus?.previousFocus();
               } else if (pin.isNotEmpty) {
-                if (widget.onComplete.isNotNull) {
-                  widget.onComplete();
-                }
+                widget.onComplete?.call();
                 widget.currentFocus?.nextFocus();
               }
             },
@@ -184,10 +182,11 @@ class _PinTextFieldState extends BaseState<_PinTextField> {
             minLines: 1,
 //            showCursor: false,
             enableInteractiveSelection: false,
-            buildCounter: (c,
-                {int currentLength, int maxLength, bool isFocused}) {
-              return Container();
-            },
+            buildCounter: (context,
+                    {required currentLength,
+                    required isFocused,
+                    required maxLength}) =>
+                Container(),
             decoration: InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(bottom: -8),
