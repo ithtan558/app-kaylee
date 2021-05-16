@@ -7,8 +7,8 @@ import 'package:kaylee/services/services.dart';
 import 'package:kaylee/utils/utils.dart';
 
 class ReservationFilter extends Filter {
-  ReservationStatus status;
-  Brand brand;
+  ReservationStatus? status;
+  Brand? brand;
 }
 
 class ReservationListBloc extends Cubit<LoadMoreModel<Reservation>>

@@ -3,9 +3,9 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 abstract class KayleeCartProdItem extends StatelessWidget {
-  final String name;
-  final int amount;
-  final int quantity;
+  final String? name;
+  final int? amount;
+  final int? quantity;
 
   KayleeCartProdItem({this.name, this.amount, this.quantity});
 

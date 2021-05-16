@@ -6,9 +6,9 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class KayleeFilterView extends StatefulWidget {
-  final Widget child;
-  final String title;
-  final KayleeFloatButton floatingActionButton;
+  final Widget? child;
+  final String? title;
+  final KayleeFloatButton? floatingActionButton;
 
   KayleeFilterView({this.title, this.child, this.floatingActionButton});
 
@@ -29,9 +29,9 @@ class _KayleeFilterViewState extends BaseState<KayleeFilterView> {
               child: widget.child ?? Container(),
             ),
           ),
-          if (widget.floatingActionButton.isNotNull)
+          if (widget.floatingActionButton != null)
             Positioned(
-              child: widget.floatingActionButton,
+              child: widget.floatingActionButton!,
               right: Dimens.px24,
               bottom: Dimens.px24,
             ),
@@ -55,10 +55,10 @@ class _KayleeFilterViewState extends BaseState<KayleeFilterView> {
 }
 
 class _FilterButton extends StatefulWidget {
-  final void Function(bool state) onClick;
+  final void Function(bool state)? onClick;
   final AnimationController animController;
 
-  _FilterButton({this.onClick, this.animController});
+  _FilterButton({this.onClick, required this.animController});
 
   @override
   __FilterButtonState createState() => __FilterButtonState();
@@ -98,9 +98,7 @@ class __FilterButtonState extends BaseState<_FilterButton>
             else
               widget.animController.reverse(from: widget.animController.value);
             isOpened = !isOpened;
-            if (widget.onClick != null) {
-              widget.onClick(isOpened);
-            }
+            widget.onClick?.call(isOpened);
           },
           child: Row(
             children: [
@@ -142,7 +140,7 @@ class __FilterButtonState extends BaseState<_FilterButton>
 }
 
 class _FilterView extends StatefulWidget {
-  final String title;
+  final String? title;
 
   _FilterView({this.title});
 

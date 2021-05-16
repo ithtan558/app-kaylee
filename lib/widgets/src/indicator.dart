@@ -5,12 +5,12 @@ class Indicator extends StatefulWidget {
   final Color activeColor;
   final Color inactiveColor;
   final IndicatorController controller;
-  final ValueChanged<int> onSelect;
+  final ValueChanged<int>? onSelect;
 
   Indicator({
     this.activeColor = ColorsRes.background,
     this.inactiveColor = ColorsRes.hintText,
-    this.controller,
+    required this.controller,
     this.onSelect,
   });
 
@@ -44,14 +44,14 @@ class _IndicatorState extends State<Indicator> implements _IndicatorView {
   }
 
   @override
-  void jumpTo({int index}) {
+  void jumpTo({required int index}) {
     setState(() {
       widget.controller.selected = index;
     });
     widget.onSelect?.call(index);
   }
 
-  Widget _buildDot({VoidCallback onTap, bool selected = false}) {
+  Widget _buildDot({VoidCallback? onTap, bool selected = false}) {
     return GestureDetector(
       onTap: onTap,
       child: Material(
@@ -70,16 +70,16 @@ class _IndicatorState extends State<Indicator> implements _IndicatorView {
 class IndicatorController implements _IndicatorView {
   int selected;
   int length;
-  _IndicatorView _view;
+  late _IndicatorView _view;
 
   IndicatorController({this.length = 0, this.selected = 0});
 
   @override
-  void jumpTo({int index}) {
+  void jumpTo({required int index}) {
     _view.jumpTo(index: index);
   }
 }
 
 abstract class _IndicatorView {
-  void jumpTo({int index});
+  void jumpTo({required int index});
 }

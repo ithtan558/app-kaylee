@@ -7,10 +7,10 @@ import 'package:kaylee/models/models.dart';
 import 'package:kaylee/services/services.dart';
 
 class ProductFilter extends Filter {
-  int startPrice;
-  int endPrice;
-  ProdCate category;
-  Brand brand;
+  int? startPrice;
+  int? endPrice;
+  ProdCate? category;
+  Brand? brand;
 }
 
 class ProdListBloc extends Cubit<LoadMoreModel<Product>>

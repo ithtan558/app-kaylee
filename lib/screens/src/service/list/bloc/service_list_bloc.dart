@@ -5,10 +5,10 @@ import 'package:kaylee/models/models.dart';
 import 'package:kaylee/services/services.dart';
 
 class ServiceFilter extends Filter {
-  int startPrice;
-  int endPrice;
-  ServiceCate category;
-  Brand brand;
+  int? startPrice;
+  int? endPrice;
+  ServiceCate? category;
+  Brand? brand;
 }
 
 class ServiceListBloc extends Cubit<LoadMoreModel<Service>>

@@ -5,9 +5,9 @@ import 'package:kaylee/models/models.dart';
 import 'package:kaylee/services/services.dart';
 
 class CustomerFilter extends Filter {
-  City city;
-  District district;
-  CustomerType type;
+  City? city;
+  District? district;
+  CustomerType? type;
 }
 
 class CustomerListScreenBloc extends Cubit<LoadMoreModel<Customer>>

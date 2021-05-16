@@ -8,34 +8,34 @@ import 'package:kaylee/widgets/widgets.dart';
 
 class KayleeAppBar extends StatelessWidget implements PreferredSizeWidget {
   factory KayleeAppBar.hyperTextAction(
-          {String title,
-          Widget titleWidget,
-          Widget leading,
-          bool Function() onBack,
-          String actionTitle,
-          VoidCallback onActionClick,
-          IconData leadingIcon}) =>
+          {String? title,
+          Widget? titleWidget,
+          Widget? leading,
+          ValueGetter<bool>? onBack,
+          String? actionTitle,
+          VoidCallback? onActionClick,
+          IconData? leadingIcon}) =>
       KayleeAppBar(
         title: title,
         titleWidget: titleWidget,
         leading: leading,
         onBack: onBack,
         actions: [
-          if (actionTitle.isNotNullAndEmpty)
+          if (actionTitle?.isNotEmpty ?? false)
             KayleeAppBarAction.hyperText(
-              title: actionTitle,
+              title: actionTitle!,
               onTap: onActionClick,
             )
         ],
         leadingIcon: leadingIcon,
       );
 
-  final String title;
-  final Widget titleWidget;
-  final Widget leading;
-  final bool Function() onBack;
-  final List<Widget> actions;
-  final IconData leadingIcon;
+  final String? title;
+  final Widget? titleWidget;
+  final Widget? leading;
+  final ValueGetter<bool>? onBack;
+  final List<Widget>? actions;
+  final IconData? leadingIcon;
   final bool automaticallyImplyLeading;
 
   KayleeAppBar({
@@ -52,10 +52,10 @@ class KayleeAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final canPop = ModalRoute.of(context)?.canPop;
     return AppBar(
-      leading: leading.isNotNull
+      leading: leading != null
           ? leading
           : automaticallyImplyLeading
-              ? canPop
+              ? canPop ?? false
                   ? FlatButton(
                       shape: CircleBorder(),
                       child: Icon(
@@ -63,7 +63,7 @@ class KayleeAppBar extends StatelessWidget implements PreferredSizeWidget {
                         color: ColorsRes.hintText,
                       ),
                       onPressed: () {
-                        if (onBack == null || onBack()) {
+                        if (onBack == null || onBack!()) {
                           context.pop();
                         }
                       },
@@ -90,7 +90,7 @@ class KayleeAppBar extends StatelessWidget implements PreferredSizeWidget {
 
 class KayleeAppBarAction extends StatelessWidget {
   factory KayleeAppBarAction.hyperText(
-          {@required String title, void Function() onTap}) =>
+          {required String title, VoidCallback? onTap}) =>
       KayleeAppBarAction(
         child: InkWell(
           onTap: onTap,
@@ -99,7 +99,7 @@ class KayleeAppBarAction extends StatelessWidget {
             padding: const EdgeInsets.all(Dimens.px16),
             child: Center(
               child: HyperLinkText(
-                text: title ?? '',
+                text: title,
                 onTap: onTap,
               ),
             ),
@@ -108,7 +108,7 @@ class KayleeAppBarAction extends StatelessWidget {
       );
 
   factory KayleeAppBarAction.button(
-          {@required Widget child, void Function() onTap}) =>
+          {required Widget child, VoidCallback? onTap}) =>
       KayleeAppBarAction(
         child: SizedBox(
           height: kToolbarHeight,
@@ -124,7 +124,7 @@ class KayleeAppBarAction extends StatelessWidget {
       );
 
   factory KayleeAppBarAction.iconButton(
-          {@required String icon, Color iconColor, void Function() onTap}) =>
+          {required String icon, Color? iconColor, VoidCallback? onTap}) =>
       KayleeAppBarAction(
         child: SizedBox(
           height: kToolbarHeight,
@@ -143,7 +143,7 @@ class KayleeAppBarAction extends StatelessWidget {
         ),
       );
 
-  final Widget child;
+  final Widget? child;
 
   KayleeAppBarAction({this.child});
 

@@ -48,16 +48,16 @@ class KayleeRoundBorder extends StatelessWidget {
         onTap: onTap,
       );
 
-  final BorderRadius borderRadius;
-  final double borderWidth;
-  final Color borderColor;
-  final VoidCallback onTap;
-  final EdgeInsets padding;
-  final Widget child;
-  final double width;
-  final double height;
-  final Color bgColor;
-  final Alignment alignment;
+  final BorderRadius? borderRadius;
+  final double? borderWidth;
+  final Color? borderColor;
+  final VoidCallback? onTap;
+  final EdgeInsets? padding;
+  final Widget? child;
+  final double? width;
+  final double? height;
+  final Color? bgColor;
+  final Alignment? alignment;
 
   KayleeRoundBorder(
       {this.borderRadius,

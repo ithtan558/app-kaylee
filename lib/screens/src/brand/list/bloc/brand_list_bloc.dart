@@ -4,8 +4,8 @@ import 'package:kaylee/models/models.dart';
 import 'package:kaylee/services/services.dart';
 
 class BrandFilter extends Filter {
-  City city;
-  District district;
+  City? city;
+  District? district;
 }
 
 class BrandListBloc extends Cubit<LoadMoreModel<Brand>>

@@ -3,9 +3,9 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/src/kaylee_text.dart';
 
 class CategoryItem extends StatelessWidget {
-  final int index;
-  final String name;
-  final VoidCallback onTap;
+  final int? index;
+  final String? name;
+  final VoidCallback? onTap;
 
   CategoryItem({this.index, this.name, this.onTap});
 

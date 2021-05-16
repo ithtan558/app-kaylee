@@ -33,7 +33,7 @@ class KayleePickerTextField<T> extends StatefulWidget {
   final String title;
   final String error;
   final String hint;
-  final PickInputController<T> controller;
+  final PickInputController<T>? controller;
 
   ///nếu [useForFilter] == true (khi [KayleePickerTextField] đc gắn ở [FilterScreen]) => hiện item 'Tất cả'
   final bool useForFilter;
@@ -59,13 +59,13 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField>
     implements KayleePickerTextFieldView {
   final _tfController = TextEditingController();
   bool focused = false;
-  T currentValue;
-  KayleePickerTextFieldModel pickerTFModel;
+  T? currentValue;
+  KayleePickerTextFieldModel? pickerTFModel;
 
   @override
   void initState() {
     super.initState();
-    widget?.controller?._view = this;
+    widget.controller?._view = this;
     try {
       pickerTFModel = context.repository<KayleePickerTextFieldModel>();
     } catch (e) {
@@ -534,8 +534,8 @@ class DatePickInputController extends PickInputController<DateTime> {
 }
 
 class PickInputController<T> {
-  KayleePickerTextFieldView _view;
-  T value;
+  KayleePickerTextFieldView? _view;
+  T? value;
 
   PickInputController({this.value});
 

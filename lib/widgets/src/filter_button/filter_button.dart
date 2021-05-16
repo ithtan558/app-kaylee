@@ -8,7 +8,7 @@ import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class FilterButton<T extends Filter> extends StatefulWidget {
-  final KayleeFilterInterface<T> controller;
+  final KayleeFilterInterface<T>? controller;
 
   FilterButton({this.controller});
 

@@ -113,9 +113,9 @@ class _CustomThumbShape extends SliderComponentShape {
 }
 
 class KayleePriceRangeController {
-  int startPrice;
-  int endPrice;
-  KayleePriceRangeView _view;
+  int? startPrice;
+  int? endPrice;
+  KayleePriceRangeView? _view;
 
   void reset() {
     _view?.reset();

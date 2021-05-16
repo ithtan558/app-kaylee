@@ -4,11 +4,11 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class KayleeTabView extends StatefulWidget {
-  final KayleeAppBar appBar;
-  final Widget floatingActionButton;
-  final Widget tabBar;
-  final Widget pageView;
-  final Color bgColor;
+  final KayleeAppBar? appBar;
+  final Widget? floatingActionButton;
+  final Widget? tabBar;
+  final Widget? pageView;
+  final Color? bgColor;
 
   KayleeTabView(
       {this.appBar,
@@ -40,7 +40,7 @@ class _KayleeTabViewState extends BaseState<KayleeTabView>
       backgroundColor: widget.bgColor ?? context.theme.scaffoldBackgroundColor,
       body: Column(
         children: [
-          if (widget.tabBar.isNotNull)
+          if (widget.tabBar != null)
             Container(
               margin: EdgeInsets.only(top: Dimens.px16),
               height: Dimens.px40,
@@ -69,14 +69,14 @@ class _KayleeTabViewState extends BaseState<KayleeTabView>
 }
 
 class KayleeTabBar extends StatefulWidget {
-  final ValueSetter<int> onSelected;
+  final ValueSetter<int>? onSelected;
   final int itemCount;
-  final String Function(int index) mapTitle;
-  final EdgeInsets padding;
+  final String Function(int index)? mapTitle;
+  final EdgeInsets? padding;
 
   KayleeTabBar({
-    @required this.itemCount,
-    @required this.mapTitle,
+    required this.itemCount,
+    required this.mapTitle,
     this.onSelected,
     this.padding,
   });
@@ -87,16 +87,6 @@ class KayleeTabBar extends StatefulWidget {
 
 class _KayleeTabBarState extends BaseState<KayleeTabBar> {
   int currentIndex = 0;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -114,18 +104,17 @@ class _KayleeTabBarState extends BaseState<KayleeTabBar> {
           },
         );
       },
-      separatorBuilder: (context, index) =>
-          Container(
-            width: Dimens.px16,
-          ),
+      separatorBuilder: (context, index) => Container(
+        width: Dimens.px16,
+      ),
       padding:
-      widget.padding ?? const EdgeInsets.symmetric(horizontal: Dimens.px16),
-      itemCount: widget.itemCount ?? 0,
+          widget.padding ?? const EdgeInsets.symmetric(horizontal: Dimens.px16),
+      itemCount: widget.itemCount,
     );
   }
 
   Widget buildTabItem(
-      {String title, bool isSelected = false, VoidCallback onTap}) {
+      {String? title, bool isSelected = false, VoidCallback? onTap}) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -139,42 +128,32 @@ class _KayleeTabBarState extends BaseState<KayleeTabBar> {
         alignment: Alignment.center,
         child: isSelected
             ? KayleeText.hyper16W400(
-          title ?? '',
-          overflow: TextOverflow.visible,
-          textAlign: TextAlign.center,
-        )
+                title ?? '',
+                overflow: TextOverflow.visible,
+                textAlign: TextAlign.center,
+              )
             : KayleeText.normal16W400(
-          title ?? '',
-          overflow: TextOverflow.visible,
-          textAlign: TextAlign.center,
-        ),
+                title ?? '',
+                overflow: TextOverflow.visible,
+                textAlign: TextAlign.center,
+              ),
       ),
     );
   }
 }
 
 class KayleePageView extends StatefulWidget {
-  final int itemCount;
+  final int? itemCount;
   final IndexedWidgetBuilder itemBuilder;
-  final PageController controller;
+  final PageController? controller;
 
-  KayleePageView({this.itemCount, @required this.itemBuilder, this.controller});
+  KayleePageView({this.itemCount, required this.itemBuilder, this.controller});
 
   @override
   _KayleePageViewState createState() => _KayleePageViewState();
 }
 
 class _KayleePageViewState extends BaseState<KayleePageView> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return PageView.builder(

@@ -403,7 +403,7 @@ class _PriceInputFieldState extends BaseState<PriceInputField> {
 
 class SearchInputFieldController {
   _SearchInputFieldState view;
-  String keyword;
+  String? keyword;
 
   void clear() {
     view.clear();

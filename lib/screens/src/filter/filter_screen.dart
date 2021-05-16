@@ -22,7 +22,7 @@ abstract class KayleeFilterAction {
 }
 
 class FilterScreen<T extends Filter> extends StatefulWidget {
-  final KayleeFilterInterface<T> controller;
+  final KayleeFilterInterface<T>? controller;
 
   FilterScreen({this.controller});
 
@@ -33,12 +33,12 @@ class FilterScreen<T extends Filter> extends StatefulWidget {
 class _FilterScreenState<T extends Filter> extends BaseState<FilterScreen<T>> {
   final searchTfController = SearchInputFieldController();
   final searchFocus = FocusNode();
-  KayleeFilterAction action;
+  KayleeFilterAction? action;
 
   @override
   void initState() {
     super.initState();
-    searchTfController.keyword = widget.controller?.getFilter()?.keyword;
+    searchTfController.keyword = (widget.controller?.getFilter())?.keyword;
   }
 
   @override
@@ -58,7 +58,7 @@ class _FilterScreenState<T extends Filter> extends BaseState<FilterScreen<T>> {
             action?.onReset();
             searchFocus.unfocus();
             searchTfController.clear();
-            widget.controller.resetFilter();
+            widget.controller?.resetFilter();
           },
         ),
         child: Column(
@@ -77,7 +77,7 @@ class _FilterScreenState<T extends Filter> extends BaseState<FilterScreen<T>> {
                 focusNode: searchFocus,
                 controller: searchTfController,
                 onClear: () {
-                  widget.controller.getFilter().keyword = null;
+                  widget.controller?.getFilter().keyword = null;
                 },
               ),
             ),
@@ -104,7 +104,7 @@ class _FilterScreenState<T extends Filter> extends BaseState<FilterScreen<T>> {
             ///nếu keyword not empty
             ///thì set keyword cho filter
             if (searchTfController.keyword.isNotNullAndEmpty) {
-              widget.controller?.updateFilter()?.keyword =
+              (widget.controller?.updateFilter())?.keyword =
                   searchTfController.keyword;
             }
             action?.onApply();
@@ -115,35 +115,35 @@ class _FilterScreenState<T extends Filter> extends BaseState<FilterScreen<T>> {
     );
   }
 
-  Widget getFilterView({KayleeFilterInterface<T> controller}) {
+  Widget getFilterView({KayleeFilterInterface<T>? controller}) {
     switch (T) {
       case BrandFilter:
         return BrandFilterView(
-          controller: controller as KayleeFilterInterface<BrandFilter>,
+          controller: controller as KayleeFilterInterface<BrandFilter>?,
         );
       case StaffFilter:
         return StaffFilterView(
-          controller: controller as KayleeFilterInterface<StaffFilter>,
+          controller: controller as KayleeFilterInterface<StaffFilter>?,
         );
       case CustomerFilter:
         return CustomerFilterView(
-          controller: controller as KayleeFilterInterface<CustomerFilter>,
+          controller: controller as KayleeFilterInterface<CustomerFilter>?,
         );
       case ServiceFilter:
         return ServiceFilterView(
-          controller: controller as KayleeFilterInterface<ServiceFilter>,
+          controller: controller as KayleeFilterInterface<ServiceFilter>?,
         );
       case ProductFilter:
         return ProductFilterView(
-          controller: controller as KayleeFilterInterface<ProductFilter>,
+          controller: controller as KayleeFilterInterface<ProductFilter>?,
         );
       case CommissionFilter:
         return CommissionFilterView(
-          controller: controller as KayleeFilterInterface<CommissionFilter>,
+          controller: controller as KayleeFilterInterface<CommissionFilter>?,
         );
       case ReservationFilter:
         return ReservationFilterFilterView(
-          controller: controller as KayleeFilterInterface<ReservationFilter>,
+          controller: controller as KayleeFilterInterface<ReservationFilter>?,
         );
       default:
         return Container();
@@ -152,7 +152,7 @@ class _FilterScreenState<T extends Filter> extends BaseState<FilterScreen<T>> {
 }
 
 class BrandFilterView extends StatefulWidget {
-  final KayleeFilterInterface<BrandFilter> controller;
+  final KayleeFilterInterface<BrandFilter>? controller;
 
   BrandFilterView({this.controller});
 
@@ -168,10 +168,10 @@ class _BrandFilterViewState extends BaseState<BrandFilterView>
   @override
   void onApply() {
     if (cityController.value != null) {
-      widget.controller?.updateFilter()?.city = cityController.value;
+      (widget.controller?.updateFilter())?.city = cityController.value;
     }
     if (districtController.value != null) {
-      widget.controller?.updateFilter()?.district = districtController.value;
+      (widget.controller?.updateFilter())?.district = districtController.value;
     }
   }
 
@@ -184,9 +184,9 @@ class _BrandFilterViewState extends BaseState<BrandFilterView>
   @override
   void initState() {
     super.initState();
-    context.repository<_FilterScreenState>().action = this;
-    cityController.value = widget.controller?.getFilter()?.city;
-    districtController.value = widget.controller?.getFilter()?.district;
+    context.repository<_FilterScreenState>()!.action = this;
+    cityController.value = (widget.controller?.getFilter())?.city;
+    districtController.value = (widget.controller?.getFilter())?.district;
   }
 
   @override
@@ -220,7 +220,7 @@ class _BrandFilterViewState extends BaseState<BrandFilterView>
 }
 
 class StaffFilterView extends StatefulWidget {
-  final KayleeFilterInterface<StaffFilter> controller;
+  final KayleeFilterInterface<StaffFilter>? controller;
 
   StaffFilterView({this.controller});
 
@@ -237,13 +237,13 @@ class _StaffFilterViewState extends BaseState<StaffFilterView>
   @override
   void onApply() {
     if (brandController.value != null) {
-      widget.controller?.updateFilter()?.brand = brandController.value;
+      (widget.controller?.updateFilter())?.brand = brandController.value;
     }
     if (cityController.value != null) {
-      widget.controller?.updateFilter()?.city = cityController.value;
+      (widget.controller?.updateFilter())?.city = cityController.value;
     }
     if (districtController.value != null) {
-      widget.controller?.updateFilter()?.district = districtController.value;
+      (widget.controller?.updateFilter())?.district = districtController.value;
     }
   }
 
@@ -257,10 +257,10 @@ class _StaffFilterViewState extends BaseState<StaffFilterView>
   @override
   void initState() {
     super.initState();
-    context.repository<_FilterScreenState>().action = this;
-    brandController.value = widget.controller?.getFilter()?.brand;
-    cityController.value = widget.controller?.getFilter()?.city;
-    districtController.value = widget.controller?.getFilter()?.district;
+    context.repository<_FilterScreenState>()!.action = this;
+    brandController.value = (widget.controller?.getFilter())?.brand;
+    cityController.value = (widget.controller?.getFilter())?.city;
+    districtController.value = (widget.controller?.getFilter())?.district;
   }
 
   @override
@@ -303,7 +303,7 @@ class _StaffFilterViewState extends BaseState<StaffFilterView>
 }
 
 class CustomerFilterView extends StatefulWidget {
-  final KayleeFilterInterface<CustomerFilter> controller;
+  final KayleeFilterInterface<CustomerFilter>? controller;
 
   CustomerFilterView({this.controller});
 
@@ -320,19 +320,13 @@ class _CustomerFilterViewState extends BaseState<CustomerFilterView>
   @override
   void onApply() {
     if (typeController.value != null) {
-      widget.controller
-          ?.updateFilter()
-          ?.type = typeController.value;
+      (widget.controller?.updateFilter())?.type = typeController.value;
     }
     if (cityController.value != null) {
-      widget.controller
-          ?.updateFilter()
-          ?.city = cityController.value;
+      (widget.controller?.updateFilter())?.city = cityController.value;
     }
     if (districtController.value != null) {
-      widget.controller
-          ?.updateFilter()
-          ?.district = districtController.value;
+      (widget.controller?.updateFilter())?.district = districtController.value;
     }
   }
 
@@ -346,18 +340,10 @@ class _CustomerFilterViewState extends BaseState<CustomerFilterView>
   @override
   void initState() {
     super.initState();
-    context
-        .repository<_FilterScreenState>()
-        .action = this;
-    typeController.value = widget.controller
-        ?.getFilter()
-        ?.type;
-    cityController.value = widget.controller
-        ?.getFilter()
-        ?.city;
-    districtController.value = widget.controller
-        ?.getFilter()
-        ?.district;
+    context.repository<_FilterScreenState>()!.action = this;
+    typeController.value = (widget.controller?.getFilter())?.type;
+    cityController.value = (widget.controller?.getFilter())?.city;
+    districtController.value = (widget.controller?.getFilter())?.district;
   }
 
   @override
@@ -400,7 +386,7 @@ class _CustomerFilterViewState extends BaseState<CustomerFilterView>
 }
 
 class ServiceFilterView extends StatefulWidget {
-  final KayleeFilterInterface<ServiceFilter> controller;
+  final KayleeFilterInterface<ServiceFilter>? controller;
 
   ServiceFilterView({this.controller});
 
@@ -417,26 +403,18 @@ class _ServiceFilterViewState extends BaseState<ServiceFilterView>
   @override
   void onApply() {
     if (categoryController.value != null) {
-      widget.controller
-          ?.updateFilter()
-          ?.category = categoryController.value;
+      (widget.controller?.updateFilter())?.category = categoryController.value;
     }
     if (brandController.value != null) {
-      widget.controller
-          ?.updateFilter()
-          ?.brand = brandController.value;
+      (widget.controller?.updateFilter())?.brand = brandController.value;
     }
 
     if (priceController.startPrice.isNotNull) {
-      widget.controller
-          ?.updateFilter()
-          ?.startPrice =
+      (widget.controller?.updateFilter())?.startPrice =
           priceController.startPrice;
     }
     if (priceController.endPrice.isNotNull) {
-      widget.controller
-          ?.updateFilter()
-          ?.endPrice = priceController.endPrice;
+      (widget.controller?.updateFilter())?.endPrice = priceController.endPrice;
     }
   }
 
@@ -450,21 +428,11 @@ class _ServiceFilterViewState extends BaseState<ServiceFilterView>
   @override
   void initState() {
     super.initState();
-    context
-        .repository<_FilterScreenState>()
-        .action = this;
-    categoryController.value = widget.controller
-        ?.getFilter()
-        ?.category;
-    brandController.value = widget.controller
-        ?.getFilter()
-        ?.brand;
-    priceController.startPrice = widget.controller
-        ?.getFilter()
-        ?.startPrice;
-    priceController.endPrice = widget.controller
-        ?.getFilter()
-        ?.endPrice;
+    context.repository<_FilterScreenState>()!.action = this;
+    categoryController.value = (widget.controller?.getFilter())?.category;
+    brandController.value = (widget.controller?.getFilter())?.brand;
+    priceController.startPrice = (widget.controller?.getFilter())?.startPrice;
+    priceController.endPrice = (widget.controller?.getFilter())?.endPrice;
   }
 
   @override
@@ -502,7 +470,7 @@ class _ServiceFilterViewState extends BaseState<ServiceFilterView>
 }
 
 class ProductFilterView extends StatefulWidget {
-  final KayleeFilterInterface<ProductFilter> controller;
+  final KayleeFilterInterface<ProductFilter>? controller;
 
   ProductFilterView({this.controller});
 
@@ -519,26 +487,18 @@ class _ProductFilterViewState extends BaseState<ProductFilterView>
   @override
   void onApply() {
     if (categoryController.value != null) {
-      widget.controller
-          ?.updateFilter()
-          ?.category = categoryController.value;
+      (widget.controller?.updateFilter())?.category = categoryController.value;
     }
     if (brandController.value != null) {
-      widget.controller
-          ?.updateFilter()
-          ?.brand = brandController.value;
+      (widget.controller?.updateFilter())?.brand = brandController.value;
     }
 
     if (priceController.startPrice.isNotNull) {
-      widget.controller
-          ?.updateFilter()
-          ?.startPrice =
+      (widget.controller?.updateFilter())?.startPrice =
           priceController.startPrice;
     }
     if (priceController.endPrice.isNotNull) {
-      widget.controller
-          ?.updateFilter()
-          ?.endPrice = priceController.endPrice;
+      (widget.controller?.updateFilter())?.endPrice = priceController.endPrice;
     }
   }
 
@@ -552,21 +512,11 @@ class _ProductFilterViewState extends BaseState<ProductFilterView>
   @override
   void initState() {
     super.initState();
-    context
-        .repository<_FilterScreenState>()
-        .action = this;
-    categoryController.value = widget.controller
-        ?.getFilter()
-        ?.category;
-    brandController.value = widget.controller
-        ?.getFilter()
-        ?.brand;
-    priceController.startPrice = widget.controller
-        ?.getFilter()
-        ?.startPrice;
-    priceController.endPrice = widget.controller
-        ?.getFilter()
-        ?.endPrice;
+    context.repository<_FilterScreenState>()!.action = this;
+    categoryController.value = (widget.controller?.getFilter())?.category;
+    brandController.value = (widget.controller?.getFilter())?.brand;
+    priceController.startPrice = (widget.controller?.getFilter())?.startPrice;
+    priceController.endPrice = (widget.controller?.getFilter())?.endPrice;
   }
 
   @override
@@ -604,7 +554,7 @@ class _ProductFilterViewState extends BaseState<ProductFilterView>
 }
 
 class CommissionFilterView extends StatefulWidget {
-  final KayleeFilterInterface<CommissionFilter> controller;
+  final KayleeFilterInterface<CommissionFilter>? controller;
 
   CommissionFilterView({this.controller});
 
@@ -621,19 +571,13 @@ class _CommissionFilterViewState extends BaseState<CommissionFilterView>
   @override
   void onApply() {
     if (brandController.value != null) {
-      widget.controller
-          ?.updateFilter()
-          ?.brand = brandController.value;
+      (widget.controller?.updateFilter())?.brand = brandController.value;
     }
     if (cityController.value != null) {
-      widget.controller
-          ?.updateFilter()
-          ?.city = cityController.value;
+      (widget.controller?.updateFilter())?.city = cityController.value;
     }
     if (districtController.value != null) {
-      widget.controller
-          ?.updateFilter()
-          ?.district = districtController.value;
+      (widget.controller?.updateFilter())?.district = districtController.value;
     }
   }
 
@@ -647,18 +591,10 @@ class _CommissionFilterViewState extends BaseState<CommissionFilterView>
   @override
   void initState() {
     super.initState();
-    context
-        .repository<_FilterScreenState>()
-        .action = this;
-    brandController.value = widget.controller
-        ?.getFilter()
-        ?.brand;
-    cityController.value = widget.controller
-        ?.getFilter()
-        ?.city;
-    districtController.value = widget.controller
-        ?.getFilter()
-        ?.district;
+    context.repository<_FilterScreenState>()!.action = this;
+    brandController.value = (widget.controller?.getFilter())?.brand;
+    cityController.value = (widget.controller?.getFilter())?.city;
+    districtController.value = (widget.controller?.getFilter())?.district;
   }
 
   @override
@@ -701,7 +637,7 @@ class _CommissionFilterViewState extends BaseState<CommissionFilterView>
 }
 
 class ReservationFilterFilterView extends StatefulWidget {
-  final KayleeFilterInterface<ReservationFilter> controller;
+  final KayleeFilterInterface<ReservationFilter>? controller;
 
   ReservationFilterFilterView({this.controller});
 
@@ -717,14 +653,10 @@ class _ReservationFilterViewState extends BaseState<ReservationFilterFilterView>
   @override
   void onApply() {
     if (brandController.value != null) {
-      widget.controller
-          ?.updateFilter()
-          ?.brand = brandController.value;
+      (widget.controller?.updateFilter())?.brand = brandController.value;
     }
     if (statusController.value != null) {
-      widget.controller
-          ?.updateFilter()
-          ?.status = statusController.value;
+      (widget.controller?.updateFilter())?.status = statusController.value;
     }
   }
 
@@ -737,15 +669,9 @@ class _ReservationFilterViewState extends BaseState<ReservationFilterFilterView>
   @override
   void initState() {
     super.initState();
-    context
-        .repository<_FilterScreenState>()
-        .action = this;
-    brandController.value = widget.controller
-        ?.getFilter()
-        ?.brand;
-    statusController.value = widget.controller
-        ?.getFilter()
-        ?.status;
+    context.repository<_FilterScreenState>()!.action = this;
+    brandController.value = (widget.controller?.getFilter())?.brand;
+    statusController.value = (widget.controller?.getFilter())?.status;
   }
 
   @override

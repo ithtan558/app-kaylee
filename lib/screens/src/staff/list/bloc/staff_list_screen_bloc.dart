@@ -7,9 +7,9 @@ import 'package:kaylee/models/models.dart';
 import 'package:kaylee/services/services.dart';
 
 class StaffFilter extends Filter {
-  Brand brand;
-  City city;
-  District district;
+  Brand? brand;
+  City? city;
+  District? district;
 }
 
 class StaffListScreenBloc extends Cubit<LoadMoreModel<Employee>>

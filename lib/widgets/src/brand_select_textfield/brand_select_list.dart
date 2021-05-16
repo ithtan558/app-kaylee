@@ -8,8 +8,8 @@ import 'package:kaylee/widgets/src/brand_select_textfield/bloc/brand_select_list
 import 'package:kaylee/widgets/widgets.dart';
 
 class BrandSelectList extends StatefulWidget {
-  final ScrollController scrollController;
-  final BrandSelectTFController controller;
+  final ScrollController? scrollController;
+  final BrandSelectTFController? controller;
 
   BrandSelectList({this.scrollController, this.controller});
 
@@ -18,7 +18,7 @@ class BrandSelectList extends StatefulWidget {
 }
 
 class _BrandSelectListState extends BaseState<BrandSelectList> {
-  int selectedIndex;
+  int? selectedIndex;
   final text = KayleeText.normal18W700(
     'Chọn cửa hàng cần áp dụng',
     maxLines: 1,
