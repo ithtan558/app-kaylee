@@ -4,21 +4,21 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class LabelDividerView extends StatelessWidget {
-  final String title;
-  final Widget child;
-  final Widget ending;
-  final Color bgColor;
+  final String? title;
+  final Widget? child;
+  final Widget? ending;
+  final Color? bgColor;
 
   LabelDividerView({this.title, this.ending, this.bgColor, this.child});
 
-  factory LabelDividerView.normal({String title, Color bgColor}) =>
+  factory LabelDividerView.normal({String? title, Color? bgColor}) =>
       LabelDividerView(
         title: title,
         bgColor: bgColor,
       );
 
   factory LabelDividerView.withButton(
-          {String title, String buttonText, VoidCallback onPress}) =>
+          {String? title, String? buttonText, VoidCallback? onPress}) =>
       LabelDividerView(
         title: title,
         ending: Padding(
@@ -30,7 +30,7 @@ class LabelDividerView extends StatelessWidget {
         ),
       );
 
-  factory LabelDividerView.monthYear({DateTime time}) {
+  factory LabelDividerView.monthYear({required DateTime time}) {
     final dateString = 'Tháng ' +
         DateFormat('${DateFormat.NUM_MONTH * 2}/${DateFormat.YEAR * 4}')
             .format(time);
@@ -40,7 +40,7 @@ class LabelDividerView extends StatelessWidget {
     );
   }
 
-  factory LabelDividerView.monthYearRange({DateTimeRange range}) {
+  factory LabelDividerView.monthYearRange({required DateTimeRange range}) {
     final isSameMonth = range.start.month == range.end.month;
     final startDateString = 'Tháng ' +
         DateFormat(
@@ -54,7 +54,7 @@ class LabelDividerView extends StatelessWidget {
 
     return LabelDividerView(
       child: KayleeText.normal16W500(
-        (startDateString ?? '') + (endDateString ?? ''),
+        (startDateString) + (endDateString),
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       ),
@@ -63,7 +63,7 @@ class LabelDividerView extends StatelessWidget {
   }
 
   factory LabelDividerView.hyperLink(
-          {String title, String linkText, Function onPress}) =>
+          {String? title, String? linkText, VoidCallback? onPress}) =>
       LabelDividerView(
         title: title,
         ending: Padding(
@@ -95,7 +95,7 @@ class LabelDividerView extends StatelessWidget {
                   ),
             ),
           ),
-          if (ending.isNotNull) ending
+          if (ending != null) ending!
         ],
       ),
     );

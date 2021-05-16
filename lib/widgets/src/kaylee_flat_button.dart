@@ -8,12 +8,12 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class KayleeFlatButton extends StatelessWidget {
-  final VoidCallback onPress;
-  final String title;
-  final Widget child;
-  final Color background;
-  final BorderRadius borderRadius;
-  final EdgeInsets titlePadding;
+  final VoidCallback? onPress;
+  final String? title;
+  final Widget? child;
+  final Color? background;
+  final BorderRadius? borderRadius;
+  final EdgeInsets? titlePadding;
 
   KayleeFlatButton(
       {this.onPress,
@@ -23,7 +23,7 @@ class KayleeFlatButton extends StatelessWidget {
       this.borderRadius,
       this.titlePadding});
 
-  factory KayleeFlatButton.normal({String title, VoidCallback onPress}) =>
+  factory KayleeFlatButton.normal({String? title, VoidCallback? onPress}) =>
       KayleeFlatButton(
         title: title,
         onPress: onPress,
@@ -31,7 +31,7 @@ class KayleeFlatButton extends StatelessWidget {
       );
 
   factory KayleeFlatButton.withTextField(
-          {String title, VoidCallback onPress}) =>
+          {String? title, VoidCallback? onPress}) =>
       KayleeFlatButton(
         title: title,
         onPress: onPress,
@@ -40,7 +40,7 @@ class KayleeFlatButton extends StatelessWidget {
       );
 
   factory KayleeFlatButton.withLabelDivider(
-          {String title, VoidCallback onPress}) =>
+          {String? title, VoidCallback? onPress}) =>
       KayleeFlatButton(
         title: title,
         onPress: onPress,
@@ -49,7 +49,7 @@ class KayleeFlatButton extends StatelessWidget {
       );
 
   factory KayleeFlatButton.filter(
-          {VoidCallback onPress, Color background, Widget child}) =>
+          {VoidCallback? onPress, Color? background, Widget? child}) =>
       KayleeFlatButton(
         onPress: onPress,
         borderRadius: BorderRadius.circular(Dimens.px10),
@@ -69,8 +69,8 @@ class KayleeFlatButton extends StatelessWidget {
           shape: RoundedRectangleBorder(
               borderRadius: borderRadius ?? BorderRadius.circular(Dimens.px5)),
           clipBehavior: Clip.antiAlias,
-          child: child.isNotNull
-              ? child
+          child: child != null
+              ? child!
               : KayleeText(
                   title ?? '',
                   style: TextStyles.normalWhite16W500,
@@ -83,11 +83,11 @@ class KayleeFlatButton extends StatelessWidget {
 class KayleeDateFilterButton extends StatefulWidget {
   final AsyncValueGetter<bool> onTap;
   final DateTime selectedDate;
-  final Color color;
+  final Color? color;
 
   KayleeDateFilterButton({
-    @required this.selectedDate,
-    @required this.onTap,
+    required this.selectedDate,
+    required this.onTap,
     this.color,
   });
 
@@ -97,7 +97,7 @@ class KayleeDateFilterButton extends StatefulWidget {
 
 class _KayleeDateFilterButtonState extends BaseState<KayleeDateFilterButton>
     with SingleTickerProviderStateMixin {
-  AnimationController animController;
+  late AnimationController animController;
 
   @override
   void initState() {
@@ -119,16 +119,14 @@ class _KayleeDateFilterButtonState extends BaseState<KayleeDateFilterButton>
       child: Row(children: [
         Expanded(
             child: Container(
-              alignment: Alignment.center,
-              child: KayleeText.normalWhite16W400(
-                'Tháng ${DateFormat(
-                    '${DateFormat.NUM_MONTH * 2}/${DateFormat.YEAR * 4}')
-                    .format(widget.selectedDate)}',
-                textAlign: TextAlign.center,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-            )),
+          alignment: Alignment.center,
+          child: KayleeText.normalWhite16W400(
+            'Tháng ${DateFormat('${DateFormat.NUM_MONTH * 2}/${DateFormat.YEAR * 4}').format(widget.selectedDate)}',
+            textAlign: TextAlign.center,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        )),
         AnimatedBuilder(
           animation: animController,
           builder: (context, child) {
