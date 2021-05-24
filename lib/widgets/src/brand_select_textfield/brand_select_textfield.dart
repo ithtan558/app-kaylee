@@ -7,9 +7,9 @@ import 'package:kaylee/widgets/src/brand_select_textfield/brand_select_list.dart
 import 'package:kaylee/widgets/widgets.dart';
 
 class BrandSelectTextField extends StatefulWidget {
-  final String error;
-  final String title;
-  final BrandSelectTFController controller;
+  final String? error;
+  final String? title;
+  final BrandSelectTFController? controller;
 
   BrandSelectTextField({this.error, this.title, this.controller});
 
@@ -18,7 +18,7 @@ class BrandSelectTextField extends StatefulWidget {
 }
 
 class _BrandSelectTextFieldState extends State<BrandSelectTextField> {
-  BrandSelectTfBloc bloc;
+  late BrandSelectTfBloc bloc;
 
   @override
   void initState() {
@@ -47,7 +47,7 @@ class _BrandSelectTextFieldState extends State<BrandSelectTextField> {
             children: [
               Expanded(
                 child: BlocBuilder<BrandSelectTfBloc, dynamic>(
-                  cubit: bloc,
+                  bloc: bloc,
                   builder: (context, state) {
                     return KayleeText.normal16W400(
                       '(${widget.controller?.count ?? 0}) địa điểm được chọn',
@@ -84,10 +84,10 @@ class _BrandSelectTextFieldState extends State<BrandSelectTextField> {
 }
 
 class BrandSelectTFController {
-  List<Brand> brands;
+  List<Brand>? brands;
 
-  int get count => brands?.where((e) => e.selected)?.length ?? 0;
+  int get count => (brands?.where((e) => e.selected))?.length ?? 0;
 
-  String get brandIds =>
-      brands?.where((e) => e.selected)?.map((e) => e.id)?.join(',');
+  String? get brandIds =>
+      ((brands?.where((e) => e.selected))?.map((e) => e.id))?.join(',');
 }

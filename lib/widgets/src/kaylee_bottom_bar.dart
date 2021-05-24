@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
 
 class KayleeBottomBar extends StatefulWidget {
-  final void Function(int index) onTapChanged;
-  final PageController pageController;
+  final void Function(int index)? onTapChanged;
+  final PageController? pageController;
 
   KayleeBottomBar({this.onTapChanged, this.pageController});
 
@@ -29,7 +29,7 @@ class _KayleeBottomBarState extends BaseState<KayleeBottomBar> {
 
   void handlePageChange() {
     setState(() {
-      selectedTab = widget.pageController.page.toInt();
+      selectedTab = (widget.pageController?.page)?.toInt() ?? 0;
     });
   }
 
@@ -58,20 +58,18 @@ class _KayleeBottomBarState extends BaseState<KayleeBottomBar> {
           inActiveImage: Images.ic_account_inactive,
         ),
       ],
-      selectedLabelStyle: context.textTheme.bodyText2.copyWith(
+      selectedLabelStyle: context.textTheme.bodyText2?.copyWith(
         fontSize: Dimens.px12,
         fontWeight: FontWeight.w700,
       ),
-      unselectedLabelStyle: context.textTheme.bodyText2.copyWith(
+      unselectedLabelStyle: context.textTheme.bodyText2?.copyWith(
         fontSize: Dimens.px12,
       ),
       onTap: (index) {
         if (index != selectedTab)
           setState(() {
             selectedTab = index;
-            if (widget.onTapChanged != null) {
-              widget.onTapChanged(selectedTab);
-            }
+            widget.onTapChanged?.call(selectedTab);
           });
       },
       currentIndex: selectedTab,
@@ -87,9 +85,9 @@ class _KayleeBottomBarState extends BaseState<KayleeBottomBar> {
   }
 
   _buildBtmBarItem({
-    String title,
-    String inActiveImage,
-    String activeImage,
+    required String title,
+    required String inActiveImage,
+    required String activeImage,
   }) {
     return BottomNavigationBarItem(
       icon: Image.asset(

@@ -24,7 +24,7 @@ class _BrandSelectListState extends BaseState<BrandSelectList> {
     maxLines: 1,
     textAlign: TextAlign.center,
   );
-  BrandSelectListBloc bloc;
+  late BrandSelectListBloc bloc;
 
   @override
   void initState() {
@@ -48,7 +48,7 @@ class _BrandSelectListState extends BaseState<BrandSelectList> {
         text,
         Expanded(
             child: BlocBuilder<BrandSelectListBloc, SingleModel<List<Brand>>>(
-          cubit: bloc,
+              bloc: bloc,
           builder: (context, state) {
             if (state.loading == true)
               return CupertinoActivityIndicator(
@@ -58,7 +58,7 @@ class _BrandSelectListState extends BaseState<BrandSelectList> {
                 padding: const EdgeInsets.all(Dimens.px16),
                 controller: widget.scrollController,
                 itemBuilder: (c, index) {
-                  final item = state.item.elementAt(index);
+                  final item = state.item!.elementAt(index);
                   return BlocProvider<BrandSelectListBloc>.value(
                     value: bloc,
                     child: _BrandItem(
@@ -67,7 +67,7 @@ class _BrandSelectListState extends BaseState<BrandSelectList> {
                   );
                 },
                 separatorBuilder: (c, _) => SizedBox(height: Dimens.px8),
-                itemCount: state.item.length);
+                itemCount: state.item?.length ?? 0);
           },
         )),
         Container(
@@ -95,8 +95,8 @@ class _BrandSelectListState extends BaseState<BrandSelectList> {
                   margin: EdgeInsets.zero,
                   text: Strings.xacNhan,
                   onPressed: () {
-                    widget.controller.brands =
-                        bloc.state.item.sublist(1, bloc.state.item.length);
+                    widget.controller?.brands =
+                        bloc.state.item?.sublist(1, bloc.state.item!.length);
                     popScreen();
                   },
                 ),
@@ -112,28 +112,30 @@ class _BrandSelectListState extends BaseState<BrandSelectList> {
 class _BrandItem extends StatefulWidget {
   final Brand brand;
 
-  _BrandItem({this.brand});
+  _BrandItem({required this.brand});
 
   @override
   _BrandItemState createState() => _BrandItemState();
 }
 
 class _BrandItemState extends BaseState<_BrandItem> {
-  BrandSelectListBloc bloc;
+  BrandSelectListBloc get bloc => context.bloc<BrandSelectListBloc>()!;
 
   @override
   void initState() {
     super.initState();
-    bloc = context.bloc<BrandSelectListBloc>();
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<BrandSelectListBloc, SingleModel<List<Brand>>>(
       buildWhen: (previous, current) {
-        return current.item
-            .singleWhere((e) => e.id == widget.brand.id, orElse: null)
-            .isNotNull;
+        try {
+          current.item?.singleWhere((e) => e.id == widget.brand.id);
+          return true;
+        } catch (_) {
+          return false;
+        }
       },
       builder: (context, state) {
         return Material(

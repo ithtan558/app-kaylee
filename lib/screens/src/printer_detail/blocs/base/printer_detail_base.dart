@@ -29,7 +29,7 @@ abstract class PrinterDetailBase extends Cubit<PrinterDetailState> {
         orElse: () => null,
       );
 
-  PrinterDevice get defaultDevice {
+  PrinterDevice? get defaultDevice {
     final fromSharePref = SharedRef.getString(PRINTER_DEVICES_KEY);
     final map =
         jsonDecode(fromSharePref.isNullOrEmpty ? '[]' : fromSharePref) as List;
@@ -57,8 +57,8 @@ abstract class PrinterDetailBase extends Cubit<PrinterDetailState> {
     emit(PrinterDetailStateOnSelectBluetooth());
   }
 
-  void onAddBluetooth({PrinterDevice device}) {
-    if (device.isNull) return;
+  void onAddBluetooth({PrinterDevice? device}) {
+    if (device == null) return;
     _addDevice(device);
     emit(PrinterDetailStateLoadedDevices());
   }
@@ -79,7 +79,7 @@ abstract class PrinterDetailBase extends Cubit<PrinterDetailState> {
   }
 
   void removeDevice({PrinterDevice device}) {
-    final isDefault = defaultDevice.isNull
+    final isDefault = defaultDevice == null
         ? false
         : defaultDevice.deviceAddress == device.deviceAddress;
     devices.removeWhere((e) {

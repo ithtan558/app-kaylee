@@ -1,17 +1,15 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:bluetooth_print/bluetooth_print.dart';
 import 'package:bluetooth_print/bluetooth_print_model.dart';
-
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/components/components.dart';
-import 'package:kaylee/components/src/printer/bluetooth_printer_module.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/printer_detail/widgets/printer_device_item.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class BluetoothSelectDeviceDialog extends StatefulWidget {
-  final ValueSetter<PrinterDevice> onSelected;
+  final ValueSetter<PrinterDevice?>? onSelected;
 
   BluetoothSelectDeviceDialog({
     this.onSelected,
@@ -24,8 +22,7 @@ class BluetoothSelectDeviceDialog extends StatefulWidget {
 
 class _BluetoothSelectDeviceDialogState
     extends KayleeState<BluetoothSelectDeviceDialog> {
-  BluetoothPrinterModule module;
-  PrinterDevice _device;
+  PrinterDevice? _device;
 
   @override
   void initState() {
@@ -82,7 +79,7 @@ class _BluetoothSelectDeviceDialogState
                     return PrinterDeviceItem(
                       device: device
                         ..selected =
-                            _device.isNull ? false : device.isEqual(_device),
+                            _device == null ? false : device.isEqual(_device!),
                       onTap: () {
                         _device = device;
                         setState(() {});

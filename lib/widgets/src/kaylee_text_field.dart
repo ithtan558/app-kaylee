@@ -12,25 +12,25 @@ import 'package:kaylee/res/src/strings.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class KayleeTextField extends StatelessWidget {
-  final String title;
-  final Widget titleWidget;
-  final Widget textInput;
+  final String? title;
+  final Widget? titleWidget;
+  final Widget? textInput;
 
-  KayleeTextField({Key key, this.title, this.textInput, this.titleWidget})
+  KayleeTextField({Key? key, this.title, this.textInput, this.titleWidget})
       : super(key: key);
 
   factory KayleeTextField.withUnit({
-    Key key,
-    String title,
-    String hint,
-    FocusNode focusNode,
-    FocusNode nextFocusNode,
-    TextEditingController controller,
-    TextInputAction textInputAction,
-    TextInputType textInputType,
-    String error,
-    TextAlign textAlign,
-    String unit,
+    Key? key,
+    String? title,
+    String? hint,
+    FocusNode? focusNode,
+    FocusNode? nextFocusNode,
+    TextEditingController? controller,
+    TextInputAction textInputAction = TextInputAction.done,
+    TextInputType textInputType = TextInputType.text,
+    String? error,
+    TextAlign textAlign = TextAlign.start,
+    String? unit,
   }) =>
       KayleeTextField(
         key: key,
@@ -49,7 +49,7 @@ class KayleeTextField extends StatelessWidget {
       );
 
   factory KayleeTextField.priceWithUnderline({
-    String title,
+    String? title,
     dynamic price,
   }) =>
       KayleeTextField(
@@ -60,12 +60,12 @@ class KayleeTextField extends StatelessWidget {
       );
 
   factory KayleeTextField.search({
-    String hint,
-    SearchInputFieldController controller,
-    FocusNode focusNode,
-    ValueChanged<String> onChanged,
-    ValueChanged<String> onDoneTyping,
-    VoidCallback onClear,
+    String? hint,
+    SearchInputFieldController? controller,
+    FocusNode? focusNode,
+    ValueChanged<String>? onChanged,
+    ValueChanged<String>? onDoneTyping,
+    VoidCallback? onClear,
   }) =>
       KayleeTextField(
         textInput: TextFieldBorderWrapper(SearchInputField(
@@ -81,22 +81,22 @@ class KayleeTextField extends StatelessWidget {
   /// [fieldHeight] chiều cao của text field
   /// khi set [fieldHeight], để text field expand với chiều cao [fieldHeight], thì [expands] phải set = true
   factory KayleeTextField.normal(
-          {Key key,
-          String title,
-          Widget titleWidget,
-          String hint,
-          double fieldHeight,
-          FocusNode focusNode,
-          FocusNode nextFocusNode,
-          TextEditingController controller,
+          {Key? key,
+          String? title,
+          Widget? titleWidget,
+          String? hint,
+          double? fieldHeight,
+          FocusNode? focusNode,
+          FocusNode? nextFocusNode,
+          TextEditingController? controller,
           TextInputAction textInputAction = TextInputAction.done,
-          TextInputType textInputType,
-          String error,
-          EdgeInsets contentPadding,
-          bool expands,
-          TextAlign textAlign,
-          int maxLength,
-          ValueChanged<String> onChanged}) =>
+          TextInputType? textInputType,
+          String? error,
+          EdgeInsets? contentPadding,
+          bool expands = false,
+          TextAlign textAlign = TextAlign.start,
+          int? maxLength,
+          ValueChanged<String>? onChanged}) =>
       KayleeTextField(
         key: key,
         title: title,
@@ -118,14 +118,14 @@ class KayleeTextField extends StatelessWidget {
       );
 
   factory KayleeTextField.unitSelection({
-    String title,
-    String hint,
-    FocusNode focusNode,
-    FocusNode nextFocusNode,
-    TextEditingController controller,
-    TextInputAction textInputAction,
-    String error,
-    ValueChanged<String> onChange,
+    String? title,
+    String? hint,
+    FocusNode? focusNode,
+    FocusNode? nextFocusNode,
+    TextEditingController? controller,
+    TextInputAction? textInputAction,
+    String? error,
+    ValueChanged<String>? onChange,
   }) =>
       KayleeTextField(
         title: title,
@@ -139,18 +139,18 @@ class KayleeTextField extends StatelessWidget {
       );
 
   factory KayleeTextField.multiLine({
-    Key key,
-    String title,
-    String hint,
+    Key? key,
+    String? title,
+    String? hint,
     double fieldHeight = Dimens.px48,
-    FocusNode focusNode,
-    FocusNode nextFocusNode,
-    TextEditingController controller,
-    TextInputAction textInputAction,
-    String error,
+    FocusNode? focusNode,
+    FocusNode? nextFocusNode,
+    TextEditingController? controller,
+    TextInputAction textInputAction = TextInputAction.done,
+    String? error,
     EdgeInsets contentPadding =
         const EdgeInsets.symmetric(vertical: Dimens.px16),
-    int maxLength,
+    int? maxLength,
   }) =>
       KayleeTextField.normal(
         key: key,
@@ -170,11 +170,11 @@ class KayleeTextField extends StatelessWidget {
       );
 
   factory KayleeTextField.selection(
-          {String title,
-          String content,
-          String buttonText,
-          String error,
-          VoidCallback onPress}) =>
+          {String? title,
+          String content = '',
+          String? buttonText,
+          String? error,
+          VoidCallback? onPress}) =>
       KayleeTextField(
         title: title,
         textInput: SelectInputTextField(
@@ -186,9 +186,9 @@ class KayleeTextField extends StatelessWidget {
       );
 
   factory KayleeTextField.staticPhone({
-    Key key,
-    String title,
-    String initText,
+    Key? key,
+    String? title,
+    String? initText,
   }) =>
       KayleeTextField(
         key: key,
@@ -200,14 +200,14 @@ class KayleeTextField extends StatelessWidget {
       );
 
   factory KayleeTextField.phoneInput(
-          {Key key,
-          String title,
-          String hint,
-          FocusNode focusNode,
-          FocusNode nextFocusNode,
-          TextEditingController controller,
+          {Key? key,
+          String? title,
+          String? hint,
+          FocusNode? focusNode,
+          FocusNode? nextFocusNode,
+          TextEditingController? controller,
           TextInputAction textInputAction = TextInputAction.done,
-          String error}) =>
+          String? error}) =>
       KayleeTextField(
         key: key,
         title: title ?? Strings.soDienThoai,
@@ -221,7 +221,7 @@ class KayleeTextField extends StatelessWidget {
         ),
       );
 
-  factory KayleeTextField.staticWidget({String title, String initText}) =>
+  factory KayleeTextField.staticWidget({String? title, String? initText}) =>
       KayleeTextField(
         title: title,
         textInput: NormalInputField(
@@ -231,13 +231,13 @@ class KayleeTextField extends StatelessWidget {
       );
 
   factory KayleeTextField.price(
-          {String title,
-          String hint,
-          String error,
-          TextEditingController controller,
-          TextInputAction textInputAction,
-          FocusNode focusNode,
-          FocusNode nextFocusNode}) =>
+          {String? title,
+          String? hint,
+          String? error,
+          TextEditingController? controller,
+          TextInputAction? textInputAction,
+          FocusNode? focusNode,
+          FocusNode? nextFocusNode}) =>
       KayleeTextField(
         title: title,
         textInput: PriceInputField(
@@ -250,7 +250,7 @@ class KayleeTextField extends StatelessWidget {
         ),
       );
 
-  factory KayleeTextField.staticPrice({String title, dynamic initPrice}) =>
+  factory KayleeTextField.staticPrice({String? title, dynamic initPrice}) =>
       KayleeTextField(
         title: title,
         textInput: PriceInputField(
@@ -260,13 +260,13 @@ class KayleeTextField extends StatelessWidget {
       );
 
   factory KayleeTextField.password({
-    String title,
-    String hint,
-    TextEditingController controller,
-    TextInputAction textInputAction,
-    FocusNode focusNode,
-    FocusNode nextFocusNode,
-    String error,
+    String? title,
+    String? hint,
+    TextEditingController? controller,
+    TextInputAction? textInputAction,
+    FocusNode? focusNode,
+    FocusNode? nextFocusNode,
+    String? error,
   }) =>
       KayleeTextField(
         title: title ?? Strings.matKhau,
@@ -286,25 +286,25 @@ class KayleeTextField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (!title.isNullOrEmpty || titleWidget.isNotNull)
+        if ((title?.isNotEmpty ?? false) || titleWidget != null)
           Container(
             margin: EdgeInsets.only(bottom: Dimens.px8),
-            child: titleWidget ?? KayleeText.normal16W500(title),
+            child: titleWidget ?? KayleeText.normal16W500(title!),
           ),
-        if (textInput.isNotNull) textInput,
+        if (textInput != null) textInput!,
       ],
     );
   }
 }
 
 class PriceInputField extends StatefulWidget {
-  final String hint;
-  final String error;
-  final TextEditingController controller;
-  final TextInputAction textInputAction;
-  final FocusNode focusNode;
-  final FocusNode nextFocusNode;
-  final String initText;
+  final String? hint;
+  final String? error;
+  final TextEditingController? controller;
+  final TextInputAction? textInputAction;
+  final FocusNode? focusNode;
+  final FocusNode? nextFocusNode;
+  final String? initText;
   final bool isStaticTField;
 
   PriceInputField(
@@ -322,7 +322,7 @@ class PriceInputField extends StatefulWidget {
 }
 
 class _PriceInputFieldState extends BaseState<PriceInputField> {
-  TextEditingController tfController;
+  TextEditingController? tfController;
 
   @override
   void initState() {
@@ -347,6 +347,12 @@ class _PriceInputFieldState extends BaseState<PriceInputField> {
   }
 
   @override
+  void dispose() {
+    tfController?.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ErrorText(
       child: TextFieldBorderWrapper(
@@ -367,8 +373,8 @@ class _PriceInputFieldState extends BaseState<PriceInputField> {
                 onSubmitted: (value) {
                   if (widget.textInputAction == TextInputAction.next) {
                     if (widget.textInputAction == TextInputAction.next) {
-                      if (widget.nextFocusNode.isNotNull) {
-                        widget.nextFocusNode.requestFocus();
+                      if (widget.nextFocusNode != null) {
+                        widget.nextFocusNode!.requestFocus();
                       } else
                         FocusScope.of(context).nextFocus();
                     }
@@ -402,21 +408,21 @@ class _PriceInputFieldState extends BaseState<PriceInputField> {
 }
 
 class SearchInputFieldController {
-  _SearchInputFieldState view;
+  _SearchInputFieldState? view;
   String? keyword;
 
   void clear() {
-    view.clear();
+    view?.clear();
   }
 }
 
 class SearchInputField extends StatefulWidget {
-  final String hint;
-  final SearchInputFieldController controller;
-  final FocusNode focusNode;
-  final ValueChanged<String> onChanged;
-  final ValueChanged<String> onDoneTyping;
-  final VoidCallback onClear;
+  final String? hint;
+  final SearchInputFieldController? controller;
+  final FocusNode? focusNode;
+  final ValueChanged<String>? onChanged;
+  final ValueChanged<String>? onDoneTyping;
+  final VoidCallback? onClear;
 
   SearchInputField(
       {this.hint,
@@ -439,8 +445,8 @@ class _SearchInputFieldState extends BaseState<SearchInputField> {
   void initState() {
     super.initState();
     widget.controller?.view = this;
-    tfController.text = widget.controller?.keyword;
-    closeIsShowed = widget?.controller?.keyword.isNotNullAndEmpty;
+    tfController.text = widget.controller?.keyword ?? '';
+    closeIsShowed = widget.controller?.keyword?.isNotEmpty ?? false;
     typingStreamController.stream
         .debounceTime(Duration(milliseconds: 500))
         .listen((keyword) {
@@ -451,7 +457,7 @@ class _SearchInputFieldState extends BaseState<SearchInputField> {
   void clear() {
     if (closeIsShowed) {
       setState(() {
-        tfController?.clear();
+        tfController.clear();
         widget.controller?.keyword = tfController.text;
         closeIsShowed = !closeIsShowed;
       });
@@ -474,7 +480,7 @@ class _SearchInputFieldState extends BaseState<SearchInputField> {
       controller: tfController,
       textAlignVertical: TextAlignVertical.center,
       onChanged: (text) {
-        widget?.controller?.keyword = text;
+        widget.controller?.keyword = text;
         typingStreamController.add(text);
         widget.onChanged?.call(text);
         if (text.isNotEmpty && !closeIsShowed) {
@@ -509,16 +515,16 @@ class _SearchInputFieldState extends BaseState<SearchInputField> {
 }
 
 class WithUnitInputField extends StatefulWidget {
-  final String error;
-  final String hint;
-  final FocusNode focusNode;
-  final FocusNode nextFocusNode;
-  final TextEditingController controller;
+  final String? error;
+  final String? hint;
+  final FocusNode? focusNode;
+  final FocusNode? nextFocusNode;
+  final TextEditingController? controller;
   final TextInputAction textInputAction;
   final TextInputType textInputType;
   final EdgeInsets contentPadding;
   final TextAlign textAlign;
-  final String unit;
+  final String? unit;
 
   WithUnitInputField({
     this.hint,
@@ -528,8 +534,8 @@ class WithUnitInputField extends StatefulWidget {
     this.nextFocusNode,
     this.textInputAction = TextInputAction.done,
     this.textInputType = TextInputType.text,
-    this.contentPadding,
-    this.textAlign,
+    this.contentPadding = const EdgeInsets.only(bottom: Dimens.px4),
+    this.textAlign = TextAlign.start,
     this.unit,
   });
 
@@ -564,27 +570,27 @@ class _WithUnitInputFieldState extends BaseState<WithUnitInputField> {
                     textInputAction: widget.textInputAction,
                     onSubmitted: (_) {
                       if (widget.textInputAction == TextInputAction.next) {
-                        if (widget.nextFocusNode.isNotNull) {
-                          widget.nextFocusNode.requestFocus();
+                        if (widget.nextFocusNode != null) {
+                          widget.nextFocusNode!.requestFocus();
                         } else
                           FocusScope.of(context).nextFocus();
                       }
                     },
                     autofocus: false,
-                    textAlign: widget.textAlign ?? TextAlign.start,
+                    textAlign: widget.textAlign,
                     textAlignVertical: TextAlignVertical.top,
                     style: TextStyles.normal16W400,
                     buildCounter: (context,
-                        {currentLength, isFocused, maxLength}) {
-                      return null;
-                    },
+                            {required currentLength,
+                            required isFocused,
+                            required maxLength}) =>
+                        null,
                     decoration: InputDecoration(
                       enabledBorder: InputBorder.none,
                       focusedBorder: InputBorder.none,
                       border: InputBorder.none,
                       hintText: widget.hint,
-                      contentPadding: widget.contentPadding ??
-                          const EdgeInsets.only(bottom: Dimens.px4),
+                      contentPadding: widget.contentPadding,
                       hintStyle: TextStyles.hint16W400,
                     ),
                   ),
@@ -615,23 +621,23 @@ class _WithUnitInputFieldState extends BaseState<WithUnitInputField> {
 }
 
 class NormalInputField extends StatefulWidget {
-  final String error;
-  final String hint;
-  final String initText;
-  final FocusNode focusNode;
-  final FocusNode nextFocusNode;
-  final TextEditingController controller;
-  final TextInputAction textInputAction;
-  final TextInputType textInputType;
+  final String? error;
+  final String? hint;
+  final String? initText;
+  final FocusNode? focusNode;
+  final FocusNode? nextFocusNode;
+  final TextEditingController? controller;
+  final TextInputAction? textInputAction;
+  final TextInputType? textInputType;
   final bool isStaticTField;
-  final double fieldHeight;
-  final EdgeInsets contentPadding;
+  final double? fieldHeight;
+  final EdgeInsets? contentPadding;
   final TextAlign textAlign;
   final bool expands;
-  final int maxLength;
-  final Widget suffixWidget;
-  final BoxConstraints suffixBoxConstraints;
-  final ValueChanged<String> onChanged;
+  final int? maxLength;
+  final Widget? suffixWidget;
+  final BoxConstraints? suffixBoxConstraints;
+  final ValueChanged<String>? onChanged;
 
   NormalInputField({
     this.hint,
@@ -645,8 +651,8 @@ class NormalInputField extends StatefulWidget {
     this.isStaticTField = false,
     this.fieldHeight,
     this.contentPadding,
-    this.textAlign,
-    this.expands,
+    this.textAlign = TextAlign.start,
+    this.expands = false,
     this.maxLength,
     this.suffixWidget,
     this.suffixBoxConstraints,
@@ -659,7 +665,7 @@ class NormalInputField extends StatefulWidget {
 
 class _NormalInputFieldState extends BaseState<NormalInputField> {
   bool showPass = false;
-  TextEditingController tfController;
+  TextEditingController? tfController;
 
   @override
   void initState() {
@@ -710,7 +716,7 @@ class _NormalInputFieldState extends BaseState<NormalInputField> {
                     onSubmitted: (_) {
                       if (widget.textInputAction == TextInputAction.next) {
                         if (widget.nextFocusNode.isNotNull) {
-                          widget.nextFocusNode.requestFocus();
+                          widget.nextFocusNode?.requestFocus();
                         } else
                           FocusScope.of(context).nextFocus();
                       }
@@ -718,18 +724,21 @@ class _NormalInputFieldState extends BaseState<NormalInputField> {
                     onChanged: widget.onChanged,
                     autofocus: false,
                     obscureText: isPassTField ? !showPass : false,
-                    textAlign: widget.textAlign ?? TextAlign.start,
+                    textAlign: widget.textAlign,
                     textAlignVertical: TextAlignVertical.top,
-                    expands: widget.expands ?? false,
-                    maxLines: widget.expands ?? false ? null : 1,
-                    minLines: widget.expands ?? false ? null : 1,
-                    maxLength: widget?.maxLength,
-                    maxLengthEnforced: widget?.maxLength.isNotNull,
+                    expands: widget.expands,
+                    maxLines: widget.expands ? null : 1,
+                    minLines: widget.expands ? null : 1,
+                    maxLength: widget.maxLength,
+                    maxLengthEnforcement: widget.maxLength != null
+                        ? MaxLengthEnforcement.enforced
+                        : null,
                     style: TextStyles.normal16W400,
                     buildCounter: (context,
-                        {currentLength, isFocused, maxLength}) {
-                      return null;
-                    },
+                            {required currentLength,
+                            required isFocused,
+                            required maxLength}) =>
+                        null,
                     decoration: InputDecoration(
                         enabled: !widget.isStaticTField,
                         enabledBorder: InputBorder.none,
@@ -779,12 +788,12 @@ class _NormalInputFieldState extends BaseState<NormalInputField> {
 }
 
 class PhoneInputField extends StatefulWidget {
-  final String initText;
-  final String hint;
-  final String error;
-  final FocusNode focusNode;
-  final FocusNode nextFocusNode;
-  final TextEditingController controller;
+  final String? initText;
+  final String? hint;
+  final String? error;
+  final FocusNode? focusNode;
+  final FocusNode? nextFocusNode;
+  final TextEditingController? controller;
   final TextInputAction textInputAction;
   final bool isStaticTField;
 
@@ -803,7 +812,7 @@ class PhoneInputField extends StatefulWidget {
 }
 
 class _PhoneInputFieldState extends State<PhoneInputField> {
-  TextEditingController tfController;
+  TextEditingController? tfController;
 
   @override
   void initState() {
@@ -861,7 +870,7 @@ class _PhoneInputFieldState extends State<PhoneInputField> {
                 onSubmitted: (_) {
                   if (widget.textInputAction == TextInputAction.next) {
                     if (widget.nextFocusNode.isNotNull) {
-                      widget.nextFocusNode.requestFocus();
+                      widget.nextFocusNode?.requestFocus();
                     } else
                       FocusScope.of(context).nextFocus();
                   }
@@ -888,12 +897,12 @@ class _PhoneInputFieldState extends State<PhoneInputField> {
 }
 
 class WebsiteInputField extends StatefulWidget {
-  final String error;
-  final TextEditingController websiteTfController;
-  final TextEditingController domainTfController;
-  final FocusNode websiteFocus;
-  final FocusNode domainFocus;
-  final TextInputAction textInputAction;
+  final String? error;
+  final TextEditingController? websiteTfController;
+  final TextEditingController? domainTfController;
+  final FocusNode? websiteFocus;
+  final FocusNode? domainFocus;
+  final TextInputAction? textInputAction;
 
   WebsiteInputField(
       {this.error,
@@ -918,10 +927,6 @@ class _WebsiteInputFieldState extends BaseState<WebsiteInputField> {
 
   @override
   void dispose() {
-    widget.domainTfController?.dispose();
-    widget.websiteTfController?.dispose();
-    widget.websiteFocus?.dispose();
-    widget.domainFocus?.dispose();
     super.dispose();
   }
 
@@ -980,13 +985,13 @@ class _WebsiteInputFieldState extends BaseState<WebsiteInputField> {
 }
 
 class SelectInputTextField extends StatefulWidget {
-  final String error;
+  final String? error;
   final String content;
-  final String buttonText;
-  final VoidCallback onPress;
+  final String? buttonText;
+  final VoidCallback? onPress;
 
   SelectInputTextField(
-      {this.error, this.content, this.onPress, this.buttonText});
+      {this.error, this.content = '', this.onPress, this.buttonText});
 
   @override
   _SelectInputTextFieldState createState() => _SelectInputTextFieldState();
@@ -1016,7 +1021,7 @@ class _SelectInputTextFieldState extends BaseState<SelectInputTextField> {
           children: [
             Expanded(
                 child: KayleeText.normal16W400(
-              widget.content ?? '',
+                  widget.content,
               maxLines: 1,
             )),
             KayleeFlatButton.withTextField(
@@ -1032,11 +1037,11 @@ class _SelectInputTextFieldState extends BaseState<SelectInputTextField> {
 }
 
 class UnitInputField extends StatefulWidget {
-  final String hint;
-  final String error;
-  final TextInputAction textInputAction;
-  final ValueChanged<String> onChange;
-  final TextEditingController controller;
+  final String? hint;
+  final String? error;
+  final TextInputAction? textInputAction;
+  final ValueChanged<String>? onChange;
+  final TextEditingController? controller;
 
   UnitInputField(
       {this.hint,
@@ -1184,8 +1189,8 @@ class _PriceWithUnderLineBorderTextFieldState
 }
 
 class ErrorText extends StatelessWidget {
-  final String error;
-  final Widget child;
+  final String? error;
+  final Widget? child;
 
   ErrorText({this.child, this.error});
 
@@ -1193,13 +1198,13 @@ class ErrorText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        if (child.isNotNull) child,
-        if (!error.isNullOrEmpty)
+        if (child != null) child!,
+        if (error != null && error!.isNotEmpty)
           Container(
             margin: const EdgeInsets.only(top: Dimens.px4),
             alignment: Alignment.centerRight,
             child: KayleeText.error12W400(
-              error,
+              error!,
               textAlign: TextAlign.end,
               overflow: TextOverflow.visible,
             ),
@@ -1212,12 +1217,15 @@ class ErrorText extends StatelessWidget {
 class TextFieldBorderWrapper extends StatelessWidget {
   final Widget child;
   final bool isError;
-  final Color bgColor;
-  final double fieldHeight;
+  final Color? bgColor;
+  final double? fieldHeight;
   final bool focused;
 
   TextFieldBorderWrapper(this.child,
-      {this.isError, this.bgColor, this.fieldHeight, this.focused = false});
+      {this.isError = false,
+      this.bgColor,
+      this.fieldHeight,
+      this.focused = false});
 
   @override
   Widget build(BuildContext context) {
@@ -1229,10 +1237,8 @@ class TextFieldBorderWrapper extends StatelessWidget {
         color: bgColor ?? Colors.white,
         borderRadius: BorderRadius.circular(Dimens.px5),
         border: Border.all(
-            width: (isError ?? false) ? Dimens.px2 : Dimens.px1,
-            color: (isError ?? false)
-                ? ColorsRes.errorBorder
-                : ColorsRes.textFieldBorder),
+            width: isError ? Dimens.px2 : Dimens.px1,
+            color: isError ? ColorsRes.errorBorder : ColorsRes.textFieldBorder),
         boxShadow: [
           if (focused)
             BoxShadow(

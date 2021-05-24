@@ -16,8 +16,9 @@ class BrandSelectListBloc extends Cubit<SingleModel<List<Brand>>> {
       onSuccess: ({message, result}) {
         final brands = result as List<Brand>;
         state.item?.forEach((old) {
-          brands.singleWhere((e) => e.id == old.id, orElse: null)?.selected =
-              old.selected;
+          try {
+            brands.singleWhere((e) => e.id == old.id).selected = old.selected;
+          } catch (_) {}
         });
         final totalSelected = brands.fold<int>(
             0,
@@ -45,27 +46,27 @@ class BrandSelectListBloc extends Cubit<SingleModel<List<Brand>>> {
     );
   }
 
-  void select({Brand brand}) {
+  void select({required Brand brand}) {
     if (brand.id == -1) {
       //select all
       emit(SingleModel.copy(state
-        ..item.forEach((e) {
+        ..item?.forEach((e) {
           e.selected = brand.selected;
         })));
     } else {
-      final totalSelected = state.item.fold<int>(
+      final totalSelected = state.item?.fold<int>(
           0,
           (previousValue, e) =>
               e.id != -1 && e.selected ? (previousValue + 1) : previousValue);
-      final itemTotal = state.item.length - 1;
+      final itemTotal = (state.item?.length ?? 0) - 1;
 
       //nếu tất cả item (trừ item 'Tất cả') đc select
       if (totalSelected == itemTotal && brand.selected) {
-        //set item 'Tất cả'với select=true
-        state.item.first..selected = true;
-      } else if (state.item.first.selected) {
+        //set item 'Tất cả' với select=true
+        (state.item?.first)?..selected = true;
+      } else if (((state.item?.first)?.selected ?? false)) {
         //chỉ set lại item đầu = false khi nó đã được select
-        state..item.first.selected = false;
+        state..item!.first.selected = false;
       }
       emit(SingleModel.copy(state));
     }
