@@ -112,9 +112,14 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
         if (response.request.path == 'check-expired') {
           return context.bloc<ReloadBloc>().forceReloadAllState();
         }
-        if (responseModel.warning.isNotNull &&
-            responseModel.warning.code == ErrorCode.EXPIRE_WARNING_CODE) {
-          _appBloc.expirationWarning(error: responseModel.warning);
+        if (responseModel.warning.isNotNull) {
+          if (responseModel.warning.code == ErrorCode.EXPIRE_WARNING_CODE) {
+            return _appBloc.expirationWarning(error: responseModel.warning);
+          }
+
+          if (responseModel.warning.code == ErrorCode.OUT_OF_DATE_CODE) {
+            return _appBloc.outOfDate(error: responseModel.warning);
+          }
         }
       },
       onError: (error) {
