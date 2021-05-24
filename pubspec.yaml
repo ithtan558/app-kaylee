@@ -8,8 +8,8 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 2.0.0+20000
 
 environment:
-  sdk: ">=2.12.2 <3.0.0"
-  flutter: ">=2.0.0"
+  sdk: ">=2.13.0 <3.0.0"
+  flutter: ">=2.2.0"
 
 dependencies:
   flutter_localizations:
@@ -17,8 +17,8 @@ dependencies:
   flutter:
     sdk: flutter
 
-  permission_handler: ^7.1.0
-  image_picker: ^0.7.5
+  permission_handler: ^8.0.0+2
+  image_picker: ^0.7.5+2
   flutter_masked_text: ^0.8.0
   #  esc_pos_printer: ^4.0.3
   esc_pos_printer:
@@ -35,35 +35,24 @@ dependencies:
       url: https://github.com/tungpham6195/bluetooth_print.git
       ref: tungpham6195/device-not-found-on-android-10
   app_settings: ^4.1.0
-  firebase_remote_config: ^0.10.0-dev.3
+  firebase_remote_config: ^0.10.0-dev.4
   anth_package:
     path: ../anth_package
 #    git:
 #      url: https://tungpham6195@bitbucket.org/anth-freelance/anth_package.git
 #      ref: 0.2.2
-dependency_overrides:
-  #tạm thời dùng master
-  retrofit:
-    git:
-      url: https://github.com/trevorwang/retrofit.dart.git
-      path: annotation
-      ref: master
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   # json serializable
-  json_serializable: ^4.1.1
+  json_serializable: ^4.1.2
 
   # Tools to write binaries that run builders(In this project, we use it
   # for json_serializable, retrofit)
-  build_runner: ^2.0.2
+  build_runner: ^2.0.3
   #tạm thời dùng master
-  retrofit_generator:
-    git:
-      url: https://github.com/trevorwang/retrofit.dart.git
-      path: generator
-      ref: master
+  retrofit_generator: ^2.0.0
 
 
 # For information on the generic Dart part of this file, see the
