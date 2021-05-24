@@ -1020,7 +1020,7 @@ packages:
     source: hosted
     version: "0.1.8+1"
   store_redirect:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: store_redirect
       url: "https://pub.dartlang.org"

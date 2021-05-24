@@ -38,6 +38,8 @@ dependencies:
     git:
       url: https://tungpham6195@bitbucket.org/anth-freelance/anth_package.git
       ref: 0.2.2
+  store_redirect: ^1.0.2
+
 dependency_overrides:
   rxdart: 0.24.0
 
