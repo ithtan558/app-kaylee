@@ -9,6 +9,7 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
+import 'package:store_redirect/store_redirect.dart';
 
 abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
   bool isShowLoading = false;
@@ -17,6 +18,7 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
   StreamSubscription appBlocSub;
   StreamSubscription expirationWarningSub;
   StreamSubscription expirationSub;
+  StreamSubscription outOfDateSub;
   StreamSubscription _reloadBlocSub;
 
   @override
@@ -25,6 +27,7 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
     _listenUnauthorStream();
     _listenExpirationWarningStream();
     _listenExpirationStream();
+    _listenOutOfDateStream();
     _reloadBlocSub = context.bloc<ReloadBloc>().listen((state) {
       if (state is ReloadOneState) {
         onReloadWidget(state.widget, state.bundle);
@@ -40,6 +43,7 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
     _reloadBlocSub?.cancel();
     expirationWarningSub?.cancel();
     expirationSub?.cancel();
+    outOfDateSub?.cancel();
     super.dispose();
   }
 
@@ -174,6 +178,43 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
             .then((value) {
           appBloc.isShowingExpirationScreen = false;
         });
+      }
+    });
+  }
+
+  void _listenOutOfDateStream() async {
+    outOfDateSub = appBloc.outOfDateStream.listen((state) {
+      if (state is OutOfDateState && !appBloc.isShowingOutOfDateDialog) {
+        appBloc.isShowingOutOfDateDialog = true;
+        if (dialogContext.isNotNull) {
+          final dialog = ModalRoute.of(dialogContext);
+          if (dialog.isFirst && dialog.isActive) {
+            Navigator.removeRoute(context, ModalRoute.of(dialogContext));
+            dialogContext = null;
+          }
+        }
+        appBloc.isShowingOutOfDateDialog = true;
+        showKayleeAlertDialog(
+          context: context,
+          view: KayleeAlertDialogView.error(
+            error: state.error,
+            actions: [
+              KayleeAlertDialogAction.dongY(
+                onPressed: () {
+                  StoreRedirect.redirect(
+                    androidAppId: 'com.kaylee.android',
+                    iOSAppId: '1530411047',
+                  );
+                  popScreen();
+                },
+                isDefaultAction: true,
+              )
+            ],
+          ),
+          onDismiss: () {
+            appBloc.isShowingExpirationWarningDialog = false;
+          },
+        );
       }
     });
   }
