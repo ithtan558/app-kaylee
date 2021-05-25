@@ -5,8 +5,6 @@ import 'package:kaylee/models/models.dart';
 import 'package:kaylee/services/services.dart';
 
 class SplashScreenBloc extends BaseBloc {
-  UserService userService;
-
   SplashScreenBloc();
 
   @override
@@ -35,7 +33,7 @@ class SplashScreenBloc extends BaseBloc {
     add(GoToHomeScreenSplashScrEvent());
   }
 
-  void loadUserInfo() {
+  void loadUserInfo({UserService userService}) {
     RequestHandler(
       request: userService.getProfile(),
       onSuccess: ({message, result}) {
