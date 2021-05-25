@@ -24,4 +24,5 @@ class ErrorCode {
   static const int EXPIRATION_CODE = 100031;
   static const int EXPIRE_WARNING_CODE = 100032;
   static const int OUT_OF_DATE_CODE = 100033;
+  static const int NO_PASSING_VERSION_CODE = 100034;
 }
