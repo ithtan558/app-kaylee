@@ -14,7 +14,7 @@ enum DateRangeValueType {
 }
 
 extension DateRangeValueTypeExtension on DateRangeValueType {
-  String get text {
+  String? get text {
     switch (this) {
       case DateRangeValueType.thisWeek:
         return Strings.tuanNay;
@@ -58,10 +58,10 @@ extension DateRangeValueTypeExtension on DateRangeValueType {
 }
 
 class KayleeDateRangePickerView extends StatefulWidget {
-  final ValueChanged<DateTimeRange> onSelectByDate;
-  final ValueChanged<DateRangeValueType> onSelectByType;
-  final DateTimeRange selectedRange;
-  final DateRangeValueType selectedType;
+  final ValueChanged<DateTimeRange>? onSelectByDate;
+  final ValueChanged<DateRangeValueType>? onSelectByType;
+  final DateTimeRange? selectedRange;
+  final DateRangeValueType? selectedType;
 
   KayleeDateRangePickerView(
       {this.onSelectByDate,
@@ -76,17 +76,17 @@ class KayleeDateRangePickerView extends StatefulWidget {
 
 class _KayleeDateRangePickerViewState
     extends KayleeState<KayleeDateRangePickerView> {
-  DateRangeValueType rangeValueType;
-  DateTimeRange dateRange;
-  DateTime selectedStartDate;
-  DateTime selectedEndDate;
+  DateRangeValueType? rangeValueType;
+  DateTimeRange? dateRange;
+  DateTime? selectedStartDate;
+  DateTime? selectedEndDate;
 
   @override
   void initState() {
     super.initState();
     rangeValueType = widget.selectedType;
-    if (rangeValueType.isNotNull) {
-      dateRange = rangeValueType.range;
+    if (rangeValueType != null) {
+      dateRange = rangeValueType!.range;
     } else {
       dateRange = widget.selectedRange;
     }
@@ -126,14 +126,13 @@ class _KayleeDateRangePickerViewState
                       itemBuilder: (context, index) {
                         final item = DateRangeValueType.values.elementAt(index);
                         return _buildTag(
-                            title: item.text,
+                            title: item.text ?? '',
                             onTap: () {
                               _onChangeType(type: item);
                             },
                             selected: rangeValueType == item);
                       },
-                      separatorBuilder: (context, index) =>
-                          SizedBox(
+                      separatorBuilder: (context, index) => SizedBox(
                             width: Dimens.px16,
                           ),
                       itemCount: DateRangeValueType.values.length),
@@ -150,16 +149,16 @@ class _KayleeDateRangePickerViewState
               Row(
                 children: [
                   _buildPicker(
-                    date: dateRange.start,
+                    date: dateRange?.start,
                     onTap: () {
                       showKayleeDatePickerDialog(
                         context: context,
                         initialDateTime: dateRange.start,
                         maximumDate: dateRange.end,
                         onDone: () {
-                          if (selectedStartDate.isNotNull) {
+                          if (selectedStartDate != null) {
                             dateRange = DateTimeRange(
-                                start: selectedStartDate, end: dateRange.end);
+                                start: selectedStartDate!, end: dateRange.end);
                             selectedStartDate = null;
                             rangeValueType = null;
                             setState(() {});
@@ -185,16 +184,18 @@ class _KayleeDateRangePickerViewState
                         initialDateTime: dateRange.end,
                         maximumDate: DateTime.now(),
                         onDone: () {
-                          if (selectedEndDate.isNotNull) {
-                            if (selectedEndDate
-                                .difference(dateRange.start)
-                                .inDays <
+                          if (selectedEndDate != null) {
+                            if (selectedEndDate!
+                                    .difference(dateRange.start)
+                                    .inDays <
                                 0) {
                               dateRange = DateTimeRange(
-                                  start: selectedEndDate, end: selectedEndDate);
+                                  start: selectedEndDate!,
+                                  end: selectedEndDate!);
                             } else {
                               dateRange = DateTimeRange(
-                                  start: dateRange.start, end: selectedEndDate);
+                                  start: dateRange.start,
+                                  end: selectedEndDate!);
                             }
                             selectedEndDate = null;
                             rangeValueType = null;
@@ -219,9 +220,9 @@ class _KayleeDateRangePickerViewState
           decoration: const BoxDecoration(
               border: Border(
                   top: BorderSide(
-                    color: ColorsRes.divider,
-                    width: Dimens.px1,
-                  ))),
+            color: ColorsRes.divider,
+            width: Dimens.px1,
+          ))),
           padding: const EdgeInsets.all(Dimens.px16),
           child: Row(
             children: [
@@ -239,8 +240,8 @@ class _KayleeDateRangePickerViewState
                   text: Strings.luu,
                   onPressed: () {
                     popScreen();
-                    if (rangeValueType.isNotNull) {
-                      widget.onSelectByType?.call(rangeValueType);
+                    if (rangeValueType != null) {
+                      widget.onSelectByType?.call(rangeValueType!);
                     } else {
                       widget.onSelectByDate?.call(dateRange);
                     }
@@ -254,40 +255,43 @@ class _KayleeDateRangePickerViewState
     );
   }
 
-  void _onChangeType({DateRangeValueType type}) {
+  void _onChangeType({required DateRangeValueType type}) {
     setState(() {
       rangeValueType = type;
-      dateRange = rangeValueType.range;
+      dateRange = rangeValueType!.range;
     });
   }
 
-  Widget _buildTag({String title, VoidCallback onTap, bool selected = false}) {
+  Widget _buildTag(
+      {required String title,
+      required VoidCallback onTap,
+      bool selected = false}) {
     return selected
         ? KayleeRoundBorder.hyper(
-      borderWidth: Dimens.px2,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: KayleeText.normal12W400(
-          title,
-          maxLines: 1,
-        ),
-      ),
-      onTap: onTap,
-    )
+            borderWidth: Dimens.px2,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: KayleeText.normal12W400(
+                title,
+                maxLines: 1,
+              ),
+            ),
+            onTap: onTap,
+          )
         : KayleeRoundBorder(
-      borderColor: ColorsRes.textFieldBorder,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: KayleeText.normal12W400(
-          title,
-          maxLines: 1,
-        ),
-      ),
-      onTap: onTap,
-    );
+            borderColor: ColorsRes.textFieldBorder,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: KayleeText.normal12W400(
+                title,
+                maxLines: 1,
+              ),
+            ),
+            onTap: onTap,
+          );
   }
 
-  Widget _buildPicker({DateTime date, VoidCallback onTap}) {
+  Widget _buildPicker({DateTime? date, VoidCallback? onTap}) {
     return Expanded(
       child: KayleeRoundBorder.normal(
         padding: const EdgeInsets.only(left: Dimens.px12, right: Dimens.px8),

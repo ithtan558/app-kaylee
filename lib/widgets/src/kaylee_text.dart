@@ -6,15 +6,16 @@ import 'package:kaylee/widgets/src/kaylee_date_picker.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class KayleeDateTimeText extends StatelessWidget {
-  final DateTime time;
+  final DateTime? time;
   final String format;
-  final TextAlign textAlign;
-  final TextStyle textStyle;
+  final TextAlign? textAlign;
+  final TextStyle? textStyle;
 
-  KayleeDateTimeText(this.time, {this.format, this.textAlign, this.textStyle});
+  KayleeDateTimeText(this.time,
+      {this.format = '', this.textAlign, this.textStyle});
 
   factory KayleeDateTimeText.normal(DateTime time,
-          {TextAlign textAlign, TextStyle textStyle}) =>
+          {TextAlign? textAlign, TextStyle? textStyle}) =>
       KayleeDateTimeText(
         time,
         textAlign: textAlign,
@@ -24,7 +25,7 @@ class KayleeDateTimeText extends StatelessWidget {
       );
 
   factory KayleeDateTimeText.normalFromServer(int time,
-          {TextAlign textAlign, TextStyle textStyle}) =>
+          {TextAlign? textAlign, TextStyle? textStyle}) =>
       KayleeDateTimeText.normal(
         time.toDateTimeFromServer,
         textAlign: textAlign,
@@ -32,7 +33,7 @@ class KayleeDateTimeText extends StatelessWidget {
       );
 
   factory KayleeDateTimeText.dayMonth(DateTime time,
-          {TextAlign textAlign, TextStyle textStyle}) =>
+          {TextAlign? textAlign, TextStyle? textStyle}) =>
       KayleeDateTimeText(
         time,
         textAlign: textAlign,
@@ -41,7 +42,7 @@ class KayleeDateTimeText extends StatelessWidget {
       );
 
   factory KayleeDateTimeText.dayMonthFromServer(int time,
-          {TextAlign textAlign, TextStyle textStyle}) =>
+          {TextAlign? textAlign, TextStyle? textStyle}) =>
       KayleeDateTimeText(
         time.toDateTimeFromServer,
         textAlign: textAlign,
@@ -49,8 +50,8 @@ class KayleeDateTimeText extends StatelessWidget {
         format: '${DateFormat.DAY * 2}/${DateFormat.NUM_MONTH * 2}',
       );
 
-  factory KayleeDateTimeText.dayMonthYear(DateTime time,
-          {TextAlign textAlign, TextStyle textStyle}) =>
+  factory KayleeDateTimeText.dayMonthYear(DateTime? time,
+          {TextAlign? textAlign, TextStyle? textStyle}) =>
       KayleeDateTimeText(
         time,
         textAlign: textAlign,
@@ -60,7 +61,7 @@ class KayleeDateTimeText extends StatelessWidget {
       );
 
   factory KayleeDateTimeText.dayMonthYearFromServer(int time,
-          {TextAlign textAlign, TextStyle textStyle}) =>
+          {TextAlign? textAlign, TextStyle? textStyle}) =>
       KayleeDateTimeText.dayMonthYear(
         time.toDateTimeFromServer,
         textAlign: textAlign,
@@ -80,19 +81,19 @@ class KayleeDateTimeText extends StatelessWidget {
 }
 
 class KayleeTitlePriceText extends StatelessWidget {
-  final String title;
+  final String? title;
   final dynamic price;
   final bool isBold;
 
   KayleeTitlePriceText({this.title, this.price, this.isBold = false});
 
-  factory KayleeTitlePriceText.normal({String title, dynamic price}) =>
+  factory KayleeTitlePriceText.normal({String? title, dynamic price}) =>
       KayleeTitlePriceText(
         title: title,
         price: price,
       );
 
-  factory KayleeTitlePriceText.bold({String title, dynamic price}) =>
+  factory KayleeTitlePriceText.bold({String? title, dynamic price}) =>
       KayleeTitlePriceText(
         title: title,
         price: price,
@@ -126,16 +127,16 @@ class KayleeTitlePriceText extends StatelessWidget {
 
 class KayleePriceText extends StatelessWidget {
   final dynamic price;
-  final TextStyle textStyle;
+  final TextStyle? textStyle;
   final bool showUnit;
-  final TextAlign textAlign;
-  final TextOverflow textOverflow;
+  final TextAlign? textAlign;
+  final TextOverflow? textOverflow;
 
   factory KayleePriceText.normal(
     dynamic price, {
-    TextStyle textStyle,
+    TextStyle? textStyle,
     TextAlign textAlign = TextAlign.start,
-    TextOverflow textOverflow,
+    TextOverflow? textOverflow,
   }) =>
       KayleePriceText(
         price,
@@ -150,7 +151,7 @@ class KayleePriceText extends StatelessWidget {
         textStyle: TextStyles.hyper16W700,
       );
 
-  factory KayleePriceText.noUnit(dynamic price, {TextStyle textStyle}) =>
+  factory KayleePriceText.noUnit(dynamic price, {TextStyle? textStyle}) =>
       KayleePriceText(
         price,
         textStyle: textStyle,
@@ -185,7 +186,7 @@ class KayleePriceText extends StatelessWidget {
   Widget build(BuildContext context) {
     return KayleeText(
       CurrencyUtils.formatVNDWithCustomUnit(price ?? 0,
-          unit: showUnit ? 'đ' : null),
+          unit: showUnit ? 'đ' : ''),
       style: textStyle ?? TextStyles.hyper16W500,
       maxLines: 1,
       textAlign: textAlign,
@@ -196,8 +197,8 @@ class KayleePriceText extends StatelessWidget {
 
 class KayleePriceUnitText extends StatelessWidget {
   final dynamic price;
-  final TextStyle textStyle;
-  final MainAxisAlignment alignment;
+  final TextStyle? textStyle;
+  final MainAxisAlignment? alignment;
 
   KayleePriceUnitText(this.price, {this.textStyle, this.alignment});
 
@@ -221,15 +222,15 @@ class KayleePriceUnitText extends StatelessWidget {
 
 class KayleeText extends StatelessWidget {
   final String text;
-  final TextAlign textAlign;
-  final TextStyle style;
-  final int maxLines;
-  final TextOverflow overflow;
+  final TextAlign? textAlign;
+  final TextStyle? style;
+  final int? maxLines;
+  final TextOverflow? overflow;
 
   factory KayleeText.hint16W400(String text,
-          {TextAlign textAlign = TextAlign.start,
-          int maxLines,
-          TextOverflow overflow}) =>
+          {TextAlign? textAlign = TextAlign.start,
+          int? maxLines,
+          TextOverflow? overflow}) =>
       KayleeText(
         text,
         textAlign: textAlign,
@@ -240,8 +241,8 @@ class KayleeText extends StatelessWidget {
 
   factory KayleeText.hint16W500(String text,
           {TextAlign textAlign = TextAlign.start,
-          int maxLines,
-          TextOverflow overflow}) =>
+          int? maxLines,
+          TextOverflow? overflow}) =>
       KayleeText(
         text,
         textAlign: textAlign,
@@ -251,9 +252,9 @@ class KayleeText extends StatelessWidget {
       );
 
   factory KayleeText.normal16W500(String text,
-          {TextAlign textAlign = TextAlign.start,
-          int maxLines,
-          TextOverflow overflow}) =>
+          {TextAlign? textAlign = TextAlign.start,
+          int? maxLines,
+          TextOverflow? overflow}) =>
       KayleeText(
         text,
         textAlign: textAlign,
@@ -263,9 +264,9 @@ class KayleeText extends StatelessWidget {
       );
 
   factory KayleeText.normal26W700(String text,
-          {TextAlign textAlign = TextAlign.start,
-          int maxLines,
-          TextOverflow overflow}) =>
+          {TextAlign? textAlign = TextAlign.start,
+          int? maxLines,
+          TextOverflow? overflow}) =>
       KayleeText(
         text,
         textAlign: textAlign,
@@ -275,9 +276,9 @@ class KayleeText extends StatelessWidget {
       );
 
   factory KayleeText.normal18W700(String text,
-          {TextAlign textAlign = TextAlign.start,
-          int maxLines,
-          TextOverflow overflow}) =>
+          {TextAlign? textAlign = TextAlign.start,
+          int? maxLines,
+          TextOverflow? overflow}) =>
       KayleeText(
         text,
         textAlign: textAlign,
@@ -287,9 +288,9 @@ class KayleeText extends StatelessWidget {
       );
 
   factory KayleeText.normal12W400(String text,
-          {TextAlign textAlign = TextAlign.start,
-          int maxLines,
-          TextOverflow overflow}) =>
+          {TextAlign? textAlign = TextAlign.start,
+          int? maxLines,
+          TextOverflow? overflow}) =>
       KayleeText(
         text,
         textAlign: textAlign,
@@ -299,9 +300,9 @@ class KayleeText extends StatelessWidget {
       );
 
   factory KayleeText.normalWhite18W700(String text,
-      {TextAlign textAlign = TextAlign.start,
-        int maxLines,
-        TextOverflow overflow}) =>
+          {TextAlign textAlign = TextAlign.start,
+          int? maxLines,
+          TextOverflow? overflow}) =>
       KayleeText(
         text,
         textAlign: textAlign,
@@ -311,9 +312,9 @@ class KayleeText extends StatelessWidget {
       );
 
   factory KayleeText.normalWhite16W500(String text,
-      {TextAlign textAlign = TextAlign.start,
-        int maxLines,
-        TextOverflow overflow}) =>
+          {TextAlign textAlign = TextAlign.start,
+          int? maxLines,
+          TextOverflow? overflow}) =>
       KayleeText(
         text,
         textAlign: textAlign,
@@ -324,8 +325,8 @@ class KayleeText extends StatelessWidget {
 
   factory KayleeText.normalWhite16W400(String text,
           {TextAlign textAlign = TextAlign.start,
-          int maxLines,
-          TextOverflow overflow}) =>
+          int? maxLines,
+          TextOverflow? overflow}) =>
       KayleeText(
         text,
         textAlign: textAlign,
@@ -336,8 +337,8 @@ class KayleeText extends StatelessWidget {
 
   factory KayleeText.normalWhite12W400(String text,
           {TextAlign textAlign = TextAlign.start,
-          int maxLines,
-          TextOverflow overflow}) =>
+          int? maxLines,
+          TextOverflow? overflow}) =>
       KayleeText(
         text,
         textAlign: textAlign,
@@ -348,8 +349,8 @@ class KayleeText extends StatelessWidget {
 
   factory KayleeText.normal16W400(String text,
           {TextAlign textAlign = TextAlign.start,
-          int maxLines,
-          TextOverflow overflow}) =>
+          int? maxLines,
+          TextOverflow? overflow}) =>
       KayleeText(
         text,
         textAlign: textAlign,
@@ -360,8 +361,8 @@ class KayleeText extends StatelessWidget {
 
   factory KayleeText.hyper16W500(String text,
           {TextAlign textAlign = TextAlign.start,
-          int maxLines,
-          TextOverflow overflow}) =>
+          int? maxLines,
+          TextOverflow? overflow}) =>
       KayleeText(
         text,
         textAlign: textAlign,
@@ -371,9 +372,9 @@ class KayleeText extends StatelessWidget {
       );
 
   factory KayleeText.hyper16W400(String text,
-      {TextAlign textAlign = TextAlign.start,
-        int maxLines,
-        TextOverflow overflow}) =>
+          {TextAlign textAlign = TextAlign.start,
+          int? maxLines,
+          TextOverflow? overflow}) =>
       KayleeText(
         text,
         textAlign: textAlign,
@@ -383,9 +384,9 @@ class KayleeText extends StatelessWidget {
       );
 
   factory KayleeText.error12W400(String text,
-      {TextAlign textAlign = TextAlign.start,
-        int maxLines,
-        TextOverflow overflow}) =>
+          {TextAlign textAlign = TextAlign.start,
+          int? maxLines,
+          TextOverflow? overflow}) =>
       KayleeText(
         text,
         textAlign: textAlign,
@@ -395,9 +396,9 @@ class KayleeText extends StatelessWidget {
       );
 
   factory KayleeText.error16W400(String text,
-      {TextAlign textAlign = TextAlign.start,
-        int maxLines,
-        TextOverflow overflow}) =>
+          {TextAlign textAlign = TextAlign.start,
+          int? maxLines,
+          TextOverflow? overflow}) =>
       KayleeText(
         text,
         textAlign: textAlign,
@@ -407,9 +408,9 @@ class KayleeText extends StatelessWidget {
       );
 
   factory KayleeText.textFieldBorder12W400(String text,
-      {TextAlign textAlign = TextAlign.start,
-        int maxLines,
-        TextOverflow overflow}) =>
+          {TextAlign textAlign = TextAlign.start,
+          int? maxLines,
+          TextOverflow? overflow}) =>
       KayleeText(
         text,
         textAlign: textAlign,
@@ -420,9 +421,9 @@ class KayleeText extends StatelessWidget {
 
   KayleeText(this.text,
       {this.textAlign = TextAlign.start,
-        this.maxLines,
-        this.style,
-        this.overflow = TextOverflow.ellipsis});
+      this.maxLines,
+      this.style,
+      this.overflow = TextOverflow.ellipsis});
 
   @override
   Widget build(BuildContext context) {
@@ -431,16 +432,16 @@ class KayleeText extends StatelessWidget {
       textAlign: textAlign,
       maxLines: maxLines,
       overflow: overflow,
-      style: context.textTheme.bodyText2.merge(style),
+      style: context.textTheme.bodyText2?.merge(style),
     );
   }
 }
 
 class KayleeDateText extends StatelessWidget {
   final DateTime initDate;
-  final void Function() onTap;
+  final VoidCallback? onTap;
 
-  KayleeDateText({@required this.initDate, this.onTap});
+  KayleeDateText({required this.initDate, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -470,15 +471,13 @@ class KayleeDateText extends StatelessWidget {
 }
 
 class KayleeDateRangeText extends StatelessWidget {
-  final DateTime fromDate;
-  final DateTime toDate;
-  final void Function() onTap;
-  final double textSize;
+  final DateTime? fromDate;
+  final DateTime? toDate;
+  final VoidCallback? onTap;
+  final double? textSize;
 
-  KayleeDateRangeText({@required this.fromDate,
-    this.onTap,
-    @required this.toDate,
-    this.textSize = Dimens.px16});
+  KayleeDateRangeText(
+      {this.fromDate, this.onTap, this.toDate, this.textSize = Dimens.px16});
 
   @override
   Widget build(BuildContext context) {
@@ -492,7 +491,7 @@ class KayleeDateRangeText extends StatelessWidget {
                 KayleeDateTimeText.dayMonthYear(
                   fromDate,
                   textStyle:
-                  TextStyles.hyper16W400.copyWith(fontSize: textSize),
+                      TextStyles.hyper16W400.copyWith(fontSize: textSize),
                 ),
                 KayleeText(
                   ' - ',
@@ -501,7 +500,7 @@ class KayleeDateRangeText extends StatelessWidget {
                 KayleeDateTimeText.dayMonthYear(
                   toDate,
                   textStyle:
-                  TextStyles.hyper16W400.copyWith(fontSize: textSize),
+                      TextStyles.hyper16W400.copyWith(fontSize: textSize),
                 ),
               ],
             ),
@@ -521,8 +520,8 @@ class KayleeDateRangeText extends StatelessWidget {
 }
 
 class KayleeDatePickerText extends StatefulWidget {
-  final ValueChanged<DateTimeRange> onSelectRange;
-  final KayleeDatePickerTextController controller;
+  final ValueChanged<DateTimeRange>? onSelectRange;
+  final KayleeDatePickerTextController? controller;
   final double textSize;
 
   KayleeDatePickerText(
@@ -533,8 +532,8 @@ class KayleeDatePickerText extends StatefulWidget {
 }
 
 class _KayleeDatePickerTextState extends BaseState<KayleeDatePickerText> {
-  DateTimeRange dateRange;
-  DateRangeValueType rangeType;
+  DateTimeRange? dateRange;
+  DateRangeValueType? rangeType;
 
   @override
   void initState() {
@@ -547,8 +546,8 @@ class _KayleeDatePickerTextState extends BaseState<KayleeDatePickerText> {
   Widget build(BuildContext context) {
     return KayleeDateRangeText(
       textSize: widget.textSize,
-      fromDate: dateRange.start,
-      toDate: dateRange.end,
+      fromDate: dateRange?.start,
+      toDate: dateRange?.end,
       onTap: () {
         showKayleeDialog(
           context: context,
@@ -557,7 +556,7 @@ class _KayleeDatePickerTextState extends BaseState<KayleeDatePickerText> {
             selectedType: rangeType,
             onSelectByType: (value) {
               rangeType = value;
-              _selectDateRange(rangeType.range);
+              _selectDateRange(rangeType!.range);
             },
             onSelectByDate: (value) {
               rangeType = null;
@@ -573,18 +572,20 @@ class _KayleeDatePickerTextState extends BaseState<KayleeDatePickerText> {
     dateRange = value;
     widget.controller?.value = dateRange;
     setState(() {});
-    widget.onSelectRange?.call(dateRange);
+    if (dateRange != null) {
+      widget.onSelectRange?.call(dateRange!);
+    }
   }
 }
 
 class KayleeDatePickerTextController {
-  DateTimeRange value;
+  DateTimeRange? value;
 
   KayleeDatePickerTextController({this.value});
 }
 
 class KayleeDateRangePickerText extends StatefulWidget {
-  final void Function(DateTime from, DateTime to) onSelect;
+  final void Function(DateTime from, DateTime to)? onSelect;
 
   KayleeDateRangePickerText({this.onSelect});
 
@@ -597,8 +598,8 @@ class _KayleeDateRangePickerTextState
     extends BaseState<KayleeDateRangePickerText> {
   final now = DateTime.now();
 
-  DateTime fromDate;
-  DateTime toDate;
+  late DateTime fromDate;
+  late DateTime toDate;
 
   @override
   void initState() {
@@ -640,10 +641,7 @@ class _KayleeDateRangePickerTextState
                         setState(() {
                           fromDate = getFromDate(changed);
                         });
-
-                        if (widget.onSelect.isNotNull) {
-                          widget.onSelect(fromDate, toDate);
-                        }
+                        widget.onSelect?.call(fromDate, toDate);
                       },
                       backgroundColor: Colors.white,
                     );
@@ -671,9 +669,7 @@ class _KayleeDateRangePickerTextState
                         setState(() {
                           toDate = getToDate(changed);
                         });
-                        if (widget.onSelect.isNotNull) {
-                          widget.onSelect(fromDate, toDate);
-                        }
+                        widget.onSelect?.call(fromDate, toDate);
                       },
                       backgroundColor: Colors.white,
                     );

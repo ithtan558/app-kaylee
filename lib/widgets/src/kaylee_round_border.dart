@@ -3,15 +3,15 @@ import 'package:kaylee/res/res.dart';
 
 class KayleeRoundBorder extends StatelessWidget {
   factory KayleeRoundBorder.hyper(
-          {BorderRadius borderRadius,
-          double borderWidth,
-          EdgeInsets padding,
-          Widget child,
-          double width,
-          double height,
-          Color bgColor,
-          Alignment alignment,
-          VoidCallback onTap}) =>
+          {BorderRadius? borderRadius,
+          double? borderWidth,
+          EdgeInsets? padding,
+          Widget? child,
+          double? width,
+          double? height,
+          Color? bgColor,
+          Alignment? alignment,
+          VoidCallback? onTap}) =>
       KayleeRoundBorder(
         borderRadius: borderRadius,
         borderColor: ColorsRes.hyper,
@@ -26,15 +26,15 @@ class KayleeRoundBorder extends StatelessWidget {
       );
 
   factory KayleeRoundBorder.normal(
-          {BorderRadius borderRadius,
-          double borderWidth,
-          EdgeInsets padding,
-          Widget child,
-          double width,
-          double height,
-          Color bgColor,
-          Alignment alignment,
-          VoidCallback onTap}) =>
+          {BorderRadius? borderRadius,
+          double? borderWidth,
+          EdgeInsets? padding,
+          Widget? child,
+          double? width,
+          double? height,
+          Color? bgColor,
+          Alignment? alignment,
+          VoidCallback? onTap}) =>
       KayleeRoundBorder(
         borderRadius: borderRadius,
         borderColor: ColorsRes.textFieldBorder,
