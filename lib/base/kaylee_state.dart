@@ -188,10 +188,10 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
     outOfDateSub = appBloc.outOfDateStream.listen((state) {
       if (state is OutOfDateState && !appBloc.isShowingOutOfDateDialog) {
         appBloc.isShowingOutOfDateDialog = true;
-        if (dialogContext.isNotNull) {
-          final dialog = ModalRoute.of(dialogContext);
-          if (dialog.isFirst && dialog.isActive) {
-            Navigator.removeRoute(context, ModalRoute.of(dialogContext));
+        if (dialogContext != null) {
+          final dialog = ModalRoute.of(dialogContext!);
+          if (dialog!.isFirst && dialog.isActive) {
+            Navigator.removeRoute(context, dialog);
             dialogContext = null;
           }
         }
