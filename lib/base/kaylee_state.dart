@@ -212,7 +212,7 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
             ],
           ),
           onDismiss: () {
-            appBloc.isShowingExpirationWarningDialog = false;
+            appBloc.isShowingOutOfDateDialog = false;
           },
         );
       }
