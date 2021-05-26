@@ -107,9 +107,9 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
 
     context.network.dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options) {
-        options.headers
-            .putIfAbsent('version', () => _appBloc.packageInfo.buildNumber);
-        return options;
+        return options
+          ..headers
+              .putIfAbsent('version', () => _appBloc.packageInfo.buildNumber);
       },
       onResponse: (response) {
         final responseModel =
@@ -123,7 +123,7 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
       },
       onError: (error) {
         final responseModel =
-        ResponseModel.fromJson(error.response.data, (json) => null);
+            ResponseModel.fromJson(error.response.data, (json) => null);
         if (error.response.statusCode == HttpStatus.unauthorized) {
           if (responseModel.error?.code != null &&
               responseModel.error.code == ErrorCode.EXPIRATION_CODE) {
