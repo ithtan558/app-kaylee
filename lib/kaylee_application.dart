@@ -127,7 +127,7 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
       },
       onError: (error) {
         final responseModel =
-        ResponseModel.fromJson(error.response.data, (json) => null);
+            ResponseModel.fromJson(error.response.data, (json) => null);
         if (error.response.statusCode == HttpStatus.unauthorized) {
           if (responseModel.error?.code != null &&
               responseModel.error.code == ErrorCode.EXPIRATION_CODE) {
