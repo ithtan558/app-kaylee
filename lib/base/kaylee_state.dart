@@ -19,7 +19,7 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
   late StreamSubscription _expirationWarningSub;
   late StreamSubscription _expirationSub;
   late StreamSubscription outOfDateSub;
-  StreamSubscription _reloadBlocSub;
+  late StreamSubscription _reloadBlocSub;
 
   @override
   void initState() {
