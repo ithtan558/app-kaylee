@@ -198,6 +198,7 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
           context: context,
           view: KayleeAlertDialogView.error(
             error: state.error,
+            allowBackPress: false,
             actions: [
               KayleeAlertDialogAction.dongY(
                 onPressed: () {
@@ -205,7 +206,6 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
                     androidAppId: 'com.kaylee.android',
                     iOSAppId: '1530411047',
                   );
-                  popScreen();
                 },
                 isDefaultAction: true,
               )
