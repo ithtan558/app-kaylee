@@ -105,6 +105,10 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
       });
     }
 
+    _handleRequestInterceptor();
+  }
+
+  void _handleRequestInterceptor() {
     context.network.dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options) {
         return options
@@ -123,7 +127,7 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
       },
       onError: (error) {
         final responseModel =
-            ResponseModel.fromJson(error.response.data, (json) => null);
+        ResponseModel.fromJson(error.response.data, (json) => null);
         if (error.response.statusCode == HttpStatus.unauthorized) {
           if (responseModel.error?.code != null &&
               responseModel.error.code == ErrorCode.EXPIRATION_CODE) {
