@@ -5,6 +5,13 @@ import 'package:kaylee/services/services.dart';
 class AppBloc extends Cubit {
   final UserService userService;
   final CampaignService campaignService;
+  PackageInfo _packageInfo;
+
+  PackageInfo get packageInfo => _packageInfo;
+
+  set packageInfo(value) {
+    _packageInfo = value;
+  }
 
   AppBloc({
     this.userService,
