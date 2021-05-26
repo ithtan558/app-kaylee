@@ -18,7 +18,7 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
   late StreamSubscription _appBlocSub;
   late StreamSubscription _expirationWarningSub;
   late StreamSubscription _expirationSub;
-  late StreamSubscription outOfDateSub;
+  late StreamSubscription _outOfDateSub;
   late StreamSubscription _reloadBlocSub;
 
   @override
@@ -43,7 +43,7 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
     _reloadBlocSub.cancel();
     _expirationWarningSub.cancel();
     _expirationSub.cancel();
-    outOfDateSub?.cancel();
+    _outOfDateSub.cancel();
     super.dispose();
   }
 
@@ -185,7 +185,7 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
   }
 
   void _listenOutOfDateStream() async {
-    outOfDateSub = appBloc.outOfDateStream.listen((state) {
+    _outOfDateSub = appBloc.outOfDateStream.listen((state) {
       if (state is OutOfDateState && !appBloc.isShowingOutOfDateDialog) {
         appBloc.isShowingOutOfDateDialog = true;
         if (dialogContext != null) {
