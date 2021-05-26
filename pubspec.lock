@@ -65,7 +65,7 @@ packages:
       name: bloc
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.1.1"
+    version: "6.1.3"
   bloc_test:
     dependency: transitive
     description:
@@ -77,7 +77,7 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "tungpham6195/device-not-found-on-android-10"
+      ref: "2.0.0"
       resolved-ref: "3e517998f3d01e45ae1ad0a3ad74ce878767b082"
       url: "https://github.com/tungpham6195/bluetooth_print.git"
     source: git
@@ -151,7 +151,7 @@ packages:
       name: cached_network_image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.5.0"
+    version: "2.5.1"
   characters:
     dependency: transitive
     description:
@@ -207,7 +207,7 @@ packages:
       name: code_builder
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.6.0"
+    version: "3.7.0"
   collection:
     dependency: transitive
     description:
@@ -227,7 +227,7 @@ packages:
     description:
       path: "."
       ref: "0.6.6"
-      resolved-ref: e7077e5d345b15f4a2f3e3607ebc37a893d40919
+      resolved-ref: a0f944daf95bcc1efd8f2738d5cb889f9eb7d251
       url: "https://github.com/tungpham6195/flutter.core_plugin.git"
     source: git
     version: "0.6.6"
@@ -382,7 +382,7 @@ packages:
       name: flutter_bloc
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.1.2"
+    version: "6.1.3"
   flutter_blurhash:
     dependency: transitive
     description:
@@ -396,14 +396,14 @@ packages:
       name: flutter_cache_manager
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.1"
+    version: "2.1.2"
   flutter_local_notifications:
     dependency: transitive
     description:
       name: flutter_local_notifications
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.1+1"
+    version: "4.0.1+2"
   flutter_local_notifications_platform_interface:
     dependency: transitive
     description:
@@ -712,7 +712,7 @@ packages:
       name: path_provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.6.27"
+    version: "1.6.28"
   path_provider_linux:
     dependency: transitive
     description:
@@ -873,7 +873,7 @@ packages:
       name: retrofit_generator
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.4.1+2"
+    version: "1.4.1+3"
   rxdart:
     dependency: "direct overridden"
     description:
@@ -997,14 +997,14 @@ packages:
       name: sqflite
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.3.2+3"
+    version: "1.3.2+4"
   sqflite_common:
     dependency: transitive
     description:
       name: sqflite_common
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.3+1"
+    version: "1.0.3+3"
   stack_trace:
     dependency: transitive
     description:
