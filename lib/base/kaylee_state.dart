@@ -111,6 +111,7 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
           context: context,
           view: KayleeAlertDialogView.error(
             error: state.error,
+            allowBackPress: false,
             actions: [
               KayleeAlertDialogAction(
                 title: Strings.dangNhap,
