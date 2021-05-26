@@ -132,6 +132,7 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
           if (responseModel.error?.code != null &&
               responseModel.error.code == ErrorCode.EXPIRATION_CODE) {
             _appBloc.expired(error: responseModel.error);
+            (error.response.data as Map<String, dynamic>)..['errors'] = null;
           } else {
             _appBloc.unauthorized(error: responseModel.error);
             (error.response.data as Map<String, dynamic>)..['errors'] = null;
