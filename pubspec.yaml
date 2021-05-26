@@ -38,10 +38,9 @@ dependencies:
   firebase_remote_config: ^0.10.0
   anth_package:
     path: ../anth_package
-#    git:
-#      url: https://tungpham6195@bitbucket.org/anth-freelance/anth_package.git
-#      ref: 0.2.4
-  store_redirect: ^1.0.2
+  #    git:
+  #      url: https://tungpham6195@bitbucket.org/anth-freelance/anth_package.git
+  #      ref: 0.2.4
 
 dev_dependencies:
   flutter_test:
