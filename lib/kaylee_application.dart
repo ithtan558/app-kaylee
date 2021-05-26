@@ -132,19 +132,17 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
           if (responseModel.error?.code != null &&
               responseModel.error.code == ErrorCode.EXPIRATION_CODE) {
             _appBloc.expired(error: responseModel.error);
-            return error;
           } else {
             _appBloc.unauthorized(error: responseModel.error);
             (error.response.data as Map<String, dynamic>)..['errors'] = null;
-            return error;
           }
         } else if (error.response.statusCode == HttpStatus.badRequest &&
             responseModel.error?.code != null &&
             responseModel.error.code == ErrorCode.OUT_OF_DATE_CODE) {
           _appBloc.outOfDate(error: responseModel.error);
           (error.response.data as Map<String, dynamic>)..['errors'] = null;
-          return error;
         }
+        return error;
       },
     ));
   }
