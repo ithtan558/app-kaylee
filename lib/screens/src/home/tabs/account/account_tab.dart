@@ -77,10 +77,7 @@ class _AccountTabState extends BaseState<AccountTab> {
                 icon: Images.ic_acc_logout,
                 showBtmDivider: false,
                 showEndingIcon: false,
-                onClick: () {
-                  context.bloc<AppBloc>().loggedOut();
-                  context.pushToTop(PageIntent(screen: SplashScreen));
-                }),
+                onClick: context.bloc<AppBloc>().loggedOut),
           ],
         ),
       ),

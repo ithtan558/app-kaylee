@@ -99,7 +99,16 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
       });
     }
 
+    _handleRequestInterceptor();
+  }
+
+  void _handleRequestInterceptor() {
     context.network.dio.interceptors.add(InterceptorsWrapper(
+      onRequest: (options) {
+        return options
+          ..headers
+              .putIfAbsent('version', () => _appBloc.packageInfo.buildNumber);
+      },
       onResponse: (response, handler) {
         final responseModel =
             ResponseModel.fromJson(response.data, (json) => null);
@@ -107,7 +116,7 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
           return context.read<ReloadBloc>().forceReloadAllState();
         }
 
-        if (responseModel.warning != null &&
+        if (responseModel.warning?.code != null &&
             responseModel.warning!.code == ErrorCode.EXPIRE_WARNING_CODE) {
           _appBloc.expirationWarning(error: responseModel.warning!);
         }
@@ -120,10 +129,18 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
           if (responseModel.error?.code != null &&
               responseModel.error!.code == ErrorCode.EXPIRATION_CODE) {
             _appBloc.expired(error: responseModel.error!);
+            (error.response.data as Map<String, dynamic>)..['errors'] = null;
           } else {
             _appBloc.unauthorized(error: responseModel.error!);
+            (error.response.data as Map<String, dynamic>)..['errors'] = null;
           }
+        } else if (error.response.statusCode == HttpStatus.badRequest &&
+            responseModel.error?.code != null &&
+            responseModel.error.code == ErrorCode.OUT_OF_DATE_CODE) {
+          _appBloc.outOfDate(error: responseModel.error);
+          (error.response.data as Map<String, dynamic>)..['errors'] = null;
         }
+        return error;
       },
     ));
   }

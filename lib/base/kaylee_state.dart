@@ -9,6 +9,7 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
+import 'package:store_redirect/store_redirect.dart';
 
 abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
   bool isShowLoading = false;
@@ -17,7 +18,8 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
   late StreamSubscription _appBlocSub;
   late StreamSubscription _expirationWarningSub;
   late StreamSubscription _expirationSub;
-  late StreamSubscription _reloadBlocSub;
+  late StreamSubscription outOfDateSub;
+  StreamSubscription _reloadBlocSub;
 
   @override
   void initState() {
@@ -25,6 +27,7 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
     _listenUnAuthorStream();
     _listenExpirationWarningStream();
     _listenExpirationStream();
+    _listenOutOfDateStream();
     _reloadBlocSub = context.read<ReloadBloc>().stream.listen((state) {
       if (state is ReloadOneState) {
         onReloadWidget(state.widget, state.bundle);
@@ -40,6 +43,7 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
     _reloadBlocSub.cancel();
     _expirationWarningSub.cancel();
     _expirationSub.cancel();
+    outOfDateSub?.cancel();
     super.dispose();
   }
 
@@ -108,6 +112,7 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
           context: context,
           view: KayleeAlertDialogView.error(
             error: state.error,
+            allowBackPress: false,
             actions: [
               KayleeAlertDialogAction(
                 title: Strings.dangNhap,
@@ -175,6 +180,43 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
             .then((value) {
           appBloc.isShowingExpirationScreen = false;
         });
+      }
+    });
+  }
+
+  void _listenOutOfDateStream() async {
+    outOfDateSub = appBloc.outOfDateStream.listen((state) {
+      if (state is OutOfDateState && !appBloc.isShowingOutOfDateDialog) {
+        appBloc.isShowingOutOfDateDialog = true;
+        if (dialogContext.isNotNull) {
+          final dialog = ModalRoute.of(dialogContext);
+          if (dialog.isFirst && dialog.isActive) {
+            Navigator.removeRoute(context, ModalRoute.of(dialogContext));
+            dialogContext = null;
+          }
+        }
+        appBloc.isShowingOutOfDateDialog = true;
+        showKayleeAlertDialog(
+          context: context,
+          view: KayleeAlertDialogView.error(
+            error: state.error,
+            allowBackPress: false,
+            actions: [
+              KayleeAlertDialogAction.dongY(
+                onPressed: () {
+                  StoreRedirect.redirect(
+                    androidAppId: 'com.kaylee.android',
+                    iOSAppId: '1530411047',
+                  );
+                },
+                isDefaultAction: true,
+              )
+            ],
+          ),
+          onDismiss: () {
+            appBloc.isShowingOutOfDateDialog = false;
+          },
+        );
       }
     });
   }

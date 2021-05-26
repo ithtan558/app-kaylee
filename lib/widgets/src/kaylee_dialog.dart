@@ -191,31 +191,46 @@ class KayleeAlertDialogView extends StatelessWidget {
   final String? content;
   final Widget? contentWidget;
   final List<KayleeAlertDialogAction>? actions;
+  final bool allowBackPress;
 
   ///show cupertino dialog với [error] truyền vào
   factory KayleeAlertDialogView.error(
-          {Error? error, List<KayleeAlertDialogAction>? actions}) =>
+          {Error? error,
+          List<KayleeAlertDialogAction>? actions,
+          bool allowBackPress = true}) =>
       KayleeAlertDialogView(
         title: error?.title,
         content: error?.message,
         actions: actions,
+        allowBackPress: allowBackPress,
       );
 
   ///show cupertino dialog với [message] truyền vào
   factory KayleeAlertDialogView.message(
-          {Message? message, List<KayleeAlertDialogAction>? actions}) =>
+          {Message? message,
+          List<KayleeAlertDialogAction>? actions,
+          bool allowBackPress = true}) =>
       KayleeAlertDialogView(
         title: message?.title,
         content: message?.content,
         actions: actions,
+        allowBackPress: allowBackPress,
       );
 
   KayleeAlertDialogView(
-      {this.title, this.content, this.actions, this.contentWidget});
+      {this.title,
+      this.content,
+      this.actions,
+      this.contentWidget,
+      this.allowBackPress = true});
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoAlertDialog(
+    return WillPopScope(
+      onWillPop: () async {
+        return allowBackPress;
+      },
+      child:CupertinoAlertDialog(
       title: title != null ? Text(title!) : null,
       content: contentWidget ??
           (content != null
@@ -224,7 +239,7 @@ class KayleeAlertDialogView extends StatelessWidget {
                   child: Text(content!),
                 )
               : null),
-      actions: actions ?? [],
+      actions: actions ?? [],),
     );
   }
 }

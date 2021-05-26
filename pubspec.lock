@@ -71,15 +71,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "8.0.1"
-  bluetooth_print:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: "tungpham6195/device-not-found-on-android-10"
-      resolved-ref: "9503924d1faa775bb41bf72ed89569a8960f515c"
-      url: "https://github.com/tungpham6195/bluetooth_print.git"
-    source: git
-    version: "3.0.0"
+   bluetooth_print:
+      dependency: "direct main"
+      description:
+        path: "."
+        ref: "tungpham6195/device-not-found-on-android-10"
+        resolved-ref: "9503924d1faa775bb41bf72ed89569a8960f515c"
+        url: "https://github.com/tungpham6195/bluetooth_print.git"
+      source: git
+      version: "3.0.0"
   boolean_selector:
     dependency: transitive
     description:
@@ -149,7 +149,7 @@ packages:
       name: cached_network_image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.0"
+    version: "3.0.1"
   characters:
     dependency: transitive
     description:
@@ -1032,7 +1032,7 @@ packages:
       name: sqflite
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0+3"
+    version: "2.0.0+4"
   sqflite_common:
     dependency: transitive
     description:
@@ -1048,7 +1048,7 @@ packages:
     source: hosted
     version: "1.10.0"
   store_redirect:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: store_redirect
       url: "https://pub.dartlang.org"

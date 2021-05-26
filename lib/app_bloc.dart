@@ -5,6 +5,13 @@ import 'package:kaylee/services/services.dart';
 class AppBloc extends Cubit {
   final UserService userService;
   final CampaignService campaignService;
+  PackageInfo _packageInfo;
+
+  PackageInfo get packageInfo => _packageInfo;
+
+  set packageInfo(value) {
+    _packageInfo = value;
+  }
 
   AppBloc({
     required this.userService,
@@ -30,6 +37,13 @@ class AppBloc extends Cubit {
 
   Stream get expirationStream => _expirationController.stream;
 
+  ///handle out of date
+  bool isShowingOutOfDateDialog = false;
+
+  final _outOfDateController = PublishSubject<OutOfDateState>();
+
+  Stream get outOfDateStream => _outOfDateController.stream;
+
   void loggedIn(LoginResult result) {
     emit(LoggedInState(result: result));
   }
@@ -46,6 +60,10 @@ class AppBloc extends Cubit {
 
   void expired({required Error error}) {
     _expirationController.add(ExpirationState(error: error));
+  }
+
+  void outOfDate({Error error}) {
+    _outOfDateController.add(OutOfDateState(error: error));
   }
 
   void notifyUpdateProfile({required UserInfo userInfo}) {
@@ -83,6 +101,7 @@ class AppBloc extends Cubit {
     _unauthorizedController.close();
     _expirationController.close();
     _expirationWarningController.close();
+    _outOfDateController.close();
     return super.close();
   }
 }
@@ -101,6 +120,12 @@ class UnauthorizedState {
   Error error;
 
   UnauthorizedState({required this.error});
+}
+
+class OutOfDateState {
+  Error error;
+
+  OutOfDateState({this.error});
 }
 
 class ExpirationWarningState {

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
@@ -73,6 +74,12 @@ class _ExpirationScreenState extends KayleeState<ExpirationScreen> {
         appBar: KayleeAppBar(
           title: Strings.giaHanSuDung,
           automaticallyImplyLeading: !argument.isExpired,
+          actions: [
+            KayleeAppBarAction.hyperText(
+              title: Strings.dangXuat,
+              onTap: context.bloc<AppBloc>().loggedOut,
+            )
+          ],
         ),
         padding: const EdgeInsets.all(Dimens.px16),
         child: BlocBuilder<ExpirationScreenBloc, SingleModel<Content>>(
