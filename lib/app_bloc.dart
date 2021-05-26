@@ -5,9 +5,9 @@ import 'package:kaylee/services/services.dart';
 class AppBloc extends Cubit {
   final UserService userService;
   final CampaignService campaignService;
-  PackageInfo _packageInfo;
+  PackageInfo? _packageInfo;
 
-  PackageInfo get packageInfo => _packageInfo;
+  PackageInfo? get packageInfo => _packageInfo;
 
   set packageInfo(value) {
     _packageInfo = value;
@@ -62,7 +62,7 @@ class AppBloc extends Cubit {
     _expirationController.add(ExpirationState(error: error));
   }
 
-  void outOfDate({Error error}) {
+  void outOfDate({required Error error}) {
     _outOfDateController.add(OutOfDateState(error: error));
   }
 
@@ -125,7 +125,7 @@ class UnauthorizedState {
 class OutOfDateState {
   Error error;
 
-  OutOfDateState({this.error});
+  OutOfDateState({required this.error});
 }
 
 class ExpirationWarningState {

@@ -106,8 +106,8 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
     context.network.dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) {
         handler.next(options
-          ..headers
-              .putIfAbsent('version', () => _appBloc.packageInfo.buildNumber));
+          ..headers.putIfAbsent(
+              'version', () => _appBloc.packageInfo?.buildNumber ?? ''));
       },
       onResponse: (response, handler) {
         final responseModel =

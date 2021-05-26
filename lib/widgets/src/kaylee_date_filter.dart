@@ -6,28 +6,27 @@ import 'package:kaylee/widgets/src/kaylee_flat_button.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class KayleeDateFilterController {
-  DateTime value;
+  DateTime? value;
 
   KayleeDateFilterController({this.value});
 }
 
 class KayleeDateFilter extends StatefulWidget {
-  final ValueChanged<DateTime> onChanged;
+  final ValueChanged<DateTime>? onChanged;
   final KayleeDateFilterController controller;
 
-  KayleeDateFilter({this.onChanged, @required this.controller})
-      : assert(controller.isNotNull);
+  KayleeDateFilter({this.onChanged, required this.controller});
 
   @override
   _KayleeDateFilterState createState() => new _KayleeDateFilterState();
 }
 
 class _KayleeDateFilterState extends BaseState<KayleeDateFilter> {
-  PageController pageController;
-  DateTime selectedDate;
+  late PageController pageController;
+  DateTime? selectedDate;
   final changeTabController = BehaviorSubject<int>();
 
-  int get currentDay => pageController.page.toInt() + 1;
+  int get currentDay => pageController.page!.toInt() + 1;
 
   @override
   void initState() {
@@ -36,13 +35,13 @@ class _KayleeDateFilterState extends BaseState<KayleeDateFilter> {
     pageController = PageController(
         keepPage: false,
         viewportFraction: 1 / 7,
-        initialPage: widget.controller.value.day - 1);
+        initialPage: widget.controller.value!.day - 1);
     changeTabController
         .debounceTime(Duration(milliseconds: 500))
         .listen((index) {
       final date = widget.controller.value;
-      widget.controller.value = DateTime(date.year, date.month, index + 1);
-      widget.onChanged?.call(widget.controller.value);
+      widget.controller.value = DateTime(date!.year, date.month, index + 1);
+      widget.onChanged?.call(widget.controller.value!);
     });
   }
 
@@ -66,7 +65,7 @@ class _KayleeDateFilterState extends BaseState<KayleeDateFilter> {
           child: Column(
             children: [
               KayleeDateFilterButton(
-                selectedDate: widget.controller.value,
+                selectedDate: widget.controller.value!,
                 onTap: () async {
                   await showPickerPopup(
                       context: context,
@@ -76,7 +75,7 @@ class _KayleeDateFilterState extends BaseState<KayleeDateFilter> {
                           selectedDate = null;
                           setState(() {});
                         }
-                        widget.onChanged?.call(widget.controller.value);
+                        widget.onChanged?.call(widget.controller.value!);
                       },
                       onDismiss: () {
                         selectedDate = null;
@@ -88,7 +87,7 @@ class _KayleeDateFilterState extends BaseState<KayleeDateFilter> {
                               DateTime.now().year,
                               DateTime.now().month,
                               findMaxDate(DateTime.now())),
-                          initialDateTime: widget.controller.value,
+                          initialDateTime: widget.controller.value!,
                           mode: KayleeDatePickerMode.monthYear,
                           onDateTimeChanged: (changed) {
                             int maxDay = findMaxDate(changed);
@@ -157,7 +156,7 @@ class _KayleeDateFilterState extends BaseState<KayleeDateFilter> {
                   );
                 },
                 dragStartBehavior: DragStartBehavior.start,
-                itemCount: findMaxDate(widget.controller.value),
+                itemCount: findMaxDate(widget.controller.value!),
                 scrollDirection: Axis.horizontal,
                 controller: pageController,
               ),

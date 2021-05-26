@@ -3,10 +3,10 @@ import 'package:kaylee/res/res.dart';
 
 class KayleeCartView extends StatelessWidget {
   final Widget child;
-  final double itemHeight;
-  final BorderRadius borderRadius;
+  final double? itemHeight;
+  final BorderRadius? borderRadius;
 
-  KayleeCartView({@required this.child, this.itemHeight, this.borderRadius});
+  KayleeCartView({required this.child, this.itemHeight, this.borderRadius});
 
   @override
   Widget build(BuildContext context) {
