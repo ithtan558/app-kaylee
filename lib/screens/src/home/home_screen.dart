@@ -1,9 +1,11 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:anth_package/anth_package.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/base/reload_bloc.dart';
 import 'package:kaylee/models/models.dart';
@@ -32,6 +34,7 @@ class _HomeScreenState extends KayleeState<HomeScreen> {
       FlutterLocalNotificationsPlugin();
 
   ReloadBloc get _reloadBloc => context.bloc<ReloadBloc>();
+  StreamSubscription _appBlocSub;
 
   @override
   void initState() {
@@ -52,6 +55,12 @@ class _HomeScreenState extends KayleeState<HomeScreen> {
           onResume: _onResumeFcm,
           onLaunch: _onLaunchFcm,
         );
+
+    _appBlocSub = context.bloc<AppBloc>().listen((state) {
+      if (state is LoggedOutState) {
+        return context.pushToTop(PageIntent(screen: SplashScreen));
+      }
+    });
   }
 
   ///open local notification
@@ -114,7 +123,7 @@ class _HomeScreenState extends KayleeState<HomeScreen> {
         priority: Priority.high, importance: Importance.max);
     final iosDetail = IOSNotificationDetails();
     final platformDetail =
-        NotificationDetails(android: androidDetail, iOS: iosDetail);
+    NotificationDetails(android: androidDetail, iOS: iosDetail);
     notificationsPlugin.show(
         int.parse(notificationId),
         response.notification?.title ?? response.aps?.alert?.title ?? '',
@@ -126,6 +135,7 @@ class _HomeScreenState extends KayleeState<HomeScreen> {
   @override
   void dispose() {
     _pageController.dispose();
+    _appBlocSub.cancel();
     super.dispose();
   }
 
