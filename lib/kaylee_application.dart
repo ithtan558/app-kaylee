@@ -106,32 +106,40 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
     }
 
     context.network.dio.interceptors.add(InterceptorsWrapper(
+      onRequest: (options) {
+        options.headers
+            .putIfAbsent('version', () => _appBloc.packageInfo.buildNumber);
+        return options;
+      },
       onResponse: (response) {
         final responseModel =
             ResponseModel.fromJson(response.data, (json) => null);
         if (response.request.path == 'check-expired') {
-          return context.bloc<ReloadBloc>().forceReloadAllState();
-        }
-        if (responseModel.warning.isNotNull) {
-          if (responseModel.warning.code == ErrorCode.EXPIRE_WARNING_CODE) {
-            return _appBloc.expirationWarning(error: responseModel.warning);
-          }
-
-          if (responseModel.warning.code == ErrorCode.OUT_OF_DATE_CODE) {
-            return _appBloc.outOfDate(error: responseModel.warning);
-          }
+          context.bloc<ReloadBloc>().forceReloadAllState();
+        } else if (responseModel.warning?.code != null &&
+            responseModel.warning.code == ErrorCode.EXPIRE_WARNING_CODE) {
+          _appBloc.expirationWarning(error: responseModel.warning);
         }
       },
       onError: (error) {
         final responseModel =
-            ResponseModel.fromJson(error.response.data, (json) => null);
+        ResponseModel.fromJson(error.response.data, (json) => null);
         if (error.response.statusCode == HttpStatus.unauthorized) {
-          if (responseModel.error.code.isNotNull &&
+          if (responseModel.error?.code != null &&
               responseModel.error.code == ErrorCode.EXPIRATION_CODE) {
             _appBloc.expired(error: responseModel.error);
+            return error;
           } else {
             _appBloc.unauthorized(error: responseModel.error);
+            (error.response.data as Map<String, dynamic>)..['errors'] = null;
+            return error;
           }
+        } else if (error.response.statusCode == HttpStatus.badRequest &&
+            responseModel.error?.code != null &&
+            responseModel.error.code == ErrorCode.OUT_OF_DATE_CODE) {
+          _appBloc.outOfDate(error: responseModel.error);
+          (error.response.data as Map<String, dynamic>)..['errors'] = null;
+          return error;
         }
       },
     ));
