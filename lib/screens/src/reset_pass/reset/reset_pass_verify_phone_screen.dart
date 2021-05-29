@@ -54,11 +54,13 @@ class _ResetPassVerifyPhoneScreenState
         } else if (!state.loading) {
           hideLoading();
           if (state.code.isNotNull && state.code != ErrorType.UNAUTHORIZED) {
-            if (state.error?.code.isNull) {
-              showKayleeAlertErrorYesDialog(
-                  context: context, error: state.error, onPressed: popScreen);
-            } else {
-              phoneFocus.requestFocus();
+            if (state.error != null) {
+              if (state.error.code.isNull) {
+                showKayleeAlertErrorYesDialog(
+                    context: context, error: state.error, onPressed: popScreen);
+              } else {
+                phoneFocus.requestFocus();
+              }
             }
           } else if (state.item.isNotNull) {
             showKayleeAlertMessageYesDialog(
