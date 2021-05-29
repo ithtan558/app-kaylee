@@ -39,20 +39,15 @@ class _ContactUsTextState extends KayleeState<ContactUsText> {
   Widget build(BuildContext context) {
     return BlocListener<ContactUsBloc, dynamic>(
       listener: (context, state) {
-        if (state is ErrorState) {
+        if (state is ErrorState && state.error != null) {
           hideLoading();
-          showKayleeAlertDialog(
-              context: context,
-              view: KayleeAlertDialogView.error(
-                error: state.error,
-                actions: [
-                  KayleeAlertDialogAction.dongY(
-                    onPressed: () {
-                      popScreen();
-                    },
-                  ),
-                ],
-              ));
+          showKayleeAlertErrorYesDialog(
+            context: context,
+            error: state.error,
+            onPressed: () {
+              popScreen();
+            },
+          );
         } else if (state is LoadingState) {
           showLoading();
         } else if (state is SuccessLoadContactUsState) {
