@@ -136,7 +136,7 @@ class _PolicyViewState extends BaseState<_PolicyView> {
           return Container();
       },
       listener: (context, state) {
-        if (state is ErrorState) {
+        if (state is ErrorState && state.error != null) {
           showKayleeAlertDialog(
             context: context,
             view: KayleeAlertDialogView.error(
