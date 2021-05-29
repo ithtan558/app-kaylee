@@ -58,7 +58,9 @@ class _CreateNewBrandScreenState extends KayleeState<CreateNewBrandScreen> {
         showLoading();
       } else if (!state.loading) {
         hideLoading();
-        if (state.code.isNotNull && state.code != ErrorType.UNAUTHORIZED) {
+        if (state.code.isNotNull &&
+            state.code != ErrorType.UNAUTHORIZED &&
+            state.error != null) {
           showKayleeAlertErrorYesDialog(
             context: context,
             error: state.error,
