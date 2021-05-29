@@ -15,8 +15,8 @@ abstract class CommonService {
   Future<ResponseModel<List<City>>> getCity();
 
   @GET('district/list-by-city/{city}')
-  Future<ResponseModel<List<District>>> getDistrict(@Path() int city);
+  Future<ResponseModel<List<District>>> getDistrict(@Path() int? city);
 
   @GET('wards/list-by-district/{district}')
-  Future<ResponseModel<List<Ward>>> getWard(@Path() int district);
+  Future<ResponseModel<List<Ward>>> getWard(@Path() int? district);
 }

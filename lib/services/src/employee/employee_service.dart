@@ -24,7 +24,7 @@ abstract class EmployeeService {
   @GET('employee/get-by-phone-and-name')
   Future<ResponseModel<List<Employee>>> findEmployees({
     @Query('keyword') String keyword,
-    @Query('brand_id') int brandId,
+    @Query('brand_id') int? brandId,
   });
 
   @GET('employee/{employeeId}')

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class KayleeImageInfoLayout extends StatelessWidget {
-  final Widget imageView;
-  final Widget infoView;
+  final Widget? imageView;
+  final Widget? infoView;
 
   KayleeImageInfoLayout({this.imageView, this.infoView});
 
@@ -12,10 +12,10 @@ class KayleeImageInfoLayout extends StatelessWidget {
       children: [
         AspectRatio(
           aspectRatio: 1,
-          child: imageView ?? Container(),
+          child: imageView ?? SizedBox.shrink(),
         ),
         Expanded(
-          child: infoView ?? Container(),
+          child: infoView ?? SizedBox.shrink(),
         )
       ],
     );

@@ -3,9 +3,9 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class KayleeHeaderCard extends StatelessWidget {
-  final Widget header;
-  final Widget child;
-  final EdgeInsets headerPadding;
+  final Widget? header;
+  final Widget? child;
+  final EdgeInsets? headerPadding;
 
   KayleeHeaderCard(
       {this.header,
@@ -24,9 +24,9 @@ class KayleeHeaderCard extends StatelessWidget {
             Container(
               padding: headerPadding,
               color: ColorsRes.color2,
-              child: header ?? SizedBox(),
+              child: header ?? SizedBox.shrink(),
             ),
-            child ?? SizedBox(),
+            child ?? SizedBox.shrink(),
           ],
         ),
       ),

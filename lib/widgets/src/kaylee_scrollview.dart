@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import '../widgets.dart';
 
 class KayleeScrollview extends StatefulWidget {
-  final KayleeAppBar appBar;
-  final Widget child;
-  final EdgeInsets padding;
-  final Widget bottom;
+  final KayleeAppBar? appBar;
+  final Widget? child;
+  final EdgeInsets? padding;
+  final Widget? bottom;
 
   KayleeScrollview({this.appBar, this.child, this.padding, this.bottom});
 
@@ -28,7 +28,7 @@ class _KayleeScrollviewState extends State<KayleeScrollview> {
               child: widget.child,
             ),
           ),
-          widget.bottom ?? Container(),
+          if (widget.bottom != null) widget.bottom!,
         ],
       ),
     );

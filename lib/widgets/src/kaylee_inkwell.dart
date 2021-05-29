@@ -3,10 +3,10 @@ import 'package:kaylee/res/res.dart';
 
 class KayleeInkwell extends StatelessWidget {
   final Widget child;
-  final void Function() onTap;
-  final BorderRadius borderRadius;
+  final VoidCallback? onTap;
+  final BorderRadius? borderRadius;
 
-  KayleeInkwell({this.child, this.onTap, this.borderRadius});
+  KayleeInkwell({required this.child, this.onTap, this.borderRadius});
 
   @override
   Widget build(BuildContext context) {

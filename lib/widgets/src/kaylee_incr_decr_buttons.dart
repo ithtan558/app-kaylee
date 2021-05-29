@@ -6,12 +6,12 @@ import 'package:kaylee/widgets/widgets.dart';
 const int _kDefaultAmountMin = 1;
 
 class KayleeIncrAndDecrButtons extends StatefulWidget {
-  final int initAmount;
-  final int amountMin;
-  final int amountMax;
-  final ValueSetter<int> onAmountChange;
-  final Color btnBgColor;
-  final Color btnIconColor;
+  final int? initAmount;
+  final int? amountMin;
+  final int? amountMax;
+  final ValueSetter<int>? onAmountChange;
+  final Color? btnBgColor;
+  final Color? btnIconColor;
 
   KayleeIncrAndDecrButtons(
       {this.initAmount,
@@ -54,8 +54,7 @@ class _KayleeIncrAndDecrButtonsState
             if (current > (widget.amountMin ?? _kDefaultAmountMin))
               setState(() {
                 current--;
-                if (widget.onAmountChange.isNotNull)
-                  widget.onAmountChange(current);
+                widget.onAmountChange?.call(current);
               });
           },
           child: Container(
@@ -85,11 +84,10 @@ class _KayleeIncrAndDecrButtonsState
         ),
         GestureDetector(
           onTap: () {
-            if (widget.amountMax.isNull || current < widget.amountMax)
+            if (widget.amountMax == null || current < widget.amountMax!)
               setState(() {
                 current++;
-                if (widget.onAmountChange.isNotNull)
-                  widget.onAmountChange(current);
+                widget.onAmountChange?.call(current);
               });
           },
           child: Container(
@@ -104,7 +102,7 @@ class _KayleeIncrAndDecrButtonsState
             ),
             child: Icon(
               Icons.add,
-              color: widget?.btnIconColor ?? ColorsRes.button,
+              color: widget.btnIconColor ?? ColorsRes.button,
               size: Dimens.px16,
             ),
           ),

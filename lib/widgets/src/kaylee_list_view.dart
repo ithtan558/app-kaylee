@@ -2,22 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
 
 class KayleeListView extends StatelessWidget {
-  final EdgeInsets padding;
-  final ScrollPhysics physics;
+  final EdgeInsets? padding;
+  final ScrollPhysics? physics;
   final bool shrinkWrap;
-  final int mainAxisSpacing;
   final IndexedWidgetBuilder itemBuilder;
   final int? itemCount;
-  final IndexedWidgetBuilder separatorBuilder;
-  final WidgetBuilder loadingBuilder;
-  final ScrollController controller;
+  final IndexedWidgetBuilder? separatorBuilder;
+  final WidgetBuilder? loadingBuilder;
+  final ScrollController? controller;
 
   KayleeListView(
-      {@required this.itemBuilder,
+      {required this.itemBuilder,
       this.padding,
       this.physics,
-      this.shrinkWrap,
-      this.mainAxisSpacing,
+      this.shrinkWrap = false,
       this.itemCount,
       this.loadingBuilder,
       this.separatorBuilder,
@@ -30,13 +28,13 @@ class KayleeListView extends StatelessWidget {
       controller: controller,
       padding: padding ?? EdgeInsets.all(Dimens.px16),
       physics: physics,
-      shrinkWrap: shrinkWrap ?? false,
+      shrinkWrap: shrinkWrap,
       itemBuilder: (context, index) {
         if (index == length - 1) {
           //build loading
           return loadingBuilder?.call(context) ?? Container();
         } else // build main item
-          return itemBuilder?.call(context, index) ?? Container();
+          return itemBuilder.call(context, index);
       },
       itemCount: length,
       separatorBuilder: (context, index) {

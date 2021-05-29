@@ -1,4 +1,3 @@
-import 'package:anth_package/anth_package.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
@@ -60,12 +59,12 @@ extension DateRangeValueTypeExtension on DateRangeValueType {
 class KayleeDateRangePickerView extends StatefulWidget {
   final ValueChanged<DateTimeRange>? onSelectByDate;
   final ValueChanged<DateRangeValueType>? onSelectByType;
-  final DateTimeRange? selectedRange;
+  final DateTimeRange selectedRange;
   final DateRangeValueType? selectedType;
 
   KayleeDateRangePickerView(
-      {this.onSelectByDate,
-      this.selectedRange,
+      {required this.selectedRange,
+      this.onSelectByDate,
       this.onSelectByType,
       this.selectedType});
 
@@ -77,7 +76,7 @@ class KayleeDateRangePickerView extends StatefulWidget {
 class _KayleeDateRangePickerViewState
     extends KayleeState<KayleeDateRangePickerView> {
   DateRangeValueType? rangeValueType;
-  DateTimeRange? dateRange;
+  late DateTimeRange dateRange;
   DateTime? selectedStartDate;
   DateTime? selectedEndDate;
 
@@ -149,7 +148,7 @@ class _KayleeDateRangePickerViewState
               Row(
                 children: [
                   _buildPicker(
-                    date: dateRange?.start,
+                    date: dateRange.start,
                     onTap: () {
                       showKayleeDatePickerDialog(
                         context: context,

@@ -6,9 +6,9 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class KayleeFloatButton extends StatefulWidget {
-  final VoidCallback onTap;
-  final String icon;
-  final Widget iconWidget;
+  final VoidCallback? onTap;
+  final String? icon;
+  final Widget? iconWidget;
 
   KayleeFloatButton({this.onTap, this.icon, this.iconWidget});
 
@@ -18,8 +18,8 @@ class KayleeFloatButton extends StatefulWidget {
 
 class _KayleeFloatButtonState extends State<KayleeFloatButton>
     with SingleTickerProviderStateMixin {
-  AnimationController animController;
-  Offset currentLocalPoint;
+  late AnimationController animController;
+  Offset? currentLocalPoint;
 
   @override
   void initState() {
@@ -36,8 +36,8 @@ class _KayleeFloatButtonState extends State<KayleeFloatButton>
 
   ///tính toạ độ của finger
   ///chỉ onTap khi toạ độ (x,y) nằm trong khoảng từ (0,0) -> (56,56)
-  void _onTap(Offset offset) {
-    if (offset.isNull) return;
+  void _onTap(Offset? offset) {
+    if (offset == null) return;
     final dx = offset.dx;
     final dy = offset.dy;
     if (dx >= 0 &&
@@ -49,8 +49,8 @@ class _KayleeFloatButtonState extends State<KayleeFloatButton>
     }
   }
 
-  void _onDragUpdate(Offset offset) {
-    if (offset.isNull) return;
+  void _onDragUpdate(Offset? offset) {
+    if (offset == null) return;
     final dx = offset.dx;
     final dy = offset.dy;
     if (dx <= 0 ||
@@ -126,10 +126,10 @@ class _KayleeFloatButtonState extends State<KayleeFloatButton>
             ),
           ),
           widget.iconWidget ??
-              (widget.icon.isNotNull
+              (widget.icon != null
                   ? ImageIcon(
                       AssetImage(
-                        widget.icon,
+                        widget.icon!,
                       ),
                       color: ColorsRes.button,
                       size: Dimens.px16,
@@ -146,8 +146,8 @@ class _KayleeFloatButtonState extends State<KayleeFloatButton>
 }
 
 class KayleeMenuFloatButton extends StatefulWidget {
-  final MenuFloatItem mainItem;
-  final MenuFloatItem secondItem;
+  final MenuFloatItem? mainItem;
+  final MenuFloatItem? secondItem;
 
   KayleeMenuFloatButton({this.mainItem, this.secondItem});
 
@@ -157,10 +157,10 @@ class KayleeMenuFloatButton extends StatefulWidget {
 
 class _KayleeMenuFloatButtonState extends BaseState<KayleeMenuFloatButton>
     with SingleTickerProviderStateMixin {
-  AnimationController animController;
-  Animation secondBtnAnim;
-  Animation _label2Animation;
-  Animation _label1Animation;
+  late AnimationController animController;
+  late Animation<double> secondBtnAnim;
+  late Animation<double> _label2Animation;
+  late Animation<double> _label1Animation;
 
   @override
   void initState() {
@@ -223,7 +223,7 @@ class _KayleeMenuFloatButtonState extends BaseState<KayleeMenuFloatButton>
             bottom: Dimens.px32, //24+8
             child: AnimatedBuilder(
               animation: secondBtnAnim,
-              builder: (BuildContext context, Widget child) {
+              builder: (context, child) {
                 final value = secondBtnAnim.value;
                 return Container(
                   width: Dimens.px40,
@@ -354,7 +354,7 @@ class _KayleeMenuFloatButtonState extends BaseState<KayleeMenuFloatButton>
     );
   }
 
-  Widget _buildLabel({String title, VoidCallback onTap}) {
+  Widget _buildLabel({required String title, VoidCallback? onTap}) {
     return Material(
       borderRadius: BorderRadius.circular(Dimens.px5),
       clipBehavior: Clip.antiAlias,
@@ -378,8 +378,8 @@ class _KayleeMenuFloatButtonState extends BaseState<KayleeMenuFloatButton>
 }
 
 class MenuFloatItem {
-  final String title;
-  final VoidCallback onTap;
+  final String? title;
+  final VoidCallback? onTap;
 
   MenuFloatItem({this.title, this.onTap});
 }

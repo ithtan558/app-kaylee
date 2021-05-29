@@ -8,7 +8,7 @@ class KayleeProdItemView extends StatelessWidget {
   final Widget child;
 
   factory KayleeProdItemView.canTap(
-          {@required KayleeProdItemData data, void Function() onTap}) =>
+          {required KayleeProdItemData data, VoidCallback? onTap}) =>
       KayleeProdItemView(
           child: KayleeInkwell(
         child: KayleeProdItem(
@@ -18,9 +18,9 @@ class KayleeProdItemView extends StatelessWidget {
       ));
 
   factory KayleeProdItemView.canSelect({
-    @required KayleeProdItemData data,
-    bool selected,
-    void Function(bool selected) onSelect,
+    required KayleeProdItemData data,
+    bool selected = false,
+    void Function(bool selected)? onSelect,
   }) =>
       KayleeProdItemView(
         child: _SelectingProItemView(
@@ -30,7 +30,7 @@ class KayleeProdItemView extends StatelessWidget {
         ),
       );
 
-  KayleeProdItemView({@required this.child});
+  KayleeProdItemView({required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -39,11 +39,12 @@ class KayleeProdItemView extends StatelessWidget {
 }
 
 class _SelectingProItemView extends StatefulWidget {
-  final Function(bool selected) onSelect;
+  final void Function(bool selected)? onSelect;
   final KayleeProdItemData data;
   final bool selected;
 
-  _SelectingProItemView({@required this.data, this.onSelect, this.selected});
+  _SelectingProItemView(
+      {required this.data, this.onSelect, this.selected = false});
 
   @override
   _SelectingProItemViewState createState() => _SelectingProItemViewState();
@@ -51,15 +52,15 @@ class _SelectingProItemView extends StatefulWidget {
 
 class _SelectingProItemViewState extends BaseState<_SelectingProItemView>
     with SingleTickerProviderStateMixin {
-  AnimationController animController;
-  Animation<double> scaleAnim;
-  Animation<double> opacityAnim;
-  bool isSelected;
+  late AnimationController animController;
+  late Animation<double> scaleAnim;
+  late Animation<double> opacityAnim;
+  late bool isSelected;
 
   @override
   void initState() {
     super.initState();
-    isSelected = widget.selected ?? false;
+    isSelected = widget.selected;
     animController = AnimationController(
         vsync: this,
         duration: Duration(milliseconds: 550),
@@ -71,8 +72,8 @@ class _SelectingProItemViewState extends BaseState<_SelectingProItemView>
     opacityAnim = Tween<double>(begin: 0, end: 1).animate(
       CurvedAnimation(
         parent: animController,
-        curve: Interval(100 / animController.duration.inMilliseconds,
-            170 / animController.duration.inMilliseconds,
+        curve: Interval(100 / animController.duration!.inMilliseconds,
+            170 / animController.duration!.inMilliseconds,
             curve: Curves.easeIn),
       ),
     );
@@ -161,8 +162,8 @@ class _SelectingProItemViewState extends BaseState<_SelectingProItemView>
 }
 
 class KayleeProdItemData {
-  final String image;
-  final String name;
+  final String? image;
+  final String? name;
   final dynamic price;
 
   KayleeProdItemData({this.image, this.name, this.price});
@@ -171,7 +172,7 @@ class KayleeProdItemData {
 class KayleeProdItem extends StatelessWidget {
   final KayleeProdItemData data;
 
-  KayleeProdItem({@required this.data}) : super(key: ValueKey(data));
+  KayleeProdItem({required this.data}) : super(key: ValueKey(data));
 
   @override
   Widget build(BuildContext context) {
@@ -179,7 +180,7 @@ class KayleeProdItem extends StatelessWidget {
       itemHeight: double.infinity,
       child: KayleeImageInfoLayout(
         imageView: CachedNetworkImage(
-          imageUrl: data.image,
+          imageUrl: data.image ?? '',
           fit: BoxFit.cover,
         ),
         infoView: Column(
@@ -190,7 +191,7 @@ class KayleeProdItem extends StatelessWidget {
               padding:
                   const EdgeInsets.only(left: Dimens.px7, right: Dimens.px5),
               child: KayleeText.normal16W500(
-                data.name,
+                data.name ?? '',
                 textAlign: TextAlign.center,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,

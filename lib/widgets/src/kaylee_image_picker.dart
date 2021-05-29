@@ -1,3 +1,4 @@
+import 'dart:io' as io;
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -12,18 +13,18 @@ import 'package:permission_handler/permission_handler.dart';
 enum KayleeImagePickerType { profile, banner }
 
 class ImagePickerController {
-  File image;
+  File? image;
 
   ///image url from existed things;
-  String existedImageUrl;
+  String? existedImageUrl;
 }
 
 class KayleeImagePicker extends StatefulWidget {
   final KayleeImagePickerType type;
   final List<String> oldImages;
-  final ImagePickerController controller;
+  final ImagePickerController? controller;
 
-  final void Function() onImageSelect;
+  final VoidCallback? onImageSelect;
 
   KayleeImagePicker({
     this.type = KayleeImagePickerType.profile,
@@ -44,17 +45,7 @@ class KayleeImagePicker extends StatefulWidget {
 }
 
 class _KayleeProfileImagePickerState extends BaseState<KayleeImagePicker> {
-  File selectedFile;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void didUpdateWidget(KayleeImagePicker oldWidget) {
-    super.didUpdateWidget(oldWidget);
-  }
+  File? selectedFile;
 
   @override
   Widget build(BuildContext context) {
@@ -75,8 +66,8 @@ class _KayleeProfileImagePickerState extends BaseState<KayleeImagePicker> {
                 borderRadius: BorderRadius.circular(Dimens.px10),
                 side: BorderSide(color: ColorsRes.hintText),
               ),
-              child: widget.controller?.existedImageUrl.isNullOrEmpty &&
-                      selectedFile.isNull
+              child: (widget.controller?.existedImageUrl?.isEmpty ?? true) &&
+                      selectedFile == null
                   ? Center(
                       child: Image.asset(
                         Images.ic_image_holder,
@@ -86,9 +77,9 @@ class _KayleeProfileImagePickerState extends BaseState<KayleeImagePicker> {
                     )
                   : AspectRatio(
                       aspectRatio: 1,
-                      child: selectedFile.isNotNull
+                      child: selectedFile != null
                           ? Image.file(
-                              selectedFile,
+                              selectedFile!,
                               fit: BoxFit.cover,
                             )
                           : CachedNetworkImage(
@@ -96,7 +87,7 @@ class _KayleeProfileImagePickerState extends BaseState<KayleeImagePicker> {
                                   widget.controller?.existedImageUrl ?? '',
                               fit: BoxFit.cover,
                             ),
-                    ),
+              ),
             ),
           ),
           Container(
@@ -123,7 +114,7 @@ class _KayleeProfileImagePickerState extends BaseState<KayleeImagePicker> {
                         widget.controller?.existedImageUrl = selectedImage;
                       }
                     });
-                    widget.controller.image = selectedFile;
+                    widget.controller?.image = selectedFile;
                     widget.onImageSelect?.call();
                   },
                 );
@@ -159,7 +150,7 @@ class _KayleeProfileImagePickerState extends BaseState<KayleeImagePicker> {
 }
 
 class _KayleeBannerImagePickerState extends BaseState<KayleeImagePicker> {
-  File selectedFile;
+  File? selectedFile;
 
   @override
   void initState() {
@@ -175,9 +166,9 @@ class _KayleeBannerImagePickerState extends BaseState<KayleeImagePicker> {
           Positioned.fill(
             child: Container(
               color: ColorsRes.dialogDimBg,
-              child: selectedFile.isNotNull
+              child: selectedFile != null
                   ? Image.file(
-                      selectedFile,
+                      selectedFile!,
                       fit: BoxFit.cover,
                     )
                   : CachedNetworkImage(
@@ -209,7 +200,7 @@ class _KayleeBannerImagePickerState extends BaseState<KayleeImagePicker> {
                           widget.controller?.existedImageUrl = selectedImage;
                         }
                       });
-                      widget.controller.image = selectedFile;
+                      widget.controller?.image = selectedFile;
                       widget.onImageSelect?.call();
                     },
                   );
@@ -244,10 +235,10 @@ class _KayleeBannerImagePickerState extends BaseState<KayleeImagePicker> {
 }
 
 Future showImagePickerDialog(
-    {BuildContext context,
-    List<String> images,
-    String selectedExistedImage,
-    void Function(dynamic selectedImage) onSelect}) async {
+    {required BuildContext context,
+    List<String>? images,
+    String? selectedExistedImage,
+    void Function(dynamic selectedImage)? onSelect}) async {
   await showKayleeBottomSheet(
     context,
     initialChildSize: 145 / 667,
@@ -259,9 +250,7 @@ Future showImagePickerDialog(
         images: images,
         onSelect: (selectedImage) {
           context.pop();
-          if (onSelect.isNotNull) {
-            onSelect(selectedImage);
-          }
+          onSelect?.call(selectedImage);
         },
       );
     },
@@ -269,13 +258,13 @@ Future showImagePickerDialog(
 }
 
 class _ImageGrid extends StatefulWidget {
-  final ScrollController controller;
-  final List<String> images;
-  final String selectedExistedImage;
-  final void Function(dynamic selectedImage) onSelect;
+  final ScrollController? controller;
+  final List<String>? images;
+  final String? selectedExistedImage;
+  final void Function(dynamic selectedImage)? onSelect;
 
   _ImageGrid(
-      {@required this.controller,
+      {required this.controller,
       this.images,
       this.selectedExistedImage,
       this.onSelect});
@@ -285,7 +274,7 @@ class _ImageGrid extends StatefulWidget {
 }
 
 class _ImageGridState extends BaseState<_ImageGrid> {
-  String selectedExistedImage;
+  String? selectedExistedImage;
 
   @override
   void initState() {
@@ -295,7 +284,7 @@ class _ImageGridState extends BaseState<_ImageGrid> {
 
   Future<void> handlePermission() async {
     final Permission permission =
-        Platform.isAndroid ? Permission.storage : Permission.photosAddOnly;
+        io.Platform.isAndroid ? Permission.storage : Permission.photosAddOnly;
     final status = await permission.request();
     if (status.isGranted) {
       _openGallery();
@@ -316,10 +305,6 @@ class _ImageGridState extends BaseState<_ImageGrid> {
       ///only support android
       // print('[TUNG] ===> isPermanentlyDenied');
       await context.systemSetting.showKayleeGo2SettingDialog(context: context);
-    } else if (await permission.isUndetermined) {
-      // print('[TUNG] ===> isUndetermined');
-      await permission.request();
-      handlePermission();
     } else if (status.isLimited) {
       //only support ios
       //when user select option for only 1 time
@@ -332,11 +317,13 @@ class _ImageGridState extends BaseState<_ImageGrid> {
         source: imagePicker.ImageSource.gallery,
         maxWidth: 2020,
         maxHeight: 2020);
-    File selectedFile;
-    if (pickedFile.isNotNull) {
-      selectedFile = File(pickedFile.path);
+    io.File? selectedFile;
+    if (pickedFile != null) {
+      selectedFile = io.File(pickedFile.path);
     }
-    widget.onSelect?.call(selectedFile);
+    if (selectedFile != null) {
+      widget.onSelect?.call(selectedFile);
+    }
   }
 
   @override
@@ -377,11 +364,11 @@ class _ImageGridState extends BaseState<_ImageGrid> {
             },
           );
         else {
-          final selectedImage = widget.images.elementAt(index - 1);
+          final selectedImage = widget.images!.elementAt(index - 1);
           return _BorderWrapper.dynamic(
             isSelected: selectedExistedImage == selectedImage,
             child: CachedNetworkImage(
-              imageUrl: widget.images.elementAt(index - 1),
+              imageUrl: selectedImage,
               fit: BoxFit.cover,
               filterQuality: FilterQuality.low,
             ),
@@ -389,9 +376,7 @@ class _ImageGridState extends BaseState<_ImageGrid> {
               setState(() {
                 selectedExistedImage = selectedImage;
               });
-              if (widget.onSelect.isNotNull) {
-                widget.onSelect(selectedExistedImage);
-              }
+              widget.onSelect?.call(selectedExistedImage);
             },
           );
         }
@@ -402,12 +387,12 @@ class _ImageGridState extends BaseState<_ImageGrid> {
 }
 
 class _BorderWrapper extends StatelessWidget {
-  final Widget child;
-  final void Function() onTap;
+  final Widget? child;
+  final VoidCallback? onTap;
   final bool isStatic;
   final bool isSelected;
 
-  factory _BorderWrapper.static({Widget child, void Function() onTap}) =>
+  factory _BorderWrapper.static({Widget? child, VoidCallback? onTap}) =>
       _BorderWrapper(
         child: child,
         onTap: onTap,
@@ -415,7 +400,7 @@ class _BorderWrapper extends StatelessWidget {
       );
 
   factory _BorderWrapper.dynamic(
-          {Widget child, void Function() onTap, bool isSelected = false}) =>
+          {Widget? child, VoidCallback? onTap, bool isSelected = false}) =>
       _BorderWrapper(
         child: child,
         onTap: onTap,
@@ -423,8 +408,7 @@ class _BorderWrapper extends StatelessWidget {
         isSelected: isSelected,
       );
 
-  _BorderWrapper(
-      {this.child, this.onTap, this.isStatic = false, this.isSelected = false});
+  _BorderWrapper({this.child, this.onTap, this.isStatic = false, this.isSelected = false});
 
   @override
   Widget build(BuildContext context) {
@@ -439,12 +423,10 @@ class _BorderWrapper extends StatelessWidget {
               width: isStatic || !isSelected ? Dimens.px1 : Dimens.px2),
           borderRadius: BorderRadius.circular(Dimens.px10),
         ),
-        child: child ?? Container(),
+        child: child,
       ),
       onTap: () {
-        if (onTap.isNotNull) {
-          onTap();
-        }
+        onTap?.call();
       },
     );
   }

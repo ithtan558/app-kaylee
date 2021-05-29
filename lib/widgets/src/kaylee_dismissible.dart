@@ -7,13 +7,13 @@ class KayleeDismissible extends StatelessWidget {
   final Widget child;
 
   ///called when this widget is completely removed from the listview
-  final void Function(DismissDirection direction) onDismissed;
-  final AsyncValueGetter<bool> confirmDismiss;
-  final Widget secondaryBackground;
+  final void Function(DismissDirection direction)? onDismissed;
+  final AsyncValueGetter<bool>? confirmDismiss;
+  final Widget? secondaryBackground;
 
   KayleeDismissible(
-      {@required Key key,
-      @required this.child,
+      {required Key key,
+      required this.child,
       this.onDismissed,
       this.confirmDismiss,
       this.secondaryBackground})
@@ -21,10 +21,10 @@ class KayleeDismissible extends StatelessWidget {
 
   ///delete icon without text
   factory KayleeDismissible.iconOnly({
-    @required Key key,
-    @required Widget child,
-    void Function(DismissDirection direction) onDismissed,
-    AsyncValueGetter<bool> confirmDismiss,
+    required Key key,
+    required Widget child,
+    void Function(DismissDirection direction)? onDismissed,
+    AsyncValueGetter<bool>? confirmDismiss,
   }) {
     return KayleeDismissible(
       key: key,
@@ -48,7 +48,7 @@ class KayleeDismissible extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: key,
+      key: key!,
       direction: DismissDirection.endToStart,
       background: Container(
         color: Colors.black,

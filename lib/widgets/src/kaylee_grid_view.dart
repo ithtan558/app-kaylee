@@ -13,26 +13,26 @@ class KayleeGridView extends StatelessWidget {
           mainAxisSpacing: mainAxisSpacing,
           childAspectRatio: childAspectRatio);
 
-  final EdgeInsets padding;
-  final ScrollPhysics physics;
+  final EdgeInsets? padding;
+  final ScrollPhysics? physics;
   final bool shrinkWrap;
-  final int crossAxisCount;
-  final double crossAxisSpacing;
-  final double mainAxisSpacing;
+  final int? crossAxisCount;
+  final double? crossAxisSpacing;
+  final double? mainAxisSpacing;
   final IndexedWidgetBuilder itemBuilder;
-  final int itemCount;
+  final int? itemCount;
   final double childAspectRatio;
-  final WidgetBuilder loadingBuilder;
+  final WidgetBuilder? loadingBuilder;
 
   KayleeGridView(
-      {@required this.itemBuilder,
+      {required this.itemBuilder,
       this.padding,
       this.physics,
-      this.shrinkWrap,
+      this.shrinkWrap = false,
       this.crossAxisCount,
       this.crossAxisSpacing,
       this.mainAxisSpacing,
-      this.childAspectRatio,
+      this.childAspectRatio = 1,
       this.itemCount,
       this.loadingBuilder});
 
@@ -43,12 +43,12 @@ class KayleeGridView extends StatelessWidget {
       padding: padding ?? EdgeInsets.all(Dimens.px16),
       physics: physics,
       gridDelegate: gridDelegate(
-        childAspectRatio: childAspectRatio ?? 1,
+        childAspectRatio: childAspectRatio,
         crossAxisCount: crossAxisCount ?? 3,
         crossAxisSpacing: crossAxisSpacing ?? Dimens.px16,
         mainAxisSpacing: mainAxisSpacing ?? Dimens.px16,
       ),
-      shrinkWrap: shrinkWrap ?? false,
+      shrinkWrap: shrinkWrap,
       itemBuilder: (context, index) {
         if (index == length - 1) {
           //build loading
@@ -62,13 +62,13 @@ class KayleeGridView extends StatelessWidget {
             ),
           );
         } else // build main item
-          return itemBuilder?.call(context, index) ?? Container();
+          return itemBuilder.call(context, index);
       },
       itemCount: length,
     );
   }
 
-  int itemLength(int itemCount) {
+  int itemLength(int? itemCount) {
     itemCount ??= 0;
     final x = itemCount % 3 == 0 ? 0 : (3 - itemCount % 3);
     return itemCount + x + 2;

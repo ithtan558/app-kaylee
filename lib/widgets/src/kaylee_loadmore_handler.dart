@@ -6,7 +6,7 @@ class KayleeLoadMoreHandler extends StatefulWidget {
   final Widget child;
   final LoadMoreInterface controller;
 
-  KayleeLoadMoreHandler({@required this.child, this.controller});
+  KayleeLoadMoreHandler({required this.child, required this.controller});
 
   @override
   _KayleeLoadMoreHandlerState createState() => _KayleeLoadMoreHandlerState();
@@ -25,8 +25,8 @@ class _KayleeLoadMoreHandlerState extends BaseState<KayleeLoadMoreHandler> {
           if (notification.metrics.pixels >=
                   notification.metrics.maxScrollExtent &&
               !notification.metrics.outOfRange) {
-            if (widget.controller?.loadWhen() ?? false) {
-              widget.controller?.loadMore();
+            if (widget.controller.loadWhen()) {
+              widget.controller.loadMore();
             }
           }
         }

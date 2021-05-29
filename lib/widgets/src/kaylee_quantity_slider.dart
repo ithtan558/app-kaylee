@@ -1,11 +1,10 @@
-import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class KayleeQuantitySlider extends StatefulWidget {
-  final String title;
-  final QuantitySliderController controller;
+  final String? title;
+  final QuantitySliderController? controller;
 
   KayleeQuantitySlider({this.title, this.controller});
 
@@ -27,10 +26,10 @@ class _KayleeQuantitySliderState extends State<KayleeQuantitySlider> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (widget.title.isNotNullAndEmpty)
+        if (widget.title?.isNotEmpty ?? false)
           Padding(
             padding: const EdgeInsets.only(bottom: Dimens.px16),
-            child: KayleeText.normal16W500(widget.title),
+            child: KayleeText.normal16W500(widget.title!),
           ),
         Row(
           children: [

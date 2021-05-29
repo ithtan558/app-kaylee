@@ -6,11 +6,11 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class KayleeFullAddressInput extends StatefulWidget {
-  final String title;
-  final EdgeInsets padding;
-  final KayleeFullAddressController controller;
+  final String? title;
+  final EdgeInsets? padding;
+  final KayleeFullAddressController? controller;
 
-  KayleeFullAddressInput({Key key, this.title, this.padding, this.controller})
+  KayleeFullAddressInput({Key? key, this.title, this.padding, this.controller})
       : super(key: key);
 
   @override
@@ -73,7 +73,7 @@ class _KayleeFullAddressInputState extends BaseState<KayleeFullAddressInput> {
               hint: Strings.tinhTpHint,
               controller: cityController,
               onSelect: (value) {
-                widget.controller.initCity = cityController.value;
+                widget.controller?.initCity = cityController.value;
               },
             ),
             Padding(
@@ -85,7 +85,7 @@ class _KayleeFullAddressInputState extends BaseState<KayleeFullAddressInput> {
                       hint: Strings.quan,
                       controller: districtController,
                       onSelect: (value) {
-                        widget.controller.initDistrict =
+                        widget.controller?.initDistrict =
                             districtController.value;
                       },
                     ),
@@ -96,7 +96,7 @@ class _KayleeFullAddressInputState extends BaseState<KayleeFullAddressInput> {
                       hint: Strings.phuong,
                       controller: wardController,
                       onSelect: (value) {
-                        widget.controller.initWard = wardController.value;
+                        widget.controller?.initWard = wardController.value;
                       },
                     ),
                   ),
@@ -109,7 +109,7 @@ class _KayleeFullAddressInputState extends BaseState<KayleeFullAddressInput> {
               controller: addressTFController,
               focusNode: addressFocus,
               onChanged: (value) {
-                widget.controller.initAddress = addressTFController.text;
+                widget.controller?.initAddress = addressTFController.text;
               },
             ),
           ],
@@ -120,23 +120,23 @@ class _KayleeFullAddressInputState extends BaseState<KayleeFullAddressInput> {
 }
 
 class KayleeFullAddressController {
-  _KayleeFullAddressInputState _view;
+  _KayleeFullAddressInputState? _view;
 
   KayleeFullAddressController(
       {this.initAddress, this.initCity, this.initDistrict, this.initWard});
 
-  String initAddress;
-  City initCity;
-  District initDistrict;
-  Ward initWard;
+  String? initAddress;
+  City? initCity;
+  District? initDistrict;
+  Ward? initWard;
 
-  String get address => _view?.addressTFController?.text ?? '';
+  String get address => _view?.addressTFController.text ?? '';
 
-  void focusAddress() => _view?.addressFocus?.requestFocus();
+  void focusAddress() => _view?.addressFocus.requestFocus();
 
-  City get city => _view?.cityController?.value;
+  City? get city => _view?.cityController.value;
 
-  District get district => _view?.districtController?.value;
+  District? get district => _view?.districtController.value;
 
-  Ward get ward => _view?.wardController?.value;
+  Ward? get ward => _view?.wardController.value;
 }

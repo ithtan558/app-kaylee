@@ -5,8 +5,8 @@ import 'package:kaylee/res/res.dart';
 class KayleeNetworkImage extends StatelessWidget {
   final String url;
   final BoxFit fit;
-  final int memCacheHeight;
-  final int memCacheWidth;
+  final int? memCacheHeight;
+  final int? memCacheWidth;
 
   const KayleeNetworkImage.normal(
     this.url, {

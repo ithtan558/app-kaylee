@@ -532,7 +532,7 @@ class KayleeDatePickerText extends StatefulWidget {
 }
 
 class _KayleeDatePickerTextState extends BaseState<KayleeDatePickerText> {
-  DateTimeRange? dateRange;
+  late DateTimeRange dateRange;
   DateRangeValueType? rangeType;
 
   @override
@@ -546,8 +546,8 @@ class _KayleeDatePickerTextState extends BaseState<KayleeDatePickerText> {
   Widget build(BuildContext context) {
     return KayleeDateRangeText(
       textSize: widget.textSize,
-      fromDate: dateRange?.start,
-      toDate: dateRange?.end,
+      fromDate: dateRange.start,
+      toDate: dateRange.end,
       onTap: () {
         showKayleeDialog(
           context: context,

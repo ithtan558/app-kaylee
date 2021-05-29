@@ -30,23 +30,23 @@ abstract class KayleePickerTextFieldView {
 }
 
 class KayleePickerTextField<T> extends StatefulWidget {
-  final String title;
-  final String error;
-  final String hint;
+  final String? title;
+  final String? error;
+  final String? hint;
   final PickInputController<T>? controller;
 
   ///nếu [useForFilter] == true (khi [KayleePickerTextField] đc gắn ở [FilterScreen]) => hiện item 'Tất cả'
   final bool useForFilter;
 
-  final ValueSetter<dynamic> onSelect;
+  final ValueSetter<dynamic>? onSelect;
 
   KayleePickerTextField({
-    Key key,
+    Key? key,
     this.hint,
     this.error,
     this.title,
     this.controller,
-    this.useForFilter,
+    this.useForFilter = false,
     this.onSelect,
   }) : super(key: key);
 
@@ -105,19 +105,19 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField>
                 if (T == City) {
                   showPicker();
                 } else if (T == District) {
-                  if (pickerTFModel?.city?.id.isNotNull) {
+                  if (pickerTFModel?.city?.id != null) {
                     showPicker();
                   } else {
                     showAlert(content: Strings.xinVuiLongChonTinh);
                   }
                 } else if (T == Ward) {
-                  if (pickerTFModel?.district?.id.isNotNull) {
+                  if (pickerTFModel?.district?.id != null) {
                     showPicker();
                   } else {
                     showAlert(content: Strings.xinVuiLongChonQuan);
                   }
                 } else if (T == Employee) {
-                  if (pickerTFModel?.brand?.id.isNotNull) {
+                  if (pickerTFModel?.brand?.id != null) {
                     showPicker();
                   } else {
                     showAlert(content: Strings.batBuocChonChiNhanh);
@@ -164,13 +164,13 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField>
               ),
             ),
             focused: focused,
-            isError: !widget.error.isNullOrEmpty),
+            isError: widget.error?.isNotEmpty ?? false),
         error: widget.error,
       ),
     );
   }
 
-  void showAlert({String content}) {
+  void showAlert({String? content}) {
     showKayleeAlertDialog(
         context: context,
         view: KayleeAlertDialogView(
@@ -194,7 +194,7 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField>
         onDone: () {
           if (currentValue != null) {
             widget.controller?.value = currentValue;
-            widget?.onSelect?.call(currentValue);
+            widget.onSelect?.call(currentValue);
           }
         },
         onDismiss: () {
@@ -277,10 +277,10 @@ String _getTitle<T>(dynamic item) {
 }
 
 class _DatePickerView extends StatefulWidget {
-  final ValueChanged<DateTime> onSelectedItemChanged;
-  final DateTime intiValue;
-  final DateTime minDate;
-  final DateTime maxDate;
+  final ValueChanged<DateTime>? onSelectedItemChanged;
+  final DateTime? intiValue;
+  final DateTime? minDate;
+  final DateTime? maxDate;
 
   _DatePickerView(
       {this.onSelectedItemChanged, this.intiValue, this.minDate, this.maxDate});
@@ -290,16 +290,16 @@ class _DatePickerView extends StatefulWidget {
 }
 
 class _DatePickerViewState extends BaseState<_DatePickerView> {
-  DateTime initDateTime;
+  late DateTime initDateTime;
 
   @override
   void initState() {
     super.initState();
-    if (widget.intiValue.isNull) {
+    if (widget.intiValue == null) {
       initDateTime = DateTime.now();
       widget.onSelectedItemChanged?.call(initDateTime);
     } else {
-      initDateTime = widget.intiValue;
+      initDateTime = widget.intiValue!;
     }
   }
 
@@ -318,8 +318,8 @@ class _DatePickerViewState extends BaseState<_DatePickerView> {
 }
 
 class _DurationPickerView extends StatefulWidget {
-  final ValueChanged<Duration> onSelectedItemChanged;
-  final Duration intiValue;
+  final ValueChanged<Duration>? onSelectedItemChanged;
+  final Duration? intiValue;
 
   _DurationPickerView({
     this.onSelectedItemChanged,
@@ -331,16 +331,16 @@ class _DurationPickerView extends StatefulWidget {
 }
 
 class _DurationPickerViewState extends BaseState<_DurationPickerView> {
-  Duration initDuration;
+  late Duration initDuration;
 
   @override
   void initState() {
     super.initState();
-    if (widget.intiValue.isNull) {
+    if (widget.intiValue == null) {
       initDuration = Duration.zero;
       widget.onSelectedItemChanged?.call(initDuration);
     } else {
-      initDuration = widget.intiValue;
+      initDuration = widget.intiValue!;
     }
   }
 
@@ -357,8 +357,8 @@ class _DurationPickerViewState extends BaseState<_DurationPickerView> {
 }
 
 class _TimePickerView<T> extends StatefulWidget {
-  final ValueChanged onSelectedItemChanged;
-  final T intiValue;
+  final ValueChanged? onSelectedItemChanged;
+  final T? intiValue;
 
   _TimePickerView({this.onSelectedItemChanged, this.intiValue});
 
@@ -367,7 +367,7 @@ class _TimePickerView<T> extends StatefulWidget {
 }
 
 class _TimePickerViewState<T> extends BaseState<_TimePickerView> {
-  DateTime initDateTime;
+  late DateTime initDateTime;
 
   @override
   void initState() {
@@ -402,20 +402,21 @@ class _TimePickerViewState<T> extends BaseState<_TimePickerView> {
 }
 
 class _PickerView<T> extends StatefulWidget {
-  final ValueChanged onSelectedItemChanged;
-  final T intiValue;
+  final ValueChanged? onSelectedItemChanged;
+  final T? intiValue;
   final bool useForFilter;
 
-  _PickerView({this.onSelectedItemChanged, this.intiValue, this.useForFilter});
+  _PickerView(
+      {this.onSelectedItemChanged, this.intiValue, this.useForFilter = false});
 
   @override
   _PickerViewState<T> createState() => _PickerViewState<T>();
 }
 
 class _PickerViewState<T> extends KayleeState<_PickerView> {
-  _PickerViewBloc<T> bloc;
-  KayleePickerTextFieldModel parentBloc;
-  FixedExtentScrollController scrollController;
+  late _PickerViewBloc<T> bloc;
+  KayleePickerTextFieldModel? parentBloc;
+  FixedExtentScrollController? scrollController;
 
   @override
   void initState() {
@@ -464,7 +465,7 @@ class _PickerViewState<T> extends KayleeState<_PickerView> {
   }
 
   @override
-  void onReloadWidget(Type widget, Bundle bundle) {
+  void onReloadWidget(Type widget, Bundle? bundle) {
     loadData();
   }
 
@@ -478,7 +479,7 @@ class _PickerViewState<T> extends KayleeState<_PickerView> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<_PickerViewBloc<T>, SingleModel<List<T>>>(
-      cubit: bloc,
+      bloc: bloc,
       builder: (context, state) {
         if (state.loading)
           return Align(
@@ -494,10 +495,10 @@ class _PickerViewState<T> extends KayleeState<_PickerView> {
           scrollController: scrollController,
           itemExtent: Dimens.px35,
           onSelectedItemChanged: (index) {
-            widget.onSelectedItemChanged?.call(state.item.elementAt(index));
+            widget.onSelectedItemChanged?.call(state.item!.elementAt(index));
           },
           itemBuilder: (context, index) {
-            final item = state.item.elementAt(index);
+            final item = state.item!.elementAt(index);
             return Container(
               child: Text(_getTitle<T>(item),
                   style: TextStyle(
@@ -526,10 +527,10 @@ class _PickerViewState<T> extends KayleeState<_PickerView> {
 }
 
 class DatePickInputController extends PickInputController<DateTime> {
-  final DateTime minDate;
-  final DateTime maxDate;
+  final DateTime? minDate;
+  final DateTime? maxDate;
 
-  DatePickInputController({DateTime value, this.minDate, this.maxDate})
+  DatePickInputController({DateTime? value, this.minDate, this.maxDate})
       : super(value: value);
 }
 
@@ -555,14 +556,14 @@ class _PickerViewBloc<T> extends Cubit<SingleModel<List<T>>> {
   final bool useForFilter;
 
   _PickerViewBloc({
-    this.commonService,
-    this.productService,
-    this.servService,
-    this.brandService,
-    this.customerService,
-    this.roleService,
-    this.employeeService,
-    this.useForFilter,
+    required this.commonService,
+    required this.productService,
+    required this.servService,
+    required this.brandService,
+    required this.customerService,
+    required this.roleService,
+    required this.employeeService,
+    this.useForFilter = false,
   }) : super(SingleModel());
 
   void loadCity() {
@@ -570,7 +571,7 @@ class _PickerViewBloc<T> extends Cubit<SingleModel<List<T>>> {
     RequestHandler(
       request: commonService.getCity(),
       onSuccess: ({message, result}) {
-        if (useForFilter ?? false) {
+        if (useForFilter) {
           (result as List<City>).insert(0, City(name: Strings.tatCa));
         }
 
@@ -589,12 +590,12 @@ class _PickerViewBloc<T> extends Cubit<SingleModel<List<T>>> {
     );
   }
 
-  void loadDistrict(int city) {
+  void loadDistrict(int? city) {
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
       request: commonService.getDistrict(city),
       onSuccess: ({message, result}) {
-        if (useForFilter ?? false) {
+        if (useForFilter) {
           (result as List<District>).insert(0, District(name: Strings.tatCa));
         }
 
@@ -613,12 +614,12 @@ class _PickerViewBloc<T> extends Cubit<SingleModel<List<T>>> {
     );
   }
 
-  void loadWard(int district) {
+  void loadWard(int? district) {
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
       request: commonService.getWard(district),
       onSuccess: ({message, result}) {
-        if (useForFilter ?? false) {
+        if (useForFilter) {
           (result as List<Ward>).insert(0, Ward(name: Strings.tatCa));
         }
 
@@ -642,7 +643,7 @@ class _PickerViewBloc<T> extends Cubit<SingleModel<List<T>>> {
     RequestHandler(
       request: productService.getCategories(),
       onSuccess: ({message, result}) {
-        if (useForFilter ?? false) {
+        if (useForFilter) {
           (result as List<ProdCate>)
               .insert(0, ProdCate()..name = Strings.tatCa);
         }
@@ -667,7 +668,7 @@ class _PickerViewBloc<T> extends Cubit<SingleModel<List<T>>> {
     RequestHandler(
       request: servService.getCategories(),
       onSuccess: ({message, result}) {
-        if (useForFilter ?? false) {
+        if (useForFilter) {
           (result as List<ServiceCate>)
               .insert(0, ServiceCate()..name = Strings.tatCa);
         }
@@ -692,7 +693,7 @@ class _PickerViewBloc<T> extends Cubit<SingleModel<List<T>>> {
     RequestHandler(
       request: brandService.getAllBrands(),
       onSuccess: ({message, result}) {
-        if (useForFilter ?? false) {
+        if (useForFilter) {
           (result as List<Brand>).insert(0, Brand(name: Strings.tatCa));
         }
 
@@ -716,7 +717,7 @@ class _PickerViewBloc<T> extends Cubit<SingleModel<List<T>>> {
     RequestHandler(
       request: customerService.getCustomerType(),
       onSuccess: ({message, result}) {
-        if (useForFilter ?? false) {
+        if (useForFilter) {
           (result as List<CustomerType>)
               .insert(0, CustomerType(name: Strings.tatCa));
         }
@@ -740,7 +741,7 @@ class _PickerViewBloc<T> extends Cubit<SingleModel<List<T>>> {
     RequestHandler(
       request: roleService.getRoles(),
       onSuccess: ({message, result}) {
-        if (useForFilter ?? false) {
+        if (useForFilter) {
           (result as List<Role>).insert(0, Role(id: -1, name: Strings.tatCa));
         }
 
@@ -759,12 +760,12 @@ class _PickerViewBloc<T> extends Cubit<SingleModel<List<T>>> {
     );
   }
 
-  void loadEmployees(int brandId) {
+  void loadEmployees(int? brandId) {
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
       request: employeeService.findEmployees(brandId: brandId),
       onSuccess: ({message, result}) {
-        if (useForFilter ?? false) {
+        if (useForFilter) {
           (result as List<Employee>).insert(0, Employee(name: Strings.tatCa));
         }
 
@@ -798,16 +799,16 @@ class _PickerViewBloc<T> extends Cubit<SingleModel<List<T>>> {
 
 //dùng cho những field cần phải pick trước (ex: select tỉnh phải select city trước)
 class KayleePickerTextFieldModel {
-  City city;
-  District district;
-  StartTime startTime;
-  EndTime endTime;
-  ProdCate prodCate;
-  ServiceCate serviceCate;
-  Brand brand;
-  CustomerType customerType;
+  City? city;
+  District? district;
+  StartTime? startTime;
+  EndTime? endTime;
+  ProdCate? prodCate;
+  ServiceCate? serviceCate;
+  Brand? brand;
+  CustomerType? customerType;
 
-  KayleePickerTextFieldModel.copy(KayleePickerTextFieldModel old) {
+  KayleePickerTextFieldModel.copy(KayleePickerTextFieldModel? old) {
     this
       ..city = old?.city
       ..district = old?.district
