@@ -72,26 +72,28 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
 
               if (state.code.isNotNull &&
                   state.code != ErrorType.UNAUTHORIZED) {
-                showKayleeAlertErrorYesDialog(
-                  context: context,
-                  error: state.error,
-                  onPressed: () {
-                    popScreen();
+                if (state.error != null) {
+                  showKayleeAlertErrorYesDialog(
+                    context: context,
+                    error: state.error,
+                    onPressed: () {
+                      popScreen();
 
-                    if (state is NameErrorModel) {
-                      return nameFocus.requestFocus();
-                    }
-                    if (state is PhoneErrorModel) {
-                      return phoneFocus.requestFocus();
-                    }
-                    if (state is EmailErrorModel) {
-                      return emailFocus.requestFocus();
-                    }
-                    if (state is PasswordErrorModel) {
-                      return passFocus.requestFocus();
-                    }
-                  },
-                );
+                      if (state is NameErrorModel) {
+                        return nameFocus.requestFocus();
+                      }
+                      if (state is PhoneErrorModel) {
+                        return phoneFocus.requestFocus();
+                      }
+                      if (state is EmailErrorModel) {
+                        return emailFocus.requestFocus();
+                      }
+                      if (state is PasswordErrorModel) {
+                        return passFocus.requestFocus();
+                      }
+                    },
+                  );
+                }
               } else if (state is RegisterSuccessModel) {
                 showKayleeAlertMessageYesDialog(
                   context: context,
