@@ -54,6 +54,7 @@ class _CommonService implements CommonService {
   Future<ResponseModel<List<District>>> getDistrict(city) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<List<District>>>(
@@ -73,6 +74,7 @@ class _CommonService implements CommonService {
   Future<ResponseModel<List<Ward>>> getWard(district) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<List<Ward>>>(
