@@ -4,8 +4,7 @@ part 'page_data.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
 class PageData<T> {
-  factory PageData.fromJson(Map<String, dynamic> json,
-          T Function(Map<String, dynamic> json) fromJson) =>
+  factory PageData.fromJson(Map<String, dynamic> json) =>
       _$PageDataFromJson<T>(json);
 
   Map<String, dynamic> toJson() => _$PageDataToJson<T>(this);
