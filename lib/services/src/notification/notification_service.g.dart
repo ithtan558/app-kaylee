@@ -33,7 +33,7 @@ class _NotificationService implements NotificationService {
 
   @override
   Future<ResponseModel<PageData<Notification>>> getNotifications(
-      {required page, required limit, required sort, required keyword}) async {
+      {page, limit, sort, keyword}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'page': page,
@@ -41,6 +41,7 @@ class _NotificationService implements NotificationService {
       r'sort': sort,
       r'keyword': keyword
     };
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<PageData<Notification>>>(
@@ -74,9 +75,10 @@ class _NotificationService implements NotificationService {
   }
 
   @override
-  Future<ResponseModel<dynamic>> delete({required id}) async {
+  Future<ResponseModel<dynamic>> delete({id}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<dynamic>>(Options(
@@ -92,10 +94,10 @@ class _NotificationService implements NotificationService {
   }
 
   @override
-  Future<ResponseModel<Notification>> getDetail(
-      {required id, required notificationId}) async {
+  Future<ResponseModel<Notification>> getDetail({id, notificationId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'id': notificationId};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<Notification>>(

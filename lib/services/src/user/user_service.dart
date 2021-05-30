@@ -30,7 +30,7 @@ abstract class UserService {
       @Body() VerifyOtpBody body);
 
   @POST('forgot/update-password')
-  Future<ResponseModel> updatePass({@Body() UpdatePassBody body});
+  Future<ResponseModel> updatePass({@Body() required UpdatePassBody body});
 
   @GET('user-info')
   Future<ResponseModel<UserInfo>> getProfile();
@@ -38,13 +38,13 @@ abstract class UserService {
   @POST('update')
   @MultiPart()
   Future<ResponseModel> update({
-    @Part() String name,
-    @Part() String birthday,
-    @Part() String address,
-    @Part(name: 'city_id') int cityId,
-    @Part(name: 'district_id') int districtId,
-    @Part(name: 'wards_id') int wardsId,
-    @Part() File image,
+    @Part() String? name,
+    @Part() String? birthday,
+    @Part() String? address,
+    @Part(name: 'city_id') int? cityId,
+    @Part(name: 'district_id') int? districtId,
+    @Part(name: 'wards_id') int? wardsId,
+    @Part() File? image,
   });
 
   @POST('check-expired')

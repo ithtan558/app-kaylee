@@ -14,14 +14,14 @@ class _ReportService implements ReportService {
   String? baseUrl;
 
   @override
-  Future<ResponseModel<Revenue>> getTotal(
-      {required startDate, required endDate, required brandId}) async {
+  Future<ResponseModel<Revenue>> getTotal({startDate, endDate, brandId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'start_date': startDate,
       r'end_date': endDate,
       r'brand_id': brandId
     };
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<Revenue>>(
@@ -38,13 +38,14 @@ class _ReportService implements ReportService {
 
   @override
   Future<ResponseModel<List<EmployeeRevenue>>> getTotalByEmployee(
-      {required startDate, required endDate, required brandId}) async {
+      {startDate, endDate, brandId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'start_date': startDate,
       r'end_date': endDate,
       r'brand_id': brandId
     };
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<List<EmployeeRevenue>>>(
@@ -63,13 +64,14 @@ class _ReportService implements ReportService {
 
   @override
   Future<ResponseModel<List<ServiceRevenue>>> getTotalByService(
-      {required startDate, required endDate, required brandId}) async {
+      {startDate, endDate, brandId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'start_date': startDate,
       r'end_date': endDate,
       r'brand_id': brandId
     };
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<List<ServiceRevenue>>>(
@@ -88,13 +90,14 @@ class _ReportService implements ReportService {
 
   @override
   Future<ResponseModel<List<ServiceRevenue>>> getTotalByProduct(
-      {required startDate, required endDate, required brandId}) async {
+      {startDate, endDate, brandId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'start_date': startDate,
       r'end_date': endDate,
       r'brand_id': brandId
     };
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<List<ServiceRevenue>>>(

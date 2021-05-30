@@ -13,21 +13,21 @@ abstract class NotificationService {
 
   @GET('notification')
   Future<ResponseModel<PageData<Notification>>> getNotifications({
-    @Query('page') int page,
-    @Query('limit') int limit,
-    @Query('sort') String sort,
-    @Query('keyword') String keyword,
+    @Query('page') int? page,
+    @Query('limit') int? limit,
+    @Query('sort') String? sort,
+    @Query('keyword') String? keyword,
   });
 
   @DELETE('notification/delete/all')
   Future<ResponseModel> deleteAll();
 
   @DELETE('notification/delete/{id}')
-  Future<ResponseModel> delete({@Path() int id});
+  Future<ResponseModel> delete({@Path() int? id});
 
   @GET('notification/{id}')
   Future<ResponseModel<Notification>> getDetail(
-      {@Path() int id, @Query('id') int notificationId});
+      {@Path() int? id, @Query('id') int? notificationId});
 
   @POST('notification/update-status')
   Future<ResponseModel> updateStatus({@Body() NotificationStatusBody body});

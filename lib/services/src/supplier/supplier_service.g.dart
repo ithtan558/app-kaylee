@@ -15,13 +15,14 @@ class _SupplierService implements SupplierService {
 
   @override
   Future<ResponseModel<PageData<Supplier>>> getSuppliers(
-      {page = 1, limit = 10, required sort}) async {
+      {page = 1, limit = 10, sort}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'page': page,
       r'limit': limit,
       r'sort': sort
     };
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<PageData<Supplier>>>(
@@ -37,10 +38,10 @@ class _SupplierService implements SupplierService {
   }
 
   @override
-  Future<ResponseModel<Supplier>> getSupplierDetail(
-      {required supplierId}) async {
+  Future<ResponseModel<Supplier>> getSupplierDetail({supplierId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<Supplier>>(
