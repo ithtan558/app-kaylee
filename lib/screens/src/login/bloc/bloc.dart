@@ -24,12 +24,14 @@ class LoginScreenBloc extends BaseBloc {
           add(SuccessLoginScrEvent(message, result));
         },
         onFailed: (code, {error}) {
-          if (error.code.isNotNull) {
-            add(error.code == ErrorCode.ACCOUNT_CODE
-                ? PhoneLoginScrErrorEvent(error.message)
-                : PassLoginScrErrorEvent(error.message));
-          } else {
-            errorEvent(code, error: error);
+          if (error != null) {
+            if (error.code.isNotNull) {
+              add(error.code == ErrorCode.ACCOUNT_CODE
+                  ? PhoneLoginScrErrorEvent(error.message)
+                  : PassLoginScrErrorEvent(error.message));
+            } else {
+              errorEvent(code, error: error);
+            }
           }
         },
       );
