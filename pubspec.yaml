@@ -52,7 +52,11 @@ dev_dependencies:
   # for json_serializable, retrofit)
   build_runner: ^2.0.4
   #tạm thời dùng master
-  retrofit_generator: ^2.0.0
+  retrofit_generator:
+    git:
+      url: https://github.com/trevorwang/retrofit.dart
+      ref: master
+      path: generator
 
 
 # For information on the generic Dart part of this file, see the
