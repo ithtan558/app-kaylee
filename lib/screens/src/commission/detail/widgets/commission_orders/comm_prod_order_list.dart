@@ -68,8 +68,7 @@ class _CommProdOrderListState extends KayleeState<CommProdOrderList> {
               BlocConsumer<CommProdOrdersBloc, LoadMoreModel<CommissionOrder>>(
             listener: (context, state) {
               if (!state.loading) {
-                if (state.code.isNotNull &&
-                    state.code != ErrorType.UNAUTHORIZED) {
+                if (state.error != null) {
                   showKayleeAlertErrorYesDialog(
                       context: context,
                       error: state.error,
