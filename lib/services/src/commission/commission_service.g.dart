@@ -15,13 +15,14 @@ class _CommissionService implements CommissionService {
 
   @override
   Future<ResponseModel<Commission>> getDetail(
-      {required startDate, required endDate, required userId}) async {
+      {startDate, endDate, userId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'start_date': startDate,
       r'end_date': endDate,
       r'user_id': userId
     };
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<Commission>>(
@@ -38,11 +39,7 @@ class _CommissionService implements CommissionService {
 
   @override
   Future<ResponseModel<PageData<CommissionOrder>>> getProductOfOrder(
-      {required startDate,
-      required endDate,
-      required userId,
-      required page,
-      required limit}) async {
+      {startDate, endDate, userId, page, limit}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'start_date': startDate,
@@ -51,6 +48,7 @@ class _CommissionService implements CommissionService {
       r'page': page,
       r'limit': limit
     };
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<PageData<CommissionOrder>>>(
@@ -67,11 +65,7 @@ class _CommissionService implements CommissionService {
 
   @override
   Future<ResponseModel<PageData<CommissionOrder>>> getServiceOfOrder(
-      {required startDate,
-      required endDate,
-      required userId,
-      required page,
-      required limit}) async {
+      {startDate, endDate, userId, page, limit}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'start_date': startDate,
@@ -80,6 +74,7 @@ class _CommissionService implements CommissionService {
       r'page': page,
       r'limit': limit
     };
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<PageData<CommissionOrder>>>(
@@ -95,9 +90,10 @@ class _CommissionService implements CommissionService {
   }
 
   @override
-  Future<ResponseModel<CommissionSetting>> getSetting({required userId}) async {
+  Future<ResponseModel<CommissionSetting>> getSetting({userId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'user_id': userId};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<CommissionSetting>>(
@@ -114,13 +110,14 @@ class _CommissionService implements CommissionService {
 
   @override
   Future<ResponseModel<dynamic>> getUpdateSetting(
-      {required userId, required product, required service}) async {
+      {userId, product, service}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'user_id': userId,
       r'commission_product': product,
       r'commission_service': service
     };
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<dynamic>>(

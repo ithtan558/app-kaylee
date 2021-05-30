@@ -34,11 +34,7 @@ class _BrandService implements BrandService {
 
   @override
   Future<ResponseModel<PageData<Brand>>> getBrands(
-      {required keyword,
-      required page,
-      required limit,
-      required cityId,
-      required districtIds}) async {
+      {keyword, page, limit, cityId, districtIds}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'keyword': keyword,
@@ -47,6 +43,7 @@ class _BrandService implements BrandService {
       r'city_id': cityId,
       r'district_ids': districtIds
     };
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<PageData<Brand>>>(
@@ -62,9 +59,10 @@ class _BrandService implements BrandService {
   }
 
   @override
-  Future<ResponseModel<Brand>> getBrand({required brandId}) async {
+  Future<ResponseModel<Brand>> getBrand({brandId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<Brand>>(
@@ -81,26 +79,43 @@ class _BrandService implements BrandService {
 
   @override
   Future<ResponseModel<dynamic>> newBrand(
-      {required name,
-      required phone,
-      required location,
-      required cityId,
-      required districtId,
-      required startTime,
-      required endTime,
-      required wardsId,
-      required image}) async {
+      {name,
+      phone,
+      location,
+      cityId,
+      districtId,
+      startTime,
+      endTime,
+      wardsId,
+      image}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = FormData();
-    _data.fields.add(MapEntry('name', name));
-    _data.fields.add(MapEntry('phone', phone));
-    _data.fields.add(MapEntry('location', location));
-    _data.fields.add(MapEntry('city_id', cityId.toString()));
-    _data.fields.add(MapEntry('district_id', districtId.toString()));
-    _data.fields.add(MapEntry('start_time', startTime));
-    _data.fields.add(MapEntry('end_time', endTime));
-    _data.fields.add(MapEntry('wards_id', wardsId.toString()));
+    if (name != null) {
+      _data.fields.add(MapEntry('name', name));
+    }
+    if (phone != null) {
+      _data.fields.add(MapEntry('phone', phone));
+    }
+    if (location != null) {
+      _data.fields.add(MapEntry('location', location));
+    }
+    if (cityId != null) {
+      _data.fields.add(MapEntry('city_id', cityId.toString()));
+    }
+    if (districtId != null) {
+      _data.fields.add(MapEntry('district_id', districtId.toString()));
+    }
+    if (startTime != null) {
+      _data.fields.add(MapEntry('start_time', startTime));
+    }
+    if (endTime != null) {
+      _data.fields.add(MapEntry('end_time', endTime));
+    }
+    if (wardsId != null) {
+      _data.fields.add(MapEntry('wards_id', wardsId.toString()));
+    }
     if (image != null) {
       _data.files.add(MapEntry(
           'image',
@@ -122,35 +137,54 @@ class _BrandService implements BrandService {
 
   @override
   Future<ResponseModel<dynamic>> updateBrand(
-      {required name,
-      required phone,
-      required location,
-      required cityId,
-      required districtId,
-      required startTime,
-      required endTime,
-      required wardsId,
-      required image,
-      required id,
-      required brandId}) async {
+      {name,
+      phone,
+      location,
+      cityId,
+      districtId,
+      startTime,
+      endTime,
+      wardsId,
+      image,
+      id,
+      brandId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = FormData();
-    _data.fields.add(MapEntry('name', name));
-    _data.fields.add(MapEntry('phone', phone));
-    _data.fields.add(MapEntry('location', location));
-    _data.fields.add(MapEntry('city_id', cityId.toString()));
-    _data.fields.add(MapEntry('district_id', districtId.toString()));
-    _data.fields.add(MapEntry('start_time', startTime));
-    _data.fields.add(MapEntry('end_time', endTime));
-    _data.fields.add(MapEntry('wards_id', wardsId.toString()));
+    if (name != null) {
+      _data.fields.add(MapEntry('name', name));
+    }
+    if (phone != null) {
+      _data.fields.add(MapEntry('phone', phone));
+    }
+    if (location != null) {
+      _data.fields.add(MapEntry('location', location));
+    }
+    if (cityId != null) {
+      _data.fields.add(MapEntry('city_id', cityId.toString()));
+    }
+    if (districtId != null) {
+      _data.fields.add(MapEntry('district_id', districtId.toString()));
+    }
+    if (startTime != null) {
+      _data.fields.add(MapEntry('start_time', startTime));
+    }
+    if (endTime != null) {
+      _data.fields.add(MapEntry('end_time', endTime));
+    }
+    if (wardsId != null) {
+      _data.fields.add(MapEntry('wards_id', wardsId.toString()));
+    }
     if (image != null) {
       _data.files.add(MapEntry(
           'image',
           MultipartFile.fromFileSync(image.path,
               filename: image.path.split(Platform.pathSeparator).last)));
     }
-    _data.fields.add(MapEntry('id', id.toString()));
+    if (id != null) {
+      _data.fields.add(MapEntry('id', id.toString()));
+    }
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<dynamic>>(
             Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
@@ -165,9 +199,10 @@ class _BrandService implements BrandService {
   }
 
   @override
-  Future<ResponseModel<dynamic>> deleteBrand({required brandId}) async {
+  Future<ResponseModel<dynamic>> deleteBrand({brandId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<dynamic>>(Options(
