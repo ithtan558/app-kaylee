@@ -57,7 +57,7 @@ class _SelectProdListState extends KayleeState<SelectProdList> {
     cateBlocSub = cateBloc.listen((state) {
       if (!state.loading) {
         hideLoading();
-        if (state.code.isNotNull && state.code != ErrorType.UNAUTHORIZED) {
+        if (state.error != null) {
           showKayleeAlertErrorYesDialog(
             context: context,
             error: state.error,
@@ -75,7 +75,7 @@ class _SelectProdListState extends KayleeState<SelectProdList> {
       }
     });
     _sub = prodsListBloc.listen((state) {
-      if (state.code.isNotNull && state.code != ErrorType.UNAUTHORIZED) {
+      if (state.error != null) {
         showKayleeAlertErrorYesDialog(context: context, error: state.error);
       }
     });
@@ -117,8 +117,7 @@ class _SelectProdListState extends KayleeState<SelectProdList> {
                 controller: prodsListBloc,
                 child: BlocConsumer<SelectProdListBloc, LoadMoreModel<Product>>(
                   listener: (context, state) {
-                    if (state.code.isNotNull &&
-                        state.code != ErrorType.UNAUTHORIZED) {
+                    if (state.error != null) {
                       showKayleeAlertErrorYesDialog(
                         context: context,
                         error: state.error,

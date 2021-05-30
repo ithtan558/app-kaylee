@@ -17,7 +17,7 @@ mixin WidgetHelper<T extends StatefulWidget> on KayleeState<T> {
   }
 
   void showErrorDialog({ErrorType code, Error error}) {
-    if (code.isNotNull && code != ErrorType.UNAUTHORIZED) {
+    if (error != null) {
       showKayleeAlertErrorYesDialog(
           context: context, error: error, onPressed: popScreen);
     }

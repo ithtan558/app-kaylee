@@ -46,7 +46,7 @@ class _ServiceListScreenState extends KayleeState<ServiceListScreen> {
     sub = cateBloc.listen((state) {
       if (!cateBloc.loading) {
         hideLoading();
-        if (state.code.isNotNull && state.code != ErrorType.UNAUTHORIZED) {
+        if (state.error != null) {
           showKayleeAlertErrorYesDialog(
             context: context,
             error: state.error,
@@ -69,7 +69,7 @@ class _ServiceListScreenState extends KayleeState<ServiceListScreen> {
     });
 
     serviceListBlocSub = serviceListBloc.listen((state) {
-      if (state.code.isNotNull && state.code != ErrorType.UNAUTHORIZED) {
+      if (state.error != null) {
         showKayleeAlertErrorYesDialog(context: context, error: state.error);
       }
     });
@@ -116,8 +116,7 @@ class _ServiceListScreenState extends KayleeState<ServiceListScreen> {
             ),
             pageView: BlocConsumer<ServiceListBloc, LoadMoreModel<Service>>(
               listener: (context, state) {
-                if (state.code.isNotNull &&
-                    state.code != ErrorType.UNAUTHORIZED) {
+                if (state.error != null) {
                   showKayleeAlertErrorYesDialog(
                     context: context,
                     error: state.error,

@@ -36,7 +36,7 @@ class _ReservationItemState extends KayleeState<ReservationItem> {
             showLoading();
           else if (!state.loading) {
             hideLoading();
-            if (state.code.isNotNull && state.code != ErrorType.UNAUTHORIZED) {
+            if (state.error != null) {
               showKayleeAlertErrorYesDialog(
                   context: context, error: state.error, onPressed: popScreen);
             } else if (state.message.isNotNull) {

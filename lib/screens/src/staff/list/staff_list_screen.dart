@@ -36,7 +36,7 @@ class _StaffListScreenState extends KayleeState<StaffListScreen> {
     super.initState();
     staffsBloc = context.bloc<StaffListScreenBloc>();
     staffsBlocSub = staffsBloc.listen((state) {
-      if (!state.loading && state.code.isNotNull) {
+      if (!state.loading && state.error != null) {
         showKayleeAlertErrorYesDialog(
             context: context, error: state.error, onPressed: popScreen);
       }
