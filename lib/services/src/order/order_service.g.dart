@@ -55,9 +55,10 @@ class _OrderService implements OrderService {
 
   @override
   Future<ResponseModel<dynamic>> updateOrder(
-      {required orderRequest, required orderId}) async {
+      {required orderRequest, orderId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(orderRequest.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
@@ -75,11 +76,7 @@ class _OrderService implements OrderService {
 
   @override
   Future<ResponseModel<PageData<Order>>> getOrderSupplier(
-      {required page,
-      required limit,
-      required startDate,
-      required endDate,
-      isHistoryBySupplier = 1}) async {
+      {page, limit, startDate, endDate, isHistoryBySupplier = 1}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'page': page,
@@ -88,6 +85,7 @@ class _OrderService implements OrderService {
       r'end_date': endDate,
       r'is_history_by_supplier': isHistoryBySupplier
     };
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<PageData<Order>>>(
@@ -97,15 +95,16 @@ class _OrderService implements OrderService {
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<PageData<Order>>.fromJson(
       _result.data!,
-      (json) => PageData<Order>.fromJson(json),
+      (json) => PageData<Order>.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }
 
   @override
-  Future<ResponseModel<Order>> getDetail({required orderId}) async {
+  Future<ResponseModel<Order>> getDetail({orderId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<Order>>(
@@ -122,9 +121,10 @@ class _OrderService implements OrderService {
 
   @override
   Future<ResponseModel<dynamic>> updateOrderStatus(
-      {required orderId, required body}) async {
+      {orderId, required body}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(body.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
@@ -142,13 +142,14 @@ class _OrderService implements OrderService {
 
   @override
   Future<ResponseModel<PageData<Order>>> getOrderHistory(
-      {required page, required limit, isHistory = 1}) async {
+      {page, limit, isHistory = 1}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'page': page,
       r'limit': limit,
       r'is_history': isHistory
     };
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<PageData<Order>>>(
@@ -158,20 +159,21 @@ class _OrderService implements OrderService {
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<PageData<Order>>.fromJson(
       _result.data!,
-      (json) => PageData<Order>.fromJson(json),
+      (json) => PageData<Order>.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }
 
   @override
   Future<ResponseModel<PageData<Order>>> getOrderCashier(
-      {required page, required limit, orderStatusId = 4}) async {
+      {page, limit, orderStatusId = 4}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'page': page,
       r'limit': limit,
       r'order_status_id': orderStatusId
     };
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<PageData<Order>>>(
@@ -181,7 +183,7 @@ class _OrderService implements OrderService {
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<PageData<Order>>.fromJson(
       _result.data!,
-      (json) => PageData<Order>.fromJson(json),
+      (json) => PageData<Order>.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }
@@ -191,6 +193,7 @@ class _OrderService implements OrderService {
       {type = 1}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'type': type};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<List<OrderCancellationReason>>>(

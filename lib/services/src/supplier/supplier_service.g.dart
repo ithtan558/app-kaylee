@@ -32,7 +32,7 @@ class _SupplierService implements SupplierService {
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<PageData<Supplier>>.fromJson(
       _result.data!,
-      (json) => PageData<Supplier>.fromJson(json),
+      (json) => PageData<Supplier>.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }

@@ -53,7 +53,7 @@ class _BrandService implements BrandService {
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<PageData<Brand>>.fromJson(
       _result.data!,
-      (json) => PageData<Brand>.fromJson(json),
+      (json) => PageData<Brand>.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }

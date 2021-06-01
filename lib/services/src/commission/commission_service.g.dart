@@ -58,7 +58,8 @@ class _CommissionService implements CommissionService {
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<PageData<CommissionOrder>>.fromJson(
       _result.data!,
-      (json) => PageData<CommissionOrder>.fromJson(json),
+      (json) =>
+          PageData<CommissionOrder>.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }
@@ -84,7 +85,8 @@ class _CommissionService implements CommissionService {
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<PageData<CommissionOrder>>.fromJson(
       _result.data!,
-      (json) => PageData<CommissionOrder>.fromJson(json),
+      (json) =>
+          PageData<CommissionOrder>.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }

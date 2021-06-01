@@ -36,7 +36,7 @@ class _CustomerService implements CustomerService {
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<PageData<Customer>>.fromJson(
       _result.data!,
-      (json) => PageData<Customer>.fromJson(json),
+      (json) => PageData<Customer>.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }

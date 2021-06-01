@@ -36,7 +36,7 @@ class _ProductService implements ProductService {
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<PageData<Product>>.fromJson(
       _result.data!,
-      (json) => PageData<Product>.fromJson(json),
+      (json) => PageData<Product>.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }
@@ -80,7 +80,7 @@ class _ProductService implements ProductService {
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<PageData<ProdCate>>.fromJson(
       _result.data!,
-      (json) => PageData<ProdCate>.fromJson(json),
+      (json) => PageData<ProdCate>.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }

@@ -52,7 +52,7 @@ class _ServService implements ServService {
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<PageData<ServiceCate>>.fromJson(
       _result.data!,
-      (json) => PageData<ServiceCate>.fromJson(json),
+      (json) => PageData<ServiceCate>.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }
@@ -186,7 +186,7 @@ class _ServService implements ServService {
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<PageData<Service>>.fromJson(
       _result.data!,
-      (json) => PageData<Service>.fromJson(json),
+      (json) => PageData<Service>.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }

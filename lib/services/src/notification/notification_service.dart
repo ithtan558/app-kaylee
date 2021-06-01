@@ -30,5 +30,6 @@ abstract class NotificationService {
       {@Path() int? id, @Query('id') int? notificationId});
 
   @POST('notification/update-status')
-  Future<ResponseModel> updateStatus({@Body() NotificationStatusBody body});
+  Future<ResponseModel> updateStatus(
+      {@Body() required NotificationStatusBody body});
 }

@@ -36,7 +36,7 @@ class _ReservationService implements ReservationService {
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<PageData<Reservation>>.fromJson(
       _result.data!,
-      (json) => PageData<Reservation>.fromJson(json),
+      (json) => PageData<Reservation>.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }

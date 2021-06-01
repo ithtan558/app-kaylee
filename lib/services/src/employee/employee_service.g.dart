@@ -36,7 +36,7 @@ class _EmployeeService implements EmployeeService {
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<PageData<Employee>>.fromJson(
       _result.data!,
-      (json) => PageData<Employee>.fromJson(json),
+      (json) => PageData<Employee>.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }

@@ -51,7 +51,7 @@ class _NotificationService implements NotificationService {
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<PageData<Notification>>.fromJson(
       _result.data!,
-      (json) => PageData<Notification>.fromJson(json),
+      (json) => PageData<Notification>.fromJson(json as Map<String, dynamic>),
     );
     return value;
   }
