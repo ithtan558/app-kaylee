@@ -76,8 +76,7 @@ class _ResetPassNewPassScreenState extends KayleeState<ResetPassNewPassScreen> {
                   showLoading();
                 } else if (!state.loading) {
                   hideLoading();
-                  if (state.code.isNotNull &&
-                      state.code != ErrorType.UNAUTHORIZED) {
+                  if (state.error != null) {
                     if (state.error.code.isNull) {
                       showKayleeAlertErrorYesDialog(
                         context: context,

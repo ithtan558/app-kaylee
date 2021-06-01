@@ -67,8 +67,7 @@ class _NotifyDetailScreenState extends KayleeState<NotifyDetailScreen>
                 popScreen(resultBundle: Bundle(state.item));
               },
             );
-          } else if (state.code.isNotNull &&
-              state.code != ErrorType.UNAUTHORIZED) {
+          } else if (state.error != null) {
             showKayleeAlertErrorYesDialog(
               context: context,
               error: state.error,

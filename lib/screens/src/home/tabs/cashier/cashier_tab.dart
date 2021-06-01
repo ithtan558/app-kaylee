@@ -64,8 +64,7 @@ class _CashierTabState extends KayleeState<CashierTab>
           child: BlocConsumer<CashierTabBloc, LoadMoreModel<Order>>(
             listener: (context, state) {
               if (!state.loading) {
-                if (state.code.isNotNull &&
-                    state.code != ErrorType.UNAUTHORIZED) {
+                if (state.error != null) {
                   showKayleeAlertErrorYesDialog(
                     context: context,
                     error: state.error,

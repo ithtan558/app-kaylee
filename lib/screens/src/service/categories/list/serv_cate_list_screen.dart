@@ -61,8 +61,7 @@ class _ServCateListScreenState extends KayleeState<ServCateListScreen> {
                     LoadMoreModel<ServiceCate>>(
                   listener: (context, state) {
                     if (!state.loading) {
-                      if (state.code.isNotNull &&
-                          state.code != ErrorType.UNAUTHORIZED) {
+                      if (state.error != null) {
                         showKayleeAlertErrorYesDialog(
                           context: context,
                           error: state.error,

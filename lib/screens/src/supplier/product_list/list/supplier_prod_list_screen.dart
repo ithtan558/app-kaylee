@@ -64,13 +64,11 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
     cateBlocSub = cateBloc.listen((state) {
       if (!state.loading) {
         hideLoading();
-        if (state.code.isNotNull && state.code != ErrorType.UNAUTHORIZED) {
+        if (state.error != null) {
           showKayleeAlertErrorYesDialog(
             context: context,
             error: state.error,
-            onPressed: () {
-              popScreen();
-            },
+            onPressed: popScreen,
           );
         } else {
           prodsBloc.loadInitDataWithCate(
@@ -156,15 +154,9 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
           controller: prodsBloc,
           child: BlocConsumer<SupplierProdListBloc, LoadMoreModel<Product>>(
             listener: (context, state) {
-              if (!state.loading &&
-                  state.code.isNotNull &&
-                  state.code != ErrorType.UNAUTHORIZED) {
+              if (!state.loading && state.error != null) {
                 showKayleeAlertErrorYesDialog(
-                    context: context,
-                    error: state.error,
-                    onPressed: () {
-                      popScreen();
-                    });
+                    context: context, error: state.error, onPressed: popScreen);
               }
             },
             builder: (context, state) {

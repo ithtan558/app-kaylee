@@ -2,6 +2,7 @@ import 'package:anth_package/anth_package.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/components/components.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
@@ -82,7 +83,7 @@ class _PolicyView extends StatefulWidget {
   _PolicyViewState createState() => _PolicyViewState();
 }
 
-class _PolicyViewState extends BaseState<_PolicyView> {
+class _PolicyViewState extends KayleeState<_PolicyView> {
   _PolicyViewBloc get bloc => context.read<_PolicyViewBloc>();
 
   @override
@@ -134,7 +135,7 @@ class _PolicyViewState extends BaseState<_PolicyView> {
           return Container();
       },
       listener: (context, state) {
-        if (state is ErrorState) {
+        if (state is ErrorState && state.error != null) {
           showKayleeAlertDialog(
             context: context,
             view: KayleeAlertDialogView.error(

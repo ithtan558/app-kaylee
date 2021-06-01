@@ -34,32 +34,34 @@ class RegisterScreenBloc extends Cubit<SingleModel<RegisterBody>> {
               result: result));
         },
         onFailed: (code, {error}) {
-          switch (error?.code) {
-            case ErrorCode.NAME_CODE:
-              return emit(NameErrorModel.copy(state
-                ..loading = false
-                ..error = error
-                ..code = code));
-            case ErrorCode.PHONE_CODE:
-              return emit(PhoneErrorModel.copy(state
-                ..loading = false
-                ..error = error
-                ..code = code));
-            case ErrorCode.EMAIL_CODE:
-              return emit(EmailErrorModel.copy(state
-                ..loading = false
-                ..error = error
-                ..code = code));
-            case ErrorCode.PASSWORD_CODE:
-              return emit(PasswordErrorModel.copy(state
-                ..loading = false
-                ..error = error
-                ..code = code));
-            default:
-              return emit(SingleModel.copy(state
-                ..loading = false
-                ..error = error
-                ..code = code));
+          if (error != null) {
+            switch (error?.code) {
+              case ErrorCode.NAME_CODE:
+                return emit(NameErrorModel.copy(state
+                  ..loading = false
+                  ..error = error
+                  ..code = code));
+              case ErrorCode.PHONE_CODE:
+                return emit(PhoneErrorModel.copy(state
+                  ..loading = false
+                  ..error = error
+                  ..code = code));
+              case ErrorCode.EMAIL_CODE:
+                return emit(EmailErrorModel.copy(state
+                  ..loading = false
+                  ..error = error
+                  ..code = code));
+              case ErrorCode.PASSWORD_CODE:
+                return emit(PasswordErrorModel.copy(state
+                  ..loading = false
+                  ..error = error
+                  ..code = code));
+              default:
+                return emit(SingleModel.copy(state
+                  ..loading = false
+                  ..error = error
+                  ..code = code));
+            }
           }
         },
       );

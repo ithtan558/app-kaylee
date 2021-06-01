@@ -35,9 +35,7 @@ class _CustomerListScreenState extends KayleeState<CustomerListScreen> {
     super.initState();
     customersBloc = context.bloc<CustomerListScreenBloc>();
     customersBlocSub = customersBloc.listen((state) {
-      if (!state.loading &&
-          state.code.isNotNull &&
-          state.code != ErrorType.UNAUTHORIZED) {
+      if (!state.loading && state.error != null) {
         showKayleeAlertErrorYesDialog(
             context: context, error: state.error, onPressed: popScreen);
       }

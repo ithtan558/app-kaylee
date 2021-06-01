@@ -61,7 +61,7 @@ class _CommissionSettingDialogState
             showLoading();
           } else if (!(state.loading ?? false)) {
             hideLoading();
-            if (state.code.isNotNull && state.code != ErrorType.UNAUTHORIZED) {
+            if (state.error != null) {
               showKayleeAlertErrorYesDialog(
                   context: context, onPressed: popScreen, error: state.error);
             } else if (state is CommissionSettingUpdateModel) {

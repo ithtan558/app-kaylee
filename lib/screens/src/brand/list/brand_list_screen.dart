@@ -53,7 +53,7 @@ class _BrandListScreenState extends KayleeState<BrandListScreen> {
       body: BlocConsumer<BrandListBloc, LoadMoreModel<Brand>>(
         listener: (context, state) {
           if (!state.loading) {
-            if (state.code.isNotNull && state.code != ErrorType.UNAUTHORIZED) {
+            if (state.error != null) {
               showKayleeAlertErrorYesDialog(
                 context: context,
                 error: state.error,

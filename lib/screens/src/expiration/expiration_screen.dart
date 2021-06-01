@@ -49,7 +49,7 @@ class _ExpirationScreenState extends KayleeState<ExpirationScreen> {
         hideLoading();
         if (state is CheckExpirationSuccessModel) {
           context.pop();
-        } else if (state.code.isNotNull) {
+        } else if (state.error != null) {
           showKayleeAlertErrorYesDialog(
               context: context, error: state.error, onPressed: context.pop);
         }

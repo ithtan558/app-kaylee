@@ -45,7 +45,7 @@ class _EditProfileScreenState extends KayleeState<EditProfileScreen> {
         showLoading();
       } else if (!state.loading) {
         hideLoading();
-        if (state.code.isNotNull && state.code != ErrorType.UNAUTHORIZED) {
+        if (state.error != null) {
           showKayleeAlertErrorYesDialog(
               context: context, error: state.error, onPressed: popScreen);
         } else if (state is UpdateProfileModel) {

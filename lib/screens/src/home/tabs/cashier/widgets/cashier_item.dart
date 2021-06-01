@@ -13,7 +13,7 @@ import 'package:kaylee/widgets/widgets.dart';
 
 class CashierItem extends StatefulWidget {
   static Widget newInstance({Order order}) => BlocProvider(
-    key: ValueKey(order),
+        key: ValueKey(order),
         create: (context) => OrderItemBloc(
           orderService: context.network.provideOrderService(),
           order: order,
@@ -40,7 +40,7 @@ class _CashierItemState extends KayleeState<CashierItem> {
           showLoading();
         } else if (!state.loading) {
           hideLoading();
-          if (state.code.isNotNull && state.code != ErrorType.UNAUTHORIZED) {
+          if (state.error != null) {
             showKayleeAlertErrorYesDialog(
                 context: context, error: state.error, onPressed: popScreen);
           } else if (state.message.isNotNull) {

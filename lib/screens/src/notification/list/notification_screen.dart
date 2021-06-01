@@ -67,8 +67,7 @@ class _NotificationScreenState extends KayleeState<NotificationScreen> {
         BlocListener<NotificationListBloc, LoadMoreModel<models.Notification>>(
           listener: (context, state) {
             if (!state.loading) {
-              if (state.code.isNotNull &&
-                  state.code != ErrorType.UNAUTHORIZED) {
+              if (state.error != null) {
                 showKayleeAlertErrorYesDialog(
                   context: context,
                   error: state.error,
@@ -106,8 +105,7 @@ class _NotificationScreenState extends KayleeState<NotificationScreen> {
                         .reload(widget: NotificationButton);
                   },
                 );
-              } else if (state.code.isNotNull &&
-                  state.code != ErrorType.UNAUTHORIZED) {
+              } else if (state.error != null) {
                 showKayleeAlertErrorYesDialog(
                   context: context,
                   error: state.error,

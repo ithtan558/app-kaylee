@@ -104,19 +104,15 @@ class _LoginScreenState extends KayleeState<LoginScreen> {
                 listener: (context, state) async {
                   if (state is LoadingState) {
                     showLoading();
-                  } else if (state is ErrorState) {
+                  } else if (state is ErrorState && state.error != null) {
                     hideLoading();
-                    await showKayleeAlertDialog(
-                        context: context,
-                        view: KayleeAlertDialogView.error(
-                            error: state.error,
-                            actions: [
-                              KayleeAlertDialogAction.dongY(
-                                onPressed: () {
-                                  popScreen();
-                                },
-                              )
-                            ]));
+                    showKayleeAlertErrorYesDialog(
+                      context: context,
+                      error: state.error,
+                      onPressed: () {
+                        popScreen();
+                      },
+                    );
                   } else if (state is PhoneLoginScrErrorState) {
                     hideLoading();
                     _phoneFNode.requestFocus();

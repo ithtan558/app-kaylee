@@ -34,7 +34,7 @@ class _HistoryTabState extends KayleeState<HistoryTab>
   void initState() {
     super.initState();
     _sub = _bloc.listen((state) {
-      if (state.code.isNotNull && state.code != ErrorType.UNAUTHORIZED) {
+      if (state.error != null) {
         showKayleeAlertErrorYesDialog(
           context: context,
           error: state.error,

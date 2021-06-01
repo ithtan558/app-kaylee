@@ -74,7 +74,7 @@ class _ReceiverInfoScreenState extends KayleeState<ReceiverInfoScreen> {
       if (state.loading) return showLoading();
       if (!state.loading) {
         hideLoading();
-        if (state.code.isNotNull && state.code != ErrorType.UNAUTHORIZED) {
+        if (state.error != null) {
           showKayleeAlertErrorYesDialog(
               context: context, error: state.error, onPressed: popScreen);
         }

@@ -37,7 +37,7 @@ class _CommissionListScreenState extends KayleeState<CommissionListScreen> {
     super.initState();
     commissionListScreenBloc = context.bloc<CommissionListScreenBloc>();
     commissionBlocSub = commissionListScreenBloc.listen((state) {
-      if (state.code.isNotNull && state.code != ErrorType.UNAUTHORIZED) {
+      if (state.error != null) {
         showKayleeAlertErrorYesDialog(
             context: context, error: state.error, onPressed: popScreen);
       }
