@@ -33,7 +33,7 @@ class SplashScreenBloc extends BaseBloc {
     add(GoToHomeScreenSplashScrEvent());
   }
 
-  void loadUserInfo({UserService userService}) {
+  void loadUserInfo({required UserService userService}) {
     RequestHandler(
       request: userService.getProfile(),
       onSuccess: ({message, result}) {
@@ -57,19 +57,21 @@ class LoadedSharedPrefSplashScrState {}
 class LoadedUserInfoEvent {
   final UserInfo userInfo;
 
-  LoadedUserInfoEvent({this.userInfo});
+  LoadedUserInfoEvent({required this.userInfo});
 }
 
 class LoadedUserInfoState {
   final UserInfo userInfo;
 
-  LoadedUserInfoState({this.userInfo});
+  LoadedUserInfoState({required this.userInfo});
 }
 
 class ErrorLoadInfoEvent extends ErrorEvent {
-  ErrorLoadInfoEvent(ErrorType code, {Error error}) : super(code, error: error);
+  ErrorLoadInfoEvent(ErrorType code, {Error? error})
+      : super(code, error: error);
 }
 
 class ErrorLoadInfoState extends ErrorState {
-  ErrorLoadInfoState(ErrorType code, {Error error}) : super(code, error: error);
+  ErrorLoadInfoState(ErrorType code, {Error? error})
+      : super(code, error: error);
 }

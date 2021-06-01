@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:anth_package/anth_package.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/base/kaylee_state.dart';
@@ -25,30 +24,35 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends KayleeState<SplashScreen> {
   final logoRatio = 211 / 95;
-  SplashScreenBloc bloc;
-  StreamSubscription _sub;
+
+  SplashScreenBloc get bloc => context.bloc<SplashScreenBloc>()!;
+  late StreamSubscription _sub;
 
   @override
   void initState() {
     super.initState();
-    bloc = context.read<SplashScreenBloc>();
-    RemoteConfig.instance.fetchAndActivate().then((value) async {
-      value.setDefaults(context.appConfig.defaultConfig);
-      await value.setConfigSettings(RemoteConfigSettings(
-        debugMode: kDebugMode,
-      ));
-      await value.fetch(expiration: Duration(hours: 23));
-      await value.activateFetched();
-      context.appConfig.setupConfig(value.getAll());
-      context.network.dio.options.baseUrl = context.appConfig.baseUrl;
-      context.bloc<AppBloc>().packageInfo = await PackageInfo.fromPlatform();
-      bloc.config();
-    });
-    _sub = context.bloc<AppBloc>().listen((state) {
+    _sub = context.bloc<AppBloc>()!.stream.listen((state) {
       if (state is DoneSetupLoggedInState) {
-        if (ModalRoute.of(context).isCurrent) {
+        if (ModalRoute.of(context)?.isCurrent ?? false) {
           bloc.loadUserInfo(userService: context.network.provideUserService());
         }
+      }
+    });
+    _loadRemoteConfig();
+  }
+
+  void _loadRemoteConfig() async {
+    final remoteConfig = RemoteConfig.instance;
+    remoteConfig.setDefaults(context.appConfig.defaultConfig);
+    await remoteConfig.setConfigSettings(RemoteConfigSettings(
+        fetchTimeout: Duration(seconds: 1),
+        minimumFetchInterval: Duration(hours: 23)));
+    remoteConfig.fetchAndActivate().then((value) async {
+      if (value) {
+        context.appConfig.setupConfig(remoteConfig.getAll());
+        context.network.dio.options.baseUrl = context.appConfig.baseUrl;
+        context.bloc<AppBloc>()!.packageInfo = await PackageInfo.fromPlatform();
+        bloc.config();
       }
     });
   }
@@ -81,7 +85,7 @@ class _SplashScreenState extends KayleeState<SplashScreen> {
               builder: (context, state) {
                 if (state is LoadedSharedPrefSplashScrState) {
                   final user = context.user.getUserInfo();
-                  if (user?.token.isNullOrEmpty) {
+                  if (user.token?.isEmpty ?? true) {
                     return Column(
                       children: [
                         KayLeeRoundedButton.normal(
@@ -105,9 +109,9 @@ class _SplashScreenState extends KayleeState<SplashScreen> {
                 if (state is GoToHomeScreenSplashScrState) {
                   context.pushToTop(PageIntent(screen: HomeScreen));
                 } else if (state is LoadedSharedPrefSplashScrState) {
-                  final user = context.user?.getUserInfo();
-                  if (user?.token.isNotNullAndEmpty) {
-                    context.bloc<AppBloc>().loggedIn(user);
+                  final user = context.user.getUserInfo();
+                  if (user.token?.isNotEmpty ?? false) {
+                    context.bloc<AppBloc>()!.loggedIn(user);
                   }
                 } else if (state is LoadedUserInfoState) {
                   context.user.updateUserInfo(

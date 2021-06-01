@@ -166,8 +166,9 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
           context.user.removeUserInfo();
           context.cart.clear();
           context.network.dio.options..headers = {};
-          return _navigatorStateKey.currentContext
+          _navigatorStateKey.currentContext!
               .pushToTop(PageIntent(screen: SplashScreen));
+          return;
         } else if (state is LoadedTopicState) {
           Future(() {
             final oldTopics = fcm.getTopics();
@@ -215,9 +216,9 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
           textTheme: context.theme.textTheme
             ..bodyText2
                 ?.copyWith(
-                fontFamily: Fonts.HelveticaNeue,
-                fontStyle: FontStyle.normal,
-                letterSpacing: 0)
+                    fontFamily: Fonts.HelveticaNeue,
+                    fontStyle: FontStyle.normal,
+                    letterSpacing: 0)
                 .merge(TextStyles.normal16W400),
         ),
       ),
