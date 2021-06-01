@@ -48,7 +48,10 @@ class AppBloc extends Cubit {
     emit(LoggedInState(result: result));
   }
 
-  void loggedOut() => emit(LoggedOutState());
+  void loggedOut() {
+    _reset();
+    emit(LoggedOutState());
+  }
 
   void unauthorized({Error error}) {
     _unauthorizedController.add(UnauthorizedState(error: error));
@@ -104,6 +107,13 @@ class AppBloc extends Cubit {
     _expirationWarningController.close();
     _outOfDateController.close();
     return super.close();
+  }
+
+  void _reset() {
+    isShowingLoginDialog = false;
+    isShowingExpirationWarningDialog = false;
+    isShowingExpirationScreen = false;
+    isShowingOutOfDateDialog = false;
   }
 }
 
