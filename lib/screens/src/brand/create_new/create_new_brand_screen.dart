@@ -14,8 +14,8 @@ import 'package:kaylee/widgets/src/kaylee_picker_textfield.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class NewBrandScreenData {
-  final BrandScreenOpenFrom openFrom;
-  final Brand brand;
+  final BrandScreenOpenFrom? openFrom;
+  final Brand? brand;
 
   NewBrandScreenData({this.brand, this.openFrom});
 }
@@ -24,9 +24,9 @@ enum BrandScreenOpenFrom { brandItem, addNewBrandBtn }
 
 class CreateNewBrandScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<BrandDetailScreenBloc>(
-        create: (context) => BrandDetailScreenBloc(
+    create: (context) => BrandDetailScreenBloc(
             brandService: context.network.provideBrandService(),
-            brand: context.getArguments<NewBrandScreenData>().brand),
+            brand: context.getArguments<NewBrandScreenData>()?.brand),
         child: CreateNewBrandScreen._(),
       );
 
@@ -37,7 +37,7 @@ class CreateNewBrandScreen extends StatefulWidget {
 }
 
 class _CreateNewBrandScreenState extends KayleeState<CreateNewBrandScreen> {
-  BrandScreenOpenFrom openFrom;
+  BrandScreenOpenFrom? openFrom;
   final startTimeController = PickInputController<StartTime>();
   final endTimeController = PickInputController<EndTime>();
   final nameTfController = TextEditingController();
@@ -46,14 +46,14 @@ class _CreateNewBrandScreenState extends KayleeState<CreateNewBrandScreen> {
   final phoneTfController = TextEditingController();
   final phoneFocus = FocusNode();
 
-  BrandDetailScreenBloc get bloc => context.bloc<BrandDetailScreenBloc>();
-  StreamSubscription brandDetailScreenBlocSub;
+  BrandDetailScreenBloc get bloc => context.bloc<BrandDetailScreenBloc>()!;
+  late StreamSubscription brandDetailScreenBlocSub;
   final bannerPickerController = ImagePickerController();
 
   @override
   void initState() {
     super.initState();
-    brandDetailScreenBlocSub = bloc.listen((state) {
+    brandDetailScreenBlocSub = bloc.stream.listen((state) {
       if (state.loading) {
         showLoading();
       } else if (!state.loading) {
@@ -64,7 +64,7 @@ class _CreateNewBrandScreenState extends KayleeState<CreateNewBrandScreen> {
             error: state.error,
             onPressed: () {
               popScreen();
-              switch (state.error.code) {
+              switch (state.error!.code) {
                 case ErrorCode.PHONE_CODE:
                   phoneFocus.requestFocus();
                   break;
@@ -79,7 +79,7 @@ class _CreateNewBrandScreenState extends KayleeState<CreateNewBrandScreen> {
             message: state.message,
             onPressed: popScreen,
             onDismiss: () {
-              context.bloc<ReloadBloc>().reload(widget: BrandListScreen);
+              context.bloc<ReloadBloc>()!.reload(widget: BrandListScreen);
               popScreen();
             },
           );
