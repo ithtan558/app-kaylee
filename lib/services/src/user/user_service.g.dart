@@ -147,22 +147,29 @@ class _UserService implements UserService {
 
   @override
   Future<ResponseModel<dynamic>> update(
-      {required name,
-      required birthday,
-      required address,
-      required cityId,
-      required districtId,
-      required wardsId,
-      required image}) async {
+      {name, birthday, address, cityId, districtId, wardsId, image}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = FormData();
-    _data.fields.add(MapEntry('name', name));
-    _data.fields.add(MapEntry('birthday', birthday));
-    _data.fields.add(MapEntry('address', address));
-    _data.fields.add(MapEntry('city_id', cityId.toString()));
-    _data.fields.add(MapEntry('district_id', districtId.toString()));
-    _data.fields.add(MapEntry('wards_id', wardsId.toString()));
+    if (name != null) {
+      _data.fields.add(MapEntry('name', name));
+    }
+    if (birthday != null) {
+      _data.fields.add(MapEntry('birthday', birthday));
+    }
+    if (address != null) {
+      _data.fields.add(MapEntry('address', address));
+    }
+    if (cityId != null) {
+      _data.fields.add(MapEntry('city_id', cityId.toString()));
+    }
+    if (districtId != null) {
+      _data.fields.add(MapEntry('district_id', districtId.toString()));
+    }
+    if (wardsId != null) {
+      _data.fields.add(MapEntry('wards_id', wardsId.toString()));
+    }
     if (image != null) {
       _data.files.add(MapEntry(
           'image',

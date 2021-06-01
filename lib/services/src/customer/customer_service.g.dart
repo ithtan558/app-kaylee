@@ -15,13 +15,7 @@ class _CustomerService implements CustomerService {
 
   @override
   Future<ResponseModel<PageData<Customer>>> getCustomers(
-      {required page,
-      required limit,
-      required keyword,
-      required sort,
-      required typeId,
-      required cityId,
-      required districtIds}) async {
+      {page, limit, keyword, sort, typeId, cityId, districtIds}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'page': page,
@@ -32,6 +26,7 @@ class _CustomerService implements CustomerService {
       r'city_id': cityId,
       r'district_ids': districtIds
     };
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<PageData<Customer>>>(
@@ -47,9 +42,10 @@ class _CustomerService implements CustomerService {
   }
 
   @override
-  Future<ResponseModel<List<Customer>>> findCustomer({required keyword}) async {
+  Future<ResponseModel<List<Customer>>> findCustomer({keyword}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'keyword': keyword};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<List<Customer>>>(
@@ -66,9 +62,10 @@ class _CustomerService implements CustomerService {
   }
 
   @override
-  Future<ResponseModel<Customer>> getCustomer({required customerId}) async {
+  Future<ResponseModel<Customer>> getCustomer({customerId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<Customer>>(
@@ -85,34 +82,53 @@ class _CustomerService implements CustomerService {
 
   @override
   Future<ResponseModel<Customer>> newCustomer(
-      {required name,
-      required birthday,
-      required hometownCityId,
-      required address,
-      required cityId,
-      required districtId,
-      required wardsId,
-      required phone,
-      required image,
-      required email}) async {
+      {name,
+      birthday,
+      hometownCityId,
+      address,
+      cityId,
+      districtId,
+      wardsId,
+      phone,
+      image,
+      email}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = FormData();
-    _data.fields.add(MapEntry('name', name));
-    _data.fields.add(MapEntry('birthday', birthday));
-    _data.fields.add(MapEntry('hometown_city_id', hometownCityId.toString()));
-    _data.fields.add(MapEntry('address', address));
-    _data.fields.add(MapEntry('city_id', cityId.toString()));
-    _data.fields.add(MapEntry('district_id', districtId.toString()));
-    _data.fields.add(MapEntry('wards_id', wardsId.toString()));
-    _data.fields.add(MapEntry('phone', phone));
+    if (name != null) {
+      _data.fields.add(MapEntry('name', name));
+    }
+    if (birthday != null) {
+      _data.fields.add(MapEntry('birthday', birthday));
+    }
+    if (hometownCityId != null) {
+      _data.fields.add(MapEntry('hometown_city_id', hometownCityId.toString()));
+    }
+    if (address != null) {
+      _data.fields.add(MapEntry('address', address));
+    }
+    if (cityId != null) {
+      _data.fields.add(MapEntry('city_id', cityId.toString()));
+    }
+    if (districtId != null) {
+      _data.fields.add(MapEntry('district_id', districtId.toString()));
+    }
+    if (wardsId != null) {
+      _data.fields.add(MapEntry('wards_id', wardsId.toString()));
+    }
+    if (phone != null) {
+      _data.fields.add(MapEntry('phone', phone));
+    }
     if (image != null) {
       _data.files.add(MapEntry(
           'image',
           MultipartFile.fromFileSync(image.path,
               filename: image.path.split(Platform.pathSeparator).last)));
     }
-    _data.fields.add(MapEntry('email', email));
+    if (email != null) {
+      _data.fields.add(MapEntry('email', email));
+    }
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<Customer>>(
             Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
@@ -128,37 +144,58 @@ class _CustomerService implements CustomerService {
 
   @override
   Future<ResponseModel<Customer>> updateCustomer(
-      {required name,
-      required birthday,
-      required hometownCityId,
-      required address,
-      required cityId,
-      required districtId,
-      required wardsId,
-      required phone,
-      required image,
-      required email,
-      required id,
-      required customerId}) async {
+      {name,
+      birthday,
+      hometownCityId,
+      address,
+      cityId,
+      districtId,
+      wardsId,
+      phone,
+      image,
+      email,
+      id,
+      customerId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = FormData();
-    _data.fields.add(MapEntry('name', name));
-    _data.fields.add(MapEntry('birthday', birthday));
-    _data.fields.add(MapEntry('hometown_city_id', hometownCityId.toString()));
-    _data.fields.add(MapEntry('address', address));
-    _data.fields.add(MapEntry('city_id', cityId.toString()));
-    _data.fields.add(MapEntry('district_id', districtId.toString()));
-    _data.fields.add(MapEntry('wards_id', wardsId.toString()));
-    _data.fields.add(MapEntry('phone', phone));
+    if (name != null) {
+      _data.fields.add(MapEntry('name', name));
+    }
+    if (birthday != null) {
+      _data.fields.add(MapEntry('birthday', birthday));
+    }
+    if (hometownCityId != null) {
+      _data.fields.add(MapEntry('hometown_city_id', hometownCityId.toString()));
+    }
+    if (address != null) {
+      _data.fields.add(MapEntry('address', address));
+    }
+    if (cityId != null) {
+      _data.fields.add(MapEntry('city_id', cityId.toString()));
+    }
+    if (districtId != null) {
+      _data.fields.add(MapEntry('district_id', districtId.toString()));
+    }
+    if (wardsId != null) {
+      _data.fields.add(MapEntry('wards_id', wardsId.toString()));
+    }
+    if (phone != null) {
+      _data.fields.add(MapEntry('phone', phone));
+    }
     if (image != null) {
       _data.files.add(MapEntry(
           'image',
           MultipartFile.fromFileSync(image.path,
               filename: image.path.split(Platform.pathSeparator).last)));
     }
-    _data.fields.add(MapEntry('email', email));
-    _data.fields.add(MapEntry('id', id.toString()));
+    if (email != null) {
+      _data.fields.add(MapEntry('email', email));
+    }
+    if (id != null) {
+      _data.fields.add(MapEntry('id', id.toString()));
+    }
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<Customer>>(
             Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
@@ -173,9 +210,10 @@ class _CustomerService implements CustomerService {
   }
 
   @override
-  Future<ResponseModel<dynamic>> deleteCustomer({required customerId}) async {
+  Future<ResponseModel<dynamic>> deleteCustomer({customerId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<dynamic>>(Options(

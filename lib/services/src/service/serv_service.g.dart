@@ -35,13 +35,14 @@ class _ServService implements ServService {
 
   @override
   Future<ResponseModel<PageData<ServiceCate>>> getCategoryList(
-      {required page, required limit, required sort}) async {
+      {page, limit, sort}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'page': page,
       r'limit': limit,
       r'sort': sort
     };
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<PageData<ServiceCate>>>(
@@ -57,10 +58,10 @@ class _ServService implements ServService {
   }
 
   @override
-  Future<ResponseModel<ServiceCate>> getServiceCateDetail(
-      {required cateId}) async {
+  Future<ResponseModel<ServiceCate>> getServiceCateDetail({cateId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<ServiceCate>>(
@@ -76,14 +77,20 @@ class _ServService implements ServService {
   }
 
   @override
-  Future<ResponseModel<dynamic>> newServiceCate(
-      {required name, required code, required sequence}) async {
+  Future<ResponseModel<dynamic>> newServiceCate({name, code, sequence}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = FormData();
-    _data.fields.add(MapEntry('name', name));
-    _data.fields.add(MapEntry('code', code));
-    _data.fields.add(MapEntry('sequence', sequence.toString()));
+    if (name != null) {
+      _data.fields.add(MapEntry('name', name));
+    }
+    if (code != null) {
+      _data.fields.add(MapEntry('code', code));
+    }
+    if (sequence != null) {
+      _data.fields.add(MapEntry('sequence', sequence.toString()));
+    }
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<dynamic>>(
             Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
@@ -99,18 +106,23 @@ class _ServService implements ServService {
 
   @override
   Future<ResponseModel<dynamic>> updateServiceCate(
-      {required name,
-      required code,
-      required sequence,
-      required id,
-      required cateId}) async {
+      {name, code, sequence, id, cateId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = FormData();
-    _data.fields.add(MapEntry('name', name));
-    _data.fields.add(MapEntry('code', code));
-    _data.fields.add(MapEntry('sequence', sequence.toString()));
-    _data.fields.add(MapEntry('id', id.toString()));
+    if (name != null) {
+      _data.fields.add(MapEntry('name', name));
+    }
+    if (code != null) {
+      _data.fields.add(MapEntry('code', code));
+    }
+    if (sequence != null) {
+      _data.fields.add(MapEntry('sequence', sequence.toString()));
+    }
+    if (id != null) {
+      _data.fields.add(MapEntry('id', id.toString()));
+    }
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<dynamic>>(
             Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
@@ -125,9 +137,10 @@ class _ServService implements ServService {
   }
 
   @override
-  Future<ResponseModel<dynamic>> deleteServiceCate({required cateId}) async {
+  Future<ResponseModel<dynamic>> deleteServiceCate({cateId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<dynamic>>(Options(
@@ -144,14 +157,14 @@ class _ServService implements ServService {
 
   @override
   Future<ResponseModel<PageData<Service>>> getServices(
-      {required keyword,
-      required page,
-      required limit,
-      required sort,
-      required categoryId,
-      required brandIds,
-      required startPrice,
-      required endPrice}) async {
+      {keyword,
+      page,
+      limit,
+      sort,
+      categoryId,
+      brandIds,
+      startPrice,
+      endPrice}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'keyword': keyword,
@@ -163,6 +176,7 @@ class _ServService implements ServService {
       r'start_price': startPrice,
       r'end_price': endPrice
     };
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<PageData<Service>>>(
@@ -179,30 +193,45 @@ class _ServService implements ServService {
 
   @override
   Future<ResponseModel<dynamic>> newService(
-      {required name,
-      required description,
-      required brandIds,
-      required time,
-      required price,
-      required image,
-      required categoryId,
-      required code}) async {
+      {name,
+      description,
+      brandIds,
+      time,
+      price,
+      image,
+      categoryId,
+      code}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = FormData();
-    _data.fields.add(MapEntry('name', name));
-    _data.fields.add(MapEntry('description', description));
-    _data.fields.add(MapEntry('brand_ids', brandIds));
-    _data.fields.add(MapEntry('time', time.toString()));
-    _data.fields.add(MapEntry('price', price.toString()));
+    if (name != null) {
+      _data.fields.add(MapEntry('name', name));
+    }
+    if (description != null) {
+      _data.fields.add(MapEntry('description', description));
+    }
+    if (brandIds != null) {
+      _data.fields.add(MapEntry('brand_ids', brandIds));
+    }
+    if (time != null) {
+      _data.fields.add(MapEntry('time', time.toString()));
+    }
+    if (price != null) {
+      _data.fields.add(MapEntry('price', price.toString()));
+    }
     if (image != null) {
       _data.files.add(MapEntry(
           'image',
           MultipartFile.fromFileSync(image.path,
               filename: image.path.split(Platform.pathSeparator).last)));
     }
-    _data.fields.add(MapEntry('category_id', categoryId.toString()));
-    _data.fields.add(MapEntry('code', code));
+    if (categoryId != null) {
+      _data.fields.add(MapEntry('category_id', categoryId.toString()));
+    }
+    if (code != null) {
+      _data.fields.add(MapEntry('code', code));
+    }
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<dynamic>>(
             Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
@@ -218,33 +247,50 @@ class _ServService implements ServService {
 
   @override
   Future<ResponseModel<dynamic>> updateService(
-      {required name,
-      required description,
-      required brandIds,
-      required time,
-      required price,
-      required image,
-      required categoryId,
-      required code,
-      required id,
-      required serviceId}) async {
+      {name,
+      description,
+      brandIds,
+      time,
+      price,
+      image,
+      categoryId,
+      code,
+      id,
+      serviceId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = FormData();
-    _data.fields.add(MapEntry('name', name));
-    _data.fields.add(MapEntry('description', description));
-    _data.fields.add(MapEntry('brand_ids', brandIds));
-    _data.fields.add(MapEntry('time', time.toString()));
-    _data.fields.add(MapEntry('price', price.toString()));
+    if (name != null) {
+      _data.fields.add(MapEntry('name', name));
+    }
+    if (description != null) {
+      _data.fields.add(MapEntry('description', description));
+    }
+    if (brandIds != null) {
+      _data.fields.add(MapEntry('brand_ids', brandIds));
+    }
+    if (time != null) {
+      _data.fields.add(MapEntry('time', time.toString()));
+    }
+    if (price != null) {
+      _data.fields.add(MapEntry('price', price.toString()));
+    }
     if (image != null) {
       _data.files.add(MapEntry(
           'image',
           MultipartFile.fromFileSync(image.path,
               filename: image.path.split(Platform.pathSeparator).last)));
     }
-    _data.fields.add(MapEntry('category_id', categoryId.toString()));
-    _data.fields.add(MapEntry('code', code));
-    _data.fields.add(MapEntry('id', id.toString()));
+    if (categoryId != null) {
+      _data.fields.add(MapEntry('category_id', categoryId.toString()));
+    }
+    if (code != null) {
+      _data.fields.add(MapEntry('code', code));
+    }
+    if (id != null) {
+      _data.fields.add(MapEntry('id', id.toString()));
+    }
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<dynamic>>(
             Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
@@ -259,9 +305,10 @@ class _ServService implements ServService {
   }
 
   @override
-  Future<ResponseModel<Service>> getService({required serviceId}) async {
+  Future<ResponseModel<Service>> getService({serviceId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<Service>>(
@@ -277,9 +324,10 @@ class _ServService implements ServService {
   }
 
   @override
-  Future<ResponseModel<Service>> deleteService({required serviceId}) async {
+  Future<ResponseModel<Service>> deleteService({serviceId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<Service>>(Options(
