@@ -7,7 +7,7 @@ class BrandDetailScreenBloc extends Cubit<SingleModel<Brand>>
     implements CRUDInterface {
   final BrandService brandService;
 
-  BrandDetailScreenBloc({this.brandService, Brand brand})
+  BrandDetailScreenBloc({required this.brandService, Brand? brand})
       : super(SingleModel(item: brand));
 
   @override
@@ -111,34 +111,34 @@ class BrandDetailScreenBloc extends Cubit<SingleModel<Brand>>
 class UpdateBrandModel extends SingleModel<Brand> {
   UpdateBrandModel.copy(SingleModel old) {
     this
-      ..item = old?.item
-      ..loading = old?.loading
-      ..message = old?.message;
+      ..item = old.item
+      ..loading = old.loading
+      ..message = old.message;
   }
 }
 
 class DeleteBrandModel extends SingleModel<Brand> {
   DeleteBrandModel.copy(SingleModel old) {
     this
-      ..item = old?.item
-      ..loading = old?.loading
-      ..message = old?.message;
+      ..item = old.item
+      ..loading = old.loading
+      ..message = old.message;
   }
 }
 
 class NewBrandModel extends SingleModel<Brand> {
   NewBrandModel.copy(SingleModel old) {
     this
-      ..item = old?.item
-      ..loading = old?.loading
-      ..message = old?.message;
+      ..item = old.item
+      ..loading = old.loading
+      ..message = old.message;
   }
 }
 
 class DetailBrandModel extends SingleModel<Brand> {
   DetailBrandModel.copy(SingleModel old) {
     this
-      ..item = old?.item
-      ..loading = old?.loading;
+      ..item = old.item
+      ..loading = old.loading;
   }
 }
