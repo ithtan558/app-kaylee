@@ -42,12 +42,10 @@ class ExpirationScreenBloc extends Cubit<SingleModel<Content>> {
           ..code = null));
       },
       onFailed: (code, {error}) {
-        if (error.code == ErrorCode.EXPIRATION_CODE) {
-          emit(SingleModel.copy(state
-            ..loading = false
-            ..error = error
-            ..code = ErrorType.FAILED));
-        }
+        emit(SingleModel.copy(state
+          ..loading = false
+          ..error = error
+          ..code = ErrorType.FAILED));
       },
     );
   }

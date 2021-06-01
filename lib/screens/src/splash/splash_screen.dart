@@ -113,8 +113,7 @@ class _SplashScreenState extends KayleeState<SplashScreen> {
                   context.user.updateUserInfo(
                       context.user.getUserInfo()..userInfo = state.userInfo);
                   bloc.pushToHomeScreen();
-                } else if (state is ErrorLoadInfoState &&
-                    state.error.code != null) {
+                } else if (state is ErrorLoadInfoState && state.error != null) {
                   showKayleeAlertErrorYesDialog(
                     context: context,
                     error: state.error,

@@ -15,6 +15,7 @@ import 'package:kaylee/base/reload_bloc.dart';
 import 'package:kaylee/components/components.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/home/tabs/account/widgets/profile_widget.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/notification_button/bloc.dart';
 import 'package:kaylee/utils/utils.dart';
@@ -77,6 +78,7 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
   AppBloc get _appBloc => context.read<AppBloc>();
 
   FcmModule get fcm => context.fcm;
+  final _navigatorStateKey = GlobalKey<NavigatorState>();
 
   @override
   void initState() {
@@ -164,6 +166,8 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
           context.user.removeUserInfo();
           context.cart.clear();
           context.network.dio.options..headers = {};
+          return _navigatorStateKey.currentContext
+              .pushToTop(PageIntent(screen: SplashScreen));
         } else if (state is LoadedTopicState) {
           Future(() {
             final oldTopics = fcm.getTopics();
@@ -181,6 +185,7 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
         }
       },
       child: MaterialApp(
+        navigatorKey: _navigatorStateKey,
         title: Strings.appName,
         onGenerateRoute: onGenerateRoute,
         builder: (context, child) => MediaQuery(
@@ -210,9 +215,9 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
           textTheme: context.theme.textTheme
             ..bodyText2
                 ?.copyWith(
-                    fontFamily: Fonts.HelveticaNeue,
-                    fontStyle: FontStyle.normal,
-                    letterSpacing: 0)
+                fontFamily: Fonts.HelveticaNeue,
+                fontStyle: FontStyle.normal,
+                letterSpacing: 0)
                 .merge(TextStyles.normal16W400),
         ),
       ),
