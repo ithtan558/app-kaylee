@@ -355,6 +355,7 @@ class Strings {
   static const khongBatBuoc = 'Không bắt buộc';
   static const giaHanSuDung = 'Gia hạn sử dụng';
   static const giaHanUngDung = 'Gia hạn ứng dụng';
+  static const tenUngDung = 'Tên ứng dụng';
 
   Strings._();
 }
