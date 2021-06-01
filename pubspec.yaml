@@ -54,7 +54,7 @@ dev_dependencies:
   #tạm thời dùng master
   retrofit_generator:
     git:
-      url: https://github.com/trevorwang/retrofit.dart
+      url: https://github.com/ipcjs/retrofit.dart
       ref: master
       path: generator
 
