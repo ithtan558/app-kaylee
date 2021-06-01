@@ -15,8 +15,8 @@ class AboutScreen extends StatefulWidget {
 }
 
 class _AboutScreenState extends BaseState<AboutScreen> {
-  String appName;
-  String versionName;
+  late String appName;
+  late String versionName;
 
   @override
   void initState() {
@@ -50,11 +50,11 @@ class _AboutScreenState extends BaseState<AboutScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 KayleeText.normal16W500(
-                  'Tên ứng dụng',
+                  Strings.tenUngDung,
                   textAlign: TextAlign.start,
                 ),
                 KayleeText.normal16W400(
-                  appName ?? '',
+                  appName,
                   textAlign: TextAlign.end,
                 )
               ],
@@ -66,11 +66,11 @@ class _AboutScreenState extends BaseState<AboutScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 KayleeText.normal16W500(
-                  'Software Version',
+                  Strings.softwareVersion,
                   textAlign: TextAlign.start,
                 ),
                 KayleeText.normal16W400(
-                  versionName ?? '',
+                  versionName,
                   textAlign: TextAlign.end,
                 )
               ],
