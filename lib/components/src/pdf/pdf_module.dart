@@ -270,7 +270,7 @@ class PdfModule {
     Widget _getProductCell(String text, {TextAlign? textAlign}) {
       return _wrapPaddingAll(
         child: Text(
-          text ?? '',
+          text,
           textAlign: textAlign,
         ),
         ratio: ratio,
