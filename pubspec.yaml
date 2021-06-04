@@ -19,14 +19,12 @@ dependencies:
 
   permission_handler: ^8.0.1
   image_picker: ^0.8.0+1
-  flutter_masked_text: ^0.8.0
+  extended_masked_text: ^2.2.1
   #  esc_pos_printer: ^4.0.3
   esc_pos_printer:
     git:
       url: https://github.com/CastawayLabs/esc_pos_printer.git
       ref: master
-  ping_discover_network: ^0.2.0+1
-  wifi: ^0.1.5
   video_player: ^2.1.5
   chewie: ^1.2.0
   printing: ^5.2.1
