@@ -34,10 +34,9 @@ void _animateColumnControllerToItem(
 
 class _DatePickerLayoutDelegate extends MultiChildLayoutDelegate {
   _DatePickerLayoutDelegate({
-    @required this.columnWidths,
-    @required this.textDirectionFactor,
-  })  : assert(columnWidths != null),
-        assert(textDirectionFactor != null);
+    required this.columnWidths,
+    required this.textDirectionFactor,
+  });
 
   // The list containing widths of all columns.
   final List<double> columnWidths;
@@ -133,10 +132,10 @@ class KayleeDatePicker extends StatefulWidget {
   ///
   /// [use24hFormat] decides whether 24 hour format is used. Defaults to false.
   KayleeDatePicker({
-    Key key,
+    Key? key,
     this.mode = KayleeDatePickerMode.dateMonthYear,
-    @required this.onDateTimeChanged,
-    DateTime initialDateTime,
+    required this.onDateTimeChanged,
+    DateTime? initialDateTime,
     this.minimumDate,
     this.maximumDate,
     this.minimumYear = 1,
@@ -145,15 +144,11 @@ class KayleeDatePicker extends StatefulWidget {
     this.use24hFormat = false,
     this.backgroundColor,
   })  : initialDateTime = initialDateTime ?? DateTime.now(),
-        assert(mode != null),
-        assert(onDateTimeChanged != null),
-        assert(minimumYear != null),
         assert(
           minuteInterval > 0 && 60 % minuteInterval == 0,
           'minute interval is not a positive integer factor of 60',
         ),
         super(key: key) {
-    assert(this.initialDateTime != null);
     assert(
       this.initialDateTime.minute % minuteInterval == 0,
       'initial minute is not divisible by minute interval',
@@ -175,11 +170,11 @@ class KayleeDatePicker extends StatefulWidget {
 
   /// Minimum date that the picker can be scrolled to in [CupertinoDatePickerMode.date]
   /// and [CupertinoDatePickerMode.dateAndTime] mode. Null if there's no limit.
-  final DateTime minimumDate;
+  final DateTime? minimumDate;
 
   /// Maximum date that the picker can be scrolled to in [CupertinoDatePickerMode.date]
   /// and [CupertinoDatePickerMode.dateAndTime] mode. Null if there's no limit.
-  final DateTime maximumDate;
+  final DateTime? maximumDate;
 
   /// Minimum year that the picker can be scrolled to in
   /// [CupertinoDatePickerMode.date] mode. Defaults to 1 and must not be null.
@@ -187,7 +182,7 @@ class KayleeDatePicker extends StatefulWidget {
 
   /// Maximum year that the picker can be scrolled to in
   /// [CupertinoDatePickerMode.date] mode. Null if there's no limit.
-  final int maximumYear;
+  final int? maximumYear;
 
   /// The granularity of the minutes spinner, if it is shown in the current mode.
   /// Must be an integer factor of 60.
@@ -206,7 +201,7 @@ class KayleeDatePicker extends StatefulWidget {
   /// Background color of date picker.
   ///
   /// Defaults to null, which disables background painting entirely.
-  final Color backgroundColor;
+  final Color? backgroundColor;
 
   @override
   State<StatefulWidget> createState() {
@@ -266,24 +261,24 @@ typedef _ColumnBuilder = Widget Function(
     double offAxisFraction, TransitionBuilder itemPositioningBuilder);
 
 class _KayleeDatePickerDateMonthYearState extends State<KayleeDatePicker> {
-  int textDirectionFactor;
+  late int textDirectionFactor;
 
   // Alignment based on text direction. The variable name is self descriptive,
   // however, when text direction is rtl, alignment is reversed.
-  Alignment alignCenterLeft;
-  Alignment alignCenterRight;
+  late Alignment alignCenterLeft;
+  late Alignment alignCenterRight;
 
   // The currently selected values of the picker.
-  int selectedDay;
-  int selectedMonth;
-  int selectedYear;
+  late int selectedDay;
+  late int selectedMonth;
+  late int selectedYear;
 
   // The controller of the day picker. There are cases where the selected value
   // of the picker is invalid (e.g. February 30th 2018), and this dayController
   // is responsible for jumping to a valid value.
-  FixedExtentScrollController dayController;
-  FixedExtentScrollController monthController;
-  FixedExtentScrollController yearController;
+  late FixedExtentScrollController dayController;
+  late FixedExtentScrollController monthController;
+  late FixedExtentScrollController yearController;
 
   bool isDayPickerScrolling = false;
   bool isMonthPickerScrolling = false;
@@ -307,7 +302,8 @@ class _KayleeDatePickerDateMonthYearState extends State<KayleeDatePicker> {
         FixedExtentScrollController(initialItem: selectedMonth - 1);
     yearController = FixedExtentScrollController(initialItem: selectedYear);
 
-    PaintingBinding.instance.systemFonts.addListener(_handleSystemFontsChange);
+    (PaintingBinding.instance?.systemFonts)
+        ?.addListener(_handleSystemFontsChange);
   }
 
   void _handleSystemFontsChange() {
@@ -323,8 +319,8 @@ class _KayleeDatePickerDateMonthYearState extends State<KayleeDatePicker> {
     monthController.dispose();
     yearController.dispose();
 
-    PaintingBinding.instance.systemFonts
-        .removeListener(_handleSystemFontsChange);
+    (PaintingBinding.instance?.systemFonts)
+        ?.removeListener(_handleSystemFontsChange);
     super.dispose();
   }
 
@@ -432,9 +428,9 @@ class _KayleeDatePickerDateMonthYearState extends State<KayleeDatePicker> {
           final int month = index + 1;
           final bool isInvalidMonth =
               (widget.minimumDate?.year == selectedYear &&
-                      widget.minimumDate.month > month) ||
+                      widget.minimumDate!.month > month) ||
                   (widget.maximumDate?.year == selectedYear &&
-                      widget.maximumDate.month < month);
+                      widget.maximumDate!.month < month);
 
           return itemPositioningBuilder(
             context,
@@ -478,12 +474,12 @@ class _KayleeDatePickerDateMonthYearState extends State<KayleeDatePicker> {
         itemBuilder: (BuildContext context, int year) {
           if (year < widget.minimumYear) return null;
 
-          if (widget.maximumYear != null && year > widget.maximumYear)
+          if (widget.maximumYear != null && year > widget.maximumYear!)
             return null;
 
           final bool isValidYear = (widget.minimumDate == null ||
-                  widget.minimumDate.year <= year) &&
-              (widget.maximumDate == null || widget.maximumDate.year >= year);
+                  widget.minimumDate!.year <= year) &&
+              (widget.maximumDate == null || widget.maximumDate!.year >= year);
 
           return itemPositioningBuilder(
             context,
@@ -534,7 +530,7 @@ class _KayleeDatePickerDateMonthYearState extends State<KayleeDatePicker> {
     if (!minCheck || maxCheck) {
       // We have minCheck === !maxCheck.
       final DateTime targetDate =
-          minCheck ? widget.maximumDate : widget.minimumDate;
+          (minCheck ? widget.maximumDate : widget.minimumDate)!;
       _scrollToDate(targetDate);
       return;
     }
@@ -548,8 +544,7 @@ class _KayleeDatePickerDateMonthYearState extends State<KayleeDatePicker> {
   }
 
   void _scrollToDate(DateTime newDate) {
-    assert(newDate != null);
-    SchedulerBinding.instance.addPostFrameCallback((Duration timestamp) {
+    SchedulerBinding.instance?.addPostFrameCallback((Duration timestamp) {
       if (selectedYear != newDate.year) {
         _animateColumnControllerToItem(yearController, newDate.year);
       }
@@ -573,9 +568,9 @@ class _KayleeDatePickerDateMonthYearState extends State<KayleeDatePicker> {
     ];
 
     List<double> columnWidths = <double>[
-      estimatedColumnWidths[_PickerColumnType.dayOfMonth.index],
-      estimatedColumnWidths[_PickerColumnType.month.index],
-      estimatedColumnWidths[_PickerColumnType.year.index]
+      estimatedColumnWidths[_PickerColumnType.dayOfMonth.index]!,
+      estimatedColumnWidths[_PickerColumnType.month.index]!,
+      estimatedColumnWidths[_PickerColumnType.year.index]!
     ];
 
     final List<Widget> pickers = <Widget>[];
@@ -591,7 +586,7 @@ class _KayleeDatePickerDateMonthYearState extends State<KayleeDatePicker> {
         id: i,
         child: pickerBuilders[i](
           offAxisFraction,
-          (BuildContext context, Widget child) {
+              (BuildContext context, Widget? child) {
             return Container(
               alignment: i == columnWidths.length - 1
                   ? alignCenterLeft
@@ -625,22 +620,22 @@ class _KayleeDatePickerDateMonthYearState extends State<KayleeDatePicker> {
 }
 
 class _KayleeDatePickerMonthYearState extends State<KayleeDatePicker> {
-  int textDirectionFactor;
+  late int textDirectionFactor;
 
   // Alignment based on text direction. The variable name is self descriptive,
   // however, when text direction is rtl, alignment is reversed.
-  Alignment alignCenterLeft;
-  Alignment alignCenterRight;
+  late Alignment alignCenterLeft;
+  late Alignment alignCenterRight;
 
   // The currently selected values of the picker.
-  int selectedMonth;
-  int selectedYear;
+  late int selectedMonth;
+  late int selectedYear;
 
   // The controller of the day picker. There are cases where the selected value
   // of the picker is invalid (e.g. February 30th 2018), and this dayController
   // is responsible for jumping to a valid value.
-  FixedExtentScrollController monthController;
-  FixedExtentScrollController yearController;
+  late FixedExtentScrollController monthController;
+  late FixedExtentScrollController yearController;
 
   bool isDayPickerScrolling = false;
   bool isMonthPickerScrolling = false;
@@ -662,7 +657,8 @@ class _KayleeDatePickerMonthYearState extends State<KayleeDatePicker> {
         FixedExtentScrollController(initialItem: selectedMonth - 1);
     yearController = FixedExtentScrollController(initialItem: selectedYear);
 
-    PaintingBinding.instance.systemFonts.addListener(_handleSystemFontsChange);
+    (PaintingBinding.instance?.systemFonts)
+        ?.addListener(_handleSystemFontsChange);
   }
 
   void _handleSystemFontsChange() {
@@ -677,8 +673,8 @@ class _KayleeDatePickerMonthYearState extends State<KayleeDatePicker> {
     monthController.dispose();
     yearController.dispose();
 
-    PaintingBinding.instance.systemFonts
-        .removeListener(_handleSystemFontsChange);
+    (PaintingBinding.instance?.systemFonts)
+        ?.removeListener(_handleSystemFontsChange);
     super.dispose();
   }
 
@@ -737,9 +733,9 @@ class _KayleeDatePickerMonthYearState extends State<KayleeDatePicker> {
           final int month = index + 1;
           final bool isInvalidMonth =
               (widget.minimumDate?.year == selectedYear &&
-                      widget.minimumDate.month > month) ||
+                      widget.minimumDate!.month > month) ||
                   (widget.maximumDate?.year == selectedYear &&
-                      widget.maximumDate.month < month);
+                      widget.maximumDate!.month < month);
 
           return itemPositioningBuilder(
             context,
@@ -782,12 +778,12 @@ class _KayleeDatePickerMonthYearState extends State<KayleeDatePicker> {
         itemBuilder: (BuildContext context, int year) {
           if (year < widget.minimumYear) return null;
 
-          if (widget.maximumYear != null && year > widget.maximumYear)
+          if (widget.maximumYear != null && year > widget.maximumYear!)
             return null;
 
           final bool isValidYear = (widget.minimumDate == null ||
-                  widget.minimumDate.year <= year) &&
-              (widget.maximumDate == null || widget.maximumDate.year >= year);
+                  widget.minimumDate!.year <= year) &&
+              (widget.maximumDate == null || widget.maximumDate!.year >= year);
 
           return itemPositioningBuilder(
             context,
@@ -823,7 +819,7 @@ class _KayleeDatePickerMonthYearState extends State<KayleeDatePicker> {
     if (!minCheck || maxCheck) {
       // We have minCheck === !maxCheck.
       final DateTime targetDate =
-          minCheck ? widget.maximumDate : widget.minimumDate;
+          (minCheck ? widget.maximumDate : widget.minimumDate)!;
       _scrollToDate(targetDate);
       return;
     }
@@ -837,8 +833,7 @@ class _KayleeDatePickerMonthYearState extends State<KayleeDatePicker> {
   }
 
   void _scrollToDate(DateTime newDate) {
-    assert(newDate != null);
-    SchedulerBinding.instance.addPostFrameCallback((Duration timestamp) {
+    SchedulerBinding.instance?.addPostFrameCallback((Duration timestamp) {
       if (selectedYear != newDate.year) {
         _animateColumnControllerToItem(yearController, newDate.year);
       }
@@ -853,8 +848,8 @@ class _KayleeDatePickerMonthYearState extends State<KayleeDatePicker> {
   Widget build(BuildContext context) {
     List<_ColumnBuilder> pickerBuilders = <_ColumnBuilder>[];
     List<double> columnWidths = <double>[
-      estimatedColumnWidths[_PickerColumnType.month.index],
-      estimatedColumnWidths[_PickerColumnType.year.index]
+      estimatedColumnWidths[_PickerColumnType.month.index]!,
+      estimatedColumnWidths[_PickerColumnType.year.index]!
     ];
     pickerBuilders = <_ColumnBuilder>[_buildMonthPicker, _buildYearPicker];
 
@@ -871,7 +866,7 @@ class _KayleeDatePickerMonthYearState extends State<KayleeDatePicker> {
         id: i,
         child: pickerBuilders[i](
           offAxisFraction,
-          (BuildContext context, Widget child) {
+              (BuildContext context, Widget? child) {
             return Container(
               alignment: i == columnWidths.length - 1
                   ? alignCenterLeft
