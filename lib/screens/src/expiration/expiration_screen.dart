@@ -75,10 +75,11 @@ class _ExpirationScreenState extends KayleeState<ExpirationScreen> {
           title: Strings.giaHanSuDung,
           automaticallyImplyLeading: !argument.isExpired,
           actions: [
-            KayleeAppBarAction.hyperText(
-              title: Strings.dangXuat,
-              onTap: context.bloc<AppBloc>().loggedOut,
-            )
+            if (argument.isExpired)
+              KayleeAppBarAction.hyperText(
+                title: Strings.dangXuat,
+                onTap: context.bloc<AppBloc>().loggedOut,
+              )
           ],
         ),
         padding: const EdgeInsets.all(Dimens.px16),

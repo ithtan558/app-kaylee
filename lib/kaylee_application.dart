@@ -216,9 +216,9 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
           textTheme: context.theme.textTheme
             ..bodyText2
                 ?.copyWith(
-                    fontFamily: Fonts.HelveticaNeue,
-                    fontStyle: FontStyle.normal,
-                    letterSpacing: 0)
+                fontFamily: Fonts.HelveticaNeue,
+                fontStyle: FontStyle.normal,
+                letterSpacing: 0)
                 .merge(TextStyles.normal16W400),
         ),
       ),
