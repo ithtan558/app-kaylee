@@ -171,7 +171,7 @@ class _CreateNewReservationScreenState
                         phone: phoneTfController.text,
                         quantity: guessQuantityController.quantity,
                         note: noteTfController.text,
-                        datetime: dateController.value.combineWithTime(
+                        datetime: dateController.value?.combineWithTime(
                             time: timeController.value?.datetime),
                         brand: brandController.value);
                     _bloc.create();
