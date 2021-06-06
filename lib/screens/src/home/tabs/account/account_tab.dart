@@ -77,18 +77,19 @@ class _AccountTabState extends BaseState<AccountTab> {
                 icon: Images.ic_acc_logout,
                 showBtmDivider: false,
                 showEndingIcon: false,
-                onClick: context.bloc<AppBloc>().loggedOut),
+                onClick: context.bloc<AppBloc>()!.loggedOut),
           ],
         ),
       ),
     );
   }
 
-  _buildMenuItem({String title,
-    String icon,
-    bool showEndingIcon = true,
-    bool showBtmDivider = true,
-    Function() onClick}) {
+  _buildMenuItem(
+      {required String title,
+      required String icon,
+      bool showEndingIcon = true,
+      bool showBtmDivider = true,
+      VoidCallback? onClick}) {
     return Column(
       children: <Widget>[
         InkWell(

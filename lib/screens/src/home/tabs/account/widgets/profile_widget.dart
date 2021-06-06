@@ -13,8 +13,8 @@ class ProfileWidget extends StatefulWidget {
 }
 
 class _ProfileWidgetState extends KayleeState<ProfileWidget> {
-  String image;
-  String name;
+  late String image;
+  late String name;
 
   @override
   void initState() {
@@ -23,10 +23,10 @@ class _ProfileWidgetState extends KayleeState<ProfileWidget> {
   }
 
   @override
-  void onReloadWidget(Type widget, Bundle bundle) {
+  void onReloadWidget(Type widget, Bundle? bundle) {
     if (widget == ProfileWidget) {
-      image = context.user.getUserInfo()?.userInfo?.image ?? '';
-      name = context.user.getUserInfo()?.userInfo?.name ?? '';
+      image = context.user.getUserInfo().userInfo?.image ?? '';
+      name = context.user.getUserInfo().userInfo?.name ?? '';
       setState(() {});
     }
   }
@@ -106,13 +106,7 @@ class _ProfileWidgetState extends KayleeState<ProfileWidget> {
   }
 
   void _loadUserInfo() {
-    image = context.user
-        .getUserInfo()
-        ?.userInfo
-        ?.image ?? '';
-    name = context.user
-        .getUserInfo()
-        ?.userInfo
-        ?.name ?? '';
+    image = context.user.getUserInfo().userInfo?.image ?? '';
+    name = context.user.getUserInfo().userInfo?.name ?? '';
   }
 }

@@ -11,11 +11,8 @@ import 'package:kaylee/screens/src/home/tabs/home/widgets/supplier_list/supplier
 import 'package:kaylee/utils/utils.dart';
 
 class HomeTab extends StatefulWidget {
-  static Widget newInstance() => MultiBlocProvider(
-        providers: [
-          BlocProvider<ScrollOffsetBloc>(
-              create: (context) => ScrollOffsetBloc()),
-        ],
+  static Widget newInstance() => BlocProvider(
+        create: (context) => ScrollOffsetBloc(),
         child: HomeTab._(),
       );
 
@@ -27,9 +24,9 @@ class HomeTab extends StatefulWidget {
 
 class _HomeTabState extends KayleeState<HomeTab>
     with AutomaticKeepAliveClientMixin {
-  ScrollOffsetBloc get scrollOffsetBloc => context.bloc<ScrollOffsetBloc>();
+  ScrollOffsetBloc get scrollOffsetBloc => context.bloc<ScrollOffsetBloc>()!;
 
-  UserInfo get userInfo => context.user.getUserInfo().userInfo;
+  UserInfo get userInfo => context.user.getUserInfo().userInfo!;
 
   @override
   Widget build(BuildContext context) {
@@ -53,9 +50,7 @@ class _HomeTabState extends KayleeState<HomeTab>
               if (userInfo.role != UserRole.EMPLOYEE)
                 Expanded(
                   child: SupplierList.newInstance(
-                    onScroll: (offset) {
-                      scrollOffsetBloc.addOffset(offset);
-                    },
+                    onScroll: scrollOffsetBloc.addOffset,
                   ),
                 ),
             ],

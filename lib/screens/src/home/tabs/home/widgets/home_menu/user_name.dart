@@ -17,9 +17,10 @@ class _UserNameState extends BaseState<UserName> {
   final positionController = BehaviorSubject<double>();
   final opacityController = BehaviorSubject<double>();
   final marginTop = Dimens.px56;
-  UserInfo userInfo;
-  StreamSubscription homeMenuBlocSub;
-  double position;
+
+  UserInfo? get userInfo => context.user.getUserInfo().userInfo;
+  late StreamSubscription homeMenuBlocSub;
+  late double position;
 
   @override
   void initState() {
@@ -27,7 +28,7 @@ class _UserNameState extends BaseState<UserName> {
     position = marginTop;
     positionController.add(position);
     opacityController.add(1);
-    homeMenuBlocSub = context.bloc<HomeMenuBloc>().listen((state) {
+    homeMenuBlocSub = context.bloc<HomeMenuBloc>()!.stream.listen((state) {
       final scrollingPercent =
           (state.collapsePercent < 0.6 ? 0 : state.collapsePercent - 0.6) / 0.4;
       final namePosition = marginTop - Dimens.px16 * scrollingPercent;
@@ -39,7 +40,6 @@ class _UserNameState extends BaseState<UserName> {
       }
     });
 
-    userInfo = context.user.getUserInfo()?.userInfo;
   }
 
   @override

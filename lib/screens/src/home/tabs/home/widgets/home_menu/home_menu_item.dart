@@ -7,7 +7,7 @@ class HomeMenuItem extends StatelessWidget {
   final String title;
   final String icon;
 
-  HomeMenuItem({this.title, this.icon, this.onTap});
+  HomeMenuItem({required this.title, required this.icon, required this.onTap});
 
   @override
   Widget build(BuildContext context) {

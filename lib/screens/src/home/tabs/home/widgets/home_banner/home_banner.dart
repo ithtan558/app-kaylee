@@ -32,7 +32,7 @@ class _HomeBannerState extends KayleeState<HomeBanner> {
   final ratio = 359 / 128;
   final _pageController = PageController();
 
-  HomeBannerBloc get _bloc => context.bloc<HomeBannerBloc>();
+  HomeBannerBloc get _bloc => context.bloc<HomeBannerBloc>()!;
 
   @override
   void initState() {
@@ -47,7 +47,7 @@ class _HomeBannerState extends KayleeState<HomeBanner> {
   }
 
   @override
-  void onReloadWidget(Type widget, Bundle bundle) {
+  void onReloadWidget(Type widget, Bundle? bundle) {
     if (widget == HomeBanner) {
       _bloc.loadBanners();
     }
@@ -59,21 +59,21 @@ class _HomeBannerState extends KayleeState<HomeBanner> {
       children: [
         BlocBuilder<HomeBannerBloc, SingleModel<List<Banner>>>(
           builder: (context, state) {
-            if (state.item.isNullOrEmpty) return Container();
+            if (state.item?.isEmpty ?? true) return Container();
             return Container(
               height: height,
               padding:
                   const EdgeInsets.only(top: Dimens.px16, bottom: Dimens.px8),
               child: PageView(
                 controller: _pageController,
-                children: state.item
+                children: state.item!
                     .map((banner) => _buildBanner(
-                          image: banner.image,
+                          image: banner.image ?? '',
                           onTap: () {
                             final url = banner.url;
                             final pageIntent =
                                 DeepLinkHelper.handleLink(link: url);
-                            if (pageIntent.isNotNull) pushScreen(pageIntent);
+                            if (pageIntent != null) pushScreen(pageIntent);
                           },
                         ))
                     .toList(),
@@ -98,8 +98,8 @@ class _HomeBannerState extends KayleeState<HomeBanner> {
   }
 
   Widget _buildBanner({
-    String image,
-    VoidCallback onTap,
+    required String image,
+    required VoidCallback onTap,
   }) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: Dimens.px8),

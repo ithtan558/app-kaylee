@@ -6,7 +6,8 @@ class OrderItemBloc extends Cubit<SingleModel> {
   final OrderService orderService;
   final Order order;
 
-  OrderItemBloc({this.orderService, this.order}) : super(SingleModel());
+  OrderItemBloc({required this.orderService, required this.order})
+      : super(SingleModel());
 
   void cancelOrder() {
     emit(SingleModel.copy(state..loading = true));

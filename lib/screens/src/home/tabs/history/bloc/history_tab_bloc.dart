@@ -9,7 +9,7 @@ class HistoryTabBloc extends Cubit<LoadMoreModel<Order>>
     implements LoadMoreInterface {
   final OrderService orderService;
 
-  HistoryTabBloc({this.orderService}) : super(LoadMoreModel());
+  HistoryTabBloc({required this.orderService}) : super(LoadMoreModel());
 
   void loadOrders() {
     state.loading = true;

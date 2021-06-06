@@ -32,7 +32,7 @@ class _HomeScreenState extends KayleeState<HomeScreen> {
   final FlutterLocalNotificationsPlugin notificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
-  ReloadBloc get _reloadBloc => context.bloc<ReloadBloc>();
+  ReloadBloc get _reloadBloc => context.bloc<ReloadBloc>()!;
 
   @override
   void initState() {
@@ -47,23 +47,29 @@ class _HomeScreenState extends KayleeState<HomeScreen> {
       initializationSettings,
       onSelectNotification: _openLocalNotification,
     );
+    FirebaseMessaging.onMessage.listen((message) {
+      _onMessageFcm.call(message.data);
+    });
 
-    context.repository<FirebaseMessaging>().configure(
-          onMessage: _onMessageFcm,
-          onResume: _onResumeFcm,
-          onLaunch: _onLaunchFcm,
-        );
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      _onResumeFcm.call(message.data);
+    });
+
+    FirebaseMessaging.instance.getInitialMessage()
+      ..then((message) {
+        _onLaunchFcm.call(message);
+      });
   }
 
   ///open local notification
-  Future _openLocalNotification(String payload) async {
-    if (payload.isNullOrEmpty) return;
-    _onOpenNotification(jsonDecode(payload));
+  Future _openLocalNotification(String? payload) async {
+    if (payload?.isEmpty ?? true) return;
+    _onOpenNotification(jsonDecode(payload!));
   }
 
   ///receive notification when app is in foreground
   Future<dynamic> _onMessageFcm(Map<String, dynamic> map) async {
-    FcmResponse response;
+    FcmResponse? response;
     try {
       // print('[TUNG] ===> _onMessageFcm');
       // print('[TUNG] ===> $map');
@@ -92,7 +98,7 @@ class _HomeScreenState extends KayleeState<HomeScreen> {
 
   ///open notification, navigate to corresponding screen
   Future _onOpenNotification(map) async {
-    FcmResponse response;
+    FcmResponse? response;
     try {
       // print('[TUNG] ===> _onOpenNotification');
       // print('[TUNG] ===> $map');
@@ -100,14 +106,14 @@ class _HomeScreenState extends KayleeState<HomeScreen> {
     } catch (e, s) {
       Logger().e('error _onOpenNotification', e, s);
     }
-    if (response.isNull) return;
+    if (response == null) return;
     context.push(DeepLinkHelper.handleNotificationLink(
-        link: response.androidData?.link ?? response.iosData?.link,
-        ifNOtFound: PageIntent(screen: NotificationScreen)));
+        link: response.androidData?.link ?? response.iosData.link,
+        ifNOtFound: PageIntent(screen: NotificationScreen))!);
   }
 
-  _showNotificationLocal({FcmResponse response}) {
-    if (response.isNull) return;
+  _showNotificationLocal({FcmResponse? response}) {
+    if (response == null) return;
 
     final notificationId = DateTime.now().second.toString();
     final androidDetail = AndroidNotificationDetails(

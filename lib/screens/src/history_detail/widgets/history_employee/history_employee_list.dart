@@ -5,7 +5,7 @@ import 'package:kaylee/screens/src/history_detail/widgets/history_employee/histo
 import 'package:kaylee/widgets/widgets.dart';
 
 class HistoryEmployeeList extends StatelessWidget {
-  final List<Employee> employees;
+  final List<Employee>? employees;
 
   HistoryEmployeeList({this.employees});
 
@@ -19,7 +19,7 @@ class HistoryEmployeeList extends StatelessWidget {
         KayleeListView(
           physics: NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
-            final employee = employees.elementAt(index);
+            final employee = employees!.elementAt(index);
             return HistoryEmployeeItem(
               employee: employee,
             );

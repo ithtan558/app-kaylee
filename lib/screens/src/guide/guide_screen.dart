@@ -24,14 +24,13 @@ class GuideScreen extends StatefulWidget {
 }
 
 class _GuideScreenState extends KayleeState<GuideScreen> {
-  GuideScreenBloc _bloc;
-  StreamSubscription _sub;
+  GuideScreenBloc get _bloc => context.bloc<GuideScreenBloc>()!;
+  late StreamSubscription _sub;
 
   @override
   void initState() {
     super.initState();
-    _bloc = context.bloc<GuideScreenBloc>();
-    _sub = _bloc.listen((state) {
+    _sub = _bloc.stream.listen((state) {
       if (state.loading) {
         showLoading();
       } else if (!state.loading) {

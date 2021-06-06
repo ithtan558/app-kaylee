@@ -16,7 +16,7 @@ class NotificationButton extends StatefulWidget {
 }
 
 class _NotificationButtonState extends KayleeState<NotificationButton> {
-  NotiButtonBloc get bloc => context.bloc<NotiButtonBloc>();
+  NotiButtonBloc get bloc => context.bloc<NotiButtonBloc>()!;
 
   @override
   void initState() {
@@ -25,7 +25,7 @@ class _NotificationButtonState extends KayleeState<NotificationButton> {
   }
 
   @override
-  void onReloadWidget(Type widget, Bundle bundle) {
+  void onReloadWidget(Type widget, Bundle? bundle) {
     if (widget == NotificationButton) {
       bloc.getNotificationCount();
     }

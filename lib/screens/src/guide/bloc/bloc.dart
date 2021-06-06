@@ -5,7 +5,7 @@ import 'package:kaylee/services/services.dart';
 class GuideScreenBloc extends Cubit<SingleModel<Content>> {
   final CommonService commonService;
 
-  GuideScreenBloc({this.commonService}) : super(SingleModel());
+  GuideScreenBloc({required this.commonService}) : super(SingleModel());
 
   void loadContent() {
     emit(SingleModel.copy(state..loading = true));

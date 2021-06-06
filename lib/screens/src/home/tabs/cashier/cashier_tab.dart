@@ -24,7 +24,7 @@ class CashierTab extends StatefulWidget {
 
 class _CashierTabState extends KayleeState<CashierTab>
     with AutomaticKeepAliveClientMixin {
-  CashierTabBloc get _cashierTabBloc => context.bloc<CashierTabBloc>();
+  CashierTabBloc get _cashierTabBloc => context.bloc<CashierTabBloc>()!;
 
   @override
   void initState() {
@@ -38,7 +38,7 @@ class _CashierTabState extends KayleeState<CashierTab>
   }
 
   @override
-  void onReloadWidget(Type widget, Bundle bundle) {
+  void onReloadWidget(Type widget, Bundle? bundle) {
     if (widget == CashierTab) {
       _cashierTabBloc.refresh();
     }
@@ -78,7 +78,7 @@ class _CashierTabState extends KayleeState<CashierTab>
                   padding: EdgeInsets.all(Dimens.px16),
                   itemBuilder: (c, index) {
                     return CashierItem.newInstance(
-                        order: state.items.elementAt(index));
+                        order: state.items!.elementAt(index));
                   },
                   loadingBuilder: (context) {
                     if (state.ended) return Container();

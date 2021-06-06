@@ -77,7 +77,7 @@ class _FilterScreenState<T extends Filter> extends BaseState<FilterScreen<T>> {
                 focusNode: searchFocus,
                 controller: searchTfController,
                 onClear: () {
-                  widget.controller?.getFilter().keyword = null;
+                  widget.controller?.getFilter()?.keyword = null;
                 },
               ),
             ),

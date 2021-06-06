@@ -6,7 +6,7 @@ import 'package:kaylee/widgets/widgets.dart';
 class HistoryOrderItem extends StatelessWidget {
   final OrderItem item;
 
-  HistoryOrderItem({this.item});
+  HistoryOrderItem({required this.item});
 
   @override
   Widget build(BuildContext context) {

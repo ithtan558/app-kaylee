@@ -11,7 +11,7 @@ import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class SupplierList extends StatefulWidget {
-  static Widget newInstance({ValueChanged<double> onScroll}) =>
+  static Widget newInstance({required ValueChanged<double> onScroll}) =>
       BlocProvider<SupplierListBloc>(
         create: (context) => SupplierListBloc(
             supplierService: context.network.provideSupplierService()),
@@ -21,16 +21,16 @@ class SupplierList extends StatefulWidget {
       );
   final ValueChanged<double> onScroll;
 
-  SupplierList._({this.onScroll});
+  SupplierList._({required this.onScroll});
 
   @override
   _SupplierListState createState() => _SupplierListState();
 }
 
 class _SupplierListState extends KayleeState<SupplierList> {
-  SupplierListBloc get _bloc => context.bloc<SupplierListBloc>();
+  SupplierListBloc get _bloc => context.bloc<SupplierListBloc>()!;
 
-  ReloadBloc get _reloadBloc => context.bloc<ReloadBloc>();
+  ReloadBloc get _reloadBloc => context.bloc<ReloadBloc>()!;
   final scrollController = ScrollController();
 
   final listTitle = Padding(
@@ -45,7 +45,7 @@ class _SupplierListState extends KayleeState<SupplierList> {
   void initState() {
     super.initState();
     scrollController.addListener(() {
-      widget.onScroll?.call(scrollController.offset);
+      widget.onScroll.call(scrollController.offset);
     });
     _bloc.loadInitData();
   }
@@ -83,7 +83,7 @@ class _SupplierListState extends KayleeState<SupplierList> {
                 } else {
                   //index của item supplier
                   return SupplierItem(
-                    supplier: state.items.elementAt(index - 2),
+                    supplier: state.items!.elementAt(index - 2),
                   );
                 }
               },

@@ -18,7 +18,7 @@ class HistoryOrderDetailScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider(
       create: (context) => HistoryOrderDetailBloc(
             orderService: context.network.provideOrderService(),
-            order: context.getArguments<Order>(),
+            order: context.getArguments<Order>()!,
           ),
       child: HistoryOrderDetailScreen._());
 
@@ -31,14 +31,13 @@ class HistoryOrderDetailScreen extends StatefulWidget {
 
 class _HistoryOrderDetailScreenState
     extends KayleeState<HistoryOrderDetailScreen> {
-  HistoryOrderDetailBloc _bloc;
-  StreamSubscription _sub;
+  HistoryOrderDetailBloc get _bloc => context.bloc<HistoryOrderDetailBloc>()!;
+  late StreamSubscription _sub;
 
   @override
   void initState() {
     super.initState();
-    _bloc = context.bloc<HistoryOrderDetailBloc>();
-    _sub = _bloc.listen((state) {
+    _sub = _bloc.stream.listen((state) {
       if (state.loading) {
         showLoading();
       } else if (!state.loading) {
@@ -82,14 +81,14 @@ class _HistoryOrderDetailScreenState
                             children: [
                               KayleeTextField.staticWidget(
                                 title: Strings.thongTinKh,
-                                initText: state.item.customer?.name,
+                                initText: state.item!.customer?.name,
                               ),
                               Padding(
                                 padding:
                                     const EdgeInsets.only(top: Dimens.px16),
                                 child: KayleeTextField.staticWidget(
                                   title: Strings.chiNhanh,
-                                  initText: state.item.brand?.name,
+                                  initText: state.item!.brand?.name,
                                 ),
                               ),
                             ],
@@ -98,7 +97,7 @@ class _HistoryOrderDetailScreenState
                       ),
                       SliverToBoxAdapter(
                         child: HistoryEmployeeList(
-                          employees: state.item.employees,
+                          employees: state.item!.employees,
                         ),
                       ),
                       SliverToBoxAdapter(
@@ -109,11 +108,11 @@ class _HistoryOrderDetailScreenState
                       SliverList(
                           delegate:
                               SliverChildBuilderDelegate((context, index) {
-                        final item = state.item.orderItems.elementAt(index);
+                        final item = state.item!.orderItems!.elementAt(index);
                         return HistoryOrderItem(
                           item: item,
                         );
-                      }, childCount: state.item.orderItems?.length ?? 0)),
+                      }, childCount: state.item!.orderItems?.length ?? 0)),
                       SliverToBoxAdapter(
                         child: Padding(
                           padding: const EdgeInsets.all(Dimens.px16),
@@ -121,22 +120,22 @@ class _HistoryOrderDetailScreenState
                             children: [
                               KayleeTitlePriceText.normal(
                                 title: Strings.tongChiPhi,
-                                price: state.item.total,
+                                price: state.item!.total,
                               ),
-                              if ((state.item.discount ?? 0) > 0)
+                              if ((state.item!.discount ?? 0) > 0)
                                 Padding(
                                   padding:
                                       const EdgeInsets.only(top: Dimens.px8),
                                   child: KayleeTitlePriceText.normal(
                                     title: Strings.giamGia,
-                                    price: state.item.discount,
+                                    price: state.item!.discount,
                                   ),
                                 ),
                               Padding(
                                 padding: const EdgeInsets.only(top: Dimens.px8),
                                 child: KayleeTitlePriceText.bold(
                                   title: Strings.thanhTien,
-                                  price: state.item.amount,
+                                  price: state.item!.amount,
                                 ),
                               ),
                             ],

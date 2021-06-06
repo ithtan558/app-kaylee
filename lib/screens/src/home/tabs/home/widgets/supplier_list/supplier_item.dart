@@ -9,7 +9,7 @@ import 'package:kaylee/widgets/widgets.dart';
 class SupplierItem extends StatelessWidget {
   final Supplier supplier;
 
-  SupplierItem({@required this.supplier}) : super(key: ValueKey(supplier));
+  SupplierItem({required this.supplier}) : super(key: ValueKey(supplier));
 
   final imageRatio = 96 / 30;
 
@@ -37,7 +37,7 @@ class SupplierItem extends StatelessWidget {
                   child: AspectRatio(
                       aspectRatio: imageRatio,
                       child: CachedNetworkImage(
-                        imageUrl: supplier?.image ?? '',
+                        imageUrl: supplier.image ?? '',
                         height: 64,
                       )),
                 ),
@@ -49,7 +49,7 @@ class SupplierItem extends StatelessWidget {
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
-                  child: KayleeText.normal12W400(supplier?.name ?? '',
+                  child: KayleeText.normal12W400(supplier.name ?? '',
                       maxLines: 1, overflow: TextOverflow.ellipsis),
                 ),
               )

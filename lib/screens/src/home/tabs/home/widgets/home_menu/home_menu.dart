@@ -25,15 +25,15 @@ class HomeMenu extends StatefulWidget {
 }
 
 class _HomeMenuState extends BaseState<HomeMenu> {
-  ScrollOffsetBloc get _scrollOffsetBloc => context.bloc<ScrollOffsetBloc>();
+  ScrollOffsetBloc get _scrollOffsetBloc => context.bloc<ScrollOffsetBloc>()!;
   final menuScrollController = ScrollController();
 
-  UserInfo get userInfo => context.user.getUserInfo().userInfo;
+  UserInfo? get userInfo => context.user.getUserInfo().userInfo;
 
-  HomeMenuBloc get _homeMenuBloc => context.bloc<HomeMenuBloc>();
-  StreamSubscription _sub;
-  Widget menuRow2;
-  List<Widget> menuItems;
+  HomeMenuBloc get _homeMenuBloc => context.bloc<HomeMenuBloc>()!;
+  late StreamSubscription _sub;
+  Widget? menuRow2;
+  late List<Widget> menuItems;
 
   final gradientBg = Container(
       decoration: const BoxDecoration(
@@ -56,7 +56,7 @@ class _HomeMenuState extends BaseState<HomeMenu> {
   void initState() {
     super.initState();
     menuItems = <Widget>[
-      if (userInfo.role != UserRole.EMPLOYEE) ...[
+      if (userInfo?.role != UserRole.EMPLOYEE) ...[
         HomeMenuItem(
           title: Strings.qlChiNhanh,
           icon: Images.ic_store,
@@ -116,7 +116,7 @@ class _HomeMenuState extends BaseState<HomeMenu> {
       ]
     ];
 
-    _sub = _scrollOffsetBloc.listen((offset) {
+    _sub = _scrollOffsetBloc.stream.listen((offset) {
       _homeMenuBloc.updateHomeMenuState(
           offset: offset, collapseMenuHeight: collapseMenuHeight);
       if (menuScrollController.offset > 0 &&
@@ -136,7 +136,7 @@ class _HomeMenuState extends BaseState<HomeMenu> {
 
   @override
   Widget build(BuildContext context) {
-    if (userInfo.role == UserRole.EMPLOYEE) {
+    if (userInfo?.role == UserRole.EMPLOYEE) {
       _homeMenuBloc
           .updateMenuHeight(homeMenuItemHeight * 2 + Dimens.px56 + Dimens.px7);
     }
@@ -269,7 +269,7 @@ class _HomeMenuState extends BaseState<HomeMenu> {
 class HomeMenuBloc extends Cubit<HomeMenuState> {
   static const double menuHeight = 348;
   final backGroundStateController = BehaviorSubject<bool>();
-  double height;
+  double? height;
   bool canUpdateHeight = true;
 
   HomeMenuBloc() : super(HomeMenuState(height: menuHeight)) {
@@ -283,7 +283,7 @@ class HomeMenuBloc extends Cubit<HomeMenuState> {
   }
 
   void updateMenuHeight(double height) {
-    if (height.isNull || this.height.isNotNull) return;
+    if (this.height != null) return;
     this.height = menuHeight - height;
     updateHomeMenuState();
     canUpdateHeight = false;
@@ -322,11 +322,11 @@ class HomeMenuBloc extends Cubit<HomeMenuState> {
 }
 
 class HomeMenuState {
-  double collapsePercent;
-  double height;
-  double offset;
-  bool isCollapsed;
-  double menuRow2CollapsePercent;
+  late double collapsePercent;
+  late double height;
+  late double offset;
+  late bool isCollapsed;
+  late double menuRow2CollapsePercent;
 
   HomeMenuState(
       {this.collapsePercent = 0,
@@ -337,11 +337,10 @@ class HomeMenuState {
 
   HomeMenuState.copy(HomeMenuState old) {
     this
-      ..collapsePercent = old?.collapsePercent ?? this.collapsePercent
-      ..height = old?.height ?? this.height
-      ..offset = old?.offset ?? this.offset
-      ..isCollapsed = old?.isCollapsed ?? this.isCollapsed
-      ..menuRow2CollapsePercent =
-          old?.menuRow2CollapsePercent ?? this.menuRow2CollapsePercent;
+      ..collapsePercent = old.collapsePercent
+      ..height = old.height
+      ..offset = old.offset
+      ..isCollapsed = old.isCollapsed
+      ..menuRow2CollapsePercent = old.menuRow2CollapsePercent;
   }
 }

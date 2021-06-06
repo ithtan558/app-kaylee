@@ -12,7 +12,7 @@ import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class CashierItem extends StatefulWidget {
-  static Widget newInstance({Order order}) => BlocProvider(
+  static Widget newInstance({required Order order}) => BlocProvider(
         key: ValueKey(order),
         create: (context) => OrderItemBloc(
           orderService: context.network.provideOrderService(),
@@ -23,14 +23,14 @@ class CashierItem extends StatefulWidget {
 
   final Order order;
 
-  CashierItem._({this.order});
+  CashierItem._({required this.order});
 
   @override
   _CashierItemState createState() => _CashierItemState();
 }
 
 class _CashierItemState extends KayleeState<CashierItem> {
-  OrderItemBloc get orderItemBloc => context.bloc<OrderItemBloc>();
+  OrderItemBloc get orderItemBloc => context.bloc<OrderItemBloc>()!;
 
   @override
   Widget build(BuildContext context) {
@@ -49,8 +49,8 @@ class _CashierItemState extends KayleeState<CashierItem> {
               message: state.message,
               onPressed: popScreen,
               onDismiss: () {
-                context.bloc<ReloadBloc>().reload(widget: CashierTab);
-                context.bloc<ReloadBloc>().reload(widget: HistoryTab);
+                context.bloc<ReloadBloc>()!.reload(widget: CashierTab);
+                context.bloc<ReloadBloc>()!.reload(widget: HistoryTab);
               },
             );
           }
@@ -116,7 +116,7 @@ class _CashierItemState extends KayleeState<CashierItem> {
                   ),
                   SizedBox(height: Dimens.px8),
                   KayleeText.hint16W400(
-                      '${Strings.gioBatDau} ${widget.order.createdAt.toFormatString(pattern: dateFormat3)}'),
+                      '${Strings.gioBatDau} ${widget.order.createdAt?.toFormatString(pattern: dateFormat3)}'),
                 ],
               ),
             ),

@@ -9,7 +9,7 @@ class SupplierListBloc extends Cubit<LoadMoreModel<Supplier>>
     implements LoadMoreInterface {
   final SupplierService supplierService;
 
-  SupplierListBloc({this.supplierService}) : super(LoadMoreModel());
+  SupplierListBloc({required this.supplierService}) : super(LoadMoreModel());
 
   @override
   void loadInitData() {
@@ -62,6 +62,6 @@ class SupplierListBloc extends Cubit<LoadMoreModel<Supplier>>
 }
 
 class SupplierListModel extends LoadMoreModel<Supplier> {
-  SupplierListModel({List<Supplier> suppliers})
+  SupplierListModel({List<Supplier>? suppliers})
       : super(page: 1, limit: 10, items: suppliers);
 }

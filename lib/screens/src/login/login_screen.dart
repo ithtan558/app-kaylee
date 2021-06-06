@@ -4,10 +4,10 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/base/kaylee_state.dart';
-import 'package:kaylee/components/components.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
+import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 import 'bloc/bloc.dart';
@@ -20,14 +20,13 @@ enum LoginScreenOpenFrom {
 class LoginScreenData {
   LoginScreenOpenFrom openFrom;
 
-  LoginScreenData({this.openFrom});
+  LoginScreenData({required this.openFrom});
 }
 
 class LoginScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<LoginScreenBloc>(
-        create: (context) => LoginScreenBloc(
-            userService:
-                context.repository<NetworkModule>().provideUserService()),
+        create: (context) =>
+            LoginScreenBloc(userService: context.network.provideUserService()),
         child: LoginScreen._(),
       );
 
@@ -42,14 +41,14 @@ class _LoginScreenState extends KayleeState<LoginScreen> {
   final _passFNode = FocusNode();
   final _phoneTController = TextEditingController();
   final _passTController = TextEditingController();
-  LoginScreenBloc bloc;
-  LoginScreenData data;
+
+  LoginScreenBloc get bloc => context.bloc<LoginScreenBloc>()!;
+  late LoginScreenData data;
 
   @override
   void initState() {
     super.initState();
-    bloc = context.bloc<LoginScreenBloc>();
-    data = context.getArguments<LoginScreenData>();
+    data = context.getArguments<LoginScreenData>()!;
   }
 
   @override
@@ -121,7 +120,7 @@ class _LoginScreenState extends KayleeState<LoginScreen> {
                     _passFNode.requestFocus();
                   } else if (state is SuccessLoginScrState) {
                     hideLoading();
-                    context.bloc<AppBloc>().loggedIn(state.result);
+                    context.bloc<AppBloc>()!.loggedIn(state.result);
                     await showKayleeAlertDialog(
                       context: context,
                       view: KayleeAlertDialogView.message(
@@ -135,8 +134,7 @@ class _LoginScreenState extends KayleeState<LoginScreen> {
                         ],
                       ),
                       onDismiss: () {
-                        if (data?.openFrom ==
-                            LoginScreenOpenFrom.LOGIN_DIALOG) {
+                        if (data.openFrom == LoginScreenOpenFrom.LOGIN_DIALOG) {
                           popScreen();
                         } else {
                           context.pushToTop(PageIntent(screen: HomeScreen));

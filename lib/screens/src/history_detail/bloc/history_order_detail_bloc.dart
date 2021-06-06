@@ -6,10 +6,8 @@ class HistoryOrderDetailBloc extends Cubit<SingleModel<Order>> {
   final OrderService orderService;
   Order order;
 
-  HistoryOrderDetailBloc({this.orderService, this.order})
-      : super(SingleModel(
-          item: order,
-        ));
+  HistoryOrderDetailBloc({required this.orderService, required this.order})
+      : super(SingleModel(item: order));
 
   void loadDetail() {
     emit(SingleModel.copy(state..loading = true));
@@ -33,7 +31,7 @@ class HistoryOrderDetailBloc extends Cubit<SingleModel<Order>> {
 class HistoryOrderDetailModel extends SingleModel<Order> {
   HistoryOrderDetailModel.copy(SingleModel old) {
     this
-      ..item = old?.item
-      ..loading = old?.loading;
+      ..item = old.item
+      ..loading = old.loading;
   }
 }

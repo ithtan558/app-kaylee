@@ -8,7 +8,7 @@ import 'event.dart';
 class LoginScreenBloc extends BaseBloc {
   UserService userService;
 
-  LoginScreenBloc({this.userService});
+  LoginScreenBloc({required this.userService});
 
   @override
   Stream mapEventToState(e) async* {
@@ -25,7 +25,7 @@ class LoginScreenBloc extends BaseBloc {
         },
         onFailed: (code, {error}) {
           if (error != null) {
-            if (error.code.isNotNull) {
+            if (error.code != null) {
               add(error.code == ErrorCode.ACCOUNT_CODE
                   ? PhoneLoginScrErrorEvent(error.message)
                   : PassLoginScrErrorEvent(error.message));

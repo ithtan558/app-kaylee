@@ -11,7 +11,7 @@ import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class HistoryItem extends StatefulWidget {
-  static Widget newInstance({Order order}) => BlocProvider(
+  static Widget newInstance({required Order order}) => BlocProvider(
         key: ValueKey(order),
         create: (context) => HistoryItemBloc(
           order: order,
@@ -24,20 +24,20 @@ class HistoryItem extends StatefulWidget {
 
   final Order order;
 
-  HistoryItem._({this.order});
+  HistoryItem._({required this.order});
 
   @override
   _HistoryItemState createState() => _HistoryItemState();
 }
 
 class _HistoryItemState extends KayleeState<HistoryItem> {
-  HistoryItemBloc get _bloc => context.bloc<HistoryItemBloc>();
+  HistoryItemBloc get _bloc => context.bloc<HistoryItemBloc>()!;
 
-  ReloadBloc get _reloadBloc => context.bloc<ReloadBloc>();
+  ReloadBloc get _reloadBloc => context.bloc<ReloadBloc>()!;
 
   @override
   Widget build(BuildContext context) {
-    final date = (_bloc.order?.createdAt?.weekday ?? -1);
+    final date = (_bloc.order.createdAt?.weekday ?? -1);
     return BlocListener<HistoryItemBloc, SingleModel>(
       listener: (context, state) {
         if (state.loading) {
@@ -96,14 +96,14 @@ class _HistoryItemState extends KayleeState<HistoryItem> {
                 children: [
                   Expanded(
                     child: KayleeText.normal16W500(
-                      _bloc.order?.name ?? '',
+                      _bloc.order.name ?? '',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
                   Expanded(
                     child: KayleePriceText.normal(
-                      _bloc.order?.amount ?? 0,
+                      _bloc.order.amount ?? 0,
                       textOverflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.end,
                     ),
@@ -115,7 +115,7 @@ class _HistoryItemState extends KayleeState<HistoryItem> {
               padding: const EdgeInsets.symmetric(horizontal: Dimens.px16)
                   .copyWith(bottom: Dimens.px16),
               child: KayleeText.hint16W400(
-                '${date == DateTime.sunday ? 'CN' : 'T${date + 1}'}, ${_bloc.order?.createdAt?.toFormatString(pattern: dateFormat2)}',
+                '${date == DateTime.sunday ? 'CN' : 'T${date + 1}'}, ${_bloc.order.createdAt?.toFormatString(pattern: dateFormat2)}',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),

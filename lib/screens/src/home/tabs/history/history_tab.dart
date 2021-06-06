@@ -27,13 +27,13 @@ class HistoryTab extends StatefulWidget {
 
 class _HistoryTabState extends KayleeState<HistoryTab>
     with AutomaticKeepAliveClientMixin {
-  HistoryTabBloc get _bloc => context.bloc<HistoryTabBloc>();
-  StreamSubscription _sub;
+  HistoryTabBloc get _bloc => context.bloc<HistoryTabBloc>()!;
+  late StreamSubscription _sub;
 
   @override
   void initState() {
     super.initState();
-    _sub = _bloc.listen((state) {
+    _sub = _bloc.stream.listen((state) {
       if (state.error != null) {
         showKayleeAlertErrorYesDialog(
           context: context,
@@ -48,7 +48,7 @@ class _HistoryTabState extends KayleeState<HistoryTab>
   }
 
   @override
-  void onReloadWidget(Type widget, Bundle bundle) {
+  void onReloadWidget(Type widget, Bundle? bundle) {
     if (widget == HistoryTab) {
       _bloc.refresh();
     }
@@ -79,7 +79,7 @@ class _HistoryTabState extends KayleeState<HistoryTab>
               return KayleeListView(
                 padding: EdgeInsets.all(Dimens.px16),
                 itemBuilder: (c, index) {
-                  final item = state.items.elementAt(index);
+                  final item = state.items!.elementAt(index);
                   return HistoryItem.newInstance(
                     order: item,
                   );

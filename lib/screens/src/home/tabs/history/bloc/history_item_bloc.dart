@@ -6,7 +6,8 @@ class HistoryItemBloc extends Cubit<SingleModel> {
   final OrderService orderService;
   final Order order;
 
-  HistoryItemBloc({this.orderService, this.order}) : super(SingleModel());
+  HistoryItemBloc({required this.orderService, required this.order})
+      : super(SingleModel());
 
   void cancelOrder() {
     emit(SingleModel.copy(state..loading = true));

@@ -9,12 +9,12 @@ class CashierTabBloc extends Cubit<LoadMoreModel<Order>>
     implements LoadMoreInterface {
   final OrderService orderService;
 
-  CashierTabBloc({this.orderService}) : super(LoadMoreModel());
+  CashierTabBloc({required this.orderService}) : super(LoadMoreModel());
 
   void _loadOrders() {
     state.loading = true;
     RequestHandler(
-      request: orderService?.getOrderCashier(
+      request: orderService.getOrderCashier(
         limit: state.limit,
         page: state.page,
       ),
