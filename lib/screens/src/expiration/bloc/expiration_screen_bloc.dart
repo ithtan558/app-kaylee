@@ -7,8 +7,8 @@ class ExpirationScreenBloc extends Cubit<SingleModel<Content>> {
   final UserService userService;
 
   ExpirationScreenBloc({
-    this.commonService,
-    this.userService,
+    required this.commonService,
+    required this.userService,
   }) : super(SingleModel());
 
   void loadContent() {
@@ -54,8 +54,8 @@ class ExpirationScreenBloc extends Cubit<SingleModel<Content>> {
 class CheckExpirationSuccessModel extends SingleModel<Content> {
   CheckExpirationSuccessModel.copy(SingleModel old) {
     this
-      ..loading = old?.loading
-      ..item = old?.item
-      ..message = old?.message;
+      ..loading = old.loading
+      ..item = old.item
+      ..message = old.message;
   }
 }

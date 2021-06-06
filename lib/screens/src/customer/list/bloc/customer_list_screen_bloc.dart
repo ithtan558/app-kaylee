@@ -1,5 +1,4 @@
 import 'package:anth_package/anth_package.dart';
-import 'package:flutter/foundation.dart';
 import 'package:kaylee/base/kaylee_filter_interface.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/services/services.dart';
@@ -14,9 +13,9 @@ class CustomerListScreenBloc extends Cubit<LoadMoreModel<Customer>>
     with PaginationMixin<Customer>
     implements KayleeFilterInterface<CustomerFilter> {
   final CustomerService customerService;
-  CustomerFilter _filter;
+  CustomerFilter? _filter;
 
-  CustomerListScreenBloc({@required this.customerService})
+  CustomerListScreenBloc({required this.customerService})
       : super(LoadMoreModel()) {
     page = 1;
   }
@@ -59,7 +58,7 @@ class CustomerListScreenBloc extends Cubit<LoadMoreModel<Customer>>
   }
 
   @override
-  CustomerFilter getFilter() {
+  CustomerFilter? getFilter() {
     return _filter;
   }
 
@@ -74,6 +73,6 @@ class CustomerListScreenBloc extends Cubit<LoadMoreModel<Customer>>
   @override
   CustomerFilter updateFilter() {
     if (isEmptyFilter) _filter = CustomerFilter();
-    return _filter;
+    return _filter!;
   }
 }

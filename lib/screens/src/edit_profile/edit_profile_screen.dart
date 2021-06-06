@@ -15,7 +15,7 @@ import 'package:kaylee/widgets/widgets.dart';
 class EditProfileScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider(
       create: (context) => EditProfileBloc(
-            userInfo: context.user.getUserInfo()?.userInfo,
+            userInfo: context.user.getUserInfo().userInfo!,
             userService: context.network.provideUserService(),
           ),
       child: EditProfileScreen._());
@@ -33,14 +33,13 @@ class _EditProfileScreenState extends KayleeState<EditProfileScreen> {
   final birthDayController = PickInputController<DateTime>();
   final addressController = KayleeFullAddressController();
 
-  EditProfileBloc _bloc;
-  StreamSubscription _sub;
+  EditProfileBloc get _bloc => context.bloc<EditProfileBloc>()!;
+  late StreamSubscription _sub;
 
   @override
   void initState() {
     super.initState();
-    _bloc = context.bloc<EditProfileBloc>();
-    _sub = _bloc.listen((state) {
+    _sub = _bloc.stream.listen((state) {
       if (state.loading) {
         showLoading();
       } else if (!state.loading) {
@@ -49,7 +48,7 @@ class _EditProfileScreenState extends KayleeState<EditProfileScreen> {
           showKayleeAlertErrorYesDialog(
               context: context, error: state.error, onPressed: popScreen);
         } else if (state is UpdateProfileModel) {
-          context.bloc<AppBloc>().notifyUpdateProfile(
+          context.bloc<AppBloc>()!.notifyUpdateProfile(
                 userInfo: _bloc.userInfo,
               );
           showKayleeAlertMessageYesDialog(
@@ -108,7 +107,7 @@ class _EditProfileScreenState extends KayleeState<EditProfileScreen> {
         child: BlocConsumer<EditProfileBloc, SingleModel<UserInfo>>(
           listener: (context, state) {
             imagePickerController.existedImageUrl = state.item?.image;
-            nameTfController.text = state.item?.name;
+            nameTfController.text = state.item?.name ?? '';
             birthDayController.value = state.item?.birthdayInDateTime;
             addressController
               ..initAddress = state.item?.address

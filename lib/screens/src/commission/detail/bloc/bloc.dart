@@ -7,18 +7,17 @@ class CommissionDetailScreenBloc extends Cubit<SingleModel> {
   final CommissionService commissionService;
   Employee employee;
   DateTime startDate;
-  DateTime endDate;
+  late DateTime endDate;
 
   CommissionDetailScreenBloc({
-    this.commissionService,
-    this.startDate,
-    this.endDate,
-    this.employee,
+    required this.commissionService,
+    required this.startDate,
+    required this.employee,
   }) : super(SingleModel()) {
     endDate = startDate;
   }
 
-  void loadWithDate({DateTime startDate, DateTime endDate}) {
+  void loadWithDate({required DateTime startDate, required DateTime endDate}) {
     this.startDate = startDate;
     this.endDate = endDate;
     loadDetail();
@@ -52,7 +51,7 @@ class CommissionDetailScreenBloc extends Cubit<SingleModel> {
 class CommissionDetailModel extends SingleModel<Commission> {
   CommissionDetailModel.copy(SingleModel old) {
     this
-      ..item = old?.item
+      ..item = old.item
       ..loading = old.loading;
   }
 }

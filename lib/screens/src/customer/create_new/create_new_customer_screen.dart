@@ -16,16 +16,16 @@ enum CustomerScreenOpenFrom { customerListItem, cashier, addNewCustomerBtn }
 
 class NewCustomerScreenData {
   CustomerScreenOpenFrom openFrom;
-  Customer customer;
+  Customer? customer;
 
-  NewCustomerScreenData({this.openFrom, this.customer});
+  NewCustomerScreenData({required this.openFrom, this.customer});
 }
 
 class CreateNewCustomerScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<CustomerDetailScreenBloc>(
-        create: (context) => CustomerDetailScreenBloc(
+    create: (context) => CustomerDetailScreenBloc(
             customerService: context.network.provideCustomerService(),
-            customer: context.getArguments<NewCustomerScreenData>()?.customer),
+            customer: context.getArguments<NewCustomerScreenData>()!.customer),
         child: CreateNewCustomerScreen._(),
       );
 
@@ -38,9 +38,12 @@ class CreateNewCustomerScreen extends StatefulWidget {
 
 class _CreateNewCustomerScreenState
     extends KayleeState<CreateNewCustomerScreen> {
-  CustomerScreenOpenFrom openFrom;
-  CustomerDetailScreenBloc bloc;
-  StreamSubscription customerDetailScreenBlocSub;
+  CustomerScreenOpenFrom get openFrom =>
+      context.getArguments<NewCustomerScreenData>()!.openFrom;
+
+  CustomerDetailScreenBloc get bloc =>
+      context.bloc<CustomerDetailScreenBloc>()!;
+  late StreamSubscription customerDetailScreenBlocSub;
   final nameTfController = TextEditingController();
   final nameFocus = FocusNode();
   final homeTownCityController = PickInputController<City>();
@@ -55,8 +58,7 @@ class _CreateNewCustomerScreenState
   @override
   void initState() {
     super.initState();
-    bloc = context.bloc<CustomerDetailScreenBloc>();
-    customerDetailScreenBlocSub = bloc.listen((state) {
+    customerDetailScreenBlocSub = bloc.stream.listen((state) {
       if (state.loading) {
         showLoading();
       } else if (!state.loading) {
@@ -67,7 +69,7 @@ class _CreateNewCustomerScreenState
             error: state.error,
             onPressed: () {
               popScreen();
-              switch (state.error.code) {
+              switch (state.error!.code) {
                 case ErrorCode.NAME_CODE:
                   nameFocus.requestFocus();
                   break;
@@ -85,15 +87,13 @@ class _CreateNewCustomerScreenState
             message: state.message,
             onPressed: popScreen,
             onDismiss: () {
-              context.bloc<ReloadBloc>().reload(widget: CustomerListScreen);
+              context.bloc<ReloadBloc>()!.reload(widget: CustomerListScreen);
               popScreen();
             },
           );
         }
       }
     });
-    final data = context.bundle.args as NewCustomerScreenData;
-    openFrom = data?.openFrom;
     if (openFrom == CustomerScreenOpenFrom.customerListItem) {
       bloc.get();
     }
@@ -135,7 +135,7 @@ class _CreateNewCustomerScreenState
                       KayleeAlertDialogAction.dongY(
                         onPressed: () {
                           popScreen();
-                          bloc.state.item
+                          bloc.state.item!
                             ..name = nameTfController.text
                             ..birthday = birthDayController.value
                             ..hometownCity = homeTownCityController.value
@@ -174,7 +174,7 @@ class _CreateNewCustomerScreenState
         child: BlocConsumer<CustomerDetailScreenBloc, SingleModel<Customer>>(
           listener: (context, state) {
             imagePickerController.existedImageUrl = state.item?.image;
-            nameTfController.text = state.item?.name;
+            nameTfController.text = state.item?.name ?? '';
             birthDayController.value = state.item?.birthday;
             homeTownCityController.value = state.item?.hometownCity;
             addressController
@@ -182,8 +182,8 @@ class _CreateNewCustomerScreenState
               ..initCity = state.item?.city
               ..initDistrict = state.item?.district
               ..initWard = state.item?.wards;
-            phoneTfController.text = state.item?.phone;
-            emailTfController.text = state.item?.email;
+            phoneTfController.text = state.item?.phone ?? '';
+            emailTfController.text = state.item?.email ?? '';
           },
           listenWhen: (previous, current) => current is CustomerDetailModel,
           buildWhen: (previous, current) => current is CustomerDetailModel,
@@ -269,7 +269,7 @@ class _CreateNewCustomerScreenState
                   KayLeeRoundedButton.normal(
                     text: Strings.taoDonHang,
                     onPressed: () {
-                      context.bloc<ReloadBloc>().reload(
+                      context.bloc<ReloadBloc>()!.reload(
                           widget: SelectCustomerField,
                           bundle: Bundle(Customer(
                               name: nameTfController.text,

@@ -32,8 +32,8 @@ class ExpirationScreen extends StatefulWidget {
 }
 
 class _ExpirationScreenState extends KayleeState<ExpirationScreen> {
-  ExpirationScreenBloc get _bloc => context.bloc<ExpirationScreenBloc>();
-  StreamSubscription _sub;
+  ExpirationScreenBloc get _bloc => context.bloc<ExpirationScreenBloc>()!;
+  late StreamSubscription _sub;
 
   ExpirationScreenArgument get argument =>
       context.getArguments<ExpirationScreenArgument>() ??
@@ -42,7 +42,7 @@ class _ExpirationScreenState extends KayleeState<ExpirationScreen> {
   @override
   void initState() {
     super.initState();
-    _sub = _bloc.listen((state) {
+    _sub = _bloc.stream.listen((state) {
       if (state.loading) {
         showLoading();
       } else if (!state.loading) {
@@ -78,7 +78,7 @@ class _ExpirationScreenState extends KayleeState<ExpirationScreen> {
             if (argument.isExpired)
               KayleeAppBarAction.hyperText(
                 title: Strings.dangXuat,
-                onTap: context.bloc<AppBloc>().loggedOut,
+                onTap: context.bloc<AppBloc>()!.loggedOut,
               )
           ],
         ),
@@ -93,7 +93,7 @@ class _ExpirationScreenState extends KayleeState<ExpirationScreen> {
             );
           },
         ),
-        bottom: argument?.isExpired ?? false
+        bottom: argument.isExpired ?? false
             ? KayLeeRoundedButton.normal(
                 text: Strings.thuLai,
                 margin: const EdgeInsets.symmetric(

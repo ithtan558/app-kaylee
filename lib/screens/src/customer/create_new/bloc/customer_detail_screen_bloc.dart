@@ -8,7 +8,7 @@ class CustomerDetailScreenBloc extends Cubit<SingleModel<Customer>>
     implements CRUDInterface {
   final CustomerService customerService;
 
-  CustomerDetailScreenBloc({this.customerService, Customer customer})
+  CustomerDetailScreenBloc({required this.customerService, Customer? customer})
       : super(SingleModel(item: customer));
 
   @override
@@ -115,34 +115,34 @@ class CustomerDetailScreenBloc extends Cubit<SingleModel<Customer>>
 class CustomerDetailModel extends SingleModel<Customer> {
   CustomerDetailModel.copy(SingleModel old) {
     this
-      ..loading = old?.loading
-      ..item = old?.item;
+      ..loading = old.loading
+      ..item = old.item;
   }
 }
 
 class DeleteCustomerDetailModel extends SingleModel<Customer> {
   DeleteCustomerDetailModel.copy(SingleModel old) {
     this
-      ..loading = old?.loading
-      ..item = old?.item
-      ..message = old?.message;
+      ..loading = old.loading
+      ..item = old.item
+      ..message = old.message;
   }
 }
 
 class UpdateCustomerDetailModel extends SingleModel<Customer> {
   UpdateCustomerDetailModel.copy(SingleModel old) {
     this
-      ..loading = old?.loading
-      ..item = old?.item
-      ..message = old?.message;
+      ..loading = old.loading
+      ..item = old.item
+      ..message = old.message;
   }
 }
 
 class NewCustomerDetailModel extends SingleModel<Customer> {
   NewCustomerDetailModel.copy(SingleModel old) {
     this
-      ..loading = old?.loading
-      ..item = old?.item
-      ..message = old?.message;
+      ..loading = old.loading
+      ..item = old.item
+      ..message = old.message;
   }
 }

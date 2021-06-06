@@ -11,9 +11,9 @@ import 'package:kaylee/widgets/widgets.dart';
 
 class CommProdOrderList extends StatefulWidget {
   static Widget newInstance({
-    ScrollController scrollController,
-    Employee employee,
-    DateTimeRange range,
+    required ScrollController scrollController,
+    required Employee employee,
+    required DateTimeRange range,
   }) =>
       BlocProvider(
           create: (context) => CommProdOrdersBloc(
@@ -27,19 +27,18 @@ class CommProdOrderList extends StatefulWidget {
           ));
   final ScrollController scrollController;
 
-  CommProdOrderList._({this.scrollController});
+  CommProdOrderList._({required this.scrollController});
 
   @override
   _CommProdOrderListState createState() => _CommProdOrderListState();
 }
 
 class _CommProdOrderListState extends KayleeState<CommProdOrderList> {
-  CommProdOrdersBloc _bloc;
+  CommProdOrdersBloc get _bloc => context.bloc<CommProdOrdersBloc>()!;
 
   @override
   void initState() {
     super.initState();
-    _bloc = context.bloc<CommProdOrdersBloc>();
     _bloc.loadOrders();
   }
 
@@ -86,7 +85,7 @@ class _CommProdOrderListState extends KayleeState<CommProdOrderList> {
                   controller: widget.scrollController,
                   physics: BouncingScrollPhysics(),
                   itemBuilder: (c, index) {
-                    final item = state.items.elementAt(index);
+                    final item = state.items!.elementAt(index);
                     return CommOrderItem(
                       date: item.createdAt,
                       code: item.code,

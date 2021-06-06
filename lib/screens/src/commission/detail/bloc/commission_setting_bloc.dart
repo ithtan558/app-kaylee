@@ -7,8 +7,8 @@ class CommissionSettingBloc extends Cubit<SingleModel<CommissionSetting>> {
   final Employee employee;
 
   CommissionSettingBloc({
-    this.commissionService,
-    this.employee,
+    required this.commissionService,
+    required this.employee,
   }) : super(SingleModel());
 
   void loadSetting() {
@@ -28,8 +28,8 @@ class CommissionSettingBloc extends Cubit<SingleModel<CommissionSetting>> {
   }
 
   void updateSetting({
-    int product,
-    int service,
+    int? product,
+    int? service,
   }) {
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
@@ -56,17 +56,17 @@ class CommissionSettingBloc extends Cubit<SingleModel<CommissionSetting>> {
 class CommissionSettingUpdateModel extends SingleModel<CommissionSetting> {
   CommissionSettingUpdateModel.copy(SingleModel old) {
     this
-      ..loading = old?.loading
-      ..item = old?.item
-      ..message = old?.message;
+      ..loading = old.loading
+      ..item = old.item
+      ..message = old.message;
   }
 }
 
 class CommissionSettingModel extends SingleModel<CommissionSetting> {
   CommissionSettingModel.copy(SingleModel old) {
     this
-      ..loading = old?.loading
-      ..item = old?.item
-      ..message = old?.message;
+      ..loading = old.loading
+      ..item = old.item
+      ..message = old.message;
   }
 }

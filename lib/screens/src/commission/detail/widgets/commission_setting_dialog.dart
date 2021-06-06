@@ -8,10 +8,10 @@ import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class CommissionSettingDialog extends StatefulWidget {
-  static Widget newInstance({ScrollController scrollController}) =>
+  static Widget newInstance({required ScrollController scrollController}) =>
       BlocProvider(
         create: (context) => CommissionSettingBloc(
-          employee: context.repository<Employee>(),
+          employee: context.repository<Employee>()!,
           commissionService: context.network.provideCommissionService(),
         ),
         child: CommissionSettingDialog._(
@@ -20,7 +20,7 @@ class CommissionSettingDialog extends StatefulWidget {
       );
   final ScrollController scrollController;
 
-  CommissionSettingDialog._({this.scrollController});
+  CommissionSettingDialog._({required this.scrollController});
 
   @override
   _CommissionSettingDialogState createState() =>
@@ -33,12 +33,12 @@ class _CommissionSettingDialogState
   final serviceController = TextEditingController();
   final productFocus = FocusNode();
   final serviceFocus = FocusNode();
-  CommissionSettingBloc _bloc;
+
+  CommissionSettingBloc get _bloc => context.bloc<CommissionSettingBloc>()!;
 
   @override
   void initState() {
     super.initState();
-    _bloc = context.bloc<CommissionSettingBloc>();
     _bloc.loadSetting();
   }
 
@@ -57,9 +57,9 @@ class _CommissionSettingDialogState
       child:
           BlocListener<CommissionSettingBloc, SingleModel<CommissionSetting>>(
         listener: (context, state) {
-          if (state.loading ?? false) {
+          if (state.loading) {
             showLoading();
-          } else if (!(state.loading ?? false)) {
+          } else if (!state.loading) {
             hideLoading();
             if (state.error != null) {
               showKayleeAlertErrorYesDialog(
@@ -88,9 +88,9 @@ class _CommissionSettingDialogState
                   if (state is CommissionSettingModel) {
                     final data = state.item;
                     productController.text =
-                        data?.commissionProduct?.toString();
+                        data?.commissionProduct?.toString() ?? '';
                     serviceController.text =
-                        data?.commissionService?.toString();
+                        data?.commissionService?.toString() ?? '';
                   }
                 },
                 listenWhen: (previous, current) =>
@@ -159,7 +159,7 @@ class _CommissionSettingDialogState
                       margin: EdgeInsets.zero,
                       text: Strings.luu,
                       onPressed: () {
-                        primaryFocus.unfocus();
+                        primaryFocus!.unfocus();
                         _bloc.updateSetting(
                           product: int.tryParse(productController.text),
                           service: int.tryParse(serviceController.text),

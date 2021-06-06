@@ -13,18 +13,18 @@ class BrandListBloc extends Cubit<LoadMoreModel<Brand>>
     implements KayleeFilterInterface<BrandFilter> {
   BrandService brandService;
 
-  BrandListBloc({this.brandService}) : super(LoadMoreModel()) {
+  BrandListBloc({required this.brandService}) : super(LoadMoreModel()) {
     page = 1;
   }
 
-  BrandFilter _filter;
+  BrandFilter? _filter;
 
   @override
   void load() {
     super.load();
     state.loading = true;
     RequestHandler(
-      request: brandService?.getBrands(
+      request: brandService.getBrands(
         keyword: _filter?.keyword,
         cityId: _filter?.city?.id,
         districtIds: _filter?.district?.id?.toString(),
@@ -58,7 +58,7 @@ class BrandListBloc extends Cubit<LoadMoreModel<Brand>>
   }
 
   @override
-  BrandFilter getFilter() {
+  BrandFilter? getFilter() {
     return _filter;
   }
 
@@ -73,7 +73,7 @@ class BrandListBloc extends Cubit<LoadMoreModel<Brand>>
   @override
   BrandFilter updateFilter() {
     if (isEmptyFilter) _filter = BrandFilter();
-    return _filter;
+    return _filter!;
   }
 
   void loadInitData() {

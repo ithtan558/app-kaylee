@@ -3,13 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class CustomerItem extends StatelessWidget {
-  final Function() onTap;
   final Customer customer;
 
-  CustomerItem({this.onTap, this.customer});
+  CustomerItem({required this.customer});
 
   @override
   Widget build(BuildContext context) {
@@ -20,19 +20,25 @@ class CustomerItem extends StatelessWidget {
               itemHeight: double.infinity,
               child: KayleeImageInfoLayout(
                 imageView: KayleeNetworkImage.normal(
-                  customer?.image ?? '',
+                  customer.image ?? '',
                   fit: BoxFit.cover,
                 ),
                 infoView: Padding(
                   padding: const EdgeInsets.only(top: Dimens.px16),
                   child: KayleeText.hyper16W500(
-                    customer?.name ?? '',
+                    customer.name ?? '',
                     maxLines: 2,
                     textAlign: TextAlign.center,
                   ),
                 ),
               )),
-          onTap: onTap,
+          onTap: () {
+            context.push(PageIntent(
+                screen: CreateNewCustomerScreen,
+                bundle: Bundle(NewCustomerScreenData(
+                    openFrom: CustomerScreenOpenFrom.customerListItem,
+                    customer: customer))));
+          },
         ),
         Positioned(
           left: 0,

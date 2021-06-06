@@ -4,9 +4,9 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class CommOrderItem extends StatelessWidget {
-  final DateTime date;
-  final String code;
-  final String name;
+  final DateTime? date;
+  final String? code;
+  final String? name;
   final dynamic commissionAmount;
 
   CommOrderItem({

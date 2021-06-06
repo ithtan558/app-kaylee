@@ -1,5 +1,4 @@
 import 'package:anth_package/anth_package.dart';
-import 'package:flutter/foundation.dart';
 import 'package:kaylee/base/kaylee_filter_interface.dart';
 import 'package:kaylee/base/kaylee_list_interface.dart';
 import 'package:kaylee/base/loadmore_interface.dart';
@@ -16,9 +15,9 @@ class CommissionListScreenBloc extends Cubit<LoadMoreModel<Employee>>
     with KayleeListInterfaceMixin
     implements LoadMoreInterface, KayleeFilterInterface<CommissionFilter> {
   final EmployeeService employeeService;
-  CommissionFilter _filter;
+  CommissionFilter? _filter;
 
-  CommissionListScreenBloc({@required this.employeeService})
+  CommissionListScreenBloc({required this.employeeService})
       : super(LoadMoreModel());
 
   void loadEmployees() {
@@ -69,7 +68,7 @@ class CommissionListScreenBloc extends Cubit<LoadMoreModel<Employee>>
   }
 
   @override
-  CommissionFilter getFilter() {
+  CommissionFilter? getFilter() {
     return _filter;
   }
 
@@ -84,7 +83,7 @@ class CommissionListScreenBloc extends Cubit<LoadMoreModel<Employee>>
   @override
   CommissionFilter updateFilter() {
     if (isEmptyFilter) _filter = CommissionFilter();
-    return _filter;
+    return _filter!;
   }
 
   @override

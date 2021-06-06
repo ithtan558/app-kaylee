@@ -24,7 +24,7 @@ class BrandListScreen extends StatefulWidget {
 }
 
 class _BrandListScreenState extends KayleeState<BrandListScreen> {
-  BrandListBloc get brandListBloc => context.bloc<BrandListBloc>();
+  BrandListBloc get brandListBloc => context.bloc<BrandListBloc>()!;
 
   @override
   void initState() {
@@ -33,7 +33,7 @@ class _BrandListScreenState extends KayleeState<BrandListScreen> {
   }
 
   @override
-  void onReloadWidget(Type screen, Bundle bundle) {
+  void onReloadWidget(Type screen, Bundle? bundle) {
     if (screen == BrandListScreen) {
       brandListBloc.refresh();
     }

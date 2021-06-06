@@ -28,15 +28,15 @@ class CommissionListScreen extends StatefulWidget {
 }
 
 class _CommissionListScreenState extends KayleeState<CommissionListScreen> {
-  CommissionListScreenBloc commissionListScreenBloc;
-  StreamSubscription commissionBlocSub;
+  CommissionListScreenBloc get commissionListScreenBloc =>
+      context.bloc<CommissionListScreenBloc>()!;
+  late StreamSubscription commissionBlocSub;
   final dateFilterController = KayleeDateFilterController();
 
   @override
   void initState() {
     super.initState();
-    commissionListScreenBloc = context.bloc<CommissionListScreenBloc>();
-    commissionBlocSub = commissionListScreenBloc.listen((state) {
+    commissionBlocSub = commissionListScreenBloc.stream.listen((state) {
       if (state.error != null) {
         showKayleeAlertErrorYesDialog(
             context: context, error: state.error, onPressed: popScreen);
@@ -71,7 +71,7 @@ class _CommissionListScreenState extends KayleeState<CommissionListScreen> {
             child: KayleeRefreshIndicator(
               controller: commissionListScreenBloc,
               child: KayleeLoadMoreHandler(
-                controller: context.bloc<CommissionListScreenBloc>(),
+                controller: commissionListScreenBloc,
                 child: BlocBuilder<CommissionListScreenBloc,
                     LoadMoreModel<Employee>>(
                   buildWhen: (previous, current) {
@@ -82,7 +82,7 @@ class _CommissionListScreenState extends KayleeState<CommissionListScreen> {
                       padding: EdgeInsets.all(Dimens.px16),
                       childAspectRatio: 103 / 195,
                       itemBuilder: (c, index) {
-                        final item = state.items.elementAt(index);
+                        final item = state.items!.elementAt(index);
                         return StaffItem(
                           employee: item,
                           onTap: () {

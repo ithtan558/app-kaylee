@@ -24,7 +24,7 @@ enum BrandScreenOpenFrom { brandItem, addNewBrandBtn }
 
 class CreateNewBrandScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<BrandDetailScreenBloc>(
-    create: (context) => BrandDetailScreenBloc(
+        create: (context) => BrandDetailScreenBloc(
             brandService: context.network.provideBrandService(),
             brand: context.getArguments<NewBrandScreenData>()?.brand),
         child: CreateNewBrandScreen._(),
@@ -130,14 +130,14 @@ class _CreateNewBrandScreenState extends KayleeState<CreateNewBrandScreen> {
                             KayleeAlertDialogAction.dongY(
                               onPressed: () {
                                 popScreen();
-                                bloc.state.item
+                                bloc.state.item!
                                   ..name = nameTfController.text
                                   ..phone = phoneTfController.text
                                   ..location = addressController.address
                                   ..city = addressController.city
                                   ..district = addressController.district
-                                  ..startTime = startTimeController.value.time
-                                  ..endTime = endTimeController.value.time
+                                  ..startTime = startTimeController.value?.time
+                                  ..endTime = endTimeController.value?.time
                                   ..wards = addressController.ward
                                   ..imageFile = bannerPickerController.image;
                                 bloc.update();
@@ -170,13 +170,13 @@ class _CreateNewBrandScreenState extends KayleeState<CreateNewBrandScreen> {
         child: BlocConsumer<BrandDetailScreenBloc, SingleModel<Brand>>(
           listener: (context, state) {
             bannerPickerController.existedImageUrl = state.item?.image;
-            nameTfController.text = state.item?.name;
+            nameTfController.text = state.item?.name ?? '';
             addressController
               ..initAddress = state.item?.location
               ..initCity = state.item?.city
               ..initDistrict = state.item?.district
               ..initWard = state.item?.wards;
-            phoneTfController.text = state.item?.phone;
+            phoneTfController.text = state.item?.phone ?? '';
             startTimeController.value = state.item?.start;
             endTimeController.value = state.item?.end;
           },

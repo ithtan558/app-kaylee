@@ -17,16 +17,17 @@ class CommissionDetailScreenData {
   Employee employee;
   DateTime date;
 
-  CommissionDetailScreenData({this.employee, this.date});
+  CommissionDetailScreenData({required this.employee, required this.date});
 }
 
 class CommissionDetailScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider(
-        create: (context) => CommissionDetailScreenBloc(
+    create: (context) => CommissionDetailScreenBloc(
             commissionService: context.network.provideCommissionService(),
             employee:
-                context.getArguments<CommissionDetailScreenData>().employee,
-            startDate: context.getArguments<CommissionDetailScreenData>().date),
+                context.getArguments<CommissionDetailScreenData>()!.employee,
+            startDate:
+                context.getArguments<CommissionDetailScreenData>()!.date),
         child: CommissionDetailScreen._(),
       );
 
@@ -37,16 +38,16 @@ class CommissionDetailScreen extends StatefulWidget {
 }
 
 class _CommissionDetailScreenState extends KayleeState<CommissionDetailScreen> {
-  CommissionDetailScreenBloc _bloc;
-  StreamSubscription _sub;
+  CommissionDetailScreenBloc get _bloc =>
+      context.bloc<CommissionDetailScreenBloc>()!;
+  late StreamSubscription _sub;
   final dateController = KayleeDatePickerTextController();
 
   @override
   void initState() {
     super.initState();
-    _bloc = context.bloc<CommissionDetailScreenBloc>();
     // dateController.value = _bloc.date;
-    _sub = _bloc.listen((state) {
+    _sub = _bloc.stream.listen((state) {
       if (state.loading) {
         showLoading();
       } else if (!state.loading) {
@@ -101,7 +102,7 @@ class _CommissionDetailScreenState extends KayleeState<CommissionDetailScreen> {
         buildWhen: (previous, current) => current is CommissionDetailModel,
         builder: (context, state) {
           if (state is! CommissionDetailModel) return Container();
-          final data = (state as CommissionDetailModel).item;
+          final data = state.item!;
           return Column(
             children: [
               Padding(
@@ -162,14 +163,14 @@ class _CommissionDetailScreenState extends KayleeState<CommissionDetailScreen> {
                     Expanded(
                       child: KayleeTextField.priceWithUnderline(
                         title: Strings.doanhSo,
-                        price: data.commissionProduct.total,
+                        price: data.commissionProduct?.total,
                       ),
                     ),
                     SizedBox(width: Dimens.px16),
                     Expanded(
                       child: KayleeTextField.priceWithUnderline(
                         title: Strings.hoaHong,
-                        price: data.commissionProduct.commission,
+                        price: data.commissionProduct?.commission,
                       ),
                     ),
                   ],
@@ -209,14 +210,14 @@ class _CommissionDetailScreenState extends KayleeState<CommissionDetailScreen> {
                     Expanded(
                       child: KayleeTextField.priceWithUnderline(
                         title: Strings.doanhSo,
-                        price: data.commissionService.total,
+                        price: data.commissionService?.total,
                       ),
                     ),
                     SizedBox(width: Dimens.px16),
                     Expanded(
                       child: KayleeTextField.priceWithUnderline(
                         title: Strings.hoaHong,
-                        price: data.commissionService.commission,
+                        price: data.commissionService?.commission,
                       ),
                     ),
                   ],

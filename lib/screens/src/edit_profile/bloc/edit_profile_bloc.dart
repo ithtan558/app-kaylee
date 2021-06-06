@@ -57,15 +57,15 @@ class EditProfileBloc extends Cubit<SingleModel<UserInfo>> {
 class ProfileModel extends SingleModel<UserInfo> {
   ProfileModel.copy(SingleModel old) {
     this
-      ..loading = old?.loading
-      ..item = old?.item;
+      ..loading = old.loading
+      ..item = old.item;
   }
 }
 
 class UpdateProfileModel extends SingleModel<UserInfo> {
   UpdateProfileModel.copy(SingleModel old) {
     this
-      ..loading = old?.loading
-      ..message = old?.message;
+      ..loading = old.loading
+      ..message = old.message;
   }
 }

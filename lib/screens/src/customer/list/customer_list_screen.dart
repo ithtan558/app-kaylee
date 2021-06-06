@@ -27,14 +27,14 @@ class CustomerListScreen extends StatefulWidget {
 }
 
 class _CustomerListScreenState extends KayleeState<CustomerListScreen> {
-  CustomerListScreenBloc customersBloc;
-  StreamSubscription customersBlocSub;
+  CustomerListScreenBloc get customersBloc =>
+      context.bloc<CustomerListScreenBloc>()!;
+  late StreamSubscription customersBlocSub;
 
   @override
   void initState() {
     super.initState();
-    customersBloc = context.bloc<CustomerListScreenBloc>();
-    customersBlocSub = customersBloc.listen((state) {
+    customersBlocSub = customersBloc.stream.listen((state) {
       if (!state.loading && state.error != null) {
         showKayleeAlertErrorYesDialog(
             context: context, error: state.error, onPressed: popScreen);
@@ -50,7 +50,7 @@ class _CustomerListScreenState extends KayleeState<CustomerListScreen> {
   }
 
   @override
-  void onReloadWidget(Type widget, Bundle bundle) {
+  void onReloadWidget(Type widget, Bundle? bundle) {
     if (widget == CustomerListScreen) {
       customersBloc.refresh();
     }
@@ -82,13 +82,6 @@ class _CustomerListScreenState extends KayleeState<CustomerListScreen> {
             itemBuilder: (c, index, item) {
               return CustomerItem(
                 customer: item,
-                onTap: () {
-                  pushScreen(PageIntent(
-                      screen: CreateNewCustomerScreen,
-                      bundle: Bundle(NewCustomerScreenData(
-                          openFrom: CustomerScreenOpenFrom.customerListItem,
-                          customer: item))));
-                },
               );
             },
             loadingIndicatorBuilder: (context) => CupertinoActivityIndicator(

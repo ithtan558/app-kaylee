@@ -14,16 +14,16 @@ class CommSerOrdersBloc extends Cubit<LoadMoreModel<CommissionOrder>>
   final Employee employee;
 
   CommSerOrdersBloc({
-    this.commissionService,
-    this.startDate,
-    this.endDate,
-    this.employee,
+    required this.commissionService,
+    required this.startDate,
+    required this.endDate,
+    required this.employee,
   }) : super(LoadMoreModel());
 
   void loadOrders() {
     emit(LoadMoreModel.copy(state..loading = true));
     RequestHandler(
-      request: commissionService?.getServiceOfOrder(
+      request: commissionService.getServiceOfOrder(
         userId: employee.id,
         startDate: startDate.toFormatString(pattern: dateFormat),
         endDate: endDate.toFormatString(pattern: dateFormat),
