@@ -7,7 +7,7 @@ class ProdDetailScreenBloc extends Cubit<SingleModel<Product>>
     implements CRUDInterface {
   final ProductService prodService;
 
-  ProdDetailScreenBloc({this.prodService, Product product})
+  ProdDetailScreenBloc({required this.prodService, Product? product})
       : super(SingleModel(item: product));
 
   @override
@@ -15,7 +15,7 @@ class ProdDetailScreenBloc extends Cubit<SingleModel<Product>>
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
       request: prodService.newProduct(
-          code: state.item.code,
+          code: state.item?.code,
           name: state.item?.name,
           brandIds: state.item?.selectedBrandIds,
           price: state.item?.price,
@@ -88,7 +88,7 @@ class ProdDetailScreenBloc extends Cubit<SingleModel<Product>>
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
       request: prodService.updateProduct(
-        code: state.item.code,
+        code: state.item?.code,
         name: state.item?.name,
         brandIds: state.item?.selectedBrandIds,
         price: state.item?.price,
@@ -118,34 +118,34 @@ class ProdDetailScreenBloc extends Cubit<SingleModel<Product>>
 class ProdDetailModel extends SingleModel<Product> {
   ProdDetailModel.copy(SingleModel old) {
     this
-      ..loading = old?.loading
-      ..item = old?.item;
+      ..loading = old.loading
+      ..item = old.item;
   }
 }
 
 class DeleteProdDetailModel extends SingleModel<Product> {
   DeleteProdDetailModel.copy(SingleModel old) {
     this
-      ..loading = old?.loading
-      ..item = old?.item
-      ..message = old?.message;
+      ..loading = old.loading
+      ..item = old.item
+      ..message = old.message;
   }
 }
 
 class UpdateProdDetailModel extends SingleModel<Product> {
   UpdateProdDetailModel.copy(SingleModel old) {
     this
-      ..loading = old?.loading
-      ..item = old?.item
-      ..message = old?.message;
+      ..loading = old.loading
+      ..item = old.item
+      ..message = old.message;
   }
 }
 
 class NewProdDetailModel extends SingleModel<Product> {
   NewProdDetailModel.copy(SingleModel old) {
     this
-      ..loading = old?.loading
-      ..item = old?.item
-      ..message = old?.message;
+      ..loading = old.loading
+      ..item = old.item
+      ..message = old.message;
   }
 }

@@ -13,9 +13,9 @@ import 'package:kaylee/widgets/widgets.dart';
 
 class NewProdCateScreenData {
   final NewProdCateScreenOpenFrom openFrom;
-  final ProdCate prodCate;
+  final ProdCate? prodCate;
 
-  NewProdCateScreenData({this.openFrom, this.prodCate});
+  NewProdCateScreenData({required this.openFrom, this.prodCate});
 }
 
 enum NewProdCateScreenOpenFrom { cateItem, addNewCateBtn }
@@ -23,8 +23,8 @@ enum NewProdCateScreenOpenFrom { cateItem, addNewCateBtn }
 class CreateNewProdCateScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider(
       create: (context) => ProdCateDetailBloc(
-            productService: context.network.provideProductService(),
-            prodCate: context.getArguments<NewProdCateScreenData>().prodCate,
+        productService: context.network.provideProductService(),
+            prodCate: context.getArguments<NewProdCateScreenData>()!.prodCate,
           ),
       child: CreateNewProdCateScreen._());
 
@@ -37,9 +37,9 @@ class CreateNewProdCateScreen extends StatefulWidget {
 
 class _CreateNewProdCateScreenState
     extends KayleeState<CreateNewProdCateScreen> {
-  ProdCateDetailBloc _bloc;
-  NewProdCateScreenOpenFrom openFrom;
-  StreamSubscription _sub;
+  ProdCateDetailBloc get _bloc => context.bloc<ProdCateDetailBloc>()!;
+  late NewProdCateScreenOpenFrom openFrom;
+  late StreamSubscription _sub;
   final nameTfController = TextEditingController();
   final nameFocus = FocusNode();
   final codeTfController = TextEditingController();
@@ -50,8 +50,7 @@ class _CreateNewProdCateScreenState
   @override
   void initState() {
     super.initState();
-    _bloc = context.bloc<ProdCateDetailBloc>();
-    _sub = _bloc.listen((state) {
+    _sub = _bloc.stream.listen((state) {
       if (state.loading) {
         showLoading();
       } else if (!state.loading) {
@@ -65,13 +64,13 @@ class _CreateNewProdCateScreenState
         } else if (state is DeleteProductCateModel ||
             state is NewProductCateModel ||
             state is UpdateProductCateModel) {
-          context.bloc<ReloadBloc>().reload(widget: ProdCateListScreen);
+          context.bloc<ReloadBloc>()!.reload(widget: ProdCateListScreen);
           showKayleeAlertMessageYesDialog(
             context: context,
             message: state.message,
             onPressed: popScreen,
             onDismiss: () {
-              context.bloc<ReloadBloc>().reload(widget: ProdCateListScreen);
+              context.bloc<ReloadBloc>()!.reload(widget: ProdCateListScreen);
               popScreen();
             },
           );
@@ -79,8 +78,8 @@ class _CreateNewProdCateScreenState
       }
     });
 
-    final data = context.getArguments<NewProdCateScreenData>();
-    openFrom = data?.openFrom;
+    final data = context.getArguments<NewProdCateScreenData>()!;
+    openFrom = data.openFrom;
     if (openFrom == NewProdCateScreenOpenFrom.cateItem) {
       _bloc.get();
     }
@@ -121,7 +120,7 @@ class _CreateNewProdCateScreenState
                       KayleeAlertDialogAction.dongY(
                         onPressed: () {
                           popScreen();
-                          _bloc.state.item
+                          _bloc.state.item!
                             ..name = nameTfController.text
                             ..code = codeTfController.text
                             ..sequence =
@@ -147,9 +146,9 @@ class _CreateNewProdCateScreenState
         padding: const EdgeInsets.all(Dimens.px16),
         child: BlocConsumer<ProdCateDetailBloc, SingleModel<ProdCate>>(
           listener: (context, state) {
-            nameTfController.text = state.item?.name;
-            codeTfController.text = state.item?.code;
-            sequenceTfController.text = state.item?.sequence?.toString();
+            nameTfController.text = state.item?.name ?? '';
+            codeTfController.text = state.item?.code ?? '';
+            sequenceTfController.text = state.item?.sequence?.toString() ?? '';
           },
           listenWhen: (previous, current) => current is DetailProductCateModel,
           buildWhen: (previous, current) => current is DetailProductCateModel,

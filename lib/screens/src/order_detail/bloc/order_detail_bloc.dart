@@ -7,14 +7,14 @@ import 'package:kaylee/services/services.dart';
 class OrderDetailBloc extends Cubit<SingleModel<OrderRequest>>
     with CRUDInterface {
   final OrderService orderService;
-  Order order;
+  Order? order;
   final CartModule cart;
   final Reservation reservation;
 
   OrderDetailBloc({
-    this.orderService,
+    required this.orderService,
     this.order,
-    this.cart,
+    required this.cart,
     this.reservation,
   }) : super(SingleModel());
 

@@ -17,7 +17,7 @@ class NotifyDetailScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<NotifyDetailScreenBloc>(
         create: (context) => NotifyDetailScreenBloc(
           notificationService: context.network.provideNotificationService(),
-          notification: context.getArguments<models.Notification>(),
+          notification: context.getArguments<models.Notification>()!,
         ),
         child: NotifyDetailScreen._(),
       );
@@ -30,14 +30,14 @@ class NotifyDetailScreen extends StatefulWidget {
 
 class _NotifyDetailScreenState extends KayleeState<NotifyDetailScreen>
     with NotifyDetailScreenView {
-  NotifyDetailScreenBloc _bloc;
-  StreamSubscription sub;
+  NotifyDetailScreenBloc get _bloc => context.bloc<NotifyDetailScreenBloc>()!;
+  late StreamSubscription sub;
 
   @override
   void initState() {
     super.initState();
-    _bloc = context.bloc<NotifyDetailScreenBloc>()..view = this;
-    sub = _bloc.listen((state) {
+    _bloc.view = this;
+    sub = _bloc.stream.listen((state) {
       if (state.loading) {
         showLoading();
       } else if (!state.loading) {
@@ -111,7 +111,7 @@ class _NotifyDetailScreenState extends KayleeState<NotifyDetailScreen>
                 current is NotificationDetailModel,
             builder: (context, state) {
               if (state is! NotificationDetailModel) return Container();
-              final data = (state as NotificationDetailModel).item;
+              final data = state.item!;
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -127,7 +127,7 @@ class _NotifyDetailScreenState extends KayleeState<NotifyDetailScreen>
                     onTapUrl: (url) {
                       final pageIntent =
                           DeepLinkHelper.handleNotificationLink(link: url);
-                      if (pageIntent.isNotNull) {
+                      if (pageIntent != null) {
                         pushScreen(pageIntent);
                       } else {
                         showKayleeAlertErrorYesDialog(
@@ -148,7 +148,7 @@ class _NotifyDetailScreenState extends KayleeState<NotifyDetailScreen>
 
   @override
   void updateStatusSuccess() {
-    context.bloc<ReloadBloc>().reload(widget: NotificationButton);
+    context.bloc<ReloadBloc>()!.reload(widget: NotificationButton);
   }
 }
 

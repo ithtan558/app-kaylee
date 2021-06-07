@@ -36,15 +36,16 @@ class NotificationScreen extends StatefulWidget {
 }
 
 class _NotificationScreenState extends KayleeState<NotificationScreen> {
-  NotificationListBloc _notificationListBloc;
-  NotificationScreenBloc _notificationScreenBloc;
+  NotificationListBloc get _notificationListBloc =>
+      context.bloc<NotificationListBloc>()!;
+
+  NotificationScreenBloc get _notificationScreenBloc =>
+      context.bloc<NotificationScreenBloc>()!;
   final searchController = SearchInputFieldController();
 
   @override
   void initState() {
     super.initState();
-    _notificationListBloc = context.bloc<NotificationListBloc>();
-    _notificationScreenBloc = context.bloc<NotificationScreenBloc>();
     _notificationListBloc.loadInitData();
   }
 
@@ -54,7 +55,7 @@ class _NotificationScreenState extends KayleeState<NotificationScreen> {
   }
 
   @override
-  void onReloadWidget(Type widget, Bundle bundle) {
+  void onReloadWidget(Type widget, Bundle? bundle) {
     if (widget == NotificationScreen) {
       _notificationListBloc.refresh();
     }
@@ -89,19 +90,19 @@ class _NotificationScreenState extends KayleeState<NotificationScreen> {
                   onPressed: popScreen,
                   onDismiss: () {
                     context
-                        .bloc<ReloadBloc>()
+                        .bloc<ReloadBloc>()!
                         .reload(widget: NotificationButton);
                   },
                 );
               } else if (state is DeleteState) {
-                _notificationListBloc.removeItem(notification: state.item);
+                _notificationListBloc.removeItem(notification: state.item!);
                 showKayleeAlertMessageYesDialog(
                   context: context,
                   message: state.message,
                   onPressed: popScreen,
                   onDismiss: () {
                     context
-                        .bloc<ReloadBloc>()
+                        .bloc<ReloadBloc>()!
                         .reload(widget: NotificationButton);
                   },
                 );
@@ -180,7 +181,7 @@ class _NotificationScreenState extends KayleeState<NotificationScreen> {
                         return KayleeListView(
                           padding: EdgeInsets.zero,
                           itemBuilder: (context, index) {
-                            final item = state.items.elementAt(index);
+                            final item = state.items!.elementAt(index);
                             return NotifyItem(
                               notification: item,
                               onDeleted: () {
@@ -223,9 +224,9 @@ class _NotificationScreenState extends KayleeState<NotificationScreen> {
   @override
   void onPopResult(Type returnScreen, Bundle resultBundle) {
     if (returnScreen == NotifyDetailScreen &&
-        resultBundle?.args is models.Notification) {
+        resultBundle.args is models.Notification) {
       _notificationListBloc.removeItem(notification: resultBundle.args);
-      context.bloc<ReloadBloc>().reload(widget: NotificationButton);
+      context.bloc<ReloadBloc>()!.reload(widget: NotificationButton);
     }
   }
 }

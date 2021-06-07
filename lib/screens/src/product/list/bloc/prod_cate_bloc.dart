@@ -1,12 +1,11 @@
 import 'package:anth_package/anth_package.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/services/services.dart';
 
 class ProdCateBloc extends Cubit<SingleModel<List<Category>>> {
   ProductService productService;
 
-  ProdCateBloc({@required this.productService}) : super(SingleModel());
+  ProdCateBloc({required this.productService}) : super(SingleModel());
 
   void _loadProdCate() {
     RequestHandler(

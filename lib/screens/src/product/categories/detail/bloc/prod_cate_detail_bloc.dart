@@ -8,8 +8,8 @@ class ProdCateDetailBloc extends Cubit<SingleModel<ProdCate>>
   final ProductService productService;
 
   ProdCateDetailBloc({
-    this.productService,
-    ProdCate prodCate,
+    required this.productService,
+    ProdCate? prodCate,
   }) : super(SingleModel(item: prodCate));
 
   @override
@@ -19,7 +19,7 @@ class ProdCateDetailBloc extends Cubit<SingleModel<ProdCate>>
       request: productService.newProdCate(
         name: state.item?.name,
         code: state.item?.code,
-        sequence: state.item.sequence,
+        sequence: state.item?.sequence,
       ),
       onSuccess: ({message, result}) {
         emit(NewProductCateModel.copy(state
@@ -104,34 +104,34 @@ class ProdCateDetailBloc extends Cubit<SingleModel<ProdCate>>
 class UpdateProductCateModel extends SingleModel<ProdCate> {
   UpdateProductCateModel.copy(SingleModel old) {
     this
-      ..loading = old?.loading
-      ..item = old?.item
-      ..message = old?.message;
+      ..loading = old.loading
+      ..item = old.item
+      ..message = old.message;
   }
 }
 
 class DeleteProductCateModel extends SingleModel<ProdCate> {
   DeleteProductCateModel.copy(SingleModel old) {
     this
-      ..loading = old?.loading
-      ..item = old?.item
-      ..message = old?.message;
+      ..loading = old.loading
+      ..item = old.item
+      ..message = old.message;
   }
 }
 
 class NewProductCateModel extends SingleModel<ProdCate> {
   NewProductCateModel.copy(SingleModel old) {
     this
-      ..loading = old?.loading
-      ..item = old?.item
-      ..message = old?.message;
+      ..loading = old.loading
+      ..item = old.item
+      ..message = old.message;
   }
 }
 
 class DetailProductCateModel extends SingleModel<ProdCate> {
   DetailProductCateModel.copy(SingleModel old) {
     this
-      ..loading = old?.loading
-      ..item = old?.item;
+      ..loading = old.loading
+      ..item = old.item;
   }
 }

@@ -3,7 +3,7 @@ import 'package:kaylee/models/models.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class ProdCateItem extends CategoryItem {
-  ProdCateItem({ProdCate category, VoidCallback onTap})
+  ProdCateItem({required ProdCate category, required VoidCallback onTap})
       : super(
           index: category.sequence,
           name: category.name,

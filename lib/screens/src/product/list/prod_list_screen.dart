@@ -34,18 +34,17 @@ class ProdListScreen extends StatefulWidget {
 }
 
 class _ProdListScreenState extends KayleeState<ProdListScreen> {
-  ProdCateBloc cateBloc;
-  StreamSubscription cateBlocSub;
-  ProdListBloc prodsListBloc;
-  StreamSubscription prodListBlocSub;
+  ProdCateBloc get cateBloc => context.bloc<ProdCateBloc>()!;
+  late StreamSubscription cateBlocSub;
+
+  ProdListBloc get prodsListBloc => context.bloc<ProdListBloc>()!;
+  late StreamSubscription prodListBlocSub;
 
   @override
   void initState() {
     super.initState();
-    cateBloc = context.bloc<ProdCateBloc>();
-    prodsListBloc = context.bloc<ProdListBloc>();
 
-    cateBlocSub = cateBloc.listen((state) {
+    cateBlocSub = cateBloc.stream.listen((state) {
       if (!state.loading) {
         hideLoading();
         if (state.error != null) {
@@ -55,19 +54,17 @@ class _ProdListScreenState extends KayleeState<ProdListScreen> {
             onPressed: popScreen,
           );
         } else {
-          prodsListBloc.loadInitDataWithCate(
-              cateId: state.item
-                  ?.firstWhere(
-                    (element) => true,
-                    orElse: () => null,
-                  )
-                  ?.id);
+          int? id;
+          try {
+            id = (state.item?.firstWhere((element) => true))?.id;
+          } catch (_) {}
+          prodsListBloc.loadInitDataWithCate(cateId: id);
         }
       } else if (state.loading) {
         showLoading();
       }
     });
-    prodListBlocSub = prodsListBloc.listen((state) {
+    prodListBlocSub = prodsListBloc.stream.listen((state) {
       if (state.error != null) {
         showKayleeAlertErrorYesDialog(context: context, error: state.error);
       }
@@ -83,7 +80,7 @@ class _ProdListScreenState extends KayleeState<ProdListScreen> {
   }
 
   @override
-  void onReloadWidget(Type widget, Bundle bundle) {
+  void onReloadWidget(Type widget, Bundle? bundle) {
     if (widget == ProdCateListScreen) {
       cateBloc.refresh();
     } else if (widget == ProdListScreen) {
@@ -115,11 +112,11 @@ class _ProdListScreenState extends KayleeState<ProdListScreen> {
               builder: (context, state) {
                 final categories = state.item;
                 return KayleeTabBar(
-                  itemCount: categories?.length,
-                  mapTitle: (index) => categories.elementAt(index).name,
+                  itemCount: categories?.length ?? 0,
+                  mapTitle: (index) => categories!.elementAt(index).name ?? '',
                   onSelected: (value) {
                     prodsListBloc.changeTab(
-                        cateId: cateBloc.state.item.elementAt(value).id);
+                        cateId: categories!.elementAt(value).id);
                   },
                 );
               },
@@ -127,7 +124,7 @@ class _ProdListScreenState extends KayleeState<ProdListScreen> {
             pageView: KayleeRefreshIndicator(
               controller: prodsListBloc,
               child: KayleeLoadMoreHandler(
-                controller: context.bloc<ProdListBloc>(),
+                controller: prodsListBloc,
                 child: BlocConsumer<ProdListBloc, LoadMoreModel<Product>>(
                   listener: (context, state) {
                     if (state.error != null) {
@@ -143,7 +140,7 @@ class _ProdListScreenState extends KayleeState<ProdListScreen> {
                       padding: EdgeInsets.all(Dimens.px16),
                       childAspectRatio: 103 / 195,
                       itemBuilder: (c, index) {
-                        final item = state.items.elementAt(index);
+                        final item = state.items!.elementAt(index);
                         return KayleeProdItemView.canTap(
                           data: KayleeProdItemData(
                               name: item.name,

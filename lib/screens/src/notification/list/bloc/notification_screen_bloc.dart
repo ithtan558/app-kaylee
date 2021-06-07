@@ -7,7 +7,8 @@ import 'package:kaylee/services/services.dart';
 class NotificationScreenBloc extends Cubit<SingleModel> {
   final NotificationService notificationService;
 
-  NotificationScreenBloc({this.notificationService}) : super(SingleModel());
+  NotificationScreenBloc({required this.notificationService})
+      : super(SingleModel());
 
   void deleteAll() {
     emit(SingleModel.copy(state..loading = true));
@@ -25,7 +26,7 @@ class NotificationScreenBloc extends Cubit<SingleModel> {
     );
   }
 
-  void delete({models.Notification notification}) {
+  void delete({required models.Notification notification}) {
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
       request: notificationService.delete(id: notification.id),
@@ -48,16 +49,16 @@ class NotificationScreenBloc extends Cubit<SingleModel> {
 
 class DeleteAllState extends SingleModel {
   DeleteAllState({
-    Message message,
-    bool loading,
+    Message? message,
+    bool loading = false,
   }) : super(loading: loading, message: message);
 }
 
 class DeleteState extends SingleModel<models.Notification> {
   DeleteState({
-    Message message,
-    models.Notification item,
-    bool loading,
+    Message? message,
+    required models.Notification item,
+    bool loading = false,
   }) : super(loading: loading, message: message, item: item);
 }
 
@@ -66,11 +67,12 @@ class NotificationListBloc extends Cubit<LoadMoreModel<models.Notification>>
     implements LoadMoreInterface {
   final NotificationService notificationService;
 
-  NotificationListBloc({this.notificationService}) : super(LoadMoreModel());
+  NotificationListBloc({required this.notificationService})
+      : super(LoadMoreModel());
 
-  String keyword;
+  String? keyword;
 
-  void search({String keyword}) {
+  void search({String? keyword}) {
     state.items = null;
     this.keyword = keyword;
     loadNotification();
@@ -108,13 +110,13 @@ class NotificationListBloc extends Cubit<LoadMoreModel<models.Notification>>
     );
   }
 
-  void removeItem({models.Notification notification}) {
-    state.items.removeWhere((e) => e.id == notification.id);
+  void removeItem({required models.Notification notification}) {
+    state.items?.removeWhere((e) => e.id == notification.id);
     emit(LoadMoreModel.copy(state));
   }
 
   void removeAll() {
-    emit(LoadMoreModel.copy(state..items.clear()));
+    emit(LoadMoreModel.copy(state..items?.clear()));
   }
 
   @override

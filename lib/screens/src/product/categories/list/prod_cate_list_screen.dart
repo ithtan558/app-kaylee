@@ -23,7 +23,7 @@ class ProdCateListScreen extends StatefulWidget {
 }
 
 class _ProdCateListScreenState extends KayleeState<ProdCateListScreen> {
-  ProCateListScreenBloc get _bloc => context.bloc<ProCateListScreenBloc>();
+  ProCateListScreenBloc get _bloc => context.bloc<ProCateListScreenBloc>()!;
 
   @override
   void initState() {
@@ -32,7 +32,7 @@ class _ProdCateListScreenState extends KayleeState<ProdCateListScreen> {
   }
 
   @override
-  void onReloadWidget(Type screen, Bundle bundle) {
+  void onReloadWidget(Type screen, Bundle? bundle) {
     if (screen == ProdCateListScreen) {
       _bloc.refresh();
     }
@@ -50,7 +50,7 @@ class _ProdCateListScreenState extends KayleeState<ProdCateListScreen> {
             child: KayleeRefreshIndicator(
               controller: _bloc,
               child: KayleeLoadMoreHandler(
-                controller: context.bloc<ProCateListScreenBloc>(),
+                controller: _bloc,
                 child: BlocConsumer<ProCateListScreenBloc,
                     LoadMoreModel<ProdCate>>(
                   listener: (context, state) {
@@ -70,7 +70,7 @@ class _ProdCateListScreenState extends KayleeState<ProdCateListScreen> {
                     return KayleeListView(
                       padding: EdgeInsets.all(Dimens.px16),
                       itemBuilder: (c, index) {
-                        final item = state.items.elementAt(index);
+                        final item = state.items!.elementAt(index);
                         return ProdCateItem(
                           category: item,
                           onTap: () {

@@ -24,7 +24,7 @@ class NewOrderScreenData {
   final Reservation reservation;
 
   NewOrderScreenData({
-    this.openFrom,
+    required this.openFrom,
     this.order,
     this.reservation,
   });

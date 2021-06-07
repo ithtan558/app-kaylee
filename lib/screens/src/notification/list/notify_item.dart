@@ -6,12 +6,11 @@ import 'package:kaylee/screens/src/notification/detail/notify_detail_screen.dart
 import 'package:kaylee/widgets/widgets.dart';
 
 class NotifyItem extends StatefulWidget {
-  final String index;
-  final Function() onDeleted;
-  final Function() onTap;
+  final VoidCallback? onDeleted;
+  final VoidCallback? onTap;
   final models.Notification notification;
 
-  NotifyItem({this.index, this.onDeleted, this.onTap, this.notification})
+  NotifyItem({this.onDeleted, this.onTap, required this.notification})
       : super(key: ValueKey(notification));
 
   @override
@@ -25,7 +24,7 @@ class _NotifyItemState extends BaseState<NotifyItem> {
   @override
   Widget build(BuildContext context) {
     return KayleeDismissible(
-      key: widget.key,
+      key: widget.key!,
       onDismissed: (_) {
         if (widget.onDeleted != null) {
           widget.onDeleted?.call();
@@ -64,7 +63,7 @@ class _NotifyItemState extends BaseState<NotifyItem> {
                       padding: EdgeInsets.only(
                           left: isRead ? 0 : Dimens.px8, right: Dimens.px16),
                       child: KayleeText(
-                        widget.notification.title,
+                        widget.notification.title ?? '',
                         maxLines: 1,
                         style: isRead
                             ? TextStyles.normal16W400
@@ -74,12 +73,12 @@ class _NotifyItemState extends BaseState<NotifyItem> {
                   ),
                   isRead
                       ? KayleeText.normal16W400(
-                          widget.notification.date,
+                    widget.notification.date ?? '',
                           textAlign: TextAlign.end,
                           maxLines: 1,
                         )
                       : KayleeText.normal16W500(
-                          widget.notification.date,
+                    widget.notification.date ?? '',
                           textAlign: TextAlign.end,
                           maxLines: 1,
                         )
@@ -88,7 +87,7 @@ class _NotifyItemState extends BaseState<NotifyItem> {
               Padding(
                 padding: const EdgeInsets.only(top: Dimens.px8),
                 child: KayleeText(
-                  widget.notification.description,
+                  widget.notification.description ?? '',
                   maxLines: 2,
                   style:
                       isRead ? TextStyles.hint16W400 : TextStyles.button16W400,

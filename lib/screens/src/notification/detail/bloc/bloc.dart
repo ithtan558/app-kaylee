@@ -8,9 +8,10 @@ class NotifyDetailScreenBloc extends Cubit<SingleModel>
     implements CRUDInterface {
   final NotificationService notificationService;
   Notification notification;
-  NotifyDetailScreenView view;
+  late NotifyDetailScreenView view;
 
-  NotifyDetailScreenBloc({this.notificationService, this.notification})
+  NotifyDetailScreenBloc(
+      {required this.notificationService, required this.notification})
       : super(SingleModel());
 
   void _updateStatus() {
@@ -83,17 +84,17 @@ class NotifyDetailScreenBloc extends Cubit<SingleModel>
 class DeleteNotificationState extends SingleModel {
   DeleteNotificationState.copy(SingleModel old) {
     this
-      ..loading = old?.loading
-      ..message = old?.message
-      ..item = old?.item;
+      ..loading = old.loading
+      ..message = old.message
+      ..item = old.item;
   }
 }
 
 class NotificationDetailModel extends SingleModel<Notification> {
   NotificationDetailModel.copy(SingleModel old) {
     this
-      ..loading = old?.loading
-      ..message = old?.message
-      ..item = old?.item;
+      ..loading = old.loading
+      ..message = old.message
+      ..item = old.item;
   }
 }

@@ -14,18 +14,18 @@ import 'package:kaylee/widgets/widgets.dart';
 
 class NewProdScreenData {
   final NewProdScreenOpenFrom openFrom;
-  final Product product;
+  final Product? product;
 
-  NewProdScreenData({this.openFrom, this.product});
+  NewProdScreenData({required this.openFrom, this.product});
 }
 
 enum NewProdScreenOpenFrom { prodItem, addNewProdBtn }
 
 class CreateNewProdScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<ProdDetailScreenBloc>(
-        create: (context) => ProdDetailScreenBloc(
+    create: (context) => ProdDetailScreenBloc(
             prodService: context.network.provideProductService(),
-            product: context.getArguments<NewProdScreenData>().product),
+            product: context.getArguments<NewProdScreenData>()!.product),
         child: CreateNewProdScreen._(),
       );
 
@@ -36,9 +36,10 @@ class CreateNewProdScreen extends StatefulWidget {
 }
 
 class _CreateNewProdScreenState extends KayleeState<CreateNewProdScreen> {
-  NewProdScreenOpenFrom openFrom;
-  ProdDetailScreenBloc bloc;
-  StreamSubscription prodDetailScreenBlocSub;
+  late NewProdScreenOpenFrom openFrom;
+
+  ProdDetailScreenBloc get bloc => context.bloc<ProdDetailScreenBloc>()!;
+  late StreamSubscription prodDetailScreenBlocSub;
   final bannerPickerController = ImagePickerController();
   final codeTfController = TextEditingController();
   final codeFocus = FocusNode();
@@ -58,21 +59,20 @@ class _CreateNewProdScreenState extends KayleeState<CreateNewProdScreen> {
   @override
   void initState() {
     super.initState();
-    bloc = context.bloc<ProdDetailScreenBloc>();
-    prodDetailScreenBlocSub = bloc.listen((state) {
+    prodDetailScreenBlocSub = bloc.stream.listen((state) {
       if (state.loading) {
         showLoading();
       } else if (!state.loading) {
         hideLoading();
         if (state.error != null) {
-          if (state.error.code.isNull) {
+          if (state.error!.code != null) {
             showKayleeAlertErrorYesDialog(
               context: context,
               error: state.error,
               onPressed: popScreen,
             );
           } else {
-            switch (state.error.code) {
+            switch (state.error!.code) {
               case ErrorCode.NAME_CODE:
                 nameFocus.requestFocus();
                 break;
@@ -92,15 +92,15 @@ class _CreateNewProdScreenState extends KayleeState<CreateNewProdScreen> {
             message: state.message,
             onPressed: popScreen,
             onDismiss: () {
-              context.bloc<ReloadBloc>().reload(widget: ProdListScreen);
+              context.bloc<ReloadBloc>()!.reload(widget: ProdListScreen);
               popScreen();
             },
           );
         }
       }
     });
-    final data = context.getArguments<NewProdScreenData>();
-    openFrom = data?.openFrom;
+    final data = context.getArguments<NewProdScreenData>()!;
+    openFrom = data.openFrom;
     if (openFrom == NewProdScreenOpenFrom.prodItem) {
       bloc.get();
     }
@@ -142,7 +142,7 @@ class _CreateNewProdScreenState extends KayleeState<CreateNewProdScreen> {
                       KayleeAlertDialogAction.dongY(
                         onPressed: () {
                           popScreen();
-                          bloc.state.item
+                          bloc.state.item!
                             ..code = codeTfController.text
                             ..name = nameTfController.text
                             ..brands = brandSelectController.brands
@@ -178,13 +178,13 @@ class _CreateNewProdScreenState extends KayleeState<CreateNewProdScreen> {
         child: BlocConsumer<ProdDetailScreenBloc, SingleModel<Product>>(
           listenWhen: (previous, current) => current is ProdDetailModel,
           listener: (context, state) {
-            bannerPickerController?.existedImageUrl = state.item?.image;
-            codeTfController.text = state.item?.code;
-            nameTfController.text = state.item?.name;
+            bannerPickerController.existedImageUrl = state.item?.image;
+            codeTfController.text = state.item?.code ?? '';
+            nameTfController.text = state.item?.name ?? '';
             brandSelectController.brands = state.item?.brands;
-            priceTfController.text = state.item?.price?.toString();
+            priceTfController.text = state.item?.price?.toString() ?? "";
             prodCateController.value = state.item?.category;
-            descriptionTfController.text = state.item?.description;
+            descriptionTfController.text = state.item?.description ?? '';
           },
           buildWhen: (previous, current) => current is ProdDetailModel,
           builder: (context, state) {
@@ -202,9 +202,9 @@ class _CreateNewProdScreenState extends KayleeState<CreateNewProdScreen> {
                     focusNode: codeFocus,
                     textInputAction: TextInputAction.next,
                     nextFocusNode: nameFocus,
-                    error: state.error?.code.isNotNull &&
-                        state.error.code == ErrorCode.CODE_CODE
-                        ? state.error.message
+                    error: state.error?.code != null &&
+                            state.error!.code == ErrorCode.CODE_CODE
+                        ? state.error!.message
                         : null,
                   ),
                 ),
@@ -217,9 +217,9 @@ class _CreateNewProdScreenState extends KayleeState<CreateNewProdScreen> {
                     focusNode: nameFocus,
                     textInputAction: TextInputAction.next,
                     nextFocusNode: priceFocus,
-                    error: state.error?.code.isNotNull &&
-                        state.error.code == ErrorCode.NAME_CODE
-                        ? state.error.message
+                    error: state.error?.code != null &&
+                            state.error!.code == ErrorCode.NAME_CODE
+                        ? state.error!.message
                         : null,
                   ),
                 ),
@@ -239,9 +239,9 @@ class _CreateNewProdScreenState extends KayleeState<CreateNewProdScreen> {
                       controller: priceTfController,
                       focusNode: priceFocus,
                       nextFocusNode: descriptionFocus,
-                      error: state.error?.code.isNotNull &&
-                          state.error.code == ErrorCode.PRICE_CODE
-                          ? state.error.message
+                      error: state.error?.code != null &&
+                              state.error!.code == ErrorCode.PRICE_CODE
+                          ? state.error!.message
                           : null),
                 ),
                 Padding(

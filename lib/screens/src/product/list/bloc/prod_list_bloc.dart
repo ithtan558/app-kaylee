@@ -1,5 +1,4 @@
 import 'package:anth_package/anth_package.dart';
-import 'package:flutter/foundation.dart';
 import 'package:kaylee/base/kaylee_filter_interface.dart';
 import 'package:kaylee/base/kaylee_list_interface.dart';
 import 'package:kaylee/base/loadmore_interface.dart';
@@ -17,10 +16,10 @@ class ProdListBloc extends Cubit<LoadMoreModel<Product>>
     with KayleeListInterfaceMixin
     implements LoadMoreInterface, KayleeFilterInterface<ProductFilter> {
   final ProductService productService;
-  int cateId;
-  ProductFilter _filter;
+  int? cateId;
+  ProductFilter? _filter;
 
-  ProdListBloc({@required this.productService})
+  ProdListBloc({required this.productService})
       : super(LoadMoreModel(items: []));
 
   void loadProds() {
@@ -49,12 +48,12 @@ class ProdListBloc extends Cubit<LoadMoreModel<Product>>
     );
   }
 
-  void loadInitDataWithCate({int cateId}) {
+  void loadInitDataWithCate({int? cateId}) {
     changeTab(cateId: cateId);
   }
 
-  void changeTab({int cateId}) {
-    if (cateId.isNotNull) {
+  void changeTab({int? cateId}) {
+    if (cateId != null) {
       ///user đổi category
       this.cateId = cateId;
 
@@ -77,7 +76,7 @@ class ProdListBloc extends Cubit<LoadMoreModel<Product>>
   bool loadWhen() => !state.loading && !state.ended;
 
   @override
-  ProductFilter getFilter() => _filter;
+  ProductFilter? getFilter() => _filter;
 
   @override
   bool get isEmptyFilter => _filter == null;
@@ -98,7 +97,7 @@ class ProdListBloc extends Cubit<LoadMoreModel<Product>>
   @override
   ProductFilter updateFilter() {
     if (isEmptyFilter) _filter = ProductFilter();
-    return _filter;
+    return _filter!;
   }
 
   @override

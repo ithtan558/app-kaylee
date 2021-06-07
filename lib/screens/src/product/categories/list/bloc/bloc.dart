@@ -10,7 +10,8 @@ class ProCateListScreenBloc extends Cubit<LoadMoreModel<ProdCate>>
     implements LoadMoreInterface {
   final ProductService productService;
 
-  ProCateListScreenBloc({this.productService}) : super(LoadMoreModel());
+  ProCateListScreenBloc({required this.productService})
+      : super(LoadMoreModel());
 
   void loadCategories() {
     RequestHandler(
