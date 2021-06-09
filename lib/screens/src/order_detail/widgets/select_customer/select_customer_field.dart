@@ -8,9 +8,9 @@ import 'package:kaylee/widgets/widgets.dart';
 
 class SelectCustomerField extends StatefulWidget {
   final ValueChanged<Customer> onSelect;
-  final SelectCustomerController controller;
+  final SelectCustomerController? controller;
 
-  SelectCustomerField({this.onSelect, this.controller});
+  SelectCustomerField({required this.onSelect, this.controller});
 
   @override
   _SelectCustomerFieldState createState() => _SelectCustomerFieldState();
@@ -18,11 +18,9 @@ class SelectCustomerField extends StatefulWidget {
 
 class _SelectCustomerFieldState extends KayleeState<SelectCustomerField> {
   @override
-  void onReloadWidget(Type widget, Bundle bundle) {
-    if (widget == SelectCustomerField &&
-        bundle.isNotNull &&
-        bundle.args is Customer) {
-      this.widget.controller?.customer = bundle.args;
+  void onReloadWidget(Type widget, Bundle? bundle) {
+    if (widget == SelectCustomerField && bundle?.args is Customer) {
+      this.widget.controller?.customer = bundle!.args;
       this.widget.onSelect.call(this.widget.controller?.customer);
       setState(() {});
     }
