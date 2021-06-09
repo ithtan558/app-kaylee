@@ -3,11 +3,13 @@ import 'package:kaylee/models/models.dart';
 import 'package:kaylee/repositories/repositories.dart';
 
 class OtpVerifyBloc extends Cubit<SingleModel<VerifyOtpResult>> {
-  VerifyOtpRepository verifyOtpRepository;
+  final VerifyOtpRepository verifyOtpRepository;
+  final int? userId;
 
-  OtpVerifyBloc({this.verifyOtpRepository}) : super(SingleModel());
+  OtpVerifyBloc({required this.verifyOtpRepository, this.userId})
+      : super(SingleModel());
 
-  void verifyOtp({int userId, String otp}) {
+  void verifyOtp({required String otp}) {
     emit(SingleModel.copy(state..loading = true));
     verifyOtpRepository.verifyOtp(
       userId: userId,

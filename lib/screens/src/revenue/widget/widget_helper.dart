@@ -16,7 +16,7 @@ mixin WidgetHelper<T extends StatefulWidget> on KayleeState<T> {
         child: KayleeLoadingIndicator());
   }
 
-  void showErrorDialog({ErrorType code, Error error}) {
+  void showErrorDialog({ErrorType? code, Error? error}) {
     if (error != null) {
       showKayleeAlertErrorYesDialog(
           context: context, error: error, onPressed: popScreen);

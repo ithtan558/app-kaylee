@@ -20,8 +20,8 @@ import 'package:kaylee/widgets/widgets.dart';
 
 class NewOrderScreenData {
   final OrderScreenOpenFrom openFrom;
-  final Order order;
-  final Reservation reservation;
+  final Order? order;
+  final Reservation? reservation;
 
   NewOrderScreenData({
     required this.openFrom,
@@ -138,14 +138,15 @@ class _CreateNewOrderScreenState extends KayleeState<CreateNewOrderScreen> {
       }
     });
 
-    final data = context.getArguments<NewOrderScreenData>();
-    openFrom = data?.openFrom;
+    final data = context.getArguments<NewOrderScreenData>()!;
+    openFrom = data.openFrom;
 
     if (openFrom == OrderScreenOpenFrom.detailButton) {
       _bloc.get();
     } else if (openFrom == OrderScreenOpenFrom.addNewFromReservation) {
       _cart.updateOrderInfo(OrderRequest(
-          customer: data.reservation.customer, brand: data.reservation.brand));
+          customer: data.reservation!.customer,
+          brand: data.reservation?.brand));
       customerController.customer = _order.customer;
       brandController.value = _order.brand;
     }

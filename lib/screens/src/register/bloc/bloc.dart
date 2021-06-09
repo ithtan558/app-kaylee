@@ -35,7 +35,7 @@ class RegisterScreenBloc extends Cubit<SingleModel<RegisterBody>> {
         },
         onFailed: (code, {error}) {
           if (error != null) {
-            switch (error?.code) {
+            switch (error.code) {
               case ErrorCode.NAME_CODE:
                 return emit(NameErrorModel.copy(state
                   ..loading = false
@@ -74,9 +74,9 @@ class RegisterScreenBloc extends Cubit<SingleModel<RegisterBody>> {
 }
 
 class RegisterSuccessModel extends SingleModel<RegisterBody> {
-  final RegisterResult? result;
+  final RegisterResult result;
 
-  RegisterSuccessModel.copy(SingleModel old, {this.result}) {
+  RegisterSuccessModel.copy(SingleModel old, {required this.result}) {
     this
       ..loading = old.loading
       ..item = old.item

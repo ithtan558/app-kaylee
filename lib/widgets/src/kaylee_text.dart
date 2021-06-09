@@ -572,9 +572,7 @@ class _KayleeDatePickerTextState extends BaseState<KayleeDatePickerText> {
     dateRange = value;
     widget.controller?.value = dateRange;
     setState(() {});
-    if (dateRange != null) {
-      widget.onSelectRange?.call(dateRange!);
-    }
+    widget.onSelectRange?.call(dateRange);
   }
 }
 

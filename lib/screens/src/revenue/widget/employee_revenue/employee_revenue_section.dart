@@ -18,14 +18,14 @@ class EmployeeRevenueSection extends StatefulWidget {
 class _EmployeeRevenueSectionState extends KayleeState<EmployeeRevenueSection>
     with WidgetHelper<EmployeeRevenueSection> {
   EmployeeRevenueSectionBloc get _employeeRevenueBloc =>
-      context.bloc<EmployeeRevenueSectionBloc>();
+      context.bloc<EmployeeRevenueSectionBloc>()!;
 
   @override
   void initState() {
     super.initState();
     _employeeRevenueBloc.loadData(
-      startDate: datePickerController.value.start,
-      endDate: datePickerController.value.end,
+      startDate: datePickerController.value?.start,
+      endDate: datePickerController.value?.end,
     );
   }
 
@@ -65,7 +65,7 @@ class _EmployeeRevenueSectionState extends KayleeState<EmployeeRevenueSection>
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (c, index) {
-                  final item = state.item.elementAt(index);
+                  final item = state.item!.elementAt(index);
                   return RevenueItem(
                     title: item.employee.name,
                     price: item.amount,

@@ -2,18 +2,17 @@ import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
-import 'package:kaylee/components/components.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/res/src/strings.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/register/bloc/bloc.dart';
+import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class RegisterScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<RegisterScreenBloc>(
-        create: (context) => RegisterScreenBloc(
-            userService:
-                context.repository<NetworkModule>().provideUserService()),
+    create: (context) => RegisterScreenBloc(
+            userService: context.network.provideUserService()),
         child: RegisterScreen._(),
       );
 
@@ -39,7 +38,7 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
   //todo tạm thời chưa data thật cho dialog policy, sẽ bị apple reject => ẩn ui chỗ này
   bool isAcceptPolicy = true;
 
-  RegisterScreenBloc get _bloc => context.bloc<RegisterScreenBloc>();
+  RegisterScreenBloc get _bloc => context.bloc<RegisterScreenBloc>()!;
 
   @override
   void dispose() {
@@ -121,7 +120,8 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
                     focusNode: nameFocus,
                     controller: nameTController,
                     textInputAction: TextInputAction.next,
-                    error: state is NameErrorModel ? state.error.message : null,
+                    error:
+                        state is NameErrorModel ? state.error?.message : null,
                   ),
                 ),
                 Padding(
@@ -136,7 +136,7 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
                     nextFocusNode: emailFocus,
                     textInputAction: TextInputAction.next,
                     error:
-                        state is PhoneErrorModel ? state.error.message : null,
+                        state is PhoneErrorModel ? state.error?.message : null,
                   ),
                 ),
                 Padding(
@@ -162,7 +162,7 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
                     textInputType: TextInputType.emailAddress,
                     textInputAction: TextInputAction.next,
                     error:
-                        state is EmailErrorModel ? state.error.message : null,
+                        state is EmailErrorModel ? state.error?.message : null,
                   ),
                 ),
                 Padding(
@@ -174,7 +174,7 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
                     nextFocusNode: codeFocus,
                     textInputAction: TextInputAction.next,
                     error: state is PasswordErrorModel
-                        ? state.error.message
+                        ? state.error?.message
                         : null,
                   ),
                 ),

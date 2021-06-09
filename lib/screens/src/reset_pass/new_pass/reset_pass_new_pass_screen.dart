@@ -12,20 +12,20 @@ import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class NewPassScreenData {
-  VerifyOtpResult result;
+  final VerifyOtpResult result;
 
-  NewPassScreenData({this.result});
+  NewPassScreenData({required this.result});
 }
 
 class ResetPassNewPassScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<UpdatePassBloc>(
-        create: (context) => UpdatePassBloc(
+    create: (context) => UpdatePassBloc(
             userService: context.network.provideUserService(),
             resetPassToken: context
-                .getArguments<NewPassScreenData>()
+                .getArguments<NewPassScreenData>()!
                 .result
                 .tokenResetPassword,
-            userId: context.getArguments<NewPassScreenData>().result.userId),
+            userId: context.getArguments<NewPassScreenData>()!.result.userId),
         child: ResetPassNewPassScreen._(),
       );
 
@@ -37,14 +37,13 @@ class ResetPassNewPassScreen extends StatefulWidget {
 }
 
 class _ResetPassNewPassScreenState extends KayleeState<ResetPassNewPassScreen> {
-  UpdatePassBloc updatePassBloc;
+  UpdatePassBloc get updatePassBloc => context.bloc<UpdatePassBloc>()!;
   final newPassTFController = TextEditingController();
   final newPassFocus = FocusNode();
 
   @override
   void initState() {
     super.initState();
-    updatePassBloc = context.bloc<UpdatePassBloc>();
   }
 
   @override
@@ -77,7 +76,7 @@ class _ResetPassNewPassScreenState extends KayleeState<ResetPassNewPassScreen> {
                 } else if (!state.loading) {
                   hideLoading();
                   if (state.error != null) {
-                    if (state.error.code.isNull) {
+                    if (state.error!.code == null) {
                       showKayleeAlertErrorYesDialog(
                         context: context,
                         error: state.error,
@@ -91,7 +90,7 @@ class _ResetPassNewPassScreenState extends KayleeState<ResetPassNewPassScreen> {
                       context: context,
                       message: state.message,
                       onPressed: () {
-                        context.bloc<AppBloc>().loggedOut();
+                        context.bloc<AppBloc>()!.loggedOut();
                         context.pushToTop(PageIntent(screen: SplashScreen));
                       },
                     );
@@ -105,7 +104,7 @@ class _ResetPassNewPassScreenState extends KayleeState<ResetPassNewPassScreen> {
                   controller: newPassTFController,
                   focusNode: newPassFocus,
                   error:
-                      state.error?.code.isNotNull ? state.error?.message : null,
+                      state.error?.code != null ? state.error?.message : null,
                 );
               },
             ),

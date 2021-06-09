@@ -5,13 +5,13 @@ import 'package:kaylee/services/services.dart';
 
 class EmployeeRevenueSectionBloc
     extends Cubit<SingleModel<List<EmployeeRevenue>>> with ReportBlocHelper {
-  EmployeeRevenueSectionBloc({ReportService reportService})
+  EmployeeRevenueSectionBloc({required ReportService reportService})
       : super(SingleModel()) {
     this.reportService = reportService;
   }
 
   @override
-  void loadData({Brand brand, DateTime startDate, DateTime endDate}) {
+  void loadData({Brand? brand, DateTime? startDate, DateTime? endDate}) {
     super.loadData(brand: brand, startDate: startDate, endDate: endDate);
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(

@@ -3,7 +3,7 @@ import 'package:kaylee/models/models.dart';
 import 'package:kaylee/services/services.dart';
 
 class ContactUsBloc extends BaseBloc {
-  Content _content;
+  Content? _content;
   CommonService commonService;
 
   ContactUsBloc(this.commonService);
@@ -13,10 +13,10 @@ class ContactUsBloc extends BaseBloc {
     if (e is LoadContactResetPassScrEvent) {
       yield LoadingState();
       RequestHandler(
-        request: commonService?.getContent(Content.CONTACT_US_HASHTAG),
+        request: commonService.getContent(Content.CONTACT_US_HASHTAG),
         onSuccess: ({message, result}) {
           _content = result;
-          add(SuccessLoadContactResetPassScrEvent(_content));
+          add(SuccessLoadContactResetPassScrEvent(_content!));
         },
         onFailed: (code, {error}) {
           errorEvent(code, error: error);
@@ -30,8 +30,8 @@ class ContactUsBloc extends BaseBloc {
   }
 
   void getContact() {
-    if (_content.isNotNull)
-      add(SuccessLoadContactResetPassScrEvent(_content));
+    if (_content != null)
+      add(SuccessLoadContactResetPassScrEvent(_content!));
     else
       add(LoadContactResetPassScrEvent());
   }

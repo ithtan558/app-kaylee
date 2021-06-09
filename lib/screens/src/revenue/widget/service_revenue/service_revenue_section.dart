@@ -18,14 +18,14 @@ class ServiceRevenueSection extends StatefulWidget {
 class _ServiceRevenueSectionState extends KayleeState<ServiceRevenueSection>
     with WidgetHelper<ServiceRevenueSection> {
   ServiceRevenueSectionBloc get _serviceRevenueBloc =>
-      context.bloc<ServiceRevenueSectionBloc>();
+      context.bloc<ServiceRevenueSectionBloc>()!;
 
   @override
   void initState() {
     super.initState();
     _serviceRevenueBloc.loadData(
-      startDate: datePickerController.value.start,
-      endDate: datePickerController.value.end,
+      startDate: datePickerController.value?.start,
+      endDate: datePickerController.value?.end,
     );
   }
 
@@ -65,7 +65,7 @@ class _ServiceRevenueSectionState extends KayleeState<ServiceRevenueSection>
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (c, index) {
-                  final item = state.item.elementAt(index);
+                  final item = state.item!.elementAt(index);
                   return RevenueItem(
                     title: item.name,
                     price: item.amount,

@@ -46,26 +46,16 @@ class RevenueScreen extends StatefulWidget {
 
 class _RevenueScreenState extends KayleeState<RevenueScreen> {
   TotalRevenueSectionBloc get _totalRevenueBloc =>
-      context.bloc<TotalRevenueSectionBloc>();
+      context.bloc<TotalRevenueSectionBloc>()!;
 
   EmployeeRevenueSectionBloc get _employeeRevenueBloc =>
-      context.bloc<EmployeeRevenueSectionBloc>();
+      context.bloc<EmployeeRevenueSectionBloc>()!;
 
   ServiceRevenueSectionBloc get _serviceRevenueBloc =>
-      context.bloc<ServiceRevenueSectionBloc>();
+      context.bloc<ServiceRevenueSectionBloc>()!;
 
   ProductRevenueSectionBloc get _productRevenueBloc =>
-      context.bloc<ProductRevenueSectionBloc>();
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
+      context.bloc<ProductRevenueSectionBloc>()!;
 
   @override
   Widget build(BuildContext context) {

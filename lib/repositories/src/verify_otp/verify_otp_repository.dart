@@ -13,7 +13,7 @@ abstract class VerifyOtpRepository {
       _ResetPassVerifyOtpRepoImpl;
 
   void verifyOtp(
-      {required int userId,
+      {int? userId,
       required String otp,
       required OnSuccess onSuccess,
       required OnFailed onFailed});

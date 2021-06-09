@@ -5,12 +5,12 @@ import 'package:kaylee/services/services.dart';
 class AutoFillBloc extends Cubit<SingleModel<Brand>> {
   final BrandService service;
 
-  AutoFillBloc({this.service}) : super(SingleModel());
+  AutoFillBloc({required this.service}) : super(SingleModel());
 
-  void loadBrandInfo({Brand brand}) {
+  void loadBrandInfo({required Brand brand}) {
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
-      request: service?.getBrand(brandId: brand?.id),
+      request: service.getBrand(brandId: brand.id),
       onSuccess: ({message, result}) {
         emit(DetailBrandModel.copy(state
           ..loading = false
@@ -29,7 +29,7 @@ class AutoFillBloc extends Cubit<SingleModel<Brand>> {
 class DetailBrandModel extends SingleModel<Brand> {
   DetailBrandModel.copy(SingleModel old) {
     this
-      ..loading = old?.loading
-      ..item = old?.item;
+      ..loading = old.loading
+      ..item = old.item;
   }
 }

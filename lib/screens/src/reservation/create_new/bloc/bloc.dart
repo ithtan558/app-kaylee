@@ -9,8 +9,8 @@ class ReservationDetailBloc extends Cubit<SingleModel<Reservation>>
   final ReservationService service;
 
   ReservationDetailBloc({
-    this.service,
-    Reservation reservation,
+    required this.service,
+    Reservation? reservation,
   }) : super(SingleModel(item: reservation));
 
   @override
@@ -120,34 +120,34 @@ class ReservationDetailBloc extends Cubit<SingleModel<Reservation>>
 class NewReservationModel extends SingleModel<Reservation> {
   NewReservationModel.copy(SingleModel old) {
     this
-      ..item = old?.item
-      ..loading = old?.loading
-      ..message = old?.message;
+      ..item = old.item
+      ..loading = old.loading
+      ..message = old.message;
   }
 }
 
 class UpdateReservationModel extends SingleModel<Reservation> {
   UpdateReservationModel.copy(SingleModel old) {
     this
-      ..item = old?.item
-      ..loading = old?.loading
-      ..message = old?.message;
+      ..item = old.item
+      ..loading = old.loading
+      ..message = old.message;
   }
 }
 
 class DetailReservationModel extends SingleModel<Reservation> {
   DetailReservationModel.copy(SingleModel old) {
     this
-      ..item = old?.item
-      ..loading = old?.loading;
+      ..item = old.item
+      ..loading = old.loading;
   }
 }
 
 class CancelReservationModel extends SingleModel<Reservation> {
   CancelReservationModel.copy(SingleModel old) {
     this
-      ..item = old?.item
-      ..loading = old?.loading
-      ..message = old?.message;
+      ..item = old.item
+      ..loading = old.loading
+      ..message = old.message;
   }
 }

@@ -26,7 +26,7 @@ class _ReservationListScreenState extends KayleeState<ReservationListScreen> {
   final dateFilterController =
       KayleeDateFilterController(value: DateTime.now());
 
-  ReservationListBloc get _bloc => context.bloc<ReservationListBloc>();
+  ReservationListBloc get _bloc => context.bloc<ReservationListBloc>()!;
 
   @override
   void initState() {
@@ -36,7 +36,7 @@ class _ReservationListScreenState extends KayleeState<ReservationListScreen> {
   }
 
   @override
-  void onReloadWidget(Type widget, Bundle bundle) {
+  void onReloadWidget(Type widget, Bundle? bundle) {
     if (widget == ReservationListScreen) {
       _bloc.refresh();
     }
@@ -82,7 +82,7 @@ class _ReservationListScreenState extends KayleeState<ReservationListScreen> {
                   return KayleeListView(
                       padding: const EdgeInsets.all(Dimens.px16),
                       itemBuilder: (context, index) {
-                        final item = state.items.elementAt(index);
+                        final item = state.items!.elementAt(index);
                         return ReservationItem.newInstance(
                           reservation: item,
                         );

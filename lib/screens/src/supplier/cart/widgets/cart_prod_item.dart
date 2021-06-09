@@ -7,13 +7,13 @@ import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class CartProdItem extends KayleeCartProdItem {
-  final VoidCallback onRemoveItem;
+  final VoidCallback? onRemoveItem;
   final OrderRequestItem item;
 
-  CartProdItem({@required this.item, this.onRemoveItem})
+  CartProdItem({required this.item, this.onRemoveItem})
       : super(
           name: item.name,
-          amount: item.price * item.quantity,
+          amount: (item.price ?? 0) * (item.quantity ?? 0),
           quantity: item.quantity,
         );
 
@@ -41,7 +41,7 @@ class CartProdItem extends KayleeCartProdItem {
                     },
                   ),
                 ]));
-        return (result as Bundle)?.args ?? false;
+        return (result as Bundle?)?.args ?? false;
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
@@ -55,10 +55,10 @@ class CartProdItem extends KayleeCartProdItem {
     await showKayleeAmountChangingDialog(
       context: context,
       title: item.name ?? '',
-      initAmount: item.quantity,
+      initAmount: item.quantity ?? 1,
       onAmountChange: (value) {
         context.cart.updateItem(item..quantity = value);
-        context.bloc<CartBloc>().updateCart();
+        context.bloc<CartBloc>()!.updateCart();
       },
       onRemoveItem: onRemoveItem,
     );

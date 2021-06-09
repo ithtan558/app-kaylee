@@ -7,7 +7,7 @@ class _ResetPassVerifyOtpRepoImpl implements VerifyOtpRepository {
 
   @override
   void verifyOtp(
-      {required int userId,
+      {int? userId,
       required String otp,
       required onSuccess,
       required onFailed}) {

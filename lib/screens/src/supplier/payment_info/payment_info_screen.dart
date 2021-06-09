@@ -28,14 +28,14 @@ class PaymentInfoScreen extends StatefulWidget {
 
 class _PaymentInfoScreenState extends KayleeState<PaymentInfoScreen> {
   PaymentMethod selected = PaymentMethod.cash;
-  PaymentInfoScreenBloc bloc;
-  StreamSubscription sub;
+
+  PaymentInfoScreenBloc get bloc => context.bloc<PaymentInfoScreenBloc>()!;
+  late StreamSubscription sub;
 
   @override
   void initState() {
     super.initState();
-    bloc = context.bloc<PaymentInfoScreenBloc>();
-    sub = bloc.listen((state) {
+    sub = bloc.stream.listen((state) {
       if (state.loading) {
         showLoading();
       } else if (!state.loading) {
@@ -76,7 +76,7 @@ class _PaymentInfoScreenState extends KayleeState<PaymentInfoScreen> {
       child: ListView.separated(
           shrinkWrap: true,
           itemBuilder: (context, index) {
-            if (index != 0) return null;
+            if (index != 0) return SizedBox.shrink();
             final e = PaymentMethod.values.elementAt(index);
             return _PaymentMethodCheckBox<PaymentMethod>(
               title: e.text,
@@ -103,7 +103,7 @@ class _PaymentInfoScreenState extends KayleeState<PaymentInfoScreen> {
         margin: EdgeInsets.all(Dimens.px8),
         onPressed: () {
           context.cart.updateOrderInfo(OrderRequest(
-            employee: context.user.getUserInfo()?.userInfo,
+            employee: context.user.getUserInfo().userInfo,
           ));
 
           bloc.sendOrder();
@@ -116,16 +116,16 @@ class _PaymentInfoScreenState extends KayleeState<PaymentInfoScreen> {
 class _PaymentMethodCheckBox<T> extends StatelessWidget {
   final T value;
   final T currentValue;
-  final ValueSetter<T> onChange;
+  final ValueSetter<T>? onChange;
   final String imageOfPaymentMethod;
   final String title;
 
   _PaymentMethodCheckBox(
-      {this.value,
-      this.currentValue,
+      {required this.value,
+      required this.currentValue,
       this.onChange,
-      this.imageOfPaymentMethod,
-      this.title});
+      required this.imageOfPaymentMethod,
+      required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -147,12 +147,12 @@ class _PaymentMethodCheckBox<T> extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(right: Dimens.px8),
               child: Image.asset(
-                imageOfPaymentMethod ?? '',
+                imageOfPaymentMethod,
                 width: Dimens.px16,
                 height: Dimens.px16,
               ),
             ),
-            KayleeText.normal16W400(title ?? '')
+            KayleeText.normal16W400(title)
           ],
         ),
       ),

@@ -5,21 +5,21 @@ import 'package:kaylee/services/services.dart';
 import 'package:kaylee/utils/utils.dart';
 
 mixin ReportBlocHelper {
-  ReportService reportService;
-  Brand _brand;
-  DateTime _startDate;
-  DateTime _endDate;
+  late ReportService reportService;
+  Brand? _brand;
+  DateTime? _startDate;
+  DateTime? _endDate;
 
-  String get startDateInString =>
+  String? get startDateInString =>
       _startDate?.toFormatString(pattern: dateFormat);
 
-  String get endDateInString => _endDate?.toFormatString(pattern: dateFormat);
+  String? get endDateInString => _endDate?.toFormatString(pattern: dateFormat);
 
-  Brand get brand => _brand;
+  Brand? get brand => _brand;
 
   @mustCallSuper
-  void loadData({Brand brand, DateTime startDate, DateTime endDate}) {
-    if (brand.isNotNull) this._brand = brand;
+  void loadData({Brand? brand, DateTime? startDate, DateTime? endDate}) {
+    if (brand != null) this._brand = brand;
     if (startDate.isNotNull) this._startDate = startDate;
     if (endDate.isNotNull) this._endDate = endDate;
   }

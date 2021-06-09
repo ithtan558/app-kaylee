@@ -9,7 +9,7 @@ import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class BrandSelectionButton extends StatefulWidget {
-  final ValueChanged<Brand> onChanged;
+  final ValueChanged<Brand>? onChanged;
 
   BrandSelectionButton({this.onChanged});
 
@@ -18,8 +18,8 @@ class BrandSelectionButton extends StatefulWidget {
 }
 
 class _BrandSelectionButtonState extends KayleeState<BrandSelectionButton> {
-  Brand currentValue;
-  Brand selectedBrand;
+  Brand? currentValue;
+  late Brand selectedBrand;
 
   @override
   void initState() {
@@ -40,7 +40,7 @@ class _BrandSelectionButtonState extends KayleeState<BrandSelectionButton> {
             child: Container(
           alignment: Alignment.center,
           child: KayleeText.normalWhite16W400(
-            selectedBrand.name,
+            selectedBrand.name ?? '',
             textAlign: TextAlign.center,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -64,7 +64,7 @@ class _BrandSelectionButtonState extends KayleeState<BrandSelectionButton> {
         onDone: () {
           if (currentValue != null) {
             setState(() {
-              selectedBrand = currentValue;
+              selectedBrand = currentValue!;
             });
             widget.onChanged?.call(selectedBrand);
           }
@@ -85,7 +85,8 @@ class _BrandSelectionButtonState extends KayleeState<BrandSelectionButton> {
 
 class _BrandPickerView extends StatefulWidget {
   static Widget newInstance(
-          {ValueChanged<Brand> onSelectedItemChanged, Brand intiValue}) =>
+          {required ValueChanged<Brand> onSelectedItemChanged,
+          required Brand intiValue}) =>
       BlocProvider(
           create: (context) => _BrandSelectionBloc(
               brandService: context.network.provideBrandService()),
@@ -97,8 +98,8 @@ class _BrandPickerView extends StatefulWidget {
   final Brand intiValue;
 
   _BrandPickerView._({
-    this.onSelectedItemChanged,
-    this.intiValue,
+    required this.onSelectedItemChanged,
+    required this.intiValue,
   });
 
   @override
@@ -106,10 +107,9 @@ class _BrandPickerView extends StatefulWidget {
 }
 
 class _BrandPickerViewState extends BaseState<_BrandPickerView> {
-  _BrandSelectionBloc get _bloc => context.bloc<_BrandSelectionBloc>();
+  _BrandSelectionBloc get _bloc => context.bloc<_BrandSelectionBloc>()!;
 
-  KayleePickerTextFieldModel parentBloc;
-  FixedExtentScrollController scrollController;
+  FixedExtentScrollController? scrollController;
 
   @override
   void initState() {
@@ -119,7 +119,7 @@ class _BrandPickerViewState extends BaseState<_BrandPickerView> {
 
   @override
   void dispose() {
-    scrollController.dispose();
+    scrollController?.dispose();
     super.dispose();
   }
 
@@ -130,18 +130,18 @@ class _BrandPickerViewState extends BaseState<_BrandPickerView> {
         if (state.loading) return Align(child: KayleeLoadingIndicator());
         scrollController = FixedExtentScrollController(
             initialItem:
-                state.item?.indexWhere((e) => e.id == widget.intiValue?.id) ??
+            state.item?.indexWhere((e) => e.id == widget.intiValue.id) ??
                     0);
         return CupertinoPicker.builder(
           scrollController: scrollController,
           itemExtent: Dimens.px35,
           onSelectedItemChanged: (index) {
-            widget.onSelectedItemChanged?.call(state.item.elementAt(index));
+            widget.onSelectedItemChanged.call(state.item!.elementAt(index));
           },
           itemBuilder: (context, index) {
-            final item = state.item.elementAt(index);
+            final item = state.item!.elementAt(index);
             return Container(
-              child: Text(item.name,
+              child: Text(item.name ?? '',
                   style: TextStyle(
                     fontFamily: 'SFProText',
                     color: Color(0xff000000),
@@ -162,7 +162,7 @@ class _BrandPickerViewState extends BaseState<_BrandPickerView> {
 class _BrandSelectionBloc extends Cubit<SingleModel<List<Brand>>> {
   final BrandService brandService;
 
-  _BrandSelectionBloc({this.brandService}) : super(SingleModel());
+  _BrandSelectionBloc({required this.brandService}) : super(SingleModel());
 
   void load() {
     emit(SingleModel.copy(state..loading = true));

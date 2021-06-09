@@ -18,14 +18,14 @@ class ProductRevenueWidget extends StatefulWidget {
 class _ProductRevenueWidgetState extends KayleeState<ProductRevenueWidget>
     with WidgetHelper<ProductRevenueWidget> {
   ProductRevenueSectionBloc get _productRevenueBloc =>
-      context.bloc<ProductRevenueSectionBloc>();
+      context.bloc<ProductRevenueSectionBloc>()!;
 
   @override
   void initState() {
     super.initState();
     _productRevenueBloc.loadData(
-      startDate: datePickerController.value.start,
-      endDate: datePickerController.value.end,
+      startDate: datePickerController.value?.start,
+      endDate: datePickerController.value?.end,
     );
   }
 
@@ -65,7 +65,7 @@ class _ProductRevenueWidgetState extends KayleeState<ProductRevenueWidget>
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (c, index) {
-                  final item = state.item.elementAt(index);
+                  final item = state.item!.elementAt(index);
                   return RevenueItem(
                     title: item.name,
                     price: item.amount,

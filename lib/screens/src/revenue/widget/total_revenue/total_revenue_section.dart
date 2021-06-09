@@ -17,14 +17,14 @@ class TotalRevenueSection extends StatefulWidget {
 class _TotalRevenueSectionState extends KayleeState<TotalRevenueSection>
     with WidgetHelper<TotalRevenueSection> {
   TotalRevenueSectionBloc get _totalRevenueBloc =>
-      context.bloc<TotalRevenueSectionBloc>();
+      context.bloc<TotalRevenueSectionBloc>()!;
 
   @override
   void initState() {
     super.initState();
     _totalRevenueBloc.loadData(
-      startDate: datePickerController.value.start,
-      endDate: datePickerController.value.end,
+      startDate: datePickerController.value?.start,
+      endDate: datePickerController.value?.end,
     );
   }
 
@@ -97,7 +97,7 @@ class _TotalRevenueSectionState extends KayleeState<TotalRevenueSection>
         ));
   }
 
-  Widget buildRevenueText({String title, dynamic price}) {
+  Widget buildRevenueText({String? title, dynamic price}) {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.only(top: Dimens.px21, bottom: Dimens.px20),

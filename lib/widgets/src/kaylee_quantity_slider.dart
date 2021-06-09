@@ -77,7 +77,15 @@ class _KayleeQuantitySliderState extends State<KayleeQuantitySlider> {
 }
 
 class QuantitySliderController {
-  int quantity;
+  late int _quantity;
 
-  QuantitySliderController({this.quantity = 1});
+  int get quantity => _quantity;
+
+  set quantity(value) {
+    _quantity = value;
+  }
+
+  QuantitySliderController({int quantity = 1}) {
+    this.quantity = quantity;
+  }
 }

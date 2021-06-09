@@ -3,7 +3,7 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class RevenueItem extends StatelessWidget {
-  final String title;
+  final String? title;
   final dynamic price;
 
   RevenueItem({this.title, this.price});

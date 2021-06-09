@@ -9,13 +9,11 @@ class OrderDetailBloc extends Cubit<SingleModel<OrderRequest>>
   final OrderService orderService;
   Order? order;
   final CartModule cart;
-  final Reservation reservation;
 
   OrderDetailBloc({
     required this.orderService,
     this.order,
     required this.cart,
-    this.reservation,
   }) : super(SingleModel());
 
   ///khi đang tạo, sau đó nhấn thanh toán
@@ -23,7 +21,8 @@ class OrderDetailBloc extends Cubit<SingleModel<OrderRequest>>
     cart.updateOrderInfo(OrderRequest(isPaid: true));
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
-      request: orderService.sendOrder(orderRequest: cart.getOrder()),
+      request: orderService.sendOrder(
+          orderRequest: cart.getOrder() ?? OrderRequest()),
       onSuccess: ({message, result}) {
         final successState = DoPaymentOrderState.copy(state
           ..loading = false
@@ -86,7 +85,8 @@ class OrderDetailBloc extends Cubit<SingleModel<OrderRequest>>
   void create() {
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
-      request: orderService.sendOrder(orderRequest: cart.getOrder()),
+      request: orderService.sendOrder(
+          orderRequest: cart.getOrder() ?? OrderRequest()),
       onSuccess: ({message, result}) {
         emit(CreateOrderState.copy(state
           ..loading = false
@@ -101,14 +101,14 @@ class OrderDetailBloc extends Cubit<SingleModel<OrderRequest>>
     );
   }
 
-  void _getDetail({OnSuccess onSuccess, OnFailed onFailed}) {
+  void _getDetail({required OnSuccess onSuccess, required OnFailed onFailed}) {
     RequestHandler(
-      request: orderService.getDetail(orderId: order.id),
+      request: orderService.getDetail(orderId: order?.id),
       onSuccess: ({message, result}) {
         final order = (result as Order);
-        order.id = this.order.id;
+        order.id = this.order?.id;
         this.order = order;
-        onSuccess?.call(result: result, message: message);
+        onSuccess.call(result: result, message: message);
       },
       onFailed: onFailed,
     );
@@ -143,7 +143,7 @@ class OrderDetailBloc extends Cubit<SingleModel<OrderRequest>>
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
       request: orderService.updateOrder(
-          orderRequest: cart.getOrder(), orderId: order.id),
+          orderRequest: cart.getOrder() ?? OrderRequest(), orderId: order?.id),
       onSuccess: ({message, result}) {
         emit(UpdateOrderState.copy(state
           ..loading = false
@@ -162,18 +162,18 @@ class OrderDetailBloc extends Cubit<SingleModel<OrderRequest>>
 class UpdateOrderState extends SingleModel<OrderRequest> {
   UpdateOrderState.copy(SingleModel old) {
     this
-      ..loading = old?.loading
-      ..item = old?.item
-      ..message = old?.message;
+      ..loading = old.loading
+      ..item = old.item
+      ..message = old.message;
   }
 }
 
 class CreateOrderState extends SingleModel<OrderRequest> {
   CreateOrderState.copy(SingleModel old) {
     this
-      ..loading = old?.loading
-      ..item = old?.item
-      ..message = old?.message;
+      ..loading = old.loading
+      ..item = old.item
+      ..message = old.message;
   }
 }
 
@@ -182,8 +182,8 @@ class DoPaymentOrderState extends SingleModel<OrderRequest> {
 
   DoPaymentOrderState.copy(SingleModel old, {this.hidePrinterAction = false}) {
     this
-      ..loading = old?.loading
-      ..item = old?.item
-      ..message = old?.message;
+      ..loading = old.loading
+      ..item = old.item
+      ..message = old.message;
   }
 }

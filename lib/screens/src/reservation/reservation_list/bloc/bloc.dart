@@ -16,17 +16,17 @@ class ReservationListBloc extends Cubit<LoadMoreModel<Reservation>>
     implements LoadMoreInterface, KayleeFilterInterface<ReservationFilter> {
   final ReservationService service;
 
-  ReservationListBloc({this.service}) : super(LoadMoreModel());
-  ReservationFilter _filter;
-  DateTime date;
+  ReservationListBloc({required this.service}) : super(LoadMoreModel());
+  ReservationFilter? _filter;
+  DateTime? date;
 
   void loadReservations() {
     state.loading = true;
     RequestHandler(
-      request: service?.getReservations(
+      request: service.getReservations(
         keyword: _filter?.keyword,
-        status: _filter?.status?.index.isNotNull
-            ? (_filter.status.index + 1)
+        status: _filter?.status?.index != null
+            ? (_filter!.status!.index + 1)
             : null,
         brandId: _filter?.brand?.id,
         datetime: date?.toFormatString(pattern: dateFormat),
@@ -52,7 +52,7 @@ class ReservationListBloc extends Cubit<LoadMoreModel<Reservation>>
     );
   }
 
-  void loadReservationsByDate({DateTime date}) {
+  void loadReservationsByDate({required DateTime date}) {
     this.date = date;
     emit(LoadMoreModel.copy(state
       ..page = 1
@@ -67,7 +67,7 @@ class ReservationListBloc extends Cubit<LoadMoreModel<Reservation>>
   }
 
   @override
-  ReservationFilter getFilter() {
+  ReservationFilter? getFilter() {
     return _filter;
   }
 
@@ -96,7 +96,7 @@ class ReservationListBloc extends Cubit<LoadMoreModel<Reservation>>
   @override
   ReservationFilter updateFilter() {
     if (isEmptyFilter) _filter = ReservationFilter();
-    return _filter;
+    return _filter!;
   }
 
   @override

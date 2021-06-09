@@ -13,9 +13,9 @@ import 'package:kaylee/widgets/widgets.dart';
 
 class CreateNewReservationScreenData {
   final ReservationScreenOpenFrom openFrom;
-  final Reservation reservation;
+  final Reservation? reservation;
 
-  CreateNewReservationScreenData({this.openFrom, this.reservation});
+  CreateNewReservationScreenData({required this.openFrom, this.reservation});
 }
 
 enum ReservationScreenOpenFrom { editButton, addNewButton }
@@ -25,7 +25,7 @@ class CreateNewReservationScreen extends StatefulWidget {
       create: (context) => ReservationDetailBloc(
             service: context.network.provideReservationService(),
             reservation: context
-                .getArguments<CreateNewReservationScreenData>()
+                .getArguments<CreateNewReservationScreenData>()!
                 .reservation,
           ),
       child: CreateNewReservationScreen._());
@@ -39,9 +39,9 @@ class CreateNewReservationScreen extends StatefulWidget {
 
 class _CreateNewReservationScreenState
     extends KayleeState<CreateNewReservationScreen> {
-  ReservationScreenOpenFrom openFrom;
+  late ReservationScreenOpenFrom openFrom;
 
-  ReservationDetailBloc get _bloc => context.bloc<ReservationDetailBloc>();
+  ReservationDetailBloc get _bloc => context.bloc<ReservationDetailBloc>()!;
 
   final brandController = PickInputController<Brand>();
   final nameTfController = TextEditingController();
@@ -54,12 +54,12 @@ class _CreateNewReservationScreenState
   final guessQuantityController = QuantitySliderController(quantity: 1);
   final noteTfController = TextEditingController();
   final noteFocus = FocusNode();
-  StreamSubscription reservationDetailScreenBlocSub;
+  late StreamSubscription reservationDetailScreenBlocSub;
 
   @override
   void initState() {
     super.initState();
-    reservationDetailScreenBlocSub = _bloc.listen((state) {
+    reservationDetailScreenBlocSub = _bloc.stream.listen((state) {
       if (state.loading) {
         showLoading();
       } else if (!state.loading) {
@@ -70,7 +70,7 @@ class _CreateNewReservationScreenState
             error: state.error,
             onPressed: () {
               popScreen();
-              switch (state.error.code) {
+              switch (state.error!.code) {
                 case ErrorCode.PHONE_CODE:
                   return phoneFocus.requestFocus();
                 case ErrorCode.NAME_CODE:
@@ -86,15 +86,15 @@ class _CreateNewReservationScreenState
             message: state.message,
             onPressed: popScreen,
             onDismiss: () {
-              context.bloc<ReloadBloc>().reload(widget: ReservationListScreen);
+              context.bloc<ReloadBloc>()!.reload(widget: ReservationListScreen);
               popScreen();
             },
           );
         }
       }
     });
-    final data = context.getArguments<CreateNewReservationScreenData>();
-    openFrom = data?.openFrom;
+    final data = context.getArguments<CreateNewReservationScreenData>()!;
+    openFrom = data.openFrom;
     if (openFrom == ReservationScreenOpenFrom.editButton) {
       _bloc.get();
     }
@@ -139,7 +139,7 @@ class _CreateNewReservationScreenState
                               onPressed: () {
                                 popScreen();
 
-                                _bloc.state.item
+                                _bloc.state.item!
                                   ..name = nameTfController.text
                                   ..address = addressController.address
                                   ..city = addressController.city
@@ -149,7 +149,7 @@ class _CreateNewReservationScreenState
                                   ..quantity = guessQuantityController.quantity
                                   ..note = noteTfController.text
                                   ..datetime = dateController.value
-                                      .combineWithTime(
+                                      ?.combineWithTime(
                                           time: timeController.value?.datetime)
                                   ..brand = brandController.value;
                                 _bloc.update();
@@ -185,17 +185,19 @@ class _CreateNewReservationScreenState
         child: BlocConsumer<ReservationDetailBloc, SingleModel<Reservation>>(
           listener: (context, state) {
             brandController.value = state.item?.brand;
-            nameTfController.text = state.item?.name;
+            nameTfController.text = state.item?.name ?? '';
             addressController.initAddress = state.item?.address;
             addressController.initCity = state.item?.city;
             addressController.initDistrict = state.item?.district;
             addressController.initWard = state.item?.wards;
-            phoneTfController.text = state.item?.phone;
+            phoneTfController.text = state.item?.phone ?? '';
             guessQuantityController.quantity = state.item?.quantity;
             dateController.value = state.item?.datetime;
             timeController.value = StartTime(
-                time: DateFormat(dateFormat3).format(state.item?.datetime));
-            noteTfController.text = state.item?.note;
+                time: state.item?.datetime == null
+                    ? null
+                    : DateFormat(dateFormat3).format(state.item!.datetime!));
+            noteTfController.text = state.item?.note ?? '';
           },
           listenWhen: (previous, current) => current is DetailReservationModel,
           buildWhen: (previous, current) => current is DetailReservationModel,

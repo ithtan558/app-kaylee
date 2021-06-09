@@ -40,7 +40,7 @@ class _CartScreenState extends BaseState<CartScreen> {
             child: BlocBuilder<CartBloc, CartState>(
               builder: (context, state) {
                 final cartItems = context.cart.getOrder()?.cartItems;
-                if (cartItems.isNullOrEmpty) {
+                if (cartItems?.isEmpty ?? true) {
                   return Container(
                     margin: EdgeInsets.only(top: Dimens.px16),
                     child: KayleeText.hint16W400(Strings.banChuaChonSanPham),
@@ -48,13 +48,13 @@ class _CartScreenState extends BaseState<CartScreen> {
                 }
                 return ListView.separated(
                     itemBuilder: (c, index) {
-                      if (index < cartItems.length) {
-                        final item = cartItems?.elementAt(index);
+                      if (index < cartItems!.length) {
+                        final item = cartItems.elementAt(index);
                         return CartProdItem(
                           item: item,
                           onRemoveItem: () {
                             context.cart.removeProd(item);
-                            context.bloc<CartBloc>().updateCart();
+                            context.bloc<CartBloc>()!.updateCart();
                           },
                         );
                       }
@@ -67,7 +67,7 @@ class _CartScreenState extends BaseState<CartScreen> {
                           decoration: new BoxDecoration(
                               color: ColorsRes.textFieldBorder),
                         ),
-                    itemCount: (cartItems?.length ?? 0) + 1);
+                    itemCount: cartItems!.length + 1);
               },
             ),
           ),
@@ -75,7 +75,7 @@ class _CartScreenState extends BaseState<CartScreen> {
             text: Strings.datHang,
             margin: const EdgeInsets.all(Dimens.px8),
             onPressed: () {
-              if (context.cart?.getOrder()?.cartItems.isNotNullAndEmpty)
+              if (context.cart.getOrder()?.cartItems?.isNotEmpty ?? false)
                 pushScreen(PageIntent(screen: ReceiverInfoScreen));
             },
           )
@@ -85,8 +85,8 @@ class _CartScreenState extends BaseState<CartScreen> {
   }
 
   Widget buildTotalAmountInfo(List<OrderRequestItem> cartItems) {
-    final total = cartItems.fold(0, (previousValue, e) {
-      final price = previousValue + e.price * e.quantity;
+    final total = cartItems.fold<int>(0, (previousValue, e) {
+      final price = previousValue + (e.price ?? 0) * (e.quantity ?? 0);
       return price;
     });
     return Padding(

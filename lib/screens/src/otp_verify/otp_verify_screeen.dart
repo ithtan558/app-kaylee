@@ -15,11 +15,11 @@ import 'package:kaylee/widgets/widgets.dart';
 import 'bloc/otp_verify_bloc.dart';
 
 class VerifyOtpScreenData {
-  final int userId;
+  final int? userId;
   final String phone;
   final VerifyOtpScreenDataType type;
 
-  VerifyOtpScreenData({this.userId, this.phone, this.type});
+  VerifyOtpScreenData({this.userId, required this.phone, required this.type});
 }
 
 enum VerifyOtpScreenDataType {
@@ -31,12 +31,13 @@ class OtpVerifyScreen extends StatefulWidget {
   static Widget newInstance() => MultiBlocProvider(providers: [
         BlocProvider(
           create: (context) {
+            final data = context.getArguments<VerifyOtpScreenData>()!;
             VerifyOtpRepository repository =
-                context.getArguments<VerifyOtpScreenData>().type ==
-                        VerifyOtpScreenDataType.forgotPassword
+                data.type == VerifyOtpScreenDataType.forgotPassword
                     ? context.repos.verifyOtpForForgotPassword
                     : context.repos.verifyOtpForRegister;
-            return OtpVerifyBloc(verifyOtpRepository: repository);
+            return OtpVerifyBloc(
+                verifyOtpRepository: repository, userId: data.userId);
           },
         ),
         BlocProvider(
@@ -52,11 +53,11 @@ class OtpVerifyScreen extends StatefulWidget {
 }
 
 class _OtpVerifyScreenState extends KayleeState<OtpVerifyScreen> {
-  OtpVerifyBloc get otpVerifyBloc => context.bloc<OtpVerifyBloc>();
+  OtpVerifyBloc get otpVerifyBloc => context.bloc<OtpVerifyBloc>()!;
 
-  SendOtpBloc get sendOtpBloc => context.bloc<SendOtpBloc>();
+  SendOtpBloc get sendOtpBloc => context.bloc<SendOtpBloc>()!;
 
-  VerifyOtpScreenData get data => context.getArguments<VerifyOtpScreenData>();
+  VerifyOtpScreenData get data => context.getArguments<VerifyOtpScreenData>()!;
 
   @override
   Widget build(BuildContext context) {
@@ -69,13 +70,13 @@ class _OtpVerifyScreenState extends KayleeState<OtpVerifyScreen> {
             } else if (!state.loading) {
               hideLoading();
               if (state.error != null) {
-                if (state.error.code.isNull) {
+                if (state.error!.code == null) {
                   showKayleeAlertErrorYesDialog(
                       context: context,
                       error: state.error,
                       onPressed: popScreen);
                 }
-              } else if (state.item.isNotNull) {
+              } else if (state.item != null) {
                 showKayleeAlertMessageYesDialog(
                   context: context,
                   message: state.message,
@@ -85,11 +86,11 @@ class _OtpVerifyScreenState extends KayleeState<OtpVerifyScreen> {
                       return pushReplacementScreen(PageIntent(
                           screen: ResetPassNewPassScreen,
                           bundle:
-                              Bundle(NewPassScreenData(result: state.item))));
+                              Bundle(NewPassScreenData(result: state.item!))));
                     }
 
                     if (data.type == VerifyOtpScreenDataType.register) {
-                      return context.popUntilScreenOrFirst(PageIntent());
+                      return context.popUntilScreenOrFirst();
                     }
                   },
                 );
@@ -145,10 +146,9 @@ class _OtpVerifyScreenState extends KayleeState<OtpVerifyScreen> {
                       builder: (context, state) {
                         return OtpInputField(
                           onComplete: (code) {
-                            otpVerifyBloc.verifyOtp(
-                                userId: data.userId, otp: code);
+                            otpVerifyBloc.verifyOtp(otp: code);
                           },
-                          error: state.error?.code.isNotNull
+                          error: state.error?.code != null
                               ? state.error?.message
                               : null,
                         );
@@ -165,7 +165,7 @@ class _OtpVerifyScreenState extends KayleeState<OtpVerifyScreen> {
                       child: HyperLinkText(
                         text: Strings.guiLai,
                         onTap: () {
-                          sendOtpBloc.verifyPhone(phone: data?.phone);
+                          sendOtpBloc.verifyPhone(phone: data.phone);
                         },
                       ),
                     )

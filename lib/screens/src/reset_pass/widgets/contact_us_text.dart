@@ -2,15 +2,15 @@ import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
-import 'package:kaylee/components/components.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/reset_pass/blocs/contact_us_bloc.dart';
+import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class ContactUsText extends StatefulWidget {
   static Widget newInstance() => BlocProvider<ContactUsBloc>(
-        create: (context) => ContactUsBloc(
-            context.repository<NetworkModule>().provideCommonService()),
+        create: (context) =>
+            ContactUsBloc(context.network.provideCommonService()),
         child: ContactUsText._(),
       );
 
@@ -21,19 +21,7 @@ class ContactUsText extends StatefulWidget {
 }
 
 class _ContactUsTextState extends KayleeState<ContactUsText> {
-  ContactUsBloc contactUsBloc;
-
-  @override
-  void initState() {
-    super.initState();
-    contactUsBloc = context.bloc<ContactUsBloc>();
-  }
-
-  @override
-  void dispose() {
-    contactUsBloc.close();
-    super.dispose();
-  }
+  ContactUsBloc get contactUsBloc => context.bloc<ContactUsBloc>()!;
 
   @override
   Widget build(BuildContext context) {

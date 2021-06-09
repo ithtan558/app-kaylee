@@ -6,16 +6,19 @@ class ReservationItemBloc extends Cubit<SingleModel> {
   final ReservationService service;
   final Reservation reservation;
 
-  ReservationItemBloc({this.service, this.reservation}) : super(SingleModel());
+  ReservationItemBloc({required this.service, required this.reservation})
+      : super(SingleModel());
 
   void updateCameStatus() {
     emit(SingleModel.copy(state..loading = true));
     reservation.status = ReservationStatus.came;
     RequestHandler(
-      request: service?.updateStatus(
+      request: service.updateStatus(
           id: reservation.id,
           reservationId: reservation.id,
-          status: reservation.status.index + 1),
+          status: reservation.status?.index == null
+              ? null
+              : (reservation.status!.index + 1)),
       onSuccess: ({message, result}) {
         emit(SingleModel.copy(state
           ..loading = false

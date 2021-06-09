@@ -4,16 +4,16 @@ import 'package:kaylee/services/services.dart';
 
 class UpdatePassBloc extends Cubit<SingleModel> {
   UserService userService;
-  final String resetPassToken;
-  final int userId;
+  final String? resetPassToken;
+  final int? userId;
 
   UpdatePassBloc({
-    this.userService,
+    required this.userService,
     this.resetPassToken,
     this.userId,
   }) : super(SingleModel());
 
-  void updatePass({String newPass}) {
+  void updatePass({required String newPass}) {
     emit(SingleModel.copy(state..loading = true));
 
     RequestHandler(

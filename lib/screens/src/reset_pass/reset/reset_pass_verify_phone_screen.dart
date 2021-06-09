@@ -28,12 +28,12 @@ class _ResetPassVerifyPhoneScreenState
     extends KayleeState<ResetPassVerifyPhoneScreen> {
   final _phoneTFController = TextEditingController();
   final phoneFocus = FocusNode();
-  SendOtpBloc sendOtpBloc;
+
+  SendOtpBloc get sendOtpBloc => context.bloc<SendOtpBloc>()!;
 
   @override
   void initState() {
     super.initState();
-    sendOtpBloc = context.bloc<SendOtpBloc>();
   }
 
   @override
@@ -54,13 +54,13 @@ class _ResetPassVerifyPhoneScreenState
         } else if (!state.loading) {
           hideLoading();
           if (state.error != null) {
-            if (state.error.code.isNull) {
+            if (state.error!.code == null) {
               showKayleeAlertErrorYesDialog(
                   context: context, error: state.error, onPressed: popScreen);
             } else {
               phoneFocus.requestFocus();
             }
-          } else if (state.item.isNotNull) {
+          } else if (state.item != null) {
             showKayleeAlertMessageYesDialog(
               context: context,
               message: state.message,
@@ -72,7 +72,7 @@ class _ResetPassVerifyPhoneScreenState
                     bundle: Bundle(
                       VerifyOtpScreenData(
                         phone: _phoneTFController.text,
-                        userId: state.item.userId,
+                        userId: state.item!.userId,
                         type: VerifyOtpScreenDataType.forgotPassword,
                       ),
                     ),
@@ -102,9 +102,8 @@ class _ResetPassVerifyPhoneScreenState
                   return KayleeTextField.phoneInput(
                     controller: _phoneTFController,
                     focusNode: phoneFocus,
-                    error: state.error?.code.isNotNull
-                        ? state.error?.message
-                        : null,
+                    error:
+                        state.error?.code != null ? state.error?.message : null,
                   );
                 }),
                 KayLeeRoundedButton.normal(

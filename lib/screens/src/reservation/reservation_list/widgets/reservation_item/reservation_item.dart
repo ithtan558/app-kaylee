@@ -9,7 +9,7 @@ import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class ReservationItem extends StatefulWidget {
-  static Widget newInstance({Reservation reservation}) => BlocProvider(
+  static Widget newInstance({required Reservation reservation}) => BlocProvider(
       key: ValueKey(reservation),
       create: (context) => ReservationItemBloc(
             service: context.network.provideReservationService(),
@@ -24,7 +24,7 @@ class ReservationItem extends StatefulWidget {
 }
 
 class _ReservationItemState extends KayleeState<ReservationItem> {
-  ReservationItemBloc get _bloc => context.bloc<ReservationItemBloc>();
+  ReservationItemBloc get _bloc => context.bloc<ReservationItemBloc>()!;
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +86,8 @@ class _ReservationItemState extends KayleeState<ReservationItem> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    KayleeText.normal16W500(_bloc.reservation.customer.name),
+                    KayleeText.normal16W500(
+                        _bloc.reservation.customer.name ?? ''),
                     SizedBox(height: Dimens.px8),
                     KayleeText.hint16W400(Strings.soLuongKhach
                         .plus(': ${_bloc.reservation.quantity ?? ''}')),
@@ -151,11 +152,11 @@ class _ReservationItemState extends KayleeState<ReservationItem> {
     );
   }
 
-  Widget _buildStatusTitle({Reservation reservation}) {
+  Widget _buildStatusTitle({required Reservation reservation}) {
     final status = reservation.status;
-    final dateInString = reservation.datetime.isNull
-        ? null
-        : ' ${DateFormat(dateFormat3).format(reservation.datetime)}';
+    final dateInString = reservation.datetime == null
+        ? ''
+        : ' ${DateFormat(dateFormat3).format(reservation.datetime!)}';
     if (status == ReservationStatus.canceled)
       return KayleeText.normal16W400(Strings.huy);
     if (status == ReservationStatus.booked)
