@@ -9,7 +9,7 @@ class ServCateListScreenBloc extends Cubit<LoadMoreModel<ServiceCate>>
     implements LoadMoreInterface {
   final ServService servService;
 
-  ServCateListScreenBloc({this.servService}) : super(LoadMoreModel());
+  ServCateListScreenBloc({required this.servService}) : super(LoadMoreModel());
 
   void loadCategories() {
     state.loading = true;

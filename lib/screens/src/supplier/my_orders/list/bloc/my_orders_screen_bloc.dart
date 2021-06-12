@@ -9,11 +9,14 @@ class MyOrdersScreenBloc extends Cubit<LoadMoreModel<Order>>
     with KayleeListInterfaceMixin
     implements LoadMoreInterface {
   final OrderService orderService;
-  DateTime date;
 
-  MyOrdersScreenBloc({this.orderService}) : super(LoadMoreModel());
+  ///initialized ở [loadOrdersByDate] khi view gọi function này lúc [initState]
+  ///nên nó sẽ luôn != null
+  late DateTime date;
 
-  void loadOrdersByDate({DateTime date}) {
+  MyOrdersScreenBloc({required this.orderService}) : super(LoadMoreModel());
+
+  void loadOrdersByDate({required DateTime date}) {
     this.date = date;
     emit(LoadMoreModel.copy(state
       ..page = 1

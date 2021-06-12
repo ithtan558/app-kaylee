@@ -8,8 +8,8 @@ class ServCateDetailBloc extends Cubit<SingleModel<ServiceCate>>
   final ServService servService;
 
   ServCateDetailBloc({
-    this.servService,
-    ServiceCate serviceCate,
+    required this.servService,
+    ServiceCate? serviceCate,
   }) : super(SingleModel(item: serviceCate));
 
   @override
@@ -19,7 +19,7 @@ class ServCateDetailBloc extends Cubit<SingleModel<ServiceCate>>
       request: servService.newServiceCate(
         name: state.item?.name,
         code: state.item?.code,
-        sequence: state.item.sequence,
+        sequence: state.item?.sequence,
       ),
       onSuccess: ({message, result}) {
         emit(NewServCateModel.copy(state
@@ -104,34 +104,34 @@ class ServCateDetailBloc extends Cubit<SingleModel<ServiceCate>>
 class DeleteServCateModel extends SingleModel<ServiceCate> {
   DeleteServCateModel.copy(SingleModel old) {
     this
-      ..loading = old?.loading
-      ..item = old?.item
-      ..message = old?.message;
+      ..loading = old.loading
+      ..item = old.item
+      ..message = old.message;
   }
 }
 
 class UpdateServCateModel extends SingleModel<ServiceCate> {
   UpdateServCateModel.copy(SingleModel old) {
     this
-      ..loading = old?.loading
-      ..item = old?.item
-      ..message = old?.message;
+      ..loading = old.loading
+      ..item = old.item
+      ..message = old.message;
   }
 }
 
 class NewServCateModel extends SingleModel<ServiceCate> {
   NewServCateModel.copy(SingleModel old) {
     this
-      ..loading = old?.loading
-      ..item = old?.item
-      ..message = old?.message;
+      ..loading = old.loading
+      ..item = old.item
+      ..message = old.message;
   }
 }
 
 class DetailServCateModel extends SingleModel<ServiceCate> {
   DetailServCateModel.copy(SingleModel old) {
     this
-      ..loading = old?.loading
-      ..item = old?.item;
+      ..loading = old.loading
+      ..item = old.item;
   }
 }

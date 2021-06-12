@@ -13,9 +13,9 @@ import 'package:kaylee/widgets/widgets.dart';
 
 class NewServCateScreenData {
   final NewSerCateScreenOpenFrom openFrom;
-  final ServiceCate serviceCate;
+  final ServiceCate? serviceCate;
 
-  NewServCateScreenData({this.openFrom, this.serviceCate});
+  NewServCateScreenData({required this.openFrom, this.serviceCate});
 }
 
 enum NewSerCateScreenOpenFrom { cateItem, addNewCateBtn }
@@ -23,9 +23,9 @@ enum NewSerCateScreenOpenFrom { cateItem, addNewCateBtn }
 class CreateNewServCateScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider(
       create: (context) => ServCateDetailBloc(
-            servService: context.network.provideServService(),
+        servService: context.network.provideServService(),
             serviceCate:
-                context.getArguments<NewServCateScreenData>().serviceCate,
+                context.getArguments<NewServCateScreenData>()!.serviceCate,
           ),
       child: CreateNewServCateScreen._());
 
@@ -38,9 +38,9 @@ class CreateNewServCateScreen extends StatefulWidget {
 
 class _CreateNewServCateScreenState
     extends KayleeState<CreateNewServCateScreen> {
-  ServCateDetailBloc _bloc;
-  NewSerCateScreenOpenFrom openFrom;
-  StreamSubscription _sub;
+  ServCateDetailBloc get _bloc => context.bloc<ServCateDetailBloc>()!;
+  late NewSerCateScreenOpenFrom openFrom;
+  late StreamSubscription _sub;
   final nameTfController = TextEditingController();
   final nameFocus = FocusNode();
   final codeTfController = TextEditingController();
@@ -51,8 +51,7 @@ class _CreateNewServCateScreenState
   @override
   void initState() {
     super.initState();
-    _bloc = context.bloc<ServCateDetailBloc>();
-    _sub = _bloc.listen((state) {
+    _sub = _bloc.stream.listen((state) {
       if (state.loading) {
         showLoading();
       } else if (!state.loading) {
@@ -71,7 +70,7 @@ class _CreateNewServCateScreenState
             message: state.message,
             onPressed: popScreen,
             onDismiss: () {
-              context.bloc<ReloadBloc>().reload(widget: ServCateListScreen);
+              context.bloc<ReloadBloc>()!.reload(widget: ServCateListScreen);
               popScreen();
             },
           );
@@ -79,8 +78,8 @@ class _CreateNewServCateScreenState
       }
     });
 
-    final data = context.getArguments<NewServCateScreenData>();
-    openFrom = data?.openFrom;
+    final data = context.getArguments<NewServCateScreenData>()!;
+    openFrom = data.openFrom;
     if (openFrom == NewSerCateScreenOpenFrom.cateItem) {
       _bloc.get();
     }
@@ -121,7 +120,7 @@ class _CreateNewServCateScreenState
                       KayleeAlertDialogAction.dongY(
                         onPressed: () {
                           popScreen();
-                          _bloc.state.item
+                          _bloc.state.item!
                             ..name = nameTfController.text
                             ..code = codeTfController.text
                             ..sequence =
@@ -147,9 +146,9 @@ class _CreateNewServCateScreenState
         padding: const EdgeInsets.all(Dimens.px16),
         child: BlocConsumer<ServCateDetailBloc, SingleModel<ServiceCate>>(
           listener: (context, state) {
-            nameTfController.text = state.item?.name;
-            codeTfController.text = state.item?.code;
-            sequenceTfController.text = state.item?.sequence?.toString();
+            nameTfController.text = state.item?.name ?? '';
+            codeTfController.text = state.item?.code ?? '';
+            sequenceTfController.text = state.item?.sequence?.toString() ?? '';
           },
           listenWhen: (previous, current) => current is DetailServCateModel,
           buildWhen: (previous, current) => current is DetailServCateModel,

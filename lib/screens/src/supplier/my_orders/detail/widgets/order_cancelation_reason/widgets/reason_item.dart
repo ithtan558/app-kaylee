@@ -7,7 +7,7 @@ class ReasonItem extends StatelessWidget {
   final VoidCallback onSelect;
   final OrderCancellationReason reason;
 
-  ReasonItem({this.onSelect, this.reason});
+  ReasonItem({required this.onSelect, required this.reason});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class ReasonItem extends StatelessWidget {
             children: [
               Expanded(
                 child: KayleeText.normal16W400(
-                  reason.name,
+                  reason.name ?? '',
                 ),
               ),
               reason.selected ? RadioActiveIcon() : RadioInactiveIcon(),

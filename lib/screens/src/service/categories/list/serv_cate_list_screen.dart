@@ -23,17 +23,16 @@ class ServCateListScreen extends StatefulWidget {
 }
 
 class _ServCateListScreenState extends KayleeState<ServCateListScreen> {
-  ServCateListScreenBloc _bloc;
+  ServCateListScreenBloc get _bloc => context.bloc<ServCateListScreenBloc>()!;
 
   @override
   void initState() {
     super.initState();
-    _bloc = context.bloc<ServCateListScreenBloc>();
     _bloc.loadInitData();
   }
 
   @override
-  void onReloadWidget(Type screen, Bundle bundle) {
+  void onReloadWidget(Type screen, Bundle? bundle) {
     if (screen == ServCateListScreen) {
       _bloc.refresh();
     }
@@ -56,7 +55,7 @@ class _ServCateListScreenState extends KayleeState<ServCateListScreen> {
             child: KayleeRefreshIndicator(
               controller: _bloc,
               child: KayleeLoadMoreHandler(
-                controller: context.bloc<ServCateListScreenBloc>(),
+                controller: _bloc,
                 child: BlocConsumer<ServCateListScreenBloc,
                     LoadMoreModel<ServiceCate>>(
                   listener: (context, state) {
@@ -76,7 +75,7 @@ class _ServCateListScreenState extends KayleeState<ServCateListScreen> {
                     return KayleeListView(
                       padding: EdgeInsets.all(Dimens.px16),
                       itemBuilder: (c, index) {
-                        final item = state.items.elementAt(index);
+                        final item = state.items!.elementAt(index);
                         return ServCateItem(
                           category: item,
                           onTap: () {

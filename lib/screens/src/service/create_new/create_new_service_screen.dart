@@ -14,18 +14,18 @@ import 'package:kaylee/widgets/widgets.dart';
 
 class NewServiceScreenData {
   final ServiceScreenOpenFrom openFrom;
-  final Service service;
+  final Service? service;
 
-  NewServiceScreenData({this.openFrom, this.service});
+  NewServiceScreenData({required this.openFrom, this.service});
 }
 
 enum ServiceScreenOpenFrom { serviceItem, addNewServiceBtn }
 
 class CreateNewServiceScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<ServiceDetailScreenBloc>(
-        create: (context) => ServiceDetailScreenBloc(
+    create: (context) => ServiceDetailScreenBloc(
             servService: context.network.provideServService(),
-            service: context.getArguments<NewServiceScreenData>().service),
+            service: context.getArguments<NewServiceScreenData>()!.service),
         child: CreateNewServiceScreen._(),
       );
 
@@ -36,9 +36,10 @@ class CreateNewServiceScreen extends StatefulWidget {
 }
 
 class _CreateNewServiceScreenState extends KayleeState<CreateNewServiceScreen> {
-  ServiceScreenOpenFrom openFrom;
-  ServiceDetailScreenBloc bloc;
-  StreamSubscription serviceDetailScreenBlocSub;
+  late ServiceScreenOpenFrom openFrom;
+
+  ServiceDetailScreenBloc get bloc => context.bloc<ServiceDetailScreenBloc>()!;
+  late StreamSubscription serviceDetailScreenBlocSub;
   final bannerPickerController = ImagePickerController();
   final codeTfController = TextEditingController();
   final codeFocus = FocusNode();
@@ -59,8 +60,7 @@ class _CreateNewServiceScreenState extends KayleeState<CreateNewServiceScreen> {
   @override
   void initState() {
     super.initState();
-    bloc = context.bloc<ServiceDetailScreenBloc>();
-    serviceDetailScreenBlocSub = bloc.listen((state) {
+    serviceDetailScreenBlocSub = bloc.stream.listen((state) {
       if (state.loading) {
         showLoading();
       } else if (!state.loading) {
@@ -71,7 +71,7 @@ class _CreateNewServiceScreenState extends KayleeState<CreateNewServiceScreen> {
             error: state.error,
             onPressed: () {
               popScreen();
-              switch (state.error.code) {
+              switch (state.error!.code) {
                 case ErrorCode.PRICE_CODE:
                   priceFocus.requestFocus();
                   break;
@@ -92,15 +92,15 @@ class _CreateNewServiceScreenState extends KayleeState<CreateNewServiceScreen> {
             message: state.message,
             onPressed: popScreen,
             onDismiss: () {
-              context.bloc<ReloadBloc>().reload(widget: ServiceListScreen);
+              context.bloc<ReloadBloc>()!.reload(widget: ServiceListScreen);
               popScreen();
             },
           );
         }
       }
     });
-    final data = context.getArguments<NewServiceScreenData>();
-    openFrom = data?.openFrom;
+    final data = context.getArguments<NewServiceScreenData>()!;
+    openFrom = data.openFrom;
     if (openFrom == ServiceScreenOpenFrom.serviceItem) {
       bloc.get();
     }
@@ -142,7 +142,7 @@ class _CreateNewServiceScreenState extends KayleeState<CreateNewServiceScreen> {
                       KayleeAlertDialogAction.dongY(
                         onPressed: () {
                           popScreen();
-                          bloc.state.item
+                          bloc.state.item!
                             ..code = codeTfController.text
                             ..name = nameTfController.text
                             ..description = descriptionTfController.text
@@ -181,14 +181,14 @@ class _CreateNewServiceScreenState extends KayleeState<CreateNewServiceScreen> {
         child: BlocConsumer<ServiceDetailScreenBloc, SingleModel<Service>>(
             listenWhen: (previous, current) => current is ServiceDetailModel,
             listener: (context, state) {
-              bannerPickerController?.existedImageUrl = state.item?.image;
-              codeTfController.text = state.item?.code;
-              nameTfController.text = state.item?.name;
+              bannerPickerController.existedImageUrl = state.item?.image;
+              codeTfController.text = state.item?.code ?? '';
+              nameTfController.text = state.item?.name ?? '';
               brandSelectController.brands = state.item?.brands;
               timeController.value = state.item?.timeInDuration;
-              priceTfController.text = state.item?.price?.toString();
+              priceTfController.text = state.item?.price?.toString() ?? '';
               serviceCateController.value = state.item?.category;
-              descriptionTfController.text = state.item?.description;
+              descriptionTfController.text = state.item?.description ?? '';
             },
             buildWhen: (previous, current) => current is ServiceDetailModel,
             builder: (context, state) {
@@ -206,9 +206,8 @@ class _CreateNewServiceScreenState extends KayleeState<CreateNewServiceScreen> {
                       focusNode: codeFocus,
                       textInputAction: TextInputAction.next,
                       nextFocusNode: nameFocus,
-                      error: state.error?.code.isNotNull &&
-                              state.error.code == ErrorCode.CODE_CODE
-                          ? state.error.message
+                      error: state.error?.code == ErrorCode.CODE_CODE
+                          ? state.error!.message
                           : null,
                     ),
                   ),

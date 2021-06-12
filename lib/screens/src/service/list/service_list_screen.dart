@@ -33,17 +33,17 @@ class ServiceListScreen extends StatefulWidget {
 }
 
 class _ServiceListScreenState extends KayleeState<ServiceListScreen> {
-  ServiceCateBloc get cateBloc => context.bloc<ServiceCateBloc>();
-  StreamSubscription sub;
+  ServiceCateBloc get cateBloc => context.bloc<ServiceCateBloc>()!;
+  late StreamSubscription sub;
 
-  ServiceListBloc get serviceListBloc => context.bloc<ServiceListBloc>();
-  StreamSubscription serviceListBlocSub;
+  ServiceListBloc get serviceListBloc => context.bloc<ServiceListBloc>()!;
+  late StreamSubscription serviceListBlocSub;
 
   @override
   void initState() {
     super.initState();
 
-    sub = cateBloc.listen((state) {
+    sub = cateBloc.stream.listen((state) {
       if (!cateBloc.loading) {
         hideLoading();
         if (state.error != null) {
@@ -55,20 +55,18 @@ class _ServiceListScreenState extends KayleeState<ServiceListScreen> {
             },
           );
         } else {
-          serviceListBloc.loadInitDataWithCate(
-              cateId: cateBloc.items
-                  ?.firstWhere(
-                    (element) => true,
-                    orElse: () => null,
-                  )
-                  ?.id);
+          var caetgoryId;
+          try {
+            caetgoryId = (cateBloc.items?.firstWhere((element) => true))?.id;
+          } catch (_) {}
+          serviceListBloc.loadInitDataWithCate(cateId: caetgoryId);
         }
       } else if (cateBloc.loading) {
         showLoading();
       }
     });
 
-    serviceListBlocSub = serviceListBloc.listen((state) {
+    serviceListBlocSub = serviceListBloc.stream.listen((state) {
       if (state.error != null) {
         showKayleeAlertErrorYesDialog(context: context, error: state.error);
       }
@@ -105,11 +103,11 @@ class _ServiceListScreenState extends KayleeState<ServiceListScreen> {
               builder: (context, state) {
                 final categories = cateBloc.items;
                 return KayleeTabBar(
-                  itemCount: categories?.length,
-                  mapTitle: (index) => categories.elementAt(index).name,
+                  itemCount: categories?.length ?? 0,
+                  mapTitle: (index) => categories!.elementAt(index).name,
                   onSelected: (index) {
                     serviceListBloc.changeTab(
-                        cateId: cateBloc.items.elementAt(index).id);
+                        cateId: cateBloc.items!.elementAt(index).id);
                   },
                 );
               },
@@ -184,7 +182,7 @@ class _ServiceListScreenState extends KayleeState<ServiceListScreen> {
   }
 
   @override
-  void onReloadWidget(Type widget, Bundle bundle) {
+  void onReloadWidget(Type widget, Bundle? bundle) {
     if (widget == ServCateListScreen) {
       cateBloc.refresh();
     } else if (widget == ServiceListScreen) {

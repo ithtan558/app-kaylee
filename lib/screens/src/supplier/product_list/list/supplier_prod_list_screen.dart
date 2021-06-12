@@ -44,24 +44,23 @@ class SupplierProdListScreen extends StatefulWidget {
 }
 
 class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
-  SupplierProdCateListBloc cateBloc;
-  SupplierProdListBloc prodsBloc;
-  StreamSubscription cateBlocSub;
+  SupplierProdCateListBloc get cateBloc =>
+      context.bloc<SupplierProdCateListBloc>()!;
+
+  SupplierProdListBloc get prodsBloc => context.bloc<SupplierProdListBloc>()!;
+  late StreamSubscription cateBlocSub;
 
   SupplierProdListScreenBloc get _bloc =>
-      context.bloc<SupplierProdListScreenBloc>();
+      context.bloc<SupplierProdListScreenBloc>()!;
 
-  Supplier get supplier => context.getArguments<Supplier>();
+  Supplier get supplier => context.getArguments<Supplier>()!;
 
   @override
   void initState() {
     super.initState();
-    cateBloc = context.bloc<SupplierProdCateListBloc>();
-    prodsBloc = context.bloc<SupplierProdListBloc>();
-
     _bloc.getInfo();
 
-    cateBlocSub = cateBloc.listen((state) {
+    cateBlocSub = cateBloc.stream.listen((state) {
       if (!state.loading) {
         hideLoading();
         if (state.error != null) {
@@ -71,11 +70,11 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
             onPressed: popScreen,
           );
         } else {
-          prodsBloc.loadInitDataWithCate(
-              category: state.items?.firstWhere(
-            (element) => true,
-            orElse: () => null,
-          ));
+          ProdCate? category;
+          try {
+            category = state.items?.firstWhere((element) => true);
+          } catch (_) {}
+          prodsBloc.loadInitDataWithCate(category: category);
         }
       } else if (state.loading) {
         showLoading();
@@ -140,10 +139,10 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
         builder: (context, state) {
           final categories = state.items;
           return KayleeTabBar(
-            itemCount: categories?.length,
-            mapTitle: (index) => categories.elementAt(index).name,
+            itemCount: categories?.length ?? 0,
+            mapTitle: (index) => categories!.elementAt(index).name,
             onSelected: (value) {
-              prodsBloc.changeTab(category: state.items.elementAt(value));
+              prodsBloc.changeTab(category: state.items!.elementAt(value));
             },
           );
         },
@@ -164,7 +163,7 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
                 padding: EdgeInsets.all(Dimens.px16),
                 childAspectRatio: 103 / 195,
                 itemBuilder: (c, index) {
-                  final item = state.items.elementAt(index);
+                  final item = state.items!.elementAt(index);
                   return KayleeProdItemView.canTap(
                     data: KayleeProdItemData(
                         name: item.name, image: item.image, price: item.price),

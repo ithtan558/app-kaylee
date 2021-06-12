@@ -6,7 +6,7 @@ import 'package:kaylee/widgets/widgets.dart';
 class OrderProdItem extends KayleeCartProdItem {
   final OrderItem orderItem;
 
-  OrderProdItem({this.orderItem})
+  OrderProdItem({required this.orderItem})
       : super(
           name: orderItem.name,
           amount: orderItem.total,

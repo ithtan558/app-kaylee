@@ -71,7 +71,7 @@ class _KayleeTabViewState extends BaseState<KayleeTabView>
 class KayleeTabBar extends StatefulWidget {
   final ValueSetter<int>? onSelected;
   final int itemCount;
-  final String Function(int index)? mapTitle;
+  final String? Function(int index)? mapTitle;
   final EdgeInsets? padding;
 
   KayleeTabBar({
@@ -94,7 +94,7 @@ class _KayleeTabBarState extends BaseState<KayleeTabBar> {
       scrollDirection: Axis.horizontal,
       itemBuilder: (context, index) {
         return buildTabItem(
-          title: widget.mapTitle?.call(index) ?? '',
+          title: widget.mapTitle?.call(index),
           isSelected: index == currentIndex,
           onTap: () {
             setState(() {

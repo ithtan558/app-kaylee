@@ -7,7 +7,7 @@ class StaffDetailScreenBloc extends Cubit<SingleModel<Employee>>
     implements CRUDInterface {
   final EmployeeService employeeService;
 
-  StaffDetailScreenBloc({this.employeeService, Employee employee})
+  StaffDetailScreenBloc({required this.employeeService, Employee? employee})
       : super(SingleModel(item: employee));
 
   @override
@@ -128,34 +128,34 @@ class StaffDetailScreenBloc extends Cubit<SingleModel<Employee>>
 class StaffDetailModel extends SingleModel<Employee> {
   StaffDetailModel.copy(SingleModel old) {
     this
-      ..loading = old?.loading
-      ..item = old?.item;
+      ..loading = old.loading
+      ..item = old.item;
   }
 }
 
 class DeleteStaffDetailModel extends SingleModel<Employee> {
   DeleteStaffDetailModel.copy(SingleModel old) {
     this
-      ..loading = old?.loading
-      ..item = old?.item
-      ..message = old?.message;
+      ..loading = old.loading
+      ..item = old.item
+      ..message = old.message;
   }
 }
 
 class UpdateStaffDetailModel extends SingleModel<Employee> {
   UpdateStaffDetailModel.copy(SingleModel old) {
     this
-      ..loading = old?.loading
-      ..item = old?.item
-      ..message = old?.message;
+      ..loading = old.loading
+      ..item = old.item
+      ..message = old.message;
   }
 }
 
 class NewStaffDetailModel extends SingleModel<Employee> {
   NewStaffDetailModel.copy(SingleModel old) {
     this
-      ..loading = old?.loading
-      ..item = old?.item
-      ..message = old?.message;
+      ..loading = old.loading
+      ..item = old.item
+      ..message = old.message;
   }
 }

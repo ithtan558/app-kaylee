@@ -1,5 +1,4 @@
 import 'package:anth_package/anth_package.dart';
-import 'package:flutter/foundation.dart';
 import 'package:kaylee/base/kaylee_filter_interface.dart';
 import 'package:kaylee/base/kaylee_list_interface.dart';
 import 'package:kaylee/base/loadmore_interface.dart';
@@ -16,10 +15,9 @@ class StaffListScreenBloc extends Cubit<LoadMoreModel<Employee>>
     with KayleeListInterfaceMixin
     implements LoadMoreInterface, KayleeFilterInterface<StaffFilter> {
   final EmployeeService employeeService;
-  StaffFilter _filter;
+  StaffFilter? _filter;
 
-  StaffListScreenBloc({@required this.employeeService})
-      : super(LoadMoreModel());
+  StaffListScreenBloc({required this.employeeService}) : super(LoadMoreModel());
 
   void loadEmployees() {
     state.loading = true;
@@ -69,7 +67,7 @@ class StaffListScreenBloc extends Cubit<LoadMoreModel<Employee>>
   }
 
   @override
-  StaffFilter getFilter() {
+  StaffFilter? getFilter() {
     return _filter;
   }
 
@@ -84,7 +82,7 @@ class StaffListScreenBloc extends Cubit<LoadMoreModel<Employee>>
   @override
   StaffFilter updateFilter() {
     if (isEmptyFilter) _filter = StaffFilter();
-    return _filter;
+    return _filter!;
   }
 
   @override
@@ -94,7 +92,7 @@ class StaffListScreenBloc extends Cubit<LoadMoreModel<Employee>>
 
     state
       ..page = 1
-      ..items.clear();
+      ..items?.clear();
     loadEmployees();
   }
 }

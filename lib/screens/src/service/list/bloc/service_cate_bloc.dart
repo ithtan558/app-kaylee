@@ -1,5 +1,4 @@
 import 'package:anth_package/anth_package.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/services/services.dart';
 
@@ -7,7 +6,7 @@ class ServiceCateBloc extends Cubit<SingleModel<List<Category>>>
     with PaginationMixin<Category> {
   ServService servService;
 
-  ServiceCateBloc({@required this.servService}) : super(SingleModel());
+  ServiceCateBloc({required this.servService}) : super(SingleModel());
 
   @override
   void load() {

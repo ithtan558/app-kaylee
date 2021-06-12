@@ -6,7 +6,8 @@ class MyOrderDetailBloc extends Cubit<SingleModel<Order>> {
   final OrderService orderService;
   Order order;
 
-  MyOrderDetailBloc({this.orderService, this.order}) : super(SingleModel());
+  MyOrderDetailBloc({required this.orderService, required this.order})
+      : super(SingleModel());
 
   void loadDetail() {
     emit(SingleModel.copy(state..loading = true));
@@ -26,7 +27,7 @@ class MyOrderDetailBloc extends Cubit<SingleModel<Order>> {
     );
   }
 
-  void cancelOrder({OrderCancellationReason cancellationReason}) {
+  void cancelOrder({required OrderCancellationReason cancellationReason}) {
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
       request: orderService.updateOrderStatus(
@@ -54,15 +55,15 @@ class MyOrderDetailBloc extends Cubit<SingleModel<Order>> {
 class CancelOrderModel extends SingleModel<Order> {
   CancelOrderModel.copy(SingleModel old) {
     this
-      ..message = old?.message
-      ..loading = old?.loading;
+      ..message = old.message
+      ..loading = old.loading;
   }
 }
 
 class OrderDetailModel extends SingleModel<Order> {
   OrderDetailModel.copy(SingleModel old) {
     this
-      ..item = old?.item
-      ..loading = old?.loading;
+      ..item = old.item
+      ..loading = old.loading;
   }
 }

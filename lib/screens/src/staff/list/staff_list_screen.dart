@@ -28,14 +28,13 @@ class StaffListScreen extends StatefulWidget {
 }
 
 class _StaffListScreenState extends KayleeState<StaffListScreen> {
-  StaffListScreenBloc staffsBloc;
-  StreamSubscription staffsBlocSub;
+  StaffListScreenBloc get staffsBloc => context.bloc<StaffListScreenBloc>()!;
+  late StreamSubscription staffsBlocSub;
 
   @override
   void initState() {
     super.initState();
-    staffsBloc = context.bloc<StaffListScreenBloc>();
-    staffsBlocSub = staffsBloc.listen((state) {
+    staffsBlocSub = staffsBloc.stream.listen((state) {
       if (!state.loading && state.error != null) {
         showKayleeAlertErrorYesDialog(
             context: context, error: state.error, onPressed: popScreen);
@@ -51,7 +50,7 @@ class _StaffListScreenState extends KayleeState<StaffListScreen> {
   }
 
   @override
-  void onReloadWidget(Type widget, Bundle bundle) {
+  void onReloadWidget(Type widget, Bundle? bundle) {
     if (widget == StaffListScreen) {
       staffsBloc.refresh();
     }
@@ -76,7 +75,7 @@ class _StaffListScreenState extends KayleeState<StaffListScreen> {
       body: KayleeRefreshIndicator(
         controller: staffsBloc,
         child: KayleeLoadMoreHandler(
-          controller: context.bloc<StaffListScreenBloc>(),
+          controller: staffsBloc,
           child: BlocBuilder<StaffListScreenBloc, LoadMoreModel<Employee>>(
             buildWhen: (previous, current) {
               return !current.loading;
@@ -86,7 +85,7 @@ class _StaffListScreenState extends KayleeState<StaffListScreen> {
                 padding: EdgeInsets.all(Dimens.px16),
                 childAspectRatio: 103 / 195,
                 itemBuilder: (c, index) {
-                  final item = state.items.elementAt(index);
+                  final item = state.items!.elementAt(index);
                   return StaffItem(
                     employee: item,
                     onTap: () {

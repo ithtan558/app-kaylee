@@ -1,5 +1,4 @@
 import 'package:anth_package/anth_package.dart';
-import 'package:flutter/foundation.dart';
 import 'package:kaylee/base/kaylee_list_interface.dart';
 import 'package:kaylee/base/loadmore_interface.dart';
 import 'package:kaylee/models/models.dart';
@@ -9,18 +8,18 @@ class SupplierProdListBloc extends Cubit<LoadMoreModel<Product>>
     with KayleeListInterfaceMixin
     implements LoadMoreInterface {
   final ProductService productService;
-  Supplier supplier;
-  ProdCate category;
+  Supplier? supplier;
+  ProdCate? category;
 
-  SupplierProdListBloc({@required this.productService, this.supplier})
+  SupplierProdListBloc({required this.productService, this.supplier})
       : super(LoadMoreModel(items: []));
 
-  void loadInitDataWithCate({ProdCate category}) {
+  void loadInitDataWithCate({ProdCate? category}) {
     changeTab(category: category);
   }
 
-  void changeTab({ProdCate category}) {
-    if (category.isNotNull) {
+  void changeTab({ProdCate? category}) {
+    if (category != null) {
       ///user đổi category
       this.category = category;
 

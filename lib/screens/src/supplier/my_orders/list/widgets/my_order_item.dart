@@ -8,7 +8,7 @@ import 'package:kaylee/widgets/widgets.dart';
 class MyOrderItem extends StatelessWidget {
   final Order order;
 
-  MyOrderItem({this.order});
+  MyOrderItem({required this.order});
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,7 @@ class MyOrderItem extends StatelessWidget {
               children: [
                 Expanded(
                   child: KayleeText.normal16W500(
-                    order.name,
+                    order.name ?? '',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),

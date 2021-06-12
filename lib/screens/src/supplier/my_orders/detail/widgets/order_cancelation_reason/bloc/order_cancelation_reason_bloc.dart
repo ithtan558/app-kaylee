@@ -4,13 +4,13 @@ import 'package:kaylee/models/models.dart';
 import 'package:kaylee/services/services.dart';
 
 class OrderCancellationReasonBloc
-    extends Cubit<SingleModel<Map<int, OrderCancellationReason>>> {
+    extends Cubit<SingleModel<Map<int?, OrderCancellationReason>>> {
   final OrderService service;
 
   OrderCancellationReason get selected =>
-      state.item.values.firstWhere((reason) => reason.selected);
+      state.item!.values.firstWhere((reason) => reason.selected);
 
-  OrderCancellationReasonBloc({this.service}) : super(SingleModel());
+  OrderCancellationReasonBloc({required this.service}) : super(SingleModel());
 
   void loadReasons() {
     emit(SingleModel.copy(state..loading = true));
@@ -20,10 +20,8 @@ class OrderCancellationReasonBloc
         final reasons = (result as List<OrderCancellationReason>);
         emit(SingleModel.copy(state
           ..loading = false
-          ..item = Map<int, OrderCancellationReason>.fromEntries(reasons?.map(
-                  (e) =>
-                      MapEntry(e.id, e..selected = reasons.first.id == e.id)) ??
-              [])
+          ..item = Map<int?, OrderCancellationReason>.fromEntries(reasons.map(
+              (e) => MapEntry(e.id, e..selected = reasons.first.id == e.id)))
           ..code = null
           ..error = null));
       },
@@ -36,10 +34,10 @@ class OrderCancellationReasonBloc
     );
   }
 
-  void select({OrderCancellationReason selected}) {
+  void select({required OrderCancellationReason selected}) {
     state
-      ..item.updateAll((key, value) => value..selected = false)
-      ..item.update(selected.id, (value) => value..selected = true);
+      ..item!.updateAll((key, value) => value..selected = false)
+      ..item!.update(selected.id, (value) => value..selected = true);
     emit(SingleModel.copy(state..item));
   }
 }

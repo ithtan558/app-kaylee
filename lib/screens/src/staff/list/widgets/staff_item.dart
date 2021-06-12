@@ -6,10 +6,10 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class StaffItem extends StatelessWidget {
-  final void Function() onTap;
+  final VoidCallback onTap;
   final Employee employee;
 
-  StaffItem({this.onTap, this.employee});
+  StaffItem({required this.onTap, required this.employee});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class StaffItem extends StatelessWidget {
           itemHeight: double.infinity,
           child: KayleeImageInfoLayout(
             imageView: CachedNetworkImage(
-              imageUrl: employee?.image ?? '',
+              imageUrl: employee.image ?? '',
               fit: BoxFit.cover,
             ),
             infoView: Column(
@@ -26,14 +26,14 @@ class StaffItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 KayleeText.hyper16W500(
-                  employee?.name ?? '',
+                  employee.name ?? '',
                   maxLines: 2,
                   textAlign: TextAlign.center,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: Dimens.px4),
                   child: KayleeText.hint16W400(
-                    employee?.role?.name ?? '',
+                    employee.role?.name ?? '',
                     maxLines: 1,
                     textAlign: TextAlign.center,
                   ),

@@ -17,9 +17,9 @@ class ProductSupplierVideo extends StatefulWidget {
 
 class _ProductSupplierVideoState extends State<ProductSupplierVideo>
     with AutomaticKeepAliveClientMixin<ProductSupplierVideo> {
-  VideoPlayerController _controller;
+  late VideoPlayerController _controller;
   final _videoStreamController = BehaviorSubject<bool>()..value = false;
-  ChewieController _chewieController;
+  late ChewieController _chewieController;
 
   @override
   void initState() {
@@ -27,8 +27,8 @@ class _ProductSupplierVideoState extends State<ProductSupplierVideo>
     _controller = VideoPlayerController.network(
       widget.image.value ?? '',
       videoPlayerOptions: VideoPlayerOptions(),
-    )..initialize().then((value) {
-        _videoStreamController.value = _controller.value.initialized;
+    )..initialize().then((_) {
+        _videoStreamController.value = true;
         _chewieController = ChewieController(
           videoPlayerController: _controller,
           autoPlay: true,
@@ -54,7 +54,7 @@ class _ProductSupplierVideoState extends State<ProductSupplierVideo>
       child: StreamBuilder<bool>(
         stream: _videoStreamController.stream,
         builder: (context, snapshot) {
-          if (snapshot.hasData && snapshot.data)
+          if (snapshot.hasData && snapshot.data!)
             return Chewie(
               controller: _chewieController,
             );

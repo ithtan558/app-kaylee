@@ -13,18 +13,18 @@ import 'package:kaylee/widgets/widgets.dart';
 
 class NewStaffScreenData {
   final NewStaffScreenOpenFrom openFrom;
-  Employee employee;
+  final Employee? employee;
 
-  NewStaffScreenData({this.openFrom, this.employee});
+  NewStaffScreenData({required this.openFrom, this.employee});
 }
 
 enum NewStaffScreenOpenFrom { staffItem, addNewStaffBtn }
 
 class CreateNewStaffScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<StaffDetailScreenBloc>(
-        create: (context) => StaffDetailScreenBloc(
+    create: (context) => StaffDetailScreenBloc(
             employeeService: context.network.provideEmployeeService(),
-            employee: context.getArguments<NewStaffScreenData>()?.employee),
+            employee: context.getArguments<NewStaffScreenData>()!.employee),
         child: CreateNewStaffScreen._(),
       );
 
@@ -35,9 +35,10 @@ class CreateNewStaffScreen extends StatefulWidget {
 }
 
 class _CreateNewStaffScreenState extends KayleeState<CreateNewStaffScreen> {
-  NewStaffScreenOpenFrom openFrom;
-  StaffDetailScreenBloc bloc;
-  StreamSubscription staffDetailScreenBlocSub;
+  late NewStaffScreenOpenFrom openFrom;
+
+  StaffDetailScreenBloc get bloc => context.bloc<StaffDetailScreenBloc>()!;
+  late StreamSubscription staffDetailScreenBlocSub;
   final nameTfController = TextEditingController();
   final nameFocus = FocusNode();
   final homeTownCityController = PickInputController<City>();
@@ -56,8 +57,7 @@ class _CreateNewStaffScreenState extends KayleeState<CreateNewStaffScreen> {
   @override
   void initState() {
     super.initState();
-    bloc = context.bloc<StaffDetailScreenBloc>();
-    staffDetailScreenBlocSub = bloc.listen((state) {
+    staffDetailScreenBlocSub = bloc.stream.listen((state) {
       if (state.loading) {
         showLoading();
       } else if (!state.loading) {
@@ -68,7 +68,7 @@ class _CreateNewStaffScreenState extends KayleeState<CreateNewStaffScreen> {
             error: state.error,
             onPressed: () {
               popScreen();
-              switch (state.error.code) {
+              switch (state.error!.code) {
                 case ErrorCode.NAME_CODE:
                   return nameFocus.requestFocus();
                 case ErrorCode.PHONE_CODE:
@@ -86,7 +86,7 @@ class _CreateNewStaffScreenState extends KayleeState<CreateNewStaffScreen> {
             message: state.message,
             onPressed: popScreen,
             onDismiss: () {
-              context.bloc<ReloadBloc>().reload(widget: StaffListScreen);
+              context.bloc<ReloadBloc>()!.reload(widget: StaffListScreen);
               popScreen();
             },
           );
@@ -94,8 +94,8 @@ class _CreateNewStaffScreenState extends KayleeState<CreateNewStaffScreen> {
       }
     });
 
-    final data = context.getArguments<NewStaffScreenData>();
-    openFrom = data?.openFrom;
+    final data = context.getArguments<NewStaffScreenData>()!;
+    openFrom = data.openFrom;
     if (openFrom == NewStaffScreenOpenFrom.staffItem) {
       bloc.get();
     }
@@ -137,7 +137,7 @@ class _CreateNewStaffScreenState extends KayleeState<CreateNewStaffScreen> {
                       KayleeAlertDialogAction.dongY(
                         onPressed: () {
                           popScreen();
-                          bloc.state.item
+                          bloc.state.item!
                             ..name = nameTfController.text
                             ..birthday = birthDayController.value.toString()
                             ..hometownCity = homeTownCityController.value
@@ -183,7 +183,7 @@ class _CreateNewStaffScreenState extends KayleeState<CreateNewStaffScreen> {
         child: BlocConsumer<StaffDetailScreenBloc, SingleModel<Employee>>(
           listener: (context, state) {
             imagePickerController.existedImageUrl = state.item?.image;
-            nameTfController.text = state.item?.name;
+            nameTfController.text = state.item?.name ?? '';
             birthDayController.value = state.item?.birthDayInDateTime;
             homeTownCityController.value = state.item?.hometownCity;
             addressController
@@ -191,9 +191,9 @@ class _CreateNewStaffScreenState extends KayleeState<CreateNewStaffScreen> {
               ..initCity = state.item?.city
               ..initDistrict = state.item?.district
               ..initWard = state.item?.wards;
-            phoneTfController.text = state.item?.phone;
-            passwordTfController.text = state.item?.password;
-            emailTfController.text = state.item?.email;
+            phoneTfController.text = state.item?.phone ?? '';
+            passwordTfController.text = state.item?.password ?? '';
+            emailTfController.text = state.item?.email ?? '';
             roleController.value = state.item?.role;
             brandController.value = state.item?.brand;
           },

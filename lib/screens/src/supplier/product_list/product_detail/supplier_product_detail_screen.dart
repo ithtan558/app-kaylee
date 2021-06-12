@@ -19,8 +19,8 @@ class SupplierProductDetailScreenData {
   final ProductDetailScreenOpenFrom openFrom;
 
   SupplierProductDetailScreenData(
-      {this.product,
-      this.supplier,
+      {required this.product,
+      required this.supplier,
       this.openFrom = ProductDetailScreenOpenFrom.productSupplierList});
 }
 
@@ -34,7 +34,7 @@ class SupplierProductDetailScreen extends StatefulWidget {
       create: (context) => SupplierProdDetailBloc(
           productService: context.network.provideProductService(),
           product:
-              context.getArguments<SupplierProductDetailScreenData>().product),
+              context.getArguments<SupplierProductDetailScreenData>()!.product),
       child: SupplierProductDetailScreen._());
 
   SupplierProductDetailScreen._();
@@ -47,18 +47,18 @@ class SupplierProductDetailScreen extends StatefulWidget {
 class _SupplierProductDetailScreenState
     extends KayleeState<SupplierProductDetailScreen>
     implements ProductDetailAction {
-  SupplierProdDetailBloc bloc;
-  StreamSubscription sub;
+  SupplierProdDetailBloc get bloc => context.bloc<SupplierProdDetailBloc>()!;
+  late StreamSubscription sub;
   final _indicatorController = IndicatorController();
 
   SupplierProductDetailScreenData get data =>
-      context.getArguments<SupplierProductDetailScreenData>();
+      context.getArguments<SupplierProductDetailScreenData>()!;
 
   @override
   void initState() {
     super.initState();
-    bloc = context.bloc<SupplierProdDetailBloc>()..action = this;
-    sub = bloc.listen((state) {
+    bloc.action = this;
+    sub = bloc.stream.listen((state) {
       if (state.loading) {
         showLoading();
       } else if (!state.loading) {
@@ -86,9 +86,9 @@ class _SupplierProductDetailScreenState
       ),
       child: BlocBuilder<SupplierProdDetailBloc, SingleModel<Product>>(
         builder: (context, state) {
-          if (state.item.isNull) return Container();
-          final product = state.item;
-          _indicatorController.length = state.item.images?.length ?? 0;
+          if (state.item == null) return Container();
+          final product = state.item!;
+          _indicatorController.length = product.images?.length ?? 0;
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -99,12 +99,13 @@ class _SupplierProductDetailScreenState
                   onPageChanged: (value) {
                     _indicatorController.jumpTo(index: value);
                   },
-                  children: state.item.images.map((image) {
-                    if (image.type == ProductImageType.video) {
-                      return ProductSupplierVideo(image);
-                    }
-                    return ProductSupplierImage(image);
-                  }).toList(),
+                  children: (product.images?.map((image) {
+                        if (image.type == ProductImageType.video) {
+                          return ProductSupplierVideo(image);
+                        }
+                        return ProductSupplierImage(image);
+                      }))?.toList() ??
+                      [],
                 ),
               ),
               Padding(
@@ -139,13 +140,13 @@ class _SupplierProductDetailScreenState
                     textStyle: TextStyles.normal16W400,
                     customWidgetBuilder: (element) {
                   if (element.localName == 'img') {
-                    double width =
+                    double? width =
                         double.tryParse(element.attributes['width'] ?? '');
-                    double height =
+                    double? height =
                         double.tryParse(element.attributes['height'] ?? '');
                     //chỉ tự render khi image.height > width của device
-                    if (width.isNotNull &&
-                        height.isNotNull &&
+                    if (width != null &&
+                        height != null &&
                         height > context.screenSize.width) {
                       return CachedNetworkImage(
                         imageUrl: element.attributes['src'] ?? '',
@@ -171,7 +172,7 @@ class _SupplierProductDetailScreenState
           children: [
             KayleeIncrAndDecrButtons(
               onAmountChange: (value) {
-                bloc.state.item.quantity = value;
+                bloc.state.item?.quantity = value;
               },
             ),
             Expanded(
@@ -197,7 +198,7 @@ class _SupplierProductDetailScreenState
   @override
   void onAdd2Cart() {
     context.cart.addProdToCart(bloc.state.item);
-    context.bloc<CartBloc>().updateCart();
+    context.bloc<CartBloc>()!.updateCart();
     if (data.openFrom == ProductDetailScreenOpenFrom.notification) {
       context.pushToFirst(PageIntent(
           screen: SupplierProdListScreen, bundle: Bundle(data.supplier)));
@@ -232,9 +233,7 @@ class _SupplierProductDetailScreenState
 
   @override
   void onNewAdd2Cart() {
-    context.cart.updateOrderInfo(OrderRequest(
-      supplier: data?.supplier,
-    ));
+    context.cart.updateOrderInfo(OrderRequest(supplier: data.supplier));
     onAdd2Cart();
   }
 }

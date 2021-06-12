@@ -9,7 +9,8 @@ import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class OrderCancellationReasonDialog extends StatefulWidget {
-  static Widget newInstance({ValueSetter<OrderCancellationReason> onConfirm}) =>
+  static Widget newInstance(
+          {required ValueSetter<OrderCancellationReason> onConfirm}) =>
       BlocProvider(
         create: (context) => OrderCancellationReasonBloc(
           service: context.network.provideOrderService(),
@@ -20,7 +21,7 @@ class OrderCancellationReasonDialog extends StatefulWidget {
       );
   final ValueSetter<OrderCancellationReason> onConfirm;
 
-  OrderCancellationReasonDialog._({this.onConfirm});
+  OrderCancellationReasonDialog._({required this.onConfirm});
 
   @override
   _OrderCancellationReasonDialogState createState() =>
@@ -30,7 +31,7 @@ class OrderCancellationReasonDialog extends StatefulWidget {
 class _OrderCancellationReasonDialogState
     extends KayleeState<OrderCancellationReasonDialog> {
   OrderCancellationReasonBloc get _bloc =>
-      context.bloc<OrderCancellationReasonBloc>();
+      context.bloc<OrderCancellationReasonBloc>()!;
 
   @override
   void initState() {
@@ -56,16 +57,16 @@ class _OrderCancellationReasonDialogState
           decoration: BoxDecoration(
             border: Border.symmetric(
               horizontal:
-              BorderSide(width: Dimens.px1, color: ColorsRes.divider),
+                  BorderSide(width: Dimens.px1, color: ColorsRes.divider),
             ),
           ),
           child: BlocBuilder<OrderCancellationReasonBloc,
-              SingleModel<Map<int, OrderCancellationReason>>>(
+              SingleModel<Map<int?, OrderCancellationReason>>>(
             builder: (context, state) {
               if (state.loading) return Center(child: KayleeLoadingIndicator());
               return ListView.separated(
                 itemBuilder: (context, index) {
-                  final reason = _bloc.state.item.values.elementAt(index);
+                  final reason = _bloc.state.item!.values.elementAt(index);
                   return ReasonItem(
                     reason: reason,
                     onSelect: () {
@@ -73,11 +74,10 @@ class _OrderCancellationReasonDialogState
                     },
                   );
                 },
-                separatorBuilder: (context, index) =>
-                    Container(
-                      color: ColorsRes.divider,
-                      height: Dimens.px1,
-                    ),
+                separatorBuilder: (context, index) => Container(
+                  color: ColorsRes.divider,
+                  height: Dimens.px1,
+                ),
                 itemCount: _bloc.state.item?.length ?? 0,
               );
             },
@@ -102,7 +102,7 @@ class _OrderCancellationReasonDialogState
                   margin: const EdgeInsets.only(left: Dimens.px8),
                   onPressed: () {
                     popScreen();
-                    widget.onConfirm?.call(_bloc.selected);
+                    widget.onConfirm.call(_bloc.selected);
                   },
                 ),
               ),

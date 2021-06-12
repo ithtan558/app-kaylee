@@ -1,5 +1,4 @@
 import 'package:anth_package/anth_package.dart';
-import 'package:flutter/foundation.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/services/services.dart';
 
@@ -16,21 +15,21 @@ abstract class ProductDetailAction {
 
 class SupplierProdDetailBloc extends Cubit<SingleModel<Product>> {
   ProductService productService;
-  Product product;
-  ProductDetailAction action;
+  final Product product;
+  ProductDetailAction? action;
 
-  SupplierProdDetailBloc({@required this.productService, this.product})
+  SupplierProdDetailBloc({required this.productService, required this.product})
       : super(SingleModel());
 
   void loadProduct() {
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
-      request: this.productService.getProduct(proId: product?.id),
+      request: this.productService.getProduct(proId: product.id),
       onSuccess: ({message, result}) {
         emit(SingleModel.copy(state
           ..loading = false
           ..item = result
-          ..item.quantity = 1
+          ..item!.quantity = 1
           ..error = null
           ..code = null));
       },
@@ -43,10 +42,10 @@ class SupplierProdDetailBloc extends Cubit<SingleModel<Product>> {
     );
   }
 
-  void add2Cart({Supplier previous, Supplier current}) {
-    if (previous.isNull) {
+  void add2Cart({Supplier? previous, Supplier? current}) {
+    if (previous == null) {
       action?.onNewAdd2Cart();
-    } else if (previous?.id == current?.id) {
+    } else if (previous.id == current?.id) {
       action?.onAdd2Cart();
     } else {
       action?.onResetCart();

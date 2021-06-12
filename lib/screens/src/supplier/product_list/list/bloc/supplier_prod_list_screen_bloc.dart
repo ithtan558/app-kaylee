@@ -4,10 +4,10 @@ import 'package:kaylee/services/services.dart';
 
 class SupplierProdListScreenBloc extends Cubit<SingleModel<Supplier>> {
   final SupplierService service;
-  final Supplier supplier;
+  final Supplier? supplier;
 
   SupplierProdListScreenBloc({
-    this.service,
+    required this.service,
     this.supplier,
   }) : super(SingleModel(item: supplier));
 
