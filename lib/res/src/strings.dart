@@ -340,7 +340,7 @@ class Strings {
   static const String chon = 'Chọn';
   static const String ketNoiThanhCong = 'Kết nối máy in thành công';
   static String thietBiChuaBatBluetooth = 'Thiết bị chưa bật Bluetooth';
-  static String quyenTruyBluetoothContent =
+  static String vuiLongBatBluetoothContent =
       'Vui lòng bật Bluetooth để kết nối với máy in.';
   static const String iOsBluetoothSettingGuide = 'Vào Cài đặt > Bluetooth';
   static const String androidBluetoothSettingGuide =
@@ -355,6 +355,19 @@ class Strings {
   static const khongBatBuoc = 'Không bắt buộc';
   static const giaHanSuDung = 'Gia hạn sử dụng';
   static const giaHanUngDung = 'Gia hạn ứng dụng';
+  static const String quyenTruyCapViTri = 'Quyền truy cập vị trí';
+  static const String quyenTruyCapBluetooth = 'Quyền truy cập Bluetooth';
+  static String quyenTruyCapViTriContent =
+      'Vui lòng thiết lập cho phép Kaylee truy cập Vị trí';
+  static String quyenTruyCapBluetoothContent =
+      'Vui lòng thiết lập cho phép Kaylee truy cập Bluetooth';
+  static const String androidLocationPermissionGuide =
+      'Vào Cài đặt > Ứng dụng > Kaylee > Quyền > Vị trí';
+  static const String iOsBluetoothPermissionGuide =
+      'Vào Cài đặt > Kaylee > Bluetooth';
+  static const String androidLocationProminentDisclosure =
+      'Kaylee chỉ sửa dụng quyền truy cập vị trí để sử dụng cho việc tìm kiếm các thiết bị máy in bluetooth khi \'Cài đặt máy in\'';
+  static const choPhepTruyCap = 'Cho phép truy cập';
 
   Strings._();
 }

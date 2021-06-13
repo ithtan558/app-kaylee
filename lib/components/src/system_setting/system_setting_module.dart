@@ -74,7 +74,7 @@ class _SystemSettingModuleImpl extends SystemSettingModule {
       context: context,
       barrierDismissible: barrierDismissible,
       title: Strings.thietBiChuaBatBluetooth,
-      message: Strings.quyenTruyBluetoothContent,
+      message: Strings.vuiLongBatBluetoothContent,
       guides: Platform.isAndroid
           ? Strings.androidBluetoothSettingGuide
           : Strings.iOsBluetoothSettingGuide,
@@ -93,7 +93,7 @@ class _SystemSettingModuleImpl extends SystemSettingModule {
           : Strings.quyenTruyCapBluetooth,
       message: Platform.isAndroid
           ? Strings.quyenTruyCapViTriContent
-          : Strings.quyenTruyBluetoothContent,
+          : Strings.quyenTruyCapBluetoothContent,
       guides: Platform.isAndroid
           ? Strings.androidLocationPermissionGuide
           : Strings.iOsBluetoothPermissionGuide,
