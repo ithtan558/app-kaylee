@@ -11,6 +11,8 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 const String PRINTER_DEVICES_KEY = 'PRINTER_DEVICES_KEY';
+const String LOCATION_PROMINENT_DISCLOSURE_FOR_ANDROID_KEY =
+    'LOCATION_PROMINENT_DISCLOSURE_FOR_ANDROID_KEY';
 
 class PrinterModule {
   static NetworkPrinter _printer;
