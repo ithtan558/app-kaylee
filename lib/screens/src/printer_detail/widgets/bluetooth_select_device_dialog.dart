@@ -1,7 +1,6 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:bluetooth_print/bluetooth_print.dart';
 import 'package:bluetooth_print/bluetooth_print_model.dart';
-
 // import 'package:bluetooth_print/bluetooth_print.dart';
 // import 'package:bluetooth_print/bluetooth_print_model.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +9,7 @@ import 'package:kaylee/components/components.dart';
 import 'package:kaylee/components/src/printer/bluetooth_printer_module.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/printer_detail/widgets/printer_device_item.dart';
+import 'package:kaylee/utils/src/bluetooth_helper/bluetooth_helper.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class BluetoothSelectDeviceDialog extends StatefulWidget {
@@ -25,14 +25,15 @@ class BluetoothSelectDeviceDialog extends StatefulWidget {
 }
 
 class _BluetoothSelectDeviceDialogState
-    extends KayleeState<BluetoothSelectDeviceDialog> {
+    extends KayleeState<BluetoothSelectDeviceDialog>
+    with BluetoothHelper<BluetoothSelectDeviceDialog> {
   BluetoothPrinterModule module;
   PrinterDevice _device;
 
   @override
   void initState() {
     super.initState();
-    BluetoothPrint.instance.startScan(timeout: Duration(seconds: 4));
+    checkBluetoothPermission();
   }
 
   @override
@@ -130,5 +131,10 @@ class _BluetoothSelectDeviceDialogState
         ],
       ),
     );
+  }
+
+  @override
+  void onGranted() {
+    BluetoothPrint.instance.startScan(timeout: Duration(seconds: 4));
   }
 }
