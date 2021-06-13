@@ -6,6 +6,8 @@ abstract class ApplicationConfig {
   void setupConfig(Map<String, RemoteConfigValue> config);
 
   String get baseUrl;
+
+  String get policyUrl;
 }
 
 class ProductionAppConfig extends _BaseAppConfig {
@@ -31,6 +33,10 @@ abstract class _BaseAppConfig implements ApplicationConfig {
 
   String get _defaultBaseUrlValue;
 
+  String get _basePolicyUrlKey => 'base_policy_url';
+
+  String get _defaultBasePolicyUrlValue => 'http://kaylee.vn/chinh-sach.html';
+
   @override
   void setupConfig(Map<String, RemoteConfigValue> config) {
     _config = config;
@@ -43,7 +49,14 @@ abstract class _BaseAppConfig implements ApplicationConfig {
   }
 
   @override
+  String get policyUrl {
+    final value = _config.value(_basePolicyUrlKey)?.asString();
+    return (value?.isEmpty ?? true) ? _defaultBaseUrlValue : value;
+  }
+
+  @override
   Map<String, dynamic> get defaultConfig => {
         _baseUrlKey: _defaultBaseUrlValue,
+        _basePolicyUrlKey: _defaultBasePolicyUrlValue,
       };
 }
