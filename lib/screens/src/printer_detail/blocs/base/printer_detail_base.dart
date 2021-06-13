@@ -24,26 +24,34 @@ abstract class PrinterDetailBase extends Cubit<PrinterDetailState> {
 
   List<PrinterDevice> devices = [];
 
-  PrinterDevice get _selectedDevice => devices.firstWhere(
-        (element) => element.selected,
-        orElse: () => null,
-      );
+  PrinterDevice? get _selectedDevice {
+    PrinterDevice? device;
+    try {
+      device = devices.firstWhere((element) => element.selected);
+    } catch (_) {}
+    return device;
+  }
 
   PrinterDevice? get defaultDevice {
     final fromSharePref = SharedRef.getString(PRINTER_DEVICES_KEY);
     final map =
-        jsonDecode(fromSharePref.isNullOrEmpty ? '[]' : fromSharePref) as List;
-    return map.map((e) => PrinterDevice.fromJson(e)).firstWhere(
-          (element) => element.selected,
-          orElse: () => null,
-        );
+        jsonDecode((fromSharePref?.isEmpty ?? true) ? '[]' : fromSharePref!)
+            as List;
+    PrinterDevice? device;
+    try {
+      device = map
+          .map((e) => PrinterDevice.fromJson(e))
+          .firstWhere((element) => element.selected);
+    } catch (_) {}
+    return device;
   }
 
   void initState() async {
     emit(PrinterDetailStateLoadingDevices());
     final fromSharePref = SharedRef.getString(PRINTER_DEVICES_KEY);
     final map =
-        jsonDecode(fromSharePref.isNullOrEmpty ? '[]' : fromSharePref) as List;
+        jsonDecode((fromSharePref?.isEmpty ?? true) ? '[]' : fromSharePref!)
+            as List;
     devices = map.map((e) => PrinterDevice.fromJson(e)).toList();
     await startScanBluetoothDevice();
     emit(PrinterDetailStateLoadedDevices());
@@ -78,13 +86,11 @@ abstract class PrinterDetailBase extends Cubit<PrinterDetailState> {
     }
   }
 
-  void removeDevice({PrinterDevice device}) {
+  void removeDevice({required PrinterDevice device}) {
     final isDefault = defaultDevice == null
         ? false
-        : defaultDevice.deviceAddress == device.deviceAddress;
-    devices.removeWhere((e) {
-      return e.isEqual(device);
-    });
+        : defaultDevice!.deviceAddress == device.deviceAddress;
+    devices.removeWhere((e) => e.isEqual(device));
     _updateSharedPref();
     emit(PrinterDetailStateLoadedDevices());
     if (device.isBluetooth) {
@@ -100,17 +106,17 @@ abstract class PrinterDetailBase extends Cubit<PrinterDetailState> {
     SharedRef.putString(PRINTER_DEVICES_KEY, jsonEncode(devices));
   }
 
-  void select({PrinterDevice device}) {
+  void select({required PrinterDevice device}) {
     if (device.selected) {
       device.selected = false;
       return emit(PrinterDetailStateOnNoSelectingDevice());
     }
 
     //bỏ select của device đã chọn trc đó
-    final oldSelected = devices.firstWhere(
-      (element) => element.selected,
-      orElse: () => null,
-    );
+    PrinterDevice? oldSelected;
+    try {
+      oldSelected = devices.firstWhere((element) => element.selected);
+    } catch (_) {}
     oldSelected?.selected = false;
 
     //set true cho device mới vừa chọn
@@ -141,7 +147,7 @@ abstract class PrinterDetailBase extends Cubit<PrinterDetailState> {
   void saveDefaultDevice() {
     _updateSharedPref();
     final device = _selectedDevice;
-    if (device.isNotNull) {
+    if (device != null) {
       if (device.isBluetooth) {
         return savedBluetoothDeviceAsDefault();
       } else if (device.isWifi) {

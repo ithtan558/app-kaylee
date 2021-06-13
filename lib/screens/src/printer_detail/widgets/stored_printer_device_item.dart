@@ -11,16 +11,16 @@ class StoredPrinterDeviceItem extends StatelessWidget {
   final VoidCallback onRemoveItem;
 
   StoredPrinterDeviceItem({
-    this.device,
-    this.onTap,
-    this.onRemoveItem,
+    required this.device,
+    required this.onTap,
+    required this.onRemoveItem,
   }) : super(key: ValueKey(device.deviceAddress));
 
   @override
   Widget build(BuildContext context) {
     return KayleeDismissible.iconOnly(
-      key: key,
-      onDismissed: (direction) => onRemoveItem?.call(),
+      key: key!,
+      onDismissed: (direction) => onRemoveItem.call(),
       confirmDismiss: () async {
         final result = await showKayleeAlertDialog(
             context: context,
@@ -40,7 +40,7 @@ class StoredPrinterDeviceItem extends StatelessWidget {
                     },
                   ),
                 ]));
-        return (result as Bundle)?.args ?? false;
+        return (result as Bundle?)?.args ?? false;
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),

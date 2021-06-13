@@ -7,7 +7,7 @@ import 'package:kaylee/widgets/widgets.dart';
 class WifiPrinterDeviceInputDialog extends StatefulWidget {
   final ValueSetter<String> onSave;
 
-  WifiPrinterDeviceInputDialog({this.onSave});
+  WifiPrinterDeviceInputDialog({required this.onSave});
 
   @override
   _WifiPrinterDeviceInputDialogState createState() =>
@@ -48,7 +48,7 @@ class _WifiPrinterDeviceInputDialogState
           title: Strings.luu,
           isDefaultAction: true,
           onPressed: () {
-            widget.onSave?.call(ipTfController.text);
+            widget.onSave.call(ipTfController.text);
             context.pop();
           },
         ),

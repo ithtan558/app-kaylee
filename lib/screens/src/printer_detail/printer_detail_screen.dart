@@ -30,7 +30,7 @@ class PrinterDetailScreen extends StatefulWidget {
 class _PrinterDetailScreenState extends KayleeState<PrinterDetailScreen> {
   final _ipTFController = TextEditingController();
 
-  PrinterDetailBase get _bloc => context.bloc<PrinterDetailBase>();
+  PrinterDetailBase get _bloc => context.bloc<PrinterDetailBase>()!;
 
   bool showingBluetoothDialogSuccess = false;
 
@@ -211,7 +211,7 @@ class _PrinterDetailScreenState extends KayleeState<PrinterDetailScreen> {
   }
 
   void tryToConnectPrinterDevice(
-      {BuildContext context, PrinterDevice device}) async {
+      {required BuildContext context, PrinterDevice? device}) async {
     showLoading();
     final connected = await PrinterModule.printConnectionInfo(device: device);
     hideLoading();
@@ -233,9 +233,9 @@ class _PrinterDetailScreenState extends KayleeState<PrinterDetailScreen> {
 }
 
 Future showDeviceOption({
-  BuildContext context,
-  VoidCallback onSelectWifi,
-  VoidCallback onSelectBluetooth,
+  required BuildContext context,
+  required VoidCallback onSelectWifi,
+  required VoidCallback onSelectBluetooth,
 }) {
   return showKayleeAlertDialog(
     context: context,
@@ -245,14 +245,14 @@ Future showDeviceOption({
         KayleeAlertDialogAction(
           title: Strings.wifi,
           onPressed: () {
-            onSelectWifi?.call();
+            onSelectWifi.call();
             context.pop();
           },
         ),
         KayleeAlertDialogAction(
           title: Strings.bluetooth,
           onPressed: () {
-            onSelectBluetooth?.call();
+            onSelectBluetooth.call();
             context.pop();
           },
         ),

@@ -1,7 +1,7 @@
 part of '../base/printer_detail_base.dart';
 
 mixin BluetoothPrinterMixin on PrinterDetailBase {
-  StreamSubscription _bluetoothSub;
+  late StreamSubscription _bluetoothSub;
 
   @override
   void printBluetoothConnectionInfo() async {
@@ -50,14 +50,14 @@ mixin BluetoothPrinterMixin on PrinterDetailBase {
   }
 
   Future connect() async {
-    if (defaultDevice.isNull) return;
-    final d = BluetoothDevice.fromJson(defaultDevice.toJson());
+    if (defaultDevice == null) return;
+    final d = BluetoothDevice.fromJson(defaultDevice!.toJson());
     return BluetoothPrint.instance.connect(d);
   }
 
   @override
   Future<void> close() async {
-    _bluetoothSub?.cancel();
+    _bluetoothSub.cancel();
     await BluetoothPrint.instance.stopScan();
     return super.close();
   }

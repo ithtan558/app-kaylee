@@ -51,7 +51,7 @@ mixin IosBluetoothPrinterMixin on BluetoothPrinterMixin {
     _startConnectTime = null;
   }
 
-  DateTime _startConnectTime;
+  DateTime? _startConnectTime;
 
   @override
   void startConnectingBluetoothDevice() async {
@@ -75,11 +75,11 @@ mixin IosBluetoothPrinterMixin on BluetoothPrinterMixin {
     _startRequestConnectingTimeOut();
   }
 
-  Timer _requestConnectingTimeOut;
+  Timer? _requestConnectingTimeOut;
 
   void _startRequestConnectingTimeOut() {
-    if (_requestConnectingTimeOut.isNotNull &&
-        _requestConnectingTimeOut.isActive) {
+    if (_requestConnectingTimeOut != null &&
+        _requestConnectingTimeOut!.isActive) {
       _stopRequestConnectingTimeOut();
     }
     _requestConnectingTimeOut =
@@ -109,11 +109,11 @@ mixin IosBluetoothPrinterMixin on BluetoothPrinterMixin {
     emit(PrinterDetailStateCannotConnectBluetoothDevice());
   }
 
-  Timer _requestDisconnectingTimeOut;
+  Timer? _requestDisconnectingTimeOut;
 
   void _startRequestDisconnectingTimeOut() {
-    if (_requestDisconnectingTimeOut.isNotNull &&
-        _requestDisconnectingTimeOut.isActive) {
+    if (_requestDisconnectingTimeOut != null &&
+        _requestDisconnectingTimeOut!.isActive) {
       _stopRequestConnectingTimeOut();
     }
     _requestDisconnectingTimeOut =

@@ -8,15 +8,15 @@ class PrinterDeviceItem extends StatelessWidget {
   final VoidCallback onTap;
 
   PrinterDeviceItem({
-    this.device,
-    this.onTap,
+    required this.device,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        onTap?.call();
+        onTap.call();
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8),
@@ -32,7 +32,8 @@ class PrinterDeviceItem extends StatelessWidget {
                     KayleeText.normal16W500(device.deviceName),
                     Padding(
                       padding: const EdgeInsets.only(top: Dimens.px8),
-                      child: KayleeText.normal16W400(device.deviceAddress),
+                      child:
+                          KayleeText.normal16W400(device.deviceAddress ?? ''),
                     ),
                   ],
                 ),
