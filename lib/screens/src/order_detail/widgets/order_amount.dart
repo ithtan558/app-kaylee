@@ -5,9 +5,9 @@ import 'package:kaylee/widgets/widgets.dart';
 
 class OrderAmount extends StatelessWidget {
   final int amount;
-  final int discount;
+  final int? discount;
 
-  OrderAmount({this.amount, this.discount});
+  OrderAmount({required this.amount, this.discount});
 
   @override
   Widget build(BuildContext context) {

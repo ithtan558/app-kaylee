@@ -11,7 +11,7 @@ class SelectEmployeeList extends StatefulWidget {
   final SelectEmployeeController controller;
   final ValueChanged<List<Employee>> onSelect;
 
-  SelectEmployeeList({this.controller, this.onSelect});
+  SelectEmployeeList({required this.controller, required this.onSelect});
 
   @override
   _SelectEmployeeListState createState() => _SelectEmployeeListState();
@@ -19,7 +19,7 @@ class SelectEmployeeList extends StatefulWidget {
 
 class _SelectEmployeeListState extends KayleeState<SelectEmployeeList> {
   KayleePickerTextFieldModel get _brandTFModel =>
-      context.repository<KayleePickerTextFieldModel>();
+      context.repository<KayleePickerTextFieldModel>()!;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class _SelectEmployeeListState extends KayleeState<SelectEmployeeList> {
           title: Strings.nhanVienPhucVu,
           buttonText: Strings.themNhanVien,
           onPress: () {
-            if (_brandTFModel.brand.isNull) {
+            if (_brandTFModel.brand != null) {
               showKayleeAlertDialog(
                   context: context,
                   view: KayleeAlertDialogView(
@@ -53,10 +53,10 @@ class _SelectEmployeeListState extends KayleeState<SelectEmployeeList> {
               child: SelectEmployeeDialog.newInstance(
                 onSelect: (value) {
                   widget.controller.employees = value;
-                  widget.onSelect?.call(widget.controller.employees);
+                  widget.onSelect.call(widget.controller.employees!);
                   setState(() {});
                 },
-                brand: _brandTFModel.brand,
+                brand: _brandTFModel.brand!,
                 selectedEmployees: widget.controller.employees,
               ),
             );
@@ -75,11 +75,11 @@ class _SelectEmployeeListState extends KayleeState<SelectEmployeeList> {
             separatorBuilder: (context, index) => KayleeHorizontalDivider(),
             physics: NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
-              final item = widget.controller.employees.elementAt(index);
+              final item = widget.controller.employees!.elementAt(index);
               return SelectedEmployeeItem(
                 employee: item,
                 onRemoveItem: (value) {
-                  widget.controller.employees
+                  widget.controller.employees!
                       .removeWhere((element) => element.id == value.id);
                   setState(() {});
                 },
@@ -90,39 +90,10 @@ class _SelectEmployeeListState extends KayleeState<SelectEmployeeList> {
       ],
     );
   }
-
-  Future showEmployeeList({
-    String title,
-    Widget child,
-    ValueSetter onDismiss,
-  }) {
-    return showKayleeDialog(
-        context: context,
-        borderRadius: BorderRadius.circular(Dimens.px5),
-        margin: const EdgeInsets.all(Dimens.px8),
-        showFullScreen: true,
-        showShadow: true,
-        onDismiss: onDismiss,
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: Dimens.px8)
-                  .copyWith(top: Dimens.px16, bottom: Dimens.px8),
-              child: KayleeText.normal18W700(
-                title ?? '',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.center,
-              ),
-            ),
-            Expanded(child: child ?? SizedBox()),
-          ],
-        ));
-  }
 }
 
 class SelectEmployeeController {
-  List<Employee> employees;
+  List<Employee>? employees;
 
   SelectEmployeeController({this.employees});
 }

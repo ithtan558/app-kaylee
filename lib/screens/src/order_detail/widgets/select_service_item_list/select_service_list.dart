@@ -13,10 +13,10 @@ import 'package:kaylee/widgets/widgets.dart';
 
 class SelectServiceList extends StatefulWidget {
   static Widget newInstance({
-    List<Service> initialValue,
-    ValueChanged<List<Service>> onConfirm,
-    VoidCallback onCancel,
-    Brand brand,
+    List<Service>? initialValue,
+    required ValueChanged<List<Service>> onConfirm,
+    VoidCallback? onCancel,
+    required Brand brand,
   }) =>
       MultiBlocProvider(
           providers: [
@@ -39,27 +39,27 @@ class SelectServiceList extends StatefulWidget {
           ));
 
   final ValueChanged<List<Service>> onConfirm;
-  final VoidCallback onCancel;
+  final VoidCallback? onCancel;
 
-  SelectServiceList._({this.onConfirm, this.onCancel});
+  SelectServiceList._({required this.onConfirm, this.onCancel});
 
   @override
   _SelectServiceListState createState() => _SelectServiceListState();
 }
 
 class _SelectServiceListState extends KayleeState<SelectServiceList> {
-  SelectServiceCateBloc get cateBloc => context.bloc<SelectServiceCateBloc>();
-  StreamSubscription cateBlocSub;
+  SelectServiceCateBloc get cateBloc => context.bloc<SelectServiceCateBloc>()!;
+  late StreamSubscription cateBlocSub;
 
   SelectServiceListBloc get serviceListBloc =>
-      context.bloc<SelectServiceListBloc>();
-  StreamSubscription _sub;
+      context.bloc<SelectServiceListBloc>()!;
+  late StreamSubscription _sub;
 
   @override
   void initState() {
     super.initState();
 
-    cateBlocSub = cateBloc.listen((state) {
+    cateBlocSub = cateBloc.stream.listen((state) {
       if (!state.loading) {
         hideLoading();
         if (state.error != null) {
@@ -69,17 +69,19 @@ class _SelectServiceListState extends KayleeState<SelectServiceList> {
             onPressed: popScreen,
           );
         } else {
-          serviceListBloc.loadInitDataWithCate(
-              cateId: state.item
-                  ?.firstWhere(
-                    (element) => true,
-                    orElse: () => null,
-                  )
-                  ?.id);
+          int? cateId;
+          try {
+            {
+              cateId = (state.item?.firstWhere(
+                (element) => true,
+              ))?.id;
+            }
+          } catch (_) {}
+          serviceListBloc.loadInitDataWithCate(cateId: cateId);
         }
       }
     });
-    _sub = serviceListBloc.listen((state) {
+    _sub = serviceListBloc.stream.listen((state) {
       if (state.error != null) {
         showKayleeAlertErrorYesDialog(context: context, error: state.error);
       }
@@ -105,11 +107,11 @@ class _SelectServiceListState extends KayleeState<SelectServiceList> {
           final categories = state.item;
           return KayleeTabBar(
             padding: const EdgeInsets.symmetric(horizontal: Dimens.px8),
-            itemCount: categories?.length,
-            mapTitle: (index) => categories.elementAt(index).name,
+            itemCount: categories?.length ?? 0,
+            mapTitle: (index) => categories?.elementAt(index).name,
             onSelected: (value) {
               serviceListBloc.changeTab(
-                  cateId: cateBloc.state.item.elementAt(value).id);
+                  cateId: cateBloc.state.item?.elementAt(value).id);
             },
           );
         },
@@ -137,7 +139,7 @@ class _SelectServiceListState extends KayleeState<SelectServiceList> {
                       padding: EdgeInsets.all(Dimens.px8),
                       childAspectRatio: 103 / 195,
                       itemBuilder: (c, index) {
-                        final item = state.items.elementAt(index);
+                        final item = state.items!.elementAt(index);
                         return KayleeProdItemView.canSelect(
                           data: KayleeProdItemData(
                               name: item.name,
@@ -184,7 +186,7 @@ class _SelectServiceListState extends KayleeState<SelectServiceList> {
                       LoadMoreModel<Service>>(
                     builder: (context, state) {
                       final enable =
-                          (serviceListBloc.selectedServices?.length ?? 0) > 0 &&
+                          (serviceListBloc.selectedServices.length ?? 0) > 0 &&
                               (state.items?.length ?? 0) > 0;
                       return enable
                           ? KayLeeRoundedButton.normal(
@@ -192,7 +194,7 @@ class _SelectServiceListState extends KayleeState<SelectServiceList> {
                               margin: const EdgeInsets.only(left: Dimens.px8),
                               onPressed: () {
                                 widget.onConfirm
-                                    ?.call(serviceListBloc.selectedServices);
+                                    .call(serviceListBloc.selectedServices);
                                 popScreen();
                               },
                             )

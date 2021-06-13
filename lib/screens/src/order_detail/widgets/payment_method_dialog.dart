@@ -17,13 +17,13 @@ class PaymentMethodDialog extends StatefulWidget {
 }
 
 class _PaymentMethodDialogState extends KayleeState<PaymentMethodDialog> {
-  OrderRequest get _order => context.repository<OrderRequest>();
+  OrderRequest get _order => context.repository<OrderRequest>()!;
 
   @override
   Widget build(BuildContext context) {
     int discountAmount =
-        ((_order?.totalAmount ?? 0) * (_order.discount ?? 0)) ~/ 100;
-    int summary = (_order?.totalAmount ?? 0) - discountAmount;
+        ((_order.totalAmount ?? 0) * (_order.discount ?? 0)) ~/ 100;
+    int summary = (_order.totalAmount ?? 0) - discountAmount;
     return Container(
       width: double.infinity,
       child: Column(

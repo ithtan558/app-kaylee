@@ -5,9 +5,9 @@ import 'package:kaylee/services/services.dart';
 class SelectCustomerBloc extends Cubit<SingleModel<List<Customer>>> {
   final CustomerService customerService;
 
-  SelectCustomerBloc({this.customerService}) : super(SingleModel());
+  SelectCustomerBloc({required this.customerService}) : super(SingleModel());
 
-  void loadCustomer({String keyword}) {
+  void loadCustomer({String? keyword}) {
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
       request: customerService.findCustomer(keyword: keyword),

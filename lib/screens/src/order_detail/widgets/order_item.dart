@@ -9,7 +9,10 @@ class OrderItem extends StatefulWidget {
   final ValueChanged onRemoveItem;
   final ValueChanged<int> onQuantityChange;
 
-  OrderItem({@required this.data, this.onRemoveItem, this.onQuantityChange})
+  OrderItem(
+      {required this.data,
+      required this.onRemoveItem,
+      required this.onQuantityChange})
       : assert(data.isNotNull);
 
   @override
@@ -31,7 +34,7 @@ class _OrderItemState extends BaseState<OrderItem> {
                   KayleeAlertDialogAction.dongY(
                     onPressed: () {
                       popScreen(resultBundle: Bundle(true));
-                      widget.onRemoveItem?.call(widget.data);
+                      widget.onRemoveItem.call(widget.data);
                     },
                     isDefaultAction: true,
                   ),
@@ -41,7 +44,7 @@ class _OrderItemState extends BaseState<OrderItem> {
                     },
                   ),
                 ]));
-        return (result as Bundle)?.args ?? false;
+        return (result as Bundle?)?.args ?? false;
       },
       child: Padding(
         padding: const EdgeInsets.only(
@@ -64,13 +67,13 @@ class _OrderItemState extends BaseState<OrderItem> {
                       onTap: () async {
                         await showKayleeAmountChangingDialog(
                           context: context,
-                          title: widget.data.name,
-                          initAmount: widget.data.quantity,
+                          title: widget.data.name ?? '',
+                          initAmount: widget.data.quantity ?? 1,
                           onAmountChange: (value) {
-                            widget.onQuantityChange?.call(value);
+                            widget.onQuantityChange.call(value);
                           },
                           onRemoveItem: () {
-                            widget.onRemoveItem?.call(widget.data);
+                            widget.onRemoveItem.call(widget.data);
                           },
                         );
                       },
@@ -78,7 +81,7 @@ class _OrderItemState extends BaseState<OrderItem> {
                   ),
                   Expanded(
                       child: KayleeText.normal16W400(
-                    widget.data.name,
+                        widget.data.name ?? '',
                     maxLines: 1,
                   )),
                   KayleePriceUnitText(widget.data.price)

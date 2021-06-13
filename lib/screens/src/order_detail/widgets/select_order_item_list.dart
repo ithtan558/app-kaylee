@@ -36,7 +36,7 @@ class _SelectOrderItemListState extends KayleeState<SelectOrderItemList> {
           title: Strings.danhSachDichVu,
           buttonText: Strings.themDichVu,
           onPress: () {
-            if (_brandTFModel.brand.isNull) {
+            if (_brandTFModel.brand == null) {
               showKayleeAlertDialog(
                   context: context,
                   view: KayleeAlertDialogView(
@@ -81,7 +81,7 @@ class _SelectOrderItemListState extends KayleeState<SelectOrderItemList> {
                                 _cartBloc.updateCart();
                               },
                               initialValue: order?.services,
-                              brand: _brandTFModel.brand,
+                              brand: _brandTFModel.brand!,
                             ),
                           );
                         },

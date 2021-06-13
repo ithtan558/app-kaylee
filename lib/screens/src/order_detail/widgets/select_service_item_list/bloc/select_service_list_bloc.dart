@@ -1,5 +1,4 @@
 import 'package:anth_package/anth_package.dart';
-import 'package:flutter/foundation.dart';
 import 'package:kaylee/base/kaylee_list_interface.dart';
 import 'package:kaylee/base/loadmore_interface.dart';
 import 'package:kaylee/models/models.dart';
@@ -9,18 +8,19 @@ class SelectServiceListBloc extends Cubit<LoadMoreModel<Service>>
     with KayleeListInterfaceMixin
     implements LoadMoreInterface {
   final ServService servService;
-  int cateId;
+  int? cateId;
   final List<Service> _selectedServices = [];
 
   List<Service> get selectedServices => _selectedServices;
   final Brand brand;
 
   SelectServiceListBloc({
-    @required this.servService,
-    List<Service> initialData,
-    this.brand,
+    required this.servService,
+    List<Service>? initialData,
+    required this.brand,
   }) : super(LoadMoreModel(items: [])) {
-    if (initialData.isNotNullAndEmpty) _selectedServices.addAll(initialData);
+    if (initialData?.isNotEmpty ?? false)
+      _selectedServices.addAll(initialData!);
   }
 
   void loadServices() {
@@ -34,11 +34,12 @@ class SelectServiceListBloc extends Cubit<LoadMoreModel<Service>>
       onSuccess: ({message, result}) {
         final services = (result as PageData<Service>).items;
         services?.forEach((element) {
-          final selected = _selectedServices.singleWhere(
-            (selected) => selected.id == element.id,
-            orElse: () => null,
-          );
-          if (selected.isNotNull) {
+          Service? selected;
+          try {
+            selected = _selectedServices
+                .singleWhere((selected) => selected.id == element.id);
+          } catch (_) {}
+          if (selected != null) {
             element.selected = true;
           }
         });
@@ -59,12 +60,12 @@ class SelectServiceListBloc extends Cubit<LoadMoreModel<Service>>
     );
   }
 
-  void loadInitDataWithCate({int cateId}) {
+  void loadInitDataWithCate({int? cateId}) {
     changeTab(cateId: cateId);
   }
 
-  void changeTab({int cateId}) {
-    if (cateId.isNotNull) {
+  void changeTab({int? cateId}) {
+    if (cateId != null) {
       ///user đổi category
       this.cateId = cateId;
 
@@ -77,16 +78,18 @@ class SelectServiceListBloc extends Cubit<LoadMoreModel<Service>>
     }
   }
 
-  void select({Service service}) {
-    final item = state.items.singleWhere(
-          (element) => element.id == service.id,
-      orElse: () => null,
-    );
+  void select({required Service service}) {
+    Service? item;
+    try {
+      item = state.items?.singleWhere(
+        (element) => element.id == service.id,
+      );
+    } catch (_) {}
     item?.selected = !service.selected;
-    if (!item.selected) {
+    if (item != null && !item.selected) {
       _selectedServices.removeWhere((element) => element.id == service.id);
     } else {
-      _selectedServices.add(item..quantity = 1);
+      _selectedServices.add(item!..quantity = 1);
     }
     emit(LoadMoreModel.copy(state));
   }

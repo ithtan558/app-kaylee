@@ -11,9 +11,9 @@ import 'package:kaylee/widgets/widgets.dart';
 
 class SelectEmployeeDialog extends StatefulWidget {
   static Widget newInstance(
-          {ValueSetter<List<Employee>> onSelect,
-          List<Employee> selectedEmployees,
-          Brand brand}) =>
+          {required ValueSetter<List<Employee>> onSelect,
+          List<Employee>? selectedEmployees,
+          required Brand brand}) =>
       BlocProvider(
         create: (context) => SelectEmployeeBloc(
           employeeService: context.network.provideEmployeeService(),
@@ -28,14 +28,14 @@ class SelectEmployeeDialog extends StatefulWidget {
       );
   final ValueSetter<List<Employee>> onSelect;
 
-  SelectEmployeeDialog._({this.onSelect});
+  SelectEmployeeDialog._({required this.onSelect});
 
   @override
   _SelectEmployeeDialogState createState() => _SelectEmployeeDialogState();
 }
 
 class _SelectEmployeeDialogState extends KayleeState<SelectEmployeeDialog> {
-  SelectEmployeeBloc get _bloc => context.bloc<SelectEmployeeBloc>();
+  SelectEmployeeBloc get _bloc => context.bloc<SelectEmployeeBloc>()!;
   final searchTfController = SearchInputFieldController();
 
   @override
@@ -93,7 +93,7 @@ class _SelectEmployeeDialogState extends KayleeState<SelectEmployeeDialog> {
                     padding: const EdgeInsets.symmetric(horizontal: Dimens.px16)
                         .copyWith(top: Dimens.px8, bottom: Dimens.px8),
                     itemBuilder: (context, index) {
-                      final item = state.item.elementAt(index);
+                      final item = state.item!.elementAt(index);
                       return SelectEmployeeItem(
                         employee: item,
                         selected: _bloc.selectedEmployees.containsKey(item.id),
@@ -113,7 +113,7 @@ class _SelectEmployeeDialogState extends KayleeState<SelectEmployeeDialog> {
               text: Strings.chonXong,
               onPressed: () {
                 popScreen();
-                widget.onSelect?.call(_bloc.selectedEmployees.values.toList());
+                widget.onSelect.call(_bloc.selectedEmployees.values.toList());
               },
             )
           ],

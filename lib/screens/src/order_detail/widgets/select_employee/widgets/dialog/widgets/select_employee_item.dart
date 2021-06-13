@@ -9,15 +9,16 @@ class SelectEmployeeItem extends StatelessWidget {
 
   final VoidCallback onSelect;
 
-  SelectEmployeeItem({this.employee, this.onSelect, this.selected = false});
+  SelectEmployeeItem(
+      {required this.employee, required this.onSelect, this.selected = false});
 
   @override
   Widget build(BuildContext context) {
     return KayleeRoundBorder(
       borderColor: ColorsRes.textFieldBorder,
       onTap: () {
-        primaryFocus.unfocus();
-        onSelect?.call();
+        primaryFocus?.unfocus();
+        onSelect.call();
       },
       padding: const EdgeInsets.all(Dimens.px8).copyWith(right: Dimens.px16),
       child: Row(

@@ -11,7 +11,8 @@ import 'package:kaylee/widgets/src/kaylee_text.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class SelectCustomerDialog extends StatefulWidget {
-  static Widget newInstance({ValueSetter<Customer> onSelect}) => BlocProvider(
+  static Widget newInstance({required ValueSetter<Customer> onSelect}) =>
+      BlocProvider(
         create: (context) => SelectCustomerBloc(
           customerService: context.network.provideCustomerService(),
         ),
@@ -19,7 +20,7 @@ class SelectCustomerDialog extends StatefulWidget {
       );
   final ValueSetter<Customer> onSelect;
 
-  SelectCustomerDialog._({this.onSelect});
+  SelectCustomerDialog._({required this.onSelect});
 
   @override
   _SelectCustomerDialogState createState() => _SelectCustomerDialogState();
@@ -27,7 +28,7 @@ class SelectCustomerDialog extends StatefulWidget {
 
 class _SelectCustomerDialogState extends KayleeState<SelectCustomerDialog> {
   SelectCustomerBloc get selectCustomerBloc =>
-      context.bloc<SelectCustomerBloc>();
+      context.bloc<SelectCustomerBloc>()!;
   final searchTfController = SearchInputFieldController();
 
   @override
@@ -83,11 +84,11 @@ class _SelectCustomerDialogState extends KayleeState<SelectCustomerDialog> {
                     padding: const EdgeInsets.symmetric(horizontal: Dimens.px16)
                         .copyWith(top: Dimens.px8, bottom: Dimens.px8),
                     itemBuilder: (context, index) {
-                      final item = state.item.elementAt(index);
+                      final item = state.item!.elementAt(index);
                       return SelectCustomerItem(
                         customer: item,
                         onSelect: () {
-                          widget.onSelect?.call(item);
+                          widget.onSelect.call(item);
                           context.pop();
                         },
                       );

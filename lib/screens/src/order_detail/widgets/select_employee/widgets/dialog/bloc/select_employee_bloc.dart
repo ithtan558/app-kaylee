@@ -8,12 +8,12 @@ class SelectEmployeeBloc extends Cubit<SingleModel<List<Employee>>> {
   final Brand brand;
 
   SelectEmployeeBloc({
-    this.employeeService,
+    required this.employeeService,
     this.selectedEmployees = const {},
-    this.brand,
+    required this.brand,
   }) : super(SingleModel());
 
-  void loadEmployee({String keyword}) {
+  void loadEmployee({String? keyword}) {
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
       request: employeeService.findEmployees(
@@ -36,11 +36,11 @@ class SelectEmployeeBloc extends Cubit<SingleModel<List<Employee>>> {
     );
   }
 
-  void select({Employee employee}) {
+  void select({required Employee employee}) {
     if (selectedEmployees.containsKey(employee.id)) {
       selectedEmployees.removeWhere((key, value) => key == employee.id);
-    } else {
-      selectedEmployees[employee.id] = employee;
+    } else if (employee.id != null) {
+      selectedEmployees[employee.id!] = employee;
     }
     return emit(SingleModel.copy(state
       ..loading = false

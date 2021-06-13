@@ -8,9 +8,9 @@ import 'package:kaylee/widgets/widgets.dart';
 
 class SelectCustomerField extends StatefulWidget {
   final ValueChanged<Customer> onSelect;
-  final SelectCustomerController? controller;
+  final SelectCustomerController controller;
 
-  SelectCustomerField({required this.onSelect, this.controller});
+  SelectCustomerField({required this.onSelect, required this.controller});
 
   @override
   _SelectCustomerFieldState createState() => _SelectCustomerFieldState();
@@ -20,8 +20,8 @@ class _SelectCustomerFieldState extends KayleeState<SelectCustomerField> {
   @override
   void onReloadWidget(Type widget, Bundle? bundle) {
     if (widget == SelectCustomerField && bundle?.args is Customer) {
-      this.widget.controller?.customer = bundle!.args;
-      this.widget.onSelect.call(this.widget.controller?.customer);
+      this.widget.controller.customer = bundle!.args;
+      this.widget.onSelect.call(this.widget.controller.customer!);
       setState(() {});
     }
   }
@@ -30,7 +30,7 @@ class _SelectCustomerFieldState extends KayleeState<SelectCustomerField> {
   Widget build(BuildContext context) {
     return KayleeTextField.selection(
       title: Strings.thongTinKh,
-      content: widget.controller?.customer?.name ?? '',
+      content: widget.controller.customer?.name ?? '',
       buttonText: Strings.chinhSua,
       onPress: () {
         showKayleeDialog(
@@ -42,7 +42,7 @@ class _SelectCustomerFieldState extends KayleeState<SelectCustomerField> {
           child: SelectCustomerDialog.newInstance(
             onSelect: (value) {
               widget.controller.customer = value;
-              widget.onSelect.call(widget.controller.customer);
+              widget.onSelect.call(widget.controller.customer!);
               setState(() {});
             },
           ),
@@ -53,7 +53,7 @@ class _SelectCustomerFieldState extends KayleeState<SelectCustomerField> {
 }
 
 class SelectCustomerController {
-  Customer customer;
+  Customer? customer;
 
   SelectCustomerController({this.customer});
 }
