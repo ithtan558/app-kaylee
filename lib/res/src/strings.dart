@@ -365,7 +365,7 @@ class Strings {
   static const String iOsBluetoothPermissionGuide =
       'Vào Cài đặt > Kaylee > Bluetooth';
   static const String androidLocationProminentDisclosure =
-      'Kaylee chỉ sửa dụng quyền truy cập vị trí để sử dụng cho việc tìm kiếm các thiết bị máy in bluetooth khi \'Cài đặt máy in\'';
+      'Kaylee chỉ sử dụng quyền truy cập vị trí để sử dụng cho việc tìm kiếm các thiết bị máy in bluetooth khi cài đặt máy in';
   static const choPhepTruyCap = 'Cho phép truy cập';
 
   Strings._();
