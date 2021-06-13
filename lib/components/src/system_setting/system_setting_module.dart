@@ -1,9 +1,11 @@
 import 'dart:io';
 
+import 'package:anth_package/anth_package.dart';
 import 'package:app_settings/app_settings.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
+import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -25,6 +27,12 @@ abstract class SystemSettingModule {
   Future<void> showKayleeBluetoothPermissionSettingDialog({
     @required BuildContext context,
     bool barrierDismissible = true,
+  });
+
+  Future<void> showKayleeLocationPermissionExplainsDialog({
+    @required BuildContext context,
+    bool barrierDismissible = true,
+    VoidCallback allowCallback,
   });
 
   SystemSettingModule._();
@@ -99,5 +107,75 @@ class _SystemSettingModuleImpl extends SystemSettingModule {
           : Strings.iOsBluetoothPermissionGuide,
       onGoToSetting: openAppSettings,
     );
+  }
+
+  @override
+  Future<void> showKayleeLocationPermissionExplainsDialog({
+    BuildContext context,
+    bool barrierDismissible = true,
+    VoidCallback allowCallback,
+  }) {
+    return showKayleeDialog(
+        context: context,
+        child: Column(
+          children: [
+            SizedBox(height: Dimens.px24),
+            Padding(
+              padding: const EdgeInsets.only(
+                  right: Dimens.px16, left: Dimens.px16, bottom: Dimens.px16),
+              child: KayleeText.normal16W400(
+                Strings.androidLocationProminentDisclosure,
+                textAlign: TextAlign.center,
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                mobileLaunchUrl(context.appConfig.policyUrl);
+              },
+              child: Container(
+                padding: const EdgeInsets.only(
+                    right: Dimens.px16, left: Dimens.px16, bottom: Dimens.px16),
+                child: KayleeText.hyper16W400(
+                  Strings.dieuKhoanCuaKaylee,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+            Container(
+              width: double.infinity,
+              height: Dimens.px1,
+              color: ColorsRes.divider,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: Dimens.px16),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: KayLeeRoundedButton.button2(
+                      text: Strings.boQua,
+                      onPressed: () {
+                        context.pop();
+                        allowCallback.call();
+                      },
+                      margin: const EdgeInsets.only(
+                          right: Dimens.px8, left: Dimens.px16),
+                    ),
+                  ),
+                  Expanded(
+                    child: KayLeeRoundedButton.normal(
+                      text: Strings.choPhep,
+                      onPressed: () {
+                        context.pop();
+                        allowCallback.call();
+                      },
+                      margin: const EdgeInsets.only(
+                          left: Dimens.px8, right: Dimens.px16),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ));
   }
 }
