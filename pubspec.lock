@@ -19,11 +19,11 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "0.2.5"
-      resolved-ref: cb2d9c9a038a33931acd29da1464f39187526132
+      ref: "0.2.6"
+      resolved-ref: "1b12715b32a0607d02a4fac03a8df88c73af1a5d"
       url: "https://tungpham6195@bitbucket.org/anth-freelance/anth_package.git"
     source: git
-    version: "0.2.5"
+    version: "0.2.6"
   app_settings:
     dependency: "direct main"
     description:
@@ -226,11 +226,11 @@ packages:
     dependency: transitive
     description:
       path: "."
-      ref: "0.6.6"
-      resolved-ref: a0f944daf95bcc1efd8f2738d5cb889f9eb7d251
+      ref: "0.6.7"
+      resolved-ref: b7f4d4cc78903d3760345584df89b1e38f76a639
       url: "https://github.com/tungpham6195/flutter.core_plugin.git"
     source: git
-    version: "0.6.6"
+    version: "0.6.7"
   coverage:
     dependency: transitive
     description:
