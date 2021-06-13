@@ -20,6 +20,13 @@ abstract class SystemSettingModule {
     bool barrierDismissible = true,
   });
 
+  ///android sẽ gọi location permission
+  ///ios sẽ gọi bluetooth permission
+  Future<void> showKayleeBluetoothPermissionSettingDialog({
+    @required BuildContext context,
+    bool barrierDismissible = true,
+  });
+
   SystemSettingModule._();
 }
 
@@ -72,6 +79,25 @@ class _SystemSettingModuleImpl extends SystemSettingModule {
           ? Strings.androidBluetoothSettingGuide
           : Strings.iOsBluetoothSettingGuide,
       onGoToSetting: AppSettings.openBluetoothSettings,
+    );
+  }
+
+  @override
+  Future<void> showKayleeBluetoothPermissionSettingDialog(
+      {BuildContext context, bool barrierDismissible = true}) {
+    return showKayleeRequestSettingDialog(
+      context: context,
+      barrierDismissible: barrierDismissible,
+      title: Platform.isAndroid
+          ? Strings.quyenTruyCapViTri
+          : Strings.quyenTruyCapBluetooth,
+      message: Platform.isAndroid
+          ? Strings.quyenTruyCapViTriContent
+          : Strings.quyenTruyBluetoothContent,
+      guides: Platform.isAndroid
+          ? Strings.androidLocationPermissionGuide
+          : Strings.iOsBluetoothPermissionGuide,
+      onGoToSetting: openAppSettings,
     );
   }
 }
