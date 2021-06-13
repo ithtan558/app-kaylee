@@ -87,7 +87,7 @@ class _SplashScreenState extends KayleeState<SplashScreen> {
                           onPressed: () {
                             pushScreen(PageIntent(screen: LoginScreen));
                           },
-                          text: Strings.login,
+                          text: Strings.dangNhap,
                         ),
                         Container(
                           margin:

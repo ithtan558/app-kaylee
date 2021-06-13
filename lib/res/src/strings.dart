@@ -11,7 +11,6 @@ class Strings {
   static const String khoiPhucMatKhau = 'Khôi phục mật khẩu';
   static const String appName = 'KayLee';
   static const String chuaCoTK = 'Chưa có tài khoản?';
-  static const String login = 'Login';
   static const String dangKy = 'Đăng ký';
   static const String vuiLongDangNhap = 'Vui lòng đăng nhập để tiếp tục';
   static const String dangNhap = 'Đăng nhập';
