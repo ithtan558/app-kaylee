@@ -122,12 +122,51 @@ class _SystemSettingModuleImpl extends SystemSettingModule {
             SizedBox(height: Dimens.px24),
             Padding(
               padding: const EdgeInsets.only(
-                  right: Dimens.px16, left: Dimens.px16, bottom: Dimens.px16),
-              child: KayleeText.normal16W400(
-                Strings.androidLocationProminentDisclosure,
+                  right: Dimens.px16, left: Dimens.px16, bottom: Dimens.px8),
+              child: Text.rich(
+                TextSpan(text: 'Kaylee sử dụng ', children: [
+                  TextSpan(
+                      text: Strings.quyenTruyCapViTri + ' ở chế độ chạy nền',
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  TextSpan(
+                      text:
+                          ' cho việc tìm kiếm các thiết bị máy in bluetooth.'),
+                ]),
+                style: TextStyles.normal16W400,
                 textAlign: TextAlign.center,
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.only(
+                  right: Dimens.px16, left: Dimens.px16, bottom: Dimens.px8),
+              child: Text.rich(
+                TextSpan(
+                    text: 'Kaylee chỉ sử dụng quyền này ở chức năng: ',
+                    children: [
+                      TextSpan(
+                          text: Strings.caiDatMayIn,
+                          style: TextStyle(fontWeight: FontWeight.bold)),
+                    ]),
+                style: TextStyles.normal16W400,
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Padding(
+                padding: const EdgeInsets.only(
+                    right: Dimens.px16, left: Dimens.px16, bottom: Dimens.px16),
+                child: Text.rich(
+                  TextSpan(text: 'Kaylee tuyệt đối không sử dụng ', children: [
+                    TextSpan(
+                        text: Strings.quyenTruyCapViTri,
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    TextSpan(
+                        text:
+                            ' này để lưu trữ dữ liệu vị trí của người dùng, không truy cập khi người dùng không sử dụng chức năng này'
+                            ' hoặc khi ứng dụng đã đóng hoàn toàn'),
+                  ]),
+                  style: TextStyles.normal16W400,
+                  textAlign: TextAlign.center,
+                )),
             GestureDetector(
               onTap: () {
                 mobileLaunchUrl(context.appConfig.policyUrl);
