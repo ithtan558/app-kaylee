@@ -17,7 +17,6 @@ class PrinterModule {
   static late CapabilityProfile _profile;
 
   static Future<void> init() async {
-    if (_printer.isNotNull) return;
     final paper = PaperSize.mm80;
     _profile = await CapabilityProfile.load();
     _printer = NetworkPrinter(paper, _profile);
