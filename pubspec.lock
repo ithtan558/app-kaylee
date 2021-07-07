@@ -76,7 +76,7 @@ packages:
     description:
       path: "."
       ref: "tungpham6195/device-not-found-on-android-10"
-      resolved-ref: "3cb269b2c74268ab67fc6d472bb06f8215a0cc3d"
+      resolved-ref: "7abd3786178dad0bd620f125b8af68ed83ca4dd1"
       url: "https://github.com/tungpham6195/bluetooth_print.git"
     source: git
     version: "3.0.1"
