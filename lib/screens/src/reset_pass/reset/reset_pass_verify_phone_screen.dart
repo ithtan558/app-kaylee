@@ -40,7 +40,6 @@ class _ResetPassVerifyPhoneScreenState
   void dispose() {
     phoneFocus.dispose();
     _phoneTFController.dispose();
-    sendOtpBloc.close();
     super.dispose();
   }
 
