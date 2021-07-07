@@ -191,13 +191,13 @@ class _SelectOrderItemListState extends KayleeState<SelectOrderItemList> {
               padding: const EdgeInsets.symmetric(horizontal: Dimens.px8)
                   .copyWith(top: Dimens.px16, bottom: Dimens.px8),
               child: KayleeText.normal18W700(
-                title ?? '',
+                title,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
               ),
             ),
-            Expanded(child: child ?? SizedBox()),
+            Expanded(child: child),
           ],
         ));
   }

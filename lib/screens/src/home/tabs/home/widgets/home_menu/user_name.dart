@@ -34,12 +34,10 @@ class _UserNameState extends BaseState<UserName> {
       final namePosition = marginTop - Dimens.px16 * scrollingPercent;
       if (position != namePosition) {
         positionController.add(namePosition);
-        opacityController
-            .add(1 - (marginTop - (namePosition ?? marginTop)) / Dimens.px16);
+        opacityController.add(1 - (marginTop - namePosition) / Dimens.px16);
         position = namePosition;
       }
     });
-
   }
 
   @override

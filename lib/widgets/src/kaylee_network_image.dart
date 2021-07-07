@@ -30,7 +30,7 @@ class KayleeNetworkImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
-      imageUrl: url ?? '',
+      imageUrl: url,
       fit: fit,
       memCacheHeight: memCacheHeight,
       memCacheWidth: memCacheWidth,

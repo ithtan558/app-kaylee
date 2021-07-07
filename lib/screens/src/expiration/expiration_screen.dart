@@ -93,7 +93,7 @@ class _ExpirationScreenState extends KayleeState<ExpirationScreen> {
             );
           },
         ),
-        bottom: argument.isExpired ?? false
+        bottom: argument.isExpired
             ? KayLeeRoundedButton.normal(
                 text: Strings.thuLai,
                 margin: const EdgeInsets.symmetric(

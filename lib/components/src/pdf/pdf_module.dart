@@ -333,7 +333,7 @@ class PdfModule {
         padding: EdgeInsets.only(top: Dimens.px30 / ratio),
         child: _getAmountText(
             title: Strings.tong,
-            content: CurrencyUtils.formatVNDWithCustomUnit(order.total ?? 0),
+            content: CurrencyUtils.formatVNDWithCustomUnit(order.total),
             style: theme.defaultTextStyle
                 .merge(TextStyle(fontWeight: FontWeight.bold))),
       ),
