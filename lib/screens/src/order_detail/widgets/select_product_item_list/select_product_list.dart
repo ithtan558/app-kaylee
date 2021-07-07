@@ -13,9 +13,9 @@ import 'package:kaylee/widgets/widgets.dart';
 
 class SelectProdList extends StatefulWidget {
   static Widget newInstance({
-    List<Product> initialValue,
-    ValueChanged<List<Product>> onConfirm,
-    Brand brand,
+    List<Product>? initialValue,
+    required ValueChanged<List<Product>> onConfirm,
+    required Brand brand,
   }) =>
       MultiBlocProvider(
           providers: [
@@ -37,24 +37,24 @@ class SelectProdList extends StatefulWidget {
           ));
   final ValueChanged<List<Product>> onConfirm;
 
-  SelectProdList._({this.onConfirm});
+  SelectProdList._({required this.onConfirm});
 
   @override
   _SelectProdListState createState() => _SelectProdListState();
 }
 
 class _SelectProdListState extends KayleeState<SelectProdList> {
-  SelectProdCateBloc get cateBloc => context.bloc<SelectProdCateBloc>();
-  StreamSubscription cateBlocSub;
+  SelectProdCateBloc get cateBloc => context.bloc<SelectProdCateBloc>()!;
+  late StreamSubscription cateBlocSub;
 
-  SelectProdListBloc get prodsListBloc => context.bloc<SelectProdListBloc>();
-  StreamSubscription _sub;
+  SelectProdListBloc get prodsListBloc => context.bloc<SelectProdListBloc>()!;
+  late StreamSubscription _sub;
 
   @override
   void initState() {
     super.initState();
 
-    cateBlocSub = cateBloc.listen((state) {
+    cateBlocSub = cateBloc.stream.listen((state) {
       if (!state.loading) {
         hideLoading();
         if (state.error != null) {
@@ -64,17 +64,17 @@ class _SelectProdListState extends KayleeState<SelectProdList> {
             onPressed: popScreen,
           );
         } else {
-          prodsListBloc.loadInitDataWithCate(
-              cateId: state.item
-                  ?.firstWhere(
-                    (element) => true,
-                    orElse: () => null,
-                  )
-                  ?.id);
+          int? categoryId;
+          try {
+            categoryId = state.item?.firstWhere((element) => true).id;
+          } catch (_) {}
+
+          prodsListBloc.loadInitDataWithCate(cateId: categoryId);
         }
       }
     });
-    _sub = prodsListBloc.listen((state) {
+    prodsListBloc.state.items.isNotNullAndEmpty;
+    _sub = prodsListBloc.stream.listen((state) {
       if (state.error != null) {
         showKayleeAlertErrorYesDialog(context: context, error: state.error);
       }
@@ -99,11 +99,10 @@ class _SelectProdListState extends KayleeState<SelectProdList> {
           final categories = state.item;
           return KayleeTabBar(
             padding: const EdgeInsets.symmetric(horizontal: Dimens.px8),
-            itemCount: categories?.length,
-            mapTitle: (index) => categories.elementAt(index).name,
+            itemCount: categories?.length ?? 0,
+            mapTitle: (index) => categories!.elementAt(index).name,
             onSelected: (value) {
-              prodsListBloc.changeTab(
-                  cateId: cateBloc.state.item.elementAt(value).id);
+              prodsListBloc.changeTab(cateId: categories!.elementAt(value).id);
             },
           );
         },
@@ -130,7 +129,7 @@ class _SelectProdListState extends KayleeState<SelectProdList> {
                       padding: EdgeInsets.all(Dimens.px8),
                       childAspectRatio: 103 / 195,
                       itemBuilder: (c, index) {
-                        final item = state.items.elementAt(index);
+                        final item = state.items!.elementAt(index);
                         return KayleeProdItemView.canSelect(
                           data: KayleeProdItemData(
                               name: item.name,
@@ -175,16 +174,14 @@ class _SelectProdListState extends KayleeState<SelectProdList> {
                   child:
                   BlocBuilder<SelectProdListBloc, LoadMoreModel<Product>>(
                     builder: (context, state) {
-                      final enable =
-                          (prodsListBloc.selectedProds?.length ?? 0) > 0 &&
-                              (state.items?.length ?? 0) > 0;
+                      final enable = prodsListBloc.selectedProds.isNotEmpty &&
+                          (state.items?.length ?? 0) > 0;
                       return enable
                           ? KayLeeRoundedButton.normal(
                               text: Strings.xacNhan,
                               margin: const EdgeInsets.only(left: Dimens.px8),
                               onPressed: () {
-                                widget.onConfirm
-                                    ?.call(prodsListBloc.selectedProds);
+                                widget.onConfirm(prodsListBloc.selectedProds);
                                 popScreen();
                               },
                             )

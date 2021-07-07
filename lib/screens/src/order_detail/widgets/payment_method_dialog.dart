@@ -6,11 +6,11 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class PaymentMethodDialog extends StatefulWidget {
-  static Widget newInstance({VoidCallback onConfirm}) =>
+  static Widget newInstance({required VoidCallback onConfirm}) =>
       PaymentMethodDialog._(onConfirm: onConfirm);
   final VoidCallback onConfirm;
 
-  PaymentMethodDialog._({this.onConfirm});
+  PaymentMethodDialog._({required this.onConfirm});
 
   @override
   _PaymentMethodDialogState createState() => _PaymentMethodDialogState();
@@ -21,9 +21,8 @@ class _PaymentMethodDialogState extends KayleeState<PaymentMethodDialog> {
 
   @override
   Widget build(BuildContext context) {
-    int discountAmount =
-        ((_order.totalAmount ?? 0) * (_order.discount ?? 0)) ~/ 100;
-    int summary = (_order.totalAmount ?? 0) - discountAmount;
+    int discountAmount = ((_order.totalAmount) * (_order.discount ?? 0)) ~/ 100;
+    int summary = (_order.totalAmount) - discountAmount;
     return Container(
       width: double.infinity,
       child: Column(
@@ -45,43 +44,43 @@ class _PaymentMethodDialogState extends KayleeState<PaymentMethodDialog> {
           ),
           Expanded(
               child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    _ExpandView(
-                      title: Strings.tienMat,
-                      imageOfPaymentMethod: Images.ic_cash,
-                      expand: KayleeTextField.staticPrice(
-                        title: Strings.soTien,
+            child: Column(
+              children: [
+                _ExpandView(
+                  title: Strings.tienMat,
+                  imageOfPaymentMethod: Images.ic_cash,
+                  expand: KayleeTextField.staticPrice(
+                    title: Strings.soTien,
                     initPrice: summary,
                   ),
-                    ),
-                    Container(
-                      color: ColorsRes.textFieldBorder,
-                      height: Dimens.px1,
-                    ),
-                    _ExpandView(
-                      title: Strings.theTinDung,
-                      imageOfPaymentMethod: Images.ic_card,
-                    ),
-                    Container(
-                      color: ColorsRes.textFieldBorder,
-                      height: Dimens.px1,
-                    ),
-                    _ExpandView(
-                      title: Strings.theAtm,
-                      imageOfPaymentMethod: Images.ic_card,
-                    ),
-                    Container(
-                      color: ColorsRes.textFieldBorder,
-                      height: Dimens.px1,
-                    ),
-                    _ExpandView(
-                      title: Strings.viMomo,
-                      imageOfPaymentMethod: Images.ic_momo,
-                    ),
-                  ],
                 ),
-              )),
+                Container(
+                  color: ColorsRes.textFieldBorder,
+                  height: Dimens.px1,
+                ),
+                _ExpandView(
+                  title: Strings.theTinDung,
+                  imageOfPaymentMethod: Images.ic_card,
+                ),
+                Container(
+                  color: ColorsRes.textFieldBorder,
+                  height: Dimens.px1,
+                ),
+                _ExpandView(
+                  title: Strings.theAtm,
+                  imageOfPaymentMethod: Images.ic_card,
+                ),
+                Container(
+                  color: ColorsRes.textFieldBorder,
+                  height: Dimens.px1,
+                ),
+                _ExpandView(
+                  title: Strings.viMomo,
+                  imageOfPaymentMethod: Images.ic_momo,
+                ),
+              ],
+            ),
+          )),
           Container(
             color: ColorsRes.textFieldBorder,
             height: Dimens.px1,
@@ -105,7 +104,7 @@ class _PaymentMethodDialogState extends KayleeState<PaymentMethodDialog> {
                     margin: const EdgeInsets.only(left: Dimens.px8),
                     onPressed: () {
                       popScreen();
-                      widget.onConfirm?.call();
+                      widget.onConfirm();
                     },
                   ),
                 ),
@@ -121,9 +120,10 @@ class _PaymentMethodDialogState extends KayleeState<PaymentMethodDialog> {
 class _ExpandView extends StatefulWidget {
   final String imageOfPaymentMethod;
   final String title;
-  final Widget expand;
+  final Widget? expand;
 
-  _ExpandView({this.imageOfPaymentMethod, this.title, this.expand});
+  _ExpandView(
+      {required this.imageOfPaymentMethod, required this.title, this.expand});
 
   @override
   _ExpandViewState createState() => _ExpandViewState();
@@ -143,7 +143,7 @@ class _ExpandViewState extends KayleeState<_ExpandView> {
               Padding(
                 padding: const EdgeInsets.only(right: Dimens.px8),
                 child: Image.asset(
-                  widget.imageOfPaymentMethod ?? '',
+                  widget.imageOfPaymentMethod,
                   width: Dimens.px16,
                   height: Dimens.px16,
                 ),
@@ -153,7 +153,7 @@ class _ExpandViewState extends KayleeState<_ExpandView> {
                 width: Dimens.px24,
                 height: Dimens.px24,
                 child: InkWell(
-                  onTap: widget.expand.isNotNull
+                  onTap: widget.expand != null
                       ? () {
                           setState(() {
                             expanded = !expanded;

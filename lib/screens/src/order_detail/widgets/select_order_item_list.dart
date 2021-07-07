@@ -20,12 +20,12 @@ class SelectOrderItemList extends StatefulWidget {
 class _SelectOrderItemListState extends KayleeState<SelectOrderItemList> {
   CartModule get cart => context.cart;
 
-  CartBloc get _cartBloc => context.bloc<CartBloc>();
+  CartBloc get _cartBloc => context.bloc<CartBloc>()!;
 
-  OrderRequest get order => cart.getOrder();
+  OrderRequest? get order => cart.getOrder();
 
   KayleePickerTextFieldModel get _brandTFModel =>
-      context.repository<KayleePickerTextFieldModel>();
+      context.repository<KayleePickerTextFieldModel>()!;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class _SelectOrderItemListState extends KayleeState<SelectOrderItemList> {
           title: Strings.danhSachDichVu,
           buttonText: Strings.themDichVu,
           onPress: () {
-            if (_brandTFModel.brand == null) {
+            if (_brandTFModel.brand.isNotNull) {
               showKayleeAlertDialog(
                   context: context,
                   view: KayleeAlertDialogView(
@@ -102,7 +102,7 @@ class _SelectOrderItemListState extends KayleeState<SelectOrderItemList> {
                                 _cartBloc.updateCart();
                               },
                               initialValue: order?.products,
-                              brand: _brandTFModel.brand,
+                              brand: _brandTFModel.brand!,
                             ),
                           );
                         },
@@ -125,7 +125,7 @@ class _SelectOrderItemListState extends KayleeState<SelectOrderItemList> {
         ),
         BlocBuilder<CartBloc, CartState>(
           builder: (context, state) {
-            if (order?.cartItems.isNullOrEmpty)
+            if (order?.cartItems?.isEmpty ?? true)
               return Padding(
                 padding: const EdgeInsets.all(Dimens.px16),
                 child: KayleeText.hint16W400(
@@ -138,12 +138,12 @@ class _SelectOrderItemListState extends KayleeState<SelectOrderItemList> {
         BlocBuilder<CartBloc, CartState>(
           builder: (context, state) {
             final cartItems = order?.cartItems;
-            if (cartItems.isNullOrEmpty) return SizedBox();
+            if (cartItems?.isEmpty ?? true) return SizedBox();
             return ListView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
-                final item = cartItems.elementAt(index);
+                final item = cartItems!.elementAt(index);
                 return OrderItem(
                   data: item,
                   onRemoveItem: (value) {
@@ -156,16 +156,16 @@ class _SelectOrderItemListState extends KayleeState<SelectOrderItemList> {
                   },
                 );
               },
-              itemCount: cartItems.length,
+              itemCount: cartItems!.length,
             );
           },
         ),
         BlocBuilder<CartBloc, CartState>(
           builder: (context, state) {
-            if (order?.cartItems.isNullOrEmpty) return SizedBox();
+            if (order?.cartItems?.isEmpty ?? true) return SizedBox();
             return OrderAmount(
-              amount: order.totalAmount,
-              discount: order.discount,
+              amount: order!.totalAmount,
+              discount: order!.discount,
             );
           },
         ),
@@ -174,9 +174,9 @@ class _SelectOrderItemListState extends KayleeState<SelectOrderItemList> {
   }
 
   Future showOrderItemList({
-    String title,
-    Widget child,
-    ValueSetter onDismiss,
+    required String title,
+    required Widget child,
+    ValueSetter? onDismiss,
   }) {
     return showKayleeDialog(
         context: context,

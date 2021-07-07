@@ -1,5 +1,4 @@
 import 'package:anth_package/anth_package.dart';
-import 'package:flutter/foundation.dart';
 import 'package:kaylee/base/kaylee_list_interface.dart';
 import 'package:kaylee/base/loadmore_interface.dart';
 import 'package:kaylee/models/models.dart';
@@ -9,18 +8,18 @@ class SelectProdListBloc extends Cubit<LoadMoreModel<Product>>
     with KayleeListInterfaceMixin
     implements LoadMoreInterface {
   final ProductService productService;
-  int cateId;
+  int? cateId;
   final List<Product> _selectedProds = [];
 
   List<Product> get selectedProds => _selectedProds;
   final Brand brand;
 
   SelectProdListBloc({
-    @required this.productService,
-    List<Product> initialData,
-    this.brand,
+    required this.productService,
+    List<Product>? initialData,
+    required this.brand,
   }) : super(LoadMoreModel(items: [])) {
-    if (initialData.isNotNullAndEmpty) _selectedProds.addAll(initialData);
+    if (initialData.isNotNullAndEmpty) _selectedProds.addAll(initialData!);
   }
 
   void loadProds() {
@@ -34,10 +33,12 @@ class SelectProdListBloc extends Cubit<LoadMoreModel<Product>>
       onSuccess: ({message, result}) {
         final prods = (result as PageData<Product>).items;
         prods?.forEach((element) {
-          final selected = _selectedProds.singleWhere(
-            (selected) => selected.id == element.id,
-            orElse: () => null,
-          );
+          Product? selected;
+          try {
+            selected = _selectedProds.singleWhere(
+              (selected) => selected.id == element.id,
+            );
+          } catch (_) {}
           if (selected.isNotNull) {
             element.selected = true;
           }
@@ -59,12 +60,12 @@ class SelectProdListBloc extends Cubit<LoadMoreModel<Product>>
     );
   }
 
-  void loadInitDataWithCate({int cateId}) {
+  void loadInitDataWithCate({int? cateId}) {
     changeTab(cateId: cateId);
   }
 
-  void changeTab({int cateId}) {
-    if (cateId.isNotNull) {
+  void changeTab({int? cateId}) {
+    if (cateId != null) {
       ///user đổi category
       this.cateId = cateId;
 
@@ -77,12 +78,11 @@ class SelectProdListBloc extends Cubit<LoadMoreModel<Product>>
     }
   }
 
-  void select({Product product}) {
-    final item = state.items.singleWhere(
-          (element) => element.id == product.id,
-      orElse: () => null,
+  void select({required Product product}) {
+    Product item = state.items!.singleWhere(
+      (element) => element.id == product.id,
     );
-    item?.selected = !product.selected;
+    item.selected = product.selected;
     if (!item.selected) {
       _selectedProds.removeWhere((element) => element.id == product.id);
     } else {

@@ -57,7 +57,7 @@ class CreateNewOrderScreen extends StatefulWidget {
 }
 
 class _CreateNewOrderScreenState extends KayleeState<CreateNewOrderScreen> {
-  OrderScreenOpenFrom openFrom;
+  late OrderScreenOpenFrom openFrom;
   final brandController = PickInputController<Brand>();
   final employeeController = SelectEmployeeController();
   final customerController = SelectCustomerController();
@@ -66,20 +66,20 @@ class _CreateNewOrderScreenState extends KayleeState<CreateNewOrderScreen> {
 
   CartModule get _cart => context.cart;
 
-  OrderRequest get _order => _cart.getOrder();
+  OrderRequest? get _order => _cart.getOrder();
 
-  OrderDetailBloc get _bloc => context.bloc<OrderDetailBloc>();
+  OrderDetailBloc get _bloc => context.bloc<OrderDetailBloc>()!;
 
-  CartBloc get _cartBloc => context.bloc<CartBloc>();
-  StreamSubscription _sub;
+  CartBloc get _cartBloc => context.bloc<CartBloc>()!;
+  late StreamSubscription _sub;
 
   @override
   void initState() {
     super.initState();
 
-    _sub = _bloc.listen((state) {
+    _sub = _bloc.stream.listen((state) {
       if (state.loading) {
-        primaryFocus.unfocus();
+        primaryFocus!.unfocus();
         showLoading();
       } else if (!state.loading) {
         hideLoading();
@@ -92,7 +92,7 @@ class _CreateNewOrderScreenState extends KayleeState<CreateNewOrderScreen> {
             message: state.message,
             onPressed: popScreen,
             onDismiss: () {
-              context.bloc<ReloadBloc>().reload(widget: CashierTab);
+              context.bloc<ReloadBloc>()!.reload(widget: CashierTab);
             },
           );
         } else if (state is CreateOrderState) {
@@ -101,7 +101,7 @@ class _CreateNewOrderScreenState extends KayleeState<CreateNewOrderScreen> {
             message: state.message,
             onPressed: popScreen,
             onDismiss: () {
-              context.bloc<ReloadBloc>().reload(widget: CashierTab);
+              context.bloc<ReloadBloc>()!.reload(widget: CashierTab);
               popScreen();
             },
           );
@@ -109,8 +109,8 @@ class _CreateNewOrderScreenState extends KayleeState<CreateNewOrderScreen> {
           showKayleeAlertDialog(
             context: context,
             view: KayleeAlertDialogView(
-              title: state.message.title,
-              content: state.message.content,
+              title: state.message?.title,
+              content: state.message?.content,
               actions: [
                 KayleeAlertDialogAction(
                   title: Strings.inHoaDon,
@@ -118,7 +118,7 @@ class _CreateNewOrderScreenState extends KayleeState<CreateNewOrderScreen> {
                   onPressed: () async {
                     showKayleePrintOrderDialog(
                       context: context,
-                      order: _bloc.order,
+                      order: _bloc.order!,
                     );
                   },
                 ),
@@ -129,8 +129,8 @@ class _CreateNewOrderScreenState extends KayleeState<CreateNewOrderScreen> {
               ],
             ),
             onDismiss: () {
-              context.bloc<ReloadBloc>().reload(widget: CashierTab);
-              context.bloc<ReloadBloc>().reload(widget: HistoryTab);
+              context.bloc<ReloadBloc>()!.reload(widget: CashierTab);
+              context.bloc<ReloadBloc>()!.reload(widget: HistoryTab);
               popScreen();
             },
           );
@@ -147,8 +147,8 @@ class _CreateNewOrderScreenState extends KayleeState<CreateNewOrderScreen> {
       _cart.updateOrderInfo(OrderRequest(
           customer: data.reservation!.customer,
           brand: data.reservation?.brand));
-      customerController.customer = _order.customer;
-      brandController.value = _order.brand;
+      customerController.customer = _order!.customer;
+      brandController.value = _order!.brand;
     }
   }
 
@@ -194,7 +194,7 @@ class _CreateNewOrderScreenState extends KayleeState<CreateNewOrderScreen> {
             customerController.customer = _order?.customer;
             brandController.value = _order?.brand;
             employeeController.employees = _order?.employees;
-            discountController.text = _order?.discount?.toString();
+            discountController.text = _order?.discount?.toString() ?? '';
           },
           builder: (context, state) {
             return Column(
@@ -268,7 +268,7 @@ class _CreateNewOrderScreenState extends KayleeState<CreateNewOrderScreen> {
                 if (openFrom != OrderScreenOpenFrom.addNewFromReservation)
                   BlocBuilder<CartBloc, CartState>(
                     builder: (context, state) {
-                      if (_order?.cartItems.isNullOrEmpty)
+                      if ((_order?.cartItems).isNullOrEmpty)
                         return KayLeeRoundedButton.button3(
                           text: Strings.thanhToan,
                           margin: const EdgeInsets.all(Dimens.px8),
