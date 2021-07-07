@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/application_config.dart';
+import 'package:kaylee/base/json_converter/kaylee_json_convert.dart';
 import 'package:kaylee/base/kaylee_bloc_observer.dart';
 import 'package:kaylee/base/kaylee_observer.dart';
 import 'package:kaylee/base/kaylee_routing.dart';
@@ -21,51 +22,53 @@ import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/notification
 import 'package:kaylee/utils/utils.dart';
 
 class KayLeeApplication extends StatefulWidget {
-  static Widget newInstance({required ApplicationConfig appConfig}) =>
-      MultiRepositoryProvider(
-        providers: [
-          RepositoryProvider<NetworkModule>(
-            create: (_) => NetworkModule.init(),
+  static Widget newInstance({required ApplicationConfig appConfig}) {
+    JsonConverterBuilder.init(KayleeJsonConverter());
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider<NetworkModule>(
+          create: (_) => NetworkModule.init(),
+        ),
+        RepositoryProvider<RepositoriesModule>(
+          create: (context) => RepositoriesModule.init(context.network),
+        ),
+        RepositoryProvider<UserModule>(
+          create: (_) => UserModule.init(),
+        ),
+        RepositoryProvider<CartModule>(
+          create: (_) => CartModule.init(),
+        ),
+        RepositoryProvider<FcmModule>(
+          create: (_) => FcmModule.init(),
+        ),
+        RepositoryProvider<ApplicationConfig>.value(
+          value: appConfig,
+        ),
+        RepositoryProvider<SystemSettingModule>.value(
+          value: SystemSettingModule.init(),
+        ),
+      ],
+      child: MultiBlocProvider(providers: [
+        BlocProvider(
+          create: (context) => AppBloc(
+            userService: context.network.provideUserService(),
+            campaignService: context.network.provideCampaignService(),
           ),
-          RepositoryProvider<RepositoriesModule>(
-            create: (context) => RepositoriesModule.init(context.network),
+        ),
+        BlocProvider(
+          create: (context) => CartBloc(),
+        ),
+        BlocProvider(
+          create: (context) => ReloadBloc(),
+        ),
+        BlocProvider(
+          create: (context) => NotiButtonBloc(
+            service: context.network.provideNotificationService(),
           ),
-          RepositoryProvider<UserModule>(
-            create: (_) => UserModule.init(),
-          ),
-          RepositoryProvider<CartModule>(
-            create: (_) => CartModule.init(),
-          ),
-          RepositoryProvider<FcmModule>(
-            create: (_) => FcmModule.init(),
-          ),
-          RepositoryProvider<ApplicationConfig>.value(
-            value: appConfig,
-          ),
-          RepositoryProvider<SystemSettingModule>.value(
-            value: SystemSettingModule.init(),
-          ),
-        ],
-        child: MultiBlocProvider(providers: [
-          BlocProvider(
-            create: (context) => AppBloc(
-              userService: context.network.provideUserService(),
-              campaignService: context.network.provideCampaignService(),
-            ),
-          ),
-          BlocProvider(
-            create: (context) => CartBloc(),
-          ),
-          BlocProvider(
-            create: (context) => ReloadBloc(),
-          ),
-          BlocProvider(
-            create: (context) => NotiButtonBloc(
-              service: context.network.provideNotificationService(),
-            ),
-          ),
-        ], child: KayLeeApplication._()),
-      );
+        ),
+      ], child: KayLeeApplication._()),
+    );
+  }
 
   KayLeeApplication._();
 
@@ -216,9 +219,9 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
           textTheme: context.theme.textTheme
             ..bodyText2
                 ?.copyWith(
-                fontFamily: Fonts.HelveticaNeue,
-                fontStyle: FontStyle.normal,
-                letterSpacing: 0)
+                    fontFamily: Fonts.HelveticaNeue,
+                    fontStyle: FontStyle.normal,
+                    letterSpacing: 0)
                 .merge(TextStyles.normal16W400),
         ),
       ),
