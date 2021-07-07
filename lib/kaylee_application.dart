@@ -125,6 +125,7 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
             responseModel.warning!.code == ErrorCode.EXPIRE_WARNING_CODE) {
           _appBloc.expirationWarning(error: responseModel.warning!);
         }
+        handler.next(response);
       },
       onError: (error, handler) {
         final responseModel =
