@@ -47,13 +47,11 @@ class _SplashScreenState extends KayleeState<SplashScreen> {
     await remoteConfig.setConfigSettings(RemoteConfigSettings(
         fetchTimeout: Duration(seconds: 1),
         minimumFetchInterval: Duration(hours: 23)));
-    remoteConfig.fetchAndActivate().then((value) async {
-      if (value) {
-        context.appConfig.setupConfig(remoteConfig.getAll());
-        context.network.dio.options.baseUrl = context.appConfig.baseUrl;
-        context.bloc<AppBloc>()!.packageInfo = await PackageInfo.fromPlatform();
-        bloc.config();
-      }
+    remoteConfig.fetchAndActivate().then((_) async {
+      context.appConfig.setupConfig(remoteConfig.getAll());
+      context.network.dio.options.baseUrl = context.appConfig.baseUrl;
+      context.bloc<AppBloc>()!.packageInfo = await PackageInfo.fromPlatform();
+      bloc.config();
     });
   }
 
