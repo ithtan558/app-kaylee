@@ -43,19 +43,18 @@ class _LoginScreenState extends KayleeState<LoginScreen> {
   final _passTController = TextEditingController();
 
   LoginScreenBloc get bloc => context.bloc<LoginScreenBloc>()!;
-  late LoginScreenData data;
+  LoginScreenData? data;
 
   @override
   void initState() {
     super.initState();
-    data = context.getArguments<LoginScreenData>()!;
+    data = context.getArguments<LoginScreenData>();
   }
 
   @override
   void dispose() {
     _phoneTController.dispose();
     _passTController.dispose();
-    bloc.close();
     super.dispose();
   }
 
@@ -134,7 +133,8 @@ class _LoginScreenState extends KayleeState<LoginScreen> {
                         ],
                       ),
                       onDismiss: () {
-                        if (data.openFrom == LoginScreenOpenFrom.LOGIN_DIALOG) {
+                        if (data?.openFrom ==
+                            LoginScreenOpenFrom.LOGIN_DIALOG) {
                           popScreen();
                         } else {
                           context.pushToTop(PageIntent(screen: HomeScreen));
