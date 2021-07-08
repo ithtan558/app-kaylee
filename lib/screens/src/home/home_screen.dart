@@ -48,16 +48,16 @@ class _HomeScreenState extends KayleeState<HomeScreen> {
       onSelectNotification: _openLocalNotification,
     );
     FirebaseMessaging.onMessage.listen((message) {
-      _onMessageFcm.call(message.data);
+      _onMessageFcm(message.data);
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
-      _onResumeFcm.call(message.data);
+      _onResumeFcm(message);
     });
 
     FirebaseMessaging.instance.getInitialMessage()
       ..then((message) {
-        _onLaunchFcm.call(message);
+        _onLaunchFcm(message);
       });
   }
 
@@ -83,7 +83,7 @@ class _HomeScreenState extends KayleeState<HomeScreen> {
   }
 
   ///clicked on notification when app's in background
-  Future _onResumeFcm(message) async {
+  Future _onResumeFcm(RemoteMessage message) async {
     // print('[TUNG] ===> _onResumeFcm');
     _reloadBloc.reload(widget: NotificationButton);
     _reloadBloc.reload(widget: NotificationScreen);
@@ -91,9 +91,9 @@ class _HomeScreenState extends KayleeState<HomeScreen> {
   }
 
   ///clicked on notification when app's terminated
-  Future _onLaunchFcm(message) async {
+  Future _onLaunchFcm(RemoteMessage? message) async {
     // print('[TUNG] ===> _onLaunchFcm');
-    _onOpenNotification(message);
+    if (message != null) _onOpenNotification(message.data);
   }
 
   ///open notification, navigate to corresponding screen
