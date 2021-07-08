@@ -58,7 +58,6 @@ class _SplashScreenState extends KayleeState<SplashScreen> {
   @override
   void dispose() {
     _sub.cancel();
-    bloc.close();
     super.dispose();
   }
 
