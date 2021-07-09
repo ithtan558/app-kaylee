@@ -9,7 +9,7 @@ class AndroidPrinterDetailBloc extends PrinterDetailBase
     emit(PrinterDetailStateLoadingDevices());
     final fromSharePref = SharedRef.getString(PRINTER_DEVICES_KEY);
     final map =
-        jsonDecode(fromSharePref.isNullOrEmpty ? '[]' : fromSharePref) as List;
+        jsonDecode(fromSharePref.isNullOrEmpty ? '[]' : fromSharePref!) as List;
     devices = map.map((e) => PrinterDevice.fromJson(e)).toList();
     emit(PrinterDetailStateLoadedDevices());
   }
