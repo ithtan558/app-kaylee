@@ -25,14 +25,14 @@ abstract class SystemSettingModule {
   ///android sẽ gọi location permission
   ///ios sẽ gọi bluetooth permission
   Future<void> showKayleeBluetoothPermissionSettingDialog({
-    @required BuildContext context,
+    required BuildContext context,
     bool barrierDismissible = true,
   });
 
   Future<void> showKayleeLocationPermissionExplainsDialog({
-    @required BuildContext context,
+    required BuildContext context,
     bool barrierDismissible = true,
-    VoidCallback allowCallback,
+    required VoidCallback allowCallback,
   });
 
   SystemSettingModule._();
@@ -92,7 +92,7 @@ class _SystemSettingModuleImpl extends SystemSettingModule {
 
   @override
   Future<void> showKayleeBluetoothPermissionSettingDialog(
-      {BuildContext context, bool barrierDismissible = true}) {
+      {required BuildContext context, bool barrierDismissible = true}) {
     return showKayleeRequestSettingDialog(
       context: context,
       barrierDismissible: barrierDismissible,
@@ -111,9 +111,9 @@ class _SystemSettingModuleImpl extends SystemSettingModule {
 
   @override
   Future<void> showKayleeLocationPermissionExplainsDialog({
-    BuildContext context,
+    required BuildContext context,
     bool barrierDismissible = true,
-    VoidCallback allowCallback,
+    required VoidCallback allowCallback,
   }) {
     return showKayleeDialog(
         context: context,
