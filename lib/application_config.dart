@@ -52,7 +52,7 @@ abstract class _BaseAppConfig implements ApplicationConfig {
   @override
   String get policyUrl {
     final value = _config.value(_basePolicyUrlKey)?.asString();
-    return (value?.isEmpty ?? true) ? _defaultBaseUrlValue : value;
+    return (value?.isEmpty ?? true) ? _defaultBaseUrlValue : value!;
   }
 
   @override
