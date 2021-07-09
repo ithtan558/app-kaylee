@@ -121,13 +121,22 @@ class _PrinterDetailScreenState extends KayleeState<PrinterDetailScreen> {
 
             if (state is PrinterDetailStateBluetoothEnable) {
               hideLoading();
-              return showKayleeDialog(
+              final isShownProminentDisclosure = SharedRef.getBool(
+                      LOCATION_PROMINENT_DISCLOSURE_FOR_ANDROID_KEY) ??
+                  false;
+              if (isShownProminentDisclosure) {
+                return _showSelectingBluetoothDevice();
+              } else {
+                return context.systemSetting
+                    .showKayleeLocationPermissionExplainsDialog(
                   context: context,
-                  child: BluetoothSelectDeviceDialog(
-                    onSelected: (device) {
-                      _bloc.onAddBluetooth(device: device);
-                    },
-                  ));
+                  allowCallback: () {
+                    SharedRef.putBool(
+                        LOCATION_PROMINENT_DISCLOSURE_FOR_ANDROID_KEY, true);
+                    _showSelectingBluetoothDevice();
+                  },
+                );
+              }
             }
 
             if (state is PrinterDetailStateBluetoothNotEnable) {
@@ -229,6 +238,16 @@ class _PrinterDetailScreenState extends KayleeState<PrinterDetailScreen> {
         },
       );
     }
+  }
+
+  void _showSelectingBluetoothDevice() {
+    showKayleeDialog(
+        context: context,
+        child: BluetoothSelectDeviceDialog(
+          onSelected: (device) {
+            _bloc.onAddBluetooth(device: device);
+          },
+        ));
   }
 }
 

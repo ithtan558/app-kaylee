@@ -11,7 +11,6 @@ class Strings {
   static const khoiPhucMatKhau = 'Khôi phục mật khẩu';
   static const appName = 'KayLee';
   static const chuaCoTK = 'Chưa có tài khoản?';
-  static const login = 'Login';
   static const dangKy = 'Đăng ký';
   static const vuiLongDangNhap = 'Vui lòng đăng nhập để tiếp tục';
   static const dangNhap = 'Đăng nhập';
@@ -337,7 +336,7 @@ class Strings {
   static const chon = 'Chọn';
   static const ketNoiThanhCong = 'Kết nối máy in thành công';
   static const thietBiChuaBatBluetooth = 'Thiết bị chưa bật Bluetooth';
-  static const quyenTruyBluetoothContent =
+  static const vuiLongBatBluetoothContent =
       'Vui lòng bật Bluetooth để kết nối với máy in.';
   static const iOsBluetoothSettingGuide = 'Vào Cài đặt > Bluetooth';
   static const androidBluetoothSettingGuide =
@@ -355,6 +354,19 @@ class Strings {
   static const tenUngDung = 'Tên ứng dụng';
 
   static const softwareVersion = 'Software Version';
+  static const quyenTruyCapViTri = 'Quyền truy cập vị trí';
+  static const quyenTruyCapBluetooth = 'Quyền truy cập Bluetooth';
+  static const quyenTruyCapViTriContent =
+      'Vui lòng thiết lập cho phép Kaylee truy cập Vị trí';
+  static const quyenTruyCapBluetoothContent =
+      'Vui lòng thiết lập cho phép Kaylee truy cập Bluetooth';
+  static const androidLocationPermissionGuide =
+      'Vào Cài đặt > Ứng dụng > Kaylee > Quyền > Vị trí';
+  static const iOsBluetoothPermissionGuide =
+      'Vào Cài đặt > Kaylee > Bluetooth';
+  static const choPhep = 'Cho phép';
+  static const boQua = 'Bỏ qua';
+  static const dieuKhoanCuaKaylee = 'Điều khoản của Kaylee';
 
   Strings._();
 }

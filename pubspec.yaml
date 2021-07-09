@@ -5,7 +5,7 @@ description: Kaylee application.
 # pub.dev using `pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 2.0.0+20000
+version: 1.1.5+10105
 
 environment:
   sdk: ">=2.13.0 <3.0.0"
@@ -25,7 +25,7 @@ dependencies:
     git:
       url: https://github.com/CastawayLabs/esc_pos_printer.git
       ref: master
-  video_player: ^2.1.6
+  video_player: ^2.1.10
   chewie: ^1.2.2
   printing: ^5.4.3
   bluetooth_print:

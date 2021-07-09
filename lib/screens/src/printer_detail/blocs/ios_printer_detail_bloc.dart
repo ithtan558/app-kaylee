@@ -4,3 +4,7 @@ class IosPrinterDetailBloc extends PrinterDetailBase
     with BluetoothPrinterMixin, IosBluetoothPrinterMixin, WifiPrinterMixin {
   IosPrinterDetailBloc() : super._();
 }
+
+class IosPrinterDialogBloc extends IosPrinterDetailBloc {
+  IosPrinterDialogBloc() : super();
+}

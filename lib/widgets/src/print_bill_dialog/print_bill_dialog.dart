@@ -19,8 +19,8 @@ import 'package:printing/printing.dart';
 class PrintBillDialog extends StatefulWidget {
   static Widget newInstance({required Order order}) => BlocProvider(
         create: (context) => Platform.isAndroid
-            ? AndroidPrinterDetailBloc()
-            : IosPrinterDetailBloc(),
+            ? AndroidPrinterDialogBloc()
+            : IosPrinterDialogBloc(),
         child: PrintBillDialog._(
           order: order,
         ),
