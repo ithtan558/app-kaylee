@@ -186,8 +186,7 @@ class _SelectServiceListState extends KayleeState<SelectServiceList> {
                       LoadMoreModel<Service>>(
                     builder: (context, state) {
                       final enable =
-                          serviceListBloc.selectedServices.isNotEmpty &&
-                              (state.items?.length ?? 0) > 0;
+                          serviceListBloc.selectedServices.isNotEmpty;
                       return enable
                           ? KayLeeRoundedButton.normal(
                               text: Strings.xacNhan,
