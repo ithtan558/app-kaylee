@@ -15,19 +15,9 @@ class AboutScreen extends StatefulWidget {
 }
 
 class _AboutScreenState extends BaseState<AboutScreen> {
-  late String appName;
-  late String versionName;
-
   @override
   void initState() {
     super.initState();
-    PackageInfo.fromPlatform().then((value) {
-      setState(() {
-        appName = value.appName;
-        versionName = value.version;
-      });
-      return value;
-    }).timeout(Duration(seconds: 1));
   }
 
   @override
@@ -41,43 +31,50 @@ class _AboutScreenState extends BaseState<AboutScreen> {
       appBar: KayleeAppBar(
         title: Strings.thongTinUngDung,
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(
-                top: Dimens.px16, left: Dimens.px16, right: Dimens.px16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: FutureBuilder<PackageInfo>(
+          future: PackageInfo.fromPlatform().timeout(Duration(seconds: 1)),
+          builder: (context, snapshot) {
+            final packageInfo = snapshot.data;
+            final appName = packageInfo?.appName ?? '';
+            final versionName = packageInfo?.version ?? '';
+            return Column(
               children: [
-                KayleeText.normal16W500(
-                  Strings.tenUngDung,
-                  textAlign: TextAlign.start,
+                Padding(
+                  padding: const EdgeInsets.only(
+                      top: Dimens.px16, left: Dimens.px16, right: Dimens.px16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      KayleeText.normal16W500(
+                        Strings.tenUngDung,
+                        textAlign: TextAlign.start,
+                      ),
+                      KayleeText.normal16W400(
+                        appName,
+                        textAlign: TextAlign.end,
+                      )
+                    ],
+                  ),
                 ),
-                KayleeText.normal16W400(
-                  appName,
-                  textAlign: TextAlign.end,
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(Dimens.px16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                KayleeText.normal16W500(
-                  Strings.softwareVersion,
-                  textAlign: TextAlign.start,
+                Padding(
+                  padding: const EdgeInsets.all(Dimens.px16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      KayleeText.normal16W500(
+                        Strings.softwareVersion,
+                        textAlign: TextAlign.start,
+                      ),
+                      KayleeText.normal16W400(
+                        versionName,
+                        textAlign: TextAlign.end,
+                      )
+                    ],
+                  ),
                 ),
-                KayleeText.normal16W400(
-                  versionName,
-                  textAlign: TextAlign.end,
-                )
               ],
-            ),
-          ),
-        ],
-      ),
+            );
+          }),
     );
   }
 }
