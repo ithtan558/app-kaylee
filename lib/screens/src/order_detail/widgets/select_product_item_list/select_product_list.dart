@@ -172,10 +172,9 @@ class _SelectProdListState extends KayleeState<SelectProdList> {
                 ),
                 Expanded(
                   child:
-                  BlocBuilder<SelectProdListBloc, LoadMoreModel<Product>>(
+                      BlocBuilder<SelectProdListBloc, LoadMoreModel<Product>>(
                     builder: (context, state) {
-                      final enable = prodsListBloc.selectedProds.isNotEmpty &&
-                          (state.items?.length ?? 0) > 0;
+                      final enable = prodsListBloc.selectedProds.isNotEmpty;
                       return enable
                           ? KayLeeRoundedButton.normal(
                               text: Strings.xacNhan,
