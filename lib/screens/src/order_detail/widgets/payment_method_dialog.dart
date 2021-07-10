@@ -1,4 +1,3 @@
-import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/models/models.dart';
@@ -6,18 +5,24 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class PaymentMethodDialog extends StatefulWidget {
-  static Widget newInstance({required VoidCallback onConfirm}) =>
-      PaymentMethodDialog._(onConfirm: onConfirm);
+  static Widget newInstance(
+          {required VoidCallback onConfirm,
+          required OrderRequest orderRequest}) =>
+      PaymentMethodDialog._(
+        onConfirm: onConfirm,
+        orderRequest: orderRequest,
+      );
   final VoidCallback onConfirm;
+  final OrderRequest orderRequest;
 
-  PaymentMethodDialog._({required this.onConfirm});
+  PaymentMethodDialog._({required this.onConfirm, required this.orderRequest});
 
   @override
   _PaymentMethodDialogState createState() => _PaymentMethodDialogState();
 }
 
 class _PaymentMethodDialogState extends KayleeState<PaymentMethodDialog> {
-  OrderRequest get _order => context.repository<OrderRequest>()!;
+  OrderRequest get _order => widget.orderRequest;
 
   @override
   Widget build(BuildContext context) {

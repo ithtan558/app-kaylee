@@ -280,23 +280,21 @@ class _CreateNewOrderScreenState extends KayleeState<CreateNewOrderScreen> {
                           showKayleeDialog(
                             context: context,
                             showShadow: true,
-                            child: RepositoryProvider.value(
-                              value: _order,
-                              child: PaymentMethodDialog.newInstance(
-                                onConfirm: () {
-                                  if (openFrom ==
-                                      OrderScreenOpenFrom.detailButton) {
-                                    _bloc.payOrderOnly();
-                                  } else if (openFrom ==
-                                      OrderScreenOpenFrom.addNewButton) {
-                                    _cart.updateOrderInfo(OrderRequest(
-                                      brand: brandController.value,
-                                      employee: employeeController.employees,
-                                    ));
-                                    _bloc.createOrderAndPay();
-                                  }
-                                },
-                              ),
+                            child: PaymentMethodDialog.newInstance(
+                              orderRequest: _order!,
+                              onConfirm: () {
+                                if (openFrom ==
+                                    OrderScreenOpenFrom.detailButton) {
+                                  _bloc.payOrderOnly();
+                                } else if (openFrom ==
+                                    OrderScreenOpenFrom.addNewButton) {
+                                  _cart.updateOrderInfo(OrderRequest(
+                                    brand: brandController.value,
+                                    employee: employeeController.employees,
+                                  ));
+                                  _bloc.createOrderAndPay();
+                                }
+                              },
                             ),
                           );
                         },
