@@ -67,9 +67,7 @@ class _ExpirationScreenState extends KayleeState<ExpirationScreen> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async {
-        return !argument.isExpired;
-      },
+      onWillPop: argument.isExpired ? () async => false : null,
       child: KayleeScrollview(
         appBar: KayleeAppBar(
           title: Strings.giaHanSuDung,
