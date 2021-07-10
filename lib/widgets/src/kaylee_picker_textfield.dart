@@ -205,7 +205,7 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField>
           });
         },
         builder: (context) {
-          return RepositoryProvider.value(
+          return RepositoryProvider<KayleePickerTextFieldModel?>.value(
             value: pickerTFModel,
             child: T == DateTime
                 ? _DatePickerView(
@@ -422,7 +422,7 @@ class _PickerViewState<T> extends KayleeState<_PickerView> {
   void initState() {
     super.initState();
     try {
-      parentBloc = context.repository<KayleePickerTextFieldModel>();
+      parentBloc = context.repository<KayleePickerTextFieldModel?>();
     } catch (e, _) {
       // print('[TUNG] ===> $s');
     }
