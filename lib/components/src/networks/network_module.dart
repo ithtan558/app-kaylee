@@ -5,18 +5,7 @@ abstract class NetworkModule extends Network {
   static const BASE_URL = 'http://api.kaylee.vn/';
   static const AUTHORIZATION = 'Authorization';
 
-  NetworkModule(String baseUrl) : super(baseUrl) {
-    dio.interceptors
-      ..clear()
-      ..addAll([
-        PrettyDioLogger(
-          responseBody: true,
-          responseHeader: true,
-          requestHeader: true,
-          requestBody: true,
-        )
-      ]);
-  }
+  NetworkModule(String baseUrl) : super(baseUrl);
 
   factory NetworkModule.init() => _NetworkModuleImpl(BASE_URL);
 
