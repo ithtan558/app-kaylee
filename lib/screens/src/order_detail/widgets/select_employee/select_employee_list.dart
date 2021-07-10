@@ -19,7 +19,7 @@ class SelectEmployeeList extends StatefulWidget {
 
 class _SelectEmployeeListState extends KayleeState<SelectEmployeeList> {
   KayleePickerTextFieldModel get _brandTFModel =>
-      context.repository<KayleePickerTextFieldModel>()!;
+      context.read<KayleePickerTextFieldModel>();
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class _SelectEmployeeListState extends KayleeState<SelectEmployeeList> {
           title: Strings.nhanVienPhucVu,
           buttonText: Strings.themNhanVien,
           onPress: () {
-            if (_brandTFModel.brand != null) {
+            if (_brandTFModel.brand.isNull) {
               showKayleeAlertDialog(
                   context: context,
                   view: KayleeAlertDialogView(
