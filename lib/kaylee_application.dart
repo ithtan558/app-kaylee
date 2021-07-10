@@ -98,10 +98,7 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
     );
 
     if (Platform.isIOS) {
-      FirebaseMessaging.instance.requestPermission().then((settings) {
-        print(
-            '[TUNG] ===> invoke ios notification permission ${settings.authorizationStatus}');
-      });
+      FirebaseMessaging.instance.requestPermission().then((settings) {});
     }
 
     _handleRequestInterceptor();
