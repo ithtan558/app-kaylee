@@ -22,7 +22,7 @@ Order _$OrderFromJson(Map<String, dynamic> json) {
         : DateTime.parse(json['created_at'] as String),
     supplierName: json['supplier_name'] as String?,
     count: json['count'] as int?,
-    isPaid: parseBoolFromInt(json['is_paid'] as int),
+    isPaid: parseBoolFromInt(json['is_paid'] as int?),
     name: json['name'] as String?,
     phone: json['phone'] as String?,
     email: json['email'] as String?,
