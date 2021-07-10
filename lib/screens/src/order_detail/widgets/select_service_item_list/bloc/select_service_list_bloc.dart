@@ -79,17 +79,14 @@ class SelectServiceListBloc extends Cubit<LoadMoreModel<Service>>
   }
 
   void select({required Service service}) {
-    Service? item;
-    try {
-      item = state.items?.singleWhere(
-        (element) => element.id == service.id,
-      );
-    } catch (_) {}
-    item?.selected = !service.selected;
-    if (item != null && !item.selected) {
+    final item = state.items!.singleWhere(
+      (element) => element.id == service.id,
+    );
+    item.selected = !service.selected;
+    if (!item.selected) {
       _selectedServices.removeWhere((element) => element.id == service.id);
     } else {
-      _selectedServices.add(item!..quantity = 1);
+      _selectedServices.add(item..quantity = 1);
     }
     emit(LoadMoreModel.copy(state));
   }

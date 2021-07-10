@@ -79,10 +79,10 @@ class SelectProdListBloc extends Cubit<LoadMoreModel<Product>>
   }
 
   void select({required Product product}) {
-    Product item = state.items!.singleWhere(
+    final item = state.items!.singleWhere(
       (element) => element.id == product.id,
     );
-    item.selected = product.selected;
+    item.selected = !product.selected;
     if (!item.selected) {
       _selectedProds.removeWhere((element) => element.id == product.id);
     } else {
