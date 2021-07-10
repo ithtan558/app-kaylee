@@ -36,7 +36,7 @@ class _SelectOrderItemListState extends KayleeState<SelectOrderItemList> {
           title: Strings.danhSachDichVu,
           buttonText: Strings.themDichVu,
           onPress: () {
-            if (_brandTFModel.brand.isNotNull) {
+            if (_brandTFModel.brand.isNull) {
               showKayleeAlertDialog(
                   context: context,
                   view: KayleeAlertDialogView(
