@@ -108,48 +108,66 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
   }
 
   void _handleRequestInterceptor() {
-    context.network.dio.interceptors.add(InterceptorsWrapper(
-      onRequest: (options, handler) {
-        handler.next(options
-          ..headers.putIfAbsent(
-              'version', () => _appBloc.packageInfo?.buildNumber ?? ''));
-      },
-      onResponse: (response, handler) {
-        final responseModel =
-            ResponseModel.fromJson(response.data, (json) => null);
-        if (response.requestOptions.path == 'check-expired') {
-          context.read<ReloadBloc>().forceReloadAllState();
-        }
-
-        if (responseModel.warning?.code != null &&
-            responseModel.warning!.code == ErrorCode.EXPIRE_WARNING_CODE) {
-          _appBloc.expirationWarning(error: responseModel.warning!);
-        }
-        handler.next(response);
-      },
-      onError: (error, handler) {
-        final responseModel =
-            ResponseModel.fromJson(error.response?.data, (json) => null);
-        if (error.response != null) {
-          if (error.response!.statusCode == HttpStatus.unauthorized) {
-            if (responseModel.error?.code != null &&
-                responseModel.error!.code == ErrorCode.EXPIRATION_CODE) {
-              _appBloc.expired(error: responseModel.error!);
-              (error.response!.data as Map<String, dynamic>)..['errors'] = null;
-            } else {
-              _appBloc.unauthorized(error: responseModel.error!);
-              (error.response!.data as Map<String, dynamic>)..['errors'] = null;
+    context.network.dio.interceptors
+      ..clear()
+      ..addAll([
+        InterceptorsWrapper(
+          onRequest: (options, handler) {
+            handler.next(options
+              ..headers = {
+                ...options.headers,
+                'version': _appBloc.packageInfo?.buildNumber ?? '',
+                if (context.user.getUserInfo().token.isNotNullAndEmpty)
+                  NetworkModule.AUTHORIZATION:
+                      context.user.getUserInfo().requestToken
+              });
+          },
+          onResponse: (response, handler) {
+            final responseModel =
+                ResponseModel.fromJson(response.data, (json) => null);
+            if (response.requestOptions.path == 'check-expired') {
+              context.read<ReloadBloc>().forceReloadAllState();
             }
-          } else if (error.response!.statusCode == HttpStatus.badRequest &&
-              responseModel.error?.code != null &&
-              responseModel.error!.code == ErrorCode.OUT_OF_DATE_CODE) {
-            _appBloc.outOfDate(error: responseModel.error!);
-            (error.response!.data as Map<String, dynamic>)..['errors'] = null;
-          }
-        }
-        return handler.next(error);
-      },
-    ));
+
+            if (responseModel.warning?.code != null &&
+                responseModel.warning!.code == ErrorCode.EXPIRE_WARNING_CODE) {
+              _appBloc.expirationWarning(error: responseModel.warning!);
+            }
+            handler.next(response);
+          },
+          onError: (error, handler) {
+            final responseModel =
+                ResponseModel.fromJson(error.response?.data, (json) => null);
+            if (error.response != null) {
+              if (error.response!.statusCode == HttpStatus.unauthorized) {
+                if (responseModel.error?.code != null &&
+                    responseModel.error!.code == ErrorCode.EXPIRATION_CODE) {
+                  _appBloc.expired(error: responseModel.error!);
+                  (error.response!.data as Map<String, dynamic>)
+                    ..['errors'] = null;
+                } else {
+                  _appBloc.unauthorized(error: responseModel.error!);
+                  (error.response!.data as Map<String, dynamic>)
+                    ..['errors'] = null;
+                }
+              } else if (error.response!.statusCode == HttpStatus.badRequest &&
+                  responseModel.error?.code != null &&
+                  responseModel.error!.code == ErrorCode.OUT_OF_DATE_CODE) {
+                _appBloc.outOfDate(error: responseModel.error!);
+                (error.response!.data as Map<String, dynamic>)
+                  ..['errors'] = null;
+              }
+            }
+            return handler.next(error);
+          },
+        ),
+        PrettyDioLogger(
+          responseBody: true,
+          responseHeader: true,
+          requestHeader: true,
+          requestBody: true,
+        )
+      ]);
   }
 
   @override
@@ -159,11 +177,6 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
       listener: (context, state) {
         if (state is LoggedInState) {
           context.user.updateUserInfo(state.result);
-          context.network.dio.options
-            ..headers = {
-              NetworkModule.AUTHORIZATION:
-                  context.user.getUserInfo().requestToken
-            };
           _appBloc.getFcmTopic();
           _appBloc.doneLoggedInSetup();
         } else if (state is LoggedOutState) {
