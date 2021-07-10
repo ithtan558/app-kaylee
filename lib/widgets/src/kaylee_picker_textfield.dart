@@ -517,7 +517,7 @@ class _PickerViewState<T> extends KayleeState<_PickerView> {
     );
   }
 
-  int getIndex(dynamic item) {
+  int? getIndex(dynamic item) {
     if (item != null && types.contains(T)) {
       if (item is ReservationStatus) return item.index;
       return item.id;
