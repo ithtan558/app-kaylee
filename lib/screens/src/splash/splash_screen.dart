@@ -45,8 +45,9 @@ class _SplashScreenState extends KayleeState<SplashScreen> {
     final remoteConfig = RemoteConfig.instance;
     remoteConfig.setDefaults(context.appConfig.defaultConfig);
     await remoteConfig.setConfigSettings(RemoteConfigSettings(
-        fetchTimeout: Duration(seconds: 1),
-        minimumFetchInterval: Duration(hours: 23)));
+      fetchTimeout: Duration(seconds: 1),
+      minimumFetchInterval: Duration(minutes: 1),
+    ));
     remoteConfig.fetchAndActivate().then((_) async {
       context.appConfig.setupConfig(remoteConfig.getAll());
       context.network.dio.options.baseUrl = context.appConfig.baseUrl;
