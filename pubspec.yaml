@@ -31,7 +31,7 @@ dependencies:
   bluetooth_print:
     git:
       url: https://github.com/tungpham6195/bluetooth_print.git
-      ref: tungpham6195/device-not-found-on-android-10
+      ref: 3.0.2
   app_settings: ^4.1.1
   firebase_remote_config: ^0.10.0+2
   anth_package:
@@ -48,7 +48,7 @@ dev_dependencies:
 
   # Tools to write binaries that run builders(In this project, we use it
   # for json_serializable, retrofit)
-  build_runner: ^2.0.5
+  build_runner: ^2.0.6
   #tạm thời dùng master
   retrofit_generator: ^2.0.0+3
 

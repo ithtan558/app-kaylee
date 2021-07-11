@@ -75,11 +75,11 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "tungpham6195/device-not-found-on-android-10"
-      resolved-ref: "7abd3786178dad0bd620f125b8af68ed83ca4dd1"
+      ref: "3.0.2"
+      resolved-ref: d3e11a025da2ab30e882fb95eaff3be01706636e
       url: "https://github.com/tungpham6195/bluetooth_print.git"
     source: git
-    version: "3.0.1"
+    version: "3.0.2"
   boolean_selector:
     dependency: transitive
     description:
@@ -121,7 +121,7 @@ packages:
       name: build_runner
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.5"
+    version: "2.0.6"
   build_runner_core:
     dependency: transitive
     description:
