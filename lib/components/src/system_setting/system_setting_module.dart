@@ -159,8 +159,7 @@ class _SystemSettingModuleImpl extends SystemSettingModule {
                     TextSpan(
                         text: Strings.quyenTruyCapViTri,
                         style: TextStyle(fontWeight: FontWeight.bold)),
-                    TextSpan(
-                        text: ' này kể cả khi app đã đóng hoặc không sử dụng'),
+                    TextSpan(text: ' kể cả khi app đã đóng hoặc không sử dụng'),
                   ]),
                   style: TextStyles.normal16W400,
                   textAlign: TextAlign.center,
