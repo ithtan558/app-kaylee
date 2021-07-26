@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:anth_package/anth_package.dart';
 import 'package:kaylee/services/services.dart';
 
@@ -5,7 +7,9 @@ abstract class NetworkModule extends Network {
   static const BASE_URL = 'http://api.kaylee.vn/';
   static const AUTHORIZATION = 'Authorization';
 
-  NetworkModule(String baseUrl) : super(baseUrl);
+  NetworkModule(String baseUrl) : super(baseUrl) {
+    HttpOverrides.global = IgnoreHandShakeHttpOverrides();
+  }
 
   factory NetworkModule.init() => _NetworkModuleImpl(BASE_URL);
 
@@ -92,4 +96,13 @@ class _NetworkModuleImpl extends NetworkModule {
 
   @override
   AdvertiseService provideAdvertiseService() => AdvertiseService(dio);
+}
+
+class IgnoreHandShakeHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
 }
