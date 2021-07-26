@@ -141,7 +141,7 @@ class _SystemSettingModuleImpl extends SystemSettingModule {
                   right: Dimens.px16, left: Dimens.px16, bottom: Dimens.px8),
               child: Text.rich(
                 TextSpan(
-                    text: 'Kaylee sử dụng quyền này ở chức năng: ',
+                    text: 'Kaylee sử dụng quyền này cho chức năng: ',
                     children: [
                       TextSpan(
                           text: Strings.caiDatMayIn,
