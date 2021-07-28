@@ -1,7 +1,7 @@
-import 'package:anth_package/anth_package.dart' as anthPackage;
+import 'package:anth_package/anth_package.dart' as anth_package;
 import 'package:kaylee/models/models.dart';
 
-class KayleeJsonConverter extends anthPackage.JsonConverterFactory {
+class KayleeJsonConverter extends anth_package.JsonConverterFactory {
   @override
   T fromJson<T>(json) {
     if (T == LoginResult) {
@@ -93,92 +93,93 @@ class KayleeJsonConverter extends anthPackage.JsonConverterFactory {
   }
 
   @override
-  toJson<T>(T json) {
-    if (json is LoginResult) {
-      return json.toJson();
-    } else if (json is UserInfo) {
-      return json.toJson();
-    } else if (json is VerifyPhoneResult) {
-      return json.toJson();
-    } else if (json is Content) {
-      return json.toJson();
-    } else if (json is VerifyOtpResult) {
-      return json.toJson();
-    } else if (json is City) {
-      return json.toJson();
-    } else if (json is District) {
-      return json.toJson();
-    } else if (json is Ward) {
-      return json.toJson();
-    } else if (json is Supplier) {
-      return json.toJson();
-    } else if (json is Suppliers) {
-      return json.toJson();
-    } else if (json is Product) {
-      return json.toJson();
-    } else if (json is Products) {
-      return json.toJson();
-    } else if (json is NotificationCount) {
-      return json.toJson();
-    } else if (json is Brand) {
-      return json.toJson();
-    } else if (json is Service) {
-      return json.toJson();
-    } else if (json is ProdCate) {
-      return json.toJson();
-    } else if (json is ServiceCate) {
-      return json.toJson();
-    } else if (json is Employee) {
-      return json.toJson();
-    } else if (json is Role) {
-      return json.toJson();
-    } else if (json is Customer) {
-      return json.toJson();
-    } else if (json is CustomerType) {
-      return json.toJson();
-    } else if (json is Notification) {
-      return json.toJson();
-    } else if (json is Commission) {
-      return json.toJson();
-    } else if (json is CommissionDetail) {
-      return json.toJson();
-    } else if (json is CommissionOrder) {
-      return json.toJson();
-    } else if (json is CommissionSetting) {
-      return json.toJson();
-    } else if (json is Order) {
-      return json.toJson();
-    } else if (json is OrderItem) {
-      return json.toJson();
-    } else if (json is EmployeeRevenue) {
-      return json.toJson();
-    } else if (json is Revenue) {
-      return json.toJson();
-    } else if (json is ServiceRevenue) {
-      return json.toJson();
-    } else if (json is Reservation) {
-      return json.toJson();
-    } else if (json is FcmResponse) {
-      return json.toJson();
-    } else if (json is FcmNotification) {
-      return json.toJson();
-    } else if (json is FcmAps) {
-      return json.toJson();
-    } else if (json is FcmData) {
-      return json.toJson();
-    } else if (json is Campaign) {
-      return json.toJson();
-    } else if (json is RegisterResult) {
-      return json.toJson();
-    } else if (json is Banner) {
-      return json.toJson();
-    } else if (json is ProductImage) {
-      return json.toJson();
-    } else if (json is OrderCancellationReason) {
-      return json.toJson();
-    } else if (json is CreateOrderResult) {
-      return json.toJson();
-    } else
-      return json;
+  toJson<T>(T object) {
+    if (object is LoginResult) {
+      return object.toJson();
+    } else if (object is UserInfo) {
+      return object.toJson();
+    } else if (object is VerifyPhoneResult) {
+      return object.toJson();
+    } else if (object is Content) {
+      return object.toJson();
+    } else if (object is VerifyOtpResult) {
+      return object.toJson();
+    } else if (object is City) {
+      return object.toJson();
+    } else if (object is District) {
+      return object.toJson();
+    } else if (object is Ward) {
+      return object.toJson();
+    } else if (object is Supplier) {
+      return object.toJson();
+    } else if (object is Suppliers) {
+      return object.toJson();
+    } else if (object is Product) {
+      return object.toJson();
+    } else if (object is Products) {
+      return object.toJson();
+    } else if (object is NotificationCount) {
+      return object.toJson();
+    } else if (object is Brand) {
+      return object.toJson();
+    } else if (object is Service) {
+      return object.toJson();
+    } else if (object is ProdCate) {
+      return object.toJson();
+    } else if (object is ServiceCate) {
+      return object.toJson();
+    } else if (object is Employee) {
+      return object.toJson();
+    } else if (object is Role) {
+      return object.toJson();
+    } else if (object is Customer) {
+      return object.toJson();
+    } else if (object is CustomerType) {
+      return object.toJson();
+    } else if (object is Notification) {
+      return object.toJson();
+    } else if (object is Commission) {
+      return object.toJson();
+    } else if (object is CommissionDetail) {
+      return object.toJson();
+    } else if (object is CommissionOrder) {
+      return object.toJson();
+    } else if (object is CommissionSetting) {
+      return object.toJson();
+    } else if (object is Order) {
+      return object.toJson();
+    } else if (object is OrderItem) {
+      return object.toJson();
+    } else if (object is EmployeeRevenue) {
+      return object.toJson();
+    } else if (object is Revenue) {
+      return object.toJson();
+    } else if (object is ServiceRevenue) {
+      return object.toJson();
+    } else if (object is Reservation) {
+      return object.toJson();
+    } else if (object is FcmResponse) {
+      return object.toJson();
+    } else if (object is FcmNotification) {
+      return object.toJson();
+    } else if (object is FcmAps) {
+      return object.toJson();
+    } else if (object is FcmData) {
+      return object.toJson();
+    } else if (object is Campaign) {
+      return object.toJson();
+    } else if (object is RegisterResult) {
+      return object.toJson();
+    } else if (object is Banner) {
+      return object.toJson();
+    } else if (object is ProductImage) {
+      return object.toJson();
+    } else if (object is OrderCancellationReason) {
+      return object.toJson();
+    } else if (object is CreateOrderResult) {
+      return object.toJson();
+    } else {
+      return object;
+    }
   }
 }
