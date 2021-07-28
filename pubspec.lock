@@ -18,11 +18,9 @@ packages:
   anth_package:
     dependency: "direct main"
     description:
-      path: "."
-      ref: "1.0.0"
-      resolved-ref: bfb01bcfa126a952549531ee4d6a1ebd7eba944e
-      url: "https://tungpham6195@bitbucket.org/anth-freelance/anth_package.git"
-    source: git
+      path: "../anth_package"
+      relative: true
+    source: path
     version: "1.0.0"
   app_settings:
     dependency: "direct main"
@@ -151,7 +149,21 @@ packages:
       name: cached_network_image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.0"
+    version: "3.1.0"
+  cached_network_image_platform_interface:
+    dependency: transitive
+    description:
+      name: cached_network_image_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
+  cached_network_image_web:
+    dependency: transitive
+    description:
+      name: cached_network_image_web
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   characters:
     dependency: transitive
     description:
@@ -225,11 +237,9 @@ packages:
   core_plugin:
     dependency: transitive
     description:
-      path: "."
-      ref: "1.0.0"
-      resolved-ref: fa2b5ef132053f7e2b69cf17fc00150a8e259a90
-      url: "https://github.com/tungpham6195/flutter.core_plugin.git"
-    source: git
+      path: "../../../FlutterProjects/my_packages/flutter.core_plugin"
+      relative: true
+    source: path
     version: "1.0.0"
   coverage:
     dependency: transitive
@@ -238,6 +248,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.3"
+  cross_file:
+    dependency: transitive
+    description:
+      name: cross_file
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.1+4"
   crypto:
     dependency: transitive
     description:
@@ -291,18 +308,18 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: master
-      resolved-ref: f8502e7997043fce484ab838043988bd007db838
-      url: "https://github.com/CastawayLabs/esc_pos_printer.git"
+      ref: "4.0.3"
+      resolved-ref: "120992212851c682bb904839f05773429c70fb3d"
+      url: "https://github.com/tungpham6195/esc_pos_printer.git"
     source: git
     version: "4.0.3"
   esc_pos_utils:
     dependency: transitive
     description:
       path: "."
-      ref: HEAD
-      resolved-ref: "133d7145635f866c77121904d168c33370dfb804"
-      url: "git://github.com/CastawayLabs/esc_pos_utils.git"
+      ref: "2.0.0"
+      resolved-ref: "1c6d16a50bfcb6d7b78cbdb27714cdbee7de89b2"
+      url: "https://github.com/tungpham6195/esc_pos_utils.git"
     source: git
     version: "2.0.0"
   extended_masked_text:
@@ -339,7 +356,7 @@ packages:
       name: firebase_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.3.0"
+    version: "1.4.0"
   firebase_core_platform_interface:
     dependency: transitive
     description:
@@ -360,35 +377,35 @@ packages:
       name: firebase_messaging
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "10.0.3"
+    version: "10.0.4"
   firebase_messaging_platform_interface:
     dependency: transitive
     description:
       name: firebase_messaging_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.2"
+    version: "3.0.3"
   firebase_messaging_web:
     dependency: transitive
     description:
       name: firebase_messaging_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.2"
+    version: "2.0.3"
   firebase_remote_config:
     dependency: "direct main"
     description:
       name: firebase_remote_config
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.10.0+2"
+    version: "0.10.0+3"
   firebase_remote_config_platform_interface:
     dependency: transitive
     description:
       name: firebase_remote_config_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.0+2"
+    version: "0.3.0+3"
   fixnum:
     dependency: transitive
     description:
@@ -597,21 +614,21 @@ packages:
       name: image_picker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.8.1+3"
+    version: "0.8.2"
   image_picker_for_web:
     dependency: transitive
     description:
       name: image_picker_for_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0"
+    version: "2.1.2"
   image_picker_platform_interface:
     dependency: transitive
     description:
       name: image_picker_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.0"
+    version: "2.2.0"
   intl:
     dependency: transitive
     description:
@@ -800,14 +817,14 @@ packages:
       name: permission_handler
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "8.1.2"
+    version: "8.1.4+2"
   permission_handler_platform_interface:
     dependency: transitive
     description:
       name: permission_handler_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.6.0"
+    version: "3.6.1"
   petitparser:
     dependency: transitive
     description:
@@ -898,14 +915,14 @@ packages:
       name: retrofit
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0"
+    version: "2.0.1"
   retrofit_generator:
     dependency: "direct dev"
     description:
       name: retrofit_generator
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.0+3"
+    version: "2.0.1"
   rxdart:
     dependency: transitive
     description:
@@ -1206,7 +1223,7 @@ packages:
       name: video_player
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.10"
+    version: "2.1.12"
   video_player_platform_interface:
     dependency: transitive
     description:
