@@ -6,12 +6,12 @@ import 'package:kaylee/widgets/widgets.dart';
 import 'package:package_info/package_info.dart';
 
 class AboutScreen extends StatefulWidget {
-  static Widget newInstance() => AboutScreen._();
+  static Widget newInstance() => const AboutScreen._();
 
-  AboutScreen._();
+  const AboutScreen._();
 
   @override
-  _AboutScreenState createState() => new _AboutScreenState();
+  _AboutScreenState createState() => _AboutScreenState();
 }
 
 class _AboutScreenState extends BaseState<AboutScreen> {
@@ -32,7 +32,8 @@ class _AboutScreenState extends BaseState<AboutScreen> {
         title: Strings.thongTinUngDung,
       ),
       body: FutureBuilder<PackageInfo>(
-          future: PackageInfo.fromPlatform().timeout(Duration(seconds: 1)),
+          future:
+              PackageInfo.fromPlatform().timeout(const Duration(seconds: 1)),
           builder: (context, snapshot) {
             final packageInfo = snapshot.data;
             final appName = packageInfo?.appName ?? '';
