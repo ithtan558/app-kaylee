@@ -116,7 +116,7 @@ enum OrderStatus {
   @JsonValue(3)
   finished,
   @JsonValue(4)
-  not_paid,
+  notPaid,
   @JsonValue(5)
   cancel,
   @JsonValue(6)
@@ -137,7 +137,7 @@ String orderStatus2Title({OrderStatus? status}) {
       return Strings.dangCho;
     case OrderStatus.finished:
       return Strings.hoanThanh;
-    case OrderStatus.not_paid:
+    case OrderStatus.notPaid:
       return Strings.chuaThanhToan;
     case OrderStatus.refundSalon:
     case OrderStatus.cancel:

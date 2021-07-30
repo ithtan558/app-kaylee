@@ -10,8 +10,8 @@ import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
-const String PRINTER_DEVICES_KEY = 'PRINTER_DEVICES_KEY';
-const String LOCATION_PROMINENT_DISCLOSURE_FOR_ANDROID_KEY =
+const String printerDevicesKey = 'PRINTER_DEVICES_KEY';
+const String locationProminentDisclosureForAndroidKey =
     'LOCATION_PROMINENT_DISCLOSURE_FOR_ANDROID_KEY';
 
 class PrinterModule {
@@ -99,7 +99,7 @@ class PrinterModule {
   }
 
   static PrinterDevice get connectedDevice {
-    final fromSharePref = SharedRef.getString(PRINTER_DEVICES_KEY);
+    final fromSharePref = SharedRef.getString(printerDevicesKey);
     final map = jsonDecode(fromSharePref == null || fromSharePref.isEmpty
         ? '[]'
         : fromSharePref) as List;

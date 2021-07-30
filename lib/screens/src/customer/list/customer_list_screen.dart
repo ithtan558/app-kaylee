@@ -17,13 +17,13 @@ class CustomerListScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<CustomerListScreenBloc>(
         create: (context) => CustomerListScreenBloc(
             customerService: context.network.provideCustomerService()),
-        child: CustomerListScreen._(),
+        child: const CustomerListScreen(),
       );
 
-  CustomerListScreen._();
+  const CustomerListScreen({Key? key}) : super(key: key);
 
   @override
-  _CustomerListScreenState createState() => new _CustomerListScreenState();
+  _CustomerListScreenState createState() => _CustomerListScreenState();
 }
 
 class _CustomerListScreenState extends KayleeState<CustomerListScreen> {
@@ -76,7 +76,7 @@ class _CustomerListScreenState extends KayleeState<CustomerListScreen> {
         builder: (context, state) {
           return PaginationRefreshGridView<Customer>(
             controller: customersBloc,
-            padding: EdgeInsets.all(Dimens.px16),
+            padding: const EdgeInsets.all(Dimens.px16),
             gridDelegate:
                 KayleeGridView.gridDelegate(childAspectRatio: 103 / 229),
             itemBuilder: (c, index, item) {
@@ -84,9 +84,8 @@ class _CustomerListScreenState extends KayleeState<CustomerListScreen> {
                 customer: item,
               );
             },
-            loadingIndicatorBuilder: (context) => CupertinoActivityIndicator(
-              radius: Dimens.px16,
-            ),
+            loadingIndicatorBuilder: (context) =>
+                const KayleeLoadingIndicator(),
           );
         },
       ),

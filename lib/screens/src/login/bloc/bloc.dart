@@ -11,22 +11,22 @@ class LoginScreenBloc extends BaseBloc {
   LoginScreenBloc({required this.userService});
 
   @override
-  Stream mapEventToState(e) async* {
-    if (e is PhoneLoginScrErrorEvent) {
-      yield PhoneLoginScrErrorState(e.message);
-    } else if (e is PassLoginScrErrorEvent) {
-      yield PassLoginScrErrorState(e.message);
-    } else if (e is DoSignInLoginScrEvent) {
+  Stream mapEventToState(event) async* {
+    if (event is PhoneLoginScrErrorEvent) {
+      yield PhoneLoginScrErrorState(event.message);
+    } else if (event is PassLoginScrErrorEvent) {
+      yield PassLoginScrErrorState(event.message);
+    } else if (event is DoSignInLoginScrEvent) {
       yield LoadingState();
       RequestHandler(
-        request: userService.login(e.body),
+        request: userService.login(event.body),
         onSuccess: ({message, result}) {
           add(SuccessLoginScrEvent(message, result));
         },
         onFailed: (code, {error}) {
           if (error != null) {
             if (error.code != null) {
-              add(error.code == ErrorCode.ACCOUNT_CODE
+              add(error.code == ErrorCode.accountCode
                   ? PhoneLoginScrErrorEvent(error.message)
                   : PassLoginScrErrorEvent(error.message));
             } else {
@@ -35,14 +35,14 @@ class LoginScreenBloc extends BaseBloc {
           }
         },
       );
-    } else if (e is ErrorEvent) {
-      yield* errorState(e);
-    } else if (e is PhoneLoginScrErrorEvent) {
-      yield PhoneLoginScrErrorState(e.message);
-    } else if (e is PassLoginScrErrorEvent) {
-      yield PassLoginScrErrorState(e.message);
-    } else if (e is SuccessLoginScrEvent) {
-      yield SuccessLoginScrState(e.message, e.result);
+    } else if (event is ErrorEvent) {
+      yield* errorState(event);
+    } else if (event is PhoneLoginScrErrorEvent) {
+      yield PhoneLoginScrErrorState(event.message);
+    } else if (event is PassLoginScrErrorEvent) {
+      yield PassLoginScrErrorState(event.message);
+    } else if (event is SuccessLoginScrEvent) {
+      yield SuccessLoginScrState(event.message, event.result);
     }
   }
 

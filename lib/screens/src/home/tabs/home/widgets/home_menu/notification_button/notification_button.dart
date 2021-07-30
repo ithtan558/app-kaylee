@@ -7,9 +7,9 @@ import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/notification
 import 'package:kaylee/widgets/widgets.dart';
 
 class NotificationButton extends StatefulWidget {
-  static Widget newInstance() => NotificationButton._();
+  static Widget newInstance() => const NotificationButton._();
 
-  NotificationButton._();
+  const NotificationButton._();
 
   @override
   _NotificationButtonState createState() => _NotificationButtonState();
@@ -40,19 +40,18 @@ class _NotificationButtonState extends KayleeState<NotificationButton> {
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
-        Container(
-          width: 56,
-          height: 56,
-          child: FlatButton(
-            onPressed: () {
-              context.push(PageIntent(screen: NotificationScreen));
-            },
-            shape: CircleBorder(),
-            child: Image.asset(
-              Images.ic_notification,
-              width: Dimens.px24,
-              height: Dimens.px24,
-            ),
+        TextButton(
+          onPressed: () {
+            context.push(PageIntent(screen: NotificationScreen));
+          },
+          style: ButtonStyle(
+              shape: MaterialStateProperty.all(const CircleBorder()),
+              fixedSize:
+                  MaterialStateProperty.all(const Size.square(Dimens.px56))),
+          child: Image.asset(
+            Images.icNotification,
+            width: Dimens.px24,
+            height: Dimens.px24,
           ),
         ),
         Positioned(
@@ -62,14 +61,14 @@ class _NotificationButtonState extends KayleeState<NotificationButton> {
             return state <= 0
                 ? Container()
                 : Container(
-                width: Dimens.px17,
-                height: Dimens.px17,
-                decoration: BoxDecoration(
-                    color: ColorsRes.errorBorder, shape: BoxShape.circle),
-                alignment: Alignment.center,
-                child: KayleeText.normalWhite12W400(
-                  '${state > 99 ? 99 : state}',
-                ));
+                    width: Dimens.px17,
+                    height: Dimens.px17,
+                    decoration: const BoxDecoration(
+                        color: ColorsRes.errorBorder, shape: BoxShape.circle),
+                    alignment: Alignment.center,
+                    child: KayleeText.normalWhite12W400(
+                      '${state > 99 ? 99 : state}',
+                    ));
           }),
         )
       ],

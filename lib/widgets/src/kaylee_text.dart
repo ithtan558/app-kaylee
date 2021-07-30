@@ -11,8 +11,9 @@ class KayleeDateTimeText extends StatelessWidget {
   final TextAlign? textAlign;
   final TextStyle? textStyle;
 
-  KayleeDateTimeText(this.time,
-      {this.format = '', this.textAlign, this.textStyle});
+  const KayleeDateTimeText(this.time,
+      {Key? key, this.format = '', this.textAlign, this.textStyle})
+      : super(key: key);
 
   factory KayleeDateTimeText.normal(DateTime time,
           {TextAlign? textAlign, TextStyle? textStyle}) =>
@@ -85,7 +86,9 @@ class KayleeTitlePriceText extends StatelessWidget {
   final dynamic price;
   final bool isBold;
 
-  KayleeTitlePriceText({this.title, this.price, this.isBold = false});
+  const KayleeTitlePriceText(
+      {Key? key, this.title, this.price, this.isBold = false})
+      : super(key: key);
 
   factory KayleeTitlePriceText.normal({String? title, dynamic price}) =>
       KayleeTitlePriceText(
@@ -176,11 +179,13 @@ class KayleePriceText extends StatelessWidget {
         textStyle: TextStyles.normal16W400,
       );
 
-  KayleePriceText(this.price,
-      {this.textStyle,
+  const KayleePriceText(this.price,
+      {Key? key,
+      this.textStyle,
       this.showUnit = true,
       this.textAlign = TextAlign.start,
-      this.textOverflow});
+      this.textOverflow})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -200,7 +205,9 @@ class KayleePriceUnitText extends StatelessWidget {
   final TextStyle? textStyle;
   final MainAxisAlignment? alignment;
 
-  KayleePriceUnitText(this.price, {this.textStyle, this.alignment});
+  const KayleePriceUnitText(this.price,
+      {Key? key, this.textStyle, this.alignment})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -419,11 +426,13 @@ class KayleeText extends StatelessWidget {
         overflow: overflow,
       );
 
-  KayleeText(this.text,
-      {this.textAlign = TextAlign.start,
+  const KayleeText(this.text,
+      {Key? key,
+      this.textAlign = TextAlign.start,
       this.maxLines,
       this.style,
-      this.overflow = TextOverflow.ellipsis});
+      this.overflow = TextOverflow.ellipsis})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -441,7 +450,8 @@ class KayleeDateText extends StatelessWidget {
   final DateTime initDate;
   final VoidCallback? onTap;
 
-  KayleeDateText({required this.initDate, this.onTap});
+  const KayleeDateText({Key? key, required this.initDate, this.onTap})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -459,7 +469,7 @@ class KayleeDateText extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: Dimens.px4),
             child: Image.asset(
-              Images.ic_calendar,
+              Images.icCalendar,
               width: Dimens.px16,
               height: Dimens.px16,
             ),
@@ -476,8 +486,13 @@ class KayleeDateRangeText extends StatelessWidget {
   final VoidCallback? onTap;
   final double? textSize;
 
-  KayleeDateRangeText(
-      {this.fromDate, this.onTap, this.toDate, this.textSize = Dimens.px16});
+  const KayleeDateRangeText(
+      {Key? key,
+      this.fromDate,
+      this.onTap,
+      this.toDate,
+      this.textSize = Dimens.px16})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -508,7 +523,7 @@ class KayleeDateRangeText extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: Dimens.px4),
             child: Image.asset(
-              Images.ic_calendar,
+              Images.icCalendar,
               width: Dimens.px16,
               height: Dimens.px16,
             ),
@@ -524,8 +539,12 @@ class KayleeDatePickerText extends StatefulWidget {
   final KayleeDatePickerTextController? controller;
   final double textSize;
 
-  KayleeDatePickerText(
-      {this.controller, this.onSelectRange, this.textSize = Dimens.px16});
+  const KayleeDatePickerText(
+      {Key? key,
+      this.controller,
+      this.onSelectRange,
+      this.textSize = Dimens.px16})
+      : super(key: key);
 
   @override
   _KayleeDatePickerTextState createState() => _KayleeDatePickerTextState();
@@ -585,7 +604,7 @@ class KayleeDatePickerTextController {
 class KayleeDateRangePickerText extends StatefulWidget {
   final void Function(DateTime from, DateTime to)? onSelect;
 
-  KayleeDateRangePickerText({this.onSelect});
+  const KayleeDateRangePickerText({Key? key, this.onSelect}) : super(key: key);
 
   @override
   _KayleeDateRangePickerTextState createState() =>
@@ -683,7 +702,7 @@ class _KayleeDateRangePickerTextState
 class KayleeTotalAmountText extends StatelessWidget {
   final dynamic price;
 
-  KayleeTotalAmountText({this.price});
+  const KayleeTotalAmountText({Key? key, this.price}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -693,13 +712,13 @@ class KayleeTotalAmountText extends StatelessWidget {
           KayleeText.hint16W400(Strings.tong),
           Container(
             height: Dimens.px48,
-            margin: EdgeInsets.symmetric(horizontal: Dimens.px8),
+            margin: const EdgeInsets.symmetric(horizontal: Dimens.px8),
             padding: const EdgeInsets.symmetric(
                 vertical: Dimens.px8, horizontal: Dimens.px18),
-            decoration: new BoxDecoration(
+            decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(Dimens.px5),
-                border: Border.fromBorderSide(
+                border: const Border.fromBorderSide(
                     BorderSide(color: ColorsRes.hyper, width: Dimens.px2))),
             child: KayleePriceText.noUnitNormal26W700(price),
           ),

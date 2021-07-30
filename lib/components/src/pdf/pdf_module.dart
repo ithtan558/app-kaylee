@@ -40,7 +40,7 @@ class PdfModule {
   }
 
   static Future<Map<FontsStyle, ByteData>> loadFonts() async {
-    final path = 'fonts/';
+    const path = 'fonts/';
     final normal = await rootBundle.load(path + 'Roboto-Regular.ttf');
     final normalItalic = await rootBundle.load(path + 'Roboto-Italic.ttf');
     final medium = await rootBundle.load(path + 'Roboto-Medium.ttf');
@@ -68,7 +68,7 @@ class PdfModule {
     doc.addPage(Page(
       pageTheme: PageTheme(
         buildBackground: (context) =>
-            Container(color: PdfColor.fromInt(0xFFFFFFFF)),
+            Container(color: const PdfColor.fromInt(0xFFFFFFFF)),
         pageFormat: (format ?? PdfPageFormat.a3)
             .copyWith(marginLeft: 0, marginRight: 0, height: double.infinity),
         clip: true,
@@ -76,14 +76,14 @@ class PdfModule {
       ),
       build: (context) {
         return Padding(
-          padding:
-              padding ?? EdgeInsets.only(right: Dimens.px24, left: Dimens.px4),
+          padding: padding ??
+              const EdgeInsets.only(right: Dimens.px24, left: Dimens.px4),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('${order.brand?.name ?? ''}',
+                Text(order.brand?.name ?? '',
                     style:
                         theme!.header1.copyWith(fontWeight: FontWeight.bold)),
               ],
@@ -156,7 +156,7 @@ class PdfModule {
                     children: [
                       Expanded(
                           child: Text(
-                        '${employee.name}' +
+                            (employee.name ?? '') +
                             (employee.role?.name != null &&
                                     employee.role!.name!.isNotEmpty
                                 ? ' - ${employee.role!.name}'
@@ -171,10 +171,10 @@ class PdfModule {
               padding: EdgeInsets.only(top: Dimens.px16 / ratio),
               child: Table(
                 columnWidths: {
-                  0: FlexColumnWidth(4),
-                  1: FlexColumnWidth(),
-                  2: FlexColumnWidth(3),
-                  3: FlexColumnWidth(3),
+                  0: const FlexColumnWidth(4),
+                  1: const FlexColumnWidth(),
+                  2: const FlexColumnWidth(3),
+                  3: const FlexColumnWidth(3),
                 },
                 children: [
                   TableRow(
@@ -233,7 +233,7 @@ class PdfModule {
                           border: Border.all(
                               width: Dimens.px3 / ratio,
                               style: BorderStyle.dashed,
-                              color: PdfColor.fromInt(0xff000000)))),
+                              color: const PdfColor.fromInt(0xff000000)))),
                   ...?_getProductTableRow(order.orderItems, ratio: ratio),
                 ],
               ),
@@ -261,7 +261,7 @@ class PdfModule {
     return generateDocumentForOrder(
         order: order,
         ratio: 5.6,
-        padding: EdgeInsets.only(right: Dimens.px56),
+        padding: const EdgeInsets.only(right: Dimens.px56),
         format: PdfPageFormat.roll57);
   }
 
@@ -308,17 +308,17 @@ class PdfModule {
             left: BorderSide(
               width: Dimens.px3 / ratio,
               style: BorderStyle.dashed,
-              color: PdfColor.fromInt(0xff000000),
+              color: const PdfColor.fromInt(0xff000000),
             ),
             right: BorderSide(
               width: Dimens.px3 / ratio,
               style: BorderStyle.dashed,
-              color: PdfColor.fromInt(0xff000000),
+              color: const PdfColor.fromInt(0xff000000),
             ),
             bottom: BorderSide(
               width: Dimens.px3 / ratio,
               style: BorderStyle.dashed,
-              color: PdfColor.fromInt(0xff000000),
+              color: const PdfColor.fromInt(0xff000000),
             ),
           ),
         ),

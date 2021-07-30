@@ -6,7 +6,8 @@ class KayleeQuantitySlider extends StatefulWidget {
   final String? title;
   final QuantitySliderController? controller;
 
-  KayleeQuantitySlider({this.title, this.controller});
+  const KayleeQuantitySlider({Key? key, this.title, this.controller})
+      : super(key: key);
 
   @override
   _KayleeQuantitySliderState createState() => _KayleeQuantitySliderState();

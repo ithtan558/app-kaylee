@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:anth_package/anth_package.dart' hide VoidCallback;
+import 'package:anth_package/anth_package.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/app_bloc.dart';
@@ -66,13 +66,11 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
               Animation<double> secondaryAnimation) {
             // print('[TUNG] ===> showLoading');
             dialogContext = context;
-            return CupertinoActivityIndicator(
-              radius: Dimens.px16,
-            );
+            return const KayleeLoadingIndicator();
           },
-          transitionDuration: Duration(milliseconds: 200),
+          transitionDuration: const Duration(milliseconds: 200),
           barrierColor: ColorsRes.shadow,
-          routeSettings: RouteSettings(
+          routeSettings: const RouteSettings(
             name: 'loading dialog',
           )).then((value) {
         dialogContext = null;
@@ -120,7 +118,7 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
                   pushScreen(PageIntent(
                       screen: LoginScreen,
                       bundle: Bundle(LoginScreenData(
-                        openFrom: LoginScreenOpenFrom.LOGIN_DIALOG,
+                        openFrom: LoginScreenOpenFrom.loginDialog,
                       ))));
                 },
                 isDefaultAction: true,

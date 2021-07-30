@@ -51,9 +51,7 @@ class _BrandSelectListState extends BaseState<BrandSelectList> {
               bloc: bloc,
           builder: (context, state) {
             if (state.loading == true)
-              return CupertinoActivityIndicator(
-                radius: Dimens.px16,
-              );
+              return KayleeLoadingIndicator();
             return ListView.separated(
                 padding: const EdgeInsets.all(Dimens.px16),
                 controller: widget.scrollController,
@@ -154,8 +152,8 @@ class _BrandItemState extends BaseState<_BrandItem> {
                 children: [
                   Image.asset(
                     widget.brand.selected
-                        ? Images.ic_checked_1
-                        : Images.ic_notcheck,
+                        ? Images.icChecked1
+                        : Images.icNotCheck,
                     width: Dimens.px24,
                     height: Dimens.px24,
                   ),

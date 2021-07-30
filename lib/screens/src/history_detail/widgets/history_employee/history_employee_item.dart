@@ -6,13 +6,14 @@ import 'package:kaylee/widgets/widgets.dart';
 class HistoryEmployeeItem extends StatelessWidget {
   final Employee employee;
 
-  HistoryEmployeeItem({required this.employee});
+  const HistoryEmployeeItem({Key? key, required this.employee})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return KayleeRoundBorder(
       child: KayleeText.normal16W400(
-        '${employee.name}' +
+        (employee.name ?? '') +
             ((employee.role?.name?.isEmpty ?? true)
                 ? ''
                 : ' - ${employee.role?.name}'),

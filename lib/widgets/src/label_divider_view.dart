@@ -9,7 +9,9 @@ class LabelDividerView extends StatelessWidget {
   final Widget? ending;
   final Color? bgColor;
 
-  LabelDividerView({this.title, this.ending, this.bgColor, this.child});
+  const LabelDividerView(
+      {Key? key, this.title, this.ending, this.bgColor, this.child})
+      : super(key: key);
 
   factory LabelDividerView.normal({String? title, Color? bgColor}) =>
       LabelDividerView(
@@ -22,7 +24,7 @@ class LabelDividerView extends StatelessWidget {
       LabelDividerView(
         title: title,
         ending: Padding(
-          padding: EdgeInsets.only(right: Dimens.px4),
+          padding: const EdgeInsets.only(right: Dimens.px4),
           child: KayleeFlatButton.withLabelDivider(
             title: buttonText,
             onPress: onPress,
@@ -67,7 +69,7 @@ class LabelDividerView extends StatelessWidget {
       LabelDividerView(
         title: title,
         ending: Padding(
-          padding: EdgeInsets.only(right: Dimens.px16),
+          padding: const EdgeInsets.only(right: Dimens.px16),
           child: HyperLinkText(
             text: linkText,
             onTap: onPress,

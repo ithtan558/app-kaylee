@@ -19,13 +19,13 @@ class NotifyDetailScreen extends StatefulWidget {
           notificationService: context.network.provideNotificationService(),
           notification: context.getArguments<models.Notification>()!,
         ),
-        child: NotifyDetailScreen._(),
+        child: const NotifyDetailScreen(),
       );
 
-  NotifyDetailScreen._();
+  const NotifyDetailScreen({Key? key}) : super(key: key);
 
   @override
-  _NotifyDetailScreenState createState() => new _NotifyDetailScreenState();
+  _NotifyDetailScreenState createState() => _NotifyDetailScreenState();
 }
 
 class _NotifyDetailScreenState extends KayleeState<NotifyDetailScreen>
@@ -78,12 +78,16 @@ class _NotifyDetailScreenState extends KayleeState<NotifyDetailScreen>
       },
       child: KayleeScrollview(
         appBar: KayleeAppBar(
-          leading: FlatButton(
-            shape: CircleBorder(),
-            child: ImageIcon(
-              AssetImage(Images.ic_close),
-              color: ColorsRes.hintText,
-              size: 44,
+          leading: TextButton(
+            style: ButtonStyle(
+                shape: MaterialStateProperty.all(const CircleBorder()),
+                fixedSize:
+                    MaterialStateProperty.all(const Size.square(Dimens.px44))),
+            child: const Center(
+              child: ImageIcon(
+                AssetImage(Images.icClose),
+                color: ColorsRes.hintText,
+              ),
             ),
             onPressed: () {
               popScreen();
@@ -92,7 +96,7 @@ class _NotifyDetailScreenState extends KayleeState<NotifyDetailScreen>
           actions: <Widget>[
             Container(
               height: double.infinity,
-              margin: EdgeInsets.only(right: Dimens.px16),
+              margin: const EdgeInsets.only(right: Dimens.px16),
               alignment: Alignment.centerRight,
               child: HyperLinkText(
                 text: Strings.xoa,

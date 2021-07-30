@@ -112,7 +112,7 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
               alignment: Alignment.center,
               children: <Widget>[
                 Image.asset(
-                  Images.ic_bag,
+                  Images.icBag,
                   width: Dimens.px24,
                   height: Dimens.px32,
                 ),
@@ -182,9 +182,7 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
                   if (state.ended) return Container();
                   return Align(
                     alignment: Alignment.topCenter,
-                    child: CupertinoActivityIndicator(
-                      radius: Dimens.px16,
-                    ),
+                    child: KayleeLoadingIndicator(),
                   );
                 },
               );
@@ -216,7 +214,7 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
                         spreadRadius: 0)
                   ],
                 ),
-                child: Image.asset(Images.ic_message),
+                child: Image.asset(Images.icMessage),
               ),
             );
           },

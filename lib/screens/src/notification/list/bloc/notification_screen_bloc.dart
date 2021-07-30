@@ -86,9 +86,9 @@ class NotificationListBloc extends Cubit<LoadMoreModel<models.Notification>>
     state.loading = true;
     RequestHandler(
       request: notificationService.getNotifications(
-        page: this.state.page,
-        limit: this.state.limit,
-        keyword: this.keyword,
+        page: state.page,
+        limit: state.limit,
+        keyword: keyword,
       ),
       onSuccess: ({message, result}) {
         final notifications =

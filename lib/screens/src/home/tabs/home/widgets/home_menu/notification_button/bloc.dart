@@ -9,7 +9,7 @@ class NotiButtonBloc extends Cubit<int> {
 
   void getNotificationCount() {
     RequestHandler(
-      request: this.service.getNotificationCount(),
+      request: service.getNotificationCount(),
       onSuccess: ({message, result}) {
         emit((result as NotificationCount).count);
       },

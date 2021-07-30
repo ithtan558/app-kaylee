@@ -22,12 +22,8 @@ class KayleeJsonConverter extends anth_package.JsonConverterFactory {
       return Ward.fromJson(json) as T;
     } else if (T == Supplier) {
       return Supplier.fromJson(json) as T;
-    } else if (T == Suppliers) {
-      return Suppliers.fromJson(json) as T;
     } else if (T == Product) {
       return Product.fromJson(json) as T;
-    } else if (T == Products) {
-      return Products.fromJson(json) as T;
     } else if (T == NotificationCount) {
       return NotificationCount.fromJson(json) as T;
     } else if (T == Brand) {
@@ -112,11 +108,7 @@ class KayleeJsonConverter extends anth_package.JsonConverterFactory {
       return object.toJson();
     } else if (object is Supplier) {
       return object.toJson();
-    } else if (object is Suppliers) {
-      return object.toJson();
     } else if (object is Product) {
-      return object.toJson();
-    } else if (object is Products) {
       return object.toJson();
     } else if (object is NotificationCount) {
       return object.toJson();

@@ -59,8 +59,9 @@ class KayleeRoundBorder extends StatelessWidget {
   final Color? bgColor;
   final Alignment? alignment;
 
-  KayleeRoundBorder(
-      {this.borderRadius,
+  const KayleeRoundBorder(
+      {Key? key,
+      this.borderRadius,
       this.borderWidth,
       this.borderColor,
       this.onTap,
@@ -69,7 +70,8 @@ class KayleeRoundBorder extends StatelessWidget {
       this.width,
       this.height,
       this.bgColor,
-      this.alignment});
+      this.alignment})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

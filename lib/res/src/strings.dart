@@ -308,7 +308,7 @@ class Strings {
   static const doanhThuMoiNhanVien = 'Doanh thu mỗi nhân viên';
   static const doanThuTheoDichVu = 'Doanh thu theo dịch vụ';
   static const doanThuTheoSanPham = 'Doanh thu theo sản phẩm';
-  static const In = 'In';
+  static const print = 'In';
   static const matHang = 'Mặt hàng';
   static const camOnQuyKhachHenGapLai = 'Cảm ơn Quý khách. Hẹn gặp lại!';
   static const ngay = 'Ngày';

@@ -7,7 +7,7 @@ import 'package:kaylee/widgets/widgets.dart';
 class HistoryEmployeeList extends StatelessWidget {
   final List<Employee>? employees;
 
-  HistoryEmployeeList({this.employees});
+  const HistoryEmployeeList({Key? key, this.employees}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class HistoryEmployeeList extends StatelessWidget {
           title: Strings.nhanVienThucThien,
         ),
         KayleeListView(
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
             final employee = employees!.elementAt(index);
             return HistoryEmployeeItem(
@@ -26,7 +26,8 @@ class HistoryEmployeeList extends StatelessWidget {
           },
           shrinkWrap: true,
           itemCount: employees?.length ?? 0,
-          separatorBuilder: (context, index) => SizedBox(height: Dimens.px8),
+          separatorBuilder: (context, index) =>
+              const SizedBox(height: Dimens.px8),
         ),
       ],
     );

@@ -27,10 +27,11 @@ class CreateNewBrandScreen extends StatefulWidget {
         create: (context) => BrandDetailScreenBloc(
             brandService: context.network.provideBrandService(),
             brand: context.getArguments<NewBrandScreenData>()?.brand),
-        child: CreateNewBrandScreen._(),
+        child: const CreateNewBrandScreen(),
       );
 
-  CreateNewBrandScreen._();
+  @visibleForTesting
+  const CreateNewBrandScreen({Key? key}) : super(key: key);
 
   @override
   _CreateNewBrandScreenState createState() => _CreateNewBrandScreenState();
@@ -65,7 +66,7 @@ class _CreateNewBrandScreenState extends KayleeState<CreateNewBrandScreen> {
             onPressed: () {
               popScreen();
               switch (state.error!.code) {
-                case ErrorCode.PHONE_CODE:
+                case ErrorCode.phoneCode:
                   phoneFocus.requestFocus();
                   break;
               }
@@ -233,7 +234,7 @@ class _CreateNewBrandScreenState extends KayleeState<CreateNewBrandScreen> {
                           controller: startTimeController,
                         ),
                       ),
-                      SizedBox(width: Dimens.px8),
+                      const SizedBox(width: Dimens.px8),
                       Expanded(
                         child: KayleePickerTextField<EndTime>(
                           title: Strings.gioDongCua,

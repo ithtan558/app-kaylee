@@ -4,7 +4,8 @@ class KayleeImageInfoLayout extends StatelessWidget {
   final Widget? imageView;
   final Widget? infoView;
 
-  KayleeImageInfoLayout({this.imageView, this.infoView});
+  const KayleeImageInfoLayout({Key? key, this.imageView, this.infoView})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,10 +13,10 @@ class KayleeImageInfoLayout extends StatelessWidget {
       children: [
         AspectRatio(
           aspectRatio: 1,
-          child: imageView ?? SizedBox.shrink(),
+          child: imageView ?? const SizedBox.shrink(),
         ),
         Expanded(
-          child: infoView ?? SizedBox.shrink(),
+          child: infoView ?? const SizedBox.shrink(),
         )
       ],
     );

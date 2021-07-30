@@ -39,23 +39,23 @@ class _KayleeBottomBarState extends BaseState<KayleeBottomBar> {
       items: [
         _buildBtmBarItem(
           title: Strings.trangChu,
-          activeImage: Images.ic_home_active,
-          inActiveImage: Images.ic_home_inactive,
+          activeImage: Images.icHomeActive,
+          inActiveImage: Images.icHomeInactive,
         ),
         _buildBtmBarItem(
           title: Strings.thuNgan,
-          activeImage: Images.ic_cashier_active,
-          inActiveImage: Images.ic_cashier_inactive,
+          activeImage: Images.icCashierActive,
+          inActiveImage: Images.icCashierInactive,
         ),
         _buildBtmBarItem(
           title: Strings.lichSuDh,
-          activeImage: Images.ic_history_active,
-          inActiveImage: Images.ic_history_inactive,
+          activeImage: Images.icHistoryActive,
+          inActiveImage: Images.icHistoryInactive,
         ),
         _buildBtmBarItem(
           title: Strings.taiKhoan,
-          activeImage: Images.ic_account_active,
-          inActiveImage: Images.ic_account_inactive,
+          activeImage: Images.icAccountActive,
+          inActiveImage: Images.icAccountInactive,
         ),
       ],
       selectedLabelStyle: context.textTheme.bodyText2?.copyWith(

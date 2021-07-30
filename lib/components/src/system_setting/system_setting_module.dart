@@ -119,12 +119,12 @@ class _SystemSettingModuleImpl extends SystemSettingModule {
         context: context,
         child: Column(
           children: [
-            SizedBox(height: Dimens.px24),
+            const SizedBox(height: Dimens.px24),
             Padding(
               padding: const EdgeInsets.only(
                   right: Dimens.px16, left: Dimens.px16, bottom: Dimens.px8),
               child: Text.rich(
-                TextSpan(text: 'Kaylee sử dụng ', children: [
+                const TextSpan(text: 'Kaylee sử dụng ', children: [
                   TextSpan(
                       text: Strings.quyenTruyCapViTri + ' ở chế độ chạy nền',
                       style: TextStyle(fontWeight: FontWeight.bold)),
@@ -140,7 +140,7 @@ class _SystemSettingModuleImpl extends SystemSettingModule {
               padding: const EdgeInsets.only(
                   right: Dimens.px16, left: Dimens.px16, bottom: Dimens.px8),
               child: Text.rich(
-                TextSpan(
+                const TextSpan(
                     text: 'Kaylee sử dụng quyền này cho chức năng: ',
                     children: [
                       TextSpan(
@@ -155,7 +155,7 @@ class _SystemSettingModuleImpl extends SystemSettingModule {
                 padding: const EdgeInsets.only(
                     right: Dimens.px16, left: Dimens.px16, bottom: Dimens.px16),
                 child: Text.rich(
-                  TextSpan(text: 'Kaylee sẽ sử dụng ', children: [
+                  const TextSpan(text: 'Kaylee sẽ sử dụng ', children: [
                     TextSpan(
                         text: Strings.quyenTruyCapViTri,
                         style: TextStyle(fontWeight: FontWeight.bold)),

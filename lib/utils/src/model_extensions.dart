@@ -20,12 +20,12 @@ extension PaymentMethodExtension on PaymentMethod {
   String get icon {
     switch (this) {
       case PaymentMethod.cash:
-        return Images.ic_cash;
+        return Images.icCash;
       case PaymentMethod.credit:
       case PaymentMethod.atm:
-        return Images.ic_card;
+      return Images.icCard;
       case PaymentMethod.momo:
-        return Images.ic_momo;
+        return Images.icMomo;
       default:
         return '';
     }

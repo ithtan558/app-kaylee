@@ -14,7 +14,7 @@ class ExpirationScreenBloc extends Cubit<SingleModel<Content>> {
   void loadContent() {
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
-      request: commonService.getContent(Content.EXPIRATION_HASHTAG),
+      request: commonService.getContent(Content.expirationHashtag),
       onSuccess: ({message, result}) {
         emit(SingleModel.copy(state
           ..loading = false

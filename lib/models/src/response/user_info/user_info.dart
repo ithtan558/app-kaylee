@@ -55,18 +55,18 @@ class UserInfo {
   Ward? wards;
   @JsonKey(
     name: 'role_id',
-    unknownEnumValue: UserRole.EMPLOYEE,
+    unknownEnumValue: UserRole.employee,
   )
   UserRole? role;
 }
 
 enum UserRole {
   @JsonValue(1)
-  SUPER_ADMIN,
+  superAdmin,
   @JsonValue(2)
-  MANAGER,
+  manager,
   @JsonValue(3)
-  BRAND_MANAGER,
+  brandManager,
   @JsonValue(4)
-  EMPLOYEE,
+  employee,
 }

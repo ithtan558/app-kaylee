@@ -11,7 +11,7 @@ class KayleeDismissible extends StatelessWidget {
   final AsyncValueGetter<bool>? confirmDismiss;
   final Widget? secondaryBackground;
 
-  KayleeDismissible(
+  const KayleeDismissible(
       {required Key key,
       required this.child,
       this.onDismissed,
@@ -34,9 +34,9 @@ class KayleeDismissible extends StatelessWidget {
       secondaryBackground: Container(
         color: ColorsRes.errorBorder,
         alignment: Alignment.centerRight,
-        padding: EdgeInsets.only(right: Dimens.px24),
+        padding: const EdgeInsets.only(right: Dimens.px24),
         child: Image.asset(
-          Images.ic_delete,
+          Images.icDelete,
           width: Dimens.px24,
           height: Dimens.px24,
           color: Colors.white,
@@ -58,13 +58,13 @@ class KayleeDismissible extends StatelessWidget {
       },
       secondaryBackground: secondaryBackground ??
           Container(
-            padding: EdgeInsets.symmetric(horizontal: Dimens.px24),
+            padding: const EdgeInsets.symmetric(horizontal: Dimens.px24),
             alignment: Alignment.centerRight,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(
-                  Images.ic_delete,
+                  Images.icDelete,
                   width: Dimens.px32,
                   height: Dimens.px32,
                 ),

@@ -18,12 +18,12 @@ class EditProfileScreen extends StatefulWidget {
             userInfo: context.user.getUserInfo().userInfo!,
             userService: context.network.provideUserService(),
           ),
-      child: EditProfileScreen._());
+      child: const EditProfileScreen());
 
-  EditProfileScreen._();
+  const EditProfileScreen({Key? key}) : super(key: key);
 
   @override
-  _EditProfileScreenState createState() => new _EditProfileScreenState();
+  _EditProfileScreenState createState() => _EditProfileScreenState();
 }
 
 class _EditProfileScreenState extends KayleeState<EditProfileScreen> {

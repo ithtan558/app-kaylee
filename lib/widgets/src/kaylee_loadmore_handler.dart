@@ -6,7 +6,9 @@ class KayleeLoadMoreHandler extends StatefulWidget {
   final Widget child;
   final LoadMoreInterface controller;
 
-  KayleeLoadMoreHandler({required this.child, required this.controller});
+  const KayleeLoadMoreHandler(
+      {Key? key, required this.child, required this.controller})
+      : super(key: key);
 
   @override
   _KayleeLoadMoreHandlerState createState() => _KayleeLoadMoreHandlerState();

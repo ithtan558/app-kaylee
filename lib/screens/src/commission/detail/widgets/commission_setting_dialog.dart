@@ -20,7 +20,7 @@ class CommissionSettingDialog extends StatefulWidget {
       );
   final ScrollController scrollController;
 
-  CommissionSettingDialog._({required this.scrollController});
+  const CommissionSettingDialog._({required this.scrollController});
 
   @override
   _CommissionSettingDialogState createState() =>
@@ -98,11 +98,12 @@ class _CommissionSettingDialogState
                 buildWhen: (previous, current) =>
                     current is CommissionSettingModel,
                 builder: (context, state) {
-                  if (state is! CommissionSettingModel)
-                    return Center(child: KayleeLoadingIndicator());
+                  if (state is! CommissionSettingModel) {
+                    return const Center(child: KayleeLoadingIndicator());
+                  }
                   return SingleChildScrollView(
                     padding: const EdgeInsets.all(Dimens.px16),
-                    physics: BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     controller: widget.scrollController,
                     child: Column(
                       children: [
@@ -153,7 +154,7 @@ class _CommissionSettingDialogState
                       onPressed: popScreen,
                     ),
                   ),
-                  SizedBox(width: Dimens.px8),
+                  const SizedBox(width: Dimens.px8),
                   Expanded(
                     child: KayLeeRoundedButton.normal(
                       margin: EdgeInsets.zero,

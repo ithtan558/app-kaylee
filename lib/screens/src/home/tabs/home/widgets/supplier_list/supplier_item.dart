@@ -32,7 +32,7 @@ class SupplierItem extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: Dimens.px8),
-                child: Container(
+                child: SizedBox(
                   width: (context.screenSize.width - Dimens.px32) * 96 / 343,
                   child: AspectRatio(
                       aspectRatio: imageRatio,
@@ -45,7 +45,8 @@ class SupplierItem extends StatelessWidget {
               Container(
                   width: 1,
                   height: Dimens.px16,
-                  decoration: BoxDecoration(color: ColorsRes.textFieldBorder)),
+                  decoration:
+                      const BoxDecoration(color: ColorsRes.textFieldBorder)),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),

@@ -8,6 +8,8 @@ import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class ProfileWidget extends StatefulWidget {
+  const ProfileWidget({Key? key}) : super(key: key);
+
   @override
   _ProfileWidgetState createState() => _ProfileWidgetState();
 }
@@ -37,7 +39,7 @@ class _ProfileWidgetState extends KayleeState<ProfileWidget> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(Dimens.px10),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
               color: ColorsRes.shadow,
               offset: Offset(0, 1),

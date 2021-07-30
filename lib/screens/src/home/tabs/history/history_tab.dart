@@ -17,12 +17,12 @@ class HistoryTab extends StatefulWidget {
       create: (context) => HistoryTabBloc(
             orderService: context.network.provideOrderService(),
           ),
-      child: HistoryTab._());
+      child: const HistoryTab._());
 
-  HistoryTab._();
+  const HistoryTab._();
 
   @override
-  _HistoryTabState createState() => new _HistoryTabState();
+  _HistoryTabState createState() => _HistoryTabState();
 }
 
 class _HistoryTabState extends KayleeState<HistoryTab>
@@ -77,7 +77,7 @@ class _HistoryTabState extends KayleeState<HistoryTab>
           child: BlocBuilder<HistoryTabBloc, LoadMoreModel<Order>>(
             builder: (context, state) {
               return KayleeListView(
-                padding: EdgeInsets.all(Dimens.px16),
+                padding: const EdgeInsets.all(Dimens.px16),
                 itemBuilder: (c, index) {
                   final item = state.items!.elementAt(index);
                   return HistoryItem.newInstance(
@@ -89,7 +89,7 @@ class _HistoryTabState extends KayleeState<HistoryTab>
                     const SizedBox(height: Dimens.px16),
                 loadingBuilder: (context) {
                   if (state.ended) return Container();
-                  return Align(
+                  return const Align(
                     alignment: Alignment.topCenter,
                     child: KayleeLoadingIndicator(),
                   );

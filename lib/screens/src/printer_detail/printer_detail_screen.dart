@@ -121,8 +121,8 @@ class _PrinterDetailScreenState extends KayleeState<PrinterDetailScreen> {
 
             if (state is PrinterDetailStateBluetoothEnable) {
               hideLoading();
-              final isShownProminentDisclosure = SharedRef.getBool(
-                  LOCATION_PROMINENT_DISCLOSURE_FOR_ANDROID_KEY);
+              final isShownProminentDisclosure =
+                  SharedRef.getBool(locationProminentDisclosureForAndroidKey);
               if (isShownProminentDisclosure) {
                 return _showSelectingBluetoothDevice();
               } else {
@@ -131,7 +131,7 @@ class _PrinterDetailScreenState extends KayleeState<PrinterDetailScreen> {
                   context: context,
                   allowCallback: () {
                     SharedRef.putBool(
-                        LOCATION_PROMINENT_DISCLOSURE_FOR_ANDROID_KEY, true);
+                        locationProminentDisclosureForAndroidKey, true);
                     _showSelectingBluetoothDevice();
                   },
                 );

@@ -28,7 +28,7 @@ class PrintBillDialog extends StatefulWidget {
 
   final Order order;
 
-  PrintBillDialog._({required this.order});
+  const PrintBillDialog._({required this.order});
 
   @override
   _PrintBillDialogState createState() => _PrintBillDialogState();
@@ -148,11 +148,11 @@ class _PrintBillDialogState extends KayleeState<PrintBillDialog> {
                 ),
               ),
               Expanded(
-                child: Container(
+                child: SizedBox(
                   height: context.screenSize.height,
                   child: snapshot.hasData
                       ? PdfPreview(
-                    build: (format) => snapshot.data!.save(),
+                          build: (format) => snapshot.data!.save(),
                           useActions: false,
                         )
                       : null,
@@ -179,7 +179,7 @@ class _PrintBillDialogState extends KayleeState<PrintBillDialog> {
                         onPressed: popScreen,
                       ),
                     ),
-                    SizedBox(width: Dimens.px8),
+                    const SizedBox(width: Dimens.px8),
                     Expanded(
                       child: (_bloc.defaultDevice?.isBluetooth ?? false)
                           ? BlocBuilder<PrinterDetailBase, PrinterDetailState>(
@@ -189,7 +189,7 @@ class _PrintBillDialogState extends KayleeState<PrintBillDialog> {
                                         is! PrinterDetailStateLoadingDevices) {
                                   return KayLeeRoundedButton.normal(
                                     margin: EdgeInsets.zero,
-                                    text: Strings.In,
+                                    text: Strings.print,
                                     onPressed: () async {
                                       //print with bluetooth
                                       return getPdfRasterForRol57(
@@ -203,7 +203,7 @@ class _PrintBillDialogState extends KayleeState<PrintBillDialog> {
                                   );
                                 }
                                 return KayLeeRoundedButton.button3(
-                                  text: Strings.In,
+                                  text: Strings.print,
                                   margin: EdgeInsets.zero,
                                 );
                               },
@@ -223,7 +223,7 @@ class _PrintBillDialogState extends KayleeState<PrintBillDialog> {
   Widget _buildWifiPrintButton({required AsyncSnapshot<pw.Document> snapshot}) {
     return KayLeeRoundedButton.normal(
       margin: EdgeInsets.zero,
-      text: Strings.In,
+      text: Strings.print,
       onPressed: () async {
         if (snapshot.hasData) {
           //print with wifi

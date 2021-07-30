@@ -9,6 +9,8 @@ import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class UserName extends StatefulWidget {
+  const UserName({Key? key}) : super(key: key);
+
   @override
   _UserNameState createState() => _UserNameState();
 }
@@ -68,7 +70,7 @@ class _UserNameState extends BaseState<UserName> {
               );
             }),
         Padding(
-          padding: EdgeInsets.only(top: Dimens.px8),
+          padding: const EdgeInsets.only(top: Dimens.px8),
           child: StreamBuilder<double>(
               stream: opacityController.stream,
               builder: (context, snapshot) {

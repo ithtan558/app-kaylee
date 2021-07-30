@@ -64,9 +64,9 @@ class Go2RegisterText extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(Strings.chuaCoTK),
+        const Text(Strings.chuaCoTK),
         Container(
-          margin: EdgeInsets.only(left: Dimens.px8),
+          margin: const EdgeInsets.only(left: Dimens.px8),
           child: HyperLinkText(
             text: Strings.dangKy,
             onTap: () {
@@ -77,4 +77,6 @@ class Go2RegisterText extends StatelessWidget {
       ],
     );
   }
+
+  const Go2RegisterText({Key? key}) : super(key: key);
 }

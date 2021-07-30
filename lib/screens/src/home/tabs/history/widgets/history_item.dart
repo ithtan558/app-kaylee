@@ -24,7 +24,7 @@ class HistoryItem extends StatefulWidget {
 
   final Order order;
 
-  HistoryItem._({required this.order});
+  const HistoryItem._({required this.order});
 
   @override
   _HistoryItemState createState() => _HistoryItemState();
@@ -91,7 +91,8 @@ class _HistoryItemState extends KayleeState<HistoryItem> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(Dimens.px16).copyWith(bottom: Dimens.px8),
+              padding: const EdgeInsets.all(Dimens.px16)
+                  .copyWith(bottom: Dimens.px8),
               child: Row(
                 children: [
                   Expanded(
@@ -124,7 +125,7 @@ class _HistoryItemState extends KayleeState<HistoryItem> {
               height: Dimens.px80,
               width: double.infinity,
               padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   color: Colors.white,
                   border: Border(
                       top: BorderSide(
@@ -159,7 +160,7 @@ class _HistoryItemState extends KayleeState<HistoryItem> {
                         },
                       ),
                     ),
-                    SizedBox(width: Dimens.px16),
+                    const SizedBox(width: Dimens.px16),
                   ],
                   Expanded(
                     child: KayLeeRoundedButton.normal(

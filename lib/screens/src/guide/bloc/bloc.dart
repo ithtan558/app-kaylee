@@ -10,7 +10,7 @@ class GuideScreenBloc extends Cubit<SingleModel<Content>> {
   void loadContent() {
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
-      request: commonService.getContent(Content.USER_GUIDE_HASHTAG),
+      request: commonService.getContent(Content.userGuideHashtag),
       onSuccess: ({message, result}) {
         emit(SingleModel.copy(state
           ..loading = false

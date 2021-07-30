@@ -20,7 +20,7 @@ class SelectCustomerDialog extends StatefulWidget {
       );
   final ValueSetter<Customer> onSelect;
 
-  SelectCustomerDialog._({required this.onSelect});
+  const SelectCustomerDialog._({required this.onSelect});
 
   @override
   _SelectCustomerDialogState createState() => _SelectCustomerDialogState();
@@ -75,11 +75,12 @@ class _SelectCustomerDialogState extends KayleeState<SelectCustomerDialog> {
             Expanded(child:
                 BlocBuilder<SelectCustomerBloc, SingleModel<List<Customer>>>(
               builder: (context, state) {
-                if (state.loading)
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: Dimens.px16),
+                if (state.loading) {
+                  return const Padding(
+                    padding: EdgeInsets.symmetric(vertical: Dimens.px16),
                     child: KayleeLoadingIndicator(),
                   );
+                }
                 return ListView.separated(
                     padding: const EdgeInsets.symmetric(horizontal: Dimens.px16)
                         .copyWith(top: Dimens.px8, bottom: Dimens.px8),
@@ -93,7 +94,7 @@ class _SelectCustomerDialogState extends KayleeState<SelectCustomerDialog> {
                         },
                       );
                     },
-                    separatorBuilder: (context, index) => SizedBox(
+                    separatorBuilder: (context, index) => const SizedBox(
                           height: Dimens.px8,
                         ),
                     itemCount: state.item?.length ?? 0);

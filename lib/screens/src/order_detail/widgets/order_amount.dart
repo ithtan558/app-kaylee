@@ -7,7 +7,8 @@ class OrderAmount extends StatelessWidget {
   final int amount;
   final int? discount;
 
-  OrderAmount({required this.amount, this.discount});
+  const OrderAmount({Key? key, required this.amount, this.discount})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

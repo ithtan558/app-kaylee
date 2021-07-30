@@ -21,7 +21,7 @@ class SupplierList extends StatefulWidget {
       );
   final ValueChanged<double> onScroll;
 
-  SupplierList._({required this.onScroll});
+  const SupplierList._({required this.onScroll});
 
   @override
   _SupplierListState createState() => _SupplierListState();
@@ -71,7 +71,7 @@ class _SupplierListState extends KayleeState<SupplierList> {
           builder: (context, state) {
             return KayleeListView(
               controller: scrollController,
-              physics: AlwaysScrollableScrollPhysics(),
+              physics: const AlwaysScrollableScrollPhysics(),
               padding: const EdgeInsets.only(bottom: Dimens.px16),
               itemBuilder: (c, index) {
                 if (index == 0) {

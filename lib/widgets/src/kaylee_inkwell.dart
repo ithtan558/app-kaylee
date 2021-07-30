@@ -6,7 +6,9 @@ class KayleeInkwell extends StatelessWidget {
   final VoidCallback? onTap;
   final BorderRadius? borderRadius;
 
-  KayleeInkwell({required this.child, this.onTap, this.borderRadius});
+  const KayleeInkwell(
+      {Key? key, required this.child, this.onTap, this.borderRadius})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

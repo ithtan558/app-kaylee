@@ -72,13 +72,13 @@ class _CreateNewServiceScreenState extends KayleeState<CreateNewServiceScreen> {
             onPressed: () {
               popScreen();
               switch (state.error!.code) {
-                case ErrorCode.PRICE_CODE:
+                case ErrorCode.priceCode:
                   priceFocus.requestFocus();
                   break;
-                case ErrorCode.NAME_CODE:
+                case ErrorCode.nameCode:
                   nameFocus.requestFocus();
                   break;
-                case ErrorCode.CODE_CODE:
+                case ErrorCode.codeCode:
                   codeFocus.requestFocus();
                   break;
               }
@@ -206,7 +206,7 @@ class _CreateNewServiceScreenState extends KayleeState<CreateNewServiceScreen> {
                       focusNode: codeFocus,
                       textInputAction: TextInputAction.next,
                       nextFocusNode: nameFocus,
-                      error: state.error?.code == ErrorCode.CODE_CODE
+                      error: state.error?.code == ErrorCode.codeCode
                           ? state.error!.message
                           : null,
                     ),

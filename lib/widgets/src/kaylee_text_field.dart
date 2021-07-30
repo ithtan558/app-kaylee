@@ -16,7 +16,8 @@ class KayleeTextField extends StatelessWidget {
   final Widget? titleWidget;
   final Widget? textInput;
 
-  KayleeTextField({Key? key, this.title, this.textInput, this.titleWidget})
+  const KayleeTextField(
+      {Key? key, this.title, this.textInput, this.titleWidget})
       : super(key: key);
 
   factory KayleeTextField.withUnit({
@@ -288,7 +289,7 @@ class KayleeTextField extends StatelessWidget {
       children: [
         if ((title?.isNotEmpty ?? false) || titleWidget != null)
           Container(
-            margin: EdgeInsets.only(bottom: Dimens.px8),
+            margin: const EdgeInsets.only(bottom: Dimens.px8),
             child: titleWidget ?? KayleeText.normal16W500(title!),
           ),
         if (textInput != null) textInput!,
@@ -307,15 +308,17 @@ class PriceInputField extends StatefulWidget {
   final String? initText;
   final bool isStaticTField;
 
-  PriceInputField(
-      {this.error,
+  const PriceInputField(
+      {Key? key,
+      this.error,
       this.controller,
       this.hint,
       this.textInputAction,
       this.focusNode,
       this.nextFocusNode,
       this.initText,
-      this.isStaticTField = false});
+      this.isStaticTField = false})
+      : super(key: key);
 
   @override
   _PriceInputFieldState createState() => _PriceInputFieldState();
@@ -375,8 +378,9 @@ class _PriceInputFieldState extends BaseState<PriceInputField> {
                     if (widget.textInputAction == TextInputAction.next) {
                       if (widget.nextFocusNode != null) {
                         widget.nextFocusNode!.requestFocus();
-                      } else
+                      } else {
                         FocusScope.of(context).nextFocus();
+                      }
                     }
                   }
                 },
@@ -424,16 +428,18 @@ class SearchInputField extends StatefulWidget {
   final ValueChanged<String>? onDoneTyping;
   final VoidCallback? onClear;
 
-  SearchInputField(
-      {this.hint,
+  const SearchInputField(
+      {Key? key,
+      this.hint,
       this.controller,
       this.focusNode,
       this.onChanged,
       this.onDoneTyping,
-      this.onClear});
+      this.onClear})
+      : super(key: key);
 
   @override
-  _SearchInputFieldState createState() => new _SearchInputFieldState();
+  _SearchInputFieldState createState() => _SearchInputFieldState();
 }
 
 class _SearchInputFieldState extends BaseState<SearchInputField> {
@@ -448,7 +454,7 @@ class _SearchInputFieldState extends BaseState<SearchInputField> {
     tfController.text = widget.controller?.keyword ?? '';
     closeIsShowed = widget.controller?.keyword?.isNotEmpty ?? false;
     typingStreamController.stream
-        .debounceTime(Duration(milliseconds: 500))
+        .debounceTime(const Duration(milliseconds: 500))
         .listen((keyword) {
       widget.onDoneTyping?.call(keyword);
     });
@@ -494,7 +500,7 @@ class _SearchInputFieldState extends BaseState<SearchInputField> {
         }
       },
       decoration: InputDecoration(
-          contentPadding: EdgeInsets.only(
+          contentPadding: const EdgeInsets.only(
               top: Dimens.px16, bottom: Dimens.px14, left: Dimens.px16),
           border: InputBorder.none,
           focusedBorder: InputBorder.none,
@@ -526,7 +532,8 @@ class WithUnitInputField extends StatefulWidget {
   final TextAlign textAlign;
   final String? unit;
 
-  WithUnitInputField({
+  const WithUnitInputField({
+    Key? key,
     this.hint,
     this.error,
     this.focusNode,
@@ -537,7 +544,7 @@ class WithUnitInputField extends StatefulWidget {
     this.contentPadding = const EdgeInsets.only(bottom: Dimens.px4),
     this.textAlign = TextAlign.start,
     this.unit,
-  });
+  }) : super(key: key);
 
   @override
   _WithUnitInputFieldState createState() => _WithUnitInputFieldState();
@@ -572,8 +579,9 @@ class _WithUnitInputFieldState extends BaseState<WithUnitInputField> {
                       if (widget.textInputAction == TextInputAction.next) {
                         if (widget.nextFocusNode != null) {
                           widget.nextFocusNode!.requestFocus();
-                        } else
+                        } else {
                           FocusScope.of(context).nextFocus();
+                        }
                       }
                     },
                     autofocus: false,
@@ -599,7 +607,7 @@ class _WithUnitInputFieldState extends BaseState<WithUnitInputField> {
                   padding: const EdgeInsets.only(left: Dimens.px16),
                   margin: const EdgeInsets.symmetric(vertical: Dimens.px4),
                   alignment: Alignment.center,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       border: Border(
                           left: BorderSide(
                               color: ColorsRes.textFieldBorder,
@@ -639,7 +647,8 @@ class NormalInputField extends StatefulWidget {
   final BoxConstraints? suffixBoxConstraints;
   final ValueChanged<String>? onChanged;
 
-  NormalInputField({
+  const NormalInputField({
+    Key? key,
     this.hint,
     this.initText,
     this.error,
@@ -657,7 +666,7 @@ class NormalInputField extends StatefulWidget {
     this.suffixWidget,
     this.suffixBoxConstraints,
     this.onChanged,
-  });
+  }) : super(key: key);
 
   @override
   _NormalInputFieldState createState() => _NormalInputFieldState();
@@ -717,8 +726,9 @@ class _NormalInputFieldState extends BaseState<NormalInputField> {
                       if (widget.textInputAction == TextInputAction.next) {
                         if (widget.nextFocusNode.isNotNull) {
                           widget.nextFocusNode?.requestFocus();
-                        } else
+                        } else {
                           FocusScope.of(context).nextFocus();
+                        }
                       }
                     },
                     onChanged: widget.onChanged,
@@ -750,7 +760,7 @@ class _NormalInputFieldState extends BaseState<NormalInputField> {
                         hintStyle: TextStyles.hint16W400,
                         suffixIcon: widget.suffixWidget,
                         suffixIconConstraints: widget.suffixBoxConstraints ??
-                            BoxConstraints(minWidth: 0)),
+                            const BoxConstraints(minWidth: 0)),
                   ),
                 ),
                 if (isPassTField)
@@ -771,7 +781,7 @@ class _NormalInputFieldState extends BaseState<NormalInputField> {
                   Padding(
                     padding: const EdgeInsets.only(left: Dimens.px16),
                     child: Image.asset(
-                      Images.ic_error,
+                      Images.icError,
                       width: Dimens.px16,
                       height: Dimens.px16,
                     ),
@@ -797,15 +807,17 @@ class PhoneInputField extends StatefulWidget {
   final TextInputAction textInputAction;
   final bool isStaticTField;
 
-  PhoneInputField(
-      {this.error,
+  const PhoneInputField(
+      {Key? key,
+      this.error,
       this.focusNode,
       this.controller,
       this.nextFocusNode,
       this.textInputAction = TextInputAction.done,
       this.isStaticTField = false,
       this.initText,
-      this.hint});
+      this.hint})
+      : super(key: key);
 
   @override
   _PhoneInputFieldState createState() => _PhoneInputFieldState();
@@ -871,8 +883,9 @@ class _PhoneInputFieldState extends State<PhoneInputField> {
                   if (widget.textInputAction == TextInputAction.next) {
                     if (widget.nextFocusNode.isNotNull) {
                       widget.nextFocusNode?.requestFocus();
-                    } else
+                    } else {
                       FocusScope.of(context).nextFocus();
+                    }
                   }
                 },
                 decoration: InputDecoration(
@@ -904,13 +917,15 @@ class WebsiteInputField extends StatefulWidget {
   final FocusNode? domainFocus;
   final TextInputAction? textInputAction;
 
-  WebsiteInputField(
-      {this.error,
+  const WebsiteInputField(
+      {Key? key,
+      this.error,
       this.websiteFocus,
       this.domainFocus,
       this.websiteTfController,
       this.domainTfController,
-      this.textInputAction});
+      this.textInputAction})
+      : super(key: key);
 
   @override
   _WebsiteInputFieldState createState() => _WebsiteInputFieldState();
@@ -990,8 +1005,9 @@ class SelectInputTextField extends StatefulWidget {
   final String? buttonText;
   final VoidCallback? onPress;
 
-  SelectInputTextField(
-      {this.error, this.content = '', this.onPress, this.buttonText});
+  const SelectInputTextField(
+      {Key? key, this.error, this.content = '', this.onPress, this.buttonText})
+      : super(key: key);
 
   @override
   _SelectInputTextFieldState createState() => _SelectInputTextFieldState();
@@ -1043,12 +1059,14 @@ class UnitInputField extends StatefulWidget {
   final ValueChanged<String>? onChange;
   final TextEditingController? controller;
 
-  UnitInputField(
-      {this.hint,
+  const UnitInputField(
+      {Key? key,
+      this.hint,
       this.error,
       this.textInputAction,
       this.onChange,
-      this.controller});
+      this.controller})
+      : super(key: key);
 
   @override
   _UnitInputFieldState createState() => _UnitInputFieldState();
@@ -1112,7 +1130,7 @@ class _UnitInputFieldState extends BaseState<UnitInputField> {
                 children: [
                   KayleeText.normal16W400('%'),
                   Image.asset(
-                    Images.ic_down,
+                    Images.icDown,
                     height: Dimens.px16,
                     width: Dimens.px16,
                   )
@@ -1130,7 +1148,8 @@ class _UnitInputFieldState extends BaseState<UnitInputField> {
 class PriceWithUnderLineBorderTextField extends StatefulWidget {
   final dynamic price;
 
-  PriceWithUnderLineBorderTextField({this.price});
+  const PriceWithUnderLineBorderTextField({Key? key, this.price})
+      : super(key: key);
 
   @override
   _PriceWithUnderLineBorderTextFieldState createState() =>
@@ -1161,7 +1180,7 @@ class _PriceWithUnderLineBorderTextFieldState
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: Dimens.px48,
       child: TextField(
         enabled: false,
@@ -1169,7 +1188,7 @@ class _PriceWithUnderLineBorderTextFieldState
         style: TextStyles.normal16W400,
         decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(horizontal: Dimens.px8),
-            disabledBorder: UnderlineInputBorder(
+            disabledBorder: const UnderlineInputBorder(
                 borderSide: BorderSide(
               width: Dimens.px1,
               color: ColorsRes.hintText,
@@ -1181,7 +1200,7 @@ class _PriceWithUnderLineBorderTextFieldState
                 textAlign: TextAlign.center,
               ),
             ),
-            suffixIconConstraints: BoxConstraints(),
+            suffixIconConstraints: const BoxConstraints(),
             enabled: false),
       ),
     );
@@ -1192,7 +1211,7 @@ class ErrorText extends StatelessWidget {
   final String? error;
   final Widget? child;
 
-  ErrorText({this.child, this.error});
+  const ErrorText({Key? key, this.child, this.error}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -1221,11 +1240,13 @@ class TextFieldBorderWrapper extends StatelessWidget {
   final double? fieldHeight;
   final bool focused;
 
-  TextFieldBorderWrapper(this.child,
-      {this.isError = false,
+  const TextFieldBorderWrapper(this.child,
+      {Key? key,
+      this.isError = false,
       this.bgColor,
       this.fieldHeight,
-      this.focused = false});
+      this.focused = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -1241,7 +1262,7 @@ class TextFieldBorderWrapper extends StatelessWidget {
             color: isError ? ColorsRes.errorBorder : ColorsRes.textFieldBorder),
         boxShadow: [
           if (focused)
-            BoxShadow(
+            const BoxShadow(
                 color: Color(0x4c000000),
                 offset: Offset(0, 1),
                 blurRadius: 5,

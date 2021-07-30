@@ -150,9 +150,7 @@ class _ServiceListScreenState extends KayleeState<ServiceListScreen> {
                     );
                   },
                   loadingIndicatorBuilder: (context) =>
-                      CupertinoActivityIndicator(
-                    radius: Dimens.px16,
-                  ),
+                      KayleeLoadingIndicator(),
                 );
               },
             ),

@@ -40,7 +40,7 @@ class KayleePickerTextField<T> extends StatefulWidget {
 
   final ValueSetter<dynamic>? onSelect;
 
-  KayleePickerTextField({
+  const KayleePickerTextField({
     Key? key,
     this.hint,
     this.error,
@@ -153,7 +153,7 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField>
                       child: Transform.rotate(
                         angle: focused ? pi : 0,
                         child: Image.asset(
-                          Images.ic_down,
+                          Images.icDown,
                           width: Dimens.px16,
                           height: Dimens.px16,
                         ),
@@ -282,7 +282,7 @@ class _DatePickerView extends StatefulWidget {
   final DateTime? minDate;
   final DateTime? maxDate;
 
-  _DatePickerView(
+  const _DatePickerView(
       {this.onSelectedItemChanged, this.intiValue, this.minDate, this.maxDate});
 
   @override
@@ -321,7 +321,7 @@ class _DurationPickerView extends StatefulWidget {
   final ValueChanged<Duration>? onSelectedItemChanged;
   final Duration? intiValue;
 
-  _DurationPickerView({
+  const _DurationPickerView({
     this.onSelectedItemChanged,
     this.intiValue,
   });
@@ -360,7 +360,7 @@ class _TimePickerView<T> extends StatefulWidget {
   final ValueChanged? onSelectedItemChanged;
   final T? intiValue;
 
-  _TimePickerView({this.onSelectedItemChanged, this.intiValue});
+  const _TimePickerView({this.onSelectedItemChanged, this.intiValue});
 
   @override
   _TimePickerViewState<T> createState() => _TimePickerViewState<T>();
@@ -406,7 +406,7 @@ class _PickerView<T> extends StatefulWidget {
   final T? intiValue;
   final bool useForFilter;
 
-  _PickerView(
+  const _PickerView(
       {this.onSelectedItemChanged, this.intiValue, this.useForFilter = false});
 
   @override
@@ -481,12 +481,11 @@ class _PickerViewState<T> extends KayleeState<_PickerView> {
     return BlocBuilder<_PickerViewBloc<T>, SingleModel<List<T>>>(
       bloc: bloc,
       builder: (context, state) {
-        if (state.loading)
-          return Align(
-            child: CupertinoActivityIndicator(
-              radius: Dimens.px16,
-            ),
+        if (state.loading) {
+          return const Align(
+            child: KayleeLoadingIndicator(),
           );
+        }
         scrollController = FixedExtentScrollController(
             initialItem: state.item?.indexWhere(
                     (e) => getIndex(e) == getIndex(widget.intiValue)) ??
@@ -499,17 +498,15 @@ class _PickerViewState<T> extends KayleeState<_PickerView> {
           },
           itemBuilder: (context, index) {
             final item = state.item!.elementAt(index);
-            return Container(
-              child: Text(_getTitle<T>(item),
-                  style: TextStyle(
-                    fontFamily: 'SFProText',
-                    color: Color(0xff000000),
-                    fontSize: 23.5,
-                    fontWeight: FontWeight.w400,
-                    fontStyle: FontStyle.normal,
-                    letterSpacing: 0.3799999952316284,
-                  )),
-            );
+            return Text(_getTitle<T>(item),
+                style: const TextStyle(
+                  fontFamily: 'SFProText',
+                  color: Color(0xff000000),
+                  fontSize: 23.5,
+                  fontWeight: FontWeight.w400,
+                  fontStyle: FontStyle.normal,
+                  letterSpacing: 0.3799999952316284,
+                ));
           },
           childCount: state.item?.length ?? 0,
         );
@@ -833,21 +830,21 @@ class KayleePickerTextFieldModel {
 
   void update({dynamic value}) {
     if (value is City) {
-      this.city = value;
+      city = value;
     } else if (value is District) {
-      this.district = value;
+      district = value;
     } else if (value is StartTime) {
-      this.startTime = value;
+      startTime = value;
     } else if (value is EndTime) {
-      this.endTime = value;
+      endTime = value;
     } else if (value is ProdCate) {
-      this.prodCate = value;
+      prodCate = value;
     } else if (value is ServiceCate) {
-      this.serviceCate = value;
+      serviceCate = value;
     } else if (value is Brand) {
-      this.brand = value;
+      brand = value;
     } else if (value is CustomerType) {
-      this.customerType = value;
+      customerType = value;
     }
   }
 }

@@ -26,10 +26,10 @@ class CreateNewCustomerScreen extends StatefulWidget {
     create: (context) => CustomerDetailScreenBloc(
             customerService: context.network.provideCustomerService(),
             customer: context.getArguments<NewCustomerScreenData>()!.customer),
-        child: CreateNewCustomerScreen._(),
+        child: const CreateNewCustomerScreen(),
       );
 
-  CreateNewCustomerScreen._();
+  const CreateNewCustomerScreen({Key? key}) : super(key: key);
 
   @override
   _CreateNewCustomerScreenState createState() =>
@@ -70,10 +70,10 @@ class _CreateNewCustomerScreenState
             onPressed: () {
               popScreen();
               switch (state.error!.code) {
-                case ErrorCode.NAME_CODE:
+                case ErrorCode.nameCode:
                   nameFocus.requestFocus();
                   break;
-                case ErrorCode.PHONE_CODE:
+                case ErrorCode.phoneCode:
                   phoneFocus.requestFocus();
                   break;
               }

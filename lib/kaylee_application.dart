@@ -66,11 +66,11 @@ class KayLeeApplication extends StatefulWidget {
             service: context.network.provideNotificationService(),
           ),
         ),
-      ], child: KayLeeApplication._()),
+      ], child: const KayLeeApplication()),
     );
   }
 
-  KayLeeApplication._();
+  const KayLeeApplication({Key? key}) : super(key: key);
 
   @override
   _KayLeeApplicationState createState() => _KayLeeApplicationState();
@@ -115,7 +115,7 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
                 ...options.headers,
                 'version': _appBloc.packageInfo?.buildNumber ?? '',
                 if (context.user.getUserInfo().token.isNotNullAndEmpty)
-                  NetworkModule.AUTHORIZATION:
+                  NetworkModule.authorization:
                       context.user.getUserInfo().requestToken
               });
           },
@@ -127,7 +127,7 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
             }
 
             if (responseModel.warning?.code != null &&
-                responseModel.warning!.code == ErrorCode.EXPIRE_WARNING_CODE) {
+                responseModel.warning!.code == ErrorCode.expireWarningCode) {
               _appBloc.expirationWarning(error: responseModel.warning!);
             }
             handler.next(response);
@@ -138,21 +138,20 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
             if (error.response != null) {
               if (error.response!.statusCode == HttpStatus.unauthorized) {
                 if (responseModel.error?.code != null &&
-                    responseModel.error!.code == ErrorCode.EXPIRATION_CODE) {
+                    responseModel.error!.code == ErrorCode.expirationCode) {
                   _appBloc.expired(error: responseModel.error!);
-                  (error.response!.data as Map<String, dynamic>)
-                    ..['errors'] = null;
+                  (error.response!.data as Map<String, dynamic>)['errors'] =
+                      null;
                 } else {
                   _appBloc.unauthorized(error: responseModel.error!);
-                  (error.response!.data as Map<String, dynamic>)
-                    ..['errors'] = null;
+                  (error.response!.data as Map<String, dynamic>)['errors'] =
+                      null;
                 }
               } else if (error.response!.statusCode == HttpStatus.badRequest &&
                   responseModel.error?.code != null &&
-                  responseModel.error!.code == ErrorCode.OUT_OF_DATE_CODE) {
+                  responseModel.error!.code == ErrorCode.outOfDateCode) {
                 _appBloc.outOfDate(error: responseModel.error!);
-                (error.response!.data as Map<String, dynamic>)
-                  ..['errors'] = null;
+                (error.response!.data as Map<String, dynamic>)['errors'] = null;
               }
             }
             return handler.next(error);
@@ -179,21 +178,24 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
         } else if (state is LoggedOutState) {
           context.user.removeUserInfo();
           context.cart.clear();
-          context.network.dio.options..headers = {};
+          context.network.dio.options.headers = {};
           _navigatorStateKey.currentContext!
               .pushToTop(PageIntent(screen: SplashScreen));
           return;
         } else if (state is LoadedTopicState) {
           Future(() {
             final oldTopics = fcm.getTopics();
-            oldTopics.forEach((campaign) {
-              if (campaign.key?.isNotEmpty ?? false)
+            for (var campaign in oldTopics) {
+              if (campaign.key?.isNotEmpty ?? false) {
                 FirebaseMessaging.instance.unsubscribeFromTopic(campaign.key!);
-            });
+              }
+            }
+
             fcm.overrideTopics(campaigns: state.campaigns);
             fcm.getTopics().forEach((campaign) {
-              if (campaign.key?.isNotEmpty ?? false)
+              if (campaign.key?.isNotEmpty ?? false) {
                 FirebaseMessaging.instance.subscribeToTopic(campaign.key!);
+              }
             });
             return 1;
           });
@@ -210,27 +212,27 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
         navigatorObservers: [
           KayleeObserver(),
         ],
-        localizationsDelegates: [
+        localizationsDelegates: const [
           GlobalCupertinoLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
         ],
-        supportedLocales: [
+        supportedLocales: const [
           Locale('vi'),
         ],
-        locale: Locale('vi'),
+        locale: const Locale('vi'),
         theme: ThemeData(
           scaffoldBackgroundColor: ColorsRes.background,
           visualDensity: VisualDensity.adaptivePlatformDensity,
-          fontFamily: Fonts.HelveticaNeue,
+          fontFamily: Fonts.helveticaNeue,
           accentColor: ColorsRes.color1,
-          pageTransitionsTheme: PageTransitionsTheme(builders: {
+          pageTransitionsTheme: const PageTransitionsTheme(builders: {
             TargetPlatform.android: CupertinoPageTransitionsBuilder(),
             TargetPlatform.iOS: CupertinoPageTransitionsBuilder()
           }),
           textTheme: context.theme.textTheme
             ..bodyText2
                 ?.copyWith(
-                    fontFamily: Fonts.HelveticaNeue,
+                    fontFamily: Fonts.helveticaNeue,
                     fontStyle: FontStyle.normal,
                     letterSpacing: 0)
                 .merge(TextStyles.normal16W400),

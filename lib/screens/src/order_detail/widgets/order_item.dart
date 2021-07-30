@@ -9,11 +9,12 @@ class OrderItem extends StatefulWidget {
   final ValueChanged onRemoveItem;
   final ValueChanged<int> onQuantityChange;
 
-  OrderItem(
-      {required this.data,
+  const OrderItem(
+      {Key? key,
+      required this.data,
       required this.onRemoveItem,
       required this.onQuantityChange})
-      : assert(data.isNotNull);
+      : super(key: key);
 
   @override
   _OrderItemState createState() => _OrderItemState();
@@ -81,14 +82,14 @@ class _OrderItemState extends BaseState<OrderItem> {
                   ),
                   Expanded(
                       child: KayleeText.normal16W400(
-                        widget.data.name ?? '',
+                    widget.data.name ?? '',
                     maxLines: 1,
                   )),
                   KayleePriceUnitText(widget.data.price)
                 ],
               ),
             ),
-            KayleeHorizontalDivider(),
+            const KayleeHorizontalDivider(),
           ],
         ),
       ),

@@ -8,7 +8,9 @@ class KayleeScrollview extends StatefulWidget {
   final EdgeInsets? padding;
   final Widget? bottom;
 
-  KayleeScrollview({this.appBar, this.child, this.padding, this.bottom});
+  const KayleeScrollview(
+      {Key? key, this.appBar, this.child, this.padding, this.bottom})
+      : super(key: key);
 
   @override
   _KayleeScrollviewState createState() => _KayleeScrollviewState();
@@ -24,7 +26,7 @@ class _KayleeScrollviewState extends State<KayleeScrollview> {
           Expanded(
             child: SingleChildScrollView(
               padding: widget.padding ?? EdgeInsets.zero,
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: widget.child,
             ),
           ),

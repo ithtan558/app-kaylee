@@ -22,12 +22,13 @@ class CommProdOrderList extends StatefulWidget {
                 startDate: range.start,
                 endDate: range.end,
               ),
-          child: CommProdOrderList._(
+          child: CommProdOrderList(
             scrollController: scrollController,
           ));
   final ScrollController scrollController;
 
-  CommProdOrderList._({required this.scrollController});
+  const CommProdOrderList({Key? key, required this.scrollController})
+      : super(key: key);
 
   @override
   _CommProdOrderListState createState() => _CommProdOrderListState();
@@ -83,7 +84,7 @@ class _CommProdOrderListState extends KayleeState<CommProdOrderList> {
                       right: Dimens.px16,
                       left: Dimens.px16),
                   controller: widget.scrollController,
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   itemBuilder: (c, index) {
                     final item = state.items!.elementAt(index);
                     return CommOrderItem(
@@ -94,7 +95,7 @@ class _CommProdOrderListState extends KayleeState<CommProdOrderList> {
                     );
                   },
                   separatorBuilder: (c, index) {
-                    return SizedBox(
+                    return const SizedBox(
                       height: Dimens.px16,
                     );
                   },
@@ -102,9 +103,7 @@ class _CommProdOrderListState extends KayleeState<CommProdOrderList> {
                     if (state.ended) return Container();
                     return Container(
                       padding: const EdgeInsets.only(top: Dimens.px16),
-                      child: CupertinoActivityIndicator(
-                        radius: Dimens.px16,
-                      ),
+                      child: const KayleeLoadingIndicator(),
                     );
                   },
                   itemCount: state.items?.length ?? 0);

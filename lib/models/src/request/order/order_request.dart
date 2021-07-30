@@ -11,12 +11,13 @@ Map<String, dynamic>? _parseCartCustomer(Customer? customer) {
 }
 
 int? _parseCartEmployee(Object? input) {
-  if (input is Employee)
+  if (input is Employee) {
     return input.id;
-  else if (input is UserInfo)
+  } else if (input is UserInfo) {
     return input.id;
-  else
+  } else {
     return null;
+  }
 }
 
 List<int>? _parseCartEmployees(List<Employee>? input) {

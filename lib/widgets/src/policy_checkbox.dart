@@ -12,7 +12,7 @@ import 'package:kaylee/widgets/widgets.dart';
 class PolicyCheckBox extends StatefulWidget {
   final ValueSetter<bool>? onChecked;
 
-  PolicyCheckBox({this.onChecked});
+  const PolicyCheckBox({Key? key, this.onChecked}) : super(key: key);
 
   @override
   _PolicyCheckBoxState createState() => _PolicyCheckBoxState();
@@ -34,7 +34,7 @@ class _PolicyCheckBoxState extends BaseState<PolicyCheckBox> {
             widget.onChecked?.call(isChecked);
           },
           child: Image.asset(
-            isChecked ? Images.ic_checked : Images.ic_notcheck,
+            isChecked ? Images.icChecked : Images.icNotCheck,
             width: Dimens.px24,
             height: Dimens.px24,
           ),
@@ -56,7 +56,7 @@ class _PolicyCheckBoxState extends BaseState<PolicyCheckBox> {
                       });
                     },
                   style: TextStyles.hyper16W400),
-              TextSpan(text: 'khi sử dụng ứng dụng Kaylee')
+              const TextSpan(text: 'khi sử dụng ứng dụng Kaylee')
             ])),
           ),
         )
@@ -77,7 +77,7 @@ class _PolicyView extends StatefulWidget {
 
   final ScrollController scrollController;
 
-  _PolicyView._({required this.scrollController});
+  const _PolicyView._({required this.scrollController});
 
   @override
   _PolicyViewState createState() => _PolicyViewState();
@@ -102,7 +102,7 @@ class _PolicyViewState extends KayleeState<_PolicyView> {
     return BlocConsumer<_PolicyViewBloc, dynamic>(
       builder: (context, state) {
         if (state is LoadingState) {
-          return CupertinoActivityIndicator();
+          return const KayleeLoadingIndicator();
         } else if (state is ErrorState) {
           return Container();
         } else if (state is _SuccessPolicyViewState) {
@@ -131,8 +131,9 @@ class _PolicyViewState extends KayleeState<_PolicyView> {
               )
             ],
           );
-        } else
-          return Container();
+        } else {
+          return const SizedBox.shrink();
+        }
       },
       listener: (context, state) {
         if (state is ErrorState && state.error != null) {
@@ -169,7 +170,7 @@ class _PolicyViewBloc extends BaseBloc {
     } else if (e is _LoadPolicyViewEvent) {
       yield LoadingState();
       RequestHandler(
-        request: commonService.getContent(Content.POLICY_HASHTAG),
+        request: commonService.getContent(Content.policyHashtag),
         onSuccess: ({message, result}) {
           add(_SuccessPolicyViewEvent(result));
         },

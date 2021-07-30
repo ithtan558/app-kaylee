@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:anth_package/anth_package.dart';
 import 'package:kaylee/models/models.dart';
 
-const _SHARE_REF_CAMPAIGN = 'SHARE_REF_CAMPAIGN';
+const _shareRefCampaign = 'SHARE_REF_CAMPAIGN';
 
 abstract class FcmModule {
   factory FcmModule.init() = _FcmModuleImpl._;
@@ -20,7 +20,7 @@ class _FcmModuleImpl extends FcmModule {
 
   @override
   List<Campaign> getTopics() {
-    final json = SharedRef.getString(_SHARE_REF_CAMPAIGN);
+    final json = SharedRef.getString(_shareRefCampaign);
     if (json == null || json.isEmpty) return [];
     return (jsonDecode(json) as List)
         .map((json) => Campaign.fromJson(json))
@@ -30,6 +30,6 @@ class _FcmModuleImpl extends FcmModule {
   @override
   void overrideTopics({List<Campaign>? campaigns}) {
     final json = jsonEncode(campaigns ?? []);
-    SharedRef.putString(_SHARE_REF_CAMPAIGN, json);
+    SharedRef.putString(_shareRefCampaign, json);
   }
 }

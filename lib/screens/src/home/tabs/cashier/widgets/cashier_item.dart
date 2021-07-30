@@ -23,7 +23,7 @@ class CashierItem extends StatefulWidget {
 
   final Order order;
 
-  CashierItem._({required this.order});
+  const CashierItem._({required this.order});
 
   @override
   _CashierItemState createState() => _CashierItemState();
@@ -75,7 +75,7 @@ class _CashierItemState extends KayleeState<CashierItem> {
                   )),
                   Expanded(
                     child: KayleeText.normal16W400(
-                      widget.order.status == OrderStatus.not_paid
+                      widget.order.status == OrderStatus.notPaid
                           ? Strings.chuaThanhToan
                           : '',
                       maxLines: 1,
@@ -90,7 +90,7 @@ class _CashierItemState extends KayleeState<CashierItem> {
               height: Dimens.px77,
               width: double.infinity,
               padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   color: Colors.white,
                   border: Border.fromBorderSide(BorderSide(
                       color: ColorsRes.textFieldBorder, width: Dimens.px1))),
@@ -114,7 +114,7 @@ class _CashierItemState extends KayleeState<CashierItem> {
                       )),
                     ],
                   ),
-                  SizedBox(height: Dimens.px8),
+                  const SizedBox(height: Dimens.px8),
                   KayleeText.hint16W400(
                       '${Strings.gioBatDau} ${widget.order.createdAt?.toFormatString(pattern: dateFormat3)}'),
                 ],
@@ -153,7 +153,7 @@ class _CashierItemState extends KayleeState<CashierItem> {
                       },
                     ),
                   ),
-                  SizedBox(width: Dimens.px16),
+                  const SizedBox(width: Dimens.px16),
                   Expanded(
                     child: KayLeeRoundedButton.normal(
                       text: Strings.chiTiet,

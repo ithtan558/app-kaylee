@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:core_plugin/core_plugin.dart' hide ImageSource;
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart' as imagePicker;
+import 'package:image_picker/image_picker.dart' as image_picker;
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
@@ -26,12 +26,13 @@ class KayleeImagePicker extends StatefulWidget {
 
   final VoidCallback? onImageSelect;
 
-  KayleeImagePicker({
+  const KayleeImagePicker({
+    Key? key,
     this.type = KayleeImagePickerType.profile,
     this.onImageSelect,
     this.oldImages = const [],
     this.controller,
-  });
+  }) : super(key: key);
 
   @override
   State createState() {
@@ -64,13 +65,13 @@ class _KayleeProfileImagePickerState extends BaseState<KayleeImagePicker> {
               color: Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(Dimens.px10),
-                side: BorderSide(color: ColorsRes.hintText),
+                side: const BorderSide(color: ColorsRes.hintText),
               ),
               child: (widget.controller?.existedImageUrl?.isEmpty ?? true) &&
                       selectedFile == null
                   ? Center(
                       child: Image.asset(
-                        Images.ic_image_holder,
+                        Images.icImageHolder,
                         width: Dimens.px40,
                         height: Dimens.px40,
                       ),
@@ -87,18 +88,22 @@ class _KayleeProfileImagePickerState extends BaseState<KayleeImagePicker> {
                                   widget.controller?.existedImageUrl ?? '',
                               fit: BoxFit.cover,
                             ),
-              ),
+                    ),
             ),
           ),
-          Container(
+          SizedBox(
             height: Dimens.px56,
             width: context.screenSize.width * 243 / 375,
-            child: FlatButton(
-              color: ColorsRes.button.withOpacity(0.8),
-              padding: EdgeInsets.all(Dimens.px12),
+            child: TextButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(
+                    ColorsRes.button.withOpacity(0.8)),
+                padding: MaterialStateProperty.all(
+                    const EdgeInsets.all(Dimens.px12)),
+                shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(Dimens.px10))),
+              ),
               clipBehavior: Clip.antiAlias,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(Dimens.px10)),
               onPressed: () {
                 showImagePickerDialog(
                   context: context,
@@ -122,7 +127,7 @@ class _KayleeProfileImagePickerState extends BaseState<KayleeImagePicker> {
               child: Row(
                 children: [
                   Image.asset(
-                    Images.ic_camera,
+                    Images.icCamera,
                     width: Dimens.px32,
                     height: Dimens.px32,
                   ),
@@ -210,7 +215,7 @@ class _KayleeBannerImagePickerState extends BaseState<KayleeImagePicker> {
                   child: Row(
                     children: [
                       Image.asset(
-                        Images.ic_camera,
+                        Images.icCamera,
                         width: Dimens.px32,
                         height: Dimens.px32,
                         color: ColorsRes.hintText,
@@ -263,7 +268,7 @@ class _ImageGrid extends StatefulWidget {
   final String? selectedExistedImage;
   final void Function(dynamic selectedImage)? onSelect;
 
-  _ImageGrid(
+  const _ImageGrid(
       {required this.controller,
       this.images,
       this.selectedExistedImage,
@@ -313,8 +318,8 @@ class _ImageGridState extends BaseState<_ImageGrid> {
   }
 
   void _openGallery() async {
-    final pickedFile = await imagePicker.ImagePicker().getImage(
-        source: imagePicker.ImageSource.gallery,
+    final pickedFile = await image_picker.ImagePicker().pickImage(
+        source: image_picker.ImageSource.gallery,
         maxWidth: 2020,
         maxHeight: 2020);
     io.File? selectedFile;
@@ -332,19 +337,19 @@ class _ImageGridState extends BaseState<_ImageGrid> {
       padding: const EdgeInsets.only(
           left: Dimens.px16, right: Dimens.px16, bottom: Dimens.px16),
       controller: widget.controller,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
           childAspectRatio: 1,
           crossAxisSpacing: Dimens.px16,
           mainAxisSpacing: Dimens.px16),
       itemBuilder: (c, index) {
-        if (index == 0)
+        if (index == 0) {
           return _BorderWrapper.static(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(
-                  Images.ic_image_holder,
+                  Images.icImageHolder,
                   width: Dimens.px24,
                   height: Dimens.px24,
                   color: ColorsRes.button1,
@@ -363,7 +368,7 @@ class _ImageGridState extends BaseState<_ImageGrid> {
               await handlePermission();
             },
           );
-        else {
+        } else {
           final selectedImage = widget.images!.elementAt(index - 1);
           return _BorderWrapper.dynamic(
             isSelected: selectedExistedImage == selectedImage,
@@ -408,7 +413,8 @@ class _BorderWrapper extends StatelessWidget {
         isSelected: isSelected,
       );
 
-  _BorderWrapper({this.child, this.onTap, this.isStatic = false, this.isSelected = false});
+  const _BorderWrapper(
+      {this.child, this.onTap, this.isStatic = false, this.isSelected = false});
 
   @override
   Widget build(BuildContext context) {

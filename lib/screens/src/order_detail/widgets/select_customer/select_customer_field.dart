@@ -10,7 +10,9 @@ class SelectCustomerField extends StatefulWidget {
   final ValueChanged<Customer> onSelect;
   final SelectCustomerController controller;
 
-  SelectCustomerField({required this.onSelect, required this.controller});
+  const SelectCustomerField(
+      {Key? key, required this.onSelect, required this.controller})
+      : super(key: key);
 
   @override
   _SelectCustomerFieldState createState() => _SelectCustomerFieldState();

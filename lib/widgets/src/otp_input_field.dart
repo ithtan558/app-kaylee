@@ -10,10 +10,11 @@ class OtpInputField extends StatefulWidget {
   final ValueSetter<String> onComplete;
   final String? error;
 
-  OtpInputField({required this.onComplete, this.error});
+  const OtpInputField({Key? key, required this.onComplete, this.error})
+      : super(key: key);
 
   @override
-  _OtpInputFieldState createState() => new _OtpInputFieldState();
+  _OtpInputFieldState createState() => _OtpInputFieldState();
 }
 
 class _OtpInputFieldState extends BaseState<OtpInputField> {
@@ -122,7 +123,7 @@ class _PinTextField extends StatefulWidget {
   final VoidCallback? onComplete;
   final bool autoFocus;
 
-  _PinTextField(
+  const _PinTextField(
       {this.nextFocus,
       this.currentFocus,
       this.textInputAction = TextInputAction.next,
@@ -187,7 +188,7 @@ class _PinTextFieldState extends BaseState<_PinTextField> {
                     required isFocused,
                     required maxLength}) =>
                 Container(),
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(bottom: -8),
             ),

@@ -71,9 +71,9 @@ class _CreateNewReservationScreenState
             onPressed: () {
               popScreen();
               switch (state.error!.code) {
-                case ErrorCode.PHONE_CODE:
+                case ErrorCode.phoneCode:
                   return phoneFocus.requestFocus();
-                case ErrorCode.NAME_CODE:
+                case ErrorCode.nameCode:
                   return nameFocus.requestFocus();
               }
             },

@@ -13,10 +13,10 @@ class HomeBanner extends StatefulWidget {
   static Widget newInstance() => BlocProvider(
         create: (context) =>
             HomeBannerBloc(service: context.network.provideAdvertiseService()),
-        child: HomeBanner._(),
+        child: const HomeBanner._(),
       );
 
-  HomeBanner._();
+  const HomeBanner._();
 
   @override
   _HomeBannerState createState() => _HomeBannerState();
@@ -107,13 +107,13 @@ class _HomeBannerState extends KayleeState<HomeBanner> {
         color: ColorsRes.filterButton,
         borderRadius: BorderRadius.circular(Dimens.px5),
         clipBehavior: Clip.antiAlias,
-        child: Container(
+        child: SizedBox(
           width: width,
           child: Stack(
             children: [
               CachedNetworkImage(
                 imageUrl: image,
-                errorWidget: (context, url, error) => SizedBox(),
+                errorWidget: (context, url, error) => const SizedBox(),
                 fit: BoxFit.cover,
                 width: double.infinity,
                 height: double.infinity,

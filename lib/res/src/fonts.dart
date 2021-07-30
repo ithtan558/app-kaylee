@@ -1,5 +1,5 @@
 class Fonts {
   Fonts._();
 
-  static const String HelveticaNeue = 'HelveticaNeue';
+  static const String helveticaNeue = 'HelveticaNeue';
 }

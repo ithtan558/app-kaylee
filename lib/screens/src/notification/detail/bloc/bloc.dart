@@ -39,7 +39,7 @@ class NotifyDetailScreenBloc extends Cubit<SingleModel>
         notificationId: notification.id,
       ),
       onSuccess: ({message, result}) {
-        if (this.notification.status == NotificationStatus.notRead) {
+        if (notification.status == NotificationStatus.notRead) {
           _updateStatus();
         }
         emit(NotificationDetailModel.copy(state

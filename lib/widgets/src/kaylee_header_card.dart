@@ -7,10 +7,12 @@ class KayleeHeaderCard extends StatelessWidget {
   final Widget? child;
   final EdgeInsets? headerPadding;
 
-  KayleeHeaderCard(
-      {this.header,
+  const KayleeHeaderCard(
+      {Key? key,
+      this.header,
       this.child,
-      this.headerPadding = const EdgeInsets.all(Dimens.px16)});
+      this.headerPadding = const EdgeInsets.all(Dimens.px16)})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +26,9 @@ class KayleeHeaderCard extends StatelessWidget {
             Container(
               padding: headerPadding,
               color: ColorsRes.color2,
-              child: header ?? SizedBox.shrink(),
+              child: header ?? const SizedBox.shrink(),
             ),
-            child ?? SizedBox.shrink(),
+            child ?? const SizedBox.shrink(),
           ],
         ),
       ),

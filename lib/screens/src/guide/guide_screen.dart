@@ -15,12 +15,12 @@ class GuideScreen extends StatefulWidget {
       create: (context) => GuideScreenBloc(
             commonService: context.network.provideCommonService(),
           ),
-      child: GuideScreen._());
+      child: const GuideScreen());
 
-  GuideScreen._();
+  const GuideScreen({Key? key}) : super(key: key);
 
   @override
-  _GuideScreenState createState() => new _GuideScreenState();
+  _GuideScreenState createState() => _GuideScreenState();
 }
 
 class _GuideScreenState extends KayleeState<GuideScreen> {

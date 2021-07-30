@@ -33,7 +33,7 @@ abstract class PrinterDetailBase extends Cubit<PrinterDetailState> {
   }
 
   PrinterDevice? get defaultDevice {
-    final fromSharePref = SharedRef.getString(PRINTER_DEVICES_KEY);
+    final fromSharePref = SharedRef.getString(printerDevicesKey);
     final map =
         jsonDecode((fromSharePref?.isEmpty ?? true) ? '[]' : fromSharePref!)
             as List;
@@ -48,7 +48,7 @@ abstract class PrinterDetailBase extends Cubit<PrinterDetailState> {
 
   void initState() async {
     emit(PrinterDetailStateLoadingDevices());
-    final fromSharePref = SharedRef.getString(PRINTER_DEVICES_KEY);
+    final fromSharePref = SharedRef.getString(printerDevicesKey);
     final map =
         jsonDecode((fromSharePref?.isEmpty ?? true) ? '[]' : fromSharePref!)
             as List;
@@ -103,7 +103,7 @@ abstract class PrinterDetailBase extends Cubit<PrinterDetailState> {
   }
 
   void _updateSharedPref() {
-    SharedRef.putString(PRINTER_DEVICES_KEY, jsonEncode(devices));
+    SharedRef.putString(printerDevicesKey, jsonEncode(devices));
   }
 
   void select({required PrinterDevice device}) {

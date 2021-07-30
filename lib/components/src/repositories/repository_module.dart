@@ -12,7 +12,7 @@ abstract class RepositoriesModule {
 class _RepositoriesModule implements RepositoriesModule {
   _RepositoriesModule(this._network);
 
-  NetworkModule _network;
+  final NetworkModule _network;
 
   @override
   VerifyOtpRepository get verifyOtpForForgotPassword =>

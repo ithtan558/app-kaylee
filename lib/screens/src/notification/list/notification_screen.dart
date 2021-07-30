@@ -26,13 +26,13 @@ class NotificationScreen extends StatefulWidget {
             ),
           ),
         ],
-        child: NotificationScreen._(),
+        child: const NotificationScreen(),
       );
 
-  NotificationScreen._();
+  const NotificationScreen({Key? key}) : super(key: key);
 
   @override
-  _NotificationScreenState createState() => new _NotificationScreenState();
+  _NotificationScreenState createState() => _NotificationScreenState();
 }
 
 class _NotificationScreenState extends KayleeState<NotificationScreen> {
@@ -126,7 +126,7 @@ class _NotificationScreenState extends KayleeState<NotificationScreen> {
             actions: <Widget>[
               Container(
                 height: double.infinity,
-                margin: EdgeInsets.only(right: Dimens.px16),
+                margin: const EdgeInsets.only(right: Dimens.px16),
                 alignment: Alignment.centerRight,
                 child: HyperLinkText(
                   text: Strings.xoaTatCa,
@@ -195,17 +195,15 @@ class _NotificationScreenState extends KayleeState<NotificationScreen> {
                             if (state.ended) return Container();
                             return Container(
                               padding: const EdgeInsets.only(top: Dimens.px16),
-                              child: CupertinoActivityIndicator(
-                                radius: Dimens.px16,
-                              ),
+                              child: const KayleeLoadingIndicator(),
                             );
                           },
                           separatorBuilder: (c, index) {
                             return Container(
                               height: Dimens.px1,
                               color: ColorsRes.textFieldBorder,
-                              margin:
-                                  EdgeInsets.symmetric(horizontal: Dimens.px16),
+                              margin: const EdgeInsets.symmetric(
+                                  horizontal: Dimens.px16),
                             );
                           },
                         );

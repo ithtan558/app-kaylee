@@ -15,13 +15,15 @@ class KayleeFlatButton extends StatelessWidget {
   final BorderRadius? borderRadius;
   final EdgeInsets? titlePadding;
 
-  KayleeFlatButton(
-      {this.onPress,
+  const KayleeFlatButton(
+      {Key? key,
+      this.onPress,
       this.title,
       this.child,
       this.background,
       this.borderRadius,
-      this.titlePadding});
+      this.titlePadding})
+      : super(key: key);
 
   factory KayleeFlatButton.normal({String? title, VoidCallback? onPress}) =>
       KayleeFlatButton(
@@ -36,7 +38,7 @@ class KayleeFlatButton extends StatelessWidget {
         title: title,
         onPress: onPress,
         borderRadius: BorderRadius.circular(Dimens.px5),
-        titlePadding: EdgeInsets.symmetric(horizontal: Dimens.px14),
+        titlePadding: const EdgeInsets.symmetric(horizontal: Dimens.px14),
       );
 
   factory KayleeFlatButton.withLabelDivider(
@@ -45,7 +47,7 @@ class KayleeFlatButton extends StatelessWidget {
         title: title,
         onPress: onPress,
         borderRadius: BorderRadius.circular(Dimens.px5),
-        titlePadding: EdgeInsets.symmetric(horizontal: Dimens.px16),
+        titlePadding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
       );
 
   factory KayleeFlatButton.filter(
@@ -59,15 +61,19 @@ class KayleeFlatButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: Dimens.px40,
-      child: FlatButton(
+      child: TextButton(
           onPressed: onPress,
-          padding: titlePadding ??
-              const EdgeInsets.symmetric(horizontal: Dimens.px8),
-          color: background ?? ColorsRes.hyper,
-          shape: RoundedRectangleBorder(
-              borderRadius: borderRadius ?? BorderRadius.circular(Dimens.px5)),
+          style: ButtonStyle(
+            padding: MaterialStateProperty.all(titlePadding ??
+                const EdgeInsets.symmetric(horizontal: Dimens.px8)),
+            backgroundColor:
+                MaterialStateProperty.all(background ?? ColorsRes.hyper),
+            shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                borderRadius:
+                    borderRadius ?? BorderRadius.circular(Dimens.px5))),
+          ),
           clipBehavior: Clip.antiAlias,
           child: child != null
               ? child!
@@ -85,11 +91,12 @@ class KayleeDateFilterButton extends StatefulWidget {
   final DateTime selectedDate;
   final Color? color;
 
-  KayleeDateFilterButton({
+  const KayleeDateFilterButton({
+    Key? key,
     required this.selectedDate,
     required this.onTap,
     this.color,
-  });
+  }) : super(key: key);
 
   @override
   _KayleeDateFilterButtonState createState() => _KayleeDateFilterButtonState();
@@ -102,8 +109,8 @@ class _KayleeDateFilterButtonState extends BaseState<KayleeDateFilterButton>
   @override
   void initState() {
     super.initState();
-    animController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 150));
+    animController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 150));
   }
 
   @override
@@ -134,7 +141,7 @@ class _KayleeDateFilterButtonState extends BaseState<KayleeDateFilterButton>
                 angle: pi * animController.value, child: child);
           },
           child: Image.asset(
-            Images.ic_triangle_down,
+            Images.icTriangleDown,
             color: Colors.white,
             width: Dimens.px16,
             height: Dimens.px16,
@@ -142,11 +149,13 @@ class _KayleeDateFilterButtonState extends BaseState<KayleeDateFilterButton>
         )
       ]),
       onPress: () async {
-        if (animController.isDismissed)
+        if (animController.isDismissed) {
           animController.forward(from: animController.value);
+        }
         final result = await widget.onTap();
-        if (animController.isCompleted && result)
+        if (animController.isCompleted && result) {
           animController.reverse(from: animController.value);
+        }
       },
     );
   }

@@ -10,7 +10,8 @@ class KayleeFloatButton extends StatefulWidget {
   final String? icon;
   final Widget? iconWidget;
 
-  KayleeFloatButton({this.onTap, this.icon, this.iconWidget});
+  const KayleeFloatButton({Key? key, this.onTap, this.icon, this.iconWidget})
+      : super(key: key);
 
   @override
   _KayleeFloatButtonState createState() => _KayleeFloatButtonState();
@@ -24,8 +25,8 @@ class _KayleeFloatButtonState extends State<KayleeFloatButton>
   @override
   void initState() {
     super.initState();
-    animController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 150));
+    animController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 150));
   }
 
   @override
@@ -134,7 +135,7 @@ class _KayleeFloatButtonState extends State<KayleeFloatButton>
                       color: ColorsRes.button,
                       size: Dimens.px16,
                     )
-                  : Icon(
+                  : const Icon(
                       Icons.add,
                       color: ColorsRes.button,
                       size: Dimens.px24,
@@ -149,7 +150,8 @@ class KayleeMenuFloatButton extends StatefulWidget {
   final MenuFloatItem? mainItem;
   final MenuFloatItem? secondItem;
 
-  KayleeMenuFloatButton({this.mainItem, this.secondItem});
+  const KayleeMenuFloatButton({Key? key, this.mainItem, this.secondItem})
+      : super(key: key);
 
   @override
   _KayleeMenuFloatButtonState createState() => _KayleeMenuFloatButtonState();
@@ -165,14 +167,14 @@ class _KayleeMenuFloatButtonState extends BaseState<KayleeMenuFloatButton>
   @override
   void initState() {
     super.initState();
-    animController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 150));
-    secondBtnAnim = Tween<double>(begin: 0, end: 1).animate(
-        CurvedAnimation(parent: animController, curve: Interval(0.3, 0.8)));
+    animController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 150));
+    secondBtnAnim = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(
+        parent: animController, curve: const Interval(0.3, 0.8)));
     _label2Animation = Tween<double>(begin: 0, end: 1).animate(
-        CurvedAnimation(parent: animController, curve: Interval(0.2, 1)));
-    _label1Animation = Tween<double>(begin: 0, end: 1).animate(
-        CurvedAnimation(parent: _label2Animation, curve: Interval(0.5, 1)));
+        CurvedAnimation(parent: animController, curve: const Interval(0.2, 1)));
+    _label1Animation = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(
+        parent: _label2Animation, curve: const Interval(0.5, 1)));
   }
 
   @override
@@ -185,9 +187,9 @@ class _KayleeMenuFloatButtonState extends BaseState<KayleeMenuFloatButton>
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        if (animController.isDismissed)
+        if (animController.isDismissed) {
           return true;
-        else {
+        } else {
           animController.reverse();
           return false;
         }
@@ -198,13 +200,14 @@ class _KayleeMenuFloatButtonState extends BaseState<KayleeMenuFloatButton>
             child: AnimatedBuilder(
               animation: animController,
               builder: (context, child) {
-                if (animController.isDismissed)
+                if (animController.isDismissed) {
                   return Container();
-                else
+                } else {
                   return Opacity(
                     opacity: animController.value,
                     child: child,
                   );
+                }
               },
               child: GestureDetector(
                 onTap: () {
@@ -243,13 +246,13 @@ class _KayleeMenuFloatButtonState extends BaseState<KayleeMenuFloatButton>
                 child: InkWell(
                   onTap: () {
                     animController.reverse();
-                    Future.delayed(Duration(milliseconds: 50), () {
+                    Future.delayed(const Duration(milliseconds: 50), () {
                       widget.secondItem?.onTap?.call();
                     });
                   },
-                  child: Center(
+                  child: const Center(
                     child: ImageIcon(
-                      AssetImage(Images.ic_list),
+                      AssetImage(Images.icList),
                       color: ColorsRes.hintText,
                       size: Dimens.px16,
                     ),
@@ -279,7 +282,7 @@ class _KayleeMenuFloatButtonState extends BaseState<KayleeMenuFloatButton>
                 title: widget.secondItem?.title ?? '',
                 onTap: () {
                   animController.reverse();
-                  Future.delayed(Duration(milliseconds: 50), () {
+                  Future.delayed(const Duration(milliseconds: 50), () {
                     widget.secondItem?.onTap?.call();
                   });
                 },
@@ -307,7 +310,7 @@ class _KayleeMenuFloatButtonState extends BaseState<KayleeMenuFloatButton>
                 title: widget.mainItem?.title ?? '',
                 onTap: () {
                   animController.reverse();
-                  Future.delayed(Duration(milliseconds: 50), () {
+                  Future.delayed(const Duration(milliseconds: 50), () {
                     widget.mainItem?.onTap?.call();
                   });
                 },
@@ -321,7 +324,7 @@ class _KayleeMenuFloatButtonState extends BaseState<KayleeMenuFloatButton>
               onTap: () {
                 if (animController.isCompleted) {
                   animController.reverse();
-                  Future.delayed(Duration(milliseconds: 50), () {
+                  Future.delayed(const Duration(milliseconds: 50), () {
                     widget.mainItem?.onTap?.call();
                   });
                 } else {
@@ -334,13 +337,13 @@ class _KayleeMenuFloatButtonState extends BaseState<KayleeMenuFloatButton>
                   return Transform.rotate(
                     angle: pi * animController.value,
                     child: animController.isCompleted
-                        ? Icon(
+                        ? const Icon(
                             Icons.add,
                             size: Dimens.px24,
                             color: ColorsRes.button,
                           )
-                        : ImageIcon(
-                            AssetImage(Images.ic_menu),
+                        : const ImageIcon(
+                            AssetImage(Images.icMenu),
                             size: Dimens.px16,
                             color: ColorsRes.button,
                           ),

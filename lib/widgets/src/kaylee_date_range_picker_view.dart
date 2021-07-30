@@ -311,7 +311,7 @@ class _KayleeDateRangePickerViewState
               ).copyWith(left: Dimens.px12, right: Dimens.px8),
             ),
             Image.asset(
-              Images.ic_calendar,
+              Images.icCalendar,
               width: Dimens.px16,
               height: Dimens.px16,
             )

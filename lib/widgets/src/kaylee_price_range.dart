@@ -13,7 +13,8 @@ class KayleePriceRange extends StatefulWidget {
   final String title;
   final KayleePriceRangeController? controller;
 
-  KayleePriceRange({this.title = Strings.gia, this.controller});
+  const KayleePriceRange({Key? key, this.title = Strings.gia, this.controller})
+      : super(key: key);
 
   @override
   _KayleePriceRangeState createState() => _KayleePriceRangeState();
@@ -94,7 +95,7 @@ class _KayleePriceRangeState extends BaseState<KayleePriceRange>
 class _CustomThumbShape extends SliderComponentShape {
   @override
   Size getPreferredSize(bool isEnabled, bool isDiscrete) =>
-      Size(Dimens.px32, Dimens.px32);
+      const Size.square(Dimens.px32);
 
   @override
   void paint(PaintingContext context, ui.Offset center,

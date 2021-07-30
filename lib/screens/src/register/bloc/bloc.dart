@@ -36,22 +36,22 @@ class RegisterScreenBloc extends Cubit<SingleModel<RegisterBody>> {
         onFailed: (code, {error}) {
           if (error != null) {
             switch (error.code) {
-              case ErrorCode.NAME_CODE:
+              case ErrorCode.nameCode:
                 return emit(NameErrorModel.copy(state
                   ..loading = false
                   ..error = error
                   ..code = code));
-              case ErrorCode.PHONE_CODE:
+              case ErrorCode.phoneCode:
                 return emit(PhoneErrorModel.copy(state
                   ..loading = false
                   ..error = error
                   ..code = code));
-              case ErrorCode.EMAIL_CODE:
+              case ErrorCode.emailCode:
                 return emit(EmailErrorModel.copy(state
                   ..loading = false
                   ..error = error
                   ..code = code));
-              case ErrorCode.PASSWORD_CODE:
+              case ErrorCode.passwordCode:
                 return emit(PasswordErrorModel.copy(state
                   ..loading = false
                   ..error = error

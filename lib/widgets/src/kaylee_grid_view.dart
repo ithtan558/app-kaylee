@@ -24,8 +24,9 @@ class KayleeGridView extends StatelessWidget {
   final double childAspectRatio;
   final WidgetBuilder? loadingBuilder;
 
-  KayleeGridView(
-      {required this.itemBuilder,
+  const KayleeGridView(
+      {Key? key,
+      required this.itemBuilder,
       this.padding,
       this.physics,
       this.shrinkWrap = false,
@@ -34,13 +35,14 @@ class KayleeGridView extends StatelessWidget {
       this.mainAxisSpacing,
       this.childAspectRatio = 1,
       this.itemCount,
-      this.loadingBuilder});
+      this.loadingBuilder})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final length = itemLength(itemCount);
     return GridView.builder(
-      padding: padding ?? EdgeInsets.all(Dimens.px16),
+      padding: padding ?? const EdgeInsets.all(Dimens.px16),
       physics: physics,
       gridDelegate: gridDelegate(
         childAspectRatio: childAspectRatio,
@@ -61,8 +63,9 @@ class KayleeGridView extends StatelessWidget {
               height: 0,
             ),
           );
-        } else // build main item
+        } else {
           return itemBuilder.call(context, index);
+        }
       },
       itemCount: length,
     );

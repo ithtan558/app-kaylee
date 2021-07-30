@@ -9,12 +9,13 @@ class CommOrderItem extends StatelessWidget {
   final String? name;
   final dynamic commissionAmount;
 
-  CommOrderItem({
+  const CommOrderItem({
+    Key? key,
     this.date,
     this.code,
     this.name,
     this.commissionAmount,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class CommOrderItem extends StatelessWidget {
       color: ColorsRes.textFieldBorder,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(Dimens.px5),
-        side: BorderSide(
+        side: const BorderSide(
           color: ColorsRes.textFieldBorder,
           width: Dimens.px1,
         ),

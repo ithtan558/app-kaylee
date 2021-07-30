@@ -23,12 +23,12 @@ class ExpirationScreen extends StatefulWidget {
             commonService: context.network.provideCommonService(),
             userService: context.network.provideUserService(),
           ),
-      child: ExpirationScreen._());
+      child: const ExpirationScreen());
 
-  ExpirationScreen._();
+  const ExpirationScreen({Key? key}) : super(key: key);
 
   @override
-  _ExpirationScreenState createState() => new _ExpirationScreenState();
+  _ExpirationScreenState createState() => _ExpirationScreenState();
 }
 
 class _ExpirationScreenState extends KayleeState<ExpirationScreen> {

@@ -10,12 +10,12 @@ class KayleeFullAddressInput extends StatefulWidget {
   final EdgeInsets? padding;
   final KayleeFullAddressController? controller;
 
-  KayleeFullAddressInput({Key? key, this.title, this.padding, this.controller})
+  const KayleeFullAddressInput(
+      {Key? key, this.title, this.padding, this.controller})
       : super(key: key);
 
   @override
-  _KayleeFullAddressInputState createState() =>
-      new _KayleeFullAddressInputState();
+  _KayleeFullAddressInputState createState() => _KayleeFullAddressInputState();
 }
 
 class _KayleeFullAddressInputState extends BaseState<KayleeFullAddressInput> {
@@ -90,7 +90,7 @@ class _KayleeFullAddressInputState extends BaseState<KayleeFullAddressInput> {
                       },
                     ),
                   ),
-                  SizedBox(width: Dimens.px8),
+                  const SizedBox(width: Dimens.px8),
                   Expanded(
                     child: KayleePickerTextField<Ward>(
                       hint: Strings.phuong,

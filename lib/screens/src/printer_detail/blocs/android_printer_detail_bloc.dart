@@ -7,7 +7,7 @@ class AndroidPrinterDetailBloc extends PrinterDetailBase
   @override
   void initState() async {
     emit(PrinterDetailStateLoadingDevices());
-    final fromSharePref = SharedRef.getString(PRINTER_DEVICES_KEY);
+    final fromSharePref = SharedRef.getString(printerDevicesKey);
     final map =
         jsonDecode(fromSharePref.isNullOrEmpty ? '[]' : fromSharePref!) as List;
     devices = map.map((e) => PrinterDevice.fromJson(e)).toList();

@@ -105,7 +105,7 @@ class __FilterButtonState extends BaseState<_FilterButton>
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: Dimens.px10),
                 child: Image.asset(
-                  Images.ic_options,
+                  Images.icOptions,
                   width: Dimens.px16,
                   height: Dimens.px16,
                 ),
@@ -125,7 +125,7 @@ class __FilterButtonState extends BaseState<_FilterButton>
                     );
                   },
                   child: Image.asset(
-                    Images.ic_triangle_down,
+                    Images.icTriangleDown,
                     width: Dimens.px24,
                     height: Dimens.px24,
                   ),

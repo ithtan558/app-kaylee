@@ -18,13 +18,13 @@ class CommissionListScreen extends StatefulWidget {
         create: (context) => CommissionListScreenBloc(
           employeeService: context.network.provideEmployeeService(),
         ),
-        child: CommissionListScreen._(),
+        child: const CommissionListScreen(),
       );
 
-  CommissionListScreen._();
+  const CommissionListScreen({Key? key}) : super(key: key);
 
   @override
-  _CommissionListScreenState createState() => new _CommissionListScreenState();
+  _CommissionListScreenState createState() => _CommissionListScreenState();
 }
 
 class _CommissionListScreenState extends KayleeState<CommissionListScreen> {
@@ -79,7 +79,7 @@ class _CommissionListScreenState extends KayleeState<CommissionListScreen> {
                   },
                   builder: (context, state) {
                     return KayleeGridView(
-                      padding: EdgeInsets.all(Dimens.px16),
+                      padding: const EdgeInsets.all(Dimens.px16),
                       childAspectRatio: 103 / 195,
                       itemBuilder: (c, index) {
                         final item = state.items!.elementAt(index);
@@ -98,11 +98,9 @@ class _CommissionListScreenState extends KayleeState<CommissionListScreen> {
                       itemCount: state.items?.length,
                       loadingBuilder: (context) {
                         if (state.ended) return Container();
-                        return Align(
+                        return const Align(
                           alignment: Alignment.topCenter,
-                          child: CupertinoActivityIndicator(
-                            radius: Dimens.px16,
-                          ),
+                          child: KayleeLoadingIndicator(),
                         );
                       },
                     );

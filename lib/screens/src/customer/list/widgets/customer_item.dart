@@ -9,7 +9,7 @@ import 'package:kaylee/widgets/widgets.dart';
 class CustomerItem extends StatelessWidget {
   final Customer customer;
 
-  CustomerItem({required this.customer});
+  const CustomerItem({Key? key, required this.customer}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

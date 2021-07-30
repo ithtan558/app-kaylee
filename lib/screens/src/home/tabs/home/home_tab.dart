@@ -13,13 +13,13 @@ import 'package:kaylee/utils/utils.dart';
 class HomeTab extends StatefulWidget {
   static Widget newInstance() => BlocProvider(
         create: (context) => ScrollOffsetBloc(),
-        child: HomeTab._(),
+        child: const HomeTab._(),
       );
 
-  HomeTab._();
+  const HomeTab._();
 
   @override
-  _HomeTabState createState() => new _HomeTabState();
+  _HomeTabState createState() => _HomeTabState();
 }
 
 class _HomeTabState extends KayleeState<HomeTab>
@@ -37,17 +37,17 @@ class _HomeTabState extends KayleeState<HomeTab>
         body: Container(
           height: double.infinity,
           width: double.infinity,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               image: DecorationImage(
                   image: AssetImage(
-                    Images.bg_home,
+                    Images.bgHome,
                   ),
                   fit: BoxFit.fill)),
           child: Column(
             children: <Widget>[
               BlocProvider<ScrollOffsetBloc>.value(
                   value: scrollOffsetBloc, child: HomeMenu.newInstance()),
-              if (userInfo.role != UserRole.EMPLOYEE)
+              if (userInfo.role != UserRole.employee)
                 Expanded(
                   child: SupplierList.newInstance(
                     onScroll: scrollOffsetBloc.addOffset,

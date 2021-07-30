@@ -10,12 +10,14 @@ class KayleeTabView extends StatefulWidget {
   final Widget? pageView;
   final Color? bgColor;
 
-  KayleeTabView(
-      {this.appBar,
+  const KayleeTabView(
+      {Key? key,
+      this.appBar,
       this.tabBar,
       this.floatingActionButton,
       this.pageView,
-      this.bgColor});
+      this.bgColor})
+      : super(key: key);
 
   @override
   _KayleeTabViewState createState() => _KayleeTabViewState();
@@ -42,7 +44,7 @@ class _KayleeTabViewState extends BaseState<KayleeTabView>
         children: [
           if (widget.tabBar != null)
             Container(
-              margin: EdgeInsets.only(top: Dimens.px16),
+              margin: const EdgeInsets.only(top: Dimens.px16),
               height: Dimens.px40,
               child: widget.tabBar,
             ),
@@ -74,12 +76,13 @@ class KayleeTabBar extends StatefulWidget {
   final String? Function(int index)? mapTitle;
   final EdgeInsets? padding;
 
-  KayleeTabBar({
+  const KayleeTabBar({
+    Key? key,
     required this.itemCount,
     required this.mapTitle,
     this.onSelected,
     this.padding,
-  });
+  }) : super(key: key);
 
   @override
   _KayleeTabBarState createState() => _KayleeTabBarState();
@@ -147,7 +150,9 @@ class KayleePageView extends StatefulWidget {
   final IndexedWidgetBuilder itemBuilder;
   final PageController? controller;
 
-  KayleePageView({this.itemCount, required this.itemBuilder, this.controller});
+  const KayleePageView(
+      {Key? key, this.itemCount, required this.itemBuilder, this.controller})
+      : super(key: key);
 
   @override
   _KayleePageViewState createState() => _KayleePageViewState();

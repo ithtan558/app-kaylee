@@ -6,7 +6,7 @@ import 'package:kaylee/widgets/widgets.dart';
 class HistoryOrderItem extends StatelessWidget {
   final OrderItem item;
 
-  HistoryOrderItem({required this.item});
+  const HistoryOrderItem({Key? key, required this.item}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,15 +20,15 @@ class HistoryOrderItem extends StatelessWidget {
               KayleeText.normal16W400(
                 'x${item.quantity} ',
               ),
-              Expanded(child: KayleeText.normal16W400('${item.name}')),
+              Expanded(child: KayleeText.normal16W400(item.name ?? '')),
               KayleePriceUnitText(item.total)
             ],
           ),
           Container(
-            margin: EdgeInsets.only(top: Dimens.px16),
+            margin: const EdgeInsets.only(top: Dimens.px16),
             width: double.infinity,
             height: 1,
-            decoration: new BoxDecoration(color: ColorsRes.textFieldBorder),
+            decoration: const BoxDecoration(color: ColorsRes.textFieldBorder),
           )
         ],
       ),

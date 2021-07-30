@@ -14,7 +14,7 @@ class NotifyItem extends StatefulWidget {
       : super(key: ValueKey(notification));
 
   @override
-  _NotifyItemState createState() => new _NotifyItemState();
+  _NotifyItemState createState() => _NotifyItemState();
 }
 
 class _NotifyItemState extends BaseState<NotifyItem> {
@@ -55,7 +55,7 @@ class _NotifyItemState extends BaseState<NotifyItem> {
                     Container(
                       width: Dimens.px16,
                       height: Dimens.px16,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                           color: ColorsRes.button, shape: BoxShape.circle),
                     ),
                   Expanded(

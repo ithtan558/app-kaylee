@@ -15,7 +15,8 @@ class PaymentMethodDialog extends StatefulWidget {
   final VoidCallback onConfirm;
   final OrderRequest orderRequest;
 
-  PaymentMethodDialog._({required this.onConfirm, required this.orderRequest});
+  const PaymentMethodDialog._(
+      {required this.onConfirm, required this.orderRequest});
 
   @override
   _PaymentMethodDialogState createState() => _PaymentMethodDialogState();
@@ -28,7 +29,7 @@ class _PaymentMethodDialogState extends KayleeState<PaymentMethodDialog> {
   Widget build(BuildContext context) {
     int discountAmount = ((_order.totalAmount) * (_order.discount ?? 0)) ~/ 100;
     int summary = (_order.totalAmount) - discountAmount;
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: Column(
         children: [
@@ -53,7 +54,7 @@ class _PaymentMethodDialogState extends KayleeState<PaymentMethodDialog> {
               children: [
                 _ExpandView(
                   title: Strings.tienMat,
-                  imageOfPaymentMethod: Images.ic_cash,
+                  imageOfPaymentMethod: Images.icCash,
                   expand: KayleeTextField.staticPrice(
                     title: Strings.soTien,
                     initPrice: summary,
@@ -63,25 +64,25 @@ class _PaymentMethodDialogState extends KayleeState<PaymentMethodDialog> {
                   color: ColorsRes.textFieldBorder,
                   height: Dimens.px1,
                 ),
-                _ExpandView(
+                const _ExpandView(
                   title: Strings.theTinDung,
-                  imageOfPaymentMethod: Images.ic_card,
+                  imageOfPaymentMethod: Images.icCard,
                 ),
                 Container(
                   color: ColorsRes.textFieldBorder,
                   height: Dimens.px1,
                 ),
-                _ExpandView(
+                const _ExpandView(
                   title: Strings.theAtm,
-                  imageOfPaymentMethod: Images.ic_card,
+                  imageOfPaymentMethod: Images.icCard,
                 ),
                 Container(
                   color: ColorsRes.textFieldBorder,
                   height: Dimens.px1,
                 ),
-                _ExpandView(
+                const _ExpandView(
                   title: Strings.viMomo,
-                  imageOfPaymentMethod: Images.ic_momo,
+                  imageOfPaymentMethod: Images.icMomo,
                 ),
               ],
             ),
@@ -127,7 +128,7 @@ class _ExpandView extends StatefulWidget {
   final String title;
   final Widget? expand;
 
-  _ExpandView(
+  const _ExpandView(
       {required this.imageOfPaymentMethod, required this.title, this.expand});
 
   @override
@@ -165,10 +166,10 @@ class _ExpandViewState extends KayleeState<_ExpandView> {
                           });
                         }
                       : null,
-                  customBorder: CircleBorder(),
+                  customBorder: const CircleBorder(),
                   child: Center(
                     child: Image.asset(
-                      Images.ic_down,
+                      Images.icDown,
                       width: Dimens.px16,
                       height: Dimens.px16,
                     ),

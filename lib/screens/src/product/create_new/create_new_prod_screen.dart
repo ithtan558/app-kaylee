@@ -73,13 +73,13 @@ class _CreateNewProdScreenState extends KayleeState<CreateNewProdScreen> {
             );
           } else {
             switch (state.error!.code) {
-              case ErrorCode.NAME_CODE:
+              case ErrorCode.nameCode:
                 nameFocus.requestFocus();
                 break;
-              case ErrorCode.PRICE_CODE:
+              case ErrorCode.priceCode:
                 priceFocus.requestFocus();
                 break;
-              case ErrorCode.CODE_CODE:
+              case ErrorCode.codeCode:
                 codeFocus.requestFocus();
                 break;
             }
@@ -203,7 +203,7 @@ class _CreateNewProdScreenState extends KayleeState<CreateNewProdScreen> {
                     textInputAction: TextInputAction.next,
                     nextFocusNode: nameFocus,
                     error: state.error?.code != null &&
-                            state.error!.code == ErrorCode.CODE_CODE
+                        state.error!.code == ErrorCode.codeCode
                         ? state.error!.message
                         : null,
                   ),
@@ -218,7 +218,7 @@ class _CreateNewProdScreenState extends KayleeState<CreateNewProdScreen> {
                     textInputAction: TextInputAction.next,
                     nextFocusNode: priceFocus,
                     error: state.error?.code != null &&
-                            state.error!.code == ErrorCode.NAME_CODE
+                        state.error!.code == ErrorCode.nameCode
                         ? state.error!.message
                         : null,
                   ),
@@ -240,7 +240,7 @@ class _CreateNewProdScreenState extends KayleeState<CreateNewProdScreen> {
                       focusNode: priceFocus,
                       nextFocusNode: descriptionFocus,
                       error: state.error?.code != null &&
-                              state.error!.code == ErrorCode.PRICE_CODE
+                          state.error!.code == ErrorCode.priceCode
                           ? state.error!.message
                           : null),
                 ),

@@ -100,11 +100,9 @@ class _StaffListScreenState extends KayleeState<StaffListScreen> {
                 itemCount: state.items?.length,
                 loadingBuilder: (context) {
                   if (state.ended) return Container();
-                  return Align(
+                  return const Align(
                     alignment: Alignment.topCenter,
-                    child: CupertinoActivityIndicator(
-                      radius: Dimens.px16,
-                    ),
+                    child: KayleeLoadingIndicator(),
                   );
                 },
               );

@@ -13,7 +13,7 @@ class ContactUsBloc extends BaseBloc {
     if (e is LoadContactResetPassScrEvent) {
       yield LoadingState();
       RequestHandler(
-        request: commonService.getContent(Content.CONTACT_US_HASHTAG),
+        request: commonService.getContent(Content.contactUsHashtag),
         onSuccess: ({message, result}) {
           _content = result;
           add(SuccessLoadContactResetPassScrEvent(_content!));

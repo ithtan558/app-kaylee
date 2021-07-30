@@ -27,7 +27,7 @@ class CommSerOrderList extends StatefulWidget {
           ));
   final ScrollController scrollController;
 
-  CommSerOrderList._({required this.scrollController});
+  const CommSerOrderList._({required this.scrollController});
 
   @override
   _CommSerOrderListState createState() => _CommSerOrderListState();
@@ -80,7 +80,7 @@ class _CommSerOrderListState extends KayleeState<CommSerOrderList> {
                       right: Dimens.px16,
                       left: Dimens.px16),
                   controller: widget.scrollController,
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   itemBuilder: (c, index) {
                     final item = state.items!.elementAt(index);
                     return CommOrderItem(
@@ -91,7 +91,7 @@ class _CommSerOrderListState extends KayleeState<CommSerOrderList> {
                     );
                   },
                   separatorBuilder: (c, index) {
-                    return SizedBox(
+                    return const SizedBox(
                       height: Dimens.px16,
                     );
                   },
@@ -99,9 +99,7 @@ class _CommSerOrderListState extends KayleeState<CommSerOrderList> {
                     if (state.ended) return Container();
                     return Container(
                       padding: const EdgeInsets.only(top: Dimens.px16),
-                      child: CupertinoActivityIndicator(
-                        radius: Dimens.px16,
-                      ),
+                      child: const KayleeLoadingIndicator(),
                     );
                   },
                   itemCount: state.items?.length ?? 0);

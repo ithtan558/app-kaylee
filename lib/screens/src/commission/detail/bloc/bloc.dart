@@ -33,7 +33,7 @@ class CommissionDetailScreenBloc extends Cubit<SingleModel> {
       ),
       onSuccess: ({message, result}) {
         emit(CommissionDetailModel.copy(
-          this.state
+          state
             ..loading = false
             ..item = result,
         ));

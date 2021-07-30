@@ -4,14 +4,14 @@ import 'package:anth_package/anth_package.dart';
 import 'package:kaylee/services/services.dart';
 
 abstract class NetworkModule extends Network {
-  static const BASE_URL = 'http://api.kaylee.vn/';
-  static const AUTHORIZATION = 'Authorization';
+  static const baseUrl = 'http://api.kaylee.vn/';
+  static const authorization = 'Authorization';
 
   NetworkModule(String baseUrl) : super(baseUrl) {
     HttpOverrides.global = IgnoreHandShakeHttpOverrides();
   }
 
-  factory NetworkModule.init() => _NetworkModuleImpl(BASE_URL);
+  factory NetworkModule.init() => _NetworkModuleImpl(baseUrl);
 
   UserService provideUserService();
 

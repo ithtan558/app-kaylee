@@ -28,7 +28,7 @@ const _$OrderStatusEnumMap = {
   OrderStatus.ordered: 1,
   OrderStatus.waiting: 2,
   OrderStatus.finished: 3,
-  OrderStatus.not_paid: 4,
+  OrderStatus.notPaid: 4,
   OrderStatus.cancel: 5,
   OrderStatus.accepted: 6,
   OrderStatus.refund: 7,

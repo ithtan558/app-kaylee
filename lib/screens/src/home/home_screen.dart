@@ -18,12 +18,13 @@ import 'package:kaylee/utils/deeplink_helper.dart';
 import 'package:kaylee/widgets/src/kaylee_bottom_bar.dart';
 
 class HomeScreen extends StatefulWidget {
-  static Widget newInstance() => HomeScreen._();
+  static Widget newInstance() => const HomeScreen();
 
-  HomeScreen._();
+  @visibleForTesting
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  _HomeScreenState createState() => new _HomeScreenState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends KayleeState<HomeScreen> {
@@ -38,8 +39,8 @@ class _HomeScreenState extends KayleeState<HomeScreen> {
   void initState() {
     super.initState();
     var initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
-    var initializationSettingsIOS = IOSInitializationSettings();
+        const AndroidInitializationSettings('@mipmap/ic_launcher');
+    var initializationSettingsIOS = const IOSInitializationSettings();
     var initializationSettings = InitializationSettings(
         android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
 
@@ -55,10 +56,9 @@ class _HomeScreenState extends KayleeState<HomeScreen> {
       _onResumeFcm(message);
     });
 
-    FirebaseMessaging.instance.getInitialMessage()
-      ..then((message) {
-        _onLaunchFcm(message);
-      });
+    FirebaseMessaging.instance.getInitialMessage().then((message) {
+      _onLaunchFcm(message);
+    });
   }
 
   ///open local notification
@@ -119,7 +119,7 @@ class _HomeScreenState extends KayleeState<HomeScreen> {
     final androidDetail = AndroidNotificationDetails(
         notificationId, 'FcmNotification', '',
         priority: Priority.high, importance: Importance.max);
-    final iosDetail = IOSNotificationDetails();
+    const iosDetail = IOSNotificationDetails();
     final platformDetail =
         NotificationDetails(android: androidDetail, iOS: iosDetail);
     notificationsPlugin.show(
@@ -143,7 +143,7 @@ class _HomeScreenState extends KayleeState<HomeScreen> {
         pageSnapping: true,
         allowImplicitScrolling: false,
         controller: _pageController,
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         children: [
           HomeTab.newInstance(),
           CashierTab.newInstance(),
@@ -155,7 +155,8 @@ class _HomeScreenState extends KayleeState<HomeScreen> {
         pageController: _pageController,
         onTapChanged: (index) {
           _pageController.animateToPage(index,
-              curve: Curves.easeOutCirc, duration: Duration(milliseconds: 200));
+              curve: Curves.easeOutCirc,
+              duration: const Duration(milliseconds: 200));
         },
       ),
     );

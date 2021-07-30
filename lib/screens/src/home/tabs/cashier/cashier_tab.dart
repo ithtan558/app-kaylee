@@ -13,13 +13,13 @@ class CashierTab extends StatefulWidget {
   static Widget newInstance() => BlocProvider(
         create: (context) =>
             CashierTabBloc(orderService: context.network.provideOrderService()),
-        child: CashierTab._(),
+        child: const CashierTab._(),
       );
 
-  CashierTab._();
+  const CashierTab._();
 
   @override
-  _CashierTabState createState() => new _CashierTabState();
+  _CashierTabState createState() => _CashierTabState();
 }
 
 class _CashierTabState extends KayleeState<CashierTab>
@@ -75,7 +75,7 @@ class _CashierTabState extends KayleeState<CashierTab>
             },
             builder: (context, state) {
               return KayleeListView(
-                  padding: EdgeInsets.all(Dimens.px16),
+                  padding: const EdgeInsets.all(Dimens.px16),
                   itemBuilder: (c, index) {
                     return CashierItem.newInstance(
                         order: state.items!.elementAt(index));
@@ -84,11 +84,11 @@ class _CashierTabState extends KayleeState<CashierTab>
                     if (state.ended) return Container();
                     return Container(
                       padding: const EdgeInsets.only(top: Dimens.px16),
-                      child: KayleeLoadingIndicator(),
+                      child: const KayleeLoadingIndicator(),
                     );
                   },
                   separatorBuilder: (c, index) {
-                    return SizedBox(height: Dimens.px16);
+                    return const SizedBox(height: Dimens.px16);
                   },
                   itemCount: state.items?.length ?? 0);
             },

@@ -20,13 +20,13 @@ class HistoryOrderDetailScreen extends StatefulWidget {
             orderService: context.network.provideOrderService(),
             order: context.getArguments<Order>()!,
           ),
-      child: HistoryOrderDetailScreen._());
+      child: const HistoryOrderDetailScreen());
 
-  HistoryOrderDetailScreen._();
+  const HistoryOrderDetailScreen({Key? key}) : super(key: key);
 
   @override
   _HistoryOrderDetailScreenState createState() =>
-      new _HistoryOrderDetailScreenState();
+      _HistoryOrderDetailScreenState();
 }
 
 class _HistoryOrderDetailScreenState
@@ -71,7 +71,7 @@ class _HistoryOrderDetailScreenState
                     current is HistoryOrderDetailModel,
                 builder: (context, state) {
                   return CustomScrollView(
-                    physics: BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     slivers: [
                       SliverToBoxAdapter(
                         child: Padding(

@@ -16,7 +16,7 @@ class HistoryOrderDetailBloc extends Cubit<SingleModel<Order>> {
       onSuccess: ({message, result}) {
         emit(HistoryOrderDetailModel.copy(state
           ..loading = false
-          ..item = this.order = result));
+          ..item = order = result));
       },
       onFailed: (code, {error}) {
         emit(SingleModel.copy(state

@@ -31,8 +31,8 @@ class _FilterButtonState<T extends Filter> extends BaseState<FilterButton<T>> {
   Widget build(BuildContext context) {
     return KayleeAppBarAction.iconButton(
       icon: widget.controller?.isEmptyFilter ?? true
-          ? Images.ic_search
-          : Images.ic_search_active,
+          ? Images.icSearch
+          : Images.icSearchActive,
       iconColor:
           (widget.controller?.isEmptyFilter ?? true) ? null : ColorsRes.hyper,
       onTap: () {

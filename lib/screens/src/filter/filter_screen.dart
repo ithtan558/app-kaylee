@@ -24,7 +24,7 @@ abstract class KayleeFilterAction {
 class FilterScreen<T extends Filter> extends StatefulWidget {
   final KayleeFilterInterface<T>? controller;
 
-  FilterScreen({this.controller});
+  const FilterScreen({Key? key, this.controller}) : super(key: key);
 
   @override
   _FilterScreenState<T> createState() => _FilterScreenState<T>();
@@ -154,7 +154,7 @@ class _FilterScreenState<T extends Filter> extends BaseState<FilterScreen<T>> {
 class BrandFilterView extends StatefulWidget {
   final KayleeFilterInterface<BrandFilter>? controller;
 
-  BrandFilterView({this.controller});
+  const BrandFilterView({Key? key, this.controller}) : super(key: key);
 
   @override
   _BrandFilterViewState createState() => _BrandFilterViewState();
@@ -222,7 +222,7 @@ class _BrandFilterViewState extends BaseState<BrandFilterView>
 class StaffFilterView extends StatefulWidget {
   final KayleeFilterInterface<StaffFilter>? controller;
 
-  StaffFilterView({this.controller});
+  const StaffFilterView({Key? key, this.controller}) : super(key: key);
 
   @override
   _StaffFilterViewState createState() => _StaffFilterViewState();
@@ -305,7 +305,7 @@ class _StaffFilterViewState extends BaseState<StaffFilterView>
 class CustomerFilterView extends StatefulWidget {
   final KayleeFilterInterface<CustomerFilter>? controller;
 
-  CustomerFilterView({this.controller});
+  const CustomerFilterView({Key? key, this.controller}) : super(key: key);
 
   @override
   _CustomerFilterViewState createState() => _CustomerFilterViewState();
@@ -388,7 +388,7 @@ class _CustomerFilterViewState extends BaseState<CustomerFilterView>
 class ServiceFilterView extends StatefulWidget {
   final KayleeFilterInterface<ServiceFilter>? controller;
 
-  ServiceFilterView({this.controller});
+  const ServiceFilterView({Key? key, this.controller}) : super(key: key);
 
   @override
   _ServiceFilterViewState createState() => _ServiceFilterViewState();
@@ -472,7 +472,7 @@ class _ServiceFilterViewState extends BaseState<ServiceFilterView>
 class ProductFilterView extends StatefulWidget {
   final KayleeFilterInterface<ProductFilter>? controller;
 
-  ProductFilterView({this.controller});
+  const ProductFilterView({Key? key, this.controller}) : super(key: key);
 
   @override
   _ProductFilterViewState createState() => _ProductFilterViewState();
@@ -556,7 +556,7 @@ class _ProductFilterViewState extends BaseState<ProductFilterView>
 class CommissionFilterView extends StatefulWidget {
   final KayleeFilterInterface<CommissionFilter>? controller;
 
-  CommissionFilterView({this.controller});
+  const CommissionFilterView({Key? key, this.controller}) : super(key: key);
 
   @override
   _CommissionFilterViewState createState() => _CommissionFilterViewState();
@@ -639,7 +639,8 @@ class _CommissionFilterViewState extends BaseState<CommissionFilterView>
 class ReservationFilterFilterView extends StatefulWidget {
   final KayleeFilterInterface<ReservationFilter>? controller;
 
-  ReservationFilterFilterView({this.controller});
+  const ReservationFilterFilterView({Key? key, this.controller})
+      : super(key: key);
 
   @override
   _ReservationFilterViewState createState() => _ReservationFilterViewState();

@@ -36,7 +36,7 @@ class _CartModuleImpl extends CartModule {
   @override
   void updateOrderInfo(OrderRequest? order) {
     _order ??= OrderRequest();
-    this._order!
+    _order!
       ..id = order?.id ?? _order!.id
       ..cartItems = order?.cartItems ?? _order!.cartItems
       ..cartSuppInfo = order?.cartSuppInfo ?? _order!.cartSuppInfo
@@ -72,30 +72,28 @@ class _CartModuleImpl extends CartModule {
           notContainItems.add(cartItem);
         } catch (_) {}
       });
-
-      notContainItems.forEach((notContainItem) {
+      for (var notContainItem in notContainItems) {
         _order!.cartItems!.removeWhere((cartItem) =>
             cartItem.isService &&
             cartItem.serviceId == notContainItem.serviceId);
-      });
+      }
     } else if (items is List<Product>) {
-      (_order!.cartItems!.where((cartItem) => cartItem.isProduct))
-          .forEach((cartItem) {
+      for (var cartItem
+          in _order!.cartItems!.where((cartItem) => cartItem.isProduct)) {
         try {
           newItems.singleWhere(
               (newItem) => newItem.productId == cartItem.productId);
           notContainItems.add(cartItem);
         } catch (_) {}
-      });
+      }
 
-      notContainItems.forEach((notContainItem) {
+      for (var notContainItem in notContainItems) {
         _order!.cartItems!.removeWhere((cartItem) =>
             cartItem.isProduct &&
             cartItem.productId == notContainItem.productId);
-      });
+      }
     }
-
-    newItems.forEach((newItem) {
+    for (var newItem in newItems) {
       final oldItemIndex = _order!.cartItems!.indexWhere(
         (cartItem) =>
             (cartItem.serviceId.isNotNull &&
@@ -110,7 +108,7 @@ class _CartModuleImpl extends CartModule {
       }
       _order!.cartItems!.removeAt(oldItemIndex);
       _order!.cartItems!.insert(oldItemIndex, newItem);
-    });
+    }
   }
 
   @override
@@ -187,7 +185,7 @@ class _CartModuleImpl extends CartModule {
 
   @override
   void clear() {
-    this._order = null;
+    _order = null;
   }
 
   @override

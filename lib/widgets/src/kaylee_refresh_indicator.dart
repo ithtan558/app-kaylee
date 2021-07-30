@@ -8,12 +8,14 @@ class KayleeRefreshIndicator extends StatelessWidget {
   ///dùng cho những action cần thực hiện trước khi fresh list
   final RefreshCallback? onRefresh;
 
-  KayleeRefreshIndicator({this.controller, this.child, this.onRefresh});
+  const KayleeRefreshIndicator(
+      {Key? key, this.controller, this.child, this.onRefresh})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-      child: child ?? SizedBox(),
+      child: child ?? const SizedBox.shrink(),
       onRefresh: () async {
         await onRefresh?.call();
         controller?.refresh();

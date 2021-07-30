@@ -6,14 +6,15 @@ class KayleeHorizontalDivider extends StatelessWidget {
   final double width;
 
   const KayleeHorizontalDivider(
-      {this.height = 1, this.width = double.infinity});
+      {Key? key, this.height = 1, this.width = double.infinity})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: width,
       height: height,
-      decoration: new BoxDecoration(color: ColorsRes.textFieldBorder),
+      decoration: const BoxDecoration(color: ColorsRes.textFieldBorder),
     );
   }
 }

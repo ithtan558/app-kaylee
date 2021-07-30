@@ -4,7 +4,7 @@ import 'package:anth_package/anth_package.dart';
 import 'package:flutter/foundation.dart';
 import 'package:kaylee/models/models.dart';
 
-const _SHARE_REF_AUTHENTICATE = 'SHARE_REF_LOGIN_INFO';
+const _shareRefAuthenticate = 'SHARE_REF_LOGIN_INFO';
 
 abstract class UserModule {
   factory UserModule.init() = _UserModuleImpl._;
@@ -36,18 +36,18 @@ class _UserModuleImpl extends UserModule {
   void updateUserInfo(LoginResult auth) {
     loginResult = auth;
     final json = jsonEncode(auth);
-    SharedRef.putString(_SHARE_REF_AUTHENTICATE, json);
+    SharedRef.putString(_shareRefAuthenticate, json);
   }
 
   @override
   void removeUserInfo() {
     loginResult = LoginResult();
-    SharedRef.putString(_SHARE_REF_AUTHENTICATE, jsonEncode({}));
+    SharedRef.putString(_shareRefAuthenticate, jsonEncode({}));
   }
 
   @override
   void forceGetUserInfo({ValueSetter<LoginResult>? callback}) {
-    final json = SharedRef.getString(_SHARE_REF_AUTHENTICATE);
+    final json = SharedRef.getString(_shareRefAuthenticate);
     loginResult = LoginResult.fromJson(jsonDecode(json ?? '{}'));
     if (callback != null) {
       callback(loginResult);

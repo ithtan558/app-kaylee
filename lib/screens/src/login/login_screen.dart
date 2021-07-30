@@ -14,7 +14,7 @@ import 'bloc/bloc.dart';
 import 'bloc/state.dart';
 
 enum LoginScreenOpenFrom {
-  LOGIN_DIALOG,
+  loginDialog,
 }
 
 class LoginScreenData {
@@ -27,13 +27,14 @@ class LoginScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<LoginScreenBloc>(
         create: (context) =>
             LoginScreenBloc(userService: context.network.provideUserService()),
-        child: LoginScreen._(),
+        child: const LoginScreen(),
       );
 
-  LoginScreen._();
+  @visibleForTesting
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  _LoginScreenState createState() => new _LoginScreenState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends KayleeState<LoginScreen> {
@@ -70,16 +71,18 @@ class _LoginScreenState extends KayleeState<LoginScreen> {
                 padding: const EdgeInsets.only(top: Dimens.px38),
                 child: SizedBox(
                   height: Dimens.px56,
-                  child: FlatButton(
+                  child: TextButton(
                     onPressed: () {
                       popScreen();
                     },
-                    shape: CircleBorder(),
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all(const CircleBorder()),
+                    ),
                     child: Center(
                       child: Row(
                         children: [
                           Image.asset(
-                            Images.ic_arrow_back,
+                            Images.icArrowBack,
                             width: 13,
                             height: 13,
                           ),
@@ -97,7 +100,7 @@ class _LoginScreenState extends KayleeState<LoginScreen> {
           ),
           Expanded(
             child: SingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: Dimens.px16),
+              padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
               child: BlocConsumer<LoginScreenBloc, dynamic>(
                 listener: (context, state) async {
                   if (state is LoadingState) {
@@ -133,8 +136,7 @@ class _LoginScreenState extends KayleeState<LoginScreen> {
                         ],
                       ),
                       onDismiss: () {
-                        if (data?.openFrom ==
-                            LoginScreenOpenFrom.LOGIN_DIALOG) {
+                        if (data?.openFrom == LoginScreenOpenFrom.loginDialog) {
                           popScreen();
                         } else {
                           context.pushToTop(PageIntent(screen: HomeScreen));
@@ -147,19 +149,19 @@ class _LoginScreenState extends KayleeState<LoginScreen> {
                   return Column(
                     children: [
                       Container(
-                          margin: EdgeInsets.only(top: 22),
+                          margin: const EdgeInsets.only(top: 22),
                           alignment: Alignment.centerLeft,
                           child: KayleeText.normal26W700(
                             Strings.dangNhap,
                           )),
                       Container(
-                          margin: EdgeInsets.only(top: Dimens.px8),
+                          margin: const EdgeInsets.only(top: Dimens.px8),
                           alignment: Alignment.centerLeft,
                           child: KayleeText.hint16W400(
                             Strings.vuiLongDangNhap,
                           )),
                       Container(
-                          margin: EdgeInsets.only(top: Dimens.px80),
+                          margin: const EdgeInsets.only(top: Dimens.px80),
                           alignment: Alignment.centerLeft,
                           child: KayleeTextField.phoneInput(
                             textInputAction: TextInputAction.next,
@@ -171,7 +173,7 @@ class _LoginScreenState extends KayleeState<LoginScreen> {
                                 : null,
                           )),
                       Container(
-                          margin: EdgeInsets.only(top: Dimens.px16),
+                          margin: const EdgeInsets.only(top: Dimens.px16),
                           alignment: Alignment.centerLeft,
                           child: KayleeTextField.password(
                             controller: _passTController,
@@ -182,7 +184,7 @@ class _LoginScreenState extends KayleeState<LoginScreen> {
                                 : null,
                           )),
                       Container(
-                        margin: EdgeInsets.only(top: Dimens.px16),
+                        margin: const EdgeInsets.only(top: Dimens.px16),
                         child: KayLeeRoundedButton.normal(
                           onPressed: () async {
                             bloc.doLogin(LoginBody(
@@ -197,7 +199,7 @@ class _LoginScreenState extends KayleeState<LoginScreen> {
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.only(top: Dimens.px32),
+                        margin: const EdgeInsets.only(top: Dimens.px32),
                         child: GestureDetector(
                           onTap: () {
                             pushScreen(
@@ -212,9 +214,9 @@ class _LoginScreenState extends KayleeState<LoginScreen> {
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.only(
+                        margin: const EdgeInsets.only(
                             top: Dimens.px84, bottom: Dimens.px32),
-                        child: Go2RegisterText(),
+                        child: const Go2RegisterText(),
                       ),
                     ],
                   );

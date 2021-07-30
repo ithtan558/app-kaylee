@@ -14,10 +14,10 @@ class BrandListScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<BrandListBloc>(
         create: (context) =>
             BrandListBloc(brandService: context.network.provideBrandService()),
-        child: BrandListScreen._(),
+        child: const BrandListScreen(),
       );
 
-  BrandListScreen._();
+  const BrandListScreen({Key? key}) : super(key: key);
 
   @override
   _BrandListScreenState createState() => _BrandListScreenState();
@@ -71,13 +71,12 @@ class _BrandListScreenState extends KayleeState<BrandListScreen> {
               );
             },
             separatorBuilder: (c, index) {
-              return SizedBox(
+              return const SizedBox(
                 height: Dimens.px16,
               );
             },
-            loadingIndicatorBuilder: (context) => CupertinoActivityIndicator(
-              radius: Dimens.px16,
-            ),
+            loadingIndicatorBuilder: (context) =>
+                const KayleeLoadingIndicator(),
             padding: const EdgeInsets.only(
                 bottom: Dimens.px16,
                 top: Dimens.px8,

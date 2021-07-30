@@ -31,7 +31,7 @@ UserInfo _$UserInfoFromJson(Map<String, dynamic> json) {
         ? null
         : Ward.fromJson(json['wards'] as Map<String, dynamic>),
     role: _$enumDecodeNullable(_$UserRoleEnumMap, json['role_id'],
-        unknownValue: UserRole.EMPLOYEE),
+        unknownValue: UserRole.employee),
   );
 }
 
@@ -91,8 +91,8 @@ K? _$enumDecodeNullable<K, V>(
 }
 
 const _$UserRoleEnumMap = {
-  UserRole.SUPER_ADMIN: 1,
-  UserRole.MANAGER: 2,
-  UserRole.BRAND_MANAGER: 3,
-  UserRole.EMPLOYEE: 4,
+  UserRole.superAdmin: 1,
+  UserRole.manager: 2,
+  UserRole.brandManager: 3,
+  UserRole.employee: 4,
 };

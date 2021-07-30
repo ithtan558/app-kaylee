@@ -41,9 +41,9 @@ class Brand {
   District? district;
   Ward? wards;
 
-  StartTime get start => StartTime(time: this.startTime);
+  StartTime get start => StartTime(time: startTime);
 
-  EndTime get end => EndTime(time: this.endTime);
+  EndTime get end => EndTime(time: endTime);
 
   @JsonKey(ignore: true)
   bool selected;

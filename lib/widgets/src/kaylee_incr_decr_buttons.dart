@@ -13,17 +13,19 @@ class KayleeIncrAndDecrButtons extends StatefulWidget {
   final Color? btnBgColor;
   final Color? btnIconColor;
 
-  KayleeIncrAndDecrButtons(
-      {this.initAmount,
+  const KayleeIncrAndDecrButtons(
+      {Key? key,
+      this.initAmount,
       this.onAmountChange,
       this.amountMin,
       this.amountMax,
       this.btnBgColor,
-      this.btnIconColor});
+      this.btnIconColor})
+      : super(key: key);
 
   @override
   _KayleeIncrAndDecrButtonsState createState() =>
-      new _KayleeIncrAndDecrButtonsState();
+      _KayleeIncrAndDecrButtonsState();
 }
 
 class _KayleeIncrAndDecrButtonsState
@@ -51,11 +53,12 @@ class _KayleeIncrAndDecrButtonsState
       children: <Widget>[
         GestureDetector(
           onTap: () {
-            if (current > (widget.amountMin ?? _kDefaultAmountMin))
+            if (current > (widget.amountMin ?? _kDefaultAmountMin)) {
               setState(() {
                 current--;
                 widget.onAmountChange?.call(current);
               });
+            }
           },
           child: Container(
             clipBehavior: Clip.antiAlias,
@@ -75,7 +78,7 @@ class _KayleeIncrAndDecrButtonsState
           ),
         ),
         Container(
-          margin: EdgeInsets.symmetric(horizontal: Dimens.px16),
+          margin: const EdgeInsets.symmetric(horizontal: Dimens.px16),
           child: KayleeText.normal16W500(
             '$current',
             maxLines: 1,
@@ -84,11 +87,12 @@ class _KayleeIncrAndDecrButtonsState
         ),
         GestureDetector(
           onTap: () {
-            if (widget.amountMax == null || current < widget.amountMax!)
+            if (widget.amountMax == null || current < widget.amountMax!) {
               setState(() {
                 current++;
                 widget.onAmountChange?.call(current);
               });
+            }
           },
           child: Container(
             clipBehavior: Clip.antiAlias,
@@ -97,7 +101,7 @@ class _KayleeIncrAndDecrButtonsState
             decoration: BoxDecoration(
               color: widget.btnBgColor ?? Colors.white,
               shape: BoxShape.circle,
-              border: Border.fromBorderSide(
+              border: const Border.fromBorderSide(
                   BorderSide(color: ColorsRes.button, width: 1.5)),
             ),
             child: Icon(

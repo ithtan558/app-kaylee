@@ -30,9 +30,9 @@ class PrinterDevice {
 
   bool isEqual(PrinterDevice device) {
     if (isWifi) {
-      return device.ip == this.ip;
+      return device.ip == ip;
     } else if (isBluetooth) {
-      return device.address == this.address;
+      return device.address == address;
     }
     return false;
   }

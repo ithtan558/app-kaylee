@@ -10,12 +10,12 @@ import 'package:kaylee/screens/src/notification/list/notification_screen.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class AccountTab extends StatefulWidget {
-  static Widget newInstance() => AccountTab._();
+  static Widget newInstance() => const AccountTab();
 
-  AccountTab._();
+  const AccountTab({Key? key}) : super(key: key);
 
   @override
-  _AccountTabState createState() => new _AccountTabState();
+  _AccountTabState createState() => _AccountTabState();
 }
 
 class _AccountTabState extends BaseState<AccountTab> {
@@ -35,10 +35,10 @@ class _AccountTabState extends BaseState<AccountTab> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            ProfileWidget(),
+            const ProfileWidget(),
             _buildMenuItem(
                 title: Strings.thongBao,
-                icon: Images.ic_acc_notify,
+                icon: Images.icAccNotify,
                 onClick: () {
                   pushScreen(PageIntent(screen: NotificationScreen));
                 }),
@@ -50,31 +50,31 @@ class _AccountTabState extends BaseState<AccountTab> {
             //     }),
             _buildMenuItem(
                 title: Strings.thongTinUngDung,
-                icon: Images.ic_acc_about_app,
+                icon: Images.icAccAboutApp,
                 onClick: () {
                   pushScreen(PageIntent(screen: AboutScreen));
                 }),
             _buildMenuItem(
                 title: Strings.quanlyDonDh,
-                icon: Images.ic_acc_orderlist,
+                icon: Images.icAccOrderlist,
                 onClick: () {
                   pushScreen(PageIntent(screen: MyOrdersScreen));
                 }),
             _buildMenuItem(
                 title: Strings.caiDatMayIn,
-                icon: Images.ic_acc_guide,
+                icon: Images.icAccGuide,
                 onClick: () {
                   pushScreen(PageIntent(screen: PrinterDetailScreen));
                 }),
             _buildMenuItem(
                 title: Strings.giaHanUngDung,
-                icon: Images.ic_acc_guide,
+                icon: Images.icAccGuide,
                 onClick: () {
                   pushScreen(PageIntent(screen: ExpirationScreen));
                 }),
             _buildMenuItem(
                 title: Strings.dangXuat,
-                icon: Images.ic_acc_logout,
+                icon: Images.icAccLogout,
                 showBtmDivider: false,
                 showEndingIcon: false,
                 onClick: context.bloc<AppBloc>()!.loggedOut),
@@ -115,7 +115,7 @@ class _AccountTabState extends BaseState<AccountTab> {
                 ),
                 if (showEndingIcon)
                   Image.asset(
-                    Images.ic_right,
+                    Images.icRight,
                     width: Dimens.px16,
                     height: Dimens.px16,
                   )
@@ -127,7 +127,7 @@ class _AccountTabState extends BaseState<AccountTab> {
           Container(
               height: 1,
               margin: const EdgeInsets.symmetric(horizontal: Dimens.px16),
-              decoration: BoxDecoration(color: ColorsRes.textFieldBorder))
+              decoration: const BoxDecoration(color: ColorsRes.textFieldBorder))
       ],
     );
   }

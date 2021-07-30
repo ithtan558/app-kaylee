@@ -22,16 +22,16 @@ class CommissionDetailScreenData {
 
 class CommissionDetailScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider(
-    create: (context) => CommissionDetailScreenBloc(
+        create: (context) => CommissionDetailScreenBloc(
             commissionService: context.network.provideCommissionService(),
             employee:
                 context.getArguments<CommissionDetailScreenData>()!.employee,
             startDate:
                 context.getArguments<CommissionDetailScreenData>()!.date),
-        child: CommissionDetailScreen._(),
+        child: const CommissionDetailScreen(),
       );
 
-  CommissionDetailScreen._();
+  const CommissionDetailScreen({Key? key}) : super(key: key);
 
   @override
   _CommissionDetailScreenState createState() => _CommissionDetailScreenState();
@@ -108,7 +108,7 @@ class _CommissionDetailScreenState extends KayleeState<CommissionDetailScreen> {
               Padding(
                 padding: const EdgeInsets.only(top: Dimens.px16),
                 child: KayleeText.normal16W500(
-                  '${_bloc.employee.name}',
+                  _bloc.employee.name ?? '',
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -166,7 +166,7 @@ class _CommissionDetailScreenState extends KayleeState<CommissionDetailScreen> {
                         price: data.commissionProduct?.total,
                       ),
                     ),
-                    SizedBox(width: Dimens.px16),
+                    const SizedBox(width: Dimens.px16),
                     Expanded(
                       child: KayleeTextField.priceWithUnderline(
                         title: Strings.hoaHong,
@@ -213,7 +213,7 @@ class _CommissionDetailScreenState extends KayleeState<CommissionDetailScreen> {
                         price: data.commissionService?.total,
                       ),
                     ),
-                    SizedBox(width: Dimens.px16),
+                    const SizedBox(width: Dimens.px16),
                     Expanded(
                       child: KayleeTextField.priceWithUnderline(
                         title: Strings.hoaHong,

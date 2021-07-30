@@ -160,9 +160,7 @@ class _ProdListScreenState extends KayleeState<ProdListScreen> {
                         if (state.ended) return Container();
                         return Align(
                           alignment: Alignment.topCenter,
-                          child: CupertinoActivityIndicator(
-                            radius: Dimens.px16,
-                          ),
+                          child: KayleeLoadingIndicator(),
                         );
                       },
                     );

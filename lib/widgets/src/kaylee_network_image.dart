@@ -10,14 +10,15 @@ class KayleeNetworkImage extends StatelessWidget {
 
   const KayleeNetworkImage.normal(
     this.url, {
+    Key? key,
     this.fit = BoxFit.cover,
     this.memCacheHeight,
     this.memCacheWidth,
-  });
+  }) : super(key: key);
 
   Widget get _placeHolder => Center(
         child: Image.asset(
-          Images.ic_image_holder,
+          Images.icImageHolder,
           fit: BoxFit.cover,
           width: Dimens.px40,
           height: Dimens.px40,

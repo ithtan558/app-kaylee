@@ -23,7 +23,7 @@ class KayLeeRoundedButton extends StatelessWidget {
         margin: margin,
         onPressed: onPressed,
         width: width,
-        borderSide: BorderSide(
+        borderSide: const BorderSide(
           width: Dimens.px1,
           color: ColorsRes.text,
         ),
@@ -55,13 +55,15 @@ class KayLeeRoundedButton extends StatelessWidget {
         width: width,
       );
 
-  KayLeeRoundedButton(
-      {this.width,
+  const KayLeeRoundedButton(
+      {Key? key,
+      this.width,
       this.text,
       this.onPressed,
       this.margin,
       this.borderSide,
-      this.color});
+      this.color})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -69,13 +71,17 @@ class KayLeeRoundedButton extends StatelessWidget {
       height: Dimens.px48,
       width: width ?? double.infinity,
       margin: margin ?? const EdgeInsets.symmetric(horizontal: Dimens.px16),
-      child: FlatButton(
+      child: TextButton(
         onPressed: () {
           onPressed?.call();
         },
-        shape: StadiumBorder(side: borderSide ?? BorderSide.none),
-        splashColor: Colors.grey.withOpacity(0.7),
-        color: color ?? ColorsRes.button,
+        style: ButtonStyle(
+          shape: MaterialStateProperty.all(
+              StadiumBorder(side: borderSide ?? BorderSide.none)),
+          splashFactory: InkSplash.splashFactory,
+          overlayColor: MaterialStateProperty.all(Colors.grey.withOpacity(0.7)),
+          backgroundColor: MaterialStateProperty.all(color ?? ColorsRes.button),
+        ),
         child: KayleeText.normalWhite16W500(
           text ?? '',
           maxLines: 1,

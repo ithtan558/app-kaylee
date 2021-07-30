@@ -101,7 +101,7 @@ class _MyOrderDetailScreenState extends KayleeState<MyOrderDetailScreen> {
                       padding:
                           const EdgeInsets.symmetric(horizontal: Dimens.px16),
                       child: _buildInfoText(
-                        icon: Images.ic_list,
+                        icon: Images.icList,
                         title: '#${_bloc.order.code ?? ''}',
                       ),
                     ),
@@ -110,23 +110,25 @@ class _MyOrderDetailScreenState extends KayleeState<MyOrderDetailScreen> {
                           const EdgeInsets.symmetric(horizontal: Dimens.px16)
                               .copyWith(top: Dimens.px16),
                       child: _buildInfoText(
-                        icon: Images.ic_person,
+                        icon: Images.icPerson,
                         title: _bloc.order.informationReceiveName,
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: Dimens.px16)
-                          .copyWith(top: Dimens.px8),
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: Dimens.px16)
+                              .copyWith(top: Dimens.px8),
                       child: _buildInfoText(
-                        icon: Images.ic_phone,
+                        icon: Images.icPhone,
                         title: _bloc.order.informationReceivePhone,
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: Dimens.px16)
-                          .copyWith(top: Dimens.px8),
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: Dimens.px16)
+                              .copyWith(top: Dimens.px8),
                       child: _buildInfoText(
-                        icon: Images.ic_address,
+                        icon: Images.icAddress,
                         title: _bloc.order.informationReceiveAddress,
                       ),
                     ),
@@ -134,7 +136,7 @@ class _MyOrderDetailScreenState extends KayleeState<MyOrderDetailScreen> {
                       padding: EdgeInsets.symmetric(horizontal: Dimens.px16)
                           .copyWith(top: Dimens.px8),
                       child: _buildInfoText(
-                        icon: Images.ic_edit,
+                        icon: Images.icEdit,
                         title: _bloc.order.informationReceiveNote,
                       ),
                     ),
@@ -142,7 +144,7 @@ class _MyOrderDetailScreenState extends KayleeState<MyOrderDetailScreen> {
                       padding: EdgeInsets.symmetric(horizontal: Dimens.px16)
                           .copyWith(top: Dimens.px8),
                       child: _buildInfoText(
-                        icon: Images.ic_list,
+                        icon: Images.icList,
                         title:
                             '${Strings.tinhTrangDonHang}: ${orderStatus2Title(status: _bloc.order.status)}',
                       ),
@@ -153,7 +155,7 @@ class _MyOrderDetailScreenState extends KayleeState<MyOrderDetailScreen> {
                         padding: EdgeInsets.symmetric(horizontal: Dimens.px16)
                             .copyWith(top: Dimens.px8),
                         child: _buildInfoText(
-                          icon: Images.ic_list,
+                          icon: Images.icList,
                           title:
                               '${Strings.lyDoHuyDon}: ${_bloc.order.cancellationReason!.name}',
                         ),
@@ -162,17 +164,18 @@ class _MyOrderDetailScreenState extends KayleeState<MyOrderDetailScreen> {
                       padding: EdgeInsets.symmetric(horizontal: Dimens.px16)
                           .copyWith(top: Dimens.px8),
                       child: _buildInfoText(
-                        icon: Images.ic_store,
+                        icon: Images.icStore,
                         title:
                             '${Strings.thuongHieu}: ${_bloc.order.supplierName}',
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: Dimens.px16)
-                          .copyWith(top: Dimens.px8),
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: Dimens.px16)
+                              .copyWith(top: Dimens.px8),
                       child: _buildInfoText(
-                        icon: Images.ic_cash,
-                        title: '${Strings.tienMat}',
+                        icon: Images.icCash,
+                        title: Strings.tienMat,
                       ),
                     ),
                     Padding(

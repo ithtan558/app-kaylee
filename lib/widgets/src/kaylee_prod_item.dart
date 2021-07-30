@@ -30,7 +30,7 @@ class KayleeProdItemView extends StatelessWidget {
         ),
       );
 
-  KayleeProdItemView({required this.child});
+  const KayleeProdItemView({Key? key, required this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class _SelectingProItemView extends StatefulWidget {
   final KayleeProdItemData data;
   final bool selected;
 
-  _SelectingProItemView(
+  const _SelectingProItemView(
       {required this.data, this.onSelect, this.selected = false});
 
   @override
@@ -63,8 +63,8 @@ class _SelectingProItemViewState extends BaseState<_SelectingProItemView>
     isSelected = widget.selected;
     animController = AnimationController(
         vsync: this,
-        duration: Duration(milliseconds: 550),
-        reverseDuration: Duration(milliseconds: 100));
+        duration: const Duration(milliseconds: 550),
+        reverseDuration: const Duration(milliseconds: 100));
     scaleAnim = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(
         parent: animController,
         curve: Curves.elasticOut,
@@ -141,12 +141,12 @@ class _SelectingProItemViewState extends BaseState<_SelectingProItemView>
                     ],
                   ),
                   alignment: Alignment.center,
-                  child: FractionallySizedBox(
+                  child: const FractionallySizedBox(
                     widthFactor: 20 / 48,
                     heightFactor: 16 / 48,
                     alignment: Alignment.center,
                     child: ImageIcon(
-                      AssetImage(Images.ic_tick),
+                      AssetImage(Images.icTick),
                       color: Colors.white,
                       size: Dimens.px20,
                     ),

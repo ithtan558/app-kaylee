@@ -16,7 +16,7 @@ class EditProfileBloc extends Cubit<SingleModel<UserInfo>> {
       onSuccess: ({message, result}) {
         emit(ProfileModel.copy(state
           ..loading = false
-          ..item = this.userInfo = result));
+          ..item = userInfo = result));
       },
       onFailed: (code, {error}) {
         emit(SingleModel.copy(state

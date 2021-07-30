@@ -156,9 +156,7 @@ class _SelectServiceListState extends KayleeState<SelectServiceList> {
                         if (state.ended) return Container();
                         return Align(
                           alignment: Alignment.topCenter,
-                          child: CupertinoActivityIndicator(
-                            radius: Dimens.px16,
-                          ),
+                          child: KayleeLoadingIndicator(),
                         );
                       },
                     );

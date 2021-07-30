@@ -9,7 +9,7 @@ import 'package:kaylee/widgets/widgets.dart';
 class BrandItem extends StatelessWidget {
   final Brand brand;
 
-  BrandItem({required this.brand});
+  const BrandItem({Key? key, required this.brand}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

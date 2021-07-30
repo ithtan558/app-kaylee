@@ -46,11 +46,12 @@ class CreateNewOrderScreen extends StatefulWidget {
             ),
             BlocProvider(create: (context) => CartBloc()),
           ],
-          child: CreateNewOrderScreen._(),
+          child: const CreateNewOrderScreen(),
         ),
       );
 
-  CreateNewOrderScreen._();
+  @visibleForTesting
+  const CreateNewOrderScreen({Key? key}) : super(key: key);
 
   @override
   _CreateNewOrderScreenState createState() => _CreateNewOrderScreenState();
@@ -245,7 +246,7 @@ class _CreateNewOrderScreenState extends KayleeState<CreateNewOrderScreen> {
                         ),
                         if (openFrom !=
                             OrderScreenOpenFrom.addNewFromReservation) ...[
-                          LabelDividerView(title: Strings.giamGia),
+                          const LabelDividerView(title: Strings.giamGia),
                           Padding(
                             padding: const EdgeInsets.all(Dimens.px16),
                             child: KayleeTextField.unitSelection(
@@ -268,11 +269,12 @@ class _CreateNewOrderScreenState extends KayleeState<CreateNewOrderScreen> {
                 if (openFrom != OrderScreenOpenFrom.addNewFromReservation)
                   BlocBuilder<CartBloc, CartState>(
                     builder: (context, state) {
-                      if ((_order?.cartItems).isNullOrEmpty)
+                      if ((_order?.cartItems).isNullOrEmpty) {
                         return KayLeeRoundedButton.button3(
                           text: Strings.thanhToan,
                           margin: const EdgeInsets.all(Dimens.px8),
                         );
+                      }
                       return KayLeeRoundedButton.normal(
                         text: Strings.thanhToan,
                         margin: const EdgeInsets.all(Dimens.px8),

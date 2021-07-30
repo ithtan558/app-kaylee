@@ -11,35 +11,39 @@ class KayleeListView extends StatelessWidget {
   final WidgetBuilder? loadingBuilder;
   final ScrollController? controller;
 
-  KayleeListView(
-      {required this.itemBuilder,
+  const KayleeListView(
+      {Key? key,
+      required this.itemBuilder,
       this.padding,
       this.physics,
       this.shrinkWrap = false,
       this.itemCount,
       this.loadingBuilder,
       this.separatorBuilder,
-      this.controller});
+      this.controller})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final length = (itemCount ?? 0) + 1;
     return ListView.separated(
       controller: controller,
-      padding: padding ?? EdgeInsets.all(Dimens.px16),
+      padding: padding ?? const EdgeInsets.all(Dimens.px16),
       physics: physics,
       shrinkWrap: shrinkWrap,
       itemBuilder: (context, index) {
         if (index == length - 1) {
           //build loading
-          return loadingBuilder?.call(context) ?? Container();
-        } else // build main item
-          return itemBuilder.call(context, index);
+          return loadingBuilder?.call(context) ?? const SizedBox.shrink();
+        } else {
+          return itemBuilder(context, index);
+        }
       },
       itemCount: length,
       separatorBuilder: (context, index) {
         if (index == length - 2) return Container();
-        return separatorBuilder?.call(context, index) ?? SizedBox.shrink();
+        return separatorBuilder?.call(context, index) ??
+            const SizedBox.shrink();
       },
     );
   }

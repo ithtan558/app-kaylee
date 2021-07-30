@@ -1,11 +1,8 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:anth_package/anth_package.dart';
 import 'package:bluetooth_print/bluetooth_print.dart';
 import 'package:bluetooth_print/bluetooth_print_model.dart';
-// import 'package:bluetooth_print/bluetooth_print.dart';
-// import 'package:bluetooth_print/bluetooth_print_model.dart';
 import 'package:flutter/material.dart';
 
 class BluetoothPrinterModule {
@@ -27,8 +24,9 @@ class BluetoothPrinterModule {
     onLoading?.call();
     if (data == null && _tempData == null) {
       return;
-    } else
+    } else {
       data = _tempData;
+    }
     String base64Image = base64Encode(data!);
     List<LineText> list = [];
     list.add(LineText(
@@ -39,8 +37,8 @@ class BluetoothPrinterModule {
     onFinished?.call();
     _tempData = null;
     try {
-      bluetoothPrint.printReceipt(Map(), list);
-    } catch (e) {}
+      bluetoothPrint.printReceipt({}, list);
+    } catch (_) {}
     return;
   }
 

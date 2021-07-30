@@ -15,10 +15,10 @@ import 'package:kaylee/utils/utils.dart';
 class HomeMenu extends StatefulWidget {
   static Widget newInstance() => BlocProvider<HomeMenuBloc>(
         create: (context) => HomeMenuBloc(),
-        child: HomeMenu._(),
+        child: const HomeMenu._(),
       );
 
-  HomeMenu._();
+  const HomeMenu._();
 
   @override
   _HomeMenuState createState() => _HomeMenuState();
@@ -56,59 +56,59 @@ class _HomeMenuState extends BaseState<HomeMenu> {
   void initState() {
     super.initState();
     menuItems = <Widget>[
-      if (userInfo?.role != UserRole.EMPLOYEE) ...[
+      if (userInfo?.role != UserRole.employee) ...[
         HomeMenuItem(
           title: Strings.qlChiNhanh,
-          icon: Images.ic_store,
+          icon: Images.icStore,
           onTap: () {
             context.push(PageIntent(screen: BrandListScreen));
           },
         ),
         HomeMenuItem(
           title: Strings.dsDichVu,
-          icon: Images.ic_service_list,
+          icon: Images.icServiceList,
           onTap: () {
             context.push(PageIntent(screen: ServiceListScreen));
           },
         ),
         HomeMenuItem(
           title: Strings.dsSanPham,
-          icon: Images.ic_product,
+          icon: Images.icProduct,
           onTap: () {
             context.push(PageIntent(screen: ProdListScreen));
           },
         ),
         HomeMenuItem(
           title: Strings.qlNhanVien,
-          icon: Images.ic_person,
+          icon: Images.icPerson,
           onTap: () {
             context.push(PageIntent(screen: StaffListScreen));
           },
         ),
         HomeMenuItem(
           title: Strings.dsKhachHang,
-          icon: Images.ic_user_list,
+          icon: Images.icUserList,
           onTap: () {
             context.push(PageIntent(screen: CustomerListScreen));
           },
         ),
         HomeMenuItem(
           title: Strings.dsLichHen,
-          icon: Images.ic_booking,
+          icon: Images.icBooking,
           onTap: () {
             context.push(PageIntent(screen: ReservationListScreen));
           },
         ),
         HomeMenuItem(
           title: Strings.hoaHongNv,
-          icon: Images.ic_commission,
+          icon: Images.icCommission,
           onTap: () {
             context.push(PageIntent(screen: CommissionListScreen));
           },
         ),
         HomeMenuItem(
           title: Strings.doanhThuBanHang,
-          icon: Images.ic_revenue,
+          icon: Images.icRevenue,
           onTap: () {
             context.push(PageIntent(screen: RevenueScreen));
           },
@@ -122,7 +122,7 @@ class _HomeMenuState extends BaseState<HomeMenu> {
       if (menuScrollController.offset > 0 &&
           _homeMenuBloc.state.collapsePercent < 1) {
         menuScrollController.animateTo(0,
-            duration: Duration(milliseconds: 100), curve: Curves.linear);
+            duration: const Duration(milliseconds: 100), curve: Curves.linear);
       }
     });
   }
@@ -136,7 +136,7 @@ class _HomeMenuState extends BaseState<HomeMenu> {
 
   @override
   Widget build(BuildContext context) {
-    if (userInfo?.role == UserRole.EMPLOYEE) {
+    if (userInfo?.role == UserRole.employee) {
       _homeMenuBloc
           .updateMenuHeight(homeMenuItemHeight * 2 + Dimens.px56 + Dimens.px7);
     }
@@ -167,7 +167,7 @@ class _HomeMenuState extends BaseState<HomeMenu> {
         child: Stack(children: [
           BlocBuilder<HomeMenuBloc, HomeMenuState>(
             builder: (context, state) {
-              return Container(height: state.height, child: gradientBg);
+              return SizedBox(height: state.height, child: gradientBg);
             },
           ),
           Positioned.fill(
@@ -177,7 +177,7 @@ class _HomeMenuState extends BaseState<HomeMenu> {
               stream: _homeMenuBloc.backGroundStateController.stream,
               builder: (context, snapshot) {
                 return AnimatedOpacity(
-                  duration: Duration(milliseconds: 250),
+                  duration: const Duration(milliseconds: 250),
                   opacity: snapshot.data ?? false ? 0.6 : 0.3,
                   child: Container(
                     color: Colors.black,
@@ -200,8 +200,8 @@ class _HomeMenuState extends BaseState<HomeMenu> {
               ),
             ),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: Dimens.px16),
-              child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
+              child: SizedBox(
                 height: homeMenuItemHeight,
                 child: StreamBuilder<bool>(
                     stream: _homeMenuBloc.backGroundStateController.stream,
@@ -210,8 +210,8 @@ class _HomeMenuState extends BaseState<HomeMenu> {
                         scrollDirection: Axis.horizontal,
                         controller: menuScrollController,
                         physics: !(snapshot.data ?? false)
-                            ? NeverScrollableScrollPhysics()
-                            : ClampingScrollPhysics(),
+                            ? const NeverScrollableScrollPhysics()
+                            : const ClampingScrollPhysics(),
                         children: menuItems,
                       );
                     }),
@@ -244,7 +244,7 @@ class _HomeMenuState extends BaseState<HomeMenu> {
                 ),
               ),
             )),
-      Positioned.fill(
+      const Positioned.fill(
         child: UserName(),
       ),
       Positioned(
