@@ -28,9 +28,11 @@ class CreateNewReservationScreen extends StatefulWidget {
                 .getArguments<CreateNewReservationScreenData>()!
                 .reservation,
           ),
-      child: CreateNewReservationScreen._());
+      child: const CreateNewReservationScreen());
 
-  CreateNewReservationScreen._();
+  const CreateNewReservationScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _CreateNewReservationScreenState createState() =>
@@ -246,7 +248,7 @@ class _CreateNewReservationScreenState
                           controller: dateController,
                         ),
                       ),
-                      SizedBox(width: Dimens.px8),
+                      const SizedBox(width: Dimens.px8),
                       Expanded(
                         child: KayleePickerTextField(
                           title: Strings.gioDat,

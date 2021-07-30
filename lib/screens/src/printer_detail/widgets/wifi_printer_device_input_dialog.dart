@@ -7,7 +7,8 @@ import 'package:kaylee/widgets/widgets.dart';
 class WifiPrinterDeviceInputDialog extends StatefulWidget {
   final ValueSetter<String> onSave;
 
-  WifiPrinterDeviceInputDialog({required this.onSave});
+  const WifiPrinterDeviceInputDialog({Key? key, required this.onSave})
+      : super(key: key);
 
   @override
   _WifiPrinterDeviceInputDialogState createState() =>

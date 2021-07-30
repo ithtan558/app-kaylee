@@ -11,10 +11,10 @@ class ContactUsText extends StatefulWidget {
   static Widget newInstance() => BlocProvider<ContactUsBloc>(
         create: (context) =>
             ContactUsBloc(context.network.provideCommonService()),
-        child: ContactUsText._(),
+        child: const ContactUsText._(),
       );
 
-  ContactUsText._();
+  const ContactUsText._();
 
   @override
   _ContactUsTextState createState() => _ContactUsTextState();
@@ -46,7 +46,7 @@ class _ContactUsTextState extends KayleeState<ContactUsText> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Text(
+          const Text(
             Strings.cauHoiKhacVeDangNhapDangKy,
           ),
           Padding(

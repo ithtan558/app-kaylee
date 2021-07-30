@@ -11,7 +11,9 @@ class SelectEmployeeList extends StatefulWidget {
   final SelectEmployeeController controller;
   final ValueChanged<List<Employee>> onSelect;
 
-  SelectEmployeeList({required this.controller, required this.onSelect});
+  const SelectEmployeeList(
+      {Key? key, required this.controller, required this.onSelect})
+      : super(key: key);
 
   @override
   _SelectEmployeeListState createState() => _SelectEmployeeListState();
@@ -72,8 +74,9 @@ class _SelectEmployeeListState extends KayleeState<SelectEmployeeList> {
         else
           ListView.separated(
             shrinkWrap: true,
-            separatorBuilder: (context, index) => KayleeHorizontalDivider(),
-            physics: NeverScrollableScrollPhysics(),
+            separatorBuilder: (context, index) =>
+                const KayleeHorizontalDivider(),
+            physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
               final item = widget.controller.employees!.elementAt(index);
               return SelectedEmployeeItem(

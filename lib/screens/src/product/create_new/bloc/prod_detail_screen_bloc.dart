@@ -65,9 +65,9 @@ class ProdDetailScreenBloc extends Cubit<SingleModel<Product>>
     RequestHandler(
       request: prodService.getProduct(proId: state.item?.id),
       onSuccess: ({message, result}) {
-        (result as Product).brands?.forEach((e) {
+        for (var e in (result as Product).brands ?? []) {
           e.selected = true;
-        });
+        }
         emit(ProdDetailModel.copy(
           state
             ..loading = false

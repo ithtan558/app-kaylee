@@ -11,7 +11,7 @@ import 'package:kaylee/widgets/widgets.dart';
 class BrandSelectionButton extends StatefulWidget {
   final ValueChanged<Brand>? onChanged;
 
-  BrandSelectionButton({this.onChanged});
+  const BrandSelectionButton({Key? key, this.onChanged}) : super(key: key);
 
   @override
   _BrandSelectionButtonState createState() => _BrandSelectionButtonState();
@@ -97,7 +97,7 @@ class _BrandPickerView extends StatefulWidget {
   final ValueChanged<Brand> onSelectedItemChanged;
   final Brand intiValue;
 
-  _BrandPickerView._({
+  const _BrandPickerView._({
     required this.onSelectedItemChanged,
     required this.intiValue,
   });
@@ -127,7 +127,7 @@ class _BrandPickerViewState extends BaseState<_BrandPickerView> {
   Widget build(BuildContext context) {
     return BlocBuilder<_BrandSelectionBloc, SingleModel<List<Brand>>>(
       builder: (context, state) {
-        if (state.loading) return Align(child: KayleeLoadingIndicator());
+        if (state.loading) return const Align(child: KayleeLoadingIndicator());
         scrollController = FixedExtentScrollController(
             initialItem:
             state.item?.indexWhere((e) => e.id == widget.intiValue.id) ??
@@ -140,17 +140,15 @@ class _BrandPickerViewState extends BaseState<_BrandPickerView> {
           },
           itemBuilder: (context, index) {
             final item = state.item!.elementAt(index);
-            return Container(
-              child: Text(item.name ?? '',
-                  style: TextStyle(
-                    fontFamily: 'SFProText',
-                    color: Color(0xff000000),
-                    fontSize: 23.5,
-                    fontWeight: FontWeight.w400,
-                    fontStyle: FontStyle.normal,
-                    letterSpacing: 0.3799999952316284,
-                  )),
-            );
+            return Text(item.name ?? '',
+                style: const TextStyle(
+                  fontFamily: 'SFProText',
+                  color: Color(0xff000000),
+                  fontSize: 23.5,
+                  fontWeight: FontWeight.w400,
+                  fontStyle: FontStyle.normal,
+                  letterSpacing: 0.3799999952316284,
+                ));
           },
           childCount: state.item?.length ?? 0,
         );

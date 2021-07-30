@@ -14,9 +14,11 @@ class ProdCateListScreen extends StatefulWidget {
       create: (context) => ProCateListScreenBloc(
             productService: context.network.provideProductService(),
           ),
-      child: ProdCateListScreen._());
+      child: const ProdCateListScreen());
 
-  ProdCateListScreen._();
+  const ProdCateListScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _ProdCateListScreenState createState() => _ProdCateListScreenState();

@@ -41,7 +41,7 @@ class SelectServiceList extends StatefulWidget {
   final ValueChanged<List<Service>> onConfirm;
   final VoidCallback? onCancel;
 
-  SelectServiceList._({required this.onConfirm, this.onCancel});
+  const SelectServiceList._({required this.onConfirm, this.onCancel});
 
   @override
   _SelectServiceListState createState() => _SelectServiceListState();
@@ -136,7 +136,7 @@ class _SelectServiceListState extends KayleeState<SelectServiceList> {
                   },
                   builder: (context, state) {
                     return KayleeGridView(
-                      padding: EdgeInsets.all(Dimens.px8),
+                      padding: const EdgeInsets.all(Dimens.px8),
                       childAspectRatio: 103 / 195,
                       itemBuilder: (c, index) {
                         final item = state.items!.elementAt(index);
@@ -154,7 +154,7 @@ class _SelectServiceListState extends KayleeState<SelectServiceList> {
                       itemCount: state.items?.length,
                       loadingBuilder: (context) {
                         if (state.ended) return Container();
-                        return Align(
+                        return const Align(
                           alignment: Alignment.topCenter,
                           child: KayleeLoadingIndicator(),
                         );

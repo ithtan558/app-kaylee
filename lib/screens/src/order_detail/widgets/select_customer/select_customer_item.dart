@@ -7,7 +7,9 @@ class SelectCustomerItem extends StatelessWidget {
   final Customer customer;
   final VoidCallback onSelect;
 
-  SelectCustomerItem({required this.customer, required this.onSelect});
+  const SelectCustomerItem(
+      {Key? key, required this.customer, required this.onSelect})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -15,9 +15,9 @@ class ReservationItem extends StatefulWidget {
             service: context.network.provideReservationService(),
             reservation: reservation,
           ),
-      child: ReservationItem._());
+      child: const ReservationItem._());
 
-  ReservationItem._();
+  const ReservationItem._();
 
   @override
   _ReservationItemState createState() => _ReservationItemState();
@@ -32,9 +32,9 @@ class _ReservationItemState extends KayleeState<ReservationItem> {
       borderRadius: BorderRadius.circular(Dimens.px5),
       child: BlocConsumer<ReservationItemBloc, SingleModel>(
         listener: (context, state) {
-          if (state.loading)
+          if (state.loading) {
             showLoading();
-          else if (!state.loading) {
+          } else if (!state.loading) {
             hideLoading();
             if (state.error != null) {
               showKayleeAlertErrorYesDialog(
@@ -80,7 +80,7 @@ class _ReservationItemState extends KayleeState<ReservationItem> {
                     color: status == ReservationStatus.canceled
                         ? ColorsRes.textFieldBorder
                         : Colors.white,
-                    border: Border.fromBorderSide(BorderSide(
+                    border: const Border.fromBorderSide(BorderSide(
                         color: ColorsRes.textFieldBorder, width: Dimens.px1))),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,7 +88,7 @@ class _ReservationItemState extends KayleeState<ReservationItem> {
                   children: [
                     KayleeText.normal16W500(
                         _bloc.reservation.customer.name ?? ''),
-                    SizedBox(height: Dimens.px8),
+                    const SizedBox(height: Dimens.px8),
                     KayleeText.hint16W400(Strings.soLuongKhach
                         .plus(': ${_bloc.reservation.quantity ?? ''}')),
                   ],
@@ -118,7 +118,7 @@ class _ReservationItemState extends KayleeState<ReservationItem> {
                           },
                         ),
                       ),
-                      SizedBox(width: Dimens.px16),
+                      const SizedBox(width: Dimens.px16),
                       Expanded(
                         child: status == ReservationStatus.came
                             ? KayLeeRoundedButton.normal(
@@ -157,12 +157,15 @@ class _ReservationItemState extends KayleeState<ReservationItem> {
     final dateInString = reservation.datetime == null
         ? ''
         : ' ${DateFormat(dateFormat3).format(reservation.datetime!)}';
-    if (status == ReservationStatus.canceled)
+    if (status == ReservationStatus.canceled) {
       return KayleeText.normal16W400(Strings.huy);
-    if (status == ReservationStatus.booked)
+    }
+    if (status == ReservationStatus.booked) {
       return KayleeText.normal16W400(Strings.daDat.plus(dateInString));
-    if (status == ReservationStatus.came)
+    }
+    if (status == ReservationStatus.came) {
       return KayleeText.normalWhite16W400(Strings.daDen.plus(dateInString));
-    return SizedBox();
+    }
+    return const SizedBox.shrink();
   }
 }

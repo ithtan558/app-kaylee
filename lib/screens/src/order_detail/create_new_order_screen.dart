@@ -242,7 +242,7 @@ class _CreateNewOrderScreenState extends KayleeState<CreateNewOrderScreen> {
                         ),
                         RepositoryProvider.value(
                           value: pickerTextFieldModel,
-                          child: SelectOrderItemList(),
+                          child: const SelectOrderItemList(),
                         ),
                         if (openFrom !=
                             OrderScreenOpenFrom.addNewFromReservation) ...[

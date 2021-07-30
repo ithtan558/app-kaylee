@@ -14,7 +14,7 @@ mixin BluetoothPrinterMixin on PrinterDetailBase {
           linefeed: 1)
     ];
     try {
-      BluetoothPrint.instance.printReceipt(Map(), list);
+      BluetoothPrint.instance.printReceipt({}, list);
       print('[TUNG] ===> printConnectionInfo printReceipt result ');
     } catch (e) {
       return lostConnectionToBluetoothDevice();
@@ -22,20 +22,23 @@ mixin BluetoothPrinterMixin on PrinterDetailBase {
     emit(PrinterDetailStateFinishPrintingConnectionInfo());
   }
 
+  @override
   void checkBluetoothEnable() async {
     print('[TUNG] ===> start checkBluetoothEnable ');
     emit(PrinterDetailStateBluetoothCheckingEnable());
     final result = await BluetoothPrint.instance.isOn;
     print('[TUNG] ===> checkBluetoothEnable $result');
-    if (result)
+    if (result) {
       return emit(PrinterDetailStateBluetoothEnable());
-    else
+    } else {
       return emit(PrinterDetailStateBluetoothNotEnable());
+    }
   }
 
   @override
   Future startScanBluetoothDevice() {
-    return BluetoothPrint.instance.startScan(timeout: Duration(seconds: 1));
+    return BluetoothPrint.instance
+        .startScan(timeout: const Duration(seconds: 1));
   }
 
   @override
@@ -44,6 +47,7 @@ mixin BluetoothPrinterMixin on PrinterDetailBase {
     emit(PrinterDetailStateRemovedConnectionBluetoothDevice());
   }
 
+  @override
   void savedBluetoothDeviceAsDefault() {
     emit(PrinterDetailStateSavedDefaultDeviceBluetooth());
     startConnectingBluetoothDevice();

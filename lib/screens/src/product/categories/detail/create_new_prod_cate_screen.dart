@@ -23,12 +23,15 @@ enum NewProdCateScreenOpenFrom { cateItem, addNewCateBtn }
 class CreateNewProdCateScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider(
       create: (context) => ProdCateDetailBloc(
-        productService: context.network.provideProductService(),
+            productService: context.network.provideProductService(),
             prodCate: context.getArguments<NewProdCateScreenData>()!.prodCate,
           ),
-      child: CreateNewProdCateScreen._());
+      child: const CreateNewProdCateScreen());
 
-  CreateNewProdCateScreen._();
+  @visibleForTesting
+  const CreateNewProdCateScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _CreateNewProdCateScreenState createState() =>

@@ -6,7 +6,6 @@ import 'package:bluetooth_print/bluetooth_print_model.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/components/components.dart';
-import 'package:kaylee/components/src/printer/bluetooth_printer_module.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/printer_detail/widgets/printer_device_item.dart';
 import 'package:kaylee/utils/src/bluetooth_helper/bluetooth_helper.dart';
@@ -15,9 +14,10 @@ import 'package:kaylee/widgets/widgets.dart';
 class BluetoothSelectDeviceDialog extends StatefulWidget {
   final ValueSetter<PrinterDevice?>? onSelected;
 
-  BluetoothSelectDeviceDialog({
+  const BluetoothSelectDeviceDialog({
+    Key? key,
     this.onSelected,
-  });
+  }) : super(key: key);
 
   @override
   _BluetoothSelectDeviceDialogState createState() =>
@@ -64,13 +64,13 @@ class _BluetoothSelectDeviceDialogState
               stream: BluetoothPrint.instance.scanResults,
               builder: (c, snapshot) {
                 if (!snapshot.hasData) {
-                  return Center(
+                  return const Center(
                     child: KayleeLoadingIndicator(),
                   );
                 }
 
                 if (snapshot.hasError) {
-                  return SizedBox.shrink();
+                  return const SizedBox.shrink();
                 }
                 return KayleeListView(
                   padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
@@ -134,6 +134,6 @@ class _BluetoothSelectDeviceDialogState
 
   @override
   void onGranted() {
-    BluetoothPrint.instance.startScan(timeout: Duration(seconds: 4));
+    BluetoothPrint.instance.startScan(timeout: const Duration(seconds: 4));
   }
 }

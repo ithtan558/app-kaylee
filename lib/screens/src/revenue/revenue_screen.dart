@@ -36,9 +36,11 @@ class RevenueScreen extends StatefulWidget {
             reportService: context.network.provideReportService(),
           ),
         ),
-      ], child: RevenueScreen._());
+      ], child: const RevenueScreen());
 
-  RevenueScreen._();
+  const RevenueScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _RevenueScreenState createState() => _RevenueScreenState();

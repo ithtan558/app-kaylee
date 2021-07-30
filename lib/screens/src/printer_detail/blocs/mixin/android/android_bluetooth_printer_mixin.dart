@@ -43,7 +43,7 @@ mixin AndroidBluetoothPrinterMixin on BluetoothPrinterMixin {
   }
 
   void connectedBluetoothDevice() async {
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 2));
     emit(PrinterDetailStateConnectedBluetooth());
   }
 
@@ -64,7 +64,7 @@ mixin AndroidBluetoothPrinterMixin on BluetoothPrinterMixin {
     try {
       final result = await connect();
       print('[TUNG] ===> requestConnectingBluetoothDevice result $result');
-    } catch (e) {}
+    } catch (_) {}
     _startRequestConnectingTimeOut();
   }
 
@@ -76,7 +76,7 @@ mixin AndroidBluetoothPrinterMixin on BluetoothPrinterMixin {
       _stopRequestConnectingTimeOut();
     }
     _requestConnectingTimeOut =
-        Timer.periodic(Duration(seconds: 1), (timer) async {
+        Timer.periodic(const Duration(seconds: 1), (timer) async {
       print('[TUNG] ===> _requestConnectingTimeOut ${timer.tick}');
       final readyForCheckingConnection =
           state is! PrinterDetailStateConnectedBluetooth &&
@@ -126,7 +126,7 @@ mixin AndroidBluetoothPrinterMixin on BluetoothPrinterMixin {
       _stopRequestConnectingTimeOut();
     }
     _requestDisconnectingTimeOut =
-        Timer.periodic(Duration(seconds: 1), (timer) async {
+        Timer.periodic(const Duration(seconds: 1), (timer) async {
       print('[TUNG] ===> _requestDisconnectingTimeOut ${timer.tick}');
       if (timer.tick == 6) {
         if (await BluetoothPrint.instance.isConnected) {

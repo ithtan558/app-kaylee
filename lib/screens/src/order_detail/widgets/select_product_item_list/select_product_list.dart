@@ -37,7 +37,7 @@ class SelectProdList extends StatefulWidget {
           ));
   final ValueChanged<List<Product>> onConfirm;
 
-  SelectProdList._({required this.onConfirm});
+  const SelectProdList._({required this.onConfirm});
 
   @override
   _SelectProdListState createState() => _SelectProdListState();
@@ -126,7 +126,7 @@ class _SelectProdListState extends KayleeState<SelectProdList> {
                   },
                   builder: (context, state) {
                     return KayleeGridView(
-                      padding: EdgeInsets.all(Dimens.px8),
+                      padding: const EdgeInsets.all(Dimens.px8),
                       childAspectRatio: 103 / 195,
                       itemBuilder: (c, index) {
                         final item = state.items!.elementAt(index);
@@ -144,7 +144,7 @@ class _SelectProdListState extends KayleeState<SelectProdList> {
                       itemCount: state.items?.length,
                       loadingBuilder: (context) {
                         if (state.ended) return Container();
-                        return Align(
+                        return const Align(
                           alignment: Alignment.topCenter,
                           child: KayleeLoadingIndicator(),
                         );

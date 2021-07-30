@@ -9,7 +9,9 @@ import 'package:kaylee/screens/src/revenue/widget/widget_helper.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class ProductRevenueWidget extends StatefulWidget {
-  ProductRevenueWidget();
+  const ProductRevenueWidget({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _ProductRevenueWidgetState createState() => _ProductRevenueWidgetState();

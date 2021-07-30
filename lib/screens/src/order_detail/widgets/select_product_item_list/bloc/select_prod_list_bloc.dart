@@ -25,14 +25,14 @@ class SelectProdListBloc extends Cubit<LoadMoreModel<Product>>
   void loadProds() {
     RequestHandler(
       request: productService.getProducts(
-        categoryId: this.cateId,
+        categoryId: cateId,
         limit: state.limit,
         page: state.page,
         brandIds: brand.id.toString(),
       ),
       onSuccess: ({message, result}) {
         final prods = (result as PageData<Product>).items;
-        prods?.forEach((element) {
+        for (var element in prods ?? []) {
           Product? selected;
           try {
             selected = _selectedProds.singleWhere(
@@ -42,7 +42,7 @@ class SelectProdListBloc extends Cubit<LoadMoreModel<Product>>
           if (selected.isNotNull) {
             element.selected = true;
           }
-        });
+        }
         completeRefresh();
         emit(LoadMoreModel.copy(state
           ..loading = false

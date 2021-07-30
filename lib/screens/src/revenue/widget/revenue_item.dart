@@ -6,7 +6,7 @@ class RevenueItem extends StatelessWidget {
   final String? title;
   final dynamic price;
 
-  RevenueItem({this.title, this.price});
+  const RevenueItem({Key? key, this.title, this.price}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

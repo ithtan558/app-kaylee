@@ -13,6 +13,8 @@ import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class SelectOrderItemList extends StatefulWidget {
+  const SelectOrderItemList({Key? key}) : super(key: key);
+
   @override
   _SelectOrderItemListState createState() => _SelectOrderItemListState();
 }
@@ -125,23 +127,24 @@ class _SelectOrderItemListState extends KayleeState<SelectOrderItemList> {
         ),
         BlocBuilder<CartBloc, CartState>(
           builder: (context, state) {
-            if (order?.cartItems?.isEmpty ?? true)
+            if (order?.cartItems?.isEmpty ?? true) {
               return Padding(
                 padding: const EdgeInsets.all(Dimens.px16),
                 child: KayleeText.hint16W400(
                   Strings.chuaSuDungDichVu,
                 ),
               );
-            return SizedBox();
+            }
+            return const SizedBox.shrink();
           },
         ),
         BlocBuilder<CartBloc, CartState>(
           builder: (context, state) {
             final cartItems = order?.cartItems;
-            if (cartItems?.isEmpty ?? true) return SizedBox();
+            if (cartItems?.isEmpty ?? true) return const SizedBox.shrink();
             return ListView.builder(
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 final item = cartItems!.elementAt(index);
                 return OrderItem(
@@ -162,7 +165,8 @@ class _SelectOrderItemListState extends KayleeState<SelectOrderItemList> {
         ),
         BlocBuilder<CartBloc, CartState>(
           builder: (context, state) {
-            if (order?.cartItems?.isEmpty ?? true) return SizedBox();
+            if (order?.cartItems?.isEmpty ?? true)
+              return const SizedBox.shrink();
             return OrderAmount(
               amount: order!.totalAmount,
               discount: order!.discount,

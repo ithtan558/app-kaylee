@@ -19,9 +19,12 @@ class PrinterDetailScreen extends StatefulWidget {
       create: (context) => Platform.isAndroid
           ? AndroidPrinterDetailBloc()
           : IosPrinterDetailBloc(),
-      child: PrinterDetailScreen._());
+      child: const PrinterDetailScreen());
 
-  PrinterDetailScreen._();
+  @visibleForTesting
+  const PrinterDetailScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _PrinterDetailScreenState createState() => _PrinterDetailScreenState();
@@ -167,8 +170,9 @@ class _PrinterDetailScreenState extends KayleeState<PrinterDetailScreen> {
                   child: BlocBuilder<PrinterDetailBase, PrinterDetailState>(
                 builder: (context, state) {
                   if (state is PrinterDetailStateLoadingDevices ||
-                      state is PrinterDetailStateInitial)
-                    return KayleeLoadingIndicator();
+                      state is PrinterDetailStateInitial) {
+                    return const KayleeLoadingIndicator();
+                  }
                   return KayleeListView(
                     padding: const EdgeInsets.symmetric(vertical: Dimens.px16),
                     itemBuilder: (context, index) {

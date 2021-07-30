@@ -7,10 +7,11 @@ class PrinterDeviceItem extends StatelessWidget {
   final PrinterDevice device;
   final VoidCallback onTap;
 
-  PrinterDeviceItem({
+  const PrinterDeviceItem({
+    Key? key,
     required this.device,
     required this.onTap,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

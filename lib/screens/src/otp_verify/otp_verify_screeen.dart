@@ -44,12 +44,15 @@ class OtpVerifyScreen extends StatefulWidget {
           create: (context) =>
               SendOtpBloc(userService: context.network.provideUserService()),
         ),
-      ], child: OtpVerifyScreen._());
+      ], child: const OtpVerifyScreen());
 
-  OtpVerifyScreen._();
+  @visibleForTesting
+  const OtpVerifyScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
-  _OtpVerifyScreenState createState() => new _OtpVerifyScreenState();
+  _OtpVerifyScreenState createState() => _OtpVerifyScreenState();
 }
 
 class _OtpVerifyScreenState extends KayleeState<OtpVerifyScreen> {
@@ -159,7 +162,7 @@ class _OtpVerifyScreenState extends KayleeState<OtpVerifyScreen> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    KayleeText(Strings.khongNhanDcSms),
+                    const KayleeText(Strings.khongNhanDcSms),
                     Padding(
                       padding: const EdgeInsets.only(left: Dimens.px8),
                       child: HyperLinkText(

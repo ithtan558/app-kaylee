@@ -25,9 +25,12 @@ class ProdListScreen extends StatefulWidget {
             productService: context.network.provideProductService(),
           ),
         ),
-      ], child: ProdListScreen._());
+      ], child: const ProdListScreen());
 
-  ProdListScreen._();
+  @visibleForTesting
+  const ProdListScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _ProdListScreenState createState() => _ProdListScreenState();

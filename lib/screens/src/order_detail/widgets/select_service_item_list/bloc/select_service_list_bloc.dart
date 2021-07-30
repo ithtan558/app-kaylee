@@ -19,21 +19,22 @@ class SelectServiceListBloc extends Cubit<LoadMoreModel<Service>>
     List<Service>? initialData,
     required this.brand,
   }) : super(LoadMoreModel(items: [])) {
-    if (initialData?.isNotEmpty ?? false)
+    if (initialData?.isNotEmpty ?? false) {
       _selectedServices.addAll(initialData!);
+    }
   }
 
   void loadServices() {
     RequestHandler(
       request: servService.getServices(
-        categoryId: this.cateId,
+        categoryId: cateId,
         limit: state.limit,
         page: state.page,
         brandIds: brand.id.toString(),
       ),
       onSuccess: ({message, result}) {
         final services = (result as PageData<Service>).items;
-        services?.forEach((element) {
+        for (var element in services ?? []) {
           Service? selected;
           try {
             selected = _selectedServices
@@ -42,7 +43,7 @@ class SelectServiceListBloc extends Cubit<LoadMoreModel<Service>>
           if (selected != null) {
             element.selected = true;
           }
-        });
+        }
         completeRefresh();
         emit(LoadMoreModel.copy(state
           ..loading = false

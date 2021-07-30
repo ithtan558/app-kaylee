@@ -14,14 +14,17 @@ class ResetPassVerifyPhoneScreen extends StatefulWidget {
         create: (context) => SendOtpBloc(
           userService: context.network.provideUserService(),
         ),
-        child: ResetPassVerifyPhoneScreen._(),
+        child: const ResetPassVerifyPhoneScreen(),
       );
 
-  ResetPassVerifyPhoneScreen._();
+  @visibleForTesting
+  const ResetPassVerifyPhoneScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _ResetPassVerifyPhoneScreenState createState() =>
-      new _ResetPassVerifyPhoneScreenState();
+      _ResetPassVerifyPhoneScreenState();
 }
 
 class _ResetPassVerifyPhoneScreenState
@@ -106,7 +109,7 @@ class _ResetPassVerifyPhoneScreenState
                   );
                 }),
                 KayLeeRoundedButton.normal(
-                  margin: EdgeInsets.only(top: Dimens.px16),
+                  margin: const EdgeInsets.only(top: Dimens.px16),
                   onPressed: () {
                     sendOtpBloc.verifyPhone(phone: _phoneTFController.text);
                   },

@@ -17,18 +17,16 @@ class SelectEmployeeDialog extends StatefulWidget {
       BlocProvider(
         create: (context) => SelectEmployeeBloc(
           employeeService: context.network.provideEmployeeService(),
-          selectedEmployees: Map.fromIterable(
-            selectedEmployees ?? [],
-            key: (element) => element.id,
-            value: (element) => element,
-          ),
+          selectedEmployees: {
+            for (var element in selectedEmployees ?? []) element.id: element
+          },
           brand: brand,
         ),
         child: SelectEmployeeDialog._(onSelect: onSelect),
       );
   final ValueSetter<List<Employee>> onSelect;
 
-  SelectEmployeeDialog._({required this.onSelect});
+  const SelectEmployeeDialog._({required this.onSelect});
 
   @override
   _SelectEmployeeDialogState createState() => _SelectEmployeeDialogState();
@@ -82,11 +80,12 @@ class _SelectEmployeeDialogState extends KayleeState<SelectEmployeeDialog> {
             Expanded(child:
                 BlocBuilder<SelectEmployeeBloc, SingleModel<List<Employee>>>(
               builder: (context, state) {
-                if (state.loading)
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: Dimens.px16),
+                if (state.loading) {
+                  return const Padding(
+                    padding: EdgeInsets.symmetric(vertical: Dimens.px16),
                     child: KayleeLoadingIndicator(),
                   );
+                }
                 return ListView.separated(
                     keyboardDismissBehavior:
                         ScrollViewKeyboardDismissBehavior.onDrag,
@@ -102,7 +101,7 @@ class _SelectEmployeeDialogState extends KayleeState<SelectEmployeeDialog> {
                         },
                       );
                     },
-                    separatorBuilder: (context, index) => SizedBox(
+                    separatorBuilder: (context, index) => const SizedBox(
                           height: Dimens.px8,
                         ),
                     itemCount: state.item?.length ?? 0);

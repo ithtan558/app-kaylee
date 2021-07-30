@@ -19,21 +19,23 @@ class NewPassScreenData {
 
 class ResetPassNewPassScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<UpdatePassBloc>(
-    create: (context) => UpdatePassBloc(
+        create: (context) => UpdatePassBloc(
             userService: context.network.provideUserService(),
             resetPassToken: context
                 .getArguments<NewPassScreenData>()!
                 .result
                 .tokenResetPassword,
             userId: context.getArguments<NewPassScreenData>()!.result.userId),
-        child: ResetPassNewPassScreen._(),
+        child: const ResetPassNewPassScreen(),
       );
 
-  ResetPassNewPassScreen._();
+  @visibleForTesting
+  const ResetPassNewPassScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
-  _ResetPassNewPassScreenState createState() =>
-      new _ResetPassNewPassScreenState();
+  _ResetPassNewPassScreenState createState() => _ResetPassNewPassScreenState();
 }
 
 class _ResetPassNewPassScreenState extends KayleeState<ResetPassNewPassScreen> {

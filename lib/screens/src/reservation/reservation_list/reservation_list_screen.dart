@@ -14,9 +14,11 @@ class ReservationListScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider(
       create: (context) => ReservationListBloc(
           service: context.network.provideReservationService()),
-      child: ReservationListScreen._());
+      child: const ReservationListScreen());
 
-  ReservationListScreen._();
+  const ReservationListScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _ReservationListScreenState createState() => _ReservationListScreenState();

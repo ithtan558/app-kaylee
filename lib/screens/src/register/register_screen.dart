@@ -13,13 +13,15 @@ class RegisterScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<RegisterScreenBloc>(
     create: (context) => RegisterScreenBloc(
             userService: context.network.provideUserService()),
-        child: RegisterScreen._(),
+        child: const RegisterScreen(),
       );
 
-  RegisterScreen._();
+  const RegisterScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
-  _RegisterScreenState createState() => new _RegisterScreenState();
+  _RegisterScreenState createState() => _RegisterScreenState();
 }
 
 class _RegisterScreenState extends KayleeState<RegisterScreen> {
@@ -146,7 +148,7 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
                       bottom: Dimens.px16),
                   child: KayleeTextField.normal(
                     titleWidget: Text.rich(
-                      TextSpan(text: Strings.email, children: [
+                      const TextSpan(text: Strings.email, children: [
                         TextSpan(
                             text: ' (${Strings.khongBatBuoc})',
                             style: TextStyle(
@@ -184,7 +186,7 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
                   ),
                   child: KayleeTextField.normal(
                     titleWidget: Text.rich(
-                      TextSpan(text: Strings.maGioiThieu, children: [
+                      const TextSpan(text: Strings.maGioiThieu, children: [
                         TextSpan(
                             text: ' (${Strings.khongBatBuoc})',
                             style: TextStyle(

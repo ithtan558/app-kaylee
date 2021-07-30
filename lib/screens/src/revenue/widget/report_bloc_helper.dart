@@ -19,9 +19,9 @@ mixin ReportBlocHelper {
 
   @mustCallSuper
   void loadData({Brand? brand, DateTime? startDate, DateTime? endDate}) {
-    if (brand != null) this._brand = brand;
-    if (startDate.isNotNull) this._startDate = startDate;
-    if (endDate.isNotNull) this._endDate = endDate;
+    if (brand != null) _brand = brand;
+    if (startDate.isNotNull) _startDate = startDate;
+    if (endDate.isNotNull) _endDate = endDate;
   }
 
   void refresh() {

@@ -9,8 +9,12 @@ class SelectEmployeeItem extends StatelessWidget {
 
   final VoidCallback onSelect;
 
-  SelectEmployeeItem(
-      {required this.employee, required this.onSelect, this.selected = false});
+  const SelectEmployeeItem(
+      {Key? key,
+      required this.employee,
+      required this.onSelect,
+      this.selected = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +33,7 @@ class SelectEmployeeItem extends StatelessWidget {
           Expanded(
             flex: 3,
             child: KayleeText.normal16W400(
-              '${employee.name}',
+              employee.name ?? '',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.start,
