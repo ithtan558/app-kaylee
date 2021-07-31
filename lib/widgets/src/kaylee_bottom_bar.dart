@@ -40,23 +40,19 @@ class _KayleeBottomBarState extends BaseState<KayleeBottomBar> {
       items: [
         _buildBtmBarItem(
           title: Strings.trangChu,
-          activeImage: Images.icHomeActive,
-          inActiveImage: Images.icHomeInactive,
+          icon: Images.icHomeActive,
         ),
         _buildBtmBarItem(
           title: Strings.thuNgan,
-          activeImage: Images.icCashierActive,
-          inActiveImage: Images.icCashierInactive,
+          icon: Images.icCashierActive,
         ),
         _buildBtmBarItem(
           title: Strings.lichSuDh,
-          activeImage: Images.icHistoryActive,
-          inActiveImage: Images.icHistoryInactive,
+          icon: Images.icHistoryActive,
         ),
         _buildBtmBarItem(
           title: Strings.taiKhoan,
-          activeImage: Images.icAccountActive,
-          inActiveImage: Images.icAccountInactive,
+          icon: Images.icAccountActive,
         ),
       ],
       selectedLabelStyle: context.textTheme.bodyText2?.copyWith(
@@ -88,23 +84,20 @@ class _KayleeBottomBarState extends BaseState<KayleeBottomBar> {
 
   _buildBtmBarItem({
     required String title,
-    required String inActiveImage,
-    required String activeImage,
+    required String icon,
   }) {
     return BottomNavigationBarItem(
       icon: Padding(
         padding: const EdgeInsets.only(bottom: Dimens.px5),
         child: ImageIcon(
-          AssetImage(activeImage),
+          AssetImage(icon),
           color: ColorsRes.hintText,
-          size: Dimens.px24,
         ),
       ),
       activeIcon: Padding(
         padding: const EdgeInsets.only(bottom: Dimens.px5),
         child: ImageIcon(
-          AssetImage(activeImage),
-          size: Dimens.px24,
+          AssetImage(icon),
           color: ColorsRes.hyper,
         ),
       ),

@@ -12,10 +12,6 @@ class Images {
   static const icHomeActive = 'assets/ic_home_active.png';
   static const icAccountActive = 'assets/ic_account_active.png';
   static const icCashierActive = 'assets/ic_cashier_active.png';
-  static const icHistoryInactive = 'assets/ic_history_inactive.png';
-  static const icHomeInactive = 'assets/ic_home_inactive.png';
-  static const icCashierInactive = 'assets/ic_cashier_inactive.png';
-  static const icAccountInactive = 'assets/ic_account_inactive.png';
   static const bgHome = 'assets/bg_home.png';
   static const icServiceList = 'assets/ic_service_list.png';
   static const icStore = 'assets/ic_store.png';
