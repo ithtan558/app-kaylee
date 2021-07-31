@@ -82,26 +82,24 @@ class _KayleeBottomBarState extends BaseState<KayleeBottomBar> {
     );
   }
 
-  _buildBtmBarItem({
+  BottomNavigationBarItem _buildBtmBarItem({
     required String title,
     required String icon,
   }) {
     return BottomNavigationBarItem(
-      icon: Padding(
-        padding: const EdgeInsets.only(bottom: Dimens.px5),
-        child: ImageIcon(
-          AssetImage(icon),
-          color: ColorsRes.hintText,
-        ),
-      ),
-      activeIcon: Padding(
-        padding: const EdgeInsets.only(bottom: Dimens.px5),
-        child: ImageIcon(
-          AssetImage(icon),
-          color: ColorsRes.hyper,
-        ),
-      ),
+      icon: _buildIcon(icon: icon, color: ColorsRes.hintText),
+      activeIcon: _buildIcon(icon: icon, color: ColorsRes.hyper),
       label: title,
+    );
+  }
+
+  Widget _buildIcon({required String icon, required Color color}) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: Dimens.px5),
+      child: ImageIcon(
+        AssetImage(icon),
+        color: color,
+      ),
     );
   }
 }
