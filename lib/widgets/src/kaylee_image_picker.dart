@@ -19,11 +19,10 @@ class ImagePickerController {
   String? existedImageUrl;
 }
 
-class KayleeImagePicker extends StatefulWidget {
+class KayleeImagePicker extends StatelessWidget {
   final KayleeImagePickerType type;
   final List<String> oldImages;
   final ImagePickerController? controller;
-
   final VoidCallback? onImageSelect;
 
   const KayleeImagePicker({
@@ -35,17 +34,49 @@ class KayleeImagePicker extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State createState() {
+  Widget build(BuildContext context) {
     switch (type) {
       case KayleeImagePickerType.banner:
-        return _KayleeBannerImagePickerState();
+        return _KayleeBannerImagePicker(
+          key: key,
+          type: type,
+          controller: controller,
+          onImageSelect: onImageSelect,
+          oldImages: oldImages,
+        );
       default:
-        return _KayleeProfileImagePickerState();
+        return _KayleeProfileImagePicker(
+          key: key,
+          type: type,
+          controller: controller,
+          onImageSelect: onImageSelect,
+          oldImages: oldImages,
+        );
     }
   }
 }
 
-class _KayleeProfileImagePickerState extends BaseState<KayleeImagePicker> {
+class _KayleeProfileImagePicker extends StatefulWidget {
+  final KayleeImagePickerType type;
+  final List<String> oldImages;
+  final ImagePickerController? controller;
+  final VoidCallback? onImageSelect;
+
+  const _KayleeProfileImagePicker({
+    Key? key,
+    this.type = KayleeImagePickerType.profile,
+    this.onImageSelect,
+    this.oldImages = const [],
+    this.controller,
+  }) : super(key: key);
+
+  @override
+  _KayleeProfileImagePickerState createState() =>
+      _KayleeProfileImagePickerState();
+}
+
+class _KayleeProfileImagePickerState
+    extends BaseState<_KayleeProfileImagePicker> {
   File? selectedFile;
 
   @override
@@ -77,17 +108,19 @@ class _KayleeProfileImagePickerState extends BaseState<KayleeImagePicker> {
                       ),
                     )
                   : AspectRatio(
-                      aspectRatio: 1,
+                aspectRatio: 1,
                       child: selectedFile != null
                           ? Image.file(
                               selectedFile!,
                               fit: BoxFit.cover,
                             )
-                          : CachedNetworkImage(
-                              imageUrl:
-                                  widget.controller?.existedImageUrl ?? '',
-                              fit: BoxFit.cover,
-                            ),
+                          : (widget.controller?.existedImageUrl)
+                                  .isNotNullAndEmpty
+                              ? CachedNetworkImage(
+                                  imageUrl: widget.controller!.existedImageUrl!,
+                                  fit: BoxFit.cover,
+                                )
+                              : const SizedBox.shrink(),
                     ),
             ),
           ),
@@ -154,13 +187,28 @@ class _KayleeProfileImagePickerState extends BaseState<KayleeImagePicker> {
   }
 }
 
-class _KayleeBannerImagePickerState extends BaseState<KayleeImagePicker> {
-  File? selectedFile;
+class _KayleeBannerImagePicker extends StatefulWidget {
+  final KayleeImagePickerType type;
+  final List<String> oldImages;
+  final ImagePickerController? controller;
+  final VoidCallback? onImageSelect;
+
+  const _KayleeBannerImagePicker({
+    Key? key,
+    this.type = KayleeImagePickerType.profile,
+    this.onImageSelect,
+    this.oldImages = const [],
+    this.controller,
+  }) : super(key: key);
 
   @override
-  void initState() {
-    super.initState();
-  }
+  _KayleeBannerImagePickerState createState() =>
+      _KayleeBannerImagePickerState();
+}
+
+class _KayleeBannerImagePickerState
+    extends BaseState<_KayleeBannerImagePicker> {
+  File? selectedFile;
 
   @override
   Widget build(BuildContext context) {
@@ -176,10 +224,12 @@ class _KayleeBannerImagePickerState extends BaseState<KayleeImagePicker> {
                       selectedFile!,
                       fit: BoxFit.cover,
                     )
-                  : CachedNetworkImage(
-                      imageUrl: widget.controller?.existedImageUrl ?? '',
-                      fit: BoxFit.cover,
-                    ),
+                  : (widget.controller?.existedImageUrl).isNotNullAndEmpty
+                      ? CachedNetworkImage(
+                          imageUrl: widget.controller!.existedImageUrl!,
+                          fit: BoxFit.cover,
+                        )
+                      : const SizedBox.shrink(),
             ),
           ),
           Positioned(
