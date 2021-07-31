@@ -43,7 +43,7 @@ class _ProdCateListScreenState extends KayleeState<ProdCateListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: KayleeAppBar(
+      appBar: const KayleeAppBar(
         title: Strings.quanLyDanhMuc,
       ),
       body: Column(
@@ -70,7 +70,7 @@ class _ProdCateListScreenState extends KayleeState<ProdCateListScreen> {
                   },
                   builder: (context, state) {
                     return KayleeListView(
-                      padding: EdgeInsets.all(Dimens.px16),
+                      padding: const EdgeInsets.all(Dimens.px16),
                       itemBuilder: (c, index) {
                         final item = state.items!.elementAt(index);
                         return ProdCateItem(
@@ -87,10 +87,10 @@ class _ProdCateListScreenState extends KayleeState<ProdCateListScreen> {
                       },
                       itemCount: state.items?.length,
                       separatorBuilder: (context, index) =>
-                          SizedBox(height: Dimens.px16),
+                          const SizedBox(height: Dimens.px16),
                       loadingBuilder: (context) {
                         if (state.ended) return Container();
-                        return Align(
+                        return const Align(
                           alignment: Alignment.topCenter,
                           child: KayleeLoadingIndicator(),
                         );

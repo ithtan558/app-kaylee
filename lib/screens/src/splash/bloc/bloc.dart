@@ -8,15 +8,15 @@ class SplashScreenBloc extends BaseBloc {
   SplashScreenBloc();
 
   @override
-  Stream mapEventToState(e) async* {
-    if (e is LoadedSharedPrefSplashScrEvent) {
+  Stream mapEventToState(event) async* {
+    if (event is LoadedSharedPrefSplashScrEvent) {
       yield LoadedSharedPrefSplashScrState();
-    } else if (e is GoToHomeScreenSplashScrEvent) {
+    } else if (event is GoToHomeScreenSplashScrEvent) {
       yield GoToHomeScreenSplashScrState();
-    } else if (e is LoadedUserInfoEvent) {
-      yield LoadedUserInfoState(userInfo: e.userInfo);
-    } else if (e is ErrorLoadInfoEvent) {
-      yield ErrorLoadInfoState(e.code, error: e.error);
+    } else if (event is LoadedUserInfoEvent) {
+      yield LoadedUserInfoState(userInfo: event.userInfo);
+    } else if (event is ErrorLoadInfoEvent) {
+      yield ErrorLoadInfoState(event.code, error: event.error);
     }
   }
 

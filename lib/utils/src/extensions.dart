@@ -4,20 +4,19 @@ import 'package:kaylee/application_config.dart';
 import 'package:kaylee/components/components.dart';
 
 extension KayleeBuildContextExtension on BuildContext {
-  NetworkModule get network => this.repository<NetworkModule>()!;
+  NetworkModule get network => repository<NetworkModule>()!;
 
-  UserModule get user => this.repository<UserModule>()!;
+  UserModule get user => repository<UserModule>()!;
 
-  CartModule get cart => this.repository<CartModule>()!;
+  CartModule get cart => repository<CartModule>()!;
 
-  FcmModule get fcm => this.repository<FcmModule>()!;
+  FcmModule get fcm => repository<FcmModule>()!;
 
-  RepositoriesModule get repos => this.repository<RepositoriesModule>()!;
+  RepositoriesModule get repos => repository<RepositoriesModule>()!;
 
-  ApplicationConfig get appConfig => this.repository<ApplicationConfig>()!;
+  ApplicationConfig get appConfig => repository<ApplicationConfig>()!;
 
-  SystemSettingModule get systemSetting =>
-      this.repository<SystemSettingModule>()!;
+  SystemSettingModule get systemSetting => repository<SystemSettingModule>()!;
 }
 
 extension DateTimeExtension on DateTime {

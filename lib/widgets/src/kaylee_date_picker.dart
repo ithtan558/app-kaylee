@@ -48,8 +48,9 @@ class _DatePickerLayoutDelegate extends MultiChildLayoutDelegate {
   void performLayout(Size size) {
     double remainingWidth = size.width;
 
-    for (int i = 0; i < columnWidths.length; i++)
+    for (int i = 0; i < columnWidths.length; i++) {
       remainingWidth -= columnWidths[i] + _kDatePickerPadSize * 2;
+    }
 
     double currentHorizontalOffset = 0.0;
 
@@ -58,8 +59,9 @@ class _DatePickerLayoutDelegate extends MultiChildLayoutDelegate {
           textDirectionFactor == 1 ? i : columnWidths.length - i - 1;
 
       double childWidth = columnWidths[index] + _kDatePickerPadSize * 2;
-      if (index == 0 || index == columnWidths.length - 1)
+      if (index == 0 || index == columnWidths.length - 1) {
         childWidth += remainingWidth / 2;
+      }
 
       // We can't actually assert here because it would break things badly for
       // semantics, which will expect that we laid things out here.
@@ -377,9 +379,10 @@ class _KayleeDatePickerDateMonthYearState extends State<KayleeDatePicker> {
         squeeze: _kSqueeze,
         onSelectedItemChanged: (int index) {
           selectedDay = index + 1;
-          if (_isCurrentDateValid)
+          if (_isCurrentDateValid) {
             widget.onDateTimeChanged(
                 DateTime(selectedYear, selectedMonth, selectedDay));
+          }
         },
         children: List<Widget>.generate(31, (int index) {
           final int day = index + 1;
@@ -420,9 +423,10 @@ class _KayleeDatePickerDateMonthYearState extends State<KayleeDatePicker> {
         squeeze: _kSqueeze,
         onSelectedItemChanged: (int index) {
           selectedMonth = index + 1;
-          if (_isCurrentDateValid)
+          if (_isCurrentDateValid) {
             widget.onDateTimeChanged(
                 DateTime(selectedYear, selectedMonth, selectedDay));
+          }
         },
         children: List<Widget>.generate(12, (int index) {
           final int month = index + 1;
@@ -467,15 +471,17 @@ class _KayleeDatePickerDateMonthYearState extends State<KayleeDatePicker> {
         backgroundColor: widget.backgroundColor,
         onSelectedItemChanged: (int index) {
           selectedYear = index;
-          if (_isCurrentDateValid)
+          if (_isCurrentDateValid) {
             widget.onDateTimeChanged(
                 DateTime(selectedYear, selectedMonth, selectedDay));
+          }
         },
         itemBuilder: (BuildContext context, int year) {
           if (year < widget.minimumYear) return null;
 
-          if (widget.maximumYear != null && year > widget.maximumYear!)
+          if (widget.maximumYear != null && year > widget.maximumYear!) {
             return null;
+          }
 
           final bool isValidYear = (widget.minimumDate == null ||
                   widget.minimumDate!.year <= year) &&
@@ -579,8 +585,9 @@ class _KayleeDatePickerDateMonthYearState extends State<KayleeDatePicker> {
       final double offAxisFraction = (i - 1) * 0.3 * textDirectionFactor;
 
       EdgeInsets padding = const EdgeInsets.only(right: _kDatePickerPadSize);
-      if (textDirectionFactor == -1)
+      if (textDirectionFactor == -1) {
         padding = const EdgeInsets.only(left: _kDatePickerPadSize);
+      }
 
       pickers.add(LayoutId(
         id: i,
@@ -778,8 +785,9 @@ class _KayleeDatePickerMonthYearState extends State<KayleeDatePicker> {
         itemBuilder: (BuildContext context, int year) {
           if (year < widget.minimumYear) return null;
 
-          if (widget.maximumYear != null && year > widget.maximumYear!)
+          if (widget.maximumYear != null && year > widget.maximumYear!) {
             return null;
+          }
 
           final bool isValidYear = (widget.minimumDate == null ||
                   widget.minimumDate!.year <= year) &&
@@ -859,8 +867,9 @@ class _KayleeDatePickerMonthYearState extends State<KayleeDatePicker> {
       final double offAxisFraction = (i - 1) * 0.3 * textDirectionFactor;
 
       EdgeInsets padding = const EdgeInsets.only(right: _kDatePickerPadSize);
-      if (textDirectionFactor == -1)
+      if (textDirectionFactor == -1) {
         padding = const EdgeInsets.only(left: _kDatePickerPadSize);
+      }
 
       pickers.add(LayoutId(
         id: i,

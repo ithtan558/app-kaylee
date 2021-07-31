@@ -16,7 +16,7 @@ class MyOrderDetailBloc extends Cubit<SingleModel<Order>> {
       onSuccess: ({message, result}) {
         emit(OrderDetailModel.copy(state
           ..loading = false
-          ..item = this.order = result));
+          ..item = order = result));
       },
       onFailed: (code, {error}) {
         emit(SingleModel.copy(state

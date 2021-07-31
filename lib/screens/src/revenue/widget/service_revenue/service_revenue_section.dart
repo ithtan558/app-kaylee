@@ -9,7 +9,9 @@ import 'package:kaylee/screens/src/revenue/widget/widget_helper.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class ServiceRevenueSection extends StatefulWidget {
-  ServiceRevenueSection();
+  const ServiceRevenueSection({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _ServiceRevenueSectionState createState() => _ServiceRevenueSectionState();
@@ -60,10 +62,10 @@ class _ServiceRevenueSectionState extends KayleeState<ServiceRevenueSection>
           },
           builder: (context, state) {
             if (state.loading) return buildLoading();
-            if (state.code.isNotNull) return SizedBox();
+            if (state.code.isNotNull) return const SizedBox.shrink();
             return ListView.separated(
                 shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (c, index) {
                   final item = state.item!.elementAt(index);
                   return RevenueItem(
@@ -74,7 +76,8 @@ class _ServiceRevenueSectionState extends KayleeState<ServiceRevenueSection>
                 separatorBuilder: (c, index) {
                   return Container(
                       height: Dimens.px1,
-                      decoration: BoxDecoration(color: ColorsRes.divider));
+                      decoration:
+                          const BoxDecoration(color: ColorsRes.divider));
                 },
                 itemCount: state.item?.length ?? 0);
           },

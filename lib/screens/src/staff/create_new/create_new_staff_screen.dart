@@ -22,13 +22,16 @@ enum NewStaffScreenOpenFrom { staffItem, addNewStaffBtn }
 
 class CreateNewStaffScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<StaffDetailScreenBloc>(
-    create: (context) => StaffDetailScreenBloc(
+        create: (context) => StaffDetailScreenBloc(
             employeeService: context.network.provideEmployeeService(),
             employee: context.getArguments<NewStaffScreenData>()!.employee),
-        child: CreateNewStaffScreen._(),
+        child: const CreateNewStaffScreen(),
       );
 
-  CreateNewStaffScreen._();
+  @visibleForTesting
+  const CreateNewStaffScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _CreateNewStaffScreenState createState() => _CreateNewStaffScreenState();

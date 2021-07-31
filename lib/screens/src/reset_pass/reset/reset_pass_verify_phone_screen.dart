@@ -87,7 +87,7 @@ class _ResetPassVerifyPhoneScreenState
       },
       child: UnFocusWidget(
         child: Scaffold(
-          appBar: KayleeAppBar(
+          appBar: const KayleeAppBar(
             title: Strings.khoiPhucMatKhau,
           ),
           body: Padding(

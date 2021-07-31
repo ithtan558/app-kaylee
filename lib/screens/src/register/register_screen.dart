@@ -61,7 +61,7 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
   Widget build(BuildContext context) {
     return UnFocusWidget(
       child: KayleeScrollview(
-        appBar: KayleeAppBar(
+        appBar: const KayleeAppBar(
           title: Strings.khoiTaoTaiKhoan,
         ),
         child: BlocConsumer<RegisterScreenBloc, SingleModel>(
@@ -225,7 +225,8 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
                             code: codeTController.text,
                             isAcceptPolicy: isAcceptPolicy);
                       },
-                      margin: EdgeInsets.symmetric(horizontal: Dimens.px8)),
+                      margin:
+                          const EdgeInsets.symmetric(horizontal: Dimens.px8)),
                 ),
               ],
             );

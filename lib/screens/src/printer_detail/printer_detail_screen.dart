@@ -66,7 +66,7 @@ class _PrinterDetailScreenState extends KayleeState<PrinterDetailScreen> {
         ),
         body: BlocListener<PrinterDetailBase, PrinterDetailState>(
           listener: (context, state) async {
-            print('[TUNG] ===> PrinterDetailState $state');
+            // print('[TUNG] ===> PrinterDetailState $state');
             if (state is PrinterDetailStateOnSelectWifi) {
               showCupertinoDialog(
                 context: context,

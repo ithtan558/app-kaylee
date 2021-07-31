@@ -11,7 +11,9 @@ class BrandSelectTextField extends StatefulWidget {
   final String? title;
   final BrandSelectTFController? controller;
 
-  BrandSelectTextField({this.error, this.title, this.controller});
+  const BrandSelectTextField(
+      {Key? key, this.error, this.title, this.controller})
+      : super(key: key);
 
   @override
   _BrandSelectTextFieldState createState() => _BrandSelectTextFieldState();

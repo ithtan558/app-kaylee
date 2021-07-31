@@ -13,13 +13,16 @@ import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class SplashScreen extends StatefulWidget {
-  static Widget newInstance() =>
-      BlocProvider(create: (c) => SplashScreenBloc(), child: SplashScreen._());
+  static Widget newInstance() => BlocProvider(
+      create: (c) => SplashScreenBloc(), child: const SplashScreen());
 
-  SplashScreen._();
+  @visibleForTesting
+  const SplashScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
-  _SplashScreenState createState() => new _SplashScreenState();
+  _SplashScreenState createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends KayleeState<SplashScreen> {
@@ -45,8 +48,8 @@ class _SplashScreenState extends KayleeState<SplashScreen> {
     final remoteConfig = RemoteConfig.instance;
     remoteConfig.setDefaults(context.appConfig.defaultConfig);
     await remoteConfig.setConfigSettings(RemoteConfigSettings(
-      fetchTimeout: Duration(seconds: 1),
-      minimumFetchInterval: Duration(minutes: 1),
+      fetchTimeout: const Duration(seconds: 1),
+      minimumFetchInterval: const Duration(minutes: 1),
     ));
     remoteConfig.fetchAndActivate().then((_) async {
       context.appConfig.setupConfig(remoteConfig.getAll());
@@ -95,7 +98,7 @@ class _SplashScreenState extends KayleeState<SplashScreen> {
                         Container(
                           margin:
                               const EdgeInsets.symmetric(vertical: Dimens.px32),
-                          child: Go2RegisterText(),
+                          child: const Go2RegisterText(),
                         )
                       ],
                     );

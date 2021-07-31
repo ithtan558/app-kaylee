@@ -127,7 +127,7 @@ class PdfModule {
                   Text(
                     '${Strings.ngay}: ${order.createdAt?.toFormatString(pattern: dateFormat2) ?? ''}',
                   ),
-                  Expanded(child: SizedBox()),
+                  Expanded(child: SizedBox.shrink()),
                   Text(
                     '${Strings.so}: ${order.code ?? ''}',
                     textAlign: TextAlign.right,
@@ -364,7 +364,7 @@ class PdfModule {
           '$title: ',
           style: style,
         ),
-        Expanded(child: SizedBox()),
+        Expanded(child: SizedBox.shrink()),
         Text(
           content ?? '',
           style: style,

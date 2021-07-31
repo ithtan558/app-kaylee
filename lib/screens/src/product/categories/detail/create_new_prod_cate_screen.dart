@@ -222,7 +222,7 @@ class _CreateNewProdCateScreenState
                   },
                 ),
               )
-            : SizedBox(),
+            : const SizedBox.shrink(),
       ),
     );
   }

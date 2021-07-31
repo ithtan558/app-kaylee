@@ -36,7 +36,7 @@ class SupplierProdListBloc extends Cubit<LoadMoreModel<Product>>
     RequestHandler(
       request: productService.getProducts(
         supplierId: supplier?.id,
-        categoryId: this.category?.id,
+        categoryId: category?.id,
         limit: state.limit,
         page: state.page,
       ),

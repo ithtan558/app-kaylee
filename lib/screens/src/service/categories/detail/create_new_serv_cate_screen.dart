@@ -23,13 +23,16 @@ enum NewSerCateScreenOpenFrom { cateItem, addNewCateBtn }
 class CreateNewServCateScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider(
       create: (context) => ServCateDetailBloc(
-        servService: context.network.provideServService(),
+            servService: context.network.provideServService(),
             serviceCate:
                 context.getArguments<NewServCateScreenData>()!.serviceCate,
           ),
-      child: CreateNewServCateScreen._());
+      child: const CreateNewServCateScreen());
 
-  CreateNewServCateScreen._();
+  @visibleForTesting
+  const CreateNewServCateScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _CreateNewServCateScreenState createState() =>
@@ -219,7 +222,7 @@ class _CreateNewServCateScreenState
                   },
                 ),
               )
-            : SizedBox(),
+            : const SizedBox.shrink(),
       ),
     );
   }

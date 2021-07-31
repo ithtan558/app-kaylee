@@ -15,12 +15,12 @@ class ReceiverInfoScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider(
       create: (context) =>
           AutoFillBloc(service: context.network.provideBrandService()),
-      child: ReceiverInfoScreen._());
+      child: const ReceiverInfoScreen._());
 
-  ReceiverInfoScreen._();
+  const ReceiverInfoScreen._();
 
   @override
-  _ReceiverInfoScreenState createState() => new _ReceiverInfoScreenState();
+  _ReceiverInfoScreenState createState() => _ReceiverInfoScreenState();
 }
 
 class _ReceiverInfoScreenState extends KayleeState<ReceiverInfoScreen> {
@@ -143,7 +143,7 @@ class _ReceiverInfoScreenState extends KayleeState<ReceiverInfoScreen> {
                 builder: (context, state) {
                   return KayleeFullAddressInput(
                     title: Strings.diaChiHienTai,
-                    padding: EdgeInsets.all(Dimens.px16),
+                    padding: const EdgeInsets.all(Dimens.px16),
                     controller: addressController,
                   );
                 },
@@ -180,7 +180,8 @@ class _ReceiverInfoScreenState extends KayleeState<ReceiverInfoScreen> {
                   controller: noteTfController,
                   fieldHeight:
                       (context.screenSize.width - Dimens.px32) / (343 / 233),
-                  contentPadding: EdgeInsets.symmetric(vertical: Dimens.px16),
+                  contentPadding:
+                      const EdgeInsets.symmetric(vertical: Dimens.px16),
                   maxLength: 200,
                   focusNode: noteFocus,
                 ),
@@ -189,7 +190,7 @@ class _ReceiverInfoScreenState extends KayleeState<ReceiverInfoScreen> {
           ),
           bottom: KayLeeRoundedButton.normal(
             text: Strings.tiepTuc,
-            margin: EdgeInsets.all(Dimens.px8),
+            margin: const EdgeInsets.all(Dimens.px8),
             onPressed: () {
               saveInfo();
               pushScreen(PageIntent(screen: PaymentInfoScreen));

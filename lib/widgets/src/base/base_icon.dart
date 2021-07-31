@@ -6,7 +6,8 @@ abstract class BaseIcon extends StatelessWidget {
   final double? size;
   final Color? color;
 
-  BaseIcon({required this.icon, this.size, this.color});
+  const BaseIcon({Key? key, required this.icon, this.size, this.color})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -261,7 +261,8 @@ class _CreateNewProdScreenState extends KayleeState<CreateNewProdScreen> {
                   textInputAction: TextInputAction.newline,
                   fieldHeight:
                       (context.screenSize.width - Dimens.px32) / (343 / 233),
-                  contentPadding: EdgeInsets.symmetric(vertical: Dimens.px16),
+                  contentPadding:
+                      const EdgeInsets.symmetric(vertical: Dimens.px16),
                   controller: descriptionTfController,
                   focusNode: descriptionFocus,
                 ),

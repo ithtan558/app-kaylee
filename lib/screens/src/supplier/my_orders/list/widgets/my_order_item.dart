@@ -8,7 +8,7 @@ import 'package:kaylee/widgets/widgets.dart';
 class MyOrderItem extends StatelessWidget {
   final Order order;
 
-  MyOrderItem({required this.order});
+  const MyOrderItem({Key? key, required this.order}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,8 @@ class MyOrderItem extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(Dimens.px16).copyWith(bottom: Dimens.px8),
+            padding:
+                const EdgeInsets.all(Dimens.px16).copyWith(bottom: Dimens.px8),
             child: Row(
               children: [
                 Expanded(

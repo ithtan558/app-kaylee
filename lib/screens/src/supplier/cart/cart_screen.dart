@@ -9,12 +9,15 @@ import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class CartScreen extends StatefulWidget {
-  static Widget newInstance() => CartScreen._();
+  static Widget newInstance() => const CartScreen();
 
-  CartScreen._();
+  @visibleForTesting
+  const CartScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
-  _CartScreenState createState() => new _CartScreenState();
+  _CartScreenState createState() => _CartScreenState();
 }
 
 class _CartScreenState extends BaseState<CartScreen> {
@@ -31,7 +34,7 @@ class _CartScreenState extends BaseState<CartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: KayleeAppBar(
+      appBar: const KayleeAppBar(
         title: Strings.gioHang,
       ),
       body: Column(
@@ -42,7 +45,7 @@ class _CartScreenState extends BaseState<CartScreen> {
                 final cartItems = context.cart.getOrder()?.cartItems;
                 if (cartItems?.isEmpty ?? true) {
                   return Container(
-                    margin: EdgeInsets.only(top: Dimens.px16),
+                    margin: const EdgeInsets.only(top: Dimens.px16),
                     child: KayleeText.hint16W400(Strings.banChuaChonSanPham),
                   );
                 }
@@ -64,7 +67,7 @@ class _CartScreenState extends BaseState<CartScreen> {
                           height: 1,
                           margin: const EdgeInsets.symmetric(
                               horizontal: Dimens.px16),
-                          decoration: new BoxDecoration(
+                      decoration: const BoxDecoration(
                               color: ColorsRes.textFieldBorder),
                         ),
                     itemCount: cartItems!.length + 1);
@@ -75,8 +78,9 @@ class _CartScreenState extends BaseState<CartScreen> {
             text: Strings.datHang,
             margin: const EdgeInsets.all(Dimens.px8),
             onPressed: () {
-              if (context.cart.getOrder()?.cartItems?.isNotEmpty ?? false)
+              if (context.cart.getOrder()?.cartItems?.isNotEmpty ?? false) {
                 pushScreen(PageIntent(screen: ReceiverInfoScreen));
+              }
             },
           )
         ],

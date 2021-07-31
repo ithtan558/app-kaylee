@@ -7,7 +7,8 @@ class HyperLinkText extends StatelessWidget {
   final VoidCallback? onTap;
   final TextStyle? textStyle;
 
-  HyperLinkText({this.text, this.onTap, this.textStyle});
+  const HyperLinkText({Key? key, this.text, this.onTap, this.textStyle})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

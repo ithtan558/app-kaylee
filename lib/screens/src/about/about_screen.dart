@@ -28,7 +28,7 @@ class _AboutScreenState extends BaseState<AboutScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: KayleeAppBar(
+      appBar: const KayleeAppBar(
         title: Strings.thongTinUngDung,
       ),
       body: FutureBuilder<PackageInfo>(

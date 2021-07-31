@@ -10,10 +10,12 @@ class KayleeFilterView extends StatefulWidget {
   final String? title;
   final KayleeFloatButton? floatingActionButton;
 
-  KayleeFilterView({this.title, this.child, this.floatingActionButton});
+  const KayleeFilterView(
+      {Key? key, this.title, this.child, this.floatingActionButton})
+      : super(key: key);
 
   @override
-  _KayleeFilterViewState createState() => new _KayleeFilterViewState();
+  _KayleeFilterViewState createState() => _KayleeFilterViewState();
 }
 
 class _KayleeFilterViewState extends BaseState<KayleeFilterView> {
@@ -58,7 +60,7 @@ class _FilterButton extends StatefulWidget {
   final void Function(bool state)? onClick;
   final AnimationController animController;
 
-  _FilterButton({this.onClick, required this.animController});
+  const _FilterButton({this.onClick, required this.animController});
 
   @override
   __FilterButtonState createState() => __FilterButtonState();
@@ -85,7 +87,7 @@ class __FilterButtonState extends BaseState<_FilterButton>
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: Dimens.px32,
       child: Material(
         borderRadius: BorderRadius.circular(Dimens.px5),
@@ -93,10 +95,11 @@ class __FilterButtonState extends BaseState<_FilterButton>
         clipBehavior: Clip.antiAlias,
         child: InkWell(
           onTap: () {
-            if (!isOpened)
+            if (!isOpened) {
               widget.animController.forward(from: widget.animController.value);
-            else
+            } else {
               widget.animController.reverse(from: widget.animController.value);
+            }
             isOpened = !isOpened;
             widget.onClick?.call(isOpened);
           },
@@ -113,7 +116,7 @@ class __FilterButtonState extends BaseState<_FilterButton>
               Container(
                   width: Dimens.px1,
                   margin: const EdgeInsets.symmetric(vertical: Dimens.px2),
-                  decoration: BoxDecoration(color: Colors.white)),
+                  decoration: const BoxDecoration(color: Colors.white)),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: Dimens.px4),
                 child: AnimatedBuilder(
@@ -142,10 +145,10 @@ class __FilterButtonState extends BaseState<_FilterButton>
 class _FilterView extends StatefulWidget {
   final String? title;
 
-  _FilterView({this.title});
+  const _FilterView({this.title});
 
   @override
-  _FilterViewState createState() => new _FilterViewState();
+  _FilterViewState createState() => _FilterViewState();
 }
 
 class _FilterViewState extends BaseState<_FilterView> {
@@ -163,7 +166,7 @@ class _FilterViewState extends BaseState<_FilterView> {
   Widget build(BuildContext context) {
     return Positioned.fill(
       child: Stack(
-        children: <Widget>[],
+        children: const [],
       ),
     );
   }

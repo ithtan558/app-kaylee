@@ -13,27 +13,27 @@ mixin IosBluetoothPrinterMixin on BluetoothPrinterMixin {
 
   void _initBluetoothStateListener() {
     _bluetoothSub = BluetoothPrint.instance.state.listen((state) async {
-      print('[TUNG] ===> _initBluetoothStateListener cur device status: '
-          '${state == BluetoothPrint.CONNECTED ? 'Connected' : state == BluetoothPrint.DISCONNECTED ? 'Disconnected' : state}');
+      // print('[TUNG] ===> _initBluetoothStateListener cur device status: '
+      //     '${state == BluetoothPrint.CONNECTED ? 'Connected' : state == BluetoothPrint.DISCONNECTED ? 'Disconnected' : state}');
       switch (state) {
         case BluetoothPrint.CONNECTED:
           BluetoothPrinterModule.connected = true;
           _stopRequestDisconnectingTimeOut();
           _stopRequestConnectingTimeOut();
-          print('[TUNG] ===> before connectedBluetoothDevice ${this.state}');
+          // print('[TUNG] ===> before connectedBluetoothDevice ${this.state}');
           _stateChanges = state;
           return connectedBluetoothDevice();
         case BluetoothPrint.DISCONNECTED:
           BluetoothPrinterModule.connected = false;
           if (_stateChanges == BluetoothPrint.CONNECTED) return;
-          print(
-              '[TUNG] ===> before PrinterDetailStateRequestingDisconnectBluetooth requestConnectingBluetoothDevice ${this.state}');
+          // print(
+          //     '[TUNG] ===> before PrinterDetailStateRequestingDisconnectBluetooth requestConnectingBluetoothDevice ${this.state}');
           _stateChanges = state;
           if (this.state is PrinterDetailStateRequestingDisconnectBluetooth) {
             _stopRequestDisconnectingTimeOut();
             emit(PrinterDetailStateDisconnectBluetooth());
-            print(
-                '[TUNG] ===> PrinterDetailStateRequestingDisconnectBluetooth requestConnectingBluetoothDevice');
+            // print(
+            //     '[TUNG] ===> PrinterDetailStateRequestingDisconnectBluetooth requestConnectingBluetoothDevice');
             return requestConnectingBluetoothDevice();
           }
           return;
@@ -67,10 +67,10 @@ mixin IosBluetoothPrinterMixin on BluetoothPrinterMixin {
   void requestConnectingBluetoothDevice() async {
     _stateChanges = -1;
     emit(PrinterDetailStateRequestingConnectBluetooth());
-    print('[TUNG] ===> requestConnectingBluetoothDevice start');
+    // print('[TUNG] ===> requestConnectingBluetoothDevice start');
     try {
-      final result = await connect();
-      print('[TUNG] ===> requestConnectingBluetoothDevice result $result');
+      await connect();
+      // print('[TUNG] ===> requestConnectingBluetoothDevice result $result');
     } catch (_) {}
     _startRequestConnectingTimeOut();
   }
@@ -84,7 +84,7 @@ mixin IosBluetoothPrinterMixin on BluetoothPrinterMixin {
     }
     _requestConnectingTimeOut =
         Timer.periodic(const Duration(seconds: 1), (timer) async {
-      print('[TUNG] ===> _requestConnectingTimeOut ${timer.tick}');
+          // print('[TUNG] ===> _requestConnectingTimeOut ${timer.tick}');
       if (timer.tick == 6) {
         if (state is! PrinterDetailStateConnectedBluetooth &&
             state is! PrinterDetailStatePrintingConnectionInfo &&
@@ -118,7 +118,7 @@ mixin IosBluetoothPrinterMixin on BluetoothPrinterMixin {
     }
     _requestDisconnectingTimeOut =
         Timer.periodic(const Duration(seconds: 1), (timer) async {
-      print('[TUNG] ===> _requestDisconnectingTimeOut ${timer.tick}');
+          // print('[TUNG] ===> _requestDisconnectingTimeOut ${timer.tick}');
       if (timer.tick == 6) {
         if (BluetoothPrinterModule.connected) {
           return connectedBluetoothDevice();
@@ -139,8 +139,8 @@ mixin IosBluetoothPrinterMixin on BluetoothPrinterMixin {
 
   void requestDisconnectingBluetoothDevice() async {
     emit(PrinterDetailStateRequestingDisconnectBluetooth());
-    final result = await connect();
-    print('[TUNG] ===> requestDisconnectingBluetoothDevice result $result');
+    await connect();
+    // print('[TUNG] ===> requestDisconnectingBluetoothDevice result $result');
     _startRequestDisconnectingTimeOut();
   }
 

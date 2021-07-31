@@ -35,9 +35,12 @@ class SupplierProdListScreen extends StatefulWidget {
             supplier: context.getArguments<Supplier>(),
           ),
         ),
-      ], child: SupplierProdListScreen._());
+      ], child: const SupplierProdListScreen());
 
-  SupplierProdListScreen._();
+  @visibleForTesting
+  const SupplierProdListScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _SupplierProdListScreenState createState() => _SupplierProdListScreenState();
@@ -160,7 +163,7 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
             },
             builder: (context, state) {
               return KayleeGridView(
-                padding: EdgeInsets.all(Dimens.px16),
+                padding: const EdgeInsets.all(Dimens.px16),
                 childAspectRatio: 103 / 195,
                 itemBuilder: (c, index) {
                   final item = state.items!.elementAt(index);
@@ -180,7 +183,7 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
                 itemCount: state.items?.length,
                 loadingBuilder: (context) {
                   if (state.ended) return Container();
-                  return Align(
+                  return const Align(
                     alignment: Alignment.topCenter,
                     child: KayleeLoadingIndicator(),
                   );

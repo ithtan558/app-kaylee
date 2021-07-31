@@ -5,7 +5,8 @@ class KayleeCheckBox extends StatelessWidget {
   final VoidCallback? onChecked;
   final bool checked;
 
-  KayleeCheckBox({this.onChecked, this.checked = false});
+  const KayleeCheckBox({Key? key, this.onChecked, this.checked = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

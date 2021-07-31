@@ -7,7 +7,8 @@ abstract class KayleeCartProdItem extends StatelessWidget {
   final int? amount;
   final int? quantity;
 
-  KayleeCartProdItem({this.name, this.amount, this.quantity});
+  const KayleeCartProdItem({Key? key, this.name, this.amount, this.quantity})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

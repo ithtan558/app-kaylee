@@ -10,11 +10,12 @@ class CartProdItem extends KayleeCartProdItem {
   final VoidCallback? onRemoveItem;
   final OrderRequestItem item;
 
-  CartProdItem({required this.item, this.onRemoveItem})
+  CartProdItem({Key? key, required this.item, this.onRemoveItem})
       : super(
           name: item.name,
           amount: (item.price ?? 0) * (item.quantity ?? 0),
           quantity: item.quantity,
+          key: key,
         );
 
   @override

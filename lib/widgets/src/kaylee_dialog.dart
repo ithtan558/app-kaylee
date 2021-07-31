@@ -27,7 +27,7 @@ Future<T?> showKayleeBottomSheet<T>(BuildContext context,
       builder: (c) {
         return AnimatedPadding(
           padding: MediaQuery.of(context).viewInsets,
-          duration: Duration(milliseconds: 200),
+          duration: const Duration(milliseconds: 200),
           child: Stack(
             children: <Widget>[
               Positioned.fill(
@@ -49,10 +49,10 @@ Future<T?> showKayleeBottomSheet<T>(BuildContext context,
                   return Container(
                     decoration: const BoxDecoration(
                       color: Colors.white,
-                      borderRadius: const BorderRadius.only(
+                      borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(Dimens.px5),
                           topRight: Radius.circular(Dimens.px5)),
-                      boxShadow: const [
+                      boxShadow: [
                         BoxShadow(
                             color: ColorsRes.shadow,
                             offset: Offset.zero,
@@ -106,7 +106,7 @@ Future<void> showKayleeDialog({
                 borderRadius: BorderRadius.circular(10),
                 boxShadow: [
                   if (showShadow)
-                    BoxShadow(
+                    const BoxShadow(
                         color: ColorsRes.shadow,
                         offset: Offset(0, Dimens.px10),
                         blurRadius: Dimens.px20,
@@ -130,7 +130,7 @@ Future<void> showKayleeDialog({
           },
           barrierColor: ColorsRes.dialogDimBg,
           barrierDismissible: barrierDismissible,
-          transitionDuration: Duration(milliseconds: 200))
+          transitionDuration: const Duration(milliseconds: 200))
       .then((value) {
     onDismiss?.call(value);
   });
@@ -206,10 +206,9 @@ class KayleeAlertDialogView extends StatelessWidget {
       );
 
   ///show cupertino dialog với [message] truyền vào
-  factory KayleeAlertDialogView.message(
-          {Message? message,
-          List<KayleeAlertDialogAction>? actions,
-          bool allowBackPress = true}) =>
+  factory KayleeAlertDialogView.message({Message? message,
+    List<KayleeAlertDialogAction>? actions,
+    bool allowBackPress = true}) =>
       KayleeAlertDialogView(
         title: message?.title,
         content: message?.content,
@@ -217,12 +216,13 @@ class KayleeAlertDialogView extends StatelessWidget {
         allowBackPress: allowBackPress,
       );
 
-  KayleeAlertDialogView(
-      {this.title,
-      this.content,
-      this.actions,
-      this.contentWidget,
-      this.allowBackPress = true});
+  const KayleeAlertDialogView({Key? key,
+    this.title,
+    this.content,
+    this.actions,
+    this.contentWidget,
+    this.allowBackPress = true})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -230,16 +230,17 @@ class KayleeAlertDialogView extends StatelessWidget {
       onWillPop: () async {
         return allowBackPress;
       },
-      child:CupertinoAlertDialog(
-      title: title != null ? Text(title!) : null,
-      content: contentWidget ??
-          (content != null
-              ? Padding(
-                  padding: const EdgeInsets.only(top: Dimens.px3),
-                  child: Text(content!),
-                )
-              : null),
-      actions: actions ?? [],),
+      child: CupertinoAlertDialog(
+        title: title != null ? Text(title!) : null,
+        content: contentWidget ??
+            (content != null
+                ? Padding(
+              padding: const EdgeInsets.only(top: Dimens.px3),
+              child: Text(content!),
+            )
+                : null),
+        actions: actions ?? [],
+      ),
     );
   }
 }
@@ -264,8 +265,12 @@ class KayleeAlertDialogAction extends StatelessWidget {
         isDefaultAction: isDefaultAction,
       );
 
-  KayleeAlertDialogAction(
-      {required this.title, this.onPressed, this.isDefaultAction = false});
+  const KayleeAlertDialogAction(
+      {Key? key,
+      required this.title,
+      this.onPressed,
+      this.isDefaultAction = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -293,7 +298,7 @@ Future showPickerPopup(
         return Material(
           child: Container(
             height: screenHeight * 258 / 667,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: ColorsRes.dialogNavigate,
               boxShadow: [
                 BoxShadow(
@@ -321,7 +326,7 @@ Future showPickerPopup(
                           child: Container(
                             color: Colors.transparent,
                             alignment: Alignment.center,
-                            child: Text(
+                            child: const Text(
                               Strings.huy,
                               style: TextStyle(
                                 fontFamily: 'SFProText',
@@ -341,7 +346,7 @@ Future showPickerPopup(
                           child: Container(
                             color: Colors.transparent,
                             alignment: Alignment.center,
-                            child: Text(
+                            child: const Text(
                               Strings.hoanTat,
                               style: TextStyle(
                                 fontFamily: 'SFProText',
@@ -397,7 +402,7 @@ class _KayleeAmountChangingView extends StatefulWidget {
   final ValueSetter<int>? onAmountChange;
   final VoidCallback? onRemoveItem;
 
-  _KayleeAmountChangingView({
+  const _KayleeAmountChangingView({
     required this.title,
     required this.initAmount,
     this.onAmountChange,
@@ -463,10 +468,15 @@ class _KayleeAmountChangingViewState
         Row(
           children: [
             Expanded(
-              child: FlatButton(
-                  padding: const EdgeInsets.symmetric(vertical: Dimens.px18),
-                  shape:
-                      RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+              child: TextButton(
+                  style: ButtonStyle(
+                      padding: MaterialStateProperty.all(
+                        const EdgeInsets.symmetric(vertical: Dimens.px18),
+                      ),
+                      shape: MaterialStateProperty.all(
+                        const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.zero),
+                      )),
                   onPressed: () {
                     popScreen();
                   },
@@ -481,10 +491,15 @@ class _KayleeAmountChangingViewState
               color: ColorsRes.divider,
             ),
             Expanded(
-              child: FlatButton(
-                  padding: const EdgeInsets.symmetric(vertical: Dimens.px18),
-                  shape:
-                      RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+              child: TextButton(
+                  style: ButtonStyle(
+                      padding: MaterialStateProperty.all(
+                        const EdgeInsets.symmetric(vertical: Dimens.px18),
+                      ),
+                      shape: MaterialStateProperty.all(
+                        const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.zero),
+                      )),
                   onPressed: () {
                     if (current <= 0) {
                       widget.onRemoveItem?.call();

@@ -6,10 +6,11 @@ class KayleeBottomBar extends StatefulWidget {
   final void Function(int index)? onTapChanged;
   final PageController? pageController;
 
-  KayleeBottomBar({this.onTapChanged, this.pageController});
+  const KayleeBottomBar({Key? key, this.onTapChanged, this.pageController})
+      : super(key: key);
 
   @override
-  _KayleeBottomBarState createState() => new _KayleeBottomBarState();
+  _KayleeBottomBarState createState() => _KayleeBottomBarState();
 }
 
 class _KayleeBottomBarState extends BaseState<KayleeBottomBar> {
@@ -66,11 +67,12 @@ class _KayleeBottomBarState extends BaseState<KayleeBottomBar> {
         fontSize: Dimens.px12,
       ),
       onTap: (index) {
-        if (index != selectedTab)
+        if (index != selectedTab) {
           setState(() {
             selectedTab = index;
             widget.onTapChanged?.call(selectedTab);
           });
+        }
       },
       currentIndex: selectedTab,
       unselectedIconTheme: const IconThemeData(size: Dimens.px24),
@@ -90,20 +92,23 @@ class _KayleeBottomBarState extends BaseState<KayleeBottomBar> {
     required String activeImage,
   }) {
     return BottomNavigationBarItem(
-      icon: Image.asset(
-        inActiveImage,
-        width: Dimens.px24,
-        height: Dimens.px24,
+      icon: Padding(
+        padding: const EdgeInsets.only(bottom: Dimens.px5),
+        child: ImageIcon(
+          AssetImage(activeImage),
+          color: ColorsRes.hintText,
+          size: Dimens.px24,
+        ),
       ),
-      activeIcon: Image.asset(
-        activeImage,
-        width: Dimens.px24,
-        height: Dimens.px24,
+      activeIcon: Padding(
+        padding: const EdgeInsets.only(bottom: Dimens.px5),
+        child: ImageIcon(
+          AssetImage(activeImage),
+          size: Dimens.px24,
+          color: ColorsRes.hyper,
+        ),
       ),
-      title: Padding(
-        padding: const EdgeInsets.only(top: Dimens.px5),
-        child: Text(title),
-      ),
+      label: title,
     );
   }
 }

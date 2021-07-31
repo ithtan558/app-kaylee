@@ -14,10 +14,13 @@ class MyOrdersScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider(
         create: (context) => MyOrdersScreenBloc(
             orderService: context.network.provideOrderService()),
-        child: MyOrdersScreen._(),
+        child: const MyOrdersScreen(),
       );
 
-  MyOrdersScreen._();
+  @visibleForTesting
+  const MyOrdersScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _MyOrdersScreenState createState() => _MyOrdersScreenState();
@@ -53,7 +56,7 @@ class _MyOrdersScreenState extends KayleeState<MyOrdersScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: KayleeAppBar(
+      appBar: const KayleeAppBar(
         title: Strings.danhMucDonDatHang,
       ),
       body: Column(
@@ -72,7 +75,7 @@ class _MyOrdersScreenState extends KayleeState<MyOrdersScreen> {
                 child: BlocBuilder<MyOrdersScreenBloc, LoadMoreModel<Order>>(
                   builder: (context, state) {
                     return KayleeListView(
-                      padding: EdgeInsets.all(Dimens.px16),
+                      padding: const EdgeInsets.all(Dimens.px16),
                       itemBuilder: (c, index) {
                         final item = state.items!.elementAt(index);
                         return MyOrderItem(
@@ -81,10 +84,10 @@ class _MyOrdersScreenState extends KayleeState<MyOrdersScreen> {
                       },
                       itemCount: state.items?.length,
                       separatorBuilder: (context, index) =>
-                      const SizedBox(height: Dimens.px16),
+                          const SizedBox(height: Dimens.px16),
                       loadingBuilder: (context) {
                         if (state.ended) return Container();
-                        return Align(
+                        return const Align(
                           alignment: Alignment.topCenter,
                           child: KayleeLoadingIndicator(),
                         );

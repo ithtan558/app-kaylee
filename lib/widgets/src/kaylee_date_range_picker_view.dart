@@ -33,12 +33,12 @@ extension DateRangeValueTypeExtension on DateRangeValueType {
       case DateRangeValueType.thisWeek:
         final now = DateTime.now();
         final startDate = now.subtract(Duration(days: now.weekday - 1));
-        final endDate = startDate.add(Duration(days: 6));
+        final endDate = startDate.add(const Duration(days: 6));
         return DateTimeRange(start: startDate, end: endDate);
       case DateRangeValueType.lastWeek:
         final now = DateTime.now();
         final startDate = now.subtract(Duration(days: 7 + now.weekday - 1));
-        final endDate = startDate.add(Duration(days: 6));
+        final endDate = startDate.add(const Duration(days: 6));
         return DateTimeRange(start: startDate, end: endDate);
       case DateRangeValueType.thisMonth:
         final now = DateTime.now();
@@ -62,11 +62,13 @@ class KayleeDateRangePickerView extends StatefulWidget {
   final DateTimeRange selectedRange;
   final DateRangeValueType? selectedType;
 
-  KayleeDateRangePickerView(
-      {required this.selectedRange,
+  const KayleeDateRangePickerView(
+      {Key? key,
+      required this.selectedRange,
       this.onSelectByDate,
       this.onSelectByType,
-      this.selectedType});
+      this.selectedType})
+      : super(key: key);
 
   @override
   _KayleeDateRangePickerViewState createState() =>
@@ -118,7 +120,7 @@ class _KayleeDateRangePickerViewState
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: Dimens.px24),
-                child: Container(
+                child: SizedBox(
                   height: Dimens.px32,
                   child: ListView.separated(
                       scrollDirection: Axis.horizontal,
@@ -131,7 +133,7 @@ class _KayleeDateRangePickerViewState
                             },
                             selected: rangeValueType == item);
                       },
-                      separatorBuilder: (context, index) => SizedBox(
+                      separatorBuilder: (context, index) => const SizedBox(
                             width: Dimens.px16,
                           ),
                       itemCount: DateRangeValueType.values.length),
@@ -232,7 +234,7 @@ class _KayleeDateRangePickerViewState
                   onPressed: popScreen,
                 ),
               ),
-              SizedBox(width: Dimens.px8),
+              const SizedBox(width: Dimens.px8),
               Expanded(
                 child: KayLeeRoundedButton.normal(
                   margin: EdgeInsets.zero,

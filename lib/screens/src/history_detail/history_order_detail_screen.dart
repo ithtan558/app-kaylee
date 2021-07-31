@@ -60,7 +60,7 @@ class _HistoryOrderDetailScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: KayleeAppBar(
+        appBar: const KayleeAppBar(
           title: Strings.chiTietDH,
         ),
         body: Column(

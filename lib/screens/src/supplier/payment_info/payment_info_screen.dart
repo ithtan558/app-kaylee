@@ -17,10 +17,13 @@ class PaymentInfoScreen extends StatefulWidget {
         create: (context) => PaymentInfoScreenBloc(
             orderService: context.network.provideOrderService(),
             orderRequest: context.cart.getOrder()),
-        child: PaymentInfoScreen._(),
+        child: const PaymentInfoScreen(),
       );
 
-  PaymentInfoScreen._();
+  @visibleForTesting
+  const PaymentInfoScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _PaymentInfoScreenState createState() => _PaymentInfoScreenState();
@@ -69,14 +72,14 @@ class _PaymentInfoScreenState extends KayleeState<PaymentInfoScreen> {
   @override
   Widget build(BuildContext context) {
     return KayleeScrollview(
-      appBar: KayleeAppBar(
+      appBar: const KayleeAppBar(
         title: Strings.thongTinThanhToan,
       ),
       padding: const EdgeInsets.all(Dimens.px16),
       child: ListView.separated(
           shrinkWrap: true,
           itemBuilder: (context, index) {
-            if (index != 0) return SizedBox.shrink();
+            if (index != 0) return const SizedBox.shrink();
             final e = PaymentMethod.values.elementAt(index);
             return _PaymentMethodCheckBox<PaymentMethod>(
               title: e.text,
@@ -100,7 +103,7 @@ class _PaymentInfoScreenState extends KayleeState<PaymentInfoScreen> {
           itemCount: PaymentMethod.values.length),
       bottom: KayLeeRoundedButton.normal(
         text: Strings.xacNhanVaDatHang,
-        margin: EdgeInsets.all(Dimens.px8),
+        margin: const EdgeInsets.all(Dimens.px8),
         onPressed: () {
           context.cart.updateOrderInfo(OrderRequest(
             employee: context.user.getUserInfo().userInfo,
@@ -120,7 +123,7 @@ class _PaymentMethodCheckBox<T> extends StatelessWidget {
   final String imageOfPaymentMethod;
   final String title;
 
-  _PaymentMethodCheckBox(
+  const _PaymentMethodCheckBox(
       {required this.value,
       required this.currentValue,
       this.onChange,
@@ -141,8 +144,8 @@ class _PaymentMethodCheckBox<T> extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(right: Dimens.px16),
               child: currentValue == value
-                  ? RadioActiveIcon()
-                  : RadioInactiveIcon(),
+                  ? const RadioActiveIcon()
+                  : const RadioInactiveIcon(),
             ),
             Padding(
               padding: const EdgeInsets.only(right: Dimens.px8),

@@ -59,7 +59,7 @@ class _ResetPassNewPassScreenState extends KayleeState<ResetPassNewPassScreen> {
   Widget build(BuildContext context) {
     return UnFocusWidget(
         child: Scaffold(
-      appBar: KayleeAppBar(
+      appBar: const KayleeAppBar(
         title: Strings.nhapMatKhauMoi,
       ),
       body: Padding(
@@ -111,7 +111,7 @@ class _ResetPassNewPassScreenState extends KayleeState<ResetPassNewPassScreen> {
               },
             ),
             KayLeeRoundedButton.normal(
-              margin: EdgeInsets.only(top: Dimens.px16),
+              margin: const EdgeInsets.only(top: Dimens.px16),
               onPressed: () {
                 newPassFocus.unfocus();
                 updatePassBloc.updatePass(newPass: newPassTFController.text);

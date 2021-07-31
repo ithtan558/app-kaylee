@@ -6,7 +6,9 @@ class KayleeCartView extends StatelessWidget {
   final double? itemHeight;
   final BorderRadius? borderRadius;
 
-  KayleeCartView({required this.child, this.itemHeight, this.borderRadius});
+  const KayleeCartView(
+      {Key? key, required this.child, this.itemHeight, this.borderRadius})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +17,7 @@ class KayleeCartView extends StatelessWidget {
       height: itemHeight,
       decoration: BoxDecoration(
         borderRadius: borderRadius ?? BorderRadius.circular(Dimens.px10),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
               color: ColorsRes.shadow,
               offset: Offset(0, 1),

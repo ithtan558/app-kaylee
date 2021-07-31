@@ -38,7 +38,8 @@ class KayleeAppBar extends StatelessWidget implements PreferredSizeWidget {
   final IconData? leadingIcon;
   final bool automaticallyImplyLeading;
 
-  KayleeAppBar({
+  const KayleeAppBar({
+    Key? key,
     this.title,
     this.titleWidget,
     this.leading,
@@ -46,18 +47,20 @@ class KayleeAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.actions,
     this.leadingIcon,
     this.automaticallyImplyLeading = true,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final canPop = ModalRoute.of(context)?.canPop;
     return AppBar(
-      leading: leading != null
-          ? leading
-          : automaticallyImplyLeading
+      leading: leading ??
+          (automaticallyImplyLeading
               ? canPop ?? false
-                  ? FlatButton(
-                      shape: CircleBorder(),
+                  ? TextButton(
+                      style: ButtonStyle(
+                          shape: MaterialStateProperty.all(
+                        const CircleBorder(),
+                      )),
                       child: Icon(
                         leadingIcon ?? CupertinoIcons.back,
                         color: ColorsRes.hintText,
@@ -69,7 +72,7 @@ class KayleeAppBar extends StatelessWidget implements PreferredSizeWidget {
                       },
                     )
                   : Container()
-              : null,
+              : null),
       automaticallyImplyLeading: false,
       title: titleWidget ??
           KayleeText(
@@ -85,7 +88,7 @@ class KayleeAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
 class KayleeAppBarAction extends StatelessWidget {
@@ -94,7 +97,7 @@ class KayleeAppBarAction extends StatelessWidget {
       KayleeAppBarAction(
         child: InkWell(
           onTap: onTap,
-          customBorder: CircleBorder(),
+          customBorder: const CircleBorder(),
           child: Padding(
             padding: const EdgeInsets.all(Dimens.px16),
             child: Center(
@@ -115,7 +118,7 @@ class KayleeAppBarAction extends StatelessWidget {
           width: kToolbarHeight,
           child: InkWell(
             onTap: onTap,
-            customBorder: CircleBorder(),
+            customBorder: const CircleBorder(),
             child: Center(
               child: child,
             ),
@@ -131,7 +134,7 @@ class KayleeAppBarAction extends StatelessWidget {
           width: kToolbarHeight,
           child: InkWell(
             onTap: onTap,
-            customBorder: CircleBorder(),
+            customBorder: const CircleBorder(),
             child: Center(
               child: ImageIcon(
                 AssetImage(icon),
@@ -145,7 +148,7 @@ class KayleeAppBarAction extends StatelessWidget {
 
   final Widget? child;
 
-  KayleeAppBarAction({this.child});
+  const KayleeAppBarAction({Key? key, this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

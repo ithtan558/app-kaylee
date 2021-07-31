@@ -7,11 +7,12 @@ class CategoryItem extends StatelessWidget {
   final String? name;
   final VoidCallback? onTap;
 
-  CategoryItem({this.index, this.name, this.onTap});
+  const CategoryItem({Key? key, this.index, this.name, this.onTap})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: Dimens.px48,
       child: Row(
         children: [
@@ -19,7 +20,7 @@ class CategoryItem extends StatelessWidget {
             decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(Dimens.px5),
-                border: Border.fromBorderSide(BorderSide(
+                border: const Border.fromBorderSide(BorderSide(
                     width: 1,
                     color: Color(0xff979797),
                     style: BorderStyle.solid))),
@@ -28,7 +29,7 @@ class CategoryItem extends StatelessWidget {
             alignment: Alignment.center,
             padding: const EdgeInsets.all(Dimens.px8),
             child: KayleeText.normal16W500(
-              '${index?.toString()}',
+              index?.toString() ?? '',
               maxLines: 1,
               overflow: TextOverflow.fade,
               textAlign: TextAlign.center,
@@ -40,7 +41,7 @@ class CategoryItem extends StatelessWidget {
               child: Material(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(Dimens.px5),
-                    side: BorderSide(
+                    side: const BorderSide(
                       width: 1,
                       color: Color(0xff979797),
                     )),

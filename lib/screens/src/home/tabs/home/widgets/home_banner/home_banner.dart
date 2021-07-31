@@ -113,7 +113,7 @@ class _HomeBannerState extends KayleeState<HomeBanner> {
             children: [
               CachedNetworkImage(
                 imageUrl: image,
-                errorWidget: (context, url, error) => const SizedBox(),
+                errorWidget: (context, url, error) => const SizedBox.shrink(),
                 fit: BoxFit.cover,
                 width: double.infinity,
                 height: double.infinity,

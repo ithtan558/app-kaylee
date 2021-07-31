@@ -165,8 +165,9 @@ class _SelectOrderItemListState extends KayleeState<SelectOrderItemList> {
         ),
         BlocBuilder<CartBloc, CartState>(
           builder: (context, state) {
-            if (order?.cartItems?.isEmpty ?? true)
+            if (order?.cartItems?.isEmpty ?? true) {
               return const SizedBox.shrink();
+            }
             return OrderAmount(
               amount: order!.totalAmount,
               discount: order!.discount,

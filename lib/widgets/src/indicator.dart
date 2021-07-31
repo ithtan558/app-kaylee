@@ -7,12 +7,13 @@ class Indicator extends StatefulWidget {
   final IndicatorController controller;
   final ValueChanged<int>? onSelect;
 
-  Indicator({
+  const Indicator({
+    Key? key,
     this.activeColor = ColorsRes.background,
     this.inactiveColor = ColorsRes.hintText,
     required this.controller,
     this.onSelect,
-  });
+  }) : super(key: key);
 
   @override
   _IndicatorState createState() => _IndicatorState();
@@ -58,7 +59,7 @@ class _IndicatorState extends State<Indicator> implements _IndicatorView {
         clipBehavior: Clip.antiAlias,
         type: MaterialType.circle,
         color: selected ? widget.activeColor : widget.inactiveColor,
-        child: SizedBox(
+        child: const SizedBox(
           width: 8,
           height: 8,
         ),

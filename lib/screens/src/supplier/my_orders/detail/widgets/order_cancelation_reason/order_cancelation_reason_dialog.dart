@@ -21,7 +21,7 @@ class OrderCancellationReasonDialog extends StatefulWidget {
       );
   final ValueSetter<OrderCancellationReason> onConfirm;
 
-  OrderCancellationReasonDialog._({required this.onConfirm});
+  const OrderCancellationReasonDialog._({required this.onConfirm});
 
   @override
   _OrderCancellationReasonDialogState createState() =>
@@ -54,7 +54,7 @@ class _OrderCancellationReasonDialogState
         ),
         Container(
           height: context.scaleHeight(204),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             border: Border.symmetric(
               horizontal:
                   BorderSide(width: Dimens.px1, color: ColorsRes.divider),
@@ -63,7 +63,9 @@ class _OrderCancellationReasonDialogState
           child: BlocBuilder<OrderCancellationReasonBloc,
               SingleModel<Map<int?, OrderCancellationReason>>>(
             builder: (context, state) {
-              if (state.loading) return Center(child: KayleeLoadingIndicator());
+              if (state.loading) {
+                return const Center(child: KayleeLoadingIndicator());
+              }
               return ListView.separated(
                 itemBuilder: (context, index) {
                   final reason = _bloc.state.item!.values.elementAt(index);

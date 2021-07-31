@@ -123,7 +123,7 @@ class _OtpVerifyScreenState extends KayleeState<OtpVerifyScreen> {
       ],
       child: UnFocusWidget(
         child: Scaffold(
-          appBar: KayleeAppBar(
+          appBar: const KayleeAppBar(
             title: Strings.xacNhanOtp,
           ),
           body: Padding(

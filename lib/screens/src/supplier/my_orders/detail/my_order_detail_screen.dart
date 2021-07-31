@@ -19,9 +19,12 @@ class MyOrderDetailScreen extends StatefulWidget {
             order: context.getArguments<Order>()!,
             orderService: context.network.provideOrderService(),
           ),
-      child: MyOrderDetailScreen._());
+      child: const MyOrderDetailScreen());
 
-  MyOrderDetailScreen._();
+  @visibleForTesting
+  const MyOrderDetailScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _MyOrderDetailScreenState createState() => _MyOrderDetailScreenState();
@@ -91,7 +94,7 @@ class _MyOrderDetailScreenState extends KayleeState<MyOrderDetailScreen> {
         builder: (context, state) {
           if (state is! OrderDetailModel) return Container();
           return CustomScrollView(
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             slivers: [
               SliverToBoxAdapter(
                 child: Column(
@@ -133,16 +136,18 @@ class _MyOrderDetailScreenState extends KayleeState<MyOrderDetailScreen> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: Dimens.px16)
-                          .copyWith(top: Dimens.px8),
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: Dimens.px16)
+                              .copyWith(top: Dimens.px8),
                       child: _buildInfoText(
                         icon: Images.icEdit,
                         title: _bloc.order.informationReceiveNote,
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: Dimens.px16)
-                          .copyWith(top: Dimens.px8),
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: Dimens.px16)
+                              .copyWith(top: Dimens.px8),
                       child: _buildInfoText(
                         icon: Images.icList,
                         title:
@@ -152,8 +157,9 @@ class _MyOrderDetailScreenState extends KayleeState<MyOrderDetailScreen> {
                     if (_bloc.order.cancellationReason?.name?.isNotEmpty ??
                         false)
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: Dimens.px16)
-                            .copyWith(top: Dimens.px8),
+                        padding:
+                            const EdgeInsets.symmetric(horizontal: Dimens.px16)
+                                .copyWith(top: Dimens.px8),
                         child: _buildInfoText(
                           icon: Images.icList,
                           title:
@@ -161,8 +167,9 @@ class _MyOrderDetailScreenState extends KayleeState<MyOrderDetailScreen> {
                         ),
                       ),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: Dimens.px16)
-                          .copyWith(top: Dimens.px8),
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: Dimens.px16)
+                              .copyWith(top: Dimens.px8),
                       child: _buildInfoText(
                         icon: Images.icStore,
                         title:
@@ -179,7 +186,7 @@ class _MyOrderDetailScreenState extends KayleeState<MyOrderDetailScreen> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: Dimens.px16),
+                      padding: const EdgeInsets.only(top: Dimens.px16),
                       child: LabelDividerView.normal(title: Strings.gioHang),
                     ),
                   ],

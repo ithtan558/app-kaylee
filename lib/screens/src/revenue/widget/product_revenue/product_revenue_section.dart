@@ -62,10 +62,10 @@ class _ProductRevenueWidgetState extends KayleeState<ProductRevenueWidget>
           },
           builder: (context, state) {
             if (state.loading) return buildLoading();
-            if (state.code.isNotNull) return SizedBox();
+            if (state.code.isNotNull) return const SizedBox.shrink();
             return ListView.separated(
                 shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (c, index) {
                   final item = state.item!.elementAt(index);
                   return RevenueItem(
@@ -76,7 +76,8 @@ class _ProductRevenueWidgetState extends KayleeState<ProductRevenueWidget>
                 separatorBuilder: (c, index) {
                   return Container(
                       height: Dimens.px1,
-                      decoration: BoxDecoration(color: ColorsRes.divider));
+                      decoration:
+                          const BoxDecoration(color: ColorsRes.divider));
                 },
                 itemCount: state.item?.length ?? 0);
           },

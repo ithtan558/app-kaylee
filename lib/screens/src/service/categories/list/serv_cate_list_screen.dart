@@ -14,9 +14,12 @@ class ServCateListScreen extends StatefulWidget {
       create: (context) => ServCateListScreenBloc(
             servService: context.network.provideServService(),
           ),
-      child: ServCateListScreen._());
+      child: const ServCateListScreen());
 
-  ServCateListScreen._();
+  @visibleForTesting
+  const ServCateListScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _ServCateListScreenState createState() => _ServCateListScreenState();
@@ -46,7 +49,7 @@ class _ServCateListScreenState extends KayleeState<ServCateListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: KayleeAppBar(
+      appBar: const KayleeAppBar(
         title: Strings.quanLyDanhMuc,
       ),
       body: Column(
@@ -73,7 +76,7 @@ class _ServCateListScreenState extends KayleeState<ServCateListScreen> {
                   },
                   builder: (context, state) {
                     return KayleeListView(
-                      padding: EdgeInsets.all(Dimens.px16),
+                      padding: const EdgeInsets.all(Dimens.px16),
                       itemBuilder: (c, index) {
                         final item = state.items!.elementAt(index);
                         return ServCateItem(
@@ -90,13 +93,13 @@ class _ServCateListScreenState extends KayleeState<ServCateListScreen> {
                       },
                       itemCount: state.items?.length,
                       separatorBuilder: (context, index) =>
-                          SizedBox(height: Dimens.px16),
+                          const SizedBox(height: Dimens.px16),
                       loadingBuilder: (context) {
                         if (state.ended) return Container();
-                        return Align(
+                        return const Align(
                           alignment: Alignment.topCenter,
                           child: Padding(
-                            padding: const EdgeInsets.only(top: Dimens.px16),
+                            padding: EdgeInsets.only(top: Dimens.px16),
                             child: KayleeLoadingIndicator(),
                           ),
                         );

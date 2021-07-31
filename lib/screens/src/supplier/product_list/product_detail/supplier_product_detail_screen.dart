@@ -7,7 +7,7 @@ import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
-import 'package:kaylee/screens/src/supplier/product_list/product_detail/bloc/bloc.dart';
+import 'package:kaylee/screens/src/supplier/product_list/product_detail/bloc/supplier_product_detail_screen_bloc.dart';
 import 'package:kaylee/screens/src/supplier/product_list/product_detail/widgets/product_supplier_image.dart';
 import 'package:kaylee/screens/src/supplier/product_list/product_detail/widgets/product_supplier_video.dart';
 import 'package:kaylee/utils/utils.dart';
@@ -35,13 +35,16 @@ class SupplierProductDetailScreen extends StatefulWidget {
           productService: context.network.provideProductService(),
           product:
               context.getArguments<SupplierProductDetailScreenData>()!.product),
-      child: SupplierProductDetailScreen._());
+      child: const SupplierProductDetailScreen());
 
-  SupplierProductDetailScreen._();
+  @visibleForTesting
+  const SupplierProductDetailScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _SupplierProductDetailScreenState createState() =>
-      new _SupplierProductDetailScreenState();
+      _SupplierProductDetailScreenState();
 }
 
 class _SupplierProductDetailScreenState
@@ -81,7 +84,7 @@ class _SupplierProductDetailScreenState
   @override
   Widget build(BuildContext context) {
     return KayleeScrollview(
-      appBar: KayleeAppBar(
+      appBar: const KayleeAppBar(
         title: Strings.chiTietSanPham,
       ),
       child: BlocBuilder<SupplierProdDetailBloc, SingleModel<Product>>(
@@ -92,7 +95,7 @@ class _SupplierProductDetailScreenState
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
+              SizedBox(
                 height: context.screenSize.width,
                 width: context.screenSize.width,
                 child: PageView(

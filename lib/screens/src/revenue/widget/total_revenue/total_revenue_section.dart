@@ -8,7 +8,9 @@ import 'package:kaylee/screens/src/revenue/widget/widget_helper.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class TotalRevenueSection extends StatefulWidget {
-  TotalRevenueSection();
+  const TotalRevenueSection({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _TotalRevenueSectionState createState() => _TotalRevenueSectionState();

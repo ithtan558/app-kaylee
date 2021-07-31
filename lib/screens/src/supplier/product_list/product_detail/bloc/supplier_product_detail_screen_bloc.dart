@@ -24,7 +24,7 @@ class SupplierProdDetailBloc extends Cubit<SingleModel<Product>> {
   void loadProduct() {
     emit(SingleModel.copy(state..loading = true));
     RequestHandler(
-      request: this.productService.getProduct(proId: product.id),
+      request: productService.getProduct(proId: product.id),
       onSuccess: ({message, result}) {
         emit(SingleModel.copy(state
           ..loading = false

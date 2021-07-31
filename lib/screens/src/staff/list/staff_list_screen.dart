@@ -18,13 +18,16 @@ class StaffListScreen extends StatefulWidget {
         create: (context) => StaffListScreenBloc(
           employeeService: context.network.provideEmployeeService(),
         ),
-        child: StaffListScreen._(),
+        child: const StaffListScreen(),
       );
 
-  StaffListScreen._();
+  @visibleForTesting
+  const StaffListScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
-  _StaffListScreenState createState() => new _StaffListScreenState();
+  _StaffListScreenState createState() => _StaffListScreenState();
 }
 
 class _StaffListScreenState extends KayleeState<StaffListScreen> {
@@ -82,7 +85,7 @@ class _StaffListScreenState extends KayleeState<StaffListScreen> {
             },
             builder: (context, state) {
               return KayleeGridView(
-                padding: EdgeInsets.all(Dimens.px16),
+                padding: const EdgeInsets.all(Dimens.px16),
                 childAspectRatio: 103 / 195,
                 itemBuilder: (c, index) {
                   final item = state.items!.elementAt(index);

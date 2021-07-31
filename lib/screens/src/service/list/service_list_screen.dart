@@ -24,12 +24,15 @@ class ServiceListScreen extends StatefulWidget {
             servService: context.network.provideServService(),
           ),
         ),
-      ], child: ServiceListScreen._());
+      ], child: const ServiceListScreen());
 
-  ServiceListScreen._();
+  @visibleForTesting
+  const ServiceListScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
-  _ServiceListScreenState createState() => new _ServiceListScreenState();
+  _ServiceListScreenState createState() => _ServiceListScreenState();
 }
 
 class _ServiceListScreenState extends KayleeState<ServiceListScreen> {
@@ -55,11 +58,11 @@ class _ServiceListScreenState extends KayleeState<ServiceListScreen> {
             },
           );
         } else {
-          var caetgoryId;
+          int? categoryId;
           try {
-            caetgoryId = (cateBloc.items?.firstWhere((element) => true))?.id;
+            categoryId = (cateBloc.items?.firstWhere((element) => true))?.id;
           } catch (_) {}
-          serviceListBloc.loadInitDataWithCate(cateId: caetgoryId);
+          serviceListBloc.loadInitDataWithCate(cateId: categoryId);
         }
       } else if (cateBloc.loading) {
         showLoading();
@@ -131,7 +134,7 @@ class _ServiceListScreenState extends KayleeState<ServiceListScreen> {
                     await cateBloc.refresh();
                     await serviceListBloc.refresh();
                   },
-                  padding: EdgeInsets.all(Dimens.px16),
+                  padding: const EdgeInsets.all(Dimens.px16),
                   gridDelegate:
                       KayleeGridView.gridDelegate(childAspectRatio: 103 / 195),
                   itemBuilder: (context, index, item) {
@@ -150,7 +153,7 @@ class _ServiceListScreenState extends KayleeState<ServiceListScreen> {
                     );
                   },
                   loadingIndicatorBuilder: (context) =>
-                      KayleeLoadingIndicator(),
+                      const KayleeLoadingIndicator(),
                 );
               },
             ),

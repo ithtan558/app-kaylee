@@ -13,7 +13,7 @@ mixin WidgetHelper<T extends StatefulWidget> on KayleeState<T> {
   Widget buildLoading() {
     return Container(
         padding: const EdgeInsets.symmetric(vertical: Dimens.px16),
-        child: KayleeLoadingIndicator());
+        child: const KayleeLoadingIndicator());
   }
 
   void showErrorDialog({ErrorType? code, Error? error}) {

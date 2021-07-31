@@ -6,7 +6,10 @@ import 'package:kaylee/res/res.dart';
 class ProductSupplierImage extends StatelessWidget {
   final ProductImage image;
 
-  ProductSupplierImage(this.image);
+  const ProductSupplierImage(
+    this.image, {
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +22,7 @@ class ProductSupplierImage extends StatelessWidget {
         child: CachedNetworkImage(
           imageUrl: image.value ?? '',
           fit: BoxFit.cover,
-          errorWidget: (context, url, error) => SizedBox(),
+          errorWidget: (context, url, error) => const SizedBox.shrink(),
         ),
       ),
     );

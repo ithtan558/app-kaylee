@@ -66,9 +66,9 @@ class ServiceDetailScreenBloc extends Cubit<SingleModel<Service>>
     RequestHandler(
       request: servService.getService(serviceId: state.item?.id),
       onSuccess: ({message, result}) {
-        (result as Service).brands?.forEach((e) {
+        for (var e in (result as Service).brands ?? []) {
           e.selected = true;
-        });
+        }
         emit(ServiceDetailModel.copy(
           state
             ..loading = false

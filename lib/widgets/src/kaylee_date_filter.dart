@@ -17,10 +17,11 @@ class KayleeDateFilter extends StatefulWidget {
   final ValueChanged<DateTime>? onChanged;
   final KayleeDateFilterController controller;
 
-  KayleeDateFilter({this.onChanged, required this.controller});
+  const KayleeDateFilter({Key? key, this.onChanged, required this.controller})
+      : super(key: key);
 
   @override
-  _KayleeDateFilterState createState() => new _KayleeDateFilterState();
+  _KayleeDateFilterState createState() => _KayleeDateFilterState();
 }
 
 class _KayleeDateFilterState extends BaseState<KayleeDateFilter> {
@@ -38,7 +39,7 @@ class _KayleeDateFilterState extends BaseState<KayleeDateFilter> {
         viewportFraction: 1 / 7,
         initialPage: widget.controller.value.day - 1);
     changeTabController
-        .debounceTime(Duration(milliseconds: 500))
+        .debounceTime(const Duration(milliseconds: 500))
         .listen((index) {
       final date = widget.controller.value;
       widget.controller.value = DateTime(date.year, date.month, index + 1);
@@ -105,7 +106,7 @@ class _KayleeDateFilterState extends BaseState<KayleeDateFilter> {
               ),
               CustomPaint(
                 painter: _TriangleClip(),
-                size: Size(Dimens.px6, Dimens.px5),
+                size: const Size(Dimens.px6, Dimens.px5),
               )
             ],
           ),
@@ -130,8 +131,8 @@ class _KayleeDateFilterState extends BaseState<KayleeDateFilter> {
                   ),
                 ),
                 color: Colors.white,
-                boxShadow: [
-                  const BoxShadow(
+                boxShadow: const [
+                  BoxShadow(
                       color: ColorsRes.shadow,
                       offset: Offset(0, 1),
                       blurRadius: Dimens.px5,
@@ -146,7 +147,7 @@ class _KayleeDateFilterState extends BaseState<KayleeDateFilter> {
                 onPageChanged: (index) {
                   changeTabController.add(index);
                 },
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 itemBuilder: (context, index) {
                   return Container(
                     alignment: Alignment.center,

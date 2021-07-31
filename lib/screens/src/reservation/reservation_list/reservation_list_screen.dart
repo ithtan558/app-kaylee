@@ -93,7 +93,7 @@ class _ReservationListScreenState extends KayleeState<ReservationListScreen> {
                           const SizedBox(height: Dimens.px16),
                       loadingBuilder: (context) {
                         if (state.ended) return Container();
-                        return Align(
+                        return const Align(
                           alignment: Alignment.topCenter,
                           child: KayleeLoadingIndicator(),
                         );

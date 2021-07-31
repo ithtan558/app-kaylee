@@ -9,7 +9,10 @@ import 'package:video_player/video_player.dart';
 class ProductSupplierVideo extends StatefulWidget {
   final ProductImage image;
 
-  ProductSupplierVideo(this.image);
+  const ProductSupplierVideo(
+    this.image, {
+    Key? key,
+  }) : super(key: key);
 
   @override
   _ProductSupplierVideoState createState() => _ProductSupplierVideoState();
@@ -49,16 +52,17 @@ class _ProductSupplierVideoState extends State<ProductSupplierVideo>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Container(
+    return SizedBox(
       width: context.screenSize.width,
       child: StreamBuilder<bool>(
         stream: _videoStreamController.stream,
         builder: (context, snapshot) {
-          if (snapshot.hasData && snapshot.data!)
+          if (snapshot.hasData && snapshot.data!) {
             return Chewie(
               controller: _chewieController,
             );
-          return Center(child: KayleeLoadingIndicator());
+          }
+          return const Center(child: KayleeLoadingIndicator());
         },
       ),
     );

@@ -53,7 +53,7 @@ class _GuideScreenState extends KayleeState<GuideScreen> {
   @override
   Widget build(BuildContext context) {
     return KayleeScrollview(
-      appBar: KayleeAppBar(
+      appBar: const KayleeAppBar(
         title: Strings.huongDanSd,
       ),
       padding: const EdgeInsets.all(Dimens.px16),

@@ -11,7 +11,8 @@ class BrandSelectList extends StatefulWidget {
   final ScrollController? scrollController;
   final BrandSelectTFController? controller;
 
-  BrandSelectList({this.scrollController, this.controller});
+  const BrandSelectList({Key? key, this.scrollController, this.controller})
+      : super(key: key);
 
   @override
   _BrandSelectListState createState() => _BrandSelectListState();
@@ -50,8 +51,9 @@ class _BrandSelectListState extends BaseState<BrandSelectList> {
             child: BlocBuilder<BrandSelectListBloc, SingleModel<List<Brand>>>(
               bloc: bloc,
           builder: (context, state) {
-            if (state.loading == true)
-              return KayleeLoadingIndicator();
+            if (state.loading == true) {
+              return const KayleeLoadingIndicator();
+            }
             return ListView.separated(
                 padding: const EdgeInsets.all(Dimens.px16),
                 controller: widget.scrollController,
@@ -64,7 +66,7 @@ class _BrandSelectListState extends BaseState<BrandSelectList> {
                     ),
                   );
                 },
-                separatorBuilder: (c, _) => SizedBox(height: Dimens.px8),
+                separatorBuilder: (c, _) => const SizedBox(height: Dimens.px8),
                 itemCount: state.item?.length ?? 0);
           },
         )),
@@ -87,7 +89,7 @@ class _BrandSelectListState extends BaseState<BrandSelectList> {
                   },
                 ),
               ),
-              SizedBox(width: Dimens.px8),
+              const SizedBox(width: Dimens.px8),
               Expanded(
                 child: KayLeeRoundedButton.normal(
                   margin: EdgeInsets.zero,
@@ -110,7 +112,7 @@ class _BrandSelectListState extends BaseState<BrandSelectList> {
 class _BrandItem extends StatefulWidget {
   final Brand brand;
 
-  _BrandItem({required this.brand});
+  const _BrandItem({required this.brand});
 
   @override
   _BrandItemState createState() => _BrandItemState();

@@ -62,7 +62,7 @@ class _RevenueScreenState extends KayleeState<RevenueScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: KayleeAppBar(
+      appBar: const KayleeAppBar(
         title: Strings.doanhThuBH,
       ),
       body: ListView.separated(
@@ -78,10 +78,10 @@ class _RevenueScreenState extends KayleeState<RevenueScreen> {
                 },
               );
             }
-            if (index == 1) return TotalRevenueSection();
-            if (index == 2) return EmployeeRevenueSection();
-            if (index == 3) return ServiceRevenueSection();
-            return ProductRevenueWidget();
+            if (index == 1) return const TotalRevenueSection();
+            if (index == 2) return const EmployeeRevenueSection();
+            if (index == 3) return const ServiceRevenueSection();
+            return const ProductRevenueWidget();
           },
           separatorBuilder: (_, index) => Container(
                 height: Dimens.px16,

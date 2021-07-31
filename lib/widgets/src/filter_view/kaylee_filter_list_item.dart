@@ -8,10 +8,12 @@ class KayleeFilterListItem extends StatefulWidget {
   final void Function(bool isSelected)? onTap;
   final bool disable;
 
-  KayleeFilterListItem({required this.title, this.onTap, this.disable = false});
+  const KayleeFilterListItem(
+      {Key? key, required this.title, this.onTap, this.disable = false})
+      : super(key: key);
 
   @override
-  _KayleeFilterListItemState createState() => new _KayleeFilterListItemState();
+  _KayleeFilterListItemState createState() => _KayleeFilterListItemState();
 }
 
 class _KayleeFilterListItemState extends BaseState<KayleeFilterListItem> {
@@ -46,7 +48,8 @@ class WrapperFilter extends StatelessWidget {
   final String? title;
   final bool isAll;
 
-  WrapperFilter({this.children, this.title, this.isAll = false});
+  const WrapperFilter({Key? key, this.children, this.title, this.isAll = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +58,7 @@ class WrapperFilter extends StatelessWidget {
       children: <Widget>[
         if (title?.isNotEmpty ?? false)
           Container(
-            margin: EdgeInsets.only(bottom: 16),
+            margin: const EdgeInsets.only(bottom: 16),
             child: Text(title!,
                 style:
                     isAll ? TextStyles.normal16W500 : TextStyles.normal12W400),

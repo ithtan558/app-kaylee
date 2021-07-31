@@ -9,7 +9,8 @@ class StaffItem extends StatelessWidget {
   final VoidCallback onTap;
   final Employee employee;
 
-  StaffItem({required this.onTap, required this.employee});
+  const StaffItem({Key? key, required this.onTap, required this.employee})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

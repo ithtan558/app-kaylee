@@ -9,12 +9,13 @@ class RequestSettingDialog extends StatefulWidget {
   final String? guides;
   final VoidCallback? onGoToSetting;
 
-  RequestSettingDialog({
+  const RequestSettingDialog({
+    Key? key,
     this.title,
     this.message,
     this.guides,
     this.onGoToSetting,
-  });
+  }) : super(key: key);
 
   @override
   _RequestSettingDialogState createState() => _RequestSettingDialogState();
@@ -26,7 +27,7 @@ class _RequestSettingDialogState extends State<RequestSettingDialog> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        SizedBox(height: Dimens.px24),
+        const SizedBox(height: Dimens.px24),
         if (widget.title != null && widget.title!.isNotEmpty)
           Padding(
             padding: const EdgeInsets.only(

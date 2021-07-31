@@ -29,7 +29,7 @@ class ServiceListBloc extends Cubit<LoadMoreModel<Service>>
     super.load();
     RequestHandler(
       request: servService.getServices(
-        categoryId: this.cateId,
+        categoryId: cateId,
         limit: limit,
         page: page,
         keyword: getFilter()?.keyword,

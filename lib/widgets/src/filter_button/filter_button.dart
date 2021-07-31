@@ -10,7 +10,7 @@ import 'package:kaylee/widgets/widgets.dart';
 class FilterButton<T extends Filter> extends StatefulWidget {
   final KayleeFilterInterface<T>? controller;
 
-  FilterButton({this.controller});
+  const FilterButton({Key? key, this.controller}) : super(key: key);
 
   @override
   _FilterButtonState<T> createState() => _FilterButtonState<T>();

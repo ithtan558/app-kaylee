@@ -23,13 +23,16 @@ enum ServiceScreenOpenFrom { serviceItem, addNewServiceBtn }
 
 class CreateNewServiceScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<ServiceDetailScreenBloc>(
-    create: (context) => ServiceDetailScreenBloc(
+        create: (context) => ServiceDetailScreenBloc(
             servService: context.network.provideServService(),
             service: context.getArguments<NewServiceScreenData>()!.service),
-        child: CreateNewServiceScreen._(),
+        child: const CreateNewServiceScreen(),
       );
 
-  CreateNewServiceScreen._();
+  @visibleForTesting
+  const CreateNewServiceScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _CreateNewServiceScreenState createState() => _CreateNewServiceScreenState();
@@ -261,7 +264,8 @@ class _CreateNewServiceScreenState extends KayleeState<CreateNewServiceScreen> {
                     textInputAction: TextInputAction.newline,
                     fieldHeight:
                         (context.screenSize.width - Dimens.px32) / (343 / 233),
-                    contentPadding: EdgeInsets.symmetric(vertical: Dimens.px16),
+                    contentPadding:
+                        const EdgeInsets.symmetric(vertical: Dimens.px16),
                     controller: descriptionTfController,
                     focusNode: descriptionFocus,
                   ),
