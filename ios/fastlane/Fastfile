@@ -1,0 +1,18 @@
+default_platform(:ios)
+platform :ios do
+  desc "Build an ipa"
+  lane :dev do
+    Dir.chdir("../..") do
+      sh "flutter packages get"
+      sh "flutter clean"
+      sh "flutter build ios --flavor=dev --target=lib/main_dev.dart "
+   end
+   build_ios_app(
+        scheme: "dev",
+        clean: true,
+        output_directory: '../build',
+        xcargs: "-allowProvisioningUpdates",
+        export_method: "development"
+       )
+  end
+end
