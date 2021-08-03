@@ -49,3 +49,6 @@ app.*.map.json
 #fvm
 .fvm
 
+#fastlane
+ios/fastlane/report.xml
+ios/fastlane/README.md
