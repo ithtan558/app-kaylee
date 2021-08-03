@@ -15,7 +15,7 @@ platform :ios do
         export_method: "development"
        )
   end
-  lane :dev do
+  lane :prod do
       Dir.chdir("../..") do
         sh "flutter packages get"
         sh "flutter clean"
