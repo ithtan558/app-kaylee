@@ -18,8 +18,8 @@ dependencies:
     sdk: flutter
 
   permission_handler: ^8.1.4+2
-  image_picker: ^0.8.2
-  extended_masked_text: ^2.2.1
+  image_picker: ^0.8.3+1
+  extended_masked_text: ^2.3.0
   esc_pos_printer:
     git:
       url: https://github.com/tungpham6195/esc_pos_printer.git
