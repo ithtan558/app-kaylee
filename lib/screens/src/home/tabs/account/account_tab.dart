@@ -2,11 +2,13 @@ import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/app_bloc.dart';
+import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/about/about_screen.dart';
 import 'package:kaylee/screens/src/home/tabs/account/widgets/profile_widget.dart';
 import 'package:kaylee/screens/src/notification/list/notification_screen.dart';
+import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class AccountTab extends StatefulWidget {
@@ -54,12 +56,14 @@ class _AccountTabState extends BaseState<AccountTab> {
                 onClick: () {
                   pushScreen(PageIntent(screen: AboutScreen));
                 }),
-            _buildMenuItem(
-                title: Strings.quanlyDonDh,
-                icon: Images.ic_acc_orderlist,
-                onClick: () {
-                  pushScreen(PageIntent(screen: MyOrdersScreen));
-                }),
+            if ([UserRole.MANAGER, UserRole.BRAND_MANAGER]
+                .contains(context.user.getUserInfo().userInfo.role))
+              _buildMenuItem(
+                  title: Strings.quanlyDonDh,
+                  icon: Images.ic_acc_orderlist,
+                  onClick: () {
+                    pushScreen(PageIntent(screen: MyOrdersScreen));
+                  }),
             _buildMenuItem(
                 title: Strings.caiDatMayIn,
                 icon: Images.ic_acc_guide,
@@ -84,11 +88,12 @@ class _AccountTabState extends BaseState<AccountTab> {
     );
   }
 
-  _buildMenuItem({String title,
-    String icon,
-    bool showEndingIcon = true,
-    bool showBtmDivider = true,
-    Function() onClick}) {
+  _buildMenuItem(
+      {String title,
+      String icon,
+      bool showEndingIcon = true,
+      bool showBtmDivider = true,
+      Function() onClick}) {
     return Column(
       children: <Widget>[
         InkWell(
