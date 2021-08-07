@@ -56,8 +56,8 @@ class _AccountTabState extends BaseState<AccountTab> {
                 onClick: () {
                   pushScreen(PageIntent(screen: AboutScreen));
                 }),
-            if ([UserRole.MANAGER, UserRole.BRAND_MANAGER]
-                .contains(context.user.getUserInfo().userInfo.role))
+            if ([UserRole.manager, UserRole.brandManager]
+                .contains(context.user.getUserInfo().userInfo?.role))
               _buildMenuItem(
                   title: Strings.quanlyDonDh,
                   icon: Images.icAccOrderlist,
