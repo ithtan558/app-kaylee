@@ -5,7 +5,15 @@ import 'package:kaylee/application_config.dart';
 import 'package:kaylee/kaylee_application.dart';
 
 void main() async {
+  await initialize();
+  runApp(initializeApplication(ProductionAppConfig()));
+}
+
+Future<void> initialize() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(KayLeeApplication.newInstance(appConfig: ProductionAppConfig()));
+}
+
+Widget initializeApplication(ApplicationConfig applicationConfig) {
+  return KayLeeApplication.newInstance(appConfig: applicationConfig);
 }
