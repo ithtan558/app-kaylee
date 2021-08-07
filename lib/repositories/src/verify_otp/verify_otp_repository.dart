@@ -6,10 +6,10 @@ part 'register_verify_otp_repo_impl.dart';
 part 'reset_pass_verify_otp_repo_impl.dart';
 
 abstract class VerifyOtpRepository {
-  factory VerifyOtpRepository.forRegister(UserService userService) =
+  factory VerifyOtpRepository.forRegister(UserApi userService) =
       _RegisterVerifyOtpRepoImpl;
 
-  factory VerifyOtpRepository.forResetPassword(UserService userService) =
+  factory VerifyOtpRepository.forResetPassword(UserApi userService) =
       _ResetPassVerifyOtpRepoImpl;
 
   void verifyOtp(

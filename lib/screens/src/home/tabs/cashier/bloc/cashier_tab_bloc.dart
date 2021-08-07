@@ -7,7 +7,7 @@ import 'package:kaylee/models/models.dart';
 class CashierTabBloc extends Cubit<LoadMoreModel<Order>>
     with KayleeListInterfaceMixin
     implements LoadMoreInterface {
-  final OrderService orderService;
+  final OrderApi orderService;
 
   CashierTabBloc({required this.orderService}) : super(LoadMoreModel());
 

@@ -3,7 +3,7 @@ import 'package:kaylee/apis/apis.dart';
 import 'package:kaylee/models/models.dart';
 
 class SelectEmployeeBloc extends Cubit<SingleModel<List<Employee>>> {
-  final EmployeeService employeeService;
+  final EmployeeApi employeeService;
   final Map<int, Employee> selectedEmployees;
   final Brand brand;
 

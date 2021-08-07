@@ -3,7 +3,7 @@ import 'package:kaylee/apis/apis.dart';
 import 'package:kaylee/models/models.dart';
 
 class ReservationItemBloc extends Cubit<SingleModel> {
-  final ReservationService service;
+  final ReservationApi service;
   final Reservation reservation;
 
   ReservationItemBloc({required this.service, required this.reservation})

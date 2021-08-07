@@ -3,8 +3,8 @@ import 'package:kaylee/apis/apis.dart';
 import 'package:kaylee/models/models.dart';
 
 class ExpirationScreenBloc extends Cubit<SingleModel<Content>> {
-  final CommonService commonService;
-  final UserService userService;
+  final CommonApi commonService;
+  final UserApi userService;
 
   ExpirationScreenBloc({
     required this.commonService,

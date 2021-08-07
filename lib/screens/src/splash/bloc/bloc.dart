@@ -33,7 +33,7 @@ class SplashScreenBloc extends BaseBloc {
     add(GoToHomeScreenSplashScrEvent());
   }
 
-  void loadUserInfo({required UserService userService}) {
+  void loadUserInfo({required UserApi userService}) {
     RequestHandler(
       request: userService.getProfile(),
       onSuccess: ({message, result}) {

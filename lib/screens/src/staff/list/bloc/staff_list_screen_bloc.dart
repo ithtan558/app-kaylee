@@ -14,7 +14,7 @@ class StaffFilter extends Filter {
 class StaffListScreenBloc extends Cubit<LoadMoreModel<Employee>>
     with KayleeListInterfaceMixin
     implements LoadMoreInterface, KayleeFilterInterface<StaffFilter> {
-  final EmployeeService employeeService;
+  final EmployeeApi employeeService;
   StaffFilter? _filter;
 
   StaffListScreenBloc({required this.employeeService}) : super(LoadMoreModel());

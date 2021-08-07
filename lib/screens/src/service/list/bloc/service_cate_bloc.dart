@@ -4,7 +4,7 @@ import 'package:kaylee/models/models.dart';
 
 class ServiceCateBloc extends Cubit<SingleModel<List<Category>>>
     with PaginationMixin<Category> {
-  ServService servService;
+  ServiceApi servService;
 
   ServiceCateBloc({required this.servService}) : super(SingleModel());
 

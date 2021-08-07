@@ -11,7 +11,7 @@ class BrandFilter extends Filter {
 class BrandListBloc extends Cubit<LoadMoreModel<Brand>>
     with PaginationMixin<Brand>
     implements KayleeFilterInterface<BrandFilter> {
-  BrandService brandService;
+  BrandApi brandService;
 
   BrandListBloc({required this.brandService}) : super(LoadMoreModel()) {
     page = 1;

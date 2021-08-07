@@ -3,7 +3,7 @@ import 'package:kaylee/apis/apis.dart';
 import 'package:kaylee/models/models.dart';
 
 class SelectProdCateBloc extends Cubit<SingleModel<List<Category>>> {
-  ProductService productService;
+  ProductApi productService;
 
   SelectProdCateBloc({required this.productService}) : super(SingleModel());
 

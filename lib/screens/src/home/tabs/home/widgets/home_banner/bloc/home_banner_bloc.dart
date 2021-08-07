@@ -4,7 +4,7 @@ import 'package:kaylee/apis/apis.dart';
 import 'package:kaylee/models/models.dart';
 
 class HomeBannerBloc extends Cubit<SingleModel<List<Banner>>> {
-  final AdvertiseService service;
+  final AdvertiseApi service;
 
   HomeBannerBloc({required this.service}) : super(SingleModel());
 

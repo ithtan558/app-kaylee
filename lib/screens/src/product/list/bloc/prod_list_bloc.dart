@@ -15,7 +15,7 @@ class ProductFilter extends Filter {
 class ProdListBloc extends Cubit<LoadMoreModel<Product>>
     with KayleeListInterfaceMixin
     implements LoadMoreInterface, KayleeFilterInterface<ProductFilter> {
-  final ProductService productService;
+  final ProductApi productService;
   int? cateId;
   ProductFilter? _filter;
 

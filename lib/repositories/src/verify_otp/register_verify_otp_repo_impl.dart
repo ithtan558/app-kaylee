@@ -1,7 +1,7 @@
 part of 'verify_otp_repository.dart';
 
 class _RegisterVerifyOtpRepoImpl implements VerifyOtpRepository {
-  final UserService _userService;
+  final UserApi _userService;
 
   _RegisterVerifyOtpRepoImpl(this._userService);
 

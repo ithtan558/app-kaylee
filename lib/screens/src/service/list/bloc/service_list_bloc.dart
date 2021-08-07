@@ -13,7 +13,7 @@ class ServiceFilter extends Filter {
 class ServiceListBloc extends Cubit<LoadMoreModel<Service>>
     with PaginationMixin<Service>
     implements KayleeFilterInterface<ServiceFilter> {
-  final ServService servService;
+  final ServiceApi servService;
   int? cateId;
   ServiceFilter? _filter;
 

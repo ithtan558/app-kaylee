@@ -13,89 +13,89 @@ abstract class NetworkModule extends Network {
 
   factory NetworkModule.init() => _NetworkModuleImpl(baseUrl);
 
-  UserService provideUserService();
+  UserApi provideUserService();
 
-  CommonService provideCommonService();
+  CommonApi provideCommonService();
 
-  SupplierService provideSupplierService();
+  SupplierApi provideSupplierService();
 
-  ProductService provideProductService();
+  ProductApi provideProductService();
 
-  NotificationService provideNotificationService();
+  NotificationApi provideNotificationService();
 
-  ServService provideServService();
+  ServiceApi provideServService();
 
-  BrandService provideBrandService();
+  BrandApi provideBrandService();
 
-  EmployeeService provideEmployeeService();
+  EmployeeApi provideEmployeeService();
 
-  CustomerService provideCustomerService();
+  CustomerApi provideCustomerService();
 
-  RoleService provideRoleService();
+  RoleApi provideRoleService();
 
-  OrderService provideOrderService();
+  OrderApi provideOrderService();
 
-  CommissionService provideCommissionService();
+  CommissionApi provideCommissionService();
 
-  ReportService provideReportService();
+  ReportApi provideReportService();
 
-  ReservationService provideReservationService();
+  ReservationApi provideReservationService();
 
-  CampaignService provideCampaignService();
+  CampaignApi provideCampaignService();
 
-  AdvertiseService provideAdvertiseService();
+  AdvertiseApi provideAdvertiseService();
 }
 
 class _NetworkModuleImpl extends NetworkModule {
   _NetworkModuleImpl(String baseUrl) : super(baseUrl);
 
   @override
-  UserService provideUserService() => UserService(dio);
+  UserApi provideUserService() => UserApi(dio);
 
   @override
-  CommonService provideCommonService() => CommonService(dio);
+  CommonApi provideCommonService() => CommonApi(dio);
 
   @override
-  SupplierService provideSupplierService() => SupplierService(dio);
+  SupplierApi provideSupplierService() => SupplierApi(dio);
 
   @override
-  ProductService provideProductService() => ProductService(dio);
+  ProductApi provideProductService() => ProductApi(dio);
 
   @override
-  NotificationService provideNotificationService() => NotificationService(dio);
+  NotificationApi provideNotificationService() => NotificationApi(dio);
 
   @override
-  ServService provideServService() => ServService(dio);
+  ServiceApi provideServService() => ServiceApi(dio);
 
   @override
-  BrandService provideBrandService() => BrandService(dio);
+  BrandApi provideBrandService() => BrandApi(dio);
 
   @override
-  EmployeeService provideEmployeeService() => EmployeeService(dio);
+  EmployeeApi provideEmployeeService() => EmployeeApi(dio);
 
   @override
-  CustomerService provideCustomerService() => CustomerService(dio);
+  CustomerApi provideCustomerService() => CustomerApi(dio);
 
   @override
-  RoleService provideRoleService() => RoleService(dio);
+  RoleApi provideRoleService() => RoleApi(dio);
 
   @override
-  OrderService provideOrderService() => OrderService(dio);
+  OrderApi provideOrderService() => OrderApi(dio);
 
   @override
-  CommissionService provideCommissionService() => CommissionService(dio);
+  CommissionApi provideCommissionService() => CommissionApi(dio);
 
   @override
-  ReportService provideReportService() => ReportService(dio);
+  ReportApi provideReportService() => ReportApi(dio);
 
   @override
-  ReservationService provideReservationService() => ReservationService(dio);
+  ReservationApi provideReservationService() => ReservationApi(dio);
 
   @override
-  CampaignService provideCampaignService() => CampaignService(dio);
+  CampaignApi provideCampaignService() => CampaignApi(dio);
 
   @override
-  AdvertiseService provideAdvertiseService() => AdvertiseService(dio);
+  AdvertiseApi provideAdvertiseService() => AdvertiseApi(dio);
 }
 
 class IgnoreHandShakeHttpOverrides extends HttpOverrides {

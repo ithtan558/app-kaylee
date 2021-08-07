@@ -14,7 +14,7 @@ abstract class ProductDetailAction {
 }
 
 class SupplierProdDetailBloc extends Cubit<SingleModel<Product>> {
-  ProductService productService;
+  ProductApi productService;
   final Product product;
   ProductDetailAction? action;
 

@@ -3,7 +3,7 @@ import 'package:kaylee/apis/apis.dart';
 import 'package:kaylee/models/models.dart';
 
 class AutoFillBloc extends Cubit<SingleModel<Brand>> {
-  final BrandService service;
+  final BrandApi service;
 
   AutoFillBloc({required this.service}) : super(SingleModel());
 

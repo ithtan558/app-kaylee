@@ -14,7 +14,7 @@ class ReservationFilter extends Filter {
 class ReservationListBloc extends Cubit<LoadMoreModel<Reservation>>
     with KayleeListInterfaceMixin
     implements LoadMoreInterface, KayleeFilterInterface<ReservationFilter> {
-  final ReservationService service;
+  final ReservationApi service;
 
   ReservationListBloc({required this.service}) : super(LoadMoreModel());
   ReservationFilter? _filter;

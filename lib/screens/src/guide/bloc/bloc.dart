@@ -3,7 +3,7 @@ import 'package:kaylee/apis/apis.dart';
 import 'package:kaylee/models/models.dart';
 
 class GuideScreenBloc extends Cubit<SingleModel<Content>> {
-  final CommonService commonService;
+  final CommonApi commonService;
 
   GuideScreenBloc({required this.commonService}) : super(SingleModel());
 

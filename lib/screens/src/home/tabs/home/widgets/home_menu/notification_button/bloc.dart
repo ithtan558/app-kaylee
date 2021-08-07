@@ -3,7 +3,7 @@ import 'package:kaylee/apis/apis.dart';
 import 'package:kaylee/models/models.dart';
 
 class NotiButtonBloc extends Cubit<int> {
-  NotificationService service;
+  NotificationApi service;
 
   NotiButtonBloc({required this.service}) : super(0);
 

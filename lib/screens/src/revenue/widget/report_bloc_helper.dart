@@ -5,7 +5,7 @@ import 'package:kaylee/models/models.dart';
 import 'package:kaylee/utils/utils.dart';
 
 mixin ReportBlocHelper {
-  late ReportService reportService;
+  late ReportApi reportService;
   Brand? _brand;
   DateTime? _startDate;
   DateTime? _endDate;

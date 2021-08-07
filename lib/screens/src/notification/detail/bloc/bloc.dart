@@ -6,7 +6,7 @@ import 'package:kaylee/screens/screens.dart';
 
 class NotifyDetailScreenBloc extends Cubit<SingleModel>
     implements CRUDInterface {
-  final NotificationService notificationService;
+  final NotificationApi notificationService;
   Notification notification;
   late NotifyDetailScreenView view;
 

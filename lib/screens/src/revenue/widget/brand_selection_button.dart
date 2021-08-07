@@ -158,7 +158,7 @@ class _BrandPickerViewState extends BaseState<_BrandPickerView> {
 }
 
 class _BrandSelectionBloc extends Cubit<SingleModel<List<Brand>>> {
-  final BrandService brandService;
+  final BrandApi brandService;
 
   _BrandSelectionBloc({required this.brandService}) : super(SingleModel());
 

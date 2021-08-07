@@ -5,7 +5,7 @@ import 'package:kaylee/models/models.dart';
 
 class ServiceDetailScreenBloc extends Cubit<SingleModel<Service>>
     implements CRUDInterface {
-  final ServService servService;
+  final ServiceApi servService;
 
   ServiceDetailScreenBloc({required this.servService, Service? service})
       : super(SingleModel(item: service));

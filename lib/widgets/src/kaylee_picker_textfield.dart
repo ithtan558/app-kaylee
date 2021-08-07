@@ -4,11 +4,11 @@ import 'package:anth_package/anth_package.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/apis/apis.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
-import 'package:kaylee/apis/apis.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
@@ -543,13 +543,13 @@ class PickInputController<T> {
 }
 
 class _PickerViewBloc<T> extends Cubit<SingleModel<List<T>>> {
-  final CommonService commonService;
-  final ProductService productService;
-  final ServService servService;
-  final BrandService brandService;
-  final CustomerService customerService;
-  final RoleService roleService;
-  final EmployeeService employeeService;
+  final CommonApi commonService;
+  final ProductApi productService;
+  final ServiceApi servService;
+  final BrandApi brandService;
+  final CustomerApi customerService;
+  final RoleApi roleService;
+  final EmployeeApi employeeService;
   final bool useForFilter;
 
   _PickerViewBloc({

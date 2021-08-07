@@ -14,7 +14,7 @@ class CommissionFilter extends Filter {
 class CommissionListScreenBloc extends Cubit<LoadMoreModel<Employee>>
     with KayleeListInterfaceMixin
     implements LoadMoreInterface, KayleeFilterInterface<CommissionFilter> {
-  final EmployeeService employeeService;
+  final EmployeeApi employeeService;
   CommissionFilter? _filter;
 
   CommissionListScreenBloc({required this.employeeService})

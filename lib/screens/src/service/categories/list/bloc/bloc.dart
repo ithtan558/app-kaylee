@@ -7,7 +7,7 @@ import 'package:kaylee/models/models.dart';
 class ServCateListScreenBloc extends Cubit<LoadMoreModel<ServiceCate>>
     with KayleeListInterfaceMixin
     implements LoadMoreInterface {
-  final ServService servService;
+  final ServiceApi servService;
 
   ServCateListScreenBloc({required this.servService}) : super(LoadMoreModel());
 

@@ -5,7 +5,7 @@ import 'package:kaylee/models/models.dart';
 
 class ServCateDetailBloc extends Cubit<SingleModel<ServiceCate>>
     implements CRUDInterface {
-  final ServService servService;
+  final ServiceApi servService;
 
   ServCateDetailBloc({
     required this.servService,

@@ -4,7 +4,7 @@ import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 
 class RegisterScreenBloc extends Cubit<SingleModel<RegisterBody>> {
-  UserService userService;
+  UserApi userService;
 
   RegisterScreenBloc({required this.userService})
       : super(SingleModel(item: RegisterBody()));

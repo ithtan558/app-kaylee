@@ -3,7 +3,7 @@ import 'package:kaylee/apis/apis.dart';
 import 'package:kaylee/models/models.dart';
 
 class PaymentInfoScreenBloc extends Cubit<SingleModel<OrderRequest>> {
-  OrderService orderService;
+  OrderApi orderService;
 
   PaymentInfoScreenBloc(
       {required this.orderService, OrderRequest? orderRequest})

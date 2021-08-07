@@ -12,7 +12,7 @@ class CustomerFilter extends Filter {
 class CustomerListScreenBloc extends Cubit<LoadMoreModel<Customer>>
     with PaginationMixin<Customer>
     implements KayleeFilterInterface<CustomerFilter> {
-  final CustomerService customerService;
+  final CustomerApi customerService;
   CustomerFilter? _filter;
 
   CustomerListScreenBloc({required this.customerService})

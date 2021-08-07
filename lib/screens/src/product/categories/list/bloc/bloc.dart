@@ -8,7 +8,7 @@ import 'package:kaylee/models/models.dart';
 class ProCateListScreenBloc extends Cubit<LoadMoreModel<ProdCate>>
     with KayleeListInterfaceMixin
     implements LoadMoreInterface {
-  final ProductService productService;
+  final ProductApi productService;
 
   ProCateListScreenBloc({required this.productService})
       : super(LoadMoreModel());

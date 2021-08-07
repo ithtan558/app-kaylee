@@ -157,7 +157,7 @@ class _PolicyViewState extends KayleeState<_PolicyView> {
 }
 
 class _PolicyViewBloc extends BaseBloc {
-  CommonService commonService;
+  CommonApi commonService;
 
   _PolicyViewBloc(this.commonService);
 

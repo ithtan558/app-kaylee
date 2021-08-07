@@ -8,7 +8,7 @@ import 'package:kaylee/utils/utils.dart';
 class CommProdOrdersBloc extends Cubit<LoadMoreModel<CommissionOrder>>
     with KayleeListInterfaceMixin
     implements LoadMoreInterface {
-  final CommissionService commissionService;
+  final CommissionApi commissionService;
   final DateTime startDate;
   final DateTime endDate;
   final Employee employee;

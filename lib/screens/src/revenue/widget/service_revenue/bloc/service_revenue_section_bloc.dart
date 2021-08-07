@@ -5,7 +5,7 @@ import 'package:kaylee/screens/src/revenue/widget/report_bloc_helper.dart';
 
 class ServiceRevenueSectionBloc extends Cubit<SingleModel<List<ServiceRevenue>>>
     with ReportBlocHelper {
-  ServiceRevenueSectionBloc({required ReportService reportService})
+  ServiceRevenueSectionBloc({required ReportApi reportService})
       : super(SingleModel()) {
     this.reportService = reportService;
   }

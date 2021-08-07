@@ -8,7 +8,7 @@ import 'package:kaylee/utils/utils.dart';
 class MyOrdersScreenBloc extends Cubit<LoadMoreModel<Order>>
     with KayleeListInterfaceMixin
     implements LoadMoreInterface {
-  final OrderService orderService;
+  final OrderApi orderService;
 
   ///initialized ở [loadOrdersByDate] khi view gọi function này lúc [initState]
   ///nên nó sẽ luôn != null

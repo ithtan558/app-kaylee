@@ -3,7 +3,7 @@ import 'package:kaylee/apis/apis.dart';
 import 'package:kaylee/models/models.dart';
 
 class CommissionSettingBloc extends Cubit<SingleModel<CommissionSetting>> {
-  final CommissionService commissionService;
+  final CommissionApi commissionService;
   final Employee employee;
 
   CommissionSettingBloc({

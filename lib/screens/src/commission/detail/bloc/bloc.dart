@@ -4,7 +4,7 @@ import 'package:kaylee/models/models.dart';
 import 'package:kaylee/utils/utils.dart';
 
 class CommissionDetailScreenBloc extends Cubit<SingleModel> {
-  final CommissionService commissionService;
+  final CommissionApi commissionService;
   Employee employee;
   DateTime startDate;
   late DateTime endDate;

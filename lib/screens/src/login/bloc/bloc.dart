@@ -6,7 +6,7 @@ import 'package:kaylee/screens/src/login/bloc/state.dart';
 import 'event.dart';
 
 class LoginScreenBloc extends BaseBloc {
-  UserService userService;
+  UserApi userService;
 
   LoginScreenBloc({required this.userService});
 

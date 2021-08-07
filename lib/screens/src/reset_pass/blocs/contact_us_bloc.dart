@@ -4,7 +4,7 @@ import 'package:kaylee/models/models.dart';
 
 class ContactUsBloc extends BaseBloc {
   Content? _content;
-  CommonService commonService;
+  CommonApi commonService;
 
   ContactUsBloc(this.commonService);
 

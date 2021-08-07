@@ -3,7 +3,7 @@ import 'package:kaylee/apis/apis.dart';
 import 'package:kaylee/models/models.dart';
 
 class SelectServiceCateBloc extends Cubit<SingleModel<List<ServiceCate>>> {
-  ServService servService;
+  ServiceApi servService;
 
   SelectServiceCateBloc({required this.servService}) : super(SingleModel());
 

@@ -5,7 +5,7 @@ import 'package:kaylee/models/models.dart';
 
 class OrderCancellationReasonBloc
     extends Cubit<SingleModel<Map<int?, OrderCancellationReason>>> {
-  final OrderService service;
+  final OrderApi service;
 
   OrderCancellationReason get selected =>
       state.item!.values.firstWhere((reason) => reason.selected);

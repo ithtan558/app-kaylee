@@ -3,7 +3,7 @@ import 'package:kaylee/apis/apis.dart';
 import 'package:kaylee/models/src/request/update_pass/update_pass_body.dart';
 
 class UpdatePassBloc extends Cubit<SingleModel> {
-  UserService userService;
+  UserApi userService;
   final String? resetPassToken;
   final int? userId;
 

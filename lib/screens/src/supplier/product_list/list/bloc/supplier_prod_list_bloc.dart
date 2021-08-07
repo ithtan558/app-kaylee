@@ -7,7 +7,7 @@ import 'package:kaylee/models/models.dart';
 class SupplierProdListBloc extends Cubit<LoadMoreModel<Product>>
     with KayleeListInterfaceMixin
     implements LoadMoreInterface {
-  final ProductService productService;
+  final ProductApi productService;
   Supplier? supplier;
   ProdCate? category;
 

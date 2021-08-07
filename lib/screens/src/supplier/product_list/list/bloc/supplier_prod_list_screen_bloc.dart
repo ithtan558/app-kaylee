@@ -3,7 +3,7 @@ import 'package:kaylee/apis/apis.dart';
 import 'package:kaylee/models/models.dart';
 
 class SupplierProdListScreenBloc extends Cubit<SingleModel<Supplier>> {
-  final SupplierService service;
+  final SupplierApi service;
   final Supplier? supplier;
 
   SupplierProdListScreenBloc({

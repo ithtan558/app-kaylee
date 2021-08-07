@@ -4,7 +4,7 @@ import 'package:kaylee/apis/apis.dart';
 import 'package:kaylee/models/models.dart';
 
 class BrandSelectListBloc extends Cubit<SingleModel<List<Brand>>> {
-  final BrandService service;
+  final BrandApi service;
 
   BrandSelectListBloc({required this.service, List<Brand>? brands})
       : super(SingleModel(item: brands));

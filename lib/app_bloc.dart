@@ -3,8 +3,8 @@ import 'package:kaylee/apis/apis.dart';
 import 'package:kaylee/models/models.dart';
 
 class AppBloc extends Cubit {
-  final UserService userService;
-  final CampaignService campaignService;
+  final UserApi userService;
+  final CampaignApi campaignService;
   PackageInfo? _packageInfo;
 
   PackageInfo? get packageInfo => _packageInfo;

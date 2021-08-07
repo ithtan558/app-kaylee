@@ -6,7 +6,7 @@ import 'package:kaylee/utils/utils.dart';
 
 class ReservationDetailBloc extends Cubit<SingleModel<Reservation>>
     with CRUDInterface {
-  final ReservationService service;
+  final ReservationApi service;
 
   ReservationDetailBloc({
     required this.service,

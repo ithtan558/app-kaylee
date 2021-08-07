@@ -3,7 +3,7 @@ import 'package:kaylee/apis/apis.dart';
 import 'package:kaylee/models/models.dart';
 
 class SendOtpBloc extends Cubit<SingleModel<VerifyPhoneResult>> {
-  UserService userService;
+  UserApi userService;
 
   SendOtpBloc({required this.userService}) : super(SingleModel());
 

@@ -7,7 +7,7 @@ import 'package:kaylee/models/models.dart';
 class HistoryTabBloc extends Cubit<LoadMoreModel<Order>>
     with KayleeListInterfaceMixin
     implements LoadMoreInterface {
-  final OrderService orderService;
+  final OrderApi orderService;
 
   HistoryTabBloc({required this.orderService}) : super(LoadMoreModel());
 

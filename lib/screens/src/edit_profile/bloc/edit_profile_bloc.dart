@@ -3,7 +3,7 @@ import 'package:kaylee/apis/apis.dart';
 import 'package:kaylee/models/models.dart';
 
 class EditProfileBloc extends Cubit<SingleModel<UserInfo>> {
-  final UserService userService;
+  final UserApi userService;
   UserInfo userInfo;
 
   EditProfileBloc({required this.userService, required this.userInfo})

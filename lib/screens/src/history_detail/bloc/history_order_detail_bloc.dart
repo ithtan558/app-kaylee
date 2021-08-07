@@ -3,7 +3,7 @@ import 'package:kaylee/apis/apis.dart';
 import 'package:kaylee/models/models.dart';
 
 class HistoryOrderDetailBloc extends Cubit<SingleModel<Order>> {
-  final OrderService orderService;
+  final OrderApi orderService;
   Order order;
 
   HistoryOrderDetailBloc({required this.orderService, required this.order})

@@ -5,7 +5,7 @@ import 'package:kaylee/models/models.dart';
 
 class StaffDetailScreenBloc extends Cubit<SingleModel<Employee>>
     implements CRUDInterface {
-  final EmployeeService employeeService;
+  final EmployeeApi employeeService;
 
   StaffDetailScreenBloc({required this.employeeService, Employee? employee})
       : super(SingleModel(item: employee));

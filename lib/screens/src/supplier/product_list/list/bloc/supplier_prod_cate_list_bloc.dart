@@ -3,7 +3,7 @@ import 'package:kaylee/apis/apis.dart';
 import 'package:kaylee/models/models.dart';
 
 class SupplierProdCateListBloc extends Cubit<LoadMoreModel<ProdCate>> {
-  ProductService productService;
+  ProductApi productService;
   final Supplier? supplier;
 
   SupplierProdCateListBloc({required this.productService, this.supplier})

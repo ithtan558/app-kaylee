@@ -5,7 +5,7 @@ import 'package:kaylee/base/loadmore_interface.dart';
 import 'package:kaylee/models/models.dart' as models;
 
 class NotificationScreenBloc extends Cubit<SingleModel> {
-  final NotificationService notificationService;
+  final NotificationApi notificationService;
 
   NotificationScreenBloc({required this.notificationService})
       : super(SingleModel());
@@ -65,7 +65,7 @@ class DeleteState extends SingleModel<models.Notification> {
 class NotificationListBloc extends Cubit<LoadMoreModel<models.Notification>>
     with KayleeListInterfaceMixin
     implements LoadMoreInterface {
-  final NotificationService notificationService;
+  final NotificationApi notificationService;
 
   NotificationListBloc({required this.notificationService})
       : super(LoadMoreModel());

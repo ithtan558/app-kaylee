@@ -7,7 +7,7 @@ import 'package:kaylee/models/models.dart';
 class SelectProdListBloc extends Cubit<LoadMoreModel<Product>>
     with KayleeListInterfaceMixin
     implements LoadMoreInterface {
-  final ProductService productService;
+  final ProductApi productService;
   int? cateId;
   final List<Product> _selectedProds = [];
 

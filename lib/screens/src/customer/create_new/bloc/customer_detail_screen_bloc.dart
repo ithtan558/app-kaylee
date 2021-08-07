@@ -6,7 +6,7 @@ import 'package:kaylee/utils/utils.dart';
 
 class CustomerDetailScreenBloc extends Cubit<SingleModel<Customer>>
     implements CRUDInterface {
-  final CustomerService customerService;
+  final CustomerApi customerService;
 
   CustomerDetailScreenBloc({required this.customerService, Customer? customer})
       : super(SingleModel(item: customer));
