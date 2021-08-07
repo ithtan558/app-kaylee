@@ -1,6 +1,6 @@
 import 'package:anth_package/anth_package.dart';
+import 'package:kaylee/apis/apis.dart';
 import 'package:kaylee/models/src/request/update_pass/update_pass_body.dart';
-import 'package:kaylee/services/services.dart';
 
 class UpdatePassBloc extends Cubit<SingleModel> {
   UserService userService;

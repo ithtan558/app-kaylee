@@ -1,8 +1,8 @@
 import 'package:anth_package/anth_package.dart';
+import 'package:kaylee/apis/apis.dart';
 import 'package:kaylee/base/kaylee_list_interface.dart';
 import 'package:kaylee/base/loadmore_interface.dart';
 import 'package:kaylee/models/models.dart';
-import 'package:kaylee/services/services.dart';
 
 class SelectProdListBloc extends Cubit<LoadMoreModel<Product>>
     with KayleeListInterfaceMixin

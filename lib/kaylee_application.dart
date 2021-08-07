@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:get_it/get_it.dart';
 import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/application_config.dart';
 import 'package:kaylee/base/json_converter/kaylee_json_convert.dart';
@@ -20,6 +21,8 @@ import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/home/tabs/account/widgets/profile_widget.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/notification_button/bloc.dart';
 import 'package:kaylee/utils/utils.dart';
+
+GetIt locator = GetIt.I;
 
 class KayLeeApplication extends StatefulWidget {
   static Widget newInstance({required ApplicationConfig appConfig}) {

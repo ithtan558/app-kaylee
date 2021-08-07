@@ -1,7 +1,7 @@
 import 'package:anth_package/anth_package.dart';
+import 'package:kaylee/apis/apis.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
-import 'package:kaylee/services/services.dart';
 
 class RegisterScreenBloc extends Cubit<SingleModel<RegisterBody>> {
   UserService userService;

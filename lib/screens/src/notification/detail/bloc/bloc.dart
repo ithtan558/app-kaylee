@@ -1,8 +1,8 @@
 import 'package:anth_package/anth_package.dart' hide Notification, Status;
+import 'package:kaylee/apis/apis.dart';
 import 'package:kaylee/base/crud_interface.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/screens/screens.dart';
-import 'package:kaylee/services/services.dart';
 
 class NotifyDetailScreenBloc extends Cubit<SingleModel>
     implements CRUDInterface {

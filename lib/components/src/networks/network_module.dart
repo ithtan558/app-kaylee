@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:anth_package/anth_package.dart';
-import 'package:kaylee/services/services.dart';
+import 'package:kaylee/apis/apis.dart';
 
 abstract class NetworkModule extends Network {
   static const baseUrl = 'http://api.kaylee.vn/';

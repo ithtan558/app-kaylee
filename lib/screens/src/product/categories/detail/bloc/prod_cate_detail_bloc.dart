@@ -1,7 +1,7 @@
 import 'package:anth_package/anth_package.dart';
+import 'package:kaylee/apis/apis.dart';
 import 'package:kaylee/base/crud_interface.dart';
 import 'package:kaylee/models/models.dart';
-import 'package:kaylee/services/services.dart';
 
 class ProdCateDetailBloc extends Cubit<SingleModel<ProdCate>>
     implements CRUDInterface {
