@@ -47,7 +47,6 @@ class _SplashScreenState extends KayleeState<SplashScreen> {
 
   void _loadRemoteConfig() async {
     final remoteConfig = RemoteConfig.instance;
-    remoteConfig.setDefaults(context.appConfig.defaultConfig);
     await remoteConfig.setConfigSettings(RemoteConfigSettings(
       fetchTimeout: const Duration(seconds: 1),
       minimumFetchInterval: const Duration(minutes: 1),
