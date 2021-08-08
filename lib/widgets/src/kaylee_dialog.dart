@@ -206,9 +206,10 @@ class KayleeAlertDialogView extends StatelessWidget {
       );
 
   ///show cupertino dialog với [message] truyền vào
-  factory KayleeAlertDialogView.message({Message? message,
-    List<KayleeAlertDialogAction>? actions,
-    bool allowBackPress = true}) =>
+  factory KayleeAlertDialogView.message(
+          {Message? message,
+          List<KayleeAlertDialogAction>? actions,
+          bool allowBackPress = true}) =>
       KayleeAlertDialogView(
         title: message?.title,
         content: message?.content,
@@ -216,12 +217,13 @@ class KayleeAlertDialogView extends StatelessWidget {
         allowBackPress: allowBackPress,
       );
 
-  const KayleeAlertDialogView({Key? key,
-    this.title,
-    this.content,
-    this.actions,
-    this.contentWidget,
-    this.allowBackPress = true})
+  const KayleeAlertDialogView(
+      {Key? key,
+      this.title,
+      this.content,
+      this.actions,
+      this.contentWidget,
+      this.allowBackPress = true})
       : super(key: key);
 
   @override
@@ -235,9 +237,9 @@ class KayleeAlertDialogView extends StatelessWidget {
         content: contentWidget ??
             (content != null
                 ? Padding(
-              padding: const EdgeInsets.only(top: Dimens.px3),
-              child: Text(content!),
-            )
+                    padding: const EdgeInsets.only(top: Dimens.px3),
+                    child: Text(content!),
+                  )
                 : null),
         actions: actions ?? [],
       ),
@@ -442,8 +444,10 @@ class _KayleeAmountChangingViewState
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              KayleeText.normal16W500(
-                widget.title,
+              Expanded(
+                child: KayleeText.normal16W500(
+                  widget.title,
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: Dimens.px16),
