@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/base/kaylee_state.dart';
+import 'package:kaylee/kaylee_application.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
@@ -19,19 +20,19 @@ class SupplierProdListScreen extends StatefulWidget {
   static Widget newInstance() => MultiBlocProvider(providers: [
         BlocProvider(
           create: (context) => SupplierProdListScreenBloc(
-            service: context.network.provideSupplierService(),
+            service: locator.apis.provideSupplierApi(),
             supplier: context.getArguments<Supplier>(),
           ),
         ),
         BlocProvider<SupplierProdCateListBloc>(
           create: (context) => SupplierProdCateListBloc(
-            productService: context.network.provideProductService(),
+            productService: locator.apis.provideProductApi(),
             supplier: context.getArguments<Supplier>(),
           ),
         ),
         BlocProvider<SupplierProdListBloc>(
           create: (context) => SupplierProdListBloc(
-            productService: context.network.provideProductService(),
+            productService: locator.apis.provideProductApi(),
             supplier: context.getArguments<Supplier>(),
           ),
         ),

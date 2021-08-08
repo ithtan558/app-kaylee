@@ -1,6 +1,7 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
+import 'package:kaylee/kaylee_application.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/order_detail/widgets/select_employee/widgets/dialog/bloc/select_employee_bloc.dart';
@@ -16,7 +17,7 @@ class SelectEmployeeDialog extends StatefulWidget {
           required Brand brand}) =>
       BlocProvider(
         create: (context) => SelectEmployeeBloc(
-          employeeService: context.network.provideEmployeeService(),
+          employeeService: locator.apis.provideEmployeeApi(),
           selectedEmployees: {
             for (var element in selectedEmployees ?? []) element.id: element
           },

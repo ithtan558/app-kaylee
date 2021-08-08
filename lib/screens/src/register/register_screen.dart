@@ -2,6 +2,7 @@ import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
+import 'package:kaylee/kaylee_application.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/res/src/strings.dart';
 import 'package:kaylee/screens/screens.dart';
@@ -11,8 +12,8 @@ import 'package:kaylee/widgets/widgets.dart';
 
 class RegisterScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<RegisterScreenBloc>(
-    create: (context) => RegisterScreenBloc(
-            userService: context.network.provideUserService()),
+    create: (context) =>
+            RegisterScreenBloc(userService: locator.apis.provideUserApi()),
         child: const RegisterScreen(),
       );
 

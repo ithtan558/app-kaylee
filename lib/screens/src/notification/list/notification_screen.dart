@@ -11,18 +11,19 @@ import 'package:kaylee/screens/src/notification/list/bloc/notification_screen_bl
 import 'package:kaylee/screens/src/notification/list/notify_item.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
+import 'package:kaylee/kaylee_application.dart';
 
 class NotificationScreen extends StatefulWidget {
   static Widget newInstance() => MultiBlocProvider(
         providers: [
           BlocProvider(
             create: (context) => NotificationScreenBloc(
-              notificationService: context.network.provideNotificationService(),
+              notificationService: locator.apis.provideNotificationApi(),
             ),
           ),
           BlocProvider(
             create: (context) => NotificationListBloc(
-              notificationService: context.network.provideNotificationService(),
+              notificationService: locator.apis.provideNotificationApi(),
             ),
           ),
         ],

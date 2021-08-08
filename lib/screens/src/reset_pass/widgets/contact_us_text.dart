@@ -2,6 +2,7 @@ import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
+import 'package:kaylee/kaylee_application.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/reset_pass/blocs/contact_us_bloc.dart';
 import 'package:kaylee/utils/utils.dart';
@@ -9,8 +10,7 @@ import 'package:kaylee/widgets/widgets.dart';
 
 class ContactUsText extends StatefulWidget {
   static Widget newInstance() => BlocProvider<ContactUsBloc>(
-        create: (context) =>
-            ContactUsBloc(context.network.provideCommonService()),
+    create: (context) => ContactUsBloc(locator.apis.provideCommonApi()),
         child: const ContactUsText._(),
       );
 

@@ -5,6 +5,7 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/base/kaylee_state.dart';
+import 'package:kaylee/kaylee_application.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/res/src/images.dart';
 import 'package:kaylee/screens/screens.dart';
@@ -37,7 +38,7 @@ class _SplashScreenState extends KayleeState<SplashScreen> {
     _sub = context.bloc<AppBloc>()!.stream.listen((state) {
       if (state is DoneSetupLoggedInState) {
         if (ModalRoute.of(context)?.isCurrent ?? false) {
-          bloc.loadUserInfo(userService: context.network.provideUserService());
+          bloc.loadUserInfo(userService: locator.apis.provideUserApi());
         }
       }
     });
@@ -53,7 +54,7 @@ class _SplashScreenState extends KayleeState<SplashScreen> {
     ));
     remoteConfig.fetchAndActivate().then((_) async {
       context.appConfig.setupConfig(remoteConfig.getAll());
-      context.network.dio.options.baseUrl = context.appConfig.baseUrl;
+      locator.network.dio.options.baseUrl = context.appConfig.baseUrl;
       context.bloc<AppBloc>()!.packageInfo = await PackageInfo.fromPlatform();
       bloc.config();
     });

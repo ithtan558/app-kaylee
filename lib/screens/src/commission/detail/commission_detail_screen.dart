@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
+import 'package:kaylee/kaylee_application.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/commission/detail/bloc/bloc.dart';
@@ -23,7 +24,7 @@ class CommissionDetailScreenData {
 class CommissionDetailScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider(
         create: (context) => CommissionDetailScreenBloc(
-            commissionService: context.network.provideCommissionService(),
+            commissionService: locator.apis.provideCommissionApi(),
             employee:
                 context.getArguments<CommissionDetailScreenData>()!.employee,
             startDate:

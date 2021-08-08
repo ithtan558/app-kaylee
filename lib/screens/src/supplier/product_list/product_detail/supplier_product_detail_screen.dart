@@ -4,6 +4,7 @@ import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/base/kaylee_state.dart';
+import 'package:kaylee/kaylee_application.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
@@ -32,7 +33,7 @@ enum ProductDetailScreenOpenFrom {
 class SupplierProductDetailScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<SupplierProdDetailBloc>(
       create: (context) => SupplierProdDetailBloc(
-          productService: context.network.provideProductService(),
+          productService: locator.apis.provideProductApi(),
           product:
               context.getArguments<SupplierProductDetailScreenData>()!.product),
       child: const SupplierProductDetailScreen());

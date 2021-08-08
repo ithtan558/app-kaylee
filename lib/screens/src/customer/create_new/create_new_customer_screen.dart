@@ -4,6 +4,7 @@ import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/base/reload_bloc.dart';
+import 'package:kaylee/kaylee_application.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
@@ -24,7 +25,7 @@ class NewCustomerScreenData {
 class CreateNewCustomerScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<CustomerDetailScreenBloc>(
     create: (context) => CustomerDetailScreenBloc(
-            customerService: context.network.provideCustomerService(),
+        customerService: locator.apis.provideCustomerApi(),
             customer: context.getArguments<NewCustomerScreenData>()!.customer),
         child: const CreateNewCustomerScreen(),
       );

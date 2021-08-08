@@ -5,6 +5,7 @@ import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/base/kaylee_state.dart';
+import 'package:kaylee/kaylee_application.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/expiration/bloc/expiration_screen_bloc.dart';
@@ -20,8 +21,8 @@ class ExpirationScreenArgument {
 class ExpirationScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider(
       create: (context) => ExpirationScreenBloc(
-            commonService: context.network.provideCommonService(),
-            userService: context.network.provideUserService(),
+            commonService: locator.apis.provideCommonApi(),
+            userService: locator.apis.provideUserApi(),
           ),
       child: const ExpirationScreen());
 

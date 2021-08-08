@@ -5,6 +5,7 @@ import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/base/reload_bloc.dart';
+import 'package:kaylee/kaylee_application.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
@@ -24,7 +25,7 @@ enum ServiceScreenOpenFrom { serviceItem, addNewServiceBtn }
 class CreateNewServiceScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<ServiceDetailScreenBloc>(
         create: (context) => ServiceDetailScreenBloc(
-            servService: context.network.provideServService(),
+            servService: locator.apis.provideServiceApi(),
             service: context.getArguments<NewServiceScreenData>()!.service),
         child: const CreateNewServiceScreen(),
       );

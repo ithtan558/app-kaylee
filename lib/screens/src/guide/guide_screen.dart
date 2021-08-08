@@ -4,6 +4,7 @@ import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
+import 'package:kaylee/kaylee_application.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/guide/bloc/bloc.dart';
@@ -13,7 +14,7 @@ import 'package:kaylee/widgets/widgets.dart';
 class GuideScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider(
       create: (context) => GuideScreenBloc(
-            commonService: context.network.provideCommonService(),
+        commonService: locator.apis.provideCommonApi(),
           ),
       child: const GuideScreen());
 

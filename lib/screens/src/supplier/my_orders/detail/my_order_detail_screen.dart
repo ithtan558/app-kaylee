@@ -4,6 +4,7 @@ import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/base/reload_bloc.dart';
+import 'package:kaylee/kaylee_application.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
@@ -16,8 +17,8 @@ import 'package:kaylee/widgets/widgets.dart';
 class MyOrderDetailScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider(
       create: (context) => MyOrderDetailBloc(
-            order: context.getArguments<Order>()!,
-            orderService: context.network.provideOrderService(),
+        order: context.getArguments<Order>()!,
+            orderService: locator.apis.provideOrderApi(),
           ),
       child: const MyOrderDetailScreen());
 

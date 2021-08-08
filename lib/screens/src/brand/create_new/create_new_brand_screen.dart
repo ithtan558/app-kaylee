@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/base/reload_bloc.dart';
+import 'package:kaylee/kaylee_application.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
@@ -25,7 +26,7 @@ enum BrandScreenOpenFrom { brandItem, addNewBrandBtn }
 class CreateNewBrandScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<BrandDetailScreenBloc>(
         create: (context) => BrandDetailScreenBloc(
-            brandService: context.network.provideBrandService(),
+            brandService: locator.apis.provideBrandApi(),
             brand: context.getArguments<NewBrandScreenData>()?.brand),
         child: const CreateNewBrandScreen(),
       );

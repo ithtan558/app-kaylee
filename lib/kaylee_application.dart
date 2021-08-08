@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_it/get_it.dart';
+import 'package:kaylee/apis/api_provider.dart';
+import 'package:kaylee/apis/api_provider_impl.dart';
 import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/application_config.dart';
 import 'package:kaylee/base/json_converter/kaylee_json_convert.dart';
@@ -15,6 +17,7 @@ import 'package:kaylee/base/kaylee_observer.dart';
 import 'package:kaylee/base/kaylee_routing.dart';
 import 'package:kaylee/base/reload_bloc.dart';
 import 'package:kaylee/components/components.dart';
+import 'package:kaylee/core/network/kaylee_network.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
@@ -27,13 +30,13 @@ GetIt locator = GetIt.I;
 class KayLeeApplication extends StatefulWidget {
   static Widget newInstance({required ApplicationConfig appConfig}) {
     JsonConverterBuilder.init(KayleeJsonConverter());
+    locator.registerSingleton<KayleeNetwork>(KayleeNetwork());
+    locator
+        .registerFactory<ApiProvider>(() => ApiProviderImpl(locator.network));
     return MultiRepositoryProvider(
       providers: [
-        RepositoryProvider<NetworkModule>(
-          create: (_) => NetworkModule.init(),
-        ),
         RepositoryProvider<RepositoriesModule>(
-          create: (context) => RepositoriesModule.init(context.network),
+          create: (context) => RepositoriesModule.init(locator.apis),
         ),
         RepositoryProvider<UserModule>(
           create: (_) => UserModule.init(),
@@ -54,8 +57,8 @@ class KayLeeApplication extends StatefulWidget {
       child: MultiBlocProvider(providers: [
         BlocProvider(
           create: (context) => AppBloc(
-            userService: context.network.provideUserService(),
-            campaignService: context.network.provideCampaignService(),
+            userService: locator.apis.provideUserApi(),
+            campaignService: locator.apis.provideCampaignApi(),
           ),
         ),
         BlocProvider(
@@ -66,7 +69,7 @@ class KayLeeApplication extends StatefulWidget {
         ),
         BlocProvider(
           create: (context) => NotiButtonBloc(
-            service: context.network.provideNotificationService(),
+            service: locator.apis.provideNotificationApi(),
           ),
         ),
       ], child: const KayLeeApplication()),
@@ -108,7 +111,7 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
   }
 
   void _handleRequestInterceptor() {
-    context.network.dio.interceptors
+    locator.network.dio.interceptors
       ..clear()
       ..addAll([
         InterceptorsWrapper(
@@ -118,7 +121,7 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
                 ...options.headers,
                 'version': _appBloc.packageInfo?.buildNumber ?? '',
                 if (context.user.getUserInfo().token.isNotNullAndEmpty)
-                  NetworkModule.authorization:
+                  ApiProvider.authorization:
                       context.user.getUserInfo().requestToken
               });
           },
@@ -181,7 +184,7 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
         } else if (state is LoggedOutState) {
           context.user.removeUserInfo();
           context.cart.clear();
-          context.network.dio.options.headers = {};
+          locator.network.dio.options.headers = {};
           _navigatorStateKey.currentContext!
               .pushToTop(PageIntent(screen: SplashScreen));
           return;

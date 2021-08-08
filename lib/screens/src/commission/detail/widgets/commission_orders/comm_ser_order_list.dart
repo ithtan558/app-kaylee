@@ -2,6 +2,7 @@ import 'package:anth_package/anth_package.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
+import 'package:kaylee/kaylee_application.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/commission/detail/bloc/comm_ser_orders_bloc.dart';
@@ -17,7 +18,7 @@ class CommSerOrderList extends StatefulWidget {
   }) =>
       BlocProvider(
           create: (context) => CommSerOrdersBloc(
-                commissionService: context.network.provideCommissionService(),
+            commissionService: locator.apis.provideCommissionApi(),
                 employee: employee,
                 startDate: range.start,
                 endDate: range.end,

@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/base/reload_bloc.dart';
+import 'package:kaylee/kaylee_application.dart';
 import 'package:kaylee/models/models.dart' as models;
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/notification_button/notification_button.dart';
@@ -16,7 +17,7 @@ import 'package:kaylee/widgets/widgets.dart';
 class NotifyDetailScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<NotifyDetailScreenBloc>(
         create: (context) => NotifyDetailScreenBloc(
-          notificationService: context.network.provideNotificationService(),
+          notificationService: locator.apis.provideNotificationApi(),
           notification: context.getArguments<models.Notification>()!,
         ),
         child: const NotifyDetailScreen(),

@@ -2,6 +2,7 @@ import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
+import 'package:kaylee/kaylee_application.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/repositories/repositories.dart';
 import 'package:kaylee/res/src/dimens.dart';
@@ -34,15 +35,15 @@ class OtpVerifyScreen extends StatefulWidget {
             final data = context.getArguments<VerifyOtpScreenData>()!;
             VerifyOtpRepository repository =
                 data.type == VerifyOtpScreenDataType.forgotPassword
-                    ? context.repos.verifyOtpForForgotPassword
-                    : context.repos.verifyOtpForRegister;
+                    ? context.repositories.verifyOtpForForgotPassword
+                    : context.repositories.verifyOtpForRegister;
             return OtpVerifyBloc(
                 verifyOtpRepository: repository, userId: data.userId);
           },
         ),
         BlocProvider(
           create: (context) =>
-              SendOtpBloc(userService: context.network.provideUserService()),
+              SendOtpBloc(userService: locator.apis.provideUserApi()),
         ),
       ], child: const OtpVerifyScreen());
 

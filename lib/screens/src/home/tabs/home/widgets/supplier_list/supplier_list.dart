@@ -2,6 +2,7 @@ import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/base/reload_bloc.dart';
+import 'package:kaylee/kaylee_application.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/home/tabs/home/bloc/supplier_list_bloc.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/home_banner/home_banner.dart';
@@ -14,7 +15,7 @@ class SupplierList extends StatefulWidget {
   static Widget newInstance({required ValueChanged<double> onScroll}) =>
       BlocProvider<SupplierListBloc>(
         create: (context) => SupplierListBloc(
-            supplierService: context.network.provideSupplierService()),
+            supplierService: locator.apis.provideSupplierApi()),
         child: SupplierList._(
           onScroll: onScroll,
         ),

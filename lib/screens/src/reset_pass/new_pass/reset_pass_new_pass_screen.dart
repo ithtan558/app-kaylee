@@ -3,6 +3,7 @@ import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/base/kaylee_state.dart';
+import 'package:kaylee/kaylee_application.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
@@ -20,7 +21,7 @@ class NewPassScreenData {
 class ResetPassNewPassScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<UpdatePassBloc>(
         create: (context) => UpdatePassBloc(
-            userService: context.network.provideUserService(),
+            userService: locator.apis.provideUserApi(),
             resetPassToken: context
                 .getArguments<NewPassScreenData>()!
                 .result

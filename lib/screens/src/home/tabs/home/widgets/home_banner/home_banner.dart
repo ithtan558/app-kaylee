@@ -2,6 +2,7 @@ import 'package:anth_package/anth_package.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart' hide Banner;
 import 'package:kaylee/base/kaylee_state.dart';
+import 'package:kaylee/kaylee_application.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/home_banner/bloc/home_banner_bloc.dart';
@@ -11,8 +12,8 @@ import 'package:kaylee/widgets/widgets.dart';
 
 class HomeBanner extends StatefulWidget {
   static Widget newInstance() => BlocProvider(
-        create: (context) =>
-            HomeBannerBloc(service: context.network.provideAdvertiseService()),
+    create: (context) =>
+            HomeBannerBloc(service: locator.apis.provideAdvertiseApi()),
         child: const HomeBanner._(),
       );
 

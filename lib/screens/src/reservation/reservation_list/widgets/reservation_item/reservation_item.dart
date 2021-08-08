@@ -7,12 +7,13 @@ import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/reservation/reservation_list/widgets/reservation_item/bloc/bloc.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
+import 'package:kaylee/kaylee_application.dart';
 
 class ReservationItem extends StatefulWidget {
   static Widget newInstance({required Reservation reservation}) => BlocProvider(
       key: ValueKey(reservation),
       create: (context) => ReservationItemBloc(
-            service: context.network.provideReservationService(),
+        service: locator.apis.provideReservationApi(),
             reservation: reservation,
           ),
       child: const ReservationItem._());

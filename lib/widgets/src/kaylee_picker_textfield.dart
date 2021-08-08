@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/apis/apis.dart';
 import 'package:kaylee/base/kaylee_state.dart';
+import 'package:kaylee/kaylee_application.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
@@ -428,13 +429,13 @@ class _PickerViewState<T> extends KayleeState<_PickerView> {
     }
 
     bloc = _PickerViewBloc(
-      commonService: context.network.provideCommonService(),
-      productService: context.network.provideProductService(),
-      servService: context.network.provideServService(),
-      brandService: context.network.provideBrandService(),
-      customerService: context.network.provideCustomerService(),
-      roleService: context.network.provideRoleService(),
-      employeeService: context.network.provideEmployeeService(),
+      commonService: locator.apis.provideCommonApi(),
+      productService: locator.apis.provideProductApi(),
+      servService: locator.apis.provideServiceApi(),
+      brandService: locator.apis.provideBrandApi(),
+      customerService: locator.apis.provideCustomerApi(),
+      roleService: locator.apis.provideRoleApi(),
+      employeeService: locator.apis.provideEmployeeApi(),
       useForFilter: widget.useForFilter,
     );
     loadData();

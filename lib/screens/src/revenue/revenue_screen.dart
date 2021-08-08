@@ -1,6 +1,7 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
+import 'package:kaylee/kaylee_application.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/revenue/widget/brand_selection_button.dart';
 import 'package:kaylee/screens/src/revenue/widget/employee_revenue/bloc/employee_revenue_section_bloc.dart';
@@ -18,22 +19,22 @@ class RevenueScreen extends StatefulWidget {
   static Widget newInstance() => MultiBlocProvider(providers: [
         BlocProvider(
           create: (context) => TotalRevenueSectionBloc(
-            reportService: context.network.provideReportService(),
+            reportService: locator.apis.provideReportApi(),
           ),
         ),
         BlocProvider(
           create: (context) => EmployeeRevenueSectionBloc(
-            reportService: context.network.provideReportService(),
+            reportService: locator.apis.provideReportApi(),
           ),
         ),
         BlocProvider(
           create: (context) => ServiceRevenueSectionBloc(
-            reportService: context.network.provideReportService(),
+            reportService: locator.apis.provideReportApi(),
           ),
         ),
         BlocProvider(
           create: (context) => ProductRevenueSectionBloc(
-            reportService: context.network.provideReportService(),
+            reportService: locator.apis.provideReportApi(),
           ),
         ),
       ], child: const RevenueScreen());

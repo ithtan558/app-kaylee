@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/base/reload_bloc.dart';
+import 'package:kaylee/kaylee_application.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/utils/utils.dart';
@@ -153,7 +154,7 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
               KayleeAlertDialogAction.dongY(
                 onPressed: () {
                   popScreen();
-                  context.network.provideUserService().clickWarning();
+                  locator.apis.provideUserApi().clickWarning();
                 },
                 isDefaultAction: true,
               )

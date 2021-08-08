@@ -5,6 +5,7 @@ import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:kaylee/base/kaylee_state.dart';
+import 'package:kaylee/kaylee_application.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/history_detail/bloc/history_order_detail_bloc.dart';
@@ -17,7 +18,7 @@ import 'package:kaylee/widgets/widgets.dart';
 class HistoryOrderDetailScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider(
       create: (context) => HistoryOrderDetailBloc(
-            orderService: context.network.provideOrderService(),
+        orderService: locator.apis.provideOrderApi(),
             order: context.getArguments<Order>()!,
           ),
       child: const HistoryOrderDetailScreen());
