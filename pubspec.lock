@@ -21,7 +21,7 @@ packages:
       path: "../anth_package"
       relative: true
     source: path
-    version: "1.0.0"
+    version: "1.0.0+1"
   app_settings:
     dependency: "direct main"
     description:
@@ -244,10 +244,12 @@ packages:
   core_plugin:
     dependency: transitive
     description:
-      path: "../../../FlutterProjects/my_packages/flutter.core_plugin"
-      relative: true
-    source: path
-    version: "1.0.0"
+      path: "."
+      ref: "1.0.0+1"
+      resolved-ref: "1d5832962fe9d79458f4f7a9846a2bb88345723c"
+      url: "https://github.com/tungpham6195/flutter.core_plugin.git"
+    source: git
+    version: "1.0.0+1"
   coverage:
     dependency: transitive
     description:
