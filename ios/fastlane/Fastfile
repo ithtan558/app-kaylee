@@ -2,10 +2,10 @@ default_platform(:ios)
 platform :ios do
   desc "Build an ipa"
   lane :dev do
-    Dir.chdir("../..") do
-      sh "flutter packages get"
+  Dir.chdir("../..") do
       sh "flutter clean"
-      sh "flutter build ios --flavor=dev --target=lib/main_dev.dart"
+      sh "flutter packages get"
+      sh "flutter build ios --flavor dev --target lib/main_dev.dart"
    end
    build_ios_app(
         scheme: "dev",
@@ -14,12 +14,20 @@ platform :ios do
         xcargs: "-allowProvisioningUpdates",
         export_method: "development"
        )
+   firebase_app_distribution(
+           app: "1:165119837573:ios:7056aef3764d27b355f0ec",
+           firebase_cli_token: "1//0guR3i5eyIHGsCgYIARAAGBASNwF-L9IrnfvKHdnhBVmAnpw1CtY9oxBh8StJZHSvdSD2i-o6TxliyDQN-jmviNpMW7DZE9pilxg",
+           ipa_path: "../build/Runner.ipa",
+           testers_file: "../testers.txt",
+           groups_file: "../groups.txt",
+           release_notes_file: "../release-notes.txt"
+       )
   end
   lane :prod do
       Dir.chdir("../..") do
         sh "flutter packages get"
         sh "flutter clean"
-        sh "flutter build ios --flavor=prod"
+        sh "flutter build ios --flavor prod"
      end
      build_ios_app(
           scheme: "prod",

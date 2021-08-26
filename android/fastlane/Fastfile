@@ -3,17 +3,22 @@ platform :android do
   desc "build apk/app_bundle"
   lane :dev do
     Dir.chdir("../..") do
-      sh "flutter packages get"
-      sh "flutter clean"
-      sh "flutter build apk --flavor=dev --target=lib/main_dev.dart --no-shrink"
+      sh "flutter build apk --flavor dev --target lib/main_dev.dart --no-shrink"
     end
+    firebase_app_distribution(
+        app: "1:165119837573:android:39fa739ca474c60e55f0ec",
+        firebase_cli_token: "1//0guR3i5eyIHGsCgYIARAAGBASNwF-L9IrnfvKHdnhBVmAnpw1CtY9oxBh8StJZHSvdSD2i-o6TxliyDQN-jmviNpMW7DZE9pilxg",
+        android_artifact_type: "APK",
+        android_artifact_path: "../build/app/outputs/flutter-apk/app-dev-release.apk",
+        testers_file: "../testers.txt",
+        groups_file: "../groups.txt",
+        release_notes_file: "../release-notes.txt"
+    )
   end
 
   lane :prod do
       Dir.chdir("../..") do
-        sh "flutter packages get"
-        sh "flutter clean"
-        sh "flutter build appbundle --flavor=prod --no-shrink"
+        sh "flutter build appbundle --flavor prod --no-shrink"
       end
     end
 end
