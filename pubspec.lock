@@ -21,7 +21,7 @@ packages:
       path: "../anth_package"
       relative: true
     source: path
-    version: "1.0.0+1"
+    version: "1.0.0+2"
   app_settings:
     dependency: "direct main"
     description:
@@ -244,12 +244,10 @@ packages:
   core_plugin:
     dependency: transitive
     description:
-      path: "."
-      ref: "1.0.0+1"
-      resolved-ref: "1d5832962fe9d79458f4f7a9846a2bb88345723c"
-      url: "https://github.com/tungpham6195/flutter.core_plugin.git"
-    source: git
-    version: "1.0.0+1"
+      path: "../../../FlutterProjects/my_packages/flutter.core_plugin"
+      relative: true
+    source: path
+    version: "1.0.0+2"
   coverage:
     dependency: transitive
     description:
@@ -386,21 +384,21 @@ packages:
       name: firebase_messaging
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "10.0.4"
+    version: "10.0.6"
   firebase_messaging_platform_interface:
     dependency: transitive
     description:
       name: firebase_messaging_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.3"
+    version: "3.0.5"
   firebase_messaging_web:
     dependency: transitive
     description:
       name: firebase_messaging_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.3"
+    version: "2.0.5"
   firebase_remote_config:
     dependency: "direct main"
     description:
@@ -743,7 +741,7 @@ packages:
       name: logger
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0"
+    version: "1.1.0"
   logging:
     dependency: transitive
     description:
@@ -1023,7 +1021,7 @@ packages:
       name: shared_preferences
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.6"
+    version: "2.0.7"
   shared_preferences_linux:
     dependency: transitive
     description:
