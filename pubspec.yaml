@@ -18,13 +18,13 @@ dependencies:
     sdk: flutter
 
   permission_handler: ^8.1.4+2
-  image_picker: ^0.8.3+2
-  extended_masked_text: ^2.3.0
+  image_picker: ^0.8.3+3
+  extended_masked_text: ^2.3.1
   esc_pos_printer:
     git:
       url: https://github.com/tungpham6195/esc_pos_printer.git
       ref: 4.0.3
-  video_player: ^2.1.12
+  video_player: ^2.1.14
   chewie: ^1.2.2
   printing: ^5.5.0
   bluetooth_print:
@@ -32,7 +32,7 @@ dependencies:
       url: https://github.com/tungpham6195/bluetooth_print.git
       ref: 3.0.2
   app_settings: ^4.1.1
-  firebase_remote_config: ^0.10.0+3
+  firebase_remote_config: ^0.10.0+5
   anth_package:
     path: ../anth_package
 #    git:
@@ -50,7 +50,7 @@ dev_dependencies:
   build_runner: ^2.1.1
   retrofit_generator: ^2.0.1
   flutter_lints: ^1.0.4
-  mockito: ^5.0.14
+  mockito: ^5.0.15
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
