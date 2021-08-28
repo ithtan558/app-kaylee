@@ -1,24 +1,28 @@
+require 'dotenv'
+
 default_platform(:android)
+
 platform :android do
-  desc "build apk/app_bundle"
+  desc "build apk/aab"
   lane :dev do
+    Dotenv.load('../../.env')
     Dir.chdir("../..") do
-      sh "flutter build apk --flavor dev --target lib/main_dev.dart --no-shrink"
+        sh('flutter', 'build', 'apk', '--flavor', ENV['FLAVOR'], '--target', ENV['TARGET'], '--no-shrink')
     end
     firebase_app_distribution(
-        app: "1:165119837573:android:39fa739ca474c60e55f0ec",
-        firebase_cli_token: "1//0guR3i5eyIHGsCgYIARAAGBASNwF-L9IrnfvKHdnhBVmAnpw1CtY9oxBh8StJZHSvdSD2i-o6TxliyDQN-jmviNpMW7DZE9pilxg",
+        app: ENV['FIREBASE_ANDROID_APP_ID'],
+        firebase_cli_token: ENV['PRIVATE_FIREBASE_CLI_TOKEN'],
         android_artifact_type: "APK",
-        android_artifact_path: "../build/app/outputs/flutter-apk/app-dev-release.apk",
-        testers_file: "../testers.txt",
-        groups_file: "../groups.txt",
-        release_notes_file: "../release-notes.txt"
+        android_artifact_path: ENV['ANDROID_ARTIFACT_PATH'],
+        testers_file: ENV['TESTERS_FILE'],
+        groups_file: ENV['GROUPS_FILE'],
+        release_notes_file: ENV['RELEASE_NOTES_FILE']
     )
   end
 
   lane :prod do
-      Dir.chdir("../..") do
-        sh "flutter build appbundle --flavor prod --no-shrink"
-      end
+    Dir.chdir("../..") do
+        sh('flutter', 'build', 'appbundle', '--flavor', ENV['FLAVOR'], '--no-shrink')
     end
+  end
 end

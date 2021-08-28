@@ -1,40 +1,44 @@
+require 'dotenv'
+
 default_platform(:ios)
 platform :ios do
   desc "Build an ipa"
+
+  before_all do
+    Dir.chdir("../..") do
+        sh("flutter clean")
+        sh("flutter packages get")
+    end
+  end
+
   lane :dev do
-  Dir.chdir("../..") do
-      sh "flutter clean"
-      sh "flutter packages get"
-      sh "flutter build ios --flavor dev --target lib/main_dev.dart"
-   end
-   build_ios_app(
+    Dotenv.load('.env')
+    sh('flutter', 'build', 'ios', '--flavor', ENV['FLAVOR'], '--target', 'ENV['TARGET']')
+    build_ios_app(
         scheme: "dev",
         clean: true,
         output_directory: '../build',
         xcargs: "-allowProvisioningUpdates",
         export_method: "development"
-       )
-   firebase_app_distribution(
-           app: "1:165119837573:ios:7056aef3764d27b355f0ec",
-           firebase_cli_token: "1//0guR3i5eyIHGsCgYIARAAGBASNwF-L9IrnfvKHdnhBVmAnpw1CtY9oxBh8StJZHSvdSD2i-o6TxliyDQN-jmviNpMW7DZE9pilxg",
-           ipa_path: "../build/Runner.ipa",
-           testers_file: "../testers.txt",
-           groups_file: "../groups.txt",
-           release_notes_file: "../release-notes.txt"
-       )
+    )
+    firebase_app_distribution(
+       app: ENV['FIREBASE_IOS_APP_ID'],
+       firebase_cli_token: ENV['PRIVATE_FIREBASE_CLI_TOKEN'],
+       ipa_path: ENV['IPA_PATH'],
+       testers_file: ENV['TESTERS_FILE'],
+       groups_file: ENV['GROUPS_FILE'],
+       release_notes_file: ENV['RELEASE_NOTES_FILE']
+    )
   end
+
   lane :prod do
-      Dir.chdir("../..") do
-        sh "flutter packages get"
-        sh "flutter clean"
-        sh "flutter build ios --flavor prod"
-     end
-     build_ios_app(
-          scheme: "prod",
-          clean: true,
-          output_directory: '../build',
-          xcargs: "-allowProvisioningUpdates",
-          export_method: "app-store"
-         )
+    sh('flutter', 'build', 'ios', '--flavor', ENV['FLAVOR'])
+    build_ios_app(
+        scheme: "prod",
+        clean: true,
+        output_directory: '../build',
+        xcargs: "-allowProvisioningUpdates",
+        export_method: "app-store"
+    )
     end
 end
