@@ -12,7 +12,6 @@ select_flavor(){
   echo "2: prod"
   read value
 
-
   if [ $value -eq 1 ]
   then
     flavor="dev"
