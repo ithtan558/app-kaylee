@@ -5,19 +5,22 @@ platform :ios do
   desc "Build an ipa"
 
   before_all do
-    Dir.chdir("../..") do
-        sh("flutter clean")
-        sh("flutter packages get")
+    Dir.chdir('../..') do
+        Dotenv.load('.env')
+        sh('flutter', 'clean')
+        sh('flutter', 'packages', 'get')
     end
   end
 
   lane :dev do
-    Dotenv.load('.env')
-    sh('flutter', 'build', 'ios', '--flavor', ENV['FLAVOR'], '--target', 'ENV['TARGET']')
+    Dir.chdir('../..') do
+        Dotenv.load('.env.dev')
+        sh('flutter', 'build', 'ios', '--flavor', ENV['FLAVOR'], '--target', ENV['TARGET'])
+    end
     build_ios_app(
-        scheme: "dev",
+        scheme: ENV['FLAVOR'],
         clean: true,
-        output_directory: '../build',
+        output_directory: ENV['OUTPUT_DIRECTORY'],
         xcargs: "-allowProvisioningUpdates",
         export_method: "development"
     )
@@ -32,13 +35,16 @@ platform :ios do
   end
 
   lane :prod do
-    sh('flutter', 'build', 'ios', '--flavor', ENV['FLAVOR'])
-    build_ios_app(
-        scheme: "prod",
-        clean: true,
-        output_directory: '../build',
-        xcargs: "-allowProvisioningUpdates",
-        export_method: "app-store"
-    )
+    Dir.chdir('../..') do
+        Dotenv.load('.env.prod')
+        sh('flutter', 'build', 'ios', '--flavor', ENV['FLAVOR'], '--target', ENV['TARGET'])
+        build_ios_app(
+            scheme: ENV['FLAVOR'],
+            clean: true,
+            output_directory: ENV['OUTPUT_DIRECTORY'],
+            xcargs: "-allowProvisioningUpdates",
+            export_method: "app-store"
+        )
     end
+  end
 end

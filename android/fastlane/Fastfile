@@ -4,9 +4,14 @@ default_platform(:android)
 
 platform :android do
   desc "build apk/aab"
+  before_all do
+    Dir.chdir('../..') do
+        Dotenv.load('.env')
+    end
+  end
   lane :dev do
-    Dotenv.load('../../.env')
-    Dir.chdir("../..") do
+    Dir.chdir('../..') do
+        Dotenv.load('.env.dev')
         sh('flutter', 'build', 'apk', '--flavor', ENV['FLAVOR'], '--target', ENV['TARGET'], '--no-shrink')
     end
     firebase_app_distribution(
@@ -21,8 +26,9 @@ platform :android do
   end
 
   lane :prod do
-    Dir.chdir("../..") do
-        sh('flutter', 'build', 'appbundle', '--flavor', ENV['FLAVOR'], '--no-shrink')
+    Dir.chdir('../..') do
+        Dotenv.load('.env.prod')
+        sh('flutter', 'build', 'appbundle', '--flavor', ENV['FLAVOR'], '--target', ENV['TARGET'], '--no-shrink')
     end
   end
 end
