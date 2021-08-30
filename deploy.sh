@@ -16,11 +16,12 @@ run_fastlane() {
   bundle exec fastlane $1
 }
 
-select_flavor(){
+select_flavor() {
   echo "Welcome to the show\n"
   echo -e "${red}${bold}[1]${reset}${green}: [dev] Development${reset}"
   echo "${yellow}${bold}[2]${reset}${green}: [prod] Production${reset}"
-  read -p "${green}\nPlease select your flavor, default is ${magentaBg}${white}[dev]${reset} (Press ${white}${yellowBg}enter${reset} to use the default):${reset}" -s -n 1 value
+  printf "${green}\nPlease select your flavor, default is ${magentaBg}${white}[dev]${reset} (Press ${white}${yellowBg}enter${reset} to use the default): ${reset}"
+  read value
 
   if [ $value -eq 2 ]
   then
@@ -28,14 +29,14 @@ select_flavor(){
   fi
 }
 
-deploy(){
+deploy() {
   select_flavor
   cd ios
   echo "${you_re_here}${white}${bold}${greenBg}$(pwd)${reset}"
-#  run_fastlane $flavor
-#  cd ../android
-#  echo "${you_re_here}${white}${bold}${greenBg}$(pwd)${reset}"
-#  run_fastlane $flavor
+  run_fastlane $flavor
+  cd ../android
+  echo "${you_re_here}${white}${bold}${greenBg}$(pwd)${reset}"
+  run_fastlane $flavor
 }
 
 deploy
