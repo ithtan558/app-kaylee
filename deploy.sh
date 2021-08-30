@@ -23,7 +23,7 @@ select_flavor() {
   printf "${green}\nPlease select your flavor, default is ${magentaBg}${white}[dev]${reset} (Press ${white}${yellowBg}enter${reset} to use the default): ${reset}"
   read value
 
-  if [ $value -eq 2 ]
+  if [ "$value" = "2" ]
   then
     flavor="prod"
   fi
