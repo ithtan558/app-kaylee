@@ -15,8 +15,11 @@ platform :ios do
   lane :dev do
     Dir.chdir('../..') do
         Dotenv.load('.env.dev')
-        sh('flutter', 'build', 'ios', '--flavor', ENV['FLAVOR'], '--target', ENV['TARGET'])
     end
+    flutter_build(
+        build: 'ios',
+        build_args: ['--flavor', ENV['FLAVOR'], '--target',ENV['TARGET']]
+    )
     build_ios_app(
         scheme: ENV['FLAVOR'],
         clean: true,
@@ -37,14 +40,17 @@ platform :ios do
   lane :prod do
     Dir.chdir('../..') do
         Dotenv.load('.env.prod')
-        sh('flutter', 'build', 'ios', '--flavor', ENV['FLAVOR'], '--target', ENV['TARGET'])
-        build_ios_app(
-            scheme: ENV['FLAVOR'],
-            clean: true,
-            output_directory: ENV['OUTPUT_DIRECTORY'],
-            xcargs: "-allowProvisioningUpdates",
-            export_method: "app-store"
-        )
     end
+    flutter_build(
+        build: 'ios',
+        build_args: ['--flavor', ENV['FLAVOR'], '--target',ENV['TARGET']]
+    )
+    build_ios_app(
+        scheme: ENV['FLAVOR'],
+        clean: true,
+        output_directory: ENV['OUTPUT_DIRECTORY'],
+        xcargs: "-allowProvisioningUpdates",
+        export_method: "app-store"
+    )
   end
 end

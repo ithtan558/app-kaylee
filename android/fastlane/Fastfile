@@ -12,8 +12,11 @@ platform :android do
   lane :dev do
     Dir.chdir('../..') do
         Dotenv.load('.env.dev')
-        sh('flutter', 'build', 'apk', '--flavor', ENV['FLAVOR'], '--target', ENV['TARGET'], '--no-shrink')
     end
+    flutter_build(
+        build: 'apk',
+        build_args: ['--flavor', ENV['FLAVOR'], '--target',ENV['TARGET'], '--no-shrink']
+    )
     firebase_app_distribution(
         app: ENV['FIREBASE_ANDROID_APP_ID'],
         firebase_cli_token: ENV['PRIVATE_FIREBASE_CLI_TOKEN'],
@@ -28,7 +31,10 @@ platform :android do
   lane :prod do
     Dir.chdir('../..') do
         Dotenv.load('.env.prod')
-        sh('flutter', 'build', 'appbundle', '--flavor', ENV['FLAVOR'], '--target', ENV['TARGET'], '--no-shrink')
     end
+    flutter_build(
+        build: 'appbundle',
+        build_args: ['--flavor', ENV['FLAVOR'], '--target', ENV['TARGET'], '--no-shrink']
+    )
   end
 end
