@@ -140,6 +140,7 @@ class _NotifyDetailScreenState extends KayleeState<NotifyDetailScreen>
                             error: Error(message: Strings.khongTimThayTrang),
                             onPressed: popScreen);
                       }
+                      return true;
                     },
                   ),
                 ],
