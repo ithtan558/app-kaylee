@@ -51,7 +51,7 @@ mixin AndroidBluetoothPrinterMixin on BluetoothPrinterMixin {
   void startConnectingBluetoothDevice() async {
     _stateChanges = -1;
     emit(PrinterDetailStateStartingConnectBluetoothDeviceProcess());
-    if (await BluetoothPrint.instance.isConnected) {
+    if ((await BluetoothPrint.instance.isConnected) ?? false) {
       return requestDisconnectingBluetoothDevice();
     }
     requestConnectingBluetoothDevice();
@@ -84,7 +84,7 @@ mixin AndroidBluetoothPrinterMixin on BluetoothPrinterMixin {
               state is! PrinterDetailStateFinishPrintingConnectionInfo;
       if (timer.tick == 3) {
         if (readyForCheckingConnection) {
-          if (await BluetoothPrint.instance.isConnected) {
+          if ((await BluetoothPrint.instance.isConnected) ?? false) {
             // print(
             //     '[TUNG] ===> _requestConnectingTimeOut connectedBluetoothDevice for first time');
             return connectedBluetoothDevice();
@@ -94,7 +94,7 @@ mixin AndroidBluetoothPrinterMixin on BluetoothPrinterMixin {
       }
       if (timer.tick == 6) {
         if (readyForCheckingConnection) {
-          if (await BluetoothPrint.instance.isConnected) {
+          if ((await BluetoothPrint.instance.isConnected) ?? false) {
             // print(
             //     '[TUNG] ===> _requestConnectingTimeOut connectedBluetoothDevice second time');
             return connectedBluetoothDevice();
@@ -129,7 +129,7 @@ mixin AndroidBluetoothPrinterMixin on BluetoothPrinterMixin {
         Timer.periodic(const Duration(seconds: 1), (timer) async {
           // print('[TUNG] ===> _requestDisconnectingTimeOut ${timer.tick}');
       if (timer.tick == 6) {
-        if (await BluetoothPrint.instance.isConnected) {
+        if ((await BluetoothPrint.instance.isConnected) ?? false) {
           // print(
           //     '[TUNG] ===> _requestDisconnectingTimeOut connectedBluetoothDevice');
           return connectedBluetoothDevice();
