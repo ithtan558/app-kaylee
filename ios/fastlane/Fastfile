@@ -1,56 +1,22 @@
 require 'dotenv'
+import('../../GeneralFastfile')
 
 default_platform(:ios)
 platform :ios do
   desc "Build an ipa"
 
   before_all do
-    Dir.chdir('../..') do
-        Dotenv.load('.env')
-        sh('flutter', 'clean')
-        sh('flutter', 'packages', 'get')
-    end
+    update_fastlane
+    clean_project
+    flutter_build
+    build_ios_and_export_ipa
   end
 
   lane :dev do
-    Dir.chdir('../..') do
-        Dotenv.load('.env.dev')
-    end
-    flutter_build(
-        build: 'ios',
-        build_args: ['--flavor', ENV['FLAVOR'], '--target',ENV['TARGET']]
-    )
-    build_ios_app(
-        scheme: ENV['FLAVOR'],
-        clean: true,
-        output_directory: ENV['OUTPUT_DIRECTORY'],
-        xcargs: "-allowProvisioningUpdates",
-        export_method: "development"
-    )
-    firebase_app_distribution(
-       app: ENV['FIREBASE_IOS_APP_ID'],
-       firebase_cli_token: ENV['PRIVATE_FIREBASE_CLI_TOKEN'],
-       ipa_path: ENV['IPA_PATH'],
-       testers_file: ENV['TESTERS_FILE'],
-       groups_file: ENV['GROUPS_FILE'],
-       release_notes_file: ENV['RELEASE_NOTES_FILE']
-    )
+    uploading_firebase_distribution
   end
 
   lane :prod do
-    Dir.chdir('../..') do
-        Dotenv.load('.env.prod')
-    end
-    flutter_build(
-        build: 'ios',
-        build_args: ['--flavor', ENV['FLAVOR'], '--target',ENV['TARGET']]
-    )
-    build_ios_app(
-        scheme: ENV['FLAVOR'],
-        clean: true,
-        output_directory: ENV['OUTPUT_DIRECTORY'],
-        xcargs: "-allowProvisioningUpdates",
-        export_method: "app-store"
-    )
+    upload_store
   end
 end

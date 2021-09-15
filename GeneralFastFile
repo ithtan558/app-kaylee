@@ -1,0 +1,68 @@
+import('../../CommonFastfile')
+import('../../NotificationFastfile')
+
+private_lane :load_env do
+    Dir.chdir('../..') do
+        Dotenv.load('.env')
+        Dotenv.load(".env.#{ENV['FASTLANE_LANE_NAME']}")
+    end
+end
+
+lane :clean_project do
+    Dir.chdir('../..') do
+        sh('flutter', 'clean')
+        sh('flutter', 'packages', 'get')
+    end
+end
+
+lane :flutter_build do
+    load_env
+    build
+end
+
+private_lane :build do
+    Dir.chdir('../..') do
+        command = ['flutter', 'build', build_type, '--flavor', flavor , '--target', ENV['TARGET']]
+        if platform_name == 'android' then
+            command << '--no-shrink'
+        end
+        sh(
+            command: command
+        )
+    end
+end
+
+private_lane :build_type do
+    platform_name == 'ios'? platform_name : flavor == 'dev'? 'apk' : 'appbundle'
+end
+
+lane :build_ios_and_export_ipa do
+    ENV['GYM_SCHEME'] = flavor
+    ENV['GYM_EXPORT_METHOD'] = ENV['GYM_SCHEME'] == 'prod' ? 'app-store' : 'development'
+    gym
+end
+
+lane :uploading_firebase_distribution do
+    if platform_name == 'ios' then
+        ENV['FIREBASEAPPDISTRO_APP'] = ENV['FIREBASE_IOS_APP_ID']
+        ENV['FIREBASEAPPDISTRO_APK_PATH'] = ''
+    elsif platform_name == 'android' then
+        ENV['FIREBASEAPPDISTRO_APP'] = ENV['FIREBASE_ANDROID_APP_ID']
+        ENV['FIREBASEAPPDISTRO_IPA_PATH'] = ''
+    end
+
+    firebase_app_distribution(
+        service_credentials_file: ENV['GOOGLE_APPLICATION_CREDENTIALS']
+    )
+    firebase_distribution_notification
+end
+
+lane :upload_store do
+    if platform_name == 'ios' then
+        supply
+    elsif platform_name == 'android' then
+        deliver
+    end
+
+    upload_store_notification
+end

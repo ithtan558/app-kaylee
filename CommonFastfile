@@ -1,0 +1,7 @@
+lane :platform_name do
+    ENV['FASTLANE_PLATFORM_NAME']
+end
+
+lane :flavor do
+    ENV['FASTLANE_LANE_NAME']
+end
