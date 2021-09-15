@@ -1,0 +1,4 @@
+Phần mềm quản lý dành cho Salon, Spa
+- Thay thế sổ tay salon
+- Đặt hàng mỹ phẩm tóc Online, tiếp cận nhanh sản phẩm
+- Cập nhật những kiến thức về Salon, Spa
