@@ -4,6 +4,7 @@ import('../../GeneralFastfile')
 default_platform(:android)
 platform :android do
   desc "build apk/aab"
+
   before_all do
     update_fastlane
     flutter_build
