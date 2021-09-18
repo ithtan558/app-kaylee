@@ -18,13 +18,13 @@ dependencies:
     sdk: flutter
 
   permission_handler: ^8.1.6
-  image_picker: ^0.8.4
+  image_picker: ^0.8.4+2
   extended_masked_text: ^2.3.1
   esc_pos_printer:
     git:
       url: https://github.com/tungpham6195/esc_pos_printer.git
       ref: 4.0.3
-  video_player: ^2.2.0
+  video_player: ^2.2.4
   chewie: ^1.2.2
   printing: ^5.6.0
   bluetooth_print:
@@ -38,7 +38,10 @@ dependencies:
     #    path: ../anth_package
     git:
       url: https://tungpham6195@bitbucket.org/anth-freelance/anth_package.git
-      ref: 1.0.1
+      ref: 1.0.3
+
+dependency_overrides:
+  provider: ^6.0.0
 
 dev_dependencies:
   flutter_test:
@@ -47,11 +50,11 @@ dev_dependencies:
     sdk: flutter
   flutter_driver:
     sdk: flutter
-  json_serializable: ^5.0.0
+  json_serializable: ^5.0.1
   build_runner: ^2.1.2
   retrofit_generator: ^2.0.1+1
   flutter_lints: ^1.0.4
-  mockito: ^5.0.15
+  mockito: ^5.0.16
   flutter_launcher_icons: ^0.9.2
 
 
