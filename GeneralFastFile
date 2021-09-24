@@ -59,10 +59,14 @@ end
 
 lane :upload_store do
     if platform_name == 'ios' then
-        supply
-    elsif platform_name == 'android' then
         deliver
+    elsif platform_name == 'android' then
+        supply
     end
 
     upload_store_notification
+end
+
+lane :update_gem do
+    sh(command: ['bundle', 'update'])
 end

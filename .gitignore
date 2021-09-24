@@ -53,5 +53,7 @@ app.*.map.json
 #fastlane
 ios/fastlane/report.xml
 ios/fastlane/README.md
+ios/Gemfile.lock
 android/fastlane/report.xml
 android/fastlane/README.md
+android/Gemfile.lock

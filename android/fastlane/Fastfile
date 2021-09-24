@@ -6,9 +6,10 @@ platform :android do
   desc "build apk/aab"
 
   before_all do
-    update_fastlane
+    update_gem
     flutter_build
   end
+
   lane :dev do
     uploading_firebase_distribution
   end
