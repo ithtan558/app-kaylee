@@ -1,5 +1,6 @@
 library services;
 
+export 'api_provider.dart';
 export 'src/advertise/advertise_api.dart';
 export 'src/brand/brand_api.dart';
 export 'src/campaign/campaign_api.dart';
