@@ -6,12 +6,11 @@ part of 'commission_detail.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-CommissionDetail _$CommissionDetailFromJson(Map<String, dynamic> json) {
-  return CommissionDetail(
-    total: json['total'] as int?,
-    commission: json['commission'] as int?,
-  );
-}
+CommissionDetail _$CommissionDetailFromJson(Map<String, dynamic> json) =>
+    CommissionDetail(
+      total: json['total'] as int?,
+      commission: json['commission'] as int?,
+    );
 
 Map<String, dynamic> _$CommissionDetailToJson(CommissionDetail instance) =>
     <String, dynamic>{

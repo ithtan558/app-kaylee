@@ -6,13 +6,11 @@ part of 'customer_type.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-CustomerType _$CustomerTypeFromJson(Map<String, dynamic> json) {
-  return CustomerType(
-    id: json['id'] as int?,
-    code: json['code'] as String?,
-    name: json['name'] as String?,
-  );
-}
+CustomerType _$CustomerTypeFromJson(Map<String, dynamic> json) => CustomerType(
+      id: json['id'] as int?,
+      code: json['code'] as String?,
+      name: json['name'] as String?,
+    );
 
 Map<String, dynamic> _$CustomerTypeToJson(CustomerType instance) =>
     <String, dynamic>{

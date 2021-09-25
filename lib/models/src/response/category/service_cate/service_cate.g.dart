@@ -6,16 +6,14 @@ part of 'service_cate.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-ServiceCate _$ServiceCateFromJson(Map<String, dynamic> json) {
-  return ServiceCate(
-    id: json['id'] as int?,
-    code: json['code'] as String?,
-    name: json['name'] as String?,
-    description: json['description'] as String?,
-    sequence: json['sequence'] as int?,
-    image: json['image'] as String?,
-  );
-}
+ServiceCate _$ServiceCateFromJson(Map<String, dynamic> json) => ServiceCate(
+      id: json['id'] as int?,
+      code: json['code'] as String?,
+      name: json['name'] as String?,
+      description: json['description'] as String?,
+      sequence: json['sequence'] as int?,
+      image: json['image'] as String?,
+    );
 
 Map<String, dynamic> _$ServiceCateToJson(ServiceCate instance) =>
     <String, dynamic>{

@@ -6,12 +6,10 @@ part of 'product_image.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-ProductImage _$ProductImageFromJson(Map<String, dynamic> json) {
-  return ProductImage(
-    type: _$enumDecodeNullable(_$ProductImageTypeEnumMap, json['type']),
-    value: json['value'] as String?,
-  );
-}
+ProductImage _$ProductImageFromJson(Map<String, dynamic> json) => ProductImage(
+      type: _$enumDecodeNullable(_$ProductImageTypeEnumMap, json['type']),
+      value: json['value'] as String?,
+    );
 
 Map<String, dynamic> _$ProductImageToJson(ProductImage instance) =>
     <String, dynamic>{

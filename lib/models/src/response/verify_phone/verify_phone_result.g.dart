@@ -6,11 +6,10 @@ part of 'verify_phone_result.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-VerifyPhoneResult _$VerifyPhoneResultFromJson(Map<String, dynamic> json) {
-  return VerifyPhoneResult(
-    userId: json['user_id'] as int?,
-  );
-}
+VerifyPhoneResult _$VerifyPhoneResultFromJson(Map<String, dynamic> json) =>
+    VerifyPhoneResult(
+      userId: json['user_id'] as int?,
+    );
 
 Map<String, dynamic> _$VerifyPhoneResultToJson(VerifyPhoneResult instance) =>
     <String, dynamic>{

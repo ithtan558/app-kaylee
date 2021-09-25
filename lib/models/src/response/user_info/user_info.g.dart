@@ -6,34 +6,32 @@ part of 'user_info.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-UserInfo _$UserInfoFromJson(Map<String, dynamic> json) {
-  return UserInfo(
-    id: json['id'] as int?,
-    brandId: json['brand_id'] as int?,
-    name: json['name'] as String?,
-    email: json['email'] as String?,
-    phone: json['phone'] as String?,
-    username: json['username'] as String?,
-    birthday: json['birthday'] as String?,
-    address: json['address'] as String?,
-    gender: json['gender'] as int?,
-    image: json['image'] as String?,
-    hometownCity: json['hometown_city'] == null
-        ? null
-        : City.fromJson(json['hometown_city'] as Map<String, dynamic>),
-    city: json['city'] == null
-        ? null
-        : City.fromJson(json['city'] as Map<String, dynamic>),
-    district: json['district'] == null
-        ? null
-        : District.fromJson(json['district'] as Map<String, dynamic>),
-    wards: json['wards'] == null
-        ? null
-        : Ward.fromJson(json['wards'] as Map<String, dynamic>),
-    role: _$enumDecodeNullable(_$UserRoleEnumMap, json['role_id'],
-        unknownValue: UserRole.employee),
-  );
-}
+UserInfo _$UserInfoFromJson(Map<String, dynamic> json) => UserInfo(
+      id: json['id'] as int?,
+      brandId: json['brand_id'] as int?,
+      name: json['name'] as String?,
+      email: json['email'] as String?,
+      phone: json['phone'] as String?,
+      username: json['username'] as String?,
+      birthday: json['birthday'] as String?,
+      address: json['address'] as String?,
+      gender: json['gender'] as int?,
+      image: json['image'] as String?,
+      hometownCity: json['hometown_city'] == null
+          ? null
+          : City.fromJson(json['hometown_city'] as Map<String, dynamic>),
+      city: json['city'] == null
+          ? null
+          : City.fromJson(json['city'] as Map<String, dynamic>),
+      district: json['district'] == null
+          ? null
+          : District.fromJson(json['district'] as Map<String, dynamic>),
+      wards: json['wards'] == null
+          ? null
+          : Ward.fromJson(json['wards'] as Map<String, dynamic>),
+      role: _$enumDecodeNullable(_$UserRoleEnumMap, json['role_id'],
+          unknownValue: UserRole.employee),
+    );
 
 Map<String, dynamic> _$UserInfoToJson(UserInfo instance) => <String, dynamic>{
       'id': instance.id,

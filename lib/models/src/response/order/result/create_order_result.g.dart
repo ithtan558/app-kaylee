@@ -6,24 +6,23 @@ part of 'create_order_result.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-CreateOrderResult _$CreateOrderResultFromJson(Map<String, dynamic> json) {
-  return CreateOrderResult(
-    clientId: json['client_id'] as int?,
-    brandId: json['brand_id'] as int?,
-    employeeId: json['employee_id'] as int?,
-    customerId: json['customer_id'] as int?,
-    orderStatusId: json['order_status_id'] as int?,
-    isPaid: json['is_paid'] as int?,
-    supplierId: json['supplier_id'] as int?,
-    name: json['name'] as String?,
-    phone: json['phone'] as String?,
-    note: json['note'] as String?,
-    amount: json['amount'] as int?,
-    discount: json['discount'] as int?,
-    createdBy: json['created_by'] as int?,
-    orderId: json['id'] as int?,
-  );
-}
+CreateOrderResult _$CreateOrderResultFromJson(Map<String, dynamic> json) =>
+    CreateOrderResult(
+      clientId: json['client_id'] as int?,
+      brandId: json['brand_id'] as int?,
+      employeeId: json['employee_id'] as int?,
+      customerId: json['customer_id'] as int?,
+      orderStatusId: json['order_status_id'] as int?,
+      isPaid: json['is_paid'] as int?,
+      supplierId: json['supplier_id'] as int?,
+      name: json['name'] as String?,
+      phone: json['phone'] as String?,
+      note: json['note'] as String?,
+      amount: json['amount'] as int?,
+      discount: json['discount'] as int?,
+      createdBy: json['created_by'] as int?,
+      orderId: json['id'] as int?,
+    );
 
 Map<String, dynamic> _$CreateOrderResultToJson(CreateOrderResult instance) =>
     <String, dynamic>{

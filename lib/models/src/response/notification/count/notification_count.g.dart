@@ -6,11 +6,10 @@ part of 'notification_count.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-NotificationCount _$NotificationCountFromJson(Map<String, dynamic> json) {
-  return NotificationCount(
-    json['count'] as int,
-  );
-}
+NotificationCount _$NotificationCountFromJson(Map<String, dynamic> json) =>
+    NotificationCount(
+      json['count'] as int,
+    );
 
 Map<String, dynamic> _$NotificationCountToJson(NotificationCount instance) =>
     <String, dynamic>{

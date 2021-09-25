@@ -48,27 +48,25 @@ Map<String, dynamic> _$CartSuppInfoToJson(CartSuppInfo instance) {
   return val;
 }
 
-CartCustomer _$CartCustomerFromJson(Map<String, dynamic> json) {
-  return CartCustomer(
-    id: json['id'] as int?,
-    name: json['name'] as String?,
-    phone: json['phone'] as String?,
-    address: json['address'] as String?,
-    hometownCity: json['hometown_city_id'] == null
-        ? null
-        : City.fromJson(json['hometown_city_id'] as Map<String, dynamic>),
-    city: json['city_id'] == null
-        ? null
-        : City.fromJson(json['city_id'] as Map<String, dynamic>),
-    district: json['district_id'] == null
-        ? null
-        : District.fromJson(json['district_id'] as Map<String, dynamic>),
-    ward: json['wards_id'] == null
-        ? null
-        : Ward.fromJson(json['wards_id'] as Map<String, dynamic>),
-    note: json['note'] as String?,
-  );
-}
+CartCustomer _$CartCustomerFromJson(Map<String, dynamic> json) => CartCustomer(
+      id: json['id'] as int?,
+      name: json['name'] as String?,
+      phone: json['phone'] as String?,
+      address: json['address'] as String?,
+      hometownCity: json['hometown_city_id'] == null
+          ? null
+          : City.fromJson(json['hometown_city_id'] as Map<String, dynamic>),
+      city: json['city_id'] == null
+          ? null
+          : City.fromJson(json['city_id'] as Map<String, dynamic>),
+      district: json['district_id'] == null
+          ? null
+          : District.fromJson(json['district_id'] as Map<String, dynamic>),
+      ward: json['wards_id'] == null
+          ? null
+          : Ward.fromJson(json['wards_id'] as Map<String, dynamic>),
+      note: json['note'] as String?,
+    );
 
 Map<String, dynamic> _$CartCustomerToJson(CartCustomer instance) {
   final val = <String, dynamic>{};

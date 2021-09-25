@@ -6,23 +6,22 @@ part of 'commission_order.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-CommissionOrder _$CommissionOrderFromJson(Map<String, dynamic> json) {
-  return CommissionOrder(
-    id: json['id'] as int?,
-    code: json['code'] as String?,
-    name: json['name'] as String?,
-    amount: json['amount'] as int?,
-    orderStatus: _$enumDecodeNullable(
-        _$OrderStatusEnumMap, json['order_status_id'],
-        unknownValue: OrderStatus.unknown),
-    createdAt: json['created_at'] == null
-        ? null
-        : DateTime.parse(json['created_at'] as String),
-    supplierName: json['supplier_name'] as String?,
-    commissionProduct: json['commission_product'] as int?,
-    commissionService: json['commission_service'] as int?,
-  );
-}
+CommissionOrder _$CommissionOrderFromJson(Map<String, dynamic> json) =>
+    CommissionOrder(
+      id: json['id'] as int?,
+      code: json['code'] as String?,
+      name: json['name'] as String?,
+      amount: json['amount'] as int?,
+      orderStatus: _$enumDecodeNullable(
+          _$OrderStatusEnumMap, json['order_status_id'],
+          unknownValue: OrderStatus.unknown),
+      createdAt: json['created_at'] == null
+          ? null
+          : DateTime.parse(json['created_at'] as String),
+      supplierName: json['supplier_name'] as String?,
+      commissionProduct: json['commission_product'] as int?,
+      commissionService: json['commission_service'] as int?,
+    );
 
 Map<String, dynamic> _$CommissionOrderToJson(CommissionOrder instance) =>
     <String, dynamic>{
