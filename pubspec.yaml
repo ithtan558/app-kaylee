@@ -20,11 +20,8 @@ dependencies:
   permission_handler: ^8.1.6
   image_picker: ^0.8.4+2
   extended_masked_text: ^2.3.1
-  esc_pos_printer:
-    git:
-      url: https://github.com/tungpham6195/esc_pos_printer.git
-      ref: 4.0.3
-  video_player: ^2.2.4
+  esc_pos_printer: ^4.1.0
+  video_player: ^2.2.5
   chewie: ^1.2.2
   printing: ^5.6.0
   bluetooth_print:
@@ -41,7 +38,7 @@ dependencies:
       ref: 1.0.3
 
 dependency_overrides:
-  provider: ^6.0.0
+  provider: ^6.0.1
 
 dev_dependencies:
   flutter_test:
@@ -56,7 +53,7 @@ dev_dependencies:
   flutter_lints: ^1.0.4
   mockito: ^5.0.16
   flutter_launcher_icons: ^0.9.2
-  flutter_native_splash: ^1.2.3
+  flutter_native_splash: ^1.2.4
 
 
 # For information on the generic Dart part of this file, see the
