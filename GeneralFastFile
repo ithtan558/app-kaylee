@@ -22,10 +22,7 @@ end
 
 private_lane :build do
     Dir.chdir('../..') do
-        command = ['flutter', 'build', build_type, '--flavor', flavor , '--target', ENV['TARGET']]
-        if platform_name == 'android' then
-            command << '--no-shrink'
-        end
+        command = ['flutter', 'build', build_type, '--flavor', flavor , '--target', ENV['TARGET'], '--obfuscate', '--split-debug-info', "#{ENV['SPLIT_DEBUG_INFOPATH']}"]
         sh(
             command: command
         )
