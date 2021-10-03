@@ -1,12 +1,11 @@
+import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
-import 'package:kaylee/res/res.dart';
 
 class KayleeGridView extends StatelessWidget {
-  static SliverGridDelegateWithFixedCrossAxisCount gridDelegate(
-          {int crossAxisCount = 3,
-          double crossAxisSpacing = Dimens.px16,
-          double mainAxisSpacing = Dimens.px16,
-          double childAspectRatio = 1}) =>
+  static SliverGridDelegateWithFixedCrossAxisCount gridDelegate({int crossAxisCount = 3,
+    double crossAxisSpacing = Dimens.px16,
+    double mainAxisSpacing = Dimens.px16,
+    double childAspectRatio = 1}) =>
       SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: crossAxisCount,
           crossAxisSpacing: crossAxisSpacing,
@@ -24,18 +23,17 @@ class KayleeGridView extends StatelessWidget {
   final double childAspectRatio;
   final WidgetBuilder? loadingBuilder;
 
-  const KayleeGridView(
-      {Key? key,
-      required this.itemBuilder,
-      this.padding,
-      this.physics,
-      this.shrinkWrap = false,
-      this.crossAxisCount,
-      this.crossAxisSpacing,
-      this.mainAxisSpacing,
-      this.childAspectRatio = 1,
-      this.itemCount,
-      this.loadingBuilder})
+  const KayleeGridView({Key? key,
+    required this.itemBuilder,
+    this.padding,
+    this.physics,
+    this.shrinkWrap = false,
+    this.crossAxisCount,
+    this.crossAxisSpacing,
+    this.mainAxisSpacing,
+    this.childAspectRatio = 1,
+    this.itemCount,
+    this.loadingBuilder})
       : super(key: key);
 
   @override

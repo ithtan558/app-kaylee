@@ -1,5 +1,5 @@
+import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
-import 'package:kaylee/res/res.dart';
 
 class Indicator extends StatefulWidget {
   final Color activeColor;
@@ -34,7 +34,7 @@ class _IndicatorState extends State<Indicator> implements _IndicatorView {
         return Padding(
           padding: EdgeInsets.only(
               right: (widget.controller.length - 1 == 0) ||
-                      index == widget.controller.length - 1
+                  index == widget.controller.length - 1
                   ? 0
                   : Dimens.px8),
           child: _buildDot(

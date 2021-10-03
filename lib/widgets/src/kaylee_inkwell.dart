@@ -1,13 +1,12 @@
+import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
-import 'package:kaylee/res/res.dart';
 
 class KayleeInkwell extends StatelessWidget {
   final Widget child;
   final VoidCallback? onTap;
   final BorderRadius? borderRadius;
 
-  const KayleeInkwell(
-      {Key? key, required this.child, this.onTap, this.borderRadius})
+  const KayleeInkwell({Key? key, required this.child, this.onTap, this.borderRadius})
       : super(key: key);
 
   @override
@@ -21,12 +20,12 @@ class KayleeInkwell extends StatelessWidget {
         Positioned.fill(
             child: Material(
               borderRadius: borderRadius ?? BorderRadius.circular(Dimens.px10),
-          color: Colors.transparent,
-          clipBehavior: Clip.antiAlias,
-          child: InkWell(
-            onTap: onTap,
-          ),
-        ))
+              color: Colors.transparent,
+              clipBehavior: Clip.antiAlias,
+              child: InkWell(
+                onTap: onTap,
+              ),
+            ))
       ],
     );
   }

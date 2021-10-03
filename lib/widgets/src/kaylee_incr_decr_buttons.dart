@@ -1,6 +1,6 @@
+import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
-import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 const int _kDefaultAmountMin = 1;
@@ -13,14 +13,13 @@ class KayleeIncrAndDecrButtons extends StatefulWidget {
   final Color? btnBgColor;
   final Color? btnIconColor;
 
-  const KayleeIncrAndDecrButtons(
-      {Key? key,
-      this.initAmount,
-      this.onAmountChange,
-      this.amountMin,
-      this.amountMax,
-      this.btnBgColor,
-      this.btnIconColor})
+  const KayleeIncrAndDecrButtons({Key? key,
+    this.initAmount,
+    this.onAmountChange,
+    this.amountMin,
+    this.amountMax,
+    this.btnBgColor,
+    this.btnIconColor})
       : super(key: key);
 
   @override
@@ -28,8 +27,7 @@ class KayleeIncrAndDecrButtons extends StatefulWidget {
       _KayleeIncrAndDecrButtonsState();
 }
 
-class _KayleeIncrAndDecrButtonsState
-    extends BaseState<KayleeIncrAndDecrButtons> {
+class _KayleeIncrAndDecrButtonsState extends BaseState<KayleeIncrAndDecrButtons> {
   int current = 1;
 
   @override

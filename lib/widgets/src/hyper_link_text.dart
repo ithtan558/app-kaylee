@@ -1,3 +1,4 @@
+import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/widgets.dart';
@@ -17,7 +18,7 @@ class HyperLinkText extends StatelessWidget {
       child: Container(
         color: Colors.transparent,
         child:
-            KayleeText(text ?? '', style: textStyle ?? TextStyles.hyper16W400),
+        KayleeText(text ?? '', style: textStyle ?? TextStyles.hyper16W400),
       ),
     );
   }

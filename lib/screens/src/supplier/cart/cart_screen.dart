@@ -1,3 +1,4 @@
+import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/app_bloc.dart';
@@ -64,12 +65,12 @@ class _CartScreenState extends BaseState<CartScreen> {
                       return buildTotalAmountInfo(cartItems);
                     },
                     separatorBuilder: (_, index) => Container(
-                          height: 1,
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: Dimens.px16),
+                      height: 1,
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: Dimens.px16),
                       decoration: const BoxDecoration(
-                              color: ColorsRes.textFieldBorder),
-                        ),
+                          color: ColorsRes.textFieldBorder),
+                    ),
                     itemCount: cartItems!.length + 1);
               },
             ),

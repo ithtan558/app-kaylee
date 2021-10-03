@@ -1,9 +1,7 @@
+import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:kaylee/res/res.dart';
-import 'package:kaylee/res/src/colors_res.dart';
-import 'package:kaylee/res/src/dimens.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class OtpInputField extends StatefulWidget {
@@ -44,10 +42,9 @@ class _OtpInputFieldState extends BaseState<OtpInputField> {
     });
   }
 
-  void validateTField(
-      TextEditingController currentTfController, FocusNode nextFocus,
+  void validateTField(TextEditingController currentTfController, FocusNode nextFocus,
       {TextEditingController? previousTfController,
-      TextEditingController? nextTfController}) {
+        TextEditingController? nextTfController}) {
     if (tfController1.text.isNotEmpty &&
         tfController2.text.isNotEmpty &&
         tfController3.text.isNotEmpty &&
@@ -123,13 +120,12 @@ class _PinTextField extends StatefulWidget {
   final VoidCallback? onComplete;
   final bool autoFocus;
 
-  const _PinTextField(
-      {this.nextFocus,
-      this.currentFocus,
-      this.textInputAction = TextInputAction.next,
-      this.tfController,
-      this.onComplete,
-      this.autoFocus = false});
+  const _PinTextField({this.nextFocus,
+    this.currentFocus,
+    this.textInputAction = TextInputAction.next,
+    this.tfController,
+    this.onComplete,
+    this.autoFocus = false});
 
   @override
   _PinTextFieldState createState() => _PinTextFieldState();
@@ -184,9 +180,9 @@ class _PinTextFieldState extends BaseState<_PinTextField> {
 //            showCursor: false,
             enableInteractiveSelection: false,
             buildCounter: (context,
-                    {required currentLength,
-                    required isFocused,
-                    required maxLength}) =>
+                {required currentLength,
+                  required isFocused,
+                  required maxLength}) =>
                 Container(),
             decoration: const InputDecoration(
               border: InputBorder.none,

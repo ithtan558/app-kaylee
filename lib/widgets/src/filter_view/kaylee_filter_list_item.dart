@@ -1,6 +1,6 @@
+import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
-import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class KayleeFilterListItem extends StatefulWidget {
@@ -8,8 +8,7 @@ class KayleeFilterListItem extends StatefulWidget {
   final void Function(bool isSelected)? onTap;
   final bool disable;
 
-  const KayleeFilterListItem(
-      {Key? key, required this.title, this.onTap, this.disable = false})
+  const KayleeFilterListItem({Key? key, required this.title, this.onTap, this.disable = false})
       : super(key: key);
 
   @override
@@ -29,10 +28,10 @@ class _KayleeFilterListItemState extends BaseState<KayleeFilterListItem> {
           ? null
           : () {
         setState(() {
-                isSelected = !isSelected;
-              });
-              widget.onTap?.call(isSelected);
-            },
+          isSelected = !isSelected;
+        });
+        widget.onTap?.call(isSelected);
+      },
       padding: const EdgeInsets.symmetric(
           horizontal: Dimens.px8, vertical: Dimens.px9),
       child: KayleeText.normal12W400(
@@ -61,7 +60,7 @@ class WrapperFilter extends StatelessWidget {
             margin: const EdgeInsets.only(bottom: 16),
             child: Text(title!,
                 style:
-                    isAll ? TextStyles.normal16W500 : TextStyles.normal12W400),
+                isAll ? TextStyles.normal16W500 : TextStyles.normal12W400),
           ),
         Wrap(
           direction: Axis.horizontal,

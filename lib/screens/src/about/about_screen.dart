@@ -1,3 +1,4 @@
+import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
@@ -33,7 +34,7 @@ class _AboutScreenState extends BaseState<AboutScreen> {
       ),
       body: FutureBuilder<PackageInfo>(
           future:
-              PackageInfo.fromPlatform().timeout(const Duration(seconds: 1)),
+          PackageInfo.fromPlatform().timeout(const Duration(seconds: 1)),
           builder: (context, snapshot) {
             final packageInfo = snapshot.data;
             final appName = packageInfo?.appName ?? '';

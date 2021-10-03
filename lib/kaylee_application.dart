@@ -230,7 +230,9 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
           scaffoldBackgroundColor: ColorsRes.background,
           visualDensity: VisualDensity.adaptivePlatformDensity,
           fontFamily: Fonts.helveticaNeue,
-          accentColor: ColorsRes.color1,
+          colorScheme: context.theme.colorScheme.copyWith(
+            secondary: ColorsRes.color1,
+          ),
           pageTransitionsTheme: const PageTransitionsTheme(builders: {
             TargetPlatform.android: CupertinoPageTransitionsBuilder(),
             TargetPlatform.iOS: CupertinoPageTransitionsBuilder()

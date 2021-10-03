@@ -1,14 +1,13 @@
+import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/models/models.dart';
-import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class SelectCustomerItem extends StatelessWidget {
   final Customer customer;
   final VoidCallback onSelect;
 
-  const SelectCustomerItem(
-      {Key? key, required this.customer, required this.onSelect})
+  const SelectCustomerItem({Key? key, required this.customer, required this.onSelect})
       : super(key: key);
 
   @override

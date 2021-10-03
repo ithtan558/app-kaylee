@@ -1,3 +1,4 @@
+import 'package:anth_package/anth_package.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
@@ -8,11 +9,11 @@ class OrderProdItem extends KayleeCartProdItem {
 
   OrderProdItem({Key? key, required this.orderItem})
       : super(
-          name: orderItem.name,
-          amount: orderItem.total,
-          quantity: orderItem.quantity,
-          key: key,
-        );
+    name: orderItem.name,
+    amount: orderItem.total,
+    quantity: orderItem.quantity,
+    key: key,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +21,9 @@ class OrderProdItem extends KayleeCartProdItem {
       decoration: const BoxDecoration(
           border: Border(
               bottom: BorderSide(
-        color: ColorsRes.textFieldBorder,
-        width: Dimens.px1,
-      ))),
+                color: ColorsRes.textFieldBorder,
+                width: Dimens.px1,
+              ))),
       margin: const EdgeInsets.symmetric(horizontal: Dimens.px16),
       child: super.build(context),
     );

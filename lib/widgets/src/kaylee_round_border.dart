@@ -1,17 +1,16 @@
+import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
-import 'package:kaylee/res/res.dart';
 
 class KayleeRoundBorder extends StatelessWidget {
-  factory KayleeRoundBorder.hyper(
-          {BorderRadius? borderRadius,
-          double? borderWidth,
-          EdgeInsets? padding,
-          Widget? child,
-          double? width,
-          double? height,
-          Color? bgColor,
-          Alignment? alignment,
-          VoidCallback? onTap}) =>
+  factory KayleeRoundBorder.hyper({BorderRadius? borderRadius,
+    double? borderWidth,
+    EdgeInsets? padding,
+    Widget? child,
+    double? width,
+    double? height,
+    Color? bgColor,
+    Alignment? alignment,
+    VoidCallback? onTap}) =>
       KayleeRoundBorder(
         borderRadius: borderRadius,
         borderColor: ColorsRes.hyper,
@@ -25,16 +24,15 @@ class KayleeRoundBorder extends StatelessWidget {
         onTap: onTap,
       );
 
-  factory KayleeRoundBorder.normal(
-          {BorderRadius? borderRadius,
-          double? borderWidth,
-          EdgeInsets? padding,
-          Widget? child,
-          double? width,
-          double? height,
-          Color? bgColor,
-          Alignment? alignment,
-          VoidCallback? onTap}) =>
+  factory KayleeRoundBorder.normal({BorderRadius? borderRadius,
+    double? borderWidth,
+    EdgeInsets? padding,
+    Widget? child,
+    double? width,
+    double? height,
+    Color? bgColor,
+    Alignment? alignment,
+    VoidCallback? onTap}) =>
       KayleeRoundBorder(
         borderRadius: borderRadius,
         borderColor: ColorsRes.textFieldBorder,
@@ -59,18 +57,17 @@ class KayleeRoundBorder extends StatelessWidget {
   final Color? bgColor;
   final Alignment? alignment;
 
-  const KayleeRoundBorder(
-      {Key? key,
-      this.borderRadius,
-      this.borderWidth,
-      this.borderColor,
-      this.onTap,
-      this.padding,
-      this.child,
-      this.width,
-      this.height,
-      this.bgColor,
-      this.alignment})
+  const KayleeRoundBorder({Key? key,
+    this.borderRadius,
+    this.borderWidth,
+    this.borderColor,
+    this.onTap,
+    this.padding,
+    this.child,
+    this.width,
+    this.height,
+    this.bgColor,
+    this.alignment})
       : super(key: key);
 
   @override

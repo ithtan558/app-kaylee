@@ -1,3 +1,4 @@
+import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +35,7 @@ class _FilterButtonState<T extends Filter> extends BaseState<FilterButton<T>> {
           ? Images.icSearch
           : Images.icSearchActive,
       iconColor:
-          (widget.controller?.isEmptyFilter ?? true) ? null : ColorsRes.hyper,
+      (widget.controller?.isEmptyFilter ?? true) ? null : ColorsRes.hyper,
       onTap: () {
         Navigator.push<Bundle>(
           context,

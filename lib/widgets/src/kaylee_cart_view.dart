@@ -1,13 +1,12 @@
+import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
-import 'package:kaylee/res/res.dart';
 
 class KayleeCartView extends StatelessWidget {
   final Widget child;
   final double? itemHeight;
   final BorderRadius? borderRadius;
 
-  const KayleeCartView(
-      {Key? key, required this.child, this.itemHeight, this.borderRadius})
+  const KayleeCartView({Key? key, required this.child, this.itemHeight, this.borderRadius})
       : super(key: key);
 
   @override

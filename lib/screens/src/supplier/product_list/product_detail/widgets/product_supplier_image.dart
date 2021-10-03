@@ -1,13 +1,12 @@
+import 'package:anth_package/anth_package.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/models/models.dart';
-import 'package:kaylee/res/res.dart';
 
 class ProductSupplierImage extends StatelessWidget {
   final ProductImage image;
 
-  const ProductSupplierImage(
-    this.image, {
+  const ProductSupplierImage(this.image, {
     Key? key,
   }) : super(key: key);
 

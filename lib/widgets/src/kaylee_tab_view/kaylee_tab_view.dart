@@ -1,3 +1,4 @@
+import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
@@ -10,13 +11,12 @@ class KayleeTabView extends StatefulWidget {
   final Widget? pageView;
   final Color? bgColor;
 
-  const KayleeTabView(
-      {Key? key,
-      this.appBar,
-      this.tabBar,
-      this.floatingActionButton,
-      this.pageView,
-      this.bgColor})
+  const KayleeTabView({Key? key,
+    this.appBar,
+    this.tabBar,
+    this.floatingActionButton,
+    this.pageView,
+    this.bgColor})
       : super(key: key);
 
   @override
@@ -50,20 +50,20 @@ class _KayleeTabViewState extends BaseState<KayleeTabView>
             ),
           Expanded(
               child: Stack(
-            children: [
-              Positioned.fill(
-                child: widget.pageView ??
-                    Container(
-                      color: Colors.transparent,
-                    ),
-              ),
-              Positioned(
-                child: widget.floatingActionButton ?? Container(),
-                right: Dimens.px24,
-                bottom: Dimens.px24,
-              ),
-            ],
-          ))
+                children: [
+                  Positioned.fill(
+                    child: widget.pageView ??
+                        Container(
+                          color: Colors.transparent,
+                        ),
+                  ),
+                  Positioned(
+                    child: widget.floatingActionButton ?? Container(),
+                    right: Dimens.px24,
+                    bottom: Dimens.px24,
+                  ),
+                ],
+              ))
         ],
       ),
     );
@@ -111,13 +111,12 @@ class _KayleeTabBarState extends BaseState<KayleeTabBar> {
         width: Dimens.px16,
       ),
       padding:
-          widget.padding ?? const EdgeInsets.symmetric(horizontal: Dimens.px16),
+      widget.padding ?? const EdgeInsets.symmetric(horizontal: Dimens.px16),
       itemCount: widget.itemCount,
     );
   }
 
-  Widget buildTabItem(
-      {String? title, bool isSelected = false, VoidCallback? onTap}) {
+  Widget buildTabItem({String? title, bool isSelected = false, VoidCallback? onTap}) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -131,15 +130,15 @@ class _KayleeTabBarState extends BaseState<KayleeTabBar> {
         alignment: Alignment.center,
         child: isSelected
             ? KayleeText.hyper16W400(
-                title ?? '',
-                overflow: TextOverflow.visible,
-                textAlign: TextAlign.center,
-              )
+          title ?? '',
+          overflow: TextOverflow.visible,
+          textAlign: TextAlign.center,
+        )
             : KayleeText.normal16W400(
-                title ?? '',
-                overflow: TextOverflow.visible,
-                textAlign: TextAlign.center,
-              ),
+          title ?? '',
+          overflow: TextOverflow.visible,
+          textAlign: TextAlign.center,
+        ),
       ),
     );
   }
@@ -150,8 +149,7 @@ class KayleePageView extends StatefulWidget {
   final IndexedWidgetBuilder itemBuilder;
   final PageController? controller;
 
-  const KayleePageView(
-      {Key? key, this.itemCount, required this.itemBuilder, this.controller})
+  const KayleePageView({Key? key, this.itemCount, required this.itemBuilder, this.controller})
       : super(key: key);
 
   @override

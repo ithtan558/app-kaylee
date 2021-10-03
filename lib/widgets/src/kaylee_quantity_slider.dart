@@ -1,5 +1,5 @@
+import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
-import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class KayleeQuantitySlider extends StatefulWidget {
@@ -58,7 +58,7 @@ class _KayleeQuantitySliderState extends State<KayleeQuantitySlider> {
                   min: minQuantity.toDouble(),
                   max: maxQuantity.toDouble(),
                   value:
-                      (widget.controller?.quantity ?? minQuantity).toDouble(),
+                  (widget.controller?.quantity ?? minQuantity).toDouble(),
                 ),
               ),
             ),

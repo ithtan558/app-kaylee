@@ -1,3 +1,4 @@
+import 'package:anth_package/anth_package.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
@@ -11,12 +12,11 @@ class KayleeDismissible extends StatelessWidget {
   final AsyncValueGetter<bool>? confirmDismiss;
   final Widget? secondaryBackground;
 
-  const KayleeDismissible(
-      {required Key key,
-      required this.child,
-      this.onDismissed,
-      this.confirmDismiss,
-      this.secondaryBackground})
+  const KayleeDismissible({required Key key,
+    required this.child,
+    this.onDismissed,
+    this.confirmDismiss,
+    this.secondaryBackground})
       : super(key: key);
 
   ///delete icon without text

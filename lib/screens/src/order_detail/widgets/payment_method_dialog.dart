@@ -1,3 +1,4 @@
+import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/models/models.dart';
@@ -5,9 +6,8 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class PaymentMethodDialog extends StatefulWidget {
-  static Widget newInstance(
-          {required VoidCallback onConfirm,
-          required OrderRequest orderRequest}) =>
+  static Widget newInstance({required VoidCallback onConfirm,
+    required OrderRequest orderRequest}) =>
       PaymentMethodDialog._(
         onConfirm: onConfirm,
         orderRequest: orderRequest,
@@ -15,8 +15,7 @@ class PaymentMethodDialog extends StatefulWidget {
   final VoidCallback onConfirm;
   final OrderRequest orderRequest;
 
-  const PaymentMethodDialog._(
-      {required this.onConfirm, required this.orderRequest});
+  const PaymentMethodDialog._({required this.onConfirm, required this.orderRequest});
 
   @override
   _PaymentMethodDialogState createState() => _PaymentMethodDialogState();
@@ -50,43 +49,43 @@ class _PaymentMethodDialogState extends KayleeState<PaymentMethodDialog> {
           ),
           Expanded(
               child: SingleChildScrollView(
-            child: Column(
-              children: [
-                _ExpandView(
-                  title: Strings.tienMat,
-                  imageOfPaymentMethod: Images.icCash,
-                  expand: KayleeTextField.staticPrice(
-                    title: Strings.soTien,
-                    initPrice: summary,
-                  ),
+                child: Column(
+                  children: [
+                    _ExpandView(
+                      title: Strings.tienMat,
+                      imageOfPaymentMethod: Images.icCash,
+                      expand: KayleeTextField.staticPrice(
+                        title: Strings.soTien,
+                        initPrice: summary,
+                      ),
+                    ),
+                    Container(
+                      color: ColorsRes.textFieldBorder,
+                      height: Dimens.px1,
+                    ),
+                    const _ExpandView(
+                      title: Strings.theTinDung,
+                      imageOfPaymentMethod: Images.icCard,
+                    ),
+                    Container(
+                      color: ColorsRes.textFieldBorder,
+                      height: Dimens.px1,
+                    ),
+                    const _ExpandView(
+                      title: Strings.theAtm,
+                      imageOfPaymentMethod: Images.icCard,
+                    ),
+                    Container(
+                      color: ColorsRes.textFieldBorder,
+                      height: Dimens.px1,
+                    ),
+                    const _ExpandView(
+                      title: Strings.viMomo,
+                      imageOfPaymentMethod: Images.icMomo,
+                    ),
+                  ],
                 ),
-                Container(
-                  color: ColorsRes.textFieldBorder,
-                  height: Dimens.px1,
-                ),
-                const _ExpandView(
-                  title: Strings.theTinDung,
-                  imageOfPaymentMethod: Images.icCard,
-                ),
-                Container(
-                  color: ColorsRes.textFieldBorder,
-                  height: Dimens.px1,
-                ),
-                const _ExpandView(
-                  title: Strings.theAtm,
-                  imageOfPaymentMethod: Images.icCard,
-                ),
-                Container(
-                  color: ColorsRes.textFieldBorder,
-                  height: Dimens.px1,
-                ),
-                const _ExpandView(
-                  title: Strings.viMomo,
-                  imageOfPaymentMethod: Images.icMomo,
-                ),
-              ],
-            ),
-          )),
+              )),
           Container(
             color: ColorsRes.textFieldBorder,
             height: Dimens.px1,
@@ -128,8 +127,7 @@ class _ExpandView extends StatefulWidget {
   final String title;
   final Widget? expand;
 
-  const _ExpandView(
-      {required this.imageOfPaymentMethod, required this.title, this.expand});
+  const _ExpandView({required this.imageOfPaymentMethod, required this.title, this.expand});
 
   @override
   _ExpandViewState createState() => _ExpandViewState();
@@ -161,10 +159,10 @@ class _ExpandViewState extends KayleeState<_ExpandView> {
                 child: InkWell(
                   onTap: widget.expand != null
                       ? () {
-                          setState(() {
-                            expanded = !expanded;
-                          });
-                        }
+                    setState(() {
+                      expanded = !expanded;
+                    });
+                  }
                       : null,
                   customBorder: const CircleBorder(),
                   child: Center(

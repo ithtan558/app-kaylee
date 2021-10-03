@@ -5,8 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kaylee/res/res.dart';
-import 'package:kaylee/res/src/colors_res.dart';
-import 'package:kaylee/res/src/dimens.dart';
 import 'package:kaylee/res/src/images.dart';
 import 'package:kaylee/res/src/strings.dart';
 import 'package:kaylee/widgets/widgets.dart';

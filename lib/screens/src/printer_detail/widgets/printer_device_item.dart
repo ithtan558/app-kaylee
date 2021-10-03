@@ -1,6 +1,6 @@
+import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/components/components.dart';
-import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class PrinterDeviceItem extends StatelessWidget {
@@ -34,7 +34,7 @@ class PrinterDeviceItem extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: Dimens.px8),
                       child:
-                          KayleeText.normal16W400(device.deviceAddress ?? ''),
+                      KayleeText.normal16W400(device.deviceAddress ?? ''),
                     ),
                   ],
                 ),

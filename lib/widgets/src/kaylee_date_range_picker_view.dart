@@ -1,3 +1,4 @@
+import 'package:anth_package/anth_package.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
@@ -62,12 +63,11 @@ class KayleeDateRangePickerView extends StatefulWidget {
   final DateTimeRange selectedRange;
   final DateRangeValueType? selectedType;
 
-  const KayleeDateRangePickerView(
-      {Key? key,
-      required this.selectedRange,
-      this.onSelectByDate,
-      this.onSelectByType,
-      this.selectedType})
+  const KayleeDateRangePickerView({Key? key,
+    required this.selectedRange,
+    this.onSelectByDate,
+    this.onSelectByType,
+    this.selectedType})
       : super(key: key);
 
   @override
@@ -75,8 +75,7 @@ class KayleeDateRangePickerView extends StatefulWidget {
       _KayleeDateRangePickerViewState();
 }
 
-class _KayleeDateRangePickerViewState
-    extends KayleeState<KayleeDateRangePickerView> {
+class _KayleeDateRangePickerViewState extends KayleeState<KayleeDateRangePickerView> {
   DateRangeValueType? rangeValueType;
   late DateTimeRange dateRange;
   DateTime? selectedStartDate;
@@ -134,8 +133,8 @@ class _KayleeDateRangePickerViewState
                             selected: rangeValueType == item);
                       },
                       separatorBuilder: (context, index) => const SizedBox(
-                            width: Dimens.px16,
-                          ),
+                        width: Dimens.px16,
+                      ),
                       itemCount: DateRangeValueType.values.length),
                 ),
               ),
@@ -187,8 +186,8 @@ class _KayleeDateRangePickerViewState
                         onDone: () {
                           if (selectedEndDate != null) {
                             if (selectedEndDate!
-                                    .difference(dateRange.start)
-                                    .inDays <
+                                .difference(dateRange.start)
+                                .inDays <
                                 0) {
                               dateRange = DateTimeRange(
                                   start: selectedEndDate!,
@@ -221,9 +220,9 @@ class _KayleeDateRangePickerViewState
           decoration: const BoxDecoration(
               border: Border(
                   top: BorderSide(
-            color: ColorsRes.divider,
-            width: Dimens.px1,
-          ))),
+                    color: ColorsRes.divider,
+                    width: Dimens.px1,
+                  ))),
           padding: const EdgeInsets.all(Dimens.px16),
           child: Row(
             children: [
@@ -263,33 +262,32 @@ class _KayleeDateRangePickerViewState
     });
   }
 
-  Widget _buildTag(
-      {required String title,
-      required VoidCallback onTap,
-      bool selected = false}) {
+  Widget _buildTag({required String title,
+    required VoidCallback onTap,
+    bool selected = false}) {
     return selected
         ? KayleeRoundBorder.hyper(
-            borderWidth: Dimens.px2,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: KayleeText.normal12W400(
-                title,
-                maxLines: 1,
-              ),
-            ),
-            onTap: onTap,
-          )
+      borderWidth: Dimens.px2,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: KayleeText.normal12W400(
+          title,
+          maxLines: 1,
+        ),
+      ),
+      onTap: onTap,
+    )
         : KayleeRoundBorder(
-            borderColor: ColorsRes.textFieldBorder,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: KayleeText.normal12W400(
-                title,
-                maxLines: 1,
-              ),
-            ),
-            onTap: onTap,
-          );
+      borderColor: ColorsRes.textFieldBorder,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: KayleeText.normal12W400(
+          title,
+          maxLines: 1,
+        ),
+      ),
+      onTap: onTap,
+    );
   }
 
   Widget _buildPicker({DateTime? date, VoidCallback? onTap}) {

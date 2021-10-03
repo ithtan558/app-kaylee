@@ -2,8 +2,6 @@ import 'package:anth_package/anth_package.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
-import 'package:kaylee/res/src/colors_res.dart';
-import 'package:kaylee/res/src/text_styles.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class KayleeAppBar extends StatelessWidget implements PreferredSizeWidget {
