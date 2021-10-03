@@ -30,12 +30,12 @@ dependencies:
       url: https://github.com/tungpham6195/bluetooth_print.git
       ref: 3.0.3
   app_settings: ^4.1.1
-  firebase_remote_config: ^0.11.0
+  firebase_remote_config: ^0.11.0+1
   anth_package:
-    #    path: ../anth_package
-    git:
-      url: https://tungpham6195@bitbucket.org/anth-freelance/anth_package.git
-      ref: 1.0.3
+    path: ../anth_package
+#    git:
+#      url: https://tungpham6195@bitbucket.org/anth-freelance/anth_package.git
+#      ref: 1.0.3
 
 dependency_overrides:
   provider: ^6.0.1
@@ -48,7 +48,7 @@ dev_dependencies:
   flutter_driver:
     sdk: flutter
   json_serializable: ^5.0.2
-  build_runner: ^2.1.2
+  build_runner: ^2.1.4
   retrofit_generator: ^2.0.1+1
   flutter_lints: ^1.0.4
   mockito: ^5.0.16
