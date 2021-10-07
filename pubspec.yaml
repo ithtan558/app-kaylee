@@ -100,15 +100,15 @@ flutter:
   fonts:
     - family: HelveticaNeue
       fonts:
-        - asset: fonts/helveticaneue.ttf
+        - asset: packages/anth_package/fonts/helveticaneue.ttf
           weight: 400
-        - asset: fonts/helveticaneuemedium.ttf
+        - asset: packages/anth_package/fonts/helveticaneuemedium.ttf
           weight: 500
-        - asset: fonts/helveticaneuebold.ttf
+        - asset: packages/anth_package/fonts/helveticaneuebold.ttf
           weight: 700
     - family: SFProText
       fonts:
-        - asset: fonts/SFProText-Regular.ttf
+        - asset: packages/anth_package/fonts/SFProText-Regular.ttf
           weight: 400
   assets:
     - assets/
