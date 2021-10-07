@@ -237,13 +237,10 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
             TargetPlatform.android: CupertinoPageTransitionsBuilder(),
             TargetPlatform.iOS: CupertinoPageTransitionsBuilder()
           }),
-          textTheme: context.theme.textTheme
-            ..bodyText2
-                ?.copyWith(
-                    fontFamily: Fonts.helveticaNeue,
-                    fontStyle: FontStyle.normal,
-                    letterSpacing: 0)
-                .merge(TextStyles.normal16W400),
+          textTheme: context.theme.textTheme.copyWith(
+            bodyText2: TextStyles.normal16W400
+                .copyWith(fontStyle: FontStyle.normal, letterSpacing: 0),
+          ),
         ),
       ),
     );
