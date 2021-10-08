@@ -112,4 +112,3 @@ flutter:
           weight: 400
   assets:
     - assets/
-    - fonts/

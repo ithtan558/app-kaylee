@@ -40,7 +40,7 @@ class PdfModule {
   }
 
   static Future<Map<FontsStyle, ByteData>> loadFonts() async {
-    const path = 'fonts/';
+    const path = 'packages/anth_package/receipt_fonts/';
     final normal = await rootBundle.load(path + 'Roboto-Regular.ttf');
     final normalItalic = await rootBundle.load(path + 'Roboto-Italic.ttf');
     final medium = await rootBundle.load(path + 'Roboto-Medium.ttf');
