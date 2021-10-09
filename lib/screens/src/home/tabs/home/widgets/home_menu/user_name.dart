@@ -6,7 +6,6 @@ import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/home_menu.dart';
 import 'package:kaylee/utils/utils.dart';
-import 'package:kaylee/widgets/widgets.dart';
 
 class UserName extends StatefulWidget {
   const UserName({Key? key}) : super(key: key);

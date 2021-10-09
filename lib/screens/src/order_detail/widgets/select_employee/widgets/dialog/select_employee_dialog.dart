@@ -7,7 +7,6 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/order_detail/widgets/select_employee/widgets/dialog/bloc/select_employee_bloc.dart';
 import 'package:kaylee/screens/src/order_detail/widgets/select_employee/widgets/dialog/widgets/select_employee_item.dart';
 import 'package:kaylee/utils/utils.dart';
-import 'package:kaylee/widgets/src/kaylee_text.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class SelectEmployeeDialog extends StatefulWidget {

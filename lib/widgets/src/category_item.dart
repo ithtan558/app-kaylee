@@ -1,6 +1,5 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
-import 'package:kaylee/widgets/src/kaylee_text.dart';
 
 class CategoryItem extends StatelessWidget {
   final int? index;

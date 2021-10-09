@@ -3,7 +3,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/screens/screens.dart';
-import 'package:kaylee/widgets/widgets.dart';
 
 class SupplierItem extends StatelessWidget {
   final Supplier supplier;
