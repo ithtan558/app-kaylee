@@ -1,4 +1,5 @@
 import 'package:anth_package/anth_package.dart';
+import 'package:anth_package/src/widgets/otp_input_field.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
@@ -9,7 +10,6 @@ import 'package:kaylee/res/src/strings.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/reset_pass/blocs/send_otp_bloc.dart';
 import 'package:kaylee/utils/utils.dart';
-import 'package:kaylee/widgets/src/otp_input_field.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 import 'bloc/otp_verify_bloc.dart';
