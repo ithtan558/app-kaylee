@@ -1,6 +1,5 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
-import 'package:kaylee/res/res.dart';
 
 class HomeMenuItem extends StatelessWidget {
   final VoidCallback onTap;
