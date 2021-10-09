@@ -1,7 +1,6 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class KayleeAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -90,10 +89,9 @@ class KayleeAppBar extends StatelessWidget implements PreferredSizeWidget {
 }
 
 class KayleeAppBarAction extends StatelessWidget {
-  factory KayleeAppBarAction.hyperText(
-          {required String title, VoidCallback? onTap}) =>
-      KayleeAppBarAction(
-        child: InkWell(
+  KayleeAppBarAction.hyperText(
+      {Key? key, required String title, VoidCallback? onTap})
+      : child = InkWell(
           onTap: onTap,
           customBorder: const CircleBorder(),
           child: Padding(
@@ -106,12 +104,11 @@ class KayleeAppBarAction extends StatelessWidget {
             ),
           ),
         ),
-      );
+        super(key: key);
 
-  factory KayleeAppBarAction.button(
-          {required Widget child, VoidCallback? onTap}) =>
-      KayleeAppBarAction(
-        child: SizedBox(
+  KayleeAppBarAction.button(
+      {Key? key, required Widget child, VoidCallback? onTap})
+      : child = SizedBox(
           height: kToolbarHeight,
           width: kToolbarHeight,
           child: InkWell(
@@ -122,12 +119,15 @@ class KayleeAppBarAction extends StatelessWidget {
             ),
           ),
         ),
-      );
+        super(key: key);
 
-  factory KayleeAppBarAction.iconButton(
-          {required String icon, Color? iconColor, VoidCallback? onTap}) =>
-      KayleeAppBarAction(
-        child: SizedBox(
+  KayleeAppBarAction.iconButton({
+    Key? key,
+    required String icon,
+    Color? iconColor,
+    VoidCallback? onTap,
+    double size = Dimens.px20,
+  })  : child = SizedBox(
           height: kToolbarHeight,
           width: kToolbarHeight,
           child: InkWell(
@@ -137,12 +137,12 @@ class KayleeAppBarAction extends StatelessWidget {
               child: ImageIcon(
                 AssetImage(icon),
                 color: iconColor ?? ColorsRes.hintText,
-                size: Dimens.px20,
+                size: size,
               ),
             ),
           ),
         ),
-      );
+        super(key: key);
 
   final Widget? child;
 
