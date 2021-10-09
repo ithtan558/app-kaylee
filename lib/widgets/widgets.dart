@@ -33,7 +33,6 @@ export 'src/kaylee_horizontal_divider.dart';
 export 'src/kaylee_image_info_layout.dart';
 export 'src/kaylee_image_picker.dart';
 export 'src/kaylee_incr_decr_buttons.dart';
-export 'src/kaylee_inkwell.dart';
 export 'src/kaylee_list_view.dart';
 export 'src/kaylee_loading_indicator.dart';
 export 'src/kaylee_loadmore_handler.dart';
