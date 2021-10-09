@@ -189,7 +189,7 @@ class _PrintBillDialogState extends KayleeState<PrintBillDialog> {
                                     text: Strings.print,
                                     onPressed: () async {
                                       //print with bluetooth
-                                      return getPdfRasterForRol57(
+                                      return getPdfRasterForRoll57(
                                         data: snapshot.data!.save(),
                                         onPrint: (data) async {
                                           _data = data;
@@ -225,7 +225,7 @@ class _PrintBillDialogState extends KayleeState<PrintBillDialog> {
         if (snapshot.hasData) {
           //print with wifi
           showLoading();
-          return getPdfRasterForRol80(
+          return getPdfRasterForRoll80(
             data: snapshot.data!.save(),
             onPrint: (data) async {
               await PrinterModule.connectPrinter(context,

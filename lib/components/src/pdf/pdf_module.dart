@@ -1,17 +1,13 @@
 import 'dart:async';
 import 'dart:typed_data';
-import 'dart:ui' as ui;
 
 import 'package:anth_package/anth_package.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:image/image.dart' as image;
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/utils/utils.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
-import 'package:printing/printing.dart';
 
 class PdfModule {
   static Future<Document> generateDocument({double ratio = 1}) async {
@@ -383,55 +379,3 @@ class PdfModule {
 }
 
 enum FontsStyle { normal, normalItalic, medium, mediumItalic, bold, boldItalic }
-
-void getPdfRaster(
-    {required Future<Uint8List> data,
-    required double dpi,
-    required ValueSetter<Uint8List?> onPrint}) async {
-  final raster = Printing.raster(
-    await data,
-    dpi: dpi,
-  );
-
-  await for (var page in raster) {
-    ui.Image image = await page.toImage(); // ...or page.toPng()
-    final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-    onPrint.call((byteData?.buffer)?.asUint8List());
-  }
-}
-
-///get raster cho khổ 57
-void getPdfRasterForRol57(
-    {required Future<Uint8List> data,
-    required ValueSetter<Uint8List> onPrint}) {
-  return getPdfRaster(
-      data: data,
-      dpi: 300,
-      onPrint: (value) {
-        if (value != null) {
-          final decodedImage = image.decodeImage(value);
-          if (decodedImage != null) {
-            final jpgEncoded = image.encodeJpg(decodedImage);
-            onPrint.call(Uint8List.fromList(jpgEncoded));
-          }
-        }
-      });
-}
-
-///get raster cho khổ 80
-void getPdfRasterForRol80(
-    {required Future<Uint8List> data,
-    required ValueSetter<image.Image> onPrint}) {
-  return getPdfRaster(
-    data: data,
-    dpi: 50,
-    onPrint: (value) {
-      if (value != null) {
-        final decodedImage = image.decodeImage(value);
-        if (decodedImage != null) {
-          onPrint.call(decodedImage);
-        }
-      }
-    },
-  );
-}
