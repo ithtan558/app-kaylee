@@ -1,12 +1,12 @@
 library widgets;
 
 import 'package:anth_package/anth_package.dart';
+import 'package:anth_package/src/widgets/hyper_link_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/res/src/strings.dart';
 import 'package:kaylee/screens/screens.dart';
-import 'package:kaylee/widgets/src/hyper_link_text.dart';
 
 export 'src/brand_select_textfield/brand_select_textfield.dart';
 export 'src/category_item.dart';
@@ -14,7 +14,6 @@ export 'src/dialog/request_setting/request_setting_dialog.dart';
 export 'src/filter_button/filter_button.dart';
 export 'src/filter_view/kaylee_filter_list_item.dart';
 export 'src/filter_view/kaylee_filter_view.dart';
-export 'src/hyper_link_text.dart';
 export 'src/kaylee_appbar.dart';
 export 'src/kaylee_bottom_bar.dart';
 export 'src/kaylee_cart_prod_item/kaylee_cart_prod_item.dart';
@@ -43,7 +42,6 @@ export 'src/kaylee_scrollview.dart';
 export 'src/kaylee_tab_view/kaylee_tab_view.dart';
 export 'src/kaylee_text.dart';
 export 'src/kaylee_text_field.dart';
-export 'src/label_divider_view.dart';
 export 'src/policy_checkbox.dart';
 export 'src/print_bill_dialog/print_bill_dialog.dart';
 export 'src/radio/radio_active_icon.dart';
