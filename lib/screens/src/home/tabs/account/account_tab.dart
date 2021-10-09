@@ -9,7 +9,6 @@ import 'package:kaylee/screens/src/about/about_screen.dart';
 import 'package:kaylee/screens/src/home/tabs/account/widgets/profile_widget.dart';
 import 'package:kaylee/screens/src/notification/list/notification_screen.dart';
 import 'package:kaylee/utils/utils.dart';
-import 'package:kaylee/widgets/widgets.dart';
 
 class AccountTab extends StatefulWidget {
   static Widget newInstance() => const AccountTab();
