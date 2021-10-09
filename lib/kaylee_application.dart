@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:anth_package/anth_package.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -27,12 +28,19 @@ import 'package:kaylee/utils/utils.dart';
 
 GetIt locator = GetIt.I;
 
+Future<void> initialize() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+}
+
+Widget initializeApplication(ApplicationConfig applicationConfig) {
+  return KayLeeApplication.newInstance(appConfig: applicationConfig);
+}
+
 class KayLeeApplication extends StatefulWidget {
   static Widget newInstance({required ApplicationConfig appConfig}) {
     JsonConverterBuilder.init(KayleeJsonConverter());
-    locator.registerSingleton<KayleeNetwork>(KayleeNetwork());
-    locator
-        .registerFactory<ApiProvider>(() => ApiProviderImpl(locator.network));
+    _registerServices();
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider<RepositoriesModule>(
@@ -245,4 +253,10 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
       ),
     );
   }
+}
+
+void _registerServices() {
+  locator.registerSingleton<KayleeNetwork>(KayleeNetwork());
+  locator.registerFactory<ApiProvider>(() => ApiProviderImpl(locator.network));
+  locator.registerFactory<ReceiptDocument>(() => PdfDocument());
 }
