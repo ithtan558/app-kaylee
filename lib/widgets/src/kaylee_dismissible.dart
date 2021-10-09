@@ -2,7 +2,6 @@ import 'package:anth_package/anth_package.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/res/res.dart';
-import 'package:kaylee/widgets/widgets.dart';
 
 class KayleeDismissible extends StatelessWidget {
   final Widget child;
