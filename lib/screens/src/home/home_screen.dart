@@ -8,6 +8,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/base/reload_bloc.dart';
 import 'package:kaylee/models/models.dart';
+import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/home/tabs/account/account_tab.dart';
 import 'package:kaylee/screens/src/home/tabs/cashier/cashier_tab.dart';
@@ -15,7 +16,6 @@ import 'package:kaylee/screens/src/home/tabs/history/history_tab.dart';
 import 'package:kaylee/screens/src/home/tabs/home/home_tab.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/notification_button/notification_button.dart';
 import 'package:kaylee/utils/deeplink_helper.dart';
-import 'package:kaylee/widgets/src/kaylee_bottom_bar.dart';
 
 class HomeScreen extends StatefulWidget {
   static Widget newInstance() => const HomeScreen();
@@ -158,6 +158,32 @@ class _HomeScreenState extends KayleeState<HomeScreen> {
               curve: Curves.easeOutCirc,
               duration: const Duration(milliseconds: 200));
         },
+        items: [
+          KayleeBottomBarItem(
+            label: Strings.trangChu,
+            icon: KayleeBottomBarIconData(
+              path: Images.icHomeActive,
+            ),
+          ),
+          KayleeBottomBarItem(
+            label: Strings.thuNgan,
+            icon: KayleeBottomBarIconData(
+              path: Images.icCashierActive,
+            ),
+          ),
+          KayleeBottomBarItem(
+            label: Strings.lichSuDh,
+            icon: KayleeBottomBarIconData(
+              path: Images.icHistoryActive,
+            ),
+          ),
+          KayleeBottomBarItem(
+            label: Strings.taiKhoan,
+            icon: KayleeBottomBarIconData(
+              path: Images.icAccountActive,
+            ),
+          ),
+        ],
       ),
     );
   }
