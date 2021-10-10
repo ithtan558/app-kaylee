@@ -31,7 +31,6 @@ export 'src/kaylee_loading_indicator.dart';
 export 'src/kaylee_loadmore_handler.dart';
 export 'src/kaylee_network_image.dart';
 export 'src/kaylee_picker_textfield.dart';
-export 'src/kaylee_price_range.dart';
 export 'src/kaylee_prod_item.dart';
 export 'src/kaylee_refresh_indicator.dart';
 export 'src/kaylee_tab_view/kaylee_tab_view.dart';
