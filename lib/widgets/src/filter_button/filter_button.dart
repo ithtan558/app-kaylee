@@ -6,7 +6,6 @@ import 'package:kaylee/base/kaylee_filter_interface.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
-import 'package:kaylee/widgets/widgets.dart';
 
 class FilterButton<T extends Filter> extends StatefulWidget {
   final KayleeFilterInterface<T>? controller;

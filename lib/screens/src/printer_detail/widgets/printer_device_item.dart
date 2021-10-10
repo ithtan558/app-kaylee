@@ -1,7 +1,6 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/components/components.dart';
-import 'package:kaylee/widgets/widgets.dart';
 
 class PrinterDeviceItem extends StatelessWidget {
   final PrinterDevice device;

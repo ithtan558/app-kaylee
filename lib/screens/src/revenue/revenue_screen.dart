@@ -13,7 +13,6 @@ import 'package:kaylee/screens/src/revenue/widget/service_revenue/service_revenu
 import 'package:kaylee/screens/src/revenue/widget/total_revenue/bloc/total_revenue_section_bloc.dart';
 import 'package:kaylee/screens/src/revenue/widget/total_revenue/total_revenue_section.dart';
 import 'package:kaylee/utils/utils.dart';
-import 'package:kaylee/widgets/widgets.dart';
 
 class RevenueScreen extends StatefulWidget {
   static Widget newInstance() => MultiBlocProvider(providers: [
