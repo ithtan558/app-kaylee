@@ -117,7 +117,7 @@ class _HomeScreenState extends KayleeState<HomeScreen> {
 
     final notificationId = DateTime.now().second.toString();
     final androidDetail = AndroidNotificationDetails(
-        notificationId, 'FcmNotification', '',
+        notificationId, 'FcmNotification',
         priority: Priority.high, importance: Importance.max);
     const iosDetail = IOSNotificationDetails();
     final platformDetail =
