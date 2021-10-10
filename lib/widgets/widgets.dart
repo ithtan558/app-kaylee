@@ -19,7 +19,6 @@ export 'src/kaylee_date_range_picker_view.dart';
 export 'src/kaylee_dialog.dart';
 export 'src/kaylee_dismissible.dart';
 export 'src/kaylee_flat_button.dart';
-export 'src/kaylee_float_button.dart';
 export 'src/kaylee_full_address_input.dart';
 export 'src/kaylee_grid_view.dart';
 export 'src/kaylee_header_card.dart';
