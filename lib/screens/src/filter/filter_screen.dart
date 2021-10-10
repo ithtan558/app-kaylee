@@ -440,8 +440,7 @@ class _ServiceFilterViewState extends BaseState<ServiceFilterView>
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(
-              horizontal: Dimens.px16, vertical: Dimens.px16),
+          padding: const EdgeInsets.symmetric(vertical: Dimens.px16),
           child: KayleePriceRange(
             controller: priceController,
           ),
@@ -524,8 +523,7 @@ class _ProductFilterViewState extends BaseState<ProductFilterView>
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(
-              horizontal: Dimens.px16, vertical: Dimens.px16),
+          padding: const EdgeInsets.symmetric(vertical: Dimens.px16),
           child: KayleePriceRange(
             controller: priceController,
           ),
