@@ -103,9 +103,10 @@ class _KayleeProfileImagePickerState
                       selectedFile == null
                   ? Center(
                       child: Image.asset(
-                        Images.icImageHolder,
+                        IconAssets.icImageHolder,
                         width: Dimens.px40,
                         height: Dimens.px40,
+                        package: anthPackage,
                       ),
                     )
                   : AspectRatio(
@@ -400,10 +401,11 @@ class _ImageGridState extends BaseState<_ImageGrid> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(
-                  Images.icImageHolder,
+                  IconAssets.icImageHolder,
                   width: Dimens.px24,
                   height: Dimens.px24,
                   color: ColorsRes.button1,
+                  package: anthPackage,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: Dimens.px8),

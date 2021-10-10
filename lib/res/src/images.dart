@@ -33,7 +33,6 @@ class Images {
   static const icDelete = 'assets/ic_delete.png';
   static const icClose = 'assets/ic_close.png';
   static const icCamera = 'assets/ic_camera.png';
-  static const icImageHolder = 'assets/ic_image_holder.png';
   static const icFilter = 'assets/ic_filter.png';
   static const icBag = 'assets/ic_bag.png';
   static const icTick = 'assets/ic_tick.png';
