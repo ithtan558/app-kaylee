@@ -50,7 +50,7 @@ class _BrandSelectListState extends BaseState<BrandSelectList> {
         text,
         Expanded(
             child: BlocBuilder<BrandSelectListBloc, SingleModel<List<Brand>>>(
-              bloc: bloc,
+          bloc: bloc,
           builder: (context, state) {
             if (state.loading == true) {
               return const KayleeLoadingIndicator();
@@ -153,12 +153,8 @@ class _BrandItemState extends BaseState<_BrandItem> {
               padding: const EdgeInsets.all(Dimens.px8),
               child: Row(
                 children: [
-                  Image.asset(
-                    widget.brand.selected
-                        ? Images.icChecked1
-                        : Images.icNotCheck,
-                    width: Dimens.px24,
-                    height: Dimens.px24,
+                  KayleeCheckBox(
+                    checked: widget.brand.selected,
                   ),
                   Expanded(
                     child: Padding(

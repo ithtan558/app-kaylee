@@ -6,8 +6,6 @@ class Images {
   static const icUnseen = 'assets/ic_unseen.png';
   static const icSeen = 'assets/ic_seen.png';
   static const icDown = 'assets/ic_down.png';
-  static const icNotCheck = 'assets/ic_notcheck.png';
-  static const icChecked = 'assets/ic_checked.png';
   static const icHistoryActive = 'assets/ic_history_active.png';
   static const icHomeActive = 'assets/ic_home_active.png';
   static const icAccountActive = 'assets/ic_account_active.png';
@@ -38,7 +36,6 @@ class Images {
   static const icTick = 'assets/ic_tick.png';
   static const icSearch = 'assets/ic_search.png';
   static const icCalendar = 'assets/ic_calendar.png';
-  static const icChecked1 = 'assets/ic_checked_1.png';
   static const icMessage = 'assets/ic_message.png';
   static const icSearchActive = 'assets/ic_search_active.png';
   static const icCash = 'assets/ic_cash.png';
