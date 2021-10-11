@@ -105,7 +105,8 @@ class _MyOrderDetailScreenState extends KayleeState<MyOrderDetailScreen> {
                       padding:
                           const EdgeInsets.symmetric(horizontal: Dimens.px16),
                       child: _buildInfoText(
-                        icon: Images.icList,
+                        icon: IconAssets.icList,
+                        package: anthPackage,
                         title: '#${_bloc.order.code ?? ''}',
                       ),
                     ),
@@ -150,7 +151,8 @@ class _MyOrderDetailScreenState extends KayleeState<MyOrderDetailScreen> {
                           const EdgeInsets.symmetric(horizontal: Dimens.px16)
                               .copyWith(top: Dimens.px8),
                       child: _buildInfoText(
-                        icon: Images.icList,
+                        icon: IconAssets.icList,
+                        package: anthPackage,
                         title:
                             '${Strings.tinhTrangDonHang}: ${orderStatus2Title(status: _bloc.order.status)}',
                       ),
@@ -162,7 +164,8 @@ class _MyOrderDetailScreenState extends KayleeState<MyOrderDetailScreen> {
                             const EdgeInsets.symmetric(horizontal: Dimens.px16)
                                 .copyWith(top: Dimens.px8),
                         child: _buildInfoText(
-                          icon: Images.icList,
+                          icon: IconAssets.icList,
+                          package: anthPackage,
                           title:
                               '${Strings.lyDoHuyDon}: ${_bloc.order.cancellationReason!.name}',
                         ),
@@ -227,14 +230,14 @@ class _MyOrderDetailScreenState extends KayleeState<MyOrderDetailScreen> {
     );
   }
 
-  Widget _buildInfoText({String? icon, String? title}) {
+  Widget _buildInfoText({String? icon, String? title, String? package}) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Padding(
           padding: const EdgeInsets.only(right: Dimens.px8),
           child: ImageIcon(
-            AssetImage(icon ?? ''),
+            AssetImage(icon ?? '', package: package),
             size: Dimens.px16,
             color: ColorsRes.hintText,
           ),

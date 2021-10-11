@@ -50,6 +50,5 @@ class Images {
   static const icAddress = 'assets/ic_address.png';
   static const icEdit = 'assets/ic_edit.png';
   static const icList = 'assets/ic_list.png';
-  static const icMenu = 'assets/ic_menu.png';
   static const icArrowBack = 'assets/ic_arrow_back.png';
 }
