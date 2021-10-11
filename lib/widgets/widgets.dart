@@ -11,7 +11,6 @@ export 'src/brand_select_textfield/brand_select_textfield.dart';
 export 'src/dialog/request_setting/request_setting_dialog.dart';
 export 'src/filter_button/filter_button.dart';
 export 'src/filter_view/kaylee_filter_list_item.dart';
-export 'src/filter_view/kaylee_filter_view.dart';
 export 'src/kaylee_cart_prod_item/kaylee_cart_prod_item.dart';
 export 'src/kaylee_date_filter.dart';
 export 'src/kaylee_date_range_picker_view.dart';
