@@ -18,7 +18,6 @@ export 'src/kaylee_dialog.dart';
 export 'src/kaylee_dismissible.dart';
 export 'src/kaylee_full_address_input.dart';
 export 'src/kaylee_grid_view.dart';
-export 'src/kaylee_header_card.dart';
 export 'src/kaylee_image_info_layout.dart';
 export 'src/kaylee_image_picker.dart';
 export 'src/kaylee_list_view.dart';
