@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
-import 'package:kaylee/widgets/widgets.dart';
 
 class MyOrderItem extends StatelessWidget {
   final Order order;

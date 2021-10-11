@@ -7,7 +7,6 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/supplier/my_orders/detail/widgets/order_cancelation_reason/bloc/order_cancelation_reason_bloc.dart';
 import 'package:kaylee/screens/src/supplier/my_orders/detail/widgets/order_cancelation_reason/widgets/reason_item.dart';
 import 'package:kaylee/utils/utils.dart';
-import 'package:kaylee/widgets/widgets.dart';
 
 class OrderCancellationReasonDialog extends StatefulWidget {
   static Widget newInstance(

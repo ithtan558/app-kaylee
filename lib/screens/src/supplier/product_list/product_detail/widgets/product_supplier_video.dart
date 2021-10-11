@@ -3,7 +3,6 @@ import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kaylee/models/models.dart';
-import 'package:kaylee/widgets/widgets.dart';
 import 'package:video_player/video_player.dart';
 
 class ProductSupplierVideo extends StatefulWidget {

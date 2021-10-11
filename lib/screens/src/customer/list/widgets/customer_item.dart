@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/screens/screens.dart';
-import 'package:kaylee/widgets/widgets.dart';
 
 class CustomerItem extends StatelessWidget {
   final Customer customer;
