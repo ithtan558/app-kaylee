@@ -1,10 +1,7 @@
-import 'dart:math';
 
 import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
-import 'package:kaylee/res/res.dart';
-import 'package:kaylee/widgets/widgets.dart';
 
 class KayleeFilterView extends StatefulWidget {
   final Widget? child;
@@ -57,91 +54,6 @@ class _KayleeFilterViewState extends BaseState<KayleeFilterView> {
   }
 }
 
-class _FilterButton extends StatefulWidget {
-  final void Function(bool state)? onClick;
-  final AnimationController animController;
-
-  const _FilterButton({this.onClick, required this.animController});
-
-  @override
-  __FilterButtonState createState() => __FilterButtonState();
-}
-
-class __FilterButtonState extends BaseState<_FilterButton>
-    with SingleTickerProviderStateMixin {
-  bool isOpened = false;
-
-  @override
-  void initState() {
-    super.initState();
-    widget.animController.addListener(() {
-      if (widget.animController.isDismissed) {
-        isOpened = false;
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: Dimens.px32,
-      child: Material(
-        borderRadius: BorderRadius.circular(Dimens.px5),
-        color: ColorsRes.filterButton,
-        clipBehavior: Clip.antiAlias,
-        child: InkWell(
-          onTap: () {
-            if (!isOpened) {
-              widget.animController.forward(from: widget.animController.value);
-            } else {
-              widget.animController.reverse(from: widget.animController.value);
-            }
-            isOpened = !isOpened;
-            widget.onClick?.call(isOpened);
-          },
-          child: Row(
-            children: [
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: Dimens.px10),
-                child: Image.asset(
-                  Images.icOptions,
-                  width: Dimens.px16,
-                  height: Dimens.px16,
-                ),
-              ),
-              Container(
-                  width: Dimens.px1,
-                  margin: const EdgeInsets.symmetric(vertical: Dimens.px2),
-                  decoration: const BoxDecoration(color: Colors.white)),
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: Dimens.px4),
-                child: AnimatedBuilder(
-                  animation: widget.animController,
-                  builder: (context, child) {
-                    return Transform.rotate(
-                      angle: widget.animController.value * pi,
-                      child: child,
-                    );
-                  },
-                  child: Image.asset(
-                    Images.icTriangleDown,
-                    width: Dimens.px24,
-                    height: Dimens.px24,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
 
 class _FilterView extends StatefulWidget {
   final String? title;

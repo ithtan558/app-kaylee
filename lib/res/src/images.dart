@@ -20,7 +20,6 @@ class Images {
   static const icBooking = 'assets/ic_booking.png';
   static const icProduct = 'assets/ic_product.png';
   static const icNotification = 'assets/ic_notification.png';
-  static const icTriangleDown = 'assets/ic_triangle_down.png';
   static const icOptions = 'assets/ic_options.png';
   static const icAccAboutApp = 'assets/ic_acc_about_app.png';
   static const icAccGuide = 'assets/ic_acc_guide.png';

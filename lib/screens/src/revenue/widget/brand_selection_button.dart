@@ -48,10 +48,11 @@ class _BrandSelectionButtonState extends KayleeState<BrandSelectionButton> {
           ),
         )),
         Image.asset(
-          Images.icTriangleDown,
+          IconAssets.icTriangleDown,
           color: Colors.white,
           width: Dimens.px16,
           height: Dimens.px16,
+          package: anthPackage,
         )
       ]),
       background: ColorsRes.button,
