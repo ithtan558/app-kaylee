@@ -3,8 +3,6 @@ class Images {
 
   static const logo = 'assets/logo.png';
   static const icError = 'assets/ic_error.png';
-  static const icUnseen = 'assets/ic_unseen.png';
-  static const icSeen = 'assets/ic_seen.png';
   static const icDown = 'assets/ic_down.png';
   static const icHistoryActive = 'assets/ic_history_active.png';
   static const icHomeActive = 'assets/ic_home_active.png';
@@ -20,7 +18,6 @@ class Images {
   static const icBooking = 'assets/ic_booking.png';
   static const icProduct = 'assets/ic_product.png';
   static const icNotification = 'assets/ic_notification.png';
-  static const icOptions = 'assets/ic_options.png';
   static const icAccAboutApp = 'assets/ic_acc_about_app.png';
   static const icAccGuide = 'assets/ic_acc_guide.png';
   static const icAccLogout = 'assets/ic_acc_logout.png';
@@ -29,7 +26,6 @@ class Images {
   static const icRight = 'assets/ic_right.png';
   static const icClose = 'assets/ic_close.png';
   static const icCamera = 'assets/ic_camera.png';
-  static const icFilter = 'assets/ic_filter.png';
   static const icBag = 'assets/ic_bag.png';
   static const icSearch = 'assets/ic_search.png';
   static const icCalendar = 'assets/ic_calendar.png';
@@ -41,6 +37,5 @@ class Images {
   static const icPhone = 'assets/ic_phone.png';
   static const icAddress = 'assets/ic_address.png';
   static const icEdit = 'assets/ic_edit.png';
-  static const icList = 'assets/ic_list.png';
   static const icArrowBack = 'assets/ic_arrow_back.png';
 }
