@@ -6,7 +6,6 @@ import 'package:kaylee/kaylee_application.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/reset_pass/blocs/contact_us_bloc.dart';
 import 'package:kaylee/utils/utils.dart';
-import 'package:kaylee/widgets/widgets.dart';
 
 class ContactUsText extends StatefulWidget {
   static Widget newInstance() => BlocProvider<ContactUsBloc>(

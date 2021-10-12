@@ -10,7 +10,6 @@ import 'package:kaylee/screens/src/home/tabs/cashier/bloc/order_item_bloc.dart';
 import 'package:kaylee/screens/src/home/tabs/cashier/cashier_tab.dart';
 import 'package:kaylee/screens/src/home/tabs/history/history_tab.dart';
 import 'package:kaylee/utils/utils.dart';
-import 'package:kaylee/widgets/widgets.dart';
 
 class CashierItem extends StatefulWidget {
   static Widget newInstance({required Order order}) => BlocProvider(

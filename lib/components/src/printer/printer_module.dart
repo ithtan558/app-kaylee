@@ -8,7 +8,6 @@ import 'package:image/image.dart';
 import 'package:kaylee/components/src/printer/model/printer_device.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
-import 'package:kaylee/widgets/widgets.dart';
 
 const String printerDevicesKey = 'PRINTER_DEVICES_KEY';
 const String locationProminentDisclosureForAndroidKey =

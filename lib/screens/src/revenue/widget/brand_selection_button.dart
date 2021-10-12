@@ -7,7 +7,6 @@ import 'package:kaylee/kaylee_application.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/utils/utils.dart';
-import 'package:kaylee/widgets/widgets.dart';
 
 class BrandSelectionButton extends StatefulWidget {
   final ValueChanged<Brand>? onChanged;

@@ -12,7 +12,6 @@ import 'package:kaylee/screens/src/supplier/product_list/product_detail/bloc/sup
 import 'package:kaylee/screens/src/supplier/product_list/product_detail/widgets/product_supplier_image.dart';
 import 'package:kaylee/screens/src/supplier/product_list/product_detail/widgets/product_supplier_video.dart';
 import 'package:kaylee/utils/utils.dart';
-import 'package:kaylee/widgets/widgets.dart';
 
 class SupplierProductDetailScreenData {
   Product product;

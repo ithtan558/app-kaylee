@@ -9,7 +9,6 @@ import 'package:kaylee/res/src/strings.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/reset_pass/blocs/send_otp_bloc.dart';
 import 'package:kaylee/utils/utils.dart';
-import 'package:kaylee/widgets/widgets.dart';
 
 import 'bloc/otp_verify_bloc.dart';
 

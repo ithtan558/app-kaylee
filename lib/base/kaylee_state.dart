@@ -9,7 +9,6 @@ import 'package:kaylee/kaylee_application.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/utils/utils.dart';
-import 'package:kaylee/widgets/widgets.dart';
 import 'package:store_redirect/store_redirect.dart';
 
 abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {

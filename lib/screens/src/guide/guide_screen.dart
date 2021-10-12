@@ -9,7 +9,6 @@ import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/guide/bloc/bloc.dart';
 import 'package:kaylee/utils/utils.dart';
-import 'package:kaylee/widgets/widgets.dart';
 
 class GuideScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider(

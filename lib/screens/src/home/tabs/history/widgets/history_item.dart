@@ -9,7 +9,6 @@ import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/home/tabs/history/bloc/history_item_bloc.dart';
 import 'package:kaylee/screens/src/home/tabs/history/history_tab.dart';
 import 'package:kaylee/utils/utils.dart';
-import 'package:kaylee/widgets/widgets.dart';
 
 class HistoryItem extends StatefulWidget {
   static Widget newInstance({required Order order}) => BlocProvider(

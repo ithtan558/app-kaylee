@@ -7,7 +7,6 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/reservation/reservation_list/widgets/reservation_item/bloc/bloc.dart';
 import 'package:kaylee/utils/utils.dart';
-import 'package:kaylee/widgets/widgets.dart';
 
 class ReservationItem extends StatefulWidget {
   static Widget newInstance({required Reservation reservation}) => BlocProvider(

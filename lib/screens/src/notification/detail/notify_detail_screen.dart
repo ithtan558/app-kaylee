@@ -12,7 +12,6 @@ import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/notification
 import 'package:kaylee/screens/src/notification/detail/bloc/bloc.dart';
 import 'package:kaylee/utils/deeplink_helper.dart';
 import 'package:kaylee/utils/utils.dart';
-import 'package:kaylee/widgets/widgets.dart';
 
 class NotifyDetailScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<NotifyDetailScreenBloc>(

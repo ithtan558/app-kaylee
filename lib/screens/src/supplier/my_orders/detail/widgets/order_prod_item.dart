@@ -1,7 +1,6 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:kaylee/models/models.dart';
-import 'package:kaylee/widgets/widgets.dart';
 
 class OrderProdItem extends KayleeCartProdItem {
   final OrderItem orderItem;

@@ -10,7 +10,6 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/supplier/payment_info/bloc/payment_info_screen_bloc.dart';
 import 'package:kaylee/utils/utils.dart';
-import 'package:kaylee/widgets/widgets.dart';
 
 class PaymentInfoScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<PaymentInfoScreenBloc>(

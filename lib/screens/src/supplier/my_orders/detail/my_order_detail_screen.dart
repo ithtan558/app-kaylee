@@ -12,7 +12,6 @@ import 'package:kaylee/screens/src/supplier/my_orders/detail/bloc/my_order_detai
 import 'package:kaylee/screens/src/supplier/my_orders/detail/widgets/order_cancelation_reason/order_cancelation_reason_dialog.dart';
 import 'package:kaylee/screens/src/supplier/my_orders/detail/widgets/order_prod_item.dart';
 import 'package:kaylee/utils/utils.dart';
-import 'package:kaylee/widgets/widgets.dart';
 
 class MyOrderDetailScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider(
