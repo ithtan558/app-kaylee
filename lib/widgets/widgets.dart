@@ -8,7 +8,6 @@ import 'package:kaylee/res/src/strings.dart';
 import 'package:kaylee/screens/screens.dart';
 
 export 'src/brand_select_textfield/brand_select_textfield.dart';
-export 'src/dialog/request_setting/request_setting_dialog.dart';
 export 'src/filter_button/filter_button.dart';
 export 'src/filter_view/kaylee_filter_list_item.dart';
 export 'src/kaylee_cart_prod_item/kaylee_cart_prod_item.dart';
