@@ -27,7 +27,6 @@ class Images {
   static const icAccNotify = 'assets/ic_acc_notify.png';
   static const icAccOrderlist = 'assets/ic_acc_orderlist.png';
   static const icRight = 'assets/ic_right.png';
-  static const icDelete = 'assets/ic_delete.png';
   static const icClose = 'assets/ic_close.png';
   static const icCamera = 'assets/ic_camera.png';
   static const icFilter = 'assets/ic_filter.png';
