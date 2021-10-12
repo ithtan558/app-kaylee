@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kaylee/res/res.dart';
-import 'package:kaylee/res/src/strings.dart';
 
 class KayleeTextField extends StatelessWidget {
   final String? title;
@@ -1033,7 +1032,7 @@ class _SelectInputTextFieldState extends BaseState<SelectInputTextField> {
           children: [
             Expanded(
                 child: KayleeText.normal16W400(
-                  widget.content,
+              widget.content,
               maxLines: 1,
             )),
             KayleeFlatButton.withTextField(
