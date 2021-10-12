@@ -6,7 +6,6 @@ import 'package:kaylee/apis/api_provider.dart';
 import 'package:kaylee/apis/apis.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/models/models.dart';
-import 'package:kaylee/widgets/widgets.dart';
 
 class PolicyCheckBox extends StatefulWidget {
   final ValueSetter<bool>? onChecked;

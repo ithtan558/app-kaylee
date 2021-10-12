@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:kaylee/components/components.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/printer_detail/widgets/printer_device_item.dart';
-import 'package:kaylee/widgets/widgets.dart';
 
 class StoredPrinterDeviceItem extends StatelessWidget {
   final PrinterDevice device;

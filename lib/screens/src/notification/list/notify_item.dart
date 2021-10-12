@@ -3,7 +3,6 @@ import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/models/models.dart' as models;
 import 'package:kaylee/screens/src/notification/detail/notify_detail_screen.dart';
-import 'package:kaylee/widgets/widgets.dart';
 
 class NotifyItem extends StatefulWidget {
   final VoidCallback? onDeleted;

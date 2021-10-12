@@ -4,7 +4,6 @@ import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/utils/utils.dart';
-import 'package:kaylee/widgets/widgets.dart';
 
 class CartProdItem extends KayleeCartProdItem {
   final VoidCallback? onRemoveItem;
