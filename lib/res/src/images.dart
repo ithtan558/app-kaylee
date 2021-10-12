@@ -36,8 +36,6 @@ class Images {
   static const icMessage = 'assets/ic_message.png';
   static const icSearchActive = 'assets/ic_search_active.png';
   static const icCash = 'assets/ic_cash.png';
-  static const icRadioActive = 'assets/ic_radio_active.png';
-  static const icRadioInactive = 'assets/ic_radio_unactive.png';
   static const icCard = 'assets/ic_card.png';
   static const icMomo = 'assets/ic_momo.png';
   static const icPhone = 'assets/ic_phone.png';
