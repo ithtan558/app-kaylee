@@ -12,7 +12,6 @@ export 'src/filter_button/filter_button.dart';
 export 'src/filter_view/kaylee_filter_list_item.dart';
 export 'src/kaylee_date_filter.dart';
 export 'src/kaylee_date_range_picker_view.dart';
-export 'src/kaylee_dialog.dart';
 export 'src/kaylee_dismissible.dart';
 export 'src/kaylee_full_address_input.dart';
 export 'src/kaylee_grid_view.dart';
