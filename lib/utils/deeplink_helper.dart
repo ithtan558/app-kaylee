@@ -6,8 +6,8 @@ class DeepLinkHelper {
   DeepLinkHelper._();
 
   static PageIntent? handleLink({String? link}) {
-    if (link != null && link.isNotEmpty) {
-      final uri = Uri.tryParse(link);
+    if (link?.isNotEmpty ?? false) {
+      final uri = Uri.tryParse(link!);
       if (uri != null) {
         if (uri.path == '/supplier/order/detail') {
           final orderId = int.tryParse(uri.queryParameters['order_id'] ?? '');
