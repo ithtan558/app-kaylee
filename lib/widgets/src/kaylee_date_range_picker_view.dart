@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/res/res.dart';
-import 'package:kaylee/utils/utils.dart';
 
 enum DateRangeValueType {
   thisWeek,

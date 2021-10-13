@@ -4,7 +4,6 @@ import 'package:kaylee/base/kaylee_filter_interface.dart';
 import 'package:kaylee/base/kaylee_list_interface.dart';
 import 'package:kaylee/base/loadmore_interface.dart';
 import 'package:kaylee/models/models.dart';
-import 'package:kaylee/utils/utils.dart';
 
 class ReservationFilter extends Filter {
   ReservationStatus? status;

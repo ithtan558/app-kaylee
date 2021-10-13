@@ -1,7 +1,6 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:kaylee/apis/apis.dart';
 import 'package:kaylee/models/models.dart';
-import 'package:kaylee/utils/utils.dart';
 
 class CommissionDetailScreenBloc extends Cubit<SingleModel> {
   final CommissionApi commissionService;

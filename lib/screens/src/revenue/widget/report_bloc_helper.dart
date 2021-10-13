@@ -2,7 +2,6 @@ import 'package:anth_package/anth_package.dart';
 import 'package:flutter/foundation.dart';
 import 'package:kaylee/apis/apis.dart';
 import 'package:kaylee/models/models.dart';
-import 'package:kaylee/utils/utils.dart';
 
 mixin ReportBlocHelper {
   late ReportApi reportService;
