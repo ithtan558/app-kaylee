@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="[Kaylee] debug-dev" type="FlutterRunConfigurationType" factoryName="Flutter">
-    <option name="additionalArgs" value="--debug" />
+  <configuration name="[Kaylee] dev" default="false" factoryName="Flutter"
+      type="FlutterRunConfigurationType">
     <option name="attachArgs" value="--debug" />
     <option name="buildFlavor" value="dev" />
     <option name="filePath" value="$PROJECT_DIR$/lib/main_dev.dart" />
