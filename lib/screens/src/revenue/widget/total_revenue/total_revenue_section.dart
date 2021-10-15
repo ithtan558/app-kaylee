@@ -5,7 +5,6 @@ import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/revenue/widget/total_revenue/bloc/total_revenue_section_bloc.dart';
 import 'package:kaylee/screens/src/revenue/widget/widget_helper.dart';
-import 'package:kaylee/widgets/widgets.dart';
 
 class TotalRevenueSection extends StatefulWidget {
   const TotalRevenueSection({

@@ -4,7 +4,6 @@ import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/src/brand_select_textfield/bloc/brand_select_tf_bloc.dart';
 import 'package:kaylee/widgets/src/brand_select_textfield/brand_select_list.dart';
-import 'package:kaylee/widgets/widgets.dart';
 
 class BrandSelectTextField extends StatefulWidget {
   final String? error;

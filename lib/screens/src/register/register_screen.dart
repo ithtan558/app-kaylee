@@ -8,7 +8,6 @@ import 'package:kaylee/res/src/strings.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/register/bloc/bloc.dart';
 import 'package:kaylee/utils/utils.dart';
-import 'package:kaylee/widgets/widgets.dart';
 
 class RegisterScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<RegisterScreenBloc>(

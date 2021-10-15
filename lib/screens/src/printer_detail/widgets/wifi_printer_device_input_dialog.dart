@@ -2,7 +2,6 @@ import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/res/res.dart';
-import 'package:kaylee/widgets/widgets.dart';
 
 class WifiPrinterDeviceInputDialog extends StatefulWidget {
   final ValueSetter<String> onSave;

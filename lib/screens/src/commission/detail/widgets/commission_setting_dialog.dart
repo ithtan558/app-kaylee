@@ -6,7 +6,6 @@ import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/commission/detail/bloc/commission_setting_bloc.dart';
 import 'package:kaylee/utils/utils.dart';
-import 'package:kaylee/widgets/widgets.dart';
 
 class CommissionSettingDialog extends StatefulWidget {
   static Widget newInstance({required ScrollController scrollController}) =>

@@ -6,7 +6,6 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/revenue/widget/employee_revenue/bloc/employee_revenue_section_bloc.dart';
 import 'package:kaylee/screens/src/revenue/widget/revenue_item.dart';
 import 'package:kaylee/screens/src/revenue/widget/widget_helper.dart';
-import 'package:kaylee/widgets/widgets.dart';
 
 class EmployeeRevenueSection extends StatefulWidget {
   const EmployeeRevenueSection({

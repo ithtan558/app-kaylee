@@ -8,7 +8,6 @@ import 'package:kaylee/screens/src/customer/create_new/create_new_customer_scree
 import 'package:kaylee/screens/src/order_detail/widgets/select_customer/bloc/select_customer_bloc.dart';
 import 'package:kaylee/screens/src/order_detail/widgets/select_customer/select_customer_item.dart';
 import 'package:kaylee/utils/utils.dart';
-import 'package:kaylee/widgets/widgets.dart';
 
 class SelectCustomerDialog extends StatefulWidget {
   static Widget newInstance({required ValueSetter<Customer> onSelect}) =>

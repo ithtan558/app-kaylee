@@ -10,7 +10,6 @@ import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/reset_pass/blocs/update_pass_bloc.dart';
 import 'package:kaylee/screens/src/reset_pass/widgets/contact_us_text.dart';
 import 'package:kaylee/utils/utils.dart';
-import 'package:kaylee/widgets/widgets.dart';
 
 class NewPassScreenData {
   final VerifyOtpResult result;
