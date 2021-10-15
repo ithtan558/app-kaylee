@@ -17,7 +17,6 @@ export 'src/kaylee_list_view.dart';
 export 'src/kaylee_loadmore_handler.dart';
 export 'src/kaylee_picker_textfield.dart';
 export 'src/kaylee_refresh_indicator.dart';
-export 'src/kaylee_text_field.dart';
 export 'src/policy_checkbox.dart';
 export 'src/print_bill_dialog/print_bill_dialog.dart';
 

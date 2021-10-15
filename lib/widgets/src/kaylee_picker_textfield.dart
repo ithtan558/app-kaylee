@@ -11,7 +11,6 @@ import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/utils/utils.dart';
-import 'package:kaylee/widgets/widgets.dart';
 
 const types = <Type>[
   City,
@@ -154,7 +153,8 @@ class _KayleePickerTextFieldState<T> extends BaseState<KayleePickerTextField>
                       child: Transform.rotate(
                         angle: focused ? pi : 0,
                         child: Image.asset(
-                          Images.icDown,
+                          IconAssets.icDown,
+                          package: anthPackage,
                           width: Dimens.px16,
                           height: Dimens.px16,
                         ),

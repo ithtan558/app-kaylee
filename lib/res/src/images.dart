@@ -2,8 +2,6 @@ class Images {
   Images._();
 
   static const logo = 'assets/logo.png';
-  static const icError = 'assets/ic_error.png';
-  static const icDown = 'assets/ic_down.png';
   static const icHistoryActive = 'assets/ic_history_active.png';
   static const icHomeActive = 'assets/ic_home_active.png';
   static const icAccountActive = 'assets/ic_account_active.png';

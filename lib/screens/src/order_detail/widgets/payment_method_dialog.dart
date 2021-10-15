@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
-import 'package:kaylee/widgets/widgets.dart';
 
 class PaymentMethodDialog extends StatefulWidget {
   static Widget newInstance({required VoidCallback onConfirm,
@@ -167,7 +166,8 @@ class _ExpandViewState extends KayleeState<_ExpandView> {
                   customBorder: const CircleBorder(),
                   child: Center(
                     child: Image.asset(
-                      Images.icDown,
+                      IconAssets.icDown,
+                      package: anthPackage,
                       width: Dimens.px16,
                       height: Dimens.px16,
                     ),
