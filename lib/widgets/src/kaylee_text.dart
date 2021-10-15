@@ -1,10 +1,7 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kaylee/res/res.dart';
 import 'package:kaylee/widgets/widgets.dart';
-
-
 
 class KayleeDatePickerText extends StatefulWidget {
   final ValueChanged<DateTimeRange>? onSelectRange;
@@ -161,36 +158,6 @@ class _KayleeDateRangePickerTextState
           ),
         ),
       ],
-    );
-  }
-}
-
-class KayleeTotalAmountText extends StatelessWidget {
-  final dynamic price;
-
-  const KayleeTotalAmountText({Key? key, this.price}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return IntrinsicWidth(
-      child: Row(
-        children: [
-          KayleeText.hint16W400(Strings.tong),
-          Container(
-            height: Dimens.px48,
-            margin: const EdgeInsets.symmetric(horizontal: Dimens.px8),
-            padding: const EdgeInsets.symmetric(
-                vertical: Dimens.px8, horizontal: Dimens.px18),
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(Dimens.px5),
-                border: const Border.fromBorderSide(
-                    BorderSide(color: ColorsRes.hyper, width: Dimens.px2))),
-            child: KayleePriceText.noUnitNormal26W700(price),
-          ),
-          KayleeText.hint16W400(Strings.vnd)
-        ],
-      ),
     );
   }
 }
