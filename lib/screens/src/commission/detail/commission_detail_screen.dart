@@ -11,7 +11,6 @@ import 'package:kaylee/screens/src/commission/detail/widgets/commission_orders/c
 import 'package:kaylee/screens/src/commission/detail/widgets/commission_orders/comm_ser_order_list.dart';
 import 'package:kaylee/screens/src/commission/detail/widgets/commission_setting_dialog.dart';
 import 'package:kaylee/utils/utils.dart';
-import 'package:kaylee/widgets/src/kaylee_text.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class CommissionDetailScreenData {
