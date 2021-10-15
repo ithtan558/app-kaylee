@@ -10,7 +10,6 @@ import 'package:kaylee/screens/screens.dart';
 export 'src/brand_select_textfield/brand_select_textfield.dart';
 export 'src/filter_button/filter_button.dart';
 export 'src/filter_view/kaylee_filter_list_item.dart';
-export 'src/kaylee_date_range_picker_view.dart';
 export 'src/kaylee_full_address_input.dart';
 export 'src/kaylee_grid_view.dart';
 export 'src/kaylee_image_picker.dart';

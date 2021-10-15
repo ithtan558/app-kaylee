@@ -28,7 +28,6 @@ class Images {
   static const icCamera = 'assets/ic_camera.png';
   static const icBag = 'assets/ic_bag.png';
   static const icSearch = 'assets/ic_search.png';
-  static const icCalendar = 'assets/ic_calendar.png';
   static const icMessage = 'assets/ic_message.png';
   static const icSearchActive = 'assets/ic_search_active.png';
   static const icCash = 'assets/ic_cash.png';
