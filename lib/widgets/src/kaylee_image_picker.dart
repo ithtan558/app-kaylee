@@ -1,9 +1,7 @@
 import 'dart:io' as io;
 import 'dart:io';
 
-import 'package:anth_package/anth_package.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:core_plugin/core_plugin.dart' hide ImageSource;
+import 'package:anth_package/anth_package.dart' hide ImageSource;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart' as image_picker;
 import 'package:kaylee/res/res.dart';
