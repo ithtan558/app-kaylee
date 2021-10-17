@@ -1,8 +1,6 @@
 import 'package:kaylee/apis/apis.dart';
 
 abstract class ApiProvider {
-  static const authorization = 'Authorization';
-
   UserApi provideUserApi();
 
   CommonApi provideCommonApi();

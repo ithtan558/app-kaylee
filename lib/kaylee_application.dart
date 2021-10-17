@@ -129,7 +129,7 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
                 ...options.headers,
                 'version': _appBloc.packageInfo?.buildNumber ?? '',
                 if (context.user.getUserInfo().token.isNotNullAndEmpty)
-                  ApiProvider.authorization:
+                  HttpHeaders.authorizationHeader:
                       context.user.getUserInfo().requestToken
               });
           },
