@@ -5,6 +5,7 @@ import 'package:kaylee/apis/api_provider.dart';
 import 'package:kaylee/application_config.dart';
 import 'package:kaylee/components/components.dart';
 import 'package:kaylee/core/network/kaylee_network.dart';
+import 'package:kaylee/services/services.dart';
 
 extension KayleeBuildContextExtension on BuildContext {
   UserModule get user => repository<UserModule>()!;
@@ -20,9 +21,10 @@ extension KayleeBuildContextExtension on BuildContext {
   SystemSettingModule get systemSetting => repository<SystemSettingModule>()!;
 }
 
-
 extension GetItExtension on GetIt {
   KayleeNetwork get network => get<KayleeNetwork>();
 
   ApiProvider get apis => get<ApiProvider>();
+
+  ServiceProvider get service => get<ServiceProvider>();
 }

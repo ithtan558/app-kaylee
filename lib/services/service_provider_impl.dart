@@ -8,6 +8,14 @@ import 'package:kaylee/services/src/campaign/campaign_service.dart';
 import 'package:kaylee/services/src/campaign/campaign_service_impl.dart';
 import 'package:kaylee/services/src/commission/commission_service.dart';
 import 'package:kaylee/services/src/commission/commission_service_impl.dart';
+import 'package:kaylee/services/src/common/common_service.dart';
+import 'package:kaylee/services/src/common/common_service_impl.dart';
+import 'package:kaylee/services/src/customer/customer_service.dart';
+import 'package:kaylee/services/src/customer/customer_service_impl.dart';
+import 'package:kaylee/services/src/notification/notification_service.dart';
+import 'package:kaylee/services/src/notification/notification_service_impl.dart';
+import 'package:kaylee/services/src/report/report_service.dart';
+import 'package:kaylee/services/src/report/report_service_impl.dart';
 import 'package:kaylee/services/src/user/user_service.dart';
 import 'package:kaylee/services/src/user/user_service_impl.dart';
 
@@ -33,5 +41,22 @@ class ServiceProviderImpl implements ServiceProvider {
       CampaignServiceImpl(_apiProvider.provideCampaignApi());
 
   @override
-  CommissionService provideCommissionService() => CommissionServiceImpl(_apiProvider.provideCommissionApi());
+  CommissionService provideCommissionService() =>
+      CommissionServiceImpl(_apiProvider.provideCommissionApi());
+
+  @override
+  CommonService provideCommonService() =>
+      CommonServiceImpl(_apiProvider.provideCommonApi());
+
+  @override
+  CustomerService provideCustomerService() =>
+      CustomerServiceImpl(_apiProvider.provideCustomerApi());
+
+  @override
+  NotificationService provideNotificationService() =>
+      NotificationServiceImpl(_apiProvider.provideNotificationApi());
+
+  @override
+  ReportService provideReportService() =>
+      ReportServiceImpl(_apiProvider.provideReportApi());
 }

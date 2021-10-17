@@ -10,4 +10,12 @@ abstract class ServiceProvider {
   CampaignService provideCampaignService();
 
   CommissionService provideCommissionService();
+
+  CommonService provideCommonService();
+
+  CustomerService provideCustomerService();
+
+  NotificationService provideNotificationService();
+
+  ReportService provideReportService();
 }

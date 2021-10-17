@@ -24,6 +24,7 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/home/tabs/account/widgets/profile_widget.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/notification_button/bloc.dart';
+import 'package:kaylee/services/services.dart';
 import 'package:kaylee/utils/utils.dart';
 
 GetIt locator = GetIt.I;
@@ -258,5 +259,7 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
 void _registerServices() {
   locator.registerSingleton<KayleeNetwork>(KayleeNetwork());
   locator.registerFactory<ApiProvider>(() => ApiProviderImpl(locator.network));
+  locator.registerFactory<ServiceProvider>(
+      () => ServiceProviderImpl(locator.apis));
   locator.registerFactory<ReceiptDocument>(() => PdfDocument());
 }
