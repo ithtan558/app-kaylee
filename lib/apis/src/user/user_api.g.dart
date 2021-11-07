@@ -17,11 +17,12 @@ class _UserApi implements UserApi {
   Future<ResponseModel<RegisterResult>> register(body) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<RegisterResult>>(
-            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+            Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'register',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
@@ -36,11 +37,12 @@ class _UserApi implements UserApi {
   Future<ResponseModel<VerifyOtpResult>> verifyPhoneForRegister(body) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<VerifyOtpResult>>(
-            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+            Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'register/verify-otp',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
@@ -55,11 +57,12 @@ class _UserApi implements UserApi {
   Future<ResponseModel<LoginResult>> login(body) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<LoginResult>>(
-            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+            Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'login',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
@@ -74,11 +77,12 @@ class _UserApi implements UserApi {
   Future<ResponseModel<VerifyPhoneResult>> verifyPhone(body) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<VerifyPhoneResult>>(
-            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+            Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'forgot/verify-phone-and-send-otp',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
@@ -93,11 +97,12 @@ class _UserApi implements UserApi {
   Future<ResponseModel<VerifyOtpResult>> verifyOtpForPass(body) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<VerifyOtpResult>>(
-            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+            Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'forgot/verify-otp',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
@@ -112,11 +117,12 @@ class _UserApi implements UserApi {
   Future<ResponseModel<dynamic>> updatePass({required body}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<dynamic>>(
-            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+            Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'forgot/update-password',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
@@ -131,10 +137,11 @@ class _UserApi implements UserApi {
   Future<ResponseModel<UserInfo>> getProfile() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<UserInfo>>(
-            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+            Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'user-info',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
@@ -151,6 +158,7 @@ class _UserApi implements UserApi {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final _data = FormData();
     if (name != null) {
       _data.fields.add(MapEntry('name', name));
@@ -178,7 +186,7 @@ class _UserApi implements UserApi {
     }
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<dynamic>>(
-            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+            Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'update',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
@@ -193,10 +201,11 @@ class _UserApi implements UserApi {
   Future<ResponseModel<dynamic>> checkExpire() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<dynamic>>(
-            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+            Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'check-expired',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
@@ -211,10 +220,11 @@ class _UserApi implements UserApi {
   Future<ResponseModel<dynamic>> clickWarning() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<dynamic>>(
-            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+            Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'click-warning',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));

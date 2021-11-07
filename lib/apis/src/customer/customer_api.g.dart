@@ -27,10 +27,11 @@ class _CustomerApi implements CustomerApi {
       r'district_ids': districtIds
     };
     queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<PageData<Customer>>>(
-            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+            Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'customer',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
@@ -46,10 +47,11 @@ class _CustomerApi implements CustomerApi {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'keyword': keyword};
     queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<List<Customer>>>(
-            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+            Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'customer/get-by-phone-and-name',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
@@ -66,10 +68,11 @@ class _CustomerApi implements CustomerApi {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<Customer>>(
-            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+            Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'customer/$customerId',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
@@ -95,6 +98,7 @@ class _CustomerApi implements CustomerApi {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final _data = FormData();
     if (name != null) {
       _data.fields.add(MapEntry('name', name));
@@ -131,7 +135,7 @@ class _CustomerApi implements CustomerApi {
     }
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<Customer>>(
-            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+            Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'customer',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
@@ -159,6 +163,7 @@ class _CustomerApi implements CustomerApi {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final _data = FormData();
     if (name != null) {
       _data.fields.add(MapEntry('name', name));
@@ -198,7 +203,7 @@ class _CustomerApi implements CustomerApi {
     }
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<Customer>>(
-            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+            Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'customer/$customerId',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
@@ -214,13 +219,14 @@ class _CustomerApi implements CustomerApi {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ResponseModel<dynamic>>(Options(
-                method: 'DELETE', headers: <String, dynamic>{}, extra: _extra)
-            .compose(_dio.options, 'customer/delete/$customerId',
-                queryParameters: queryParameters, data: _data)
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+        _setStreamType<ResponseModel<dynamic>>(
+            Options(method: 'DELETE', headers: _headers, extra: _extra)
+                .compose(_dio.options, 'customer/delete/$customerId',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<dynamic>.fromJson(
       _result.data!,
       (json) => json as dynamic,
@@ -232,10 +238,11 @@ class _CustomerApi implements CustomerApi {
   Future<ResponseModel<List<CustomerType>>> getCustomerType() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<List<CustomerType>>>(
-            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+            Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'customer-type/all',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));

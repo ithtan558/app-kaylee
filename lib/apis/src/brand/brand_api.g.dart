@@ -17,10 +17,11 @@ class _BrandApi implements BrandApi {
   Future<ResponseModel<List<Brand>>> getAllBrands() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<List<Brand>>>(
-            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+            Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'brand/all',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
@@ -44,10 +45,11 @@ class _BrandApi implements BrandApi {
       r'district_ids': districtIds
     };
     queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<PageData<Brand>>>(
-            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+            Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'brand',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
@@ -63,10 +65,11 @@ class _BrandApi implements BrandApi {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<Brand>>(
-            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+            Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'brand/$brandId',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
@@ -91,6 +94,7 @@ class _BrandApi implements BrandApi {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final _data = FormData();
     if (name != null) {
       _data.fields.add(MapEntry('name', name));
@@ -124,7 +128,7 @@ class _BrandApi implements BrandApi {
     }
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<dynamic>>(
-            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+            Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'brand',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
@@ -151,6 +155,7 @@ class _BrandApi implements BrandApi {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final _data = FormData();
     if (name != null) {
       _data.fields.add(MapEntry('name', name));
@@ -187,7 +192,7 @@ class _BrandApi implements BrandApi {
     }
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<dynamic>>(
-            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+            Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'brand/$brandId',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
@@ -203,13 +208,14 @@ class _BrandApi implements BrandApi {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ResponseModel<dynamic>>(Options(
-                method: 'DELETE', headers: <String, dynamic>{}, extra: _extra)
-            .compose(_dio.options, 'brand/delete/$brandId',
-                queryParameters: queryParameters, data: _data)
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+        _setStreamType<ResponseModel<dynamic>>(
+            Options(method: 'DELETE', headers: _headers, extra: _extra)
+                .compose(_dio.options, 'brand/delete/$brandId',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<dynamic>.fromJson(
       _result.data!,
       (json) => json as dynamic,

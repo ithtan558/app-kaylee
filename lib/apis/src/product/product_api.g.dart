@@ -27,10 +27,11 @@ class _ProductApi implements ProductApi {
       r'brand_ids': brandIds
     };
     queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<PageData<Product>>>(
-            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+            Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'product',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
@@ -46,10 +47,11 @@ class _ProductApi implements ProductApi {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'supplier_id': supplierId};
     queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<List<ProdCate>>>(
-            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+            Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'product-category/all',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
@@ -71,10 +73,11 @@ class _ProductApi implements ProductApi {
       r'sort': sort
     };
     queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<PageData<ProdCate>>>(
-            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+            Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'product-category',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
@@ -90,10 +93,11 @@ class _ProductApi implements ProductApi {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<ProdCate>>(
-            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+            Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'product-category/$cateId',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
@@ -109,6 +113,7 @@ class _ProductApi implements ProductApi {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final _data = FormData();
     if (name != null) {
       _data.fields.add(MapEntry('name', name));
@@ -121,7 +126,7 @@ class _ProductApi implements ProductApi {
     }
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<dynamic>>(
-            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+            Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'product-category',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
@@ -138,6 +143,7 @@ class _ProductApi implements ProductApi {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final _data = FormData();
     if (name != null) {
       _data.fields.add(MapEntry('name', name));
@@ -153,7 +159,7 @@ class _ProductApi implements ProductApi {
     }
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<dynamic>>(
-            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+            Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'product-category/$cateId',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
@@ -169,13 +175,14 @@ class _ProductApi implements ProductApi {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ResponseModel<dynamic>>(Options(
-                method: 'DELETE', headers: <String, dynamic>{}, extra: _extra)
-            .compose(_dio.options, 'product-category/delete/$cateId',
-                queryParameters: queryParameters, data: _data)
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+        _setStreamType<ResponseModel<dynamic>>(
+            Options(method: 'DELETE', headers: _headers, extra: _extra)
+                .compose(_dio.options, 'product-category/delete/$cateId',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<dynamic>.fromJson(
       _result.data!,
       (json) => json as dynamic,
@@ -188,10 +195,11 @@ class _ProductApi implements ProductApi {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<Product>>(
-            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+            Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'product/$proId',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
@@ -208,6 +216,7 @@ class _ProductApi implements ProductApi {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final _data = FormData();
     if (name != null) {
       _data.fields.add(MapEntry('name', name));
@@ -235,7 +244,7 @@ class _ProductApi implements ProductApi {
     }
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<dynamic>>(
-            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+            Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'product',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
@@ -260,6 +269,7 @@ class _ProductApi implements ProductApi {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final _data = FormData();
     if (name != null) {
       _data.fields.add(MapEntry('name', name));
@@ -290,7 +300,7 @@ class _ProductApi implements ProductApi {
     }
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<dynamic>>(
-            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+            Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'product/$prodId',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
@@ -306,13 +316,14 @@ class _ProductApi implements ProductApi {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ResponseModel<dynamic>>(Options(
-                method: 'DELETE', headers: <String, dynamic>{}, extra: _extra)
-            .compose(_dio.options, 'product/delete/$prodId',
-                queryParameters: queryParameters, data: _data)
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+        _setStreamType<ResponseModel<dynamic>>(
+            Options(method: 'DELETE', headers: _headers, extra: _extra)
+                .compose(_dio.options, 'product/delete/$prodId',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<dynamic>.fromJson(
       _result.data!,
       (json) => json as dynamic,

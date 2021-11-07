@@ -17,10 +17,11 @@ class _NotificationApi implements NotificationApi {
   Future<ResponseModel<NotificationCount>> getNotificationCount() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<NotificationCount>>(
-            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+            Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'notification/count-not-read',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
@@ -42,10 +43,11 @@ class _NotificationApi implements NotificationApi {
       r'keyword': keyword
     };
     queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<PageData<Notification>>>(
-            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+            Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'notification',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
@@ -60,13 +62,14 @@ class _NotificationApi implements NotificationApi {
   Future<ResponseModel<dynamic>> deleteAll() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ResponseModel<dynamic>>(Options(
-                method: 'DELETE', headers: <String, dynamic>{}, extra: _extra)
-            .compose(_dio.options, 'notification/delete/all',
-                queryParameters: queryParameters, data: _data)
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+        _setStreamType<ResponseModel<dynamic>>(
+            Options(method: 'DELETE', headers: _headers, extra: _extra)
+                .compose(_dio.options, 'notification/delete/all',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<dynamic>.fromJson(
       _result.data!,
       (json) => json as dynamic,
@@ -79,13 +82,14 @@ class _NotificationApi implements NotificationApi {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ResponseModel<dynamic>>(Options(
-                method: 'DELETE', headers: <String, dynamic>{}, extra: _extra)
-            .compose(_dio.options, 'notification/delete/$id',
-                queryParameters: queryParameters, data: _data)
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+        _setStreamType<ResponseModel<dynamic>>(
+            Options(method: 'DELETE', headers: _headers, extra: _extra)
+                .compose(_dio.options, 'notification/delete/$id',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<dynamic>.fromJson(
       _result.data!,
       (json) => json as dynamic,
@@ -98,10 +102,11 @@ class _NotificationApi implements NotificationApi {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'id': notificationId};
     queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<Notification>>(
-            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+            Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'notification/$id',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
@@ -116,11 +121,12 @@ class _NotificationApi implements NotificationApi {
   Future<ResponseModel<dynamic>> updateStatus({required body}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body.toJson());
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<dynamic>>(
-            Options(method: 'POST', headers: <String, dynamic>{}, extra: _extra)
+            Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'notification/update-status',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
