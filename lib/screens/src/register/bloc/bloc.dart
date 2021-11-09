@@ -13,6 +13,11 @@ class RegisterScreenBloc extends Cubit<SingleModel<RegisterBody>> {
       {String name,
       String phone,
       String email,
+      String brandName,
+      String location,
+      City city,
+      District district,
+      Ward ward,
       String password,
       String code,
       bool isAcceptPolicy = false}) {
@@ -23,6 +28,11 @@ class RegisterScreenBloc extends Cubit<SingleModel<RegisterBody>> {
           name: name,
           phone: phone,
           email: email,
+          brandName: brandName,
+          location: location,
+          city: city,
+          district: district,
+          ward: ward,
           password: password,
           code: code,
         )),
@@ -48,6 +58,12 @@ class RegisterScreenBloc extends Cubit<SingleModel<RegisterBody>> {
                   ..code = code));
               case ErrorCode.EMAIL_CODE:
                 return emit(EmailErrorModel.copy(state
+                  ..loading = false
+                  ..error = error
+                  ..code = code));
+              case ErrorCode.CITY_ID_CODE:
+              case ErrorCode.DISTRICT_ID_CODE:
+                return emit(AddressErrorModel.copy(state
                   ..loading = false
                   ..error = error
                   ..code = code));
@@ -96,6 +112,16 @@ class NameErrorModel extends SingleModel<RegisterBody> {
 
 class PhoneErrorModel extends SingleModel<RegisterBody> {
   PhoneErrorModel.copy(SingleModel old) {
+    this
+      ..loading = old?.loading
+      ..item = old?.item
+      ..error = old?.error
+      ..code = old?.code;
+  }
+}
+
+class AddressErrorModel extends SingleModel<RegisterBody> {
+  AddressErrorModel.copy(SingleModel old) {
     this
       ..loading = old?.loading
       ..item = old?.item
