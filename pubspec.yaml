@@ -52,7 +52,7 @@ dev_dependencies:
   # Tools to write binaries that run builders(In this project, we use it
   # for json_serializable, retrofit)
   build_runner: ^1.11.1
-  retrofit_generator: ^1.4.1+2
+  retrofit_generator: 1.4.1+2
 
 
 # For information on the generic Dart part of this file, see the
