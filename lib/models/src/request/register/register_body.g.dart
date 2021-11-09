@@ -20,5 +20,10 @@ Map<String, dynamic> _$RegisterBodyToJson(RegisterBody instance) {
   writeNotNull('password', instance.password);
   writeNotNull('email', instance.email);
   writeNotNull('code', instance.code);
+  writeNotNull('brand_name', instance.brandName);
+  writeNotNull('location', instance.location);
+  writeNotNull('city_id', _cityToJson(instance.city));
+  writeNotNull('district_id', _districtToJson(instance.district));
+  writeNotNull('wards_id', _wardToJson(instance.ward));
   return val;
 }
