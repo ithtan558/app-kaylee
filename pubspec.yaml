@@ -16,20 +16,11 @@ dependencies:
     sdk: flutter
   flutter:
     sdk: flutter
-  json_annotation: ^4.3.0
-  permission_handler: 8.1.6
-  image_picker: ^0.8.4+4
-  extended_masked_text: ^2.3.1
-  esc_pos_printer: ^4.1.0
-  video_player: ^2.2.7
-  chewie: ^1.2.2
   bluetooth_print:
     #    path: ../../../FlutterProjects/my_packages/bluetooth_print
     git:
       url: https://github.com/tungpham6195/bluetooth_print.git
       ref: 3.0.3
-  app_settings: ^4.1.1
-  firebase_remote_config: ^0.11.0+2
   anth_package:
     path: ../anth_package
 #    git:
@@ -37,6 +28,7 @@ dependencies:
 #      ref: 1.0.3
 
 dependency_overrides:
+  #  chewie package didn't upgrade to provider: ^6.0.0 yet
   provider: ^6.0.1
 
 dev_dependencies:
