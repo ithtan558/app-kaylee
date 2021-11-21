@@ -21,9 +21,8 @@ dependencies:
   image_picker: ^0.8.4+4
   extended_masked_text: ^2.3.1
   esc_pos_printer: ^4.1.0
-  video_player: ^2.2.6
+  video_player: ^2.2.7
   chewie: ^1.2.2
-  printing: ^5.6.0
   bluetooth_print:
     #    path: ../../../FlutterProjects/my_packages/bluetooth_print
     git:
@@ -48,7 +47,7 @@ dev_dependencies:
   flutter_driver:
     sdk: flutter
   json_serializable: ^6.0.1
-  build_runner: ^2.1.4
+  build_runner: ^2.1.5
   retrofit_generator: 2.0.1+2
   flutter_lints: ^1.0.4
   mockito: ^5.0.16
