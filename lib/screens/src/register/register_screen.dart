@@ -30,17 +30,20 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
   final emailFocus = FocusNode();
   final passFocus = FocusNode();
   final codeFocus = FocusNode();
+  final brandNameFocus = FocusNode();
 
   final nameTController = TextEditingController();
   final phoneTController = TextEditingController();
   final emailTController = TextEditingController();
   final passTController = TextEditingController();
   final codeTController = TextEditingController();
+  final brandNameTfController = TextEditingController();
 
   //todo tạm thời chưa data thật cho dialog policy, sẽ bị apple reject => ẩn ui chỗ này
   bool isAcceptPolicy = true;
 
   RegisterScreenBloc get _bloc => context.bloc<RegisterScreenBloc>()!;
+  final addressController = KayleeFullAddressController();
 
   @override
   void dispose() {
@@ -49,11 +52,13 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
     emailTController.dispose();
     passTController.dispose();
     codeTController.dispose();
+    brandNameTfController.dispose();
     nameFocus.dispose();
     phoneFocus.dispose();
     emailFocus.dispose();
     passFocus.dispose();
     codeFocus.dispose();
+    brandNameFocus.dispose();
     super.dispose();
   }
 
@@ -86,6 +91,9 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
                     }
                     if (state is EmailErrorModel) {
                       return emailFocus.requestFocus();
+                    }
+                    if (state is AddressErrorModel) {
+                      return addressController.focusAddress();
                     }
                     if (state is PasswordErrorModel) {
                       return passFocus.requestFocus();
@@ -170,6 +178,24 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: Dimens.px16)
                       .copyWith(bottom: Dimens.px16),
+                  child: KayleeTextField.normal(
+                    title: Strings.tenCuaHang,
+                    hint: Strings.hoTenHint,
+                    controller: brandNameTfController,
+                    focusNode: brandNameFocus,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: Dimens.px16)
+                      .copyWith(bottom: Dimens.px16),
+                  child: KayleeFullAddressInput(
+                    title: Strings.diaChiHienTai,
+                    controller: addressController,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: Dimens.px16)
+                      .copyWith(bottom: Dimens.px16),
                   child: KayleeTextField.password(
                     focusNode: passFocus,
                     controller: passTController,
@@ -221,6 +247,11 @@ class _RegisterScreenState extends KayleeState<RegisterScreen> {
                             name: nameTController.text,
                             phone: phoneTController.text,
                             email: emailTController.text,
+                            brandName: brandNameTfController.text,
+                            location: addressController.address,
+                            city: addressController.city,
+                            district: addressController.district,
+                            ward: addressController.ward,
                             password: passTController.text,
                             code: codeTController.text,
                             isAcceptPolicy: isAcceptPolicy);
