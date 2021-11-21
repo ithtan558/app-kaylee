@@ -61,8 +61,8 @@ class RegisterScreenBloc extends Cubit<SingleModel<RegisterBody>> {
                   ..loading = false
                   ..error = error
                   ..code = code));
-              case ErrorCode.CITY_ID_CODE:
-              case ErrorCode.DISTRICT_ID_CODE:
+              case ErrorCode.cityIdCode:
+              case ErrorCode.districtIdCode:
                 return emit(AddressErrorModel.copy(state
                   ..loading = false
                   ..error = error
@@ -123,10 +123,10 @@ class PhoneErrorModel extends SingleModel<RegisterBody> {
 class AddressErrorModel extends SingleModel<RegisterBody> {
   AddressErrorModel.copy(SingleModel old) {
     this
-      ..loading = old?.loading
-      ..item = old?.item
-      ..error = old?.error
-      ..code = old?.code;
+      ..loading = old.loading
+      ..item = old.item
+      ..error = old.error
+      ..code = old.code;
   }
 }
 

@@ -30,24 +30,24 @@ class RegisterBody {
   String? password;
   String? email;
   String? code;
-  String brandName;
-  String location;
+  String? brandName;
+  String? location;
   @JsonKey(toJson: _cityToJson, name: 'city_id')
-  City city;
+  City? city;
   @JsonKey(toJson: _districtToJson, name: 'district_id')
-  District district;
+  District? district;
   @JsonKey(toJson: _wardToJson, name: 'wards_id')
-  Ward ward;
+  Ward? ward;
 }
 
-int _cityToJson(City city) {
+int? _cityToJson(City? city) {
   return city?.id;
 }
 
-int _districtToJson(District district) {
+int? _districtToJson(District? district) {
   return district?.id;
 }
 
-int _wardToJson(Ward ward) {
+int? _wardToJson(Ward? ward) {
   return ward?.id;
 }
