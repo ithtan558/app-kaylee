@@ -5,19 +5,15 @@ import 'package:kaylee/components/src/printer/bluetooth_printer_module.dart';
 import 'package:kaylee/models/models.dart';
 
 class SplashScreenBloc extends BaseBloc {
-  SplashScreenBloc();
-
-  @override
-  Stream mapEventToState(event) async* {
-    if (event is LoadedSharedPrefSplashScrEvent) {
-      yield LoadedSharedPrefSplashScrState();
-    } else if (event is GoToHomeScreenSplashScrEvent) {
-      yield GoToHomeScreenSplashScrState();
-    } else if (event is LoadedUserInfoEvent) {
-      yield LoadedUserInfoState(userInfo: event.userInfo);
-    } else if (event is ErrorLoadInfoEvent) {
-      yield ErrorLoadInfoState(event.code, error: event.error);
-    }
+  SplashScreenBloc() {
+    on<LoadedSharedPrefSplashScrEvent>(
+        (event, emit) => {emit(LoadedSharedPrefSplashScrState())});
+    on<GoToHomeScreenSplashScrEvent>(
+        (event, emit) => {emit(GoToHomeScreenSplashScrState())});
+    on<LoadedUserInfoEvent>(
+        (event, emit) => {emit(LoadedUserInfoState(userInfo: event.userInfo))});
+    on<ErrorLoadInfoEvent>((event, emit) =>
+        {emit(ErrorLoadInfoState(event.code, error: event.error))});
   }
 
   void config() async {

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:anth_package/anth_package.dart';
@@ -34,8 +35,13 @@ Future<void> initialize() async {
   await Firebase.initializeApp();
 }
 
-Widget initializeApplication(ApplicationConfig applicationConfig) {
-  return KayLeeApplication.newInstance(appConfig: applicationConfig);
+void runApplication(ApplicationConfig applicationConfig) {
+  BlocOverrides.runZoned(
+    () {
+      runApp(KayLeeApplication.newInstance(appConfig: applicationConfig));
+    },
+    blocObserver: KayleeBlocObserver(),
+  );
 }
 
 class KayLeeApplication extends StatefulWidget {
@@ -94,6 +100,7 @@ class KayLeeApplication extends StatefulWidget {
 class _KayLeeApplicationState extends BaseState<KayLeeApplication>
     with Routing, KayleeRouting {
   AppBloc get _appBloc => context.read<AppBloc>();
+  late final StreamSubscription _appBlocSub;
 
   FcmModule get fcm => context.fcm;
   final _navigatorStateKey = GlobalKey<NavigatorState>();
@@ -101,20 +108,19 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
   @override
   void initState() {
     super.initState();
-    Bloc.observer = KayleeBlocObserver(
-      change: (cubit, change) {
-        if (change.nextState is UpdateProfileState) {
-          final userInfo = change.nextState.userInfo;
-          context.user
-              .updateUserInfo(context.user.getUserInfo()..userInfo = userInfo);
-          context.read<ReloadBloc>().reload(widget: ProfileWidget);
-        }
-      },
-    );
 
     if (Platform.isIOS) {
       FirebaseMessaging.instance.requestPermission().then((settings) {});
     }
+
+    _appBlocSub = _appBloc.stream.listen((state) {
+      if (state is UpdateProfileState) {
+        final userInfo = state.userInfo;
+        context.user
+            .updateUserInfo(context.user.getUserInfo()..userInfo = userInfo);
+        context.read<ReloadBloc>().reload(widget: ProfileWidget);
+      }
+    });
 
     _handleRequestInterceptor();
   }
@@ -131,12 +137,12 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
                 'version': _appBloc.packageInfo?.buildNumber ?? '',
                 if (context.user.getUserInfo().token.isNotNullAndEmpty)
                   HttpHeaders.authorizationHeader:
-                      context.user.getUserInfo().requestToken
+                  context.user.getUserInfo().requestToken
               });
           },
           onResponse: (response, handler) {
             final responseModel =
-                ResponseModel.fromJson(response.data, (json) => null);
+            ResponseModel.fromJson(response.data, (json) => null);
             if (response.requestOptions.path == 'check-expired') {
               context.read<ReloadBloc>().forceReloadAllState();
             }
@@ -149,18 +155,18 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
           },
           onError: (error, handler) {
             final responseModel =
-                ResponseModel.fromJson(error.response?.data, (json) => null);
+            ResponseModel.fromJson(error.response?.data, (json) => null);
             if (error.response != null) {
               if (error.response!.statusCode == HttpStatus.unauthorized) {
                 if (responseModel.error?.code != null &&
                     responseModel.error!.code == ErrorCode.expirationCode) {
                   _appBloc.expired(error: responseModel.error!);
                   (error.response!.data as Map<String, dynamic>)['errors'] =
-                      null;
+                  null;
                 } else {
                   _appBloc.unauthorized(error: responseModel.error!);
                   (error.response!.data as Map<String, dynamic>)['errors'] =
-                      null;
+                  null;
                 }
               } else if (error.response!.statusCode == HttpStatus.badRequest &&
                   responseModel.error?.code != null &&
@@ -179,6 +185,12 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
           requestBody: true,
         )
       ]);
+  }
+
+  @override
+  void dispose() {
+    _appBlocSub.cancel();
+    super.dispose();
   }
 
   @override
@@ -260,6 +272,6 @@ void _registerServices() {
   locator.registerSingleton<KayleeNetwork>(KayleeNetwork());
   locator.registerFactory<ApiProvider>(() => ApiProviderImpl(locator.network));
   locator.registerFactory<ServiceProvider>(
-      () => ServiceProviderImpl(locator.apis));
+          () => ServiceProviderImpl(locator.apis));
   locator.registerFactory<ReceiptDocument>(() => PdfDocument());
 }
