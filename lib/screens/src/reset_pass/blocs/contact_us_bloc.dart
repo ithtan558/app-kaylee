@@ -6,12 +6,9 @@ class ContactUsBloc extends BaseBloc {
   Content? _content;
   CommonApi commonService;
 
-  ContactUsBloc(this.commonService);
-
-  @override
-  Stream mapEventToState(event) async* {
-    if (event is LoadContactResetPassScrEvent) {
-      yield LoadingState();
+  ContactUsBloc(this.commonService) {
+    on<LoadContactResetPassScrEvent>((event, emit) {
+      emit(LoadingState());
       RequestHandler(
         request: commonService.getContent(Content.contactUsHashtag),
         onSuccess: ({message, result}) {
@@ -22,11 +19,10 @@ class ContactUsBloc extends BaseBloc {
           errorEvent(code, error: error);
         },
       );
-    } else if (event is SuccessLoadContactResetPassScrEvent) {
-      yield SuccessLoadContactUsState(event.content);
-    } else if (event is ErrorEvent) {
-      yield* errorState(event);
-    }
+    });
+    on<SuccessLoadContactResetPassScrEvent>(
+        (event, emit) => emit(SuccessLoadContactUsState(event.content)));
+    on<ErrorEvent>((event, emit) => emit(errorState(event)));
   }
 
   void getContact() {
