@@ -153,16 +153,12 @@ class _PolicyViewState extends KayleeState<_PolicyView> {
 class _PolicyViewBloc extends BaseBloc {
   CommonApi commonService;
 
-  _PolicyViewBloc(this.commonService);
-
-  @override
-  Stream mapEventToState(e) async* {
-    if (e is ErrorEvent) {
-      yield* errorState(e);
-    } else if (e is _SuccessPolicyViewEvent) {
-      yield _SuccessPolicyViewState(e.content);
-    } else if (e is _LoadPolicyViewEvent) {
-      yield LoadingState();
+  _PolicyViewBloc(this.commonService) {
+    on<ErrorEvent>((event, emit) => emit(errorState(event)));
+    on<_SuccessPolicyViewEvent>(
+        (event, emit) => emit(_SuccessPolicyViewState(event.content)));
+    on<_LoadPolicyViewEvent>((event, emit) {
+      emit(LoadingState());
       RequestHandler(
         request: commonService.getContent(Content.policyHashtag),
         onSuccess: ({message, result}) {
@@ -172,7 +168,7 @@ class _PolicyViewBloc extends BaseBloc {
           errorEvent(code, error: error);
         },
       );
-    }
+    });
   }
 
   void loadPolicy() {

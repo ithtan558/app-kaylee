@@ -8,16 +8,9 @@ import 'event.dart';
 class LoginScreenBloc extends BaseBloc {
   UserApi userService;
 
-  LoginScreenBloc({required this.userService});
-
-  @override
-  Stream mapEventToState(event) async* {
-    if (event is PhoneLoginScrErrorEvent) {
-      yield PhoneLoginScrErrorState(event.message);
-    } else if (event is PassLoginScrErrorEvent) {
-      yield PassLoginScrErrorState(event.message);
-    } else if (event is DoSignInLoginScrEvent) {
-      yield LoadingState();
+  LoginScreenBloc({required this.userService}) {
+    on<DoSignInLoginScrEvent>((event, emit) {
+      emit(LoadingState());
       RequestHandler(
         request: userService.login(event.body),
         onSuccess: ({message, result}) {
@@ -35,15 +28,14 @@ class LoginScreenBloc extends BaseBloc {
           }
         },
       );
-    } else if (event is ErrorEvent) {
-      yield* errorState(event);
-    } else if (event is PhoneLoginScrErrorEvent) {
-      yield PhoneLoginScrErrorState(event.message);
-    } else if (event is PassLoginScrErrorEvent) {
-      yield PassLoginScrErrorState(event.message);
-    } else if (event is SuccessLoginScrEvent) {
-      yield SuccessLoginScrState(event.message, event.result);
-    }
+    });
+    on<ErrorEvent>((event, emit) => emit(errorState(event)));
+    on<PhoneLoginScrErrorEvent>(
+        (event, emit) => emit(PhoneLoginScrErrorState(event.message)));
+    on<PassLoginScrErrorEvent>(
+        (event, emit) => emit(PassLoginScrErrorState(event.message)));
+    on<SuccessLoginScrEvent>((event, emit) =>
+        emit(SuccessLoginScrState(event.message, event.result)));
   }
 
   void doLogin(LoginBody body) {
