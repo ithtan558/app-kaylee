@@ -1,10 +1,13 @@
-import 'dart:io';
-
 import 'package:anth_package/anth_package.dart';
-import 'package:kaylee/core/network/ignore_handshake_http_override.dart';
+import 'package:dio/adapter.dart';
 
 class KayleeNetwork extends Network {
   KayleeNetwork() : super() {
-    HttpOverrides.global = IgnoreHandShakeHttpOverrides();
+    (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+        (client) {
+      client.badCertificateCallback = (cert, host, port) {
+        return true;
+      };
+    };
   }
 }
