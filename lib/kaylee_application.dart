@@ -35,7 +35,8 @@ Future<void> initialize() async {
   await Firebase.initializeApp();
 }
 
-void runApplication(ApplicationConfig applicationConfig) {
+void runApplication(ApplicationConfig applicationConfig) async {
+  await initialize();
   BlocOverrides.runZoned(
     () {
       runApp(KayLeeApplication.newInstance(appConfig: applicationConfig));
@@ -142,7 +143,7 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
           },
           onResponse: (response, handler) {
             final responseModel =
-            ResponseModel.fromJson(response.data, (json) => null);
+                ResponseModel.fromJson(response.data, (json) => null);
             if (response.requestOptions.path == 'check-expired') {
               context.read<ReloadBloc>().forceReloadAllState();
             }
@@ -155,18 +156,18 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
           },
           onError: (error, handler) {
             final responseModel =
-            ResponseModel.fromJson(error.response?.data, (json) => null);
+                ResponseModel.fromJson(error.response?.data, (json) => null);
             if (error.response != null) {
               if (error.response!.statusCode == HttpStatus.unauthorized) {
                 if (responseModel.error?.code != null &&
                     responseModel.error!.code == ErrorCode.expirationCode) {
                   _appBloc.expired(error: responseModel.error!);
                   (error.response!.data as Map<String, dynamic>)['errors'] =
-                  null;
+                      null;
                 } else {
                   _appBloc.unauthorized(error: responseModel.error!);
                   (error.response!.data as Map<String, dynamic>)['errors'] =
-                  null;
+                      null;
                 }
               } else if (error.response!.statusCode == HttpStatus.badRequest &&
                   responseModel.error?.code != null &&
@@ -272,6 +273,6 @@ void _registerServices() {
   locator.registerSingleton<KayleeNetwork>(KayleeNetwork());
   locator.registerFactory<ApiProvider>(() => ApiProviderImpl(locator.network));
   locator.registerFactory<ServiceProvider>(
-          () => ServiceProviderImpl(locator.apis));
+      () => ServiceProviderImpl(locator.apis));
   locator.registerFactory<ReceiptDocument>(() => PdfDocument());
 }

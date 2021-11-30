@@ -1,7 +1,6 @@
 import 'package:kaylee/application_config.dart';
 import 'package:kaylee/kaylee_application.dart';
 
-void main() async {
-  await initialize();
+void main() {
   runApplication(DevelopmentAppConfig());
 }
