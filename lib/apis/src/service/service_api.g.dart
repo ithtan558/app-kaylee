@@ -69,7 +69,7 @@ class _ServiceApi implements ServiceApi {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<ServiceCate>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'service-category/$cateId',
+                .compose(_dio.options, 'service-category/${cateId}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<ServiceCate>.fromJson(
@@ -131,7 +131,7 @@ class _ServiceApi implements ServiceApi {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<dynamic>>(
             Options(method: 'POST', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'service-category/$cateId',
+                .compose(_dio.options, 'service-category/${cateId}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<dynamic>.fromJson(
@@ -151,7 +151,7 @@ class _ServiceApi implements ServiceApi {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<dynamic>>(
             Options(method: 'DELETE', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'service-category/delete/$cateId',
+                .compose(_dio.options, 'service-category/delete/${cateId}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<dynamic>.fromJson(
@@ -303,7 +303,7 @@ class _ServiceApi implements ServiceApi {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<dynamic>>(
             Options(method: 'POST', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'service/$serviceId',
+                .compose(_dio.options, 'service/${serviceId}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<dynamic>.fromJson(
@@ -323,7 +323,7 @@ class _ServiceApi implements ServiceApi {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<Service>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'service/$serviceId',
+                .compose(_dio.options, 'service/${serviceId}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<Service>.fromJson(
@@ -343,7 +343,7 @@ class _ServiceApi implements ServiceApi {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<Service>>(
             Options(method: 'DELETE', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'service/delete/$serviceId}',
+                .compose(_dio.options, 'service/delete/${serviceId}}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<Service>.fromJson(

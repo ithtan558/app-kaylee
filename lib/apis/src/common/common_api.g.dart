@@ -22,7 +22,7 @@ class _CommonApi implements CommonApi {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<Content>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'content/$hashtag',
+                .compose(_dio.options, 'content/${hashtag}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<Content>.fromJson(
@@ -62,7 +62,7 @@ class _CommonApi implements CommonApi {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<List<District>>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'district/list-by-city/$city',
+                .compose(_dio.options, 'district/list-by-city/${city}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<List<District>>.fromJson(
@@ -83,7 +83,7 @@ class _CommonApi implements CommonApi {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<List<Ward>>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'wards/list-by-district/$district',
+                .compose(_dio.options, 'wards/list-by-district/${district}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<List<Ward>>.fromJson(

@@ -70,7 +70,7 @@ class _BrandApi implements BrandApi {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<Brand>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'brand/$brandId',
+                .compose(_dio.options, 'brand/${brandId}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<Brand>.fromJson(
@@ -193,7 +193,7 @@ class _BrandApi implements BrandApi {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<dynamic>>(
             Options(method: 'POST', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'brand/$brandId',
+                .compose(_dio.options, 'brand/${brandId}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<dynamic>.fromJson(
@@ -213,7 +213,7 @@ class _BrandApi implements BrandApi {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<dynamic>>(
             Options(method: 'DELETE', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'brand/delete/$brandId',
+                .compose(_dio.options, 'brand/delete/${brandId}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<dynamic>.fromJson(

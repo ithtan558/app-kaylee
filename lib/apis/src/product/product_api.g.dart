@@ -98,7 +98,7 @@ class _ProductApi implements ProductApi {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<ProdCate>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'product-category/$cateId',
+                .compose(_dio.options, 'product-category/${cateId}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<ProdCate>.fromJson(
@@ -160,7 +160,7 @@ class _ProductApi implements ProductApi {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<dynamic>>(
             Options(method: 'POST', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'product-category/$cateId',
+                .compose(_dio.options, 'product-category/${cateId}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<dynamic>.fromJson(
@@ -180,7 +180,7 @@ class _ProductApi implements ProductApi {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<dynamic>>(
             Options(method: 'DELETE', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'product-category/delete/$cateId',
+                .compose(_dio.options, 'product-category/delete/${cateId}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<dynamic>.fromJson(
@@ -200,7 +200,7 @@ class _ProductApi implements ProductApi {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<Product>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'product/$proId',
+                .compose(_dio.options, 'product/${proId}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<Product>.fromJson(
@@ -301,7 +301,7 @@ class _ProductApi implements ProductApi {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<dynamic>>(
             Options(method: 'POST', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'product/$prodId',
+                .compose(_dio.options, 'product/${prodId}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<dynamic>.fromJson(
@@ -321,7 +321,7 @@ class _ProductApi implements ProductApi {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<dynamic>>(
             Options(method: 'DELETE', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'product/delete/$prodId',
+                .compose(_dio.options, 'product/delete/${prodId}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<dynamic>.fromJson(

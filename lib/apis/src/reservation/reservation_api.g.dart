@@ -60,7 +60,7 @@ class _ReservationApi implements ReservationApi {
         _setStreamType<ResponseModel<dynamic>>(
             Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(
-                    _dio.options, 'reservation/update-status/$reservationId',
+                    _dio.options, 'reservation/update-status/${reservationId}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<dynamic>.fromJson(
@@ -185,7 +185,7 @@ class _ReservationApi implements ReservationApi {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<dynamic>>(
             Options(method: 'POST', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'reservation/$reservationId',
+                .compose(_dio.options, 'reservation/${reservationId}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<dynamic>.fromJson(
@@ -205,7 +205,7 @@ class _ReservationApi implements ReservationApi {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<Reservation>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'reservation/$id',
+                .compose(_dio.options, 'reservation/${id}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<Reservation>.fromJson(

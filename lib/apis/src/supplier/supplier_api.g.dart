@@ -48,7 +48,7 @@ class _SupplierApi implements SupplierApi {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<Supplier>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'supplier/$supplierId',
+                .compose(_dio.options, 'supplier/${supplierId}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<Supplier>.fromJson(

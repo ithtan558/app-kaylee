@@ -87,7 +87,7 @@ class _NotificationApi implements NotificationApi {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<dynamic>>(
             Options(method: 'DELETE', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'notification/delete/$id',
+                .compose(_dio.options, 'notification/delete/${id}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<dynamic>.fromJson(
@@ -107,7 +107,7 @@ class _NotificationApi implements NotificationApi {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ResponseModel<Notification>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'notification/$id',
+                .compose(_dio.options, 'notification/${id}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<Notification>.fromJson(
