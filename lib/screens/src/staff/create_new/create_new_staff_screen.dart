@@ -4,12 +4,11 @@ import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/base/reload_bloc.dart';
-import 'package:kaylee/kaylee_application.dart';
+import 'package:kaylee/locator/locator.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/staff/create_new/bloc/staff_detail_screen_bloc.dart';
-import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class NewStaffScreenData {
@@ -24,7 +23,7 @@ enum NewStaffScreenOpenFrom { staffItem, addNewStaffBtn }
 class CreateNewStaffScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<StaffDetailScreenBloc>(
         create: (context) => StaffDetailScreenBloc(
-            employeeService: locator.apis.provideEmployeeApi(),
+            employeeService: context.api.employee,
             employee: context.getArguments<NewStaffScreenData>()!.employee),
         child: const CreateNewStaffScreen(),
       );

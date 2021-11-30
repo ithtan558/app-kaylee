@@ -16,9 +16,9 @@ class _RepositoriesModule implements RepositoriesModule {
 
   @override
   VerifyOtpRepository get verifyOtpForForgotPassword =>
-      VerifyOtpRepository.forResetPassword(_network.provideUserApi());
+      VerifyOtpRepository.forResetPassword(_network.user);
 
   @override
   VerifyOtpRepository get verifyOtpForRegister =>
-      VerifyOtpRepository.forRegister(_network.provideUserApi());
+      VerifyOtpRepository.forRegister(_network.user);
 }

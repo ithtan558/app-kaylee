@@ -2,7 +2,7 @@ import 'package:anth_package/anth_package.dart';
 import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
-import 'package:kaylee/kaylee_application.dart';
+import 'package:kaylee/locator/locator.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/repositories/repositories.dart';
 import 'package:kaylee/res/src/strings.dart';
@@ -39,8 +39,7 @@ class OtpVerifyScreen extends StatefulWidget {
           },
         ),
         BlocProvider(
-          create: (context) =>
-              SendOtpBloc(userService: locator.apis.provideUserApi()),
+          create: (context) => SendOtpBloc(userService: context.api.user),
         ),
       ], child: const OtpVerifyScreen());
 

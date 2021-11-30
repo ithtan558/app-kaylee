@@ -4,11 +4,10 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/base/kaylee_state.dart';
-import 'package:kaylee/kaylee_application.dart';
+import 'package:kaylee/locator/locator.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
-import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 import 'bloc/bloc.dart';
@@ -26,8 +25,7 @@ class LoginScreenData {
 
 class LoginScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<LoginScreenBloc>(
-    create: (context) =>
-            LoginScreenBloc(userService: locator.apis.provideUserApi()),
+    create: (context) => LoginScreenBloc(userService: context.api.user),
         child: const LoginScreen(),
       );
 

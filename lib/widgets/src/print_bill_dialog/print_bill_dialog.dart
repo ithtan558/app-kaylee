@@ -8,7 +8,7 @@ import 'package:flutter/material.dart' hide TextStyle;
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/components/components.dart';
 import 'package:kaylee/components/src/printer/bluetooth_printer_module.dart';
-import 'package:kaylee/kaylee_application.dart';
+import 'package:kaylee/locator/locator.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/printer_detail/blocs/base/printer_detail_base.dart';
@@ -130,8 +130,8 @@ class _PrintBillDialogState extends KayleeState<PrintBillDialog> {
       },
       child: FutureBuilder<pw.Document>(
         future: (_bloc.defaultDevice?.isBluetooth ?? false)
-            ? locator.get<ReceiptDocument>().forRoll57(_order)
-            : locator.get<ReceiptDocument>().forRoll80(_order),
+            ? context.pdfDocument.forRoll57(_order)
+            : context.pdfDocument.forRoll80(_order),
         builder: (context, snapshot) {
           return Column(
             children: [

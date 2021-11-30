@@ -2,19 +2,17 @@ import 'package:anth_package/anth_package.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
-import 'package:kaylee/kaylee_application.dart';
+import 'package:kaylee/locator/locator.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/brand/list/bloc/brand_list_bloc.dart';
 import 'package:kaylee/screens/src/brand/list/widgets/brand_item.dart';
-import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class BrandListScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<BrandListBloc>(
-    create: (context) =>
-            BrandListBloc(brandService: locator.apis.provideBrandApi()),
+    create: (context) => BrandListBloc(brandService: context.api.brand),
         child: const BrandListScreen(),
       );
 

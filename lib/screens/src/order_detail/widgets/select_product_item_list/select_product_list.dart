@@ -4,12 +4,11 @@ import 'package:anth_package/anth_package.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
-import 'package:kaylee/kaylee_application.dart';
+import 'package:kaylee/locator/locator.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/order_detail/widgets/select_product_item_list/bloc/select_prod_cate_bloc.dart';
 import 'package:kaylee/screens/src/order_detail/widgets/select_product_item_list/bloc/select_prod_list_bloc.dart';
-import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class SelectProdList extends StatefulWidget {
@@ -22,12 +21,12 @@ class SelectProdList extends StatefulWidget {
           providers: [
             BlocProvider(
               create: (context) => SelectProdCateBloc(
-                productService: locator.apis.provideProductApi(),
+                productService: context.api.product,
               ),
             ),
             BlocProvider(
               create: (context) => SelectProdListBloc(
-                productService: locator.apis.provideProductApi(),
+                productService: context.api.product,
                 initialData: initialValue,
                 brand: brand,
               ),

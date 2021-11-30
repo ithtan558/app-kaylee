@@ -1,18 +1,17 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
-import 'package:kaylee/kaylee_application.dart';
+import 'package:kaylee/locator/locator.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/reservation/reservation_list/widgets/reservation_item/bloc/bloc.dart';
-import 'package:kaylee/utils/utils.dart';
 
 class ReservationItem extends StatefulWidget {
   static Widget newInstance({required Reservation reservation}) => BlocProvider(
       key: ValueKey(reservation),
       create: (context) => ReservationItemBloc(
-        service: locator.apis.provideReservationApi(),
+        service: context.api.reservation,
             reservation: reservation,
           ),
       child: const ReservationItem._());

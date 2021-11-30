@@ -1,18 +1,17 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
-import 'package:kaylee/kaylee_application.dart';
+import 'package:kaylee/locator/locator.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/commission/detail/bloc/commission_setting_bloc.dart';
-import 'package:kaylee/utils/utils.dart';
 
 class CommissionSettingDialog extends StatefulWidget {
   static Widget newInstance({required ScrollController scrollController}) =>
       BlocProvider(
         create: (context) => CommissionSettingBloc(
           employee: context.repository<Employee>()!,
-          commissionService: locator.apis.provideCommissionApi(),
+          commissionService: context.api.commission,
         ),
         child: CommissionSettingDialog._(
           scrollController: scrollController,

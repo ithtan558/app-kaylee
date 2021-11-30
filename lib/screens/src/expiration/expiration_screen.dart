@@ -5,11 +5,10 @@ import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/base/kaylee_state.dart';
-import 'package:kaylee/kaylee_application.dart';
+import 'package:kaylee/locator/locator.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/expiration/bloc/expiration_screen_bloc.dart';
-import 'package:kaylee/utils/utils.dart';
 
 class ExpirationScreenArgument {
   final bool isExpired;
@@ -20,8 +19,8 @@ class ExpirationScreenArgument {
 class ExpirationScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider(
       create: (context) => ExpirationScreenBloc(
-            commonService: locator.apis.provideCommonApi(),
-            userService: locator.apis.provideUserApi(),
+            commonService: context.api.common,
+            userService: context.api.user,
           ),
       child: const ExpirationScreen());
 

@@ -5,12 +5,11 @@ import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/base/reload_bloc.dart';
-import 'package:kaylee/kaylee_application.dart';
+import 'package:kaylee/locator/locator.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/product/create_new/bloc/prod_detail_screen_bloc.dart';
-import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class NewProdScreenData {
@@ -25,7 +24,7 @@ enum NewProdScreenOpenFrom { prodItem, addNewProdBtn }
 class CreateNewProdScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<ProdDetailScreenBloc>(
         create: (context) => ProdDetailScreenBloc(
-            prodService: locator.apis.provideProductApi(),
+            prodService: context.api.product,
             product: context.getArguments<NewProdScreenData>()!.product),
         child: const CreateNewProdScreen(),
       );

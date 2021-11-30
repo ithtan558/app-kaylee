@@ -6,6 +6,7 @@ import 'package:kaylee/res/res.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
 
+@Injectable(as: ReceiptDocument)
 class PdfDocument extends ReceiptDocument<Order> {
   @override
   Future<Document> forRoll57(Order data) {
@@ -222,7 +223,7 @@ class PdfDocument extends ReceiptDocument<Order> {
     }
 
     return (products?.map(
-      (product) => TableRow(
+          (product) => TableRow(
         children: [
           _getProductCell(
             product.name ?? '',
@@ -234,39 +235,39 @@ class PdfDocument extends ReceiptDocument<Order> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               _getProductCell(
-                CurrencyUtils.formatVNDWithCustomUnit(product.price ?? 0),
+                    CurrencyUtils.formatVNDWithCustomUnit(product.price ?? 0),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  _getProductCell(
+                      CurrencyUtils.formatVNDWithCustomUnit(product.total ?? 0),
+                      textAlign: TextAlign.right),
+                ],
               ),
             ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              _getProductCell(
-                  CurrencyUtils.formatVNDWithCustomUnit(product.total ?? 0),
-                  textAlign: TextAlign.right),
-            ],
-          ),
-        ],
-        decoration: BoxDecoration(
-          border: Border(
-            left: BorderSide(
-              width: Dimens.px3 / ratio,
-              style: BorderStyle.dashed,
-              color: const PdfColor.fromInt(0xff000000),
-            ),
-            right: BorderSide(
-              width: Dimens.px3 / ratio,
-              style: BorderStyle.dashed,
-              color: const PdfColor.fromInt(0xff000000),
-            ),
-            bottom: BorderSide(
-              width: Dimens.px3 / ratio,
-              style: BorderStyle.dashed,
-              color: const PdfColor.fromInt(0xff000000),
+            decoration: BoxDecoration(
+              border: Border(
+                left: BorderSide(
+                  width: Dimens.px3 / ratio,
+                  style: BorderStyle.dashed,
+                  color: const PdfColor.fromInt(0xff000000),
+                ),
+                right: BorderSide(
+                  width: Dimens.px3 / ratio,
+                  style: BorderStyle.dashed,
+                  color: const PdfColor.fromInt(0xff000000),
+                ),
+                bottom: BorderSide(
+                  width: Dimens.px3 / ratio,
+                  style: BorderStyle.dashed,
+                  color: const PdfColor.fromInt(0xff000000),
+                ),
+              ),
             ),
           ),
-        ),
-      ),
     ))?.toList();
   }
 

@@ -5,25 +5,24 @@ import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
-import 'package:kaylee/kaylee_application.dart';
+import 'package:kaylee/locator/locator.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/product/list/bloc/prod_cate_bloc.dart';
 import 'package:kaylee/screens/src/product/list/bloc/prod_list_bloc.dart';
-import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class ProdListScreen extends StatefulWidget {
   static Widget newInstance() => MultiBlocProvider(providers: [
         BlocProvider<ProdCateBloc>(
           create: (context) => ProdCateBloc(
-            productService: locator.apis.provideProductApi(),
+            productService: context.api.product,
           ),
         ),
         BlocProvider<ProdListBloc>(
           create: (context) => ProdListBloc(
-            productService: locator.apis.provideProductApi(),
+            productService: context.api.product,
           ),
         ),
       ], child: const ProdListScreen());

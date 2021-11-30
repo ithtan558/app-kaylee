@@ -6,7 +6,7 @@ import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/base/reload_bloc.dart';
 import 'package:kaylee/components/components.dart';
-import 'package:kaylee/kaylee_application.dart';
+import 'package:kaylee/locator/locator.dart';
 import 'package:kaylee/models/models.dart' hide OrderItem;
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/home/tabs/cashier/cashier_tab.dart';
@@ -40,7 +40,7 @@ class CreateNewOrderScreen extends StatefulWidget {
           providers: [
             BlocProvider(
               create: (context) => OrderDetailBloc(
-                orderService: locator.apis.provideOrderApi(),
+                orderService: context.api.order,
                 order: context.getArguments<NewOrderScreenData>()?.order,
                 cart: context.cart,
               ),

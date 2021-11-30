@@ -3,10 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/apis/apis.dart';
 import 'package:kaylee/base/kaylee_state.dart';
-import 'package:kaylee/kaylee_application.dart';
+import 'package:kaylee/locator/locator.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
-import 'package:kaylee/utils/utils.dart';
 
 class BrandSelectionButton extends StatefulWidget {
   final ValueChanged<Brand>? onChanged;
@@ -90,7 +89,7 @@ class _BrandPickerView extends StatefulWidget {
           required Brand intiValue}) =>
       BlocProvider(
           create: (context) =>
-              _BrandSelectionBloc(brandService: locator.apis.provideBrandApi()),
+              _BrandSelectionBloc(brandService: context.api.brand),
           child: _BrandPickerView._(
             intiValue: intiValue,
             onSelectedItemChanged: onSelectedItemChanged,

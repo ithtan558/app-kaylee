@@ -1,57 +1,58 @@
+import 'package:anth_package/anth_package.dart';
 import 'package:kaylee/apis/api_provider.dart';
 import 'package:kaylee/apis/apis.dart';
-import 'package:kaylee/core/network/kaylee_network.dart';
 
+@Injectable(as: ApiProvider)
 class ApiProviderImpl implements ApiProvider {
-  final KayleeNetwork _network;
+  final Network _network;
 
-  ApiProviderImpl(KayleeNetwork network) : _network = network;
-
-  @override
-  UserApi provideUserApi() => UserApi(_network.dio);
+  ApiProviderImpl(Network network) : _network = network;
 
   @override
-  CommonApi provideCommonApi() => CommonApi(_network.dio);
+  UserApi get user => UserApi(_network.dio);
 
   @override
-  SupplierApi provideSupplierApi() => SupplierApi(_network.dio);
+  CommonApi get common => CommonApi(_network.dio);
 
   @override
-  ProductApi provideProductApi() => ProductApi(_network.dio);
+  SupplierApi get supplier => SupplierApi(_network.dio);
 
   @override
-  NotificationApi provideNotificationApi() => NotificationApi(_network.dio);
+  ProductApi get product => ProductApi(_network.dio);
 
   @override
-  ServiceApi provideServiceApi() => ServiceApi(_network.dio);
+  NotificationApi get notification => NotificationApi(_network.dio);
 
   @override
-  BrandApi provideBrandApi() => BrandApi(_network.dio);
+  ServiceApi get service => ServiceApi(_network.dio);
 
   @override
-  EmployeeApi provideEmployeeApi() => EmployeeApi(_network.dio);
+  BrandApi get brand => BrandApi(_network.dio);
 
   @override
-  CustomerApi provideCustomerApi() => CustomerApi(_network.dio);
+  EmployeeApi get employee => EmployeeApi(_network.dio);
 
   @override
-  RoleApi provideRoleApi() => RoleApi(_network.dio);
+  CustomerApi get customer => CustomerApi(_network.dio);
 
   @override
-  OrderApi provideOrderApi() => OrderApi(_network.dio);
+  RoleApi get role => RoleApi(_network.dio);
 
   @override
-  CommissionApi provideCommissionApi() => CommissionApi(_network.dio);
+  OrderApi get order => OrderApi(_network.dio);
 
   @override
-  ReportApi provideReportApi() => ReportApi(_network.dio);
+  CommissionApi get commission => CommissionApi(_network.dio);
 
   @override
-  ReservationApi provideReservationApi() => ReservationApi(_network.dio);
+  ReportApi get report => ReportApi(_network.dio);
 
   @override
-  CampaignApi provideCampaignApi() => CampaignApi(_network.dio);
+  ReservationApi get reservation => ReservationApi(_network.dio);
 
   @override
-  AdvertiseApi provideAdvertiseApi() => AdvertiseApi(_network.dio);
+  CampaignApi get campaign => CampaignApi(_network.dio);
+
+  @override
+  AdvertiseApi get advertise => AdvertiseApi(_network.dio);
 }

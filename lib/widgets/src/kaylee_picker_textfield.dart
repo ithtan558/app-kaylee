@@ -6,11 +6,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/apis/apis.dart';
 import 'package:kaylee/base/kaylee_state.dart';
-import 'package:kaylee/kaylee_application.dart';
+import 'package:kaylee/locator/locator.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
-import 'package:kaylee/utils/utils.dart';
 
 const types = <Type>[
   City,
@@ -429,13 +428,13 @@ class _PickerViewState<T> extends KayleeState<_PickerView> {
     }
 
     bloc = _PickerViewBloc(
-      commonService: locator.apis.provideCommonApi(),
-      productService: locator.apis.provideProductApi(),
-      servService: locator.apis.provideServiceApi(),
-      brandService: locator.apis.provideBrandApi(),
-      customerService: locator.apis.provideCustomerApi(),
-      roleService: locator.apis.provideRoleApi(),
-      employeeService: locator.apis.provideEmployeeApi(),
+      commonService: context.api.common,
+      productService: context.api.product,
+      servService: context.api.service,
+      brandService: context.api.brand,
+      customerService: context.api.customer,
+      roleService: context.api.role,
+      employeeService: context.api.employee,
       useForFilter: widget.useForFilter,
     );
     loadData();

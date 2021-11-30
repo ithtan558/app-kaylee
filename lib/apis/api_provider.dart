@@ -1,35 +1,35 @@
 import 'package:kaylee/apis/apis.dart';
 
 abstract class ApiProvider {
-  UserApi provideUserApi();
+  UserApi get user;
 
-  CommonApi provideCommonApi();
+  CommonApi get common;
 
-  SupplierApi provideSupplierApi();
+  SupplierApi get supplier;
 
-  ProductApi provideProductApi();
+  ProductApi get product;
 
-  NotificationApi provideNotificationApi();
+  NotificationApi get notification;
 
-  ServiceApi provideServiceApi();
+  ServiceApi get service;
 
-  BrandApi provideBrandApi();
+  BrandApi get brand;
 
-  EmployeeApi provideEmployeeApi();
+  EmployeeApi get employee;
 
-  CustomerApi provideCustomerApi();
+  CustomerApi get customer;
 
-  RoleApi provideRoleApi();
+  RoleApi get role;
 
-  OrderApi provideOrderApi();
+  OrderApi get order;
 
-  CommissionApi provideCommissionApi();
+  CommissionApi get commission;
 
-  ReportApi provideReportApi();
+  ReportApi get report;
 
-  ReservationApi provideReservationApi();
+  ReservationApi get reservation;
 
-  CampaignApi provideCampaignApi();
+  CampaignApi get campaign;
 
-  AdvertiseApi provideAdvertiseApi();
+  AdvertiseApi get advertise;
 }

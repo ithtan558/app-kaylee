@@ -1,19 +1,18 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
-import 'package:kaylee/kaylee_application.dart';
+import 'package:kaylee/locator/locator.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/product/categories/list/bloc/bloc.dart';
 import 'package:kaylee/screens/src/product/categories/list/widgets/prod_cate_item.dart';
-import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class ProdCateListScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider(
       create: (context) => ProCateListScreenBloc(
-        productService: locator.apis.provideProductApi(),
+        productService: context.api.product,
           ),
       child: const ProdCateListScreen());
 

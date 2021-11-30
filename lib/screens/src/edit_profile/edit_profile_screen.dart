@@ -5,7 +5,7 @@ import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/base/kaylee_state.dart';
-import 'package:kaylee/kaylee_application.dart';
+import 'package:kaylee/locator/locator.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/edit_profile/bloc/edit_profile_bloc.dart';
@@ -17,7 +17,7 @@ class EditProfileScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider(
       create: (context) => EditProfileBloc(
         userInfo: context.user.getUserInfo().userInfo!,
-            userService: locator.apis.provideUserApi(),
+            userService: context.api.user,
           ),
       child: const EditProfileScreen());
 

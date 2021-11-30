@@ -1,19 +1,18 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
-import 'package:kaylee/kaylee_application.dart';
+import 'package:kaylee/locator/locator.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/supplier/my_orders/detail/widgets/order_cancelation_reason/bloc/order_cancelation_reason_bloc.dart';
 import 'package:kaylee/screens/src/supplier/my_orders/detail/widgets/order_cancelation_reason/widgets/reason_item.dart';
-import 'package:kaylee/utils/utils.dart';
 
 class OrderCancellationReasonDialog extends StatefulWidget {
   static Widget newInstance(
           {required ValueSetter<OrderCancellationReason> onConfirm}) =>
       BlocProvider(
         create: (context) => OrderCancellationReasonBloc(
-          service: locator.apis.provideOrderApi(),
+          service: context.api.order,
         ),
         child: OrderCancellationReasonDialog._(
           onConfirm: onConfirm,

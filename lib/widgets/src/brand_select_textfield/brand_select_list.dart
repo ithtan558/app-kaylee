@@ -1,10 +1,9 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kaylee/kaylee_application.dart';
+import 'package:kaylee/locator/locator.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
-import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/src/brand_select_textfield/bloc/brand_select_list_bloc.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
@@ -32,7 +31,7 @@ class _BrandSelectListState extends BaseState<BrandSelectList> {
   void initState() {
     super.initState();
     bloc = BrandSelectListBloc(
-      service: locator.apis.provideBrandApi(),
+      service: context.api.brand,
       brands: widget.controller?.brands,
     )..loadBrands();
   }

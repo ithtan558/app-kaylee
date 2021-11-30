@@ -4,20 +4,19 @@ import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/base/reload_bloc.dart';
-import 'package:kaylee/kaylee_application.dart';
+import 'package:kaylee/locator/locator.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/supplier/my_orders/detail/bloc/my_order_detail_bloc.dart';
 import 'package:kaylee/screens/src/supplier/my_orders/detail/widgets/order_cancelation_reason/order_cancelation_reason_dialog.dart';
 import 'package:kaylee/screens/src/supplier/my_orders/detail/widgets/order_prod_item.dart';
-import 'package:kaylee/utils/utils.dart';
 
 class MyOrderDetailScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider(
       create: (context) => MyOrderDetailBloc(
         order: context.getArguments<Order>()!,
-            orderService: locator.apis.provideOrderApi(),
+            orderService: context.api.order,
           ),
       child: const MyOrderDetailScreen());
 

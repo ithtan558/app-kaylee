@@ -4,25 +4,24 @@ import 'package:anth_package/anth_package.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
-import 'package:kaylee/kaylee_application.dart';
+import 'package:kaylee/locator/locator.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/service/list/bloc/service_cate_bloc.dart';
 import 'package:kaylee/screens/src/service/list/bloc/service_list_bloc.dart';
-import 'package:kaylee/utils/utils.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class ServiceListScreen extends StatefulWidget {
   static Widget newInstance() => MultiBlocProvider(providers: [
         BlocProvider<ServiceCateBloc>(
           create: (context) => ServiceCateBloc(
-            servService: locator.apis.provideServiceApi(),
+            servService: context.api.service,
           ),
         ),
         BlocProvider<ServiceListBloc>(
           create: (context) => ServiceListBloc(
-            servService: locator.apis.provideServiceApi(),
+            servService: context.api.service,
           ),
         ),
       ], child: const ServiceListScreen());

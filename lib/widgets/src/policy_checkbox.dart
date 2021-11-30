@@ -2,9 +2,9 @@ import 'package:anth_package/anth_package.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:kaylee/apis/api_provider.dart';
 import 'package:kaylee/apis/apis.dart';
 import 'package:kaylee/base/kaylee_state.dart';
+import 'package:kaylee/locator/locator.dart';
 import 'package:kaylee/models/models.dart';
 
 class PolicyCheckBox extends StatefulWidget {
@@ -62,8 +62,7 @@ class _PolicyCheckBoxState extends BaseState<PolicyCheckBox> {
 class _PolicyView extends StatefulWidget {
   static Widget newInstance({required ScrollController scrollController}) =>
       BlocProvider(
-        create: (context) =>
-            _PolicyViewBloc(context.read<ApiProvider>().provideCommonApi()),
+        create: (context) => _PolicyViewBloc(context.api.common),
         child: _PolicyView._(
           scrollController: scrollController,
         ),

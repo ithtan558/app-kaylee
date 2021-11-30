@@ -9,8 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_it/get_it.dart';
-import 'package:kaylee/apis/api_provider.dart';
-import 'package:kaylee/apis/api_provider_impl.dart';
 import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/application_config.dart';
 import 'package:kaylee/base/json_converter/kaylee_json_convert.dart';
@@ -19,16 +17,13 @@ import 'package:kaylee/base/kaylee_observer.dart';
 import 'package:kaylee/base/kaylee_routing.dart';
 import 'package:kaylee/base/reload_bloc.dart';
 import 'package:kaylee/components/components.dart';
-import 'package:kaylee/core/network/kaylee_network.dart';
+import 'package:kaylee/locator/locator.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/home/tabs/account/widgets/profile_widget.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/notification_button/bloc.dart';
-import 'package:kaylee/services/services.dart';
 import 'package:kaylee/utils/utils.dart';
-
-GetIt locator = GetIt.I;
 
 Future<void> initialize() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,11 +43,15 @@ void runApplication(ApplicationConfig applicationConfig) async {
 class KayLeeApplication extends StatefulWidget {
   static Widget newInstance({required ApplicationConfig appConfig}) {
     JsonConverterBuilder.init(KayleeJsonConverter());
-    _registerServices();
+    final locator = configLocator();
+
     return MultiRepositoryProvider(
       providers: [
+        RepositoryProvider<GetIt>.value(
+          value: locator,
+        ),
         RepositoryProvider<RepositoriesModule>(
-          create: (context) => RepositoriesModule.init(locator.apis),
+          create: (context) => RepositoriesModule.init(context.api),
         ),
         RepositoryProvider<UserModule>(
           create: (_) => UserModule.init(),
@@ -73,8 +72,8 @@ class KayLeeApplication extends StatefulWidget {
       child: MultiBlocProvider(providers: [
         BlocProvider(
           create: (context) => AppBloc(
-            userService: locator.apis.provideUserApi(),
-            campaignService: locator.apis.provideCampaignApi(),
+            userService: context.api.user,
+            campaignService: context.api.campaign,
           ),
         ),
         BlocProvider(
@@ -85,7 +84,7 @@ class KayLeeApplication extends StatefulWidget {
         ),
         BlocProvider(
           create: (context) => NotiButtonBloc(
-            service: locator.apis.provideNotificationApi(),
+            service: context.api.notification,
           ),
         ),
       ], child: const KayLeeApplication()),
@@ -127,7 +126,7 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
   }
 
   void _handleRequestInterceptor() {
-    locator.network.dio.interceptors
+    context.network.dio.interceptors
       ..clear()
       ..addAll([
         InterceptorsWrapper(
@@ -206,7 +205,7 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
         } else if (state is LoggedOutState) {
           context.user.removeUserInfo();
           context.cart.clear();
-          locator.network.dio.options.headers = {};
+          context.network.dio.options.headers = {};
           _navigatorStateKey.currentContext!
               .pushToTop(PageIntent(screen: SplashScreen));
           return;
@@ -267,12 +266,4 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
       ),
     );
   }
-}
-
-void _registerServices() {
-  locator.registerSingleton<KayleeNetwork>(KayleeNetwork());
-  locator.registerFactory<ApiProvider>(() => ApiProviderImpl(locator.network));
-  locator.registerFactory<ServiceProvider>(
-      () => ServiceProviderImpl(locator.apis));
-  locator.registerFactory<ReceiptDocument>(() => PdfDocument());
 }

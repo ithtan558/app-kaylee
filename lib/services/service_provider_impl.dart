@@ -1,3 +1,4 @@
+import 'package:anth_package/anth_package.dart';
 import 'package:kaylee/apis/apis.dart';
 import 'package:kaylee/services/service_provider.dart';
 import 'package:kaylee/services/src/advertise/advertise_service.dart';
@@ -19,6 +20,7 @@ import 'package:kaylee/services/src/report/report_service_impl.dart';
 import 'package:kaylee/services/src/user/user_service.dart';
 import 'package:kaylee/services/src/user/user_service_impl.dart';
 
+@Injectable(as: ServiceProvider)
 class ServiceProviderImpl implements ServiceProvider {
   final ApiProvider _apiProvider;
 
@@ -26,37 +28,35 @@ class ServiceProviderImpl implements ServiceProvider {
 
   @override
   AdvertiseService provideAdvertiseService() =>
-      AdvertiseServiceImpl(advertiseApi: _apiProvider.provideAdvertiseApi());
+      AdvertiseServiceImpl(advertiseApi: _apiProvider.advertise);
 
   @override
-  BrandService provideBrandService() =>
-      BrandServiceImpl(_apiProvider.provideBrandApi());
+  BrandService provideBrandService() => BrandServiceImpl(_apiProvider.brand);
 
   @override
-  UserService provideUserService() =>
-      UserServiceImpl(_apiProvider.provideUserApi());
+  UserService provideUserService() => UserServiceImpl(_apiProvider.user);
 
   @override
   CampaignService provideCampaignService() =>
-      CampaignServiceImpl(_apiProvider.provideCampaignApi());
+      CampaignServiceImpl(_apiProvider.campaign);
 
   @override
   CommissionService provideCommissionService() =>
-      CommissionServiceImpl(_apiProvider.provideCommissionApi());
+      CommissionServiceImpl(_apiProvider.commission);
 
   @override
   CommonService provideCommonService() =>
-      CommonServiceImpl(_apiProvider.provideCommonApi());
+      CommonServiceImpl(_apiProvider.common);
 
   @override
   CustomerService provideCustomerService() =>
-      CustomerServiceImpl(_apiProvider.provideCustomerApi());
+      CustomerServiceImpl(_apiProvider.customer);
 
   @override
   NotificationService provideNotificationService() =>
-      NotificationServiceImpl(_apiProvider.provideNotificationApi());
+      NotificationServiceImpl(_apiProvider.notification);
 
   @override
   ReportService provideReportService() =>
-      ReportServiceImpl(_apiProvider.provideReportApi());
+      ReportServiceImpl(_apiProvider.report);
 }

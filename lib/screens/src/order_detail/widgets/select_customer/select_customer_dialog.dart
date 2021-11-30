@@ -1,19 +1,18 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/base/kaylee_state.dart';
-import 'package:kaylee/kaylee_application.dart';
+import 'package:kaylee/locator/locator.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/customer/create_new/create_new_customer_screen.dart';
 import 'package:kaylee/screens/src/order_detail/widgets/select_customer/bloc/select_customer_bloc.dart';
 import 'package:kaylee/screens/src/order_detail/widgets/select_customer/select_customer_item.dart';
-import 'package:kaylee/utils/utils.dart';
 
 class SelectCustomerDialog extends StatefulWidget {
   static Widget newInstance({required ValueSetter<Customer> onSelect}) =>
       BlocProvider(
         create: (context) => SelectCustomerBloc(
-          customerService: locator.apis.provideCustomerApi(),
+          customerService: context.api.customer,
         ),
         child: SelectCustomerDialog._(onSelect: onSelect),
       );
