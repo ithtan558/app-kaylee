@@ -43,12 +43,12 @@ class _AccountTabState extends BaseState<AccountTab> {
                 onClick: () {
                   pushScreen(PageIntent(screen: NotificationScreen));
                 }),
-            // _buildMenuItem(
-            //     title: Strings.huongDanSd,
-            //     icon: Images.ic_acc_guide,
-            //     onClick: () {
-            //       pushScreen(PageIntent(screen: GuideScreen));
-            //     }),
+            _buildMenuItem(
+                title: Strings.huongDanSd,
+                icon: Images.icAccGuide,
+                onClick: () {
+                  pushScreen(PageIntent(screen: GuideScreen));
+                }),
             _buildMenuItem(
                 title: Strings.thongTinUngDung,
                 icon: Images.icAccAboutApp,
@@ -65,7 +65,7 @@ class _AccountTabState extends BaseState<AccountTab> {
                   }),
             _buildMenuItem(
                 title: Strings.caiDatMayIn,
-                icon: Images.icAccGuide,
+                icon: Images.icAccPrinter,
                 onClick: () {
                   pushScreen(PageIntent(screen: PrinterDetailScreen));
                 }),
