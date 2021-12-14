@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:anth_package/anth_package.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/base/kaylee_state.dart';
@@ -14,6 +13,7 @@ import 'package:kaylee/screens/src/supplier/product_list/list/bloc/supplier_prod
 import 'package:kaylee/screens/src/supplier/product_list/list/bloc/supplier_prod_list_bloc.dart';
 import 'package:kaylee/screens/src/supplier/product_list/list/bloc/supplier_prod_list_screen_bloc.dart';
 import 'package:kaylee/utils/utils.dart';
+import 'package:kaylee/widgets/src/supplier_menu_float_button.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class SupplierProdListScreen extends StatefulWidget {
@@ -96,134 +96,141 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return KayleeTabView(
-      appBar: KayleeAppBar(
-        titleWidget:
-        BlocBuilder<SupplierProdListScreenBloc, SingleModel<Supplier>>(
-          builder: (context, state) {
-            return CachedNetworkImage(
-              imageUrl: state.item?.image ?? '',
-              height: Dimens.px30,
-            );
-          },
-        ),
-        actions: <Widget>[
-          KayleeAppBarAction.button(
-            onTap: () {
-              pushScreen(PageIntent(screen: CartScreen));
-            },
-            child: Stack(
-              alignment: Alignment.center,
-              children: <Widget>[
-                Image.asset(
-                  Images.icBag,
-                  width: Dimens.px24,
-                  height: Dimens.px32,
-                ),
-                Positioned(
-                  child: BlocBuilder<CartBloc, CartState>(
-                    builder: (context, state) {
-                      final amount =
-                          context.cart.getOrder()?.cartItems?.length ?? 0;
-                      return KayleeText.normalWhite12W400(
-                          '${amount <= 9 ? amount : '9+'}');
-                    },
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: KayleeTabView(
+            appBar: KayleeAppBar(
+              titleWidget: BlocBuilder<SupplierProdListScreenBloc,
+                  SingleModel<Supplier>>(
+                builder: (context, state) {
+                  return CachedNetworkImage(
+                    imageUrl: state.item?.image ?? '',
+                    height: Dimens.px30,
+                  );
+                },
+              ),
+              actions: <Widget>[
+                KayleeAppBarAction.button(
+                  onTap: () {
+                    pushScreen(PageIntent(screen: CartScreen));
+                  },
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: <Widget>[
+                      Image.asset(
+                        Images.icBag,
+                        width: Dimens.px24,
+                        height: Dimens.px32,
+                      ),
+                      Positioned(
+                        child: BlocBuilder<CartBloc, CartState>(
+                          builder: (context, state) {
+                            final amount =
+                                context.cart.getOrder()?.cartItems?.length ?? 0;
+                            return KayleeText.normalWhite12W400(
+                                '${amount <= 9 ? amount : '9+'}');
+                          },
+                        ),
+                        bottom: Dimens.px5,
+                      )
+                    ],
                   ),
-                  bottom: Dimens.px5,
                 )
               ],
             ),
-          )
-        ],
-      ),
-      tabBar: BlocBuilder<SupplierProdCateListBloc, LoadMoreModel<ProdCate>>(
-        buildWhen: (previous, current) {
-          return !current.loading;
-        },
-        builder: (context, state) {
-          final categories = state.items;
-          return KayleeTabBar(
-            itemCount: categories?.length ?? 0,
-            mapTitle: (index) => categories!.elementAt(index).name,
-            onSelected: (value) {
-              prodsBloc.changeTab(category: state.items!.elementAt(value));
-            },
-          );
-        },
-      ),
-      pageView: KayleeRefreshIndicator(
-        controller: prodsBloc,
-        child: KayleeLoadMoreHandler(
-          controller: prodsBloc,
-          child: BlocConsumer<SupplierProdListBloc, LoadMoreModel<Product>>(
-            listener: (context, state) {
-              if (!state.loading && state.error != null) {
-                showKayleeAlertErrorYesDialog(
-                    context: context, error: state.error, onPressed: popScreen);
-              }
-            },
-            builder: (context, state) {
-              return KayleeGridView(
-                padding: const EdgeInsets.all(Dimens.px16),
-                childAspectRatio: 103 / 195,
-                itemBuilder: (c, index) {
-                  final item = state.items!.elementAt(index);
-                  return KayleeProdItemView.canTap(
-                    data: KayleeProdItemData(
-                        name: item.name, image: item.image, price: item.price),
-                    onTap: () {
-                      pushScreen(PageIntent(
-                          screen: SupplierProductDetailScreen,
-                          bundle: Bundle(SupplierProductDetailScreenData(
-                            supplier: supplier,
-                            product: item,
-                          ))));
-                    },
-                  );
-                },
-                itemCount: state.items?.length,
-                loadingBuilder: (context) {
-                  if (state.ended) return Container();
-                  return const Align(
-                    alignment: Alignment.topCenter,
-                    child: KayleeLoadingIndicator(),
-                  );
-                },
-              );
-            },
+            tabBar:
+                BlocBuilder<SupplierProdCateListBloc, LoadMoreModel<ProdCate>>(
+              buildWhen: (previous, current) {
+                return !current.loading;
+              },
+              builder: (context, state) {
+                final categories = state.items;
+                return KayleeTabBar(
+                  itemCount: categories?.length ?? 0,
+                  mapTitle: (index) => categories!.elementAt(index).name,
+                  onSelected: (value) {
+                    prodsBloc.changeTab(
+                        category: state.items!.elementAt(value));
+                  },
+                );
+              },
+            ),
+            pageView: KayleeRefreshIndicator(
+              controller: prodsBloc,
+              child: KayleeLoadMoreHandler(
+                controller: prodsBloc,
+                child:
+                    BlocConsumer<SupplierProdListBloc, LoadMoreModel<Product>>(
+                  listener: (context, state) {
+                    if (!state.loading && state.error != null) {
+                      showKayleeAlertErrorYesDialog(
+                          context: context,
+                          error: state.error,
+                          onPressed: popScreen);
+                    }
+                  },
+                  builder: (context, state) {
+                    return KayleeGridView(
+                      padding: const EdgeInsets.all(Dimens.px16),
+                      childAspectRatio: 103 / 195,
+                      itemBuilder: (c, index) {
+                        final item = state.items!.elementAt(index);
+                        return KayleeProdItemView.canTap(
+                          data: KayleeProdItemData(
+                              name: item.name,
+                              image: item.image,
+                              price: item.price),
+                          onTap: () {
+                            pushScreen(PageIntent(
+                                screen: SupplierProductDetailScreen,
+                                bundle: Bundle(SupplierProductDetailScreenData(
+                                  supplier: supplier,
+                                  product: item,
+                                ))));
+                          },
+                        );
+                      },
+                      itemCount: state.items?.length,
+                      loadingBuilder: (context) {
+                        if (state.ended) return Container();
+                        return const Align(
+                          alignment: Alignment.topCenter,
+                          child: KayleeLoadingIndicator(),
+                        );
+                      },
+                    );
+                  },
+                ),
+              ),
+            ),
           ),
         ),
-      ),
-      floatingActionButton: Material(
-        color: Colors.transparent,
-        type: MaterialType.circle,
-        child: BlocBuilder<SupplierProdListScreenBloc, SingleModel<Supplier>>(
+        BlocBuilder<SupplierProdListScreenBloc, SingleModel<Supplier>>(
           builder: (context, state) {
-            final link = state.item?.facebook;
-            return GestureDetector(
-              onTap: () {
-                launch(link ?? '');
-              },
-              child: Container(
-                height: Dimens.px56,
-                width: Dimens.px56,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.white.withOpacity(0.5),
-                  boxShadow: [
-                    BoxShadow(
-                        color: ColorsRes.shadow.withOpacity(0.2),
-                        offset: const Offset(Dimens.px5, Dimens.px5),
-                        blurRadius: Dimens.px10,
-                        spreadRadius: 0)
-                  ],
-                ),
-                child: Image.asset(Images.icMessage),
+            return SupplierMenuFloatButton(
+              firstItem: MenuFloatItem(
+                title: Strings.messenger,
+                onTap: () {
+                  final facebook = state.item?.facebook;
+                  if (facebook.isNotNullAndEmpty) {
+                    launch(facebook!);
+                  }
+                },
+              ),
+              secondItem: MenuFloatItem(
+                title: Strings.zalo,
+                onTap: () {
+                  final zalo = state.item?.zalo;
+                  if (zalo.isNotNullAndEmpty) {
+                    launch(zalo!);
+                  }
+                },
               ),
             );
           },
-        ),
-      ),
+        )
+      ],
     );
   }
 }
