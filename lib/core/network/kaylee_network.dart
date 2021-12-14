@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:anth_package/anth_package.dart';
 import 'package:dio/adapter.dart';
 import 'package:injectable/injectable.dart';
@@ -11,5 +13,15 @@ class KayleeNetwork extends Network {
         return true;
       };
     };
+    HttpOverrides.global = IgnoreHandShakeHttpOverrides();
+  }
+}
+
+class IgnoreHandShakeHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
   }
 }
