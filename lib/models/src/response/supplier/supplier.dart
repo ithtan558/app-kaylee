@@ -16,6 +16,7 @@ class Supplier {
     this.description,
     this.image,
     this.facebook,
+    this.zalo,
   });
 
   int? id;
@@ -23,4 +24,5 @@ class Supplier {
   String? description;
   String? image;
   String? facebook;
+  String? zalo;
 }

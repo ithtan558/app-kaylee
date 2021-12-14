@@ -12,12 +12,15 @@ Supplier _$SupplierFromJson(Map<String, dynamic> json) => Supplier(
       description: json['description'] as String?,
       image: json['image'] as String?,
       facebook: json['facebook'] as String?,
+      zalo: json['zalo'] as String?,
     );
 
-Map<String, dynamic> _$SupplierToJson(Supplier instance) => <String, dynamic>{
+Map<String, dynamic> _$SupplierToJson(Supplier instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'description': instance.description,
       'image': instance.image,
       'facebook': instance.facebook,
+      'zalo': instance.zalo,
     };
