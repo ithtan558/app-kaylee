@@ -21,6 +21,7 @@ class Images {
   static const icAccLogout = 'assets/ic_acc_logout.png';
   static const icAccNotify = 'assets/ic_acc_notify.png';
   static const icAccOrderlist = 'assets/ic_acc_orderlist.png';
+  static const icAccPrinter = 'assets/ic_acc_printer.png';
   static const icRight = 'assets/ic_right.png';
   static const icClose = 'assets/ic_close.png';
   static const icCamera = 'assets/ic_camera.png';
@@ -35,4 +36,6 @@ class Images {
   static const icAddress = 'assets/ic_address.png';
   static const icEdit = 'assets/ic_edit.png';
   static const icArrowBack = 'assets/ic_arrow_back.png';
+  static const icMessenger = 'assets/ic_messenger.png';
+  static const icZalo = 'assets/ic_zalo.png';
 }
