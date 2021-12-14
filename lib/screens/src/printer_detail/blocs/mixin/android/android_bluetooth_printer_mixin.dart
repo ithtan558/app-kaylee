@@ -20,13 +20,13 @@ mixin AndroidBluetoothPrinterMixin on BluetoothPrinterMixin {
           _stopRequestDisconnectingTimeOut();
           _stopRequestConnectingTimeOut();
           // print('[TUNG] ===> before connectedBluetoothDevice ${this.state}');
-          _stateChanges = state;
+          _stateChanges = state!;
           return connectedBluetoothDevice();
         case BluetoothPrint.DISCONNECTED:
           if (_stateChanges == BluetoothPrint.CONNECTED) return;
           // print(
           //     '[TUNG] ===> before PrinterDetailStateRequestingDisconnectBluetooth requestConnectingBluetoothDevice ${this.state}');
-          _stateChanges = state;
+          _stateChanges = state!;
           if (this.state is PrinterDetailStateRequestingDisconnectBluetooth) {
             _stopRequestDisconnectingTimeOut();
             // await Future.delayed(Duration(seconds: 2), () {});

@@ -21,7 +21,7 @@ dependencies:
     #    path: ../../../FlutterProjects/my_packages/bluetooth_print
     git:
       url: https://github.com/tungpham6195/bluetooth_print.git
-      ref: 3.0.3
+      ref: 3.0.4
   anth_package:
     #    path: ../anth_package
     git:

@@ -84,11 +84,11 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "3.0.3"
-      resolved-ref: "5ede82b368316f944841a2c714636584080d3760"
+      ref: "3.0.4"
+      resolved-ref: "5499b7f6f63cab1bddbdee3265b8d8ced258d9b7"
       url: "https://github.com/tungpham6195/bluetooth_print.git"
     source: git
-    version: "3.0.3"
+    version: "3.0.4"
   boolean_selector:
     dependency: transitive
     description:
