@@ -362,11 +362,12 @@ class Strings {
       'Vui lòng thiết lập cho phép Kaylee truy cập Bluetooth';
   static const androidLocationPermissionGuide =
       'Vào Cài đặt > Ứng dụng > Kaylee > Quyền > Vị trí';
-  static const iOsBluetoothPermissionGuide =
-      'Vào Cài đặt > Kaylee > Bluetooth';
+  static const iOsBluetoothPermissionGuide = 'Vào Cài đặt > Kaylee > Bluetooth';
   static const choPhep = 'Cho phép';
   static const boQua = 'Bỏ qua';
   static const dieuKhoanCuaKaylee = 'Điều khoản của Kaylee';
+  static const messenger = 'Messenger';
+  static const zalo = 'Zalo';
 
   Strings._();
 }
