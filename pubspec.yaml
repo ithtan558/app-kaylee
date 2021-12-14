@@ -23,10 +23,10 @@ dependencies:
       url: https://github.com/tungpham6195/bluetooth_print.git
       ref: 3.0.3
   anth_package:
-    path: ../anth_package
-#    git:
-#      url: https://tungpham6195@bitbucket.org/anth-freelance/anth_package.git
-#      ref: 1.0.3
+    #    path: ../anth_package
+    git:
+      url: https://tungpham6195@bitbucket.org/anth-freelance/anth_package.git
+      ref: 1.0.6
 
 dependency_overrides:
   #  chewie package didn't upgrade to provider: ^6.0.0 yet
