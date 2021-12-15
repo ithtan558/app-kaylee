@@ -1,1 +1,2 @@
-thu lan cuoi ne
+- display zalo in supplier product list
+- revert showing `Huong dan su dung`
