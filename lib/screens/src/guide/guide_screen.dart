@@ -8,6 +8,7 @@ import 'package:kaylee/locator/locator.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/guide/bloc/bloc.dart';
+import 'package:kaylee/widgets/widgets.dart';
 
 class GuideScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider(
@@ -58,9 +59,8 @@ class _GuideScreenState extends KayleeState<GuideScreen> {
       padding: const EdgeInsets.all(Dimens.px16),
       child: BlocBuilder<GuideScreenBloc, SingleModel<Content>>(
         builder: (context, state) {
-          return HtmlWidget(
-            state.item?.content ?? '',
-            textStyle: TextStyles.normal16W400,
+          return KayleeHtmlWidget(
+            html: state.item?.content ?? '',
           );
         },
       ),

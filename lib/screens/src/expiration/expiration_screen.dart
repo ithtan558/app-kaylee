@@ -9,6 +9,7 @@ import 'package:kaylee/locator/locator.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/expiration/bloc/expiration_screen_bloc.dart';
+import 'package:kaylee/widgets/widgets.dart';
 
 class ExpirationScreenArgument {
   final bool isExpired;
@@ -83,9 +84,8 @@ class _ExpirationScreenState extends KayleeState<ExpirationScreen> {
         child: BlocBuilder<ExpirationScreenBloc, SingleModel<Content>>(
           builder: (context, state) {
             return SingleChildScrollView(
-              child: HtmlWidget(
-                state.item?.content ?? '',
-                textStyle: TextStyles.normal16W400,
+              child: KayleeHtmlWidget(
+                html: state.item?.content ?? '',
               ),
             );
           },

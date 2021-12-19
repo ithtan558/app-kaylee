@@ -6,6 +6,7 @@ import 'package:kaylee/apis/apis.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/locator/locator.dart';
 import 'package:kaylee/models/models.dart';
+import 'package:kaylee/widgets/widgets.dart';
 
 class PolicyCheckBox extends StatefulWidget {
   final ValueSetter<bool>? onChecked;
@@ -115,9 +116,8 @@ class _PolicyViewState extends KayleeState<_PolicyView> {
                         left: Dimens.px16,
                         right: Dimens.px16,
                         bottom: Dimens.px16),
-                    child: HtmlWidget(
-                      state.content?.content ?? '',
-                      textStyle: TextStyles.normal16W400,
+                    child: KayleeHtmlWidget(
+                      html: state.content?.content ?? '',
                     ),
                   ),
                 ),

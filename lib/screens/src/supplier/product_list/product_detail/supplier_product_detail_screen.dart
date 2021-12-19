@@ -12,6 +12,7 @@ import 'package:kaylee/screens/src/supplier/product_list/product_detail/bloc/sup
 import 'package:kaylee/screens/src/supplier/product_list/product_detail/widgets/product_supplier_image.dart';
 import 'package:kaylee/screens/src/supplier/product_list/product_detail/widgets/product_supplier_video.dart';
 import 'package:kaylee/utils/utils.dart';
+import 'package:kaylee/widgets/widgets.dart';
 
 class SupplierProductDetailScreenData {
   Product product;
@@ -139,27 +140,27 @@ class _SupplierProductDetailScreenState
                     left: Dimens.px16,
                     right: Dimens.px16,
                     bottom: Dimens.px16),
-                child: HtmlWidget(product.description ?? '',
-                    textStyle: TextStyles.normal16W400,
+                child: KayleeHtmlWidget(
+                    html: product.description ?? '',
                     customWidgetBuilder: (element) {
-                  if (element.localName == 'img') {
-                    double? width =
-                        double.tryParse(element.attributes['width'] ?? '');
-                    double? height =
-                        double.tryParse(element.attributes['height'] ?? '');
-                    //chỉ tự render khi image.height > width của device
-                    if (width != null &&
-                        height != null &&
-                        height > context.screenSize.width) {
-                      return CachedNetworkImage(
-                        imageUrl: element.attributes['src'] ?? '',
-                        width: width,
-                        fit: BoxFit.cover,
-                      );
-                    }
-                  }
-                  return null;
-                }),
+                      if (element.localName == 'img') {
+                        double? width =
+                            double.tryParse(element.attributes['width'] ?? '');
+                        double? height =
+                            double.tryParse(element.attributes['height'] ?? '');
+                        //chỉ tự render khi image.height > width của device
+                        if (width != null &&
+                            height != null &&
+                            height > context.screenSize.width) {
+                          return CachedNetworkImage(
+                            imageUrl: element.attributes['src'] ?? '',
+                            width: width,
+                            fit: BoxFit.cover,
+                          );
+                        }
+                      }
+                      return null;
+                    }),
               ),
             ],
           );

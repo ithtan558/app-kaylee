@@ -11,6 +11,7 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/notification_button/notification_button.dart';
 import 'package:kaylee/screens/src/notification/detail/bloc/bloc.dart';
 import 'package:kaylee/utils/deeplink_helper.dart';
+import 'package:kaylee/widgets/widgets.dart';
 
 class NotifyDetailScreen extends StatefulWidget {
   static Widget newInstance() => BlocProvider<NotifyDetailScreenBloc>(
@@ -124,9 +125,8 @@ class _NotifyDetailScreenState extends KayleeState<NotifyDetailScreen>
                     ),
                     padding: const EdgeInsets.only(bottom: Dimens.px16),
                   ),
-                  HtmlWidget(
-                    data.content ?? '',
-                    textStyle: TextStyles.hint16W400,
+                  KayleeHtmlWidget(
+                    html: data.content ?? '',
                     onTapUrl: (url) {
                       final pageIntent =
                           DeepLinkHelper.handleNotificationLink(link: url);
