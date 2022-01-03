@@ -2,9 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:anth_package/anth_package.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/base/reload_bloc.dart';
 import 'package:kaylee/models/models.dart';
@@ -48,9 +46,8 @@ class _HomeScreenState extends KayleeState<HomeScreen> {
       initializationSettings,
       onSelectNotification: _openLocalNotification,
     );
-    FirebaseMessaging.onMessage.listen((message) {
-      _onMessageFcm(message.data);
-    });
+
+    FirebaseMessaging.onMessage.listen(_onMessageFcm);
 
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
       _onResumeFcm(message);
@@ -68,18 +65,11 @@ class _HomeScreenState extends KayleeState<HomeScreen> {
   }
 
   ///receive notification when app is in foreground
-  Future<dynamic> _onMessageFcm(Map<String, dynamic> map) async {
-    FcmResponse? response;
-    try {
-      // print('[TUNG] ===> _onMessageFcm');
-      // print('[TUNG] ===> $map');
-      response = FcmResponse.fromJson(map);
-    } catch (e, s) {
-      Logger().e('error _handleFcmNotification', e, s);
-    }
+  Future<dynamic> _onMessageFcm(RemoteMessage remoteMessage) async {
+    // print('[TUNG] ===> _onMessageFcm');
     _reloadBloc.reload(widget: NotificationButton);
     _reloadBloc.reload(widget: NotificationScreen);
-    _showNotificationLocal(response: response);
+    _showNotificationLocal(remoteMessage);
   }
 
   ///clicked on notification when app's in background
@@ -93,16 +83,16 @@ class _HomeScreenState extends KayleeState<HomeScreen> {
   ///clicked on notification when app's terminated
   Future _onLaunchFcm(RemoteMessage? message) async {
     // print('[TUNG] ===> _onLaunchFcm');
-    if (message != null) _onOpenNotification(message.data);
+    if (message != null) _onOpenNotification(message);
   }
 
   ///open notification, navigate to corresponding screen
-  Future _onOpenNotification(map) async {
+  Future _onOpenNotification(RemoteMessage remoteMessage) async {
     FcmResponse? response;
     try {
       // print('[TUNG] ===> _onOpenNotification');
       // print('[TUNG] ===> $map');
-      response = FcmResponse.fromJson(map);
+      response = FcmResponse.fromJson({'data': remoteMessage.data});
     } catch (e, s) {
       Logger().e('error _onOpenNotification', e, s);
     }
@@ -112,22 +102,23 @@ class _HomeScreenState extends KayleeState<HomeScreen> {
         ifNOtFound: PageIntent(screen: NotificationScreen))!);
   }
 
-  _showNotificationLocal({FcmResponse? response}) {
-    if (response == null) return;
-
+  _showNotificationLocal(RemoteMessage remoteMessage) {
     final notificationId = DateTime.now().second.toString();
     final androidDetail = AndroidNotificationDetails(
-        notificationId, 'FcmNotification',
-        priority: Priority.high, importance: Importance.max);
+      notificationId,
+      'FcmNotification',
+      priority: Priority.high,
+      importance: Importance.max,
+    );
     const iosDetail = IOSNotificationDetails();
     final platformDetail =
         NotificationDetails(android: androidDetail, iOS: iosDetail);
     notificationsPlugin.show(
         int.parse(notificationId),
-        response.notification?.title ?? response.aps?.alert?.title ?? '',
-        response.notification?.body ?? response.aps?.alert?.body ?? '',
+        remoteMessage.notification?.title ?? '',
+        remoteMessage.notification?.body ?? '',
         platformDetail,
-        payload: jsonEncode(response));
+        payload: jsonEncode(remoteMessage.data));
   }
 
   @override
