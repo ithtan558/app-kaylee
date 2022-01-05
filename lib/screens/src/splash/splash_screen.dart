@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:anth_package/anth_package.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/base/kaylee_state.dart';
@@ -47,8 +48,9 @@ class _SplashScreenState extends KayleeState<SplashScreen> {
   void _loadRemoteConfig() async {
     final remoteConfig = RemoteConfig.instance;
     await remoteConfig.setConfigSettings(RemoteConfigSettings(
-      fetchTimeout: const Duration(seconds: 1),
-      minimumFetchInterval: const Duration(minutes: 1),
+      fetchTimeout: const Duration(minutes: 1),
+      minimumFetchInterval:
+          kDebugMode ? const Duration(seconds: 3) : const Duration(hours: 12),
     ));
     remoteConfig.fetchAndActivate().then((_) async {
       context.appConfig.setupConfig(remoteConfig.getAll());
