@@ -9,11 +9,15 @@ abstract class ApplicationConfig {
   String get policyUrl;
 }
 
+@Singleton(as: ApplicationConfig)
+@prod
 class ProductionAppConfig extends _BaseAppConfig {
   @override
   String get _baseUrlKey => 'base_url_prod';
 }
 
+@Singleton(as: ApplicationConfig)
+@dev
 class DevelopmentAppConfig extends _BaseAppConfig {
   @override
   String get _baseUrlKey => 'base_url_dev';

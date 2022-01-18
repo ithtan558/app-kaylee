@@ -368,6 +368,27 @@ class Strings {
   static const dieuKhoanCuaKaylee = 'Điều khoản của Kaylee';
   static const messenger = 'Messenger';
   static const zalo = 'Zalo';
+  static const kienThuc = 'Kiến thức';
+  static const giaReMoiNgay = 'Giá rẻ\nmỗi ngày';
+  static const hangDocLa = 'Hàng độc\nlạ';
+  static const chuongTrinhHot = 'Chương trình\nHOT';
+  static const salonProfessional = 'Salon\nProfessional';
+  static const ketThucSau = 'Kết thúc sau';
+  static const gio = 'Giờ';
+  static const phut = 'Phút';
+  static const giay = 'Giây';
+  static const mua = 'Mua';
+  static const xemToanBo = 'Xem toàn bộ';
+  static const timTrongShop = 'Tìm trong shop';
+  static const giayTruoc = 'giây trước';
+  static const phutTruoc = 'phút trước';
+  static const gioTruoc = 'giờ trước';
+  static const ngayTruoc = 'ngày trước';
+  static const vuaXong = 'Vừa xong';
+  static const hienCoSanPham = 'Hiện có {} sản phẩm';
+  static const sanPham = 'Sản phẩm';
+  static const thongTinShop = 'Thông tin shop';
+  static const daThemVaoGio = 'Đã thêm vào giỏ';
 
   Strings._();
 }

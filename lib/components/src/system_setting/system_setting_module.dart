@@ -2,10 +2,9 @@ import 'dart:io';
 
 import 'package:anth_package/anth_package.dart';
 import 'package:app_settings/app_settings.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:kaylee/locator/locator.dart';
 import 'package:kaylee/res/res.dart';
-import 'package:kaylee/utils/utils.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 abstract class SystemSettingModule {

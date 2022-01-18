@@ -6,7 +6,9 @@ import 'package:kaylee/locator/locator.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/src/home/tabs/home/bloc/supplier_list_bloc.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/home_banner/home_banner.dart';
+import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/home_menu_grid.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/notification_button/notification_button.dart';
+import 'package:kaylee/screens/src/home/tabs/home/widgets/promo_menu/promo_menu.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/supplier_list/supplier_item.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
@@ -34,8 +36,7 @@ class _SupplierListState extends KayleeState<SupplierList> {
   final scrollController = ScrollController();
 
   final listTitle = Padding(
-    padding: const EdgeInsets.symmetric(
-        vertical: Dimens.px16, horizontal: Dimens.px8),
+    padding: const EdgeInsets.symmetric(horizontal: Dimens.px8),
     child: Center(
       child: KayleeText.normalWhite18W700(Strings.dsNhaCc),
     ),
@@ -69,28 +70,33 @@ class _SupplierListState extends KayleeState<SupplierList> {
         controller: _bloc,
         child: BlocBuilder<SupplierListBloc, LoadMoreModel>(
           builder: (context, state) {
+            const extendItemLength = 4;
             return KayleeListView(
               controller: scrollController,
-              physics: const AlwaysScrollableScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               padding: const EdgeInsets.only(bottom: Dimens.px16),
               itemBuilder: (c, index) {
                 if (index == 0) {
+                  return const HomeMenuGrid();
+                } else if (index == 1) {
                   //index cho banner
                   return HomeBanner.newInstance();
-                } else if (index == 1) {
+                } else if (index == 2) {
+                  return const PromoMenu();
+                } else if (index == 3) {
                   //index cho title của list `Danh sách nhà cung cấp
                   return listTitle;
                 } else {
                   //index của item supplier
                   return SupplierItem(
-                    supplier: state.items!.elementAt(index - 2),
+                    supplier: state.items!.elementAt(index - extendItemLength),
                   );
                 }
               },
-              itemCount: 2 + (state.items?.length ?? 0),
+              itemCount: extendItemLength + (state.items?.length ?? 0),
               separatorBuilder: (BuildContext context, int index) {
                 return Container(
-                  height: index > 1 ? Dimens.px16 : 0,
+                  height: Dimens.px16,
                 );
               },
             );

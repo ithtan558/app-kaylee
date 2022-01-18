@@ -27,4 +27,13 @@ class CommonServiceImpl implements CommonService {
   Future<ResponseModel<List<Ward>>> getWard(int? district) {
     return _api.getWard(district);
   }
+
+  @override
+  Future<ResponseModel<PageData<Content>>> fetchContents(
+      {required int categoryId,
+      int page = PaginationConst.page,
+      int limit = PaginationConst.limit}) async {
+    return await _api.fetchContents(
+        categoryId: categoryId, page: page, limit: limit);
+  }
 }

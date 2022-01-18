@@ -1,20 +1,20 @@
 import 'dart:async';
 
 import 'package:anth_package/anth_package.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/locator/locator.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
-import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/supplier/product_list/list/bloc/supplier_prod_cate_list_bloc.dart';
 import 'package:kaylee/screens/src/supplier/product_list/list/bloc/supplier_prod_list_bloc.dart';
 import 'package:kaylee/screens/src/supplier/product_list/list/bloc/supplier_prod_list_screen_bloc.dart';
-import 'package:kaylee/utils/utils.dart';
+import 'package:kaylee/screens/src/supplier/product_list/list/tabs/supplier_info_tab.dart';
+import 'package:kaylee/screens/src/supplier/product_list/list/tabs/supplier_product_list_tab.dart';
+import 'package:kaylee/screens/src/supplier/product_list/list/widgets/supplier_info.dart';
+import 'package:kaylee/screens/src/supplier/product_list/list/widgets/supplier_info_switch_bar.dart';
+import 'package:kaylee/widgets/src/cart_button.dart';
 import 'package:kaylee/widgets/src/supplier_menu_float_button.dart';
-import 'package:kaylee/widgets/widgets.dart';
 
 class SupplierProdListScreen extends StatefulWidget {
   static Widget newInstance() => MultiBlocProvider(providers: [
@@ -48,23 +48,26 @@ class SupplierProdListScreen extends StatefulWidget {
 }
 
 class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
-  SupplierProdCateListBloc get cateBloc =>
+  SupplierProdCateListBloc get _categoryBloc =>
       context.bloc<SupplierProdCateListBloc>()!;
 
-  SupplierProdListBloc get prodsBloc => context.bloc<SupplierProdListBloc>()!;
-  late StreamSubscription cateBlocSub;
+  SupplierProdListBloc get _productListBloc =>
+      context.bloc<SupplierProdListBloc>()!;
+  late StreamSubscription _cateBlocSub;
 
   SupplierProdListScreenBloc get _bloc =>
       context.bloc<SupplierProdListScreenBloc>()!;
 
-  Supplier get supplier => context.getArguments<Supplier>()!;
+  final _pageController = PageController();
+
+  final _searchInputController = SearchInputFieldController();
 
   @override
   void initState() {
     super.initState();
     _bloc.getInfo();
 
-    cateBlocSub = cateBloc.stream.listen((state) {
+    _cateBlocSub = _categoryBloc.stream.listen((state) {
       if (!state.loading) {
         hideLoading();
         if (state.error != null) {
@@ -78,19 +81,20 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
           try {
             category = state.items?.firstWhere((element) => true);
           } catch (_) {}
-          prodsBloc.loadInitDataWithCate(category: category);
+          _productListBloc.loadInitDataWithCate(category: category);
         }
       } else if (state.loading) {
         showLoading();
       }
     });
 
-    cateBloc.loadProdCate();
+    _categoryBloc.loadProdCate();
   }
 
   @override
   void dispose() {
-    cateBlocSub.cancel();
+    _cateBlocSub.cancel();
+    _pageController.dispose();
     super.dispose();
   }
 
@@ -99,109 +103,43 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
     return Stack(
       children: [
         Positioned.fill(
-          child: KayleeTabView(
-            appBar: KayleeAppBar(
-              titleWidget: BlocBuilder<SupplierProdListScreenBloc,
-                  SingleModel<Supplier>>(
-                builder: (context, state) {
-                  return CachedNetworkImage(
-                    imageUrl: state.item?.image ?? '',
-                    height: Dimens.px30,
-                  );
-                },
-              ),
-              actions: <Widget>[
-                KayleeAppBarAction.button(
-                  onTap: () {
-                    pushScreen(PageIntent(screen: CartScreen));
-                  },
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: <Widget>[
-                      Image.asset(
-                        Images.icBag,
-                        width: Dimens.px24,
-                        height: Dimens.px32,
-                      ),
-                      Positioned(
-                        child: BlocBuilder<CartBloc, CartState>(
-                          builder: (context, state) {
-                            final amount =
-                                context.cart.getOrder()?.cartItems?.length ?? 0;
-                            return KayleeText.normalWhite12W400(
-                                '${amount <= 9 ? amount : '9+'}');
-                          },
-                        ),
-                        bottom: Dimens.px5,
-                      )
-                    ],
+          child: UnFocusWidget(
+            child: Scaffold(
+              appBar: _buildAppBar(),
+              body: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: Dimens.px16)
+                        .copyWith(top: Dimens.px16),
+                    child: const SupplierInfo(),
                   ),
-                )
-              ],
-            ),
-            tabBar:
-                BlocBuilder<SupplierProdCateListBloc, LoadMoreModel<ProdCate>>(
-              buildWhen: (previous, current) {
-                return !current.loading;
-              },
-              builder: (context, state) {
-                final categories = state.items;
-                return KayleeTabBar(
-                  itemCount: categories?.length ?? 0,
-                  mapTitle: (index) => categories!.elementAt(index).name,
-                  onSelected: (value) {
-                    prodsBloc.changeTab(
-                        category: state.items!.elementAt(value));
-                  },
-                );
-              },
-            ),
-            pageView: KayleeRefreshIndicator(
-              controller: prodsBloc,
-              child: KayleeLoadMoreHandler(
-                controller: prodsBloc,
-                child:
-                    BlocConsumer<SupplierProdListBloc, LoadMoreModel<Product>>(
-                  listener: (context, state) {
-                    if (!state.loading && state.error != null) {
-                      showKayleeAlertErrorYesDialog(
-                          context: context,
-                          error: state.error,
-                          onPressed: popScreen);
-                    }
-                  },
-                  builder: (context, state) {
-                    return KayleeGridView(
-                      padding: const EdgeInsets.all(Dimens.px16),
-                      childAspectRatio: 103 / 195,
-                      itemBuilder: (c, index) {
-                        final item = state.items!.elementAt(index);
-                        return KayleeProdItemView.canTap(
-                          data: KayleeProdItemData(
-                              name: item.name,
-                              image: item.image,
-                              price: item.price),
-                          onTap: () {
-                            pushScreen(PageIntent(
-                                screen: SupplierProductDetailScreen,
-                                bundle: Bundle(SupplierProductDetailScreenData(
-                                  supplier: supplier,
-                                  product: item,
-                                ))));
-                          },
-                        );
+                  Container(
+                    height: Dimens.px1,
+                    color: ColorsRes.textFieldBorder,
+                    margin: const EdgeInsets.all(Dimens.px16),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: Dimens.px16),
+                    child: SupplierInfoSwitchBar(
+                      onTabChanged: (index) {
+                        _pageController.jumpToPage(index);
                       },
-                      itemCount: state.items?.length,
-                      loadingBuilder: (context) {
-                        if (state.ended) return Container();
-                        return const Align(
-                          alignment: Alignment.topCenter,
-                          child: KayleeLoadingIndicator(),
-                        );
-                      },
-                    );
-                  },
-                ),
+                    ),
+                  ),
+                  Expanded(
+                    child: PageView(
+                      controller: _pageController,
+                      physics: const NeverScrollableScrollPhysics(),
+                      children: [
+                        RepositoryProvider<SearchInputFieldController>.value(
+                            value: _searchInputController,
+                            child: const SupplierProductListTab()),
+                        const SupplierInfoTab(),
+                      ],
+                    ),
+                  )
+                ],
               ),
             ),
           ),
@@ -230,6 +168,26 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
             );
           },
         )
+      ],
+    );
+  }
+
+  PreferredSizeWidget _buildAppBar() {
+    return KayleeAppBar(
+      titleWidget: KayleeTextField.search(
+        controller: _searchInputController,
+        hint: Strings.timTrongShop,
+        inputPadding: const EdgeInsets.symmetric(
+          horizontal: Dimens.px12,
+        ).copyWith(bottom: Dimens.px4),
+        height: Dimens.px44,
+        onDoneTyping: (value) {
+          _productListBloc.search(value);
+        },
+        onClear: _productListBloc.clear,
+      ),
+      actions: const [
+        CartButton(),
       ],
     );
   }

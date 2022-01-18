@@ -6,7 +6,6 @@ platform :ios do
   desc "Build an ipa"
 
   before_all do
-    update_gem
     clean_project
     flutter_build
     build_ios_and_export_ipa

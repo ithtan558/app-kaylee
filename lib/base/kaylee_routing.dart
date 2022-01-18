@@ -90,6 +90,20 @@ mixin KayleeRouting on Routing {
         return PrinterDetailScreen.newInstance();
       case ExpirationScreen:
         return ExpirationScreen.newInstance();
+      case DailyEventScreen:
+        return DailyEventScreen.newInstance();
+      case SpecialEventScreen:
+        return SpecialEventScreen.newInstance();
+      case HotEventScreen:
+        return HotEventScreen.newInstance();
+      case SalonProfessionalScreen:
+        return SalonProfessionalScreen.newInstance();
+      case KnowledgeScreen:
+        return KnowledgeScreen.newInstance();
+      case KnowledgeDetailScreen:
+        return KnowledgeDetailScreen.newInstance();
+      case HotEventDetailScreen:
+        return HotEventDetailScreen.newInstance();
       default:
         return SplashScreen.newInstance();
     }

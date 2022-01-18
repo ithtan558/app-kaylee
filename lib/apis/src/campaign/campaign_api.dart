@@ -1,5 +1,4 @@
 import 'package:anth_package/anth_package.dart';
-import 'package:dio/dio.dart';
 import 'package:kaylee/models/models.dart';
 
 part 'campaign_api.g.dart';

@@ -10,11 +10,11 @@ class City {
 
   City({
     this.id,
-    this.name,
+    this.name = '',
   });
 
-  int? id;
-  String? name;
+  final int? id;
+  final String name;
   @JsonKey(ignore: true)
   bool selected = false;
 }

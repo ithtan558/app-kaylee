@@ -28,7 +28,7 @@ class ServiceProviderImpl implements ServiceProvider {
 
   @override
   AdvertiseService provideAdvertiseService() =>
-      AdvertiseServiceImpl(advertiseApi: _apiProvider.advertise);
+      AdvertiseServiceImpl(_apiProvider.advertise);
 
   @override
   BrandService provideBrandService() => BrandServiceImpl(_apiProvider.brand);

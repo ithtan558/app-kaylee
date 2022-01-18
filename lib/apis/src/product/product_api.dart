@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:anth_package/anth_package.dart';
-import 'package:dio/dio.dart';
 import 'package:kaylee/models/models.dart';
 
 part 'product_api.g.dart';

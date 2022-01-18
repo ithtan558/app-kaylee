@@ -3,14 +3,11 @@ import 'dart:io';
 
 import 'package:anth_package/anth_package.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:get_it/get_it.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:kaylee/app_bloc.dart';
-import 'package:kaylee/application_config.dart';
 import 'package:kaylee/base/json_converter/kaylee_json_convert.dart';
 import 'package:kaylee/base/kaylee_bloc_observer.dart';
 import 'package:kaylee/base/kaylee_observer.dart';
@@ -30,28 +27,25 @@ Future<void> initialize() async {
   await Firebase.initializeApp();
 }
 
-void runApplication(ApplicationConfig applicationConfig) async {
+void runApplication(Environment environment) async {
   await initialize();
   BlocOverrides.runZoned(
     () {
-      runApp(KayLeeApplication.newInstance(appConfig: applicationConfig));
+      runApp(KayLeeApplication.newInstance(environment));
     },
     blocObserver: KayleeBlocObserver(),
   );
 }
 
 class KayLeeApplication extends StatefulWidget {
-  static Widget newInstance({required ApplicationConfig appConfig}) {
+  static Widget newInstance(Environment environment) {
     JsonConverterBuilder.init(KayleeJsonConverter());
-    final locator = configLocator();
+    final locator = configLocator(flavor: environment.name);
 
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider<GetIt>.value(
           value: locator,
-        ),
-        RepositoryProvider<RepositoriesModule>(
-          create: (context) => RepositoriesModule.init(context.api),
         ),
         RepositoryProvider<UserModule>(
           create: (_) => UserModule.init(),
@@ -61,9 +55,6 @@ class KayLeeApplication extends StatefulWidget {
         ),
         RepositoryProvider<FcmModule>(
           create: (_) => FcmModule.init(),
-        ),
-        RepositoryProvider<ApplicationConfig>.value(
-          value: appConfig,
         ),
         RepositoryProvider<SystemSettingModule>.value(
           value: SystemSettingModule.init(),
@@ -108,6 +99,9 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
   @override
   void initState() {
     super.initState();
+    if (Platform.isAndroid) {
+      AndroidGoogleMapsFlutter.useAndroidViewSurface = true;
+    }
 
     if (Platform.isIOS) {
       FirebaseMessaging.instance.requestPermission().then((settings) {});
@@ -137,7 +131,7 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
                 'version': _appBloc.packageInfo?.buildNumber ?? '',
                 if (context.user.getUserInfo().token.isNotNullAndEmpty)
                   HttpHeaders.authorizationHeader:
-                  context.user.getUserInfo().requestToken
+                      context.user.getUserInfo().requestToken
               });
           },
           onResponse: (response, handler) {
@@ -196,6 +190,7 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
     return BlocListener<AppBloc, dynamic>(
       listener: (context, state) {
         if (state is LoggedInState) {
@@ -205,10 +200,8 @@ class _KayLeeApplicationState extends BaseState<KayLeeApplication>
         } else if (state is LoggedOutState) {
           context.user.removeUserInfo();
           context.cart.clear();
-          context.network.dio.options.headers = {};
           _navigatorStateKey.currentContext!
               .pushToTop(PageIntent(screen: SplashScreen));
-          return;
         } else if (state is LoadedTopicState) {
           Future(() {
             final oldTopics = fcm.getTopics();

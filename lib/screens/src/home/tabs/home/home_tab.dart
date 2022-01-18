@@ -43,12 +43,16 @@ class _HomeTabState extends KayleeState<HomeTab>
                     Images.bgHome,
                   ),
                   fit: BoxFit.fill)),
-          child: Column(
+          child: Stack(
             children: <Widget>[
-              BlocProvider<ScrollOffsetBloc>.value(
-                  value: scrollOffsetBloc, child: HomeMenu.newInstance()),
+              Positioned.fill(
+                bottom: null,
+                child: BlocProvider<ScrollOffsetBloc>.value(
+                    value: scrollOffsetBloc, child: HomeMenu.newInstance()),
+              ),
               if (userInfo.role != UserRole.employee)
-                Expanded(
+                Positioned.fill(
+                  top: 120,
                   child: SupplierList.newInstance(
                     onScroll: scrollOffsetBloc.addOffset,
                   ),

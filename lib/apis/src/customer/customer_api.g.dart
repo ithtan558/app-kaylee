@@ -134,11 +134,14 @@ class _CustomerApi implements CustomerApi {
       _data.fields.add(MapEntry('email', email));
     }
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ResponseModel<Customer>>(
-            Options(method: 'POST', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'customer',
-                    queryParameters: queryParameters, data: _data)
-                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+        _setStreamType<ResponseModel<Customer>>(Options(
+                method: 'POST',
+                headers: _headers,
+                extra: _extra,
+                contentType: 'multipart/form-data')
+            .compose(_dio.options, 'customer',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<Customer>.fromJson(
       _result.data!,
       (json) => Customer.fromJson(json as Map<String, dynamic>),
@@ -202,11 +205,14 @@ class _CustomerApi implements CustomerApi {
       _data.fields.add(MapEntry('id', id.toString()));
     }
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<ResponseModel<Customer>>(
-            Options(method: 'POST', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'customer/${customerId}',
-                    queryParameters: queryParameters, data: _data)
-                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+        _setStreamType<ResponseModel<Customer>>(Options(
+                method: 'POST',
+                headers: _headers,
+                extra: _extra,
+                contentType: 'multipart/form-data')
+            .compose(_dio.options, 'customer/${customerId}',
+                queryParameters: queryParameters, data: _data)
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<Customer>.fromJson(
       _result.data!,
       (json) => Customer.fromJson(json as Map<String, dynamic>),

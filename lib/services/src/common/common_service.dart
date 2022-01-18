@@ -9,4 +9,10 @@ abstract class CommonService {
   Future<ResponseModel<List<District>>> getDistrict(int? city);
 
   Future<ResponseModel<List<Ward>>> getWard(int? district);
+
+  Future<ResponseModel<PageData<Content>>> fetchContents({
+    required int categoryId,
+    int page = PaginationConst.page,
+    int limit = PaginationConst.limit,
+  });
 }

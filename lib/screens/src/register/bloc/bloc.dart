@@ -83,7 +83,7 @@ class RegisterScreenBloc extends Cubit<SingleModel<RegisterBody>> {
       );
     } else {
       emit(SingleModel.copy(state
-        ..code = ErrorType.FAILED
+        ..code = ErrorType.failed
         ..error = Error(message: Strings.vuiLongChapNhanDieuKhoan)));
     }
   }

@@ -18,4 +18,11 @@ abstract class CommonApi {
 
   @GET('wards/list-by-district/{district}')
   Future<ResponseModel<List<Ward>>> getWard(@Path() int? district);
+
+  @GET('content/get-by-category')
+  Future<ResponseModel<PageData<Content>>> fetchContents({
+    @Query('category_id') required int categoryId,
+    @Query('page') int page = PaginationConst.page,
+    @Query('limit') int limit = PaginationConst.limit,
+  });
 }

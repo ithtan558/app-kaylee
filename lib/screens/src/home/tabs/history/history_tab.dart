@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:anth_package/anth_package.dart';
-import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/locator/locator.dart';
 import 'package:kaylee/models/models.dart';
@@ -68,34 +68,37 @@ class _HistoryTabState extends KayleeState<HistoryTab>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return KayleeFilterView(
-      title: Strings.lichSuDonHang,
-      child: KayleeRefreshIndicator(
-        controller: _bloc,
-        child: KayleeLoadMoreHandler(
+    return AnnotatedRegion(
+      value: SystemUiOverlayStyle.dark,
+      child: KayleeFilterView(
+        title: Strings.lichSuDonHang,
+        child: KayleeRefreshIndicator(
           controller: _bloc,
-          child: BlocBuilder<HistoryTabBloc, LoadMoreModel<Order>>(
-            builder: (context, state) {
-              return KayleeListView(
-                padding: const EdgeInsets.all(Dimens.px16),
-                itemBuilder: (c, index) {
-                  final item = state.items!.elementAt(index);
-                  return HistoryItem.newInstance(
-                    order: item,
-                  );
-                },
-                itemCount: state.items?.length,
-                separatorBuilder: (context, index) =>
-                    const SizedBox(height: Dimens.px16),
-                loadingBuilder: (context) {
-                  if (state.ended) return Container();
-                  return const Align(
-                    alignment: Alignment.topCenter,
-                    child: KayleeLoadingIndicator(),
-                  );
-                },
-              );
-            },
+          child: KayleeLoadMoreHandler(
+            controller: _bloc,
+            child: BlocBuilder<HistoryTabBloc, LoadMoreModel<Order>>(
+              builder: (context, state) {
+                return KayleeListView(
+                  padding: const EdgeInsets.all(Dimens.px16),
+                  itemBuilder: (c, index) {
+                    final item = state.items!.elementAt(index);
+                    return HistoryItem.newInstance(
+                      order: item,
+                    );
+                  },
+                  itemCount: state.items?.length,
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(height: Dimens.px16),
+                  loadingBuilder: (context) {
+                    if (state.ended) return Container();
+                    return const Align(
+                      alignment: Alignment.topCenter,
+                      child: KayleeLoadingIndicator(),
+                    );
+                  },
+                );
+              },
+            ),
           ),
         ),
       ),

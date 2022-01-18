@@ -1,5 +1,4 @@
 import 'package:anth_package/anth_package.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/screens/screens.dart';
@@ -35,7 +34,7 @@ class SupplierItem extends StatelessWidget {
                   child: AspectRatio(
                       aspectRatio: imageRatio,
                       child: CachedNetworkImage(
-                        imageUrl: supplier.image ?? '',
+                        imageUrl: supplier.image,
                         height: 64,
                       )),
                 ),
@@ -48,7 +47,7 @@ class SupplierItem extends StatelessWidget {
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
-                  child: KayleeText.normal12W400(supplier.name ?? '',
+                  child: KayleeText.normal12W400(supplier.name,
                       maxLines: 1, overflow: TextOverflow.ellipsis),
                 ),
               )

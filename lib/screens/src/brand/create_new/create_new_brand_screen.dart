@@ -10,7 +10,6 @@ import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/brand/create_new/bloc/brand_detail_screen_bloc.dart';
-import 'package:kaylee/widgets/src/kaylee_picker_textfield.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class NewBrandScreenData {

@@ -1,5 +1,4 @@
 import 'package:anth_package/anth_package.dart';
-import 'package:json_annotation/json_annotation.dart';
 import 'package:kaylee/models/models.dart';
 
 part 'order_request.g.dart';

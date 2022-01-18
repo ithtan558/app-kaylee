@@ -1,5 +1,4 @@
 import 'package:anth_package/anth_package.dart';
-import 'package:kaylee/apis/api_provider.dart';
 import 'package:kaylee/apis/apis.dart';
 
 @Injectable(as: ApiProvider)

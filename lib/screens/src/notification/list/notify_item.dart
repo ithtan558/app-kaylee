@@ -1,5 +1,4 @@
 import 'package:anth_package/anth_package.dart';
-import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/models/models.dart' as models;
 import 'package:kaylee/screens/src/notification/detail/notify_detail_screen.dart';

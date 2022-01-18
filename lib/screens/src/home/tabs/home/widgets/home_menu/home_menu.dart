@@ -4,10 +4,7 @@ import 'dart:ui';
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/models/models.dart';
-import 'package:kaylee/res/res.dart';
-import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/home/tabs/home/bloc/scroll_offset_bloc.dart';
-import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/home_menu_item.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/notification_button/notification_button.dart';
 import 'package:kaylee/screens/src/home/tabs/home/widgets/home_menu/user_name.dart';
 import 'package:kaylee/utils/utils.dart';
@@ -26,14 +23,11 @@ class HomeMenu extends StatefulWidget {
 
 class _HomeMenuState extends BaseState<HomeMenu> {
   ScrollOffsetBloc get _scrollOffsetBloc => context.bloc<ScrollOffsetBloc>()!;
-  final menuScrollController = ScrollController();
 
   UserInfo? get userInfo => context.user.getUserInfo().userInfo;
 
   HomeMenuBloc get _homeMenuBloc => context.bloc<HomeMenuBloc>()!;
   late StreamSubscription _sub;
-  Widget? menuRow2;
-  late List<Widget> menuItems;
 
   final gradientBg = Container(
       decoration: const BoxDecoration(
@@ -55,81 +49,15 @@ class _HomeMenuState extends BaseState<HomeMenu> {
   @override
   void initState() {
     super.initState();
-    menuItems = <Widget>[
-      if (userInfo?.role != UserRole.employee) ...[
-        HomeMenuItem(
-          title: Strings.qlChiNhanh,
-          icon: Images.icStore,
-          onTap: () {
-            context.push(PageIntent(screen: BrandListScreen));
-          },
-        ),
-        HomeMenuItem(
-          title: Strings.dsDichVu,
-          icon: Images.icServiceList,
-          onTap: () {
-            context.push(PageIntent(screen: ServiceListScreen));
-          },
-        ),
-        HomeMenuItem(
-          title: Strings.dsSanPham,
-          icon: Images.icProduct,
-          onTap: () {
-            context.push(PageIntent(screen: ProdListScreen));
-          },
-        ),
-        HomeMenuItem(
-          title: Strings.qlNhanVien,
-          icon: Images.icPerson,
-          onTap: () {
-            context.push(PageIntent(screen: StaffListScreen));
-          },
-        ),
-        HomeMenuItem(
-          title: Strings.dsKhachHang,
-          icon: Images.icUserList,
-          onTap: () {
-            context.push(PageIntent(screen: CustomerListScreen));
-          },
-        ),
-        HomeMenuItem(
-          title: Strings.dsLichHen,
-          icon: Images.icBooking,
-          onTap: () {
-            context.push(PageIntent(screen: ReservationListScreen));
-          },
-        ),
-        HomeMenuItem(
-          title: Strings.hoaHongNv,
-          icon: Images.icCommission,
-          onTap: () {
-            context.push(PageIntent(screen: CommissionListScreen));
-          },
-        ),
-        HomeMenuItem(
-          title: Strings.doanhThuBanHang,
-          icon: Images.icRevenue,
-          onTap: () {
-            context.push(PageIntent(screen: RevenueScreen));
-          },
-        ),
-      ]
-    ];
 
     _sub = _scrollOffsetBloc.stream.listen((offset) {
       _homeMenuBloc.updateHomeMenuState(
           offset: offset, collapseMenuHeight: collapseMenuHeight);
-      if (menuScrollController.offset > 0 &&
-          _homeMenuBloc.state.collapsePercent < 1) {
-        menuScrollController.animateTo(0,
-            duration: const Duration(milliseconds: 100), curve: Curves.linear);
-      }
     });
   }
 
   @override
   void dispose() {
-    menuScrollController.dispose();
     _sub.cancel();
     super.dispose();
   }
@@ -140,21 +68,6 @@ class _HomeMenuState extends BaseState<HomeMenu> {
       _homeMenuBloc
           .updateMenuHeight(homeMenuItemHeight * 2 + Dimens.px56 + Dimens.px7);
     }
-    final row2Items = menuItems.isNullOrEmpty
-        ? <Widget>[]
-        : menuItems.sublist(menuItems.getRange(0, 4).length, menuItems.length);
-    menuRow2 ??= Column(
-      children: [
-        Expanded(
-          child: Container(),
-        ),
-        Expanded(
-          child: Row(
-            children: row2Items,
-          ),
-        )
-      ],
-    );
     return Stack(children: [
       Material(
         borderRadius: const BorderRadius.only(
@@ -188,62 +101,6 @@ class _HomeMenuState extends BaseState<HomeMenu> {
           ))
         ]),
       ),
-      Positioned.fill(
-        child: Column(
-          children: [
-            Expanded(
-              child: Container(),
-            ),
-            BlocBuilder<HomeMenuBloc, HomeMenuState>(
-              builder: (context, state) => SizedBox(
-                height: Dimens.px56 + Dimens.px16 * state.collapsePercent,
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: Dimens.px16),
-              child: SizedBox(
-                height: homeMenuItemHeight,
-                child: StreamBuilder<bool>(
-                    stream: _homeMenuBloc.backGroundStateController.stream,
-                    builder: (context, snapshot) {
-                      return ListView(
-                        scrollDirection: Axis.horizontal,
-                        controller: menuScrollController,
-                        physics: !(snapshot.data ?? false)
-                            ? const NeverScrollableScrollPhysics()
-                            : const ClampingScrollPhysics(),
-                        children: menuItems,
-                      );
-                    }),
-              ),
-            ),
-            Expanded(child: Container())
-          ],
-        ),
-      ),
-      if (row2Items.isNotNullAndEmpty)
-        Positioned.fill(
-            top: Dimens.px56 + Dimens.px32 + homeMenuItemHeight,
-            bottom: Dimens.px24,
-            child: Container(
-              alignment: Alignment.center,
-              child: Padding(
-                padding: const EdgeInsets.only(
-                    left: Dimens.px16, right: Dimens.px16, top: Dimens.px16),
-                child: BlocBuilder<HomeMenuBloc, HomeMenuState>(
-                  builder: (context, state) {
-                    return Opacity(
-                      opacity: state.menuRow2CollapsePercent,
-                      child: Transform.scale(
-                        scale: state.menuRow2CollapsePercent,
-                        alignment: Alignment.centerRight,
-                        child: menuRow2,
-                      ),
-                    );
-                  },
-                ),
-              ),
-            )),
       const Positioned.fill(
         child: UserName(),
       ),
@@ -258,16 +115,16 @@ class _HomeMenuState extends BaseState<HomeMenu> {
   double get homeMenuItemWith =>
       (context.screenSize.width - Dimens.px16 * 2) / 4;
 
-  double get homeMenuItemRatio => 86 / 80;
+  double get homeMenuItemRatio => 86 / 76;
 
   double get homeMenuItemHeight => homeMenuItemWith / homeMenuItemRatio;
 
   double get collapseMenuHeight =>
-      Dimens.px56 + Dimens.px16 * 2 + Dimens.px16 + homeMenuItemHeight;
+      Dimens.px56 + Dimens.px16 * 2 + Dimens.px16 + Dimens.px20;
 }
 
 class HomeMenuBloc extends Cubit<HomeMenuState> {
-  static const double menuHeight = 348;
+  static const double menuHeight = 316;
   final backGroundStateController = BehaviorSubject<bool>();
   double? height;
   bool canUpdateHeight = true;

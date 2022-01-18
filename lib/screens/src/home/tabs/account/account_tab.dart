@@ -1,13 +1,11 @@
 import 'package:anth_package/anth_package.dart';
-import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
-import 'package:kaylee/screens/src/about/about_screen.dart';
 import 'package:kaylee/screens/src/home/tabs/account/widgets/profile_widget.dart';
-import 'package:kaylee/screens/src/notification/list/notification_screen.dart';
 import 'package:kaylee/utils/utils.dart';
 
 class AccountTab extends StatefulWidget {
@@ -21,67 +19,60 @@ class AccountTab extends StatefulWidget {
 
 class _AccountTabState extends BaseState<AccountTab> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const ProfileWidget(),
-            _buildMenuItem(
-                title: Strings.thongBao,
-                icon: Images.icAccNotify,
-                onClick: () {
-                  pushScreen(PageIntent(screen: NotificationScreen));
-                }),
-            _buildMenuItem(
-                title: Strings.huongDanSd,
-                icon: Images.icAccGuide,
-                onClick: () {
-                  pushScreen(PageIntent(screen: GuideScreen));
-                }),
-            _buildMenuItem(
-                title: Strings.thongTinUngDung,
-                icon: Images.icAccAboutApp,
-                onClick: () {
-                  pushScreen(PageIntent(screen: AboutScreen));
-                }),
-            if ([UserRole.manager, UserRole.brandManager]
-                .contains(context.user.getUserInfo().userInfo?.role))
+    return AnnotatedRegion(
+      value: SystemUiOverlayStyle.dark,
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              const ProfileWidget(),
               _buildMenuItem(
-                  title: Strings.quanlyDonDh,
-                  icon: Images.icAccOrderlist,
+                  title: Strings.thongBao,
+                  icon: Images.icAccNotify,
                   onClick: () {
-                    pushScreen(PageIntent(screen: MyOrdersScreen));
+                    pushScreen(PageIntent(screen: NotificationScreen));
                   }),
-            _buildMenuItem(
-                title: Strings.caiDatMayIn,
-                icon: Images.icAccPrinter,
-                onClick: () {
-                  pushScreen(PageIntent(screen: PrinterDetailScreen));
-                }),
-            _buildMenuItem(
-                title: Strings.giaHanUngDung,
-                icon: Images.icAccGuide,
-                onClick: () {
-                  pushScreen(PageIntent(screen: ExpirationScreen));
-                }),
-            _buildMenuItem(
-                title: Strings.dangXuat,
-                icon: Images.icAccLogout,
-                showBtmDivider: false,
-                showEndingIcon: false,
-                onClick: context.bloc<AppBloc>()!.loggedOut),
-          ],
+              _buildMenuItem(
+                  title: Strings.huongDanSd,
+                  icon: Images.icAccGuide,
+                  onClick: () {
+                    pushScreen(PageIntent(screen: GuideScreen));
+                  }),
+              _buildMenuItem(
+                  title: Strings.thongTinUngDung,
+                  icon: Images.icAccAboutApp,
+                  onClick: () {
+                    pushScreen(PageIntent(screen: AboutScreen));
+                  }),
+              if ([UserRole.manager, UserRole.brandManager]
+                  .contains(context.user.getUserInfo().userInfo?.role))
+                _buildMenuItem(
+                    title: Strings.quanlyDonDh,
+                    icon: Images.icAccOrderlist,
+                    onClick: () {
+                      pushScreen(PageIntent(screen: MyOrdersScreen));
+                    }),
+              _buildMenuItem(
+                  title: Strings.caiDatMayIn,
+                  icon: Images.icAccPrinter,
+                  onClick: () {
+                    pushScreen(PageIntent(screen: PrinterDetailScreen));
+                  }),
+              _buildMenuItem(
+                  title: Strings.giaHanUngDung,
+                  icon: Images.icAccGuide,
+                  onClick: () {
+                    pushScreen(PageIntent(screen: ExpirationScreen));
+                  }),
+              _buildMenuItem(
+                  title: Strings.dangXuat,
+                  icon: Images.icAccLogout,
+                  showBtmDivider: false,
+                  showEndingIcon: false,
+                  onClick: context.bloc<AppBloc>()!.loggedOut),
+            ],
+          ),
         ),
       ),
     );

@@ -38,4 +38,13 @@ class Images {
   static const icArrowBack = 'assets/ic_arrow_back.png';
   static const icMessenger = 'assets/ic_messenger.png';
   static const icZalo = 'assets/ic_zalo.png';
+  static const icKnowledge = 'assets/ic_knowledge.png';
+  static const icProdDaily = 'assets/ic_prod_daily.png';
+  static const icProdHot = 'assets/ic_prod_hot.png';
+  static const icProdPro = 'assets/ic_prod_pro.png';
+  static const icProdSpecial = 'assets/ic_prod_special.png';
+  static const icEye = 'assets/ic_eye.png';
+  static const icLocationPin = 'assets/ic_location_pin.png';
+  static const icOtherPhone = 'assets/ic_other_phone.png';
+  static const icOtherStore = 'assets/ic_other_store.png';
 }

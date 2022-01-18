@@ -1,5 +1,4 @@
 import 'package:anth_package/anth_package.dart' hide Notification;
-import 'package:dio/dio.dart';
 import 'package:kaylee/models/models.dart';
 
 part 'notification_api.g.dart';

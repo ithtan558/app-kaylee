@@ -1,5 +1,4 @@
 import 'package:anth_package/anth_package.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart' hide Banner;
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/locator/locator.dart';
@@ -9,7 +8,7 @@ import 'package:kaylee/utils/deeplink_helper.dart';
 
 class HomeBanner extends StatefulWidget {
   static Widget newInstance() => BlocProvider(
-    create: (context) => HomeBannerBloc(service: context.api.advertise),
+        create: (context) => HomeBannerBloc(service: context.api.advertise),
         child: const HomeBanner._(),
       );
 
@@ -19,12 +18,13 @@ class HomeBanner extends StatefulWidget {
   _HomeBannerState createState() => _HomeBannerState();
 }
 
-class _HomeBannerState extends KayleeState<HomeBanner> {
+class _HomeBannerState extends KayleeState<HomeBanner>
+    with AutomaticKeepAliveClientMixin {
   final _indicatorController = IndicatorController();
 
-  double get width => context.screenSize.width;
+  double get width => context.screenSize.width - Dimens.px8 * 2;
 
-  double get height => (context.screenSize.width - Dimens.px8 * 2) / ratio;
+  double get height => width / ratio;
 
   final ratio = 359 / 128;
   final _pageController = PageController();
@@ -52,45 +52,48 @@ class _HomeBannerState extends KayleeState<HomeBanner> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        BlocBuilder<HomeBannerBloc, SingleModel<List<Banner>>>(
-          builder: (context, state) {
-            if (state.item?.isEmpty ?? true) return Container();
-            return Container(
-              height: height,
-              padding:
-                  const EdgeInsets.only(top: Dimens.px16, bottom: Dimens.px8),
-              child: PageView(
-                controller: _pageController,
-                children: state.item!
-                    .map((banner) => _buildBanner(
-                          image: banner.image ?? '',
-                          onTap: () {
-                            final url = banner.url;
-                            final pageIntent =
-                                DeepLinkHelper.handleLink(link: url);
-                            if (pageIntent != null) pushScreen(pageIntent);
-                          },
-                        ))
-                    .toList(),
-                onPageChanged: (value) {
-                  _indicatorController.jumpTo(index: value);
-                },
+    super.build(context);
+    return Container(
+      margin: const EdgeInsets.only(top: Dimens.px16),
+      height: height,
+      child: BlocBuilder<HomeBannerBloc, SingleModel<List<Banner>>>(
+        builder: (context, state) {
+          if (state.item?.isEmpty ?? true) return Container();
+          _indicatorController.length = state.item!.length;
+
+          return Stack(
+            children: [
+              Positioned.fill(
+                child: PageView(
+                  controller: _pageController,
+                  children: state.item!
+                      .map((banner) => _buildBanner(
+                            image: banner.image ?? '',
+                            onTap: () {
+                              final url = banner.url;
+                              final pageIntent =
+                                  DeepLinkHelper.handleLink(link: url);
+                              if (pageIntent != null) pushScreen(pageIntent);
+                            },
+                          ))
+                      .toList(),
+                  onPageChanged: (value) {
+                    _indicatorController.jumpTo(index: value);
+                  },
+                ),
               ),
-            );
-          },
-        ),
-        BlocBuilder<HomeBannerBloc, SingleModel<List<Banner>>>(
-          builder: (context, state) {
-            _indicatorController.length = state.item?.length ?? 0;
-            return Indicator(
-              controller: _indicatorController,
-              onSelect: (index) {},
-            );
-          },
-        )
-      ],
+              Positioned(
+                  bottom: Dimens.px8,
+                  left: Dimens.px0,
+                  right: Dimens.px0,
+                  child: Indicator(
+                    controller: _indicatorController,
+                    onSelect: (index) {},
+                  ))
+            ],
+          );
+        },
+      ),
     );
   }
 
@@ -132,4 +135,7 @@ class _HomeBannerState extends KayleeState<HomeBanner> {
   void onForceReloadingWidget() {
     _bloc.loadBanners();
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

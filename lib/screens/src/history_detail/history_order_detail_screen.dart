@@ -1,9 +1,7 @@
 import 'dart:async';
 
 import 'package:anth_package/anth_package.dart';
-import 'package:core_plugin/core_plugin.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/locator/locator.dart';
 import 'package:kaylee/models/models.dart';

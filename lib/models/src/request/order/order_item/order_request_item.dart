@@ -1,5 +1,4 @@
 import 'package:anth_package/anth_package.dart';
-import 'package:json_annotation/json_annotation.dart';
 import 'package:kaylee/models/models.dart';
 
 part 'order_request_item.g.dart';
@@ -13,6 +12,7 @@ class OrderRequestItem {
     this.serviceId,
     this.productId,
     this.quantity,
+    this.type,
     this.price,
     this.name,
   });
@@ -22,6 +22,7 @@ class OrderRequestItem {
   @JsonKey(toJson: _parseProductAndServiceId)
   int? productId;
   int? quantity;
+  int? type;
   @JsonKey(ignore: true)
   int? price;
   @JsonKey(ignore: true)
@@ -39,6 +40,7 @@ class OrderRequestItem {
         quantity: product.quantity,
         price: product.price,
         name: product.name,
+        type: product.type,
       );
 
   factory OrderRequestItem.copyFromService({required Service service}) =>

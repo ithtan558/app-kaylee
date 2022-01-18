@@ -63,7 +63,3 @@ lane :upload_store do
 
     upload_store_notification
 end
-
-lane :update_gem do
-    sh(command: ['bundle', 'update'])
-end

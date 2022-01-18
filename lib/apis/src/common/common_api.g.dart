@@ -94,6 +94,32 @@ class _CommonApi implements CommonApi {
     return value;
   }
 
+  @override
+  Future<ResponseModel<PageData<Content>>> fetchContents(
+      {required categoryId,
+      page = PaginationConst.page,
+      limit = PaginationConst.limit}) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'category_id': categoryId,
+      r'page': page,
+      r'limit': limit
+    };
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ResponseModel<PageData<Content>>>(
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, 'content/get-by-category',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ResponseModel<PageData<Content>>.fromJson(
+      _result.data!,
+      (json) => PageData<Content>.fromJson(json as Map<String, dynamic>),
+    );
+    return value;
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||

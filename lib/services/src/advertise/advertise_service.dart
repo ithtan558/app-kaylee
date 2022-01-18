@@ -3,4 +3,10 @@ import 'package:kaylee/models/models.dart';
 
 abstract class AdvertiseService {
   Future<ResponseModel<List<Banner>>> getAllBanners();
+
+  Future<ResponseModel<PageData<Product>>> fetchProducts({
+    required int type,
+    int page = PaginationConst.page,
+    int limit = PaginationConst.limit,
+  });
 }

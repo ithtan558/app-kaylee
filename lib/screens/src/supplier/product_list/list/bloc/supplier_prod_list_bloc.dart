@@ -1,18 +1,18 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:kaylee/apis/apis.dart';
-import 'package:kaylee/base/kaylee_list_interface.dart';
-import 'package:kaylee/base/loadmore_interface.dart';
 import 'package:kaylee/models/models.dart';
 
 class SupplierProdListBloc extends Cubit<LoadMoreModel<Product>>
-    with KayleeListInterfaceMixin
-    implements LoadMoreInterface {
+    with PaginationMixin<Product> {
   final ProductApi productService;
   Supplier? supplier;
   ProdCate? category;
+  String? keyword;
 
   SupplierProdListBloc({required this.productService, this.supplier})
-      : super(LoadMoreModel(items: []));
+      : super(LoadMoreModel(items: [])) {
+    page = 1;
+  }
 
   void loadInitDataWithCate({ProdCate? category}) {
     changeTab(category: category);
@@ -26,23 +26,27 @@ class SupplierProdListBloc extends Cubit<LoadMoreModel<Product>>
       ///reset page và item về ban đầu
       emit(LoadMoreModel.copy(state
         ..loading = true
-        ..page = 1
         ..items = null));
-      loadProds();
+      reset();
+      load();
     }
   }
 
-  void loadProds() {
+  @override
+  void load() async {
+    super.load();
     RequestHandler(
       request: productService.getProducts(
         supplierId: supplier?.id,
         categoryId: category?.id,
-        limit: state.limit,
-        page: state.page,
+        limit: limit,
+        page: page,
+        keyword: keyword,
       ),
       onSuccess: ({message, result}) {
         final prods = (result as PageData<Product>).items;
-        completeRefresh();
+        addMore(nextItems: prods);
+        completeLoading();
         emit(LoadMoreModel.copy(state
           ..loading = false
           ..addAll(prods)
@@ -50,7 +54,7 @@ class SupplierProdListBloc extends Cubit<LoadMoreModel<Product>>
           ..error = null));
       },
       onFailed: (code, {error}) {
-        completeRefresh();
+        completeLoading();
         emit(LoadMoreModel.copy(state
           ..loading = false
           ..code = code
@@ -59,24 +63,21 @@ class SupplierProdListBloc extends Cubit<LoadMoreModel<Product>>
     );
   }
 
-  @override
-  void loadMore() {
-    state.page++;
-    loadProds();
+  void search(String keyword) {
+    this.keyword = keyword;
+    reset();
+    emit(LoadMoreModel.copy(state
+      ..loading = true
+      ..items = null));
+    load();
   }
 
-  @override
-  bool loadWhen() => !state.loading && !state.ended;
-
-  @override
-  void refresh() {
-    super.refresh();
-    if (state.loading) return completeRefresh();
-
-    state
-      ..page = 1
-      ..items = []
-      ..loading = true;
-    loadProds();
+  void clear() {
+    keyword = null;
+    reset();
+    emit(LoadMoreModel.copy(state
+      ..loading = true
+      ..items = null));
+    load();
   }
 }

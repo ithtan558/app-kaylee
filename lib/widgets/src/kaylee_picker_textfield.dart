@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:kaylee/apis/apis.dart';
 import 'package:kaylee/base/kaylee_state.dart';

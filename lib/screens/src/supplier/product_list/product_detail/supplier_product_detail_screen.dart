@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:anth_package/anth_package.dart';
 import 'package:flutter/material.dart';
-import 'package:kaylee/app_bloc.dart';
 import 'package:kaylee/base/kaylee_state.dart';
 import 'package:kaylee/locator/locator.dart';
 import 'package:kaylee/models/models.dart';
@@ -10,8 +9,9 @@ import 'package:kaylee/res/res.dart';
 import 'package:kaylee/screens/screens.dart';
 import 'package:kaylee/screens/src/supplier/product_list/product_detail/bloc/supplier_product_detail_screen_bloc.dart';
 import 'package:kaylee/screens/src/supplier/product_list/product_detail/widgets/product_supplier_image.dart';
+import 'package:kaylee/screens/src/supplier/product_list/product_detail/widgets/product_supplier_price.dart';
 import 'package:kaylee/screens/src/supplier/product_list/product_detail/widgets/product_supplier_video.dart';
-import 'package:kaylee/utils/utils.dart';
+import 'package:kaylee/utils/src/supplier_add_2_cart_view_helper/supplier_add_2_cart_view_helper.dart';
 import 'package:kaylee/widgets/widgets.dart';
 
 class SupplierProductDetailScreenData {
@@ -50,7 +50,7 @@ class SupplierProductDetailScreen extends StatefulWidget {
 
 class _SupplierProductDetailScreenState
     extends KayleeState<SupplierProductDetailScreen>
-    implements ProductDetailAction {
+    with SupplierAdd2CartViewHelper<SupplierProductDetailScreen> {
   SupplierProdDetailBloc get bloc => context.bloc<SupplierProdDetailBloc>()!;
   late StreamSubscription sub;
   final _indicatorController = IndicatorController();
@@ -61,7 +61,6 @@ class _SupplierProductDetailScreenState
   @override
   void initState() {
     super.initState();
-    bloc.action = this;
     sub = bloc.stream.listen((state) {
       if (state.loading) {
         showLoading();
@@ -92,7 +91,7 @@ class _SupplierProductDetailScreenState
         builder: (context, state) {
           if (state.item == null) return Container();
           final product = state.item!;
-          _indicatorController.length = product.images?.length ?? 0;
+          _indicatorController.length = product.images.length;
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -103,13 +102,12 @@ class _SupplierProductDetailScreenState
                   onPageChanged: (value) {
                     _indicatorController.jumpTo(index: value);
                   },
-                  children: (product.images?.map((image) {
-                        if (image.type == ProductImageType.video) {
-                          return ProductSupplierVideo(image);
-                        }
-                        return ProductSupplierImage(image);
-                      }))?.toList() ??
-                      [],
+                  children: (product.images.map((image) {
+                    if (image.type == ProductImageType.video) {
+                      return ProductSupplierVideo(image);
+                    }
+                    return ProductSupplierImage(image);
+                  })).toList(),
                 ),
               ),
               Padding(
@@ -125,14 +123,13 @@ class _SupplierProductDetailScreenState
                     top: Dimens.px16, left: Dimens.px16, right: Dimens.px16),
                 child: KayleeText.normal16W500(
                   product.name ?? '',
-                  maxLines: 1,
                   textAlign: TextAlign.start,
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(
                     top: Dimens.px8, left: Dimens.px16, right: Dimens.px16),
-                child: KayleePriceText.hyper16W700(product.price),
+                child: ProductSupplierPrice(product: product),
               ),
               Padding(
                 padding: const EdgeInsets.only(
@@ -186,9 +183,8 @@ class _SupplierProductDetailScreenState
                   text: Strings.themVaoGioHang,
                   margin: EdgeInsets.zero,
                   onPressed: () {
-                    bloc.add2Cart(
-                        previous: context.cart.getOrder()?.supplier,
-                        current: data.supplier);
+                    add2Cart(
+                        bloc.state.item!.copyWith(supplier: data.supplier));
                   },
                 ),
               ),
@@ -201,43 +197,11 @@ class _SupplierProductDetailScreenState
 
   @override
   void onAdd2Cart() {
-    context.cart.addProdToCart(bloc.state.item);
-    context.bloc<CartBloc>()!.updateCart();
     if (data.openFrom == ProductDetailScreenOpenFrom.notification) {
       context.pushToFirst(PageIntent(
           screen: SupplierProdListScreen, bundle: Bundle(data.supplier)));
     } else {
       popScreen();
     }
-  }
-
-  @override
-  void onResetCart() {
-    showKayleeAlertDialog(
-      context: context,
-      view: KayleeAlertDialogView.message(
-        message: Message(
-            content: Strings.banChacChanMuonXoaDonHangNhaCungCapHienTai),
-        actions: [
-          KayleeAlertDialogAction.dongY(
-            isDefaultAction: true,
-            onPressed: () {
-              popScreen();
-              context.cart.clear();
-              onNewAdd2Cart();
-            },
-          ),
-          KayleeAlertDialogAction.huy(
-            onPressed: popScreen,
-          )
-        ],
-      ),
-    );
-  }
-
-  @override
-  void onNewAdd2Cart() {
-    context.cart.updateOrderInfo(OrderRequest(supplier: data.supplier));
-    onAdd2Cart();
   }
 }
