@@ -19,11 +19,11 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "1.0.10"
-      resolved-ref: "19123a6b9e0099956cfc1fc24b804690f192cdfd"
+      ref: "1.0.11"
+      resolved-ref: "278a31205b19c39a28c8f44fd23fbb5fa46c7ad9"
       url: "https://tungpham6195@bitbucket.org/anth-freelance/anth_package.git"
     source: git
-    version: "1.0.10"
+    version: "1.0.11"
   app_settings:
     dependency: transitive
     description:
@@ -1292,14 +1292,14 @@ packages:
       name: syncfusion_flutter_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "19.4.42"
+    version: "19.4.43+1"
   syncfusion_flutter_sliders:
     dependency: transitive
     description:
       name: syncfusion_flutter_sliders
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "19.4.42"
+    version: "19.4.43"
   synchronized:
     dependency: transitive
     description:
@@ -1462,7 +1462,7 @@ packages:
       name: video_player
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.2.11"
+    version: "2.2.13"
   video_player_platform_interface:
     dependency: transitive
     description:
