@@ -27,8 +27,6 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends KayleeState<SplashScreen> {
-  final logoRatio = 211 / 95;
-
   SplashScreenBloc get bloc => context.bloc<SplashScreenBloc>()!;
   late StreamSubscription _sub;
 
@@ -74,13 +72,10 @@ class _SplashScreenState extends KayleeState<SplashScreen> {
           children: [
             Expanded(
               child: Container(
-                width: context.scaleWidth(211),
+                width: context.scaleWidth(130),
                 height: double.infinity,
                 alignment: Alignment.center,
-                child: AspectRatio(
-                  aspectRatio: logoRatio,
-                  child: Image.asset(Images.logo),
-                ),
+                child: Image.asset(Images.logo),
               ),
             ),
             BlocConsumer<SplashScreenBloc, dynamic>(
