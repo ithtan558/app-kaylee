@@ -51,8 +51,8 @@
 		<string>Kaylee truy cập hình ảnh của bạn để lưu trữ và sử dụng để hiển thị hình đại diện cho sản phẩm, dịch vụ, khách hàng, tài khoản cá nhân</string>
 		<key>NSSpeechRecognitionUsageDescription</key>
 		<string>...</string>
-        <key>NSMicrophoneUsageDescription</key>
-        <string>...</string>
+		<key>NSMicrophoneUsageDescription</key>
+		<string>...</string>
 		<key>UIBackgroundModes</key>
 		<array>
 			<string>bluetooth-central</string>
