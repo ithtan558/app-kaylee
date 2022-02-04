@@ -6,6 +6,8 @@ part of 'common_api.dart';
 // RetrofitGenerator
 // **************************************************************************
 
+// ignore_for_file: unnecessary_brace_in_string_interps
+
 class _CommonApi implements CommonApi {
   _CommonApi(this._dio, {this.baseUrl});
 
@@ -45,10 +47,11 @@ class _CommonApi implements CommonApi {
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<List<City>>.fromJson(
-        _result.data!,
-        (json) => (json as List<dynamic>)
-            .map<City>((i) => City.fromJson(i as Map<String, dynamic>))
-            .toList());
+      _result.data!,
+      (json) => (json as List<dynamic>)
+          .map<City>((i) => City.fromJson(i as Map<String, dynamic>))
+          .toList(),
+    );
     return value;
   }
 
@@ -66,10 +69,11 @@ class _CommonApi implements CommonApi {
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<List<District>>.fromJson(
-        _result.data!,
-        (json) => (json as List<dynamic>)
-            .map<District>((i) => District.fromJson(i as Map<String, dynamic>))
-            .toList());
+      _result.data!,
+      (json) => (json as List<dynamic>)
+          .map<District>((i) => District.fromJson(i as Map<String, dynamic>))
+          .toList(),
+    );
     return value;
   }
 
@@ -87,10 +91,11 @@ class _CommonApi implements CommonApi {
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<List<Ward>>.fromJson(
-        _result.data!,
-        (json) => (json as List<dynamic>)
-            .map<Ward>((i) => Ward.fromJson(i as Map<String, dynamic>))
-            .toList());
+      _result.data!,
+      (json) => (json as List<dynamic>)
+          .map<Ward>((i) => Ward.fromJson(i as Map<String, dynamic>))
+          .toList(),
+    );
     return value;
   }
 

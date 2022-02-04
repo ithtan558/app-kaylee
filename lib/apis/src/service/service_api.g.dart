@@ -6,6 +6,8 @@ part of 'service_api.dart';
 // RetrofitGenerator
 // **************************************************************************
 
+// ignore_for_file: unnecessary_brace_in_string_interps
+
 class _ServiceApi implements ServiceApi {
   _ServiceApi(this._dio, {this.baseUrl});
 
@@ -26,11 +28,12 @@ class _ServiceApi implements ServiceApi {
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<List<ServiceCate>>.fromJson(
-        _result.data!,
-        (json) => (json as List<dynamic>)
-            .map<ServiceCate>(
-                (i) => ServiceCate.fromJson(i as Map<String, dynamic>))
-            .toList());
+      _result.data!,
+      (json) => (json as List<dynamic>)
+          .map<ServiceCate>(
+              (i) => ServiceCate.fromJson(i as Map<String, dynamic>))
+          .toList(),
+    );
     return value;
   }
 

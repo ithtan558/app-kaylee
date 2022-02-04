@@ -6,6 +6,8 @@ part of 'campaign_api.dart';
 // RetrofitGenerator
 // **************************************************************************
 
+// ignore_for_file: unnecessary_brace_in_string_interps
+
 class _CampaignApi implements CampaignApi {
   _CampaignApi(this._dio, {this.baseUrl});
 
@@ -26,10 +28,11 @@ class _CampaignApi implements CampaignApi {
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<List<Campaign>>.fromJson(
-        _result.data!,
-        (json) => (json as List<dynamic>)
-            .map<Campaign>((i) => Campaign.fromJson(i as Map<String, dynamic>))
-            .toList());
+      _result.data!,
+      (json) => (json as List<dynamic>)
+          .map<Campaign>((i) => Campaign.fromJson(i as Map<String, dynamic>))
+          .toList(),
+    );
     return value;
   }
 

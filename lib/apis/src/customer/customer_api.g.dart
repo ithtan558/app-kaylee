@@ -6,6 +6,8 @@ part of 'customer_api.dart';
 // RetrofitGenerator
 // **************************************************************************
 
+// ignore_for_file: unnecessary_brace_in_string_interps
+
 class _CustomerApi implements CustomerApi {
   _CustomerApi(this._dio, {this.baseUrl});
 
@@ -56,10 +58,11 @@ class _CustomerApi implements CustomerApi {
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<List<Customer>>.fromJson(
-        _result.data!,
-        (json) => (json as List<dynamic>)
-            .map<Customer>((i) => Customer.fromJson(i as Map<String, dynamic>))
-            .toList());
+      _result.data!,
+      (json) => (json as List<dynamic>)
+          .map<Customer>((i) => Customer.fromJson(i as Map<String, dynamic>))
+          .toList(),
+    );
     return value;
   }
 
@@ -253,11 +256,12 @@ class _CustomerApi implements CustomerApi {
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<List<CustomerType>>.fromJson(
-        _result.data!,
-        (json) => (json as List<dynamic>)
-            .map<CustomerType>(
-                (i) => CustomerType.fromJson(i as Map<String, dynamic>))
-            .toList());
+      _result.data!,
+      (json) => (json as List<dynamic>)
+          .map<CustomerType>(
+              (i) => CustomerType.fromJson(i as Map<String, dynamic>))
+          .toList(),
+    );
     return value;
   }
 

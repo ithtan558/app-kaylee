@@ -6,6 +6,8 @@ part of 'product_api.dart';
 // RetrofitGenerator
 // **************************************************************************
 
+// ignore_for_file: unnecessary_brace_in_string_interps
+
 class _ProductApi implements ProductApi {
   _ProductApi(this._dio, {this.baseUrl});
 
@@ -56,10 +58,11 @@ class _ProductApi implements ProductApi {
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<List<ProdCate>>.fromJson(
-        _result.data!,
-        (json) => (json as List<dynamic>)
-            .map<ProdCate>((i) => ProdCate.fromJson(i as Map<String, dynamic>))
-            .toList());
+      _result.data!,
+      (json) => (json as List<dynamic>)
+          .map<ProdCate>((i) => ProdCate.fromJson(i as Map<String, dynamic>))
+          .toList(),
+    );
     return value;
   }
 
