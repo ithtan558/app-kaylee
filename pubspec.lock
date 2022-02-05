@@ -19,11 +19,11 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "1.0.12"
-      resolved-ref: "88d31ff210534b2f26bba011199ad1de7b7458ba"
+      ref: "1.0.13"
+      resolved-ref: "92e821a66fcf44986453f7047fdb2e8c41701fa4"
       url: "https://tungpham6195@bitbucket.org/anth-freelance/anth_package.git"
     source: git
-    version: "1.0.12"
+    version: "1.0.13"
   app_settings:
     dependency: transitive
     description:
@@ -247,11 +247,11 @@ packages:
     dependency: transitive
     description:
       path: "."
-      ref: "1.0.16"
-      resolved-ref: "4db2ff96bc644ba36b740fce037128aaa5a931fd"
+      ref: "1.0.17"
+      resolved-ref: "806bbc809cac812397292080bd1062323cd36903"
       url: "https://github.com/tungpham6195/flutter.core_plugin.git"
     source: git
-    version: "1.0.16"
+    version: "1.0.17"
   coverage:
     dependency: transitive
     description:
@@ -1119,7 +1119,7 @@ packages:
       name: shared_preferences
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.12"
+    version: "2.0.13"
   shared_preferences_android:
     dependency: transitive
     description:
