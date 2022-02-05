@@ -28,7 +28,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends KayleeState<SplashScreen> {
   SplashScreenBloc get bloc => context.bloc<SplashScreenBloc>()!;
-  late StreamSubscription _sub;
+  late final StreamSubscription _sub;
 
   @override
   void initState() {
@@ -44,7 +44,7 @@ class _SplashScreenState extends KayleeState<SplashScreen> {
   }
 
   void _loadRemoteConfig() async {
-    final remoteConfig = RemoteConfig.instance;
+    final remoteConfig = FirebaseRemoteConfig.instance;
     await remoteConfig.setConfigSettings(RemoteConfigSettings(
       fetchTimeout: const Duration(minutes: 1),
       minimumFetchInterval:

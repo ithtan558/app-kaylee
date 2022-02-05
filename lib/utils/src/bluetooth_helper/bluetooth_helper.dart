@@ -6,7 +6,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 mixin BluetoothHelper<T extends StatefulWidget> on State<T> {
   void checkBluetoothPermission() async {
-    final permission = Permission.locationWhenInUse;
+    const permission = Permission.locationWhenInUse;
     //handle cho android trc, ios đợi lên flutter sẽ handle sau
     if (Platform.isAndroid) {
       PermissionStatus status = await permission.request();

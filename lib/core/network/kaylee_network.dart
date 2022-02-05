@@ -8,9 +8,10 @@ class KayleeNetwork extends Network {
   KayleeNetwork() : super() {
     (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
         (client) {
-      client.badCertificateCallback = (cert, host, port) {
-        return true;
-      };
+      return client
+        ..badCertificateCallback = (cert, host, port) {
+          return true;
+        };
     };
     HttpOverrides.global = IgnoreHandShakeHttpOverrides();
   }

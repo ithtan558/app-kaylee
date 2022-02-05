@@ -18,7 +18,7 @@ class PrinterModule {
   static late CapabilityProfile _profile;
 
   static Future<void> init() async {
-    final paper = PaperSize.mm80;
+    const paper = PaperSize.mm80;
     _profile = await CapabilityProfile.load();
     _printer = NetworkPrinter(paper, _profile);
   }
