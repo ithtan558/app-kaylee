@@ -26,12 +26,10 @@ dependencies:
     #    path: ../anth_package
     git:
       url: https://tungpham6195@bitbucket.org/anth-freelance/anth_package.git
-      ref: 1.0.14
+      ref: 1.0.16
   google_maps_flutter: ^2.1.1
 
 dependency_overrides:
-  #  chewie package didn't upgrade to provider: ^6.0.0 yet
-  provider: ^6.0.2
   test_api: ^0.4.9
 
 dev_dependencies:
