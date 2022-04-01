@@ -104,7 +104,8 @@ class _CartModuleImpl extends CartModule {
                 cartItem.productId == newItem.productId),
       );
       if (oldItemIndex < 0) {
-        return _order!.cartItems!.add(newItem);
+        _order!.cartItems!.add(newItem);
+        continue;
       }
       _order!.cartItems!.removeAt(oldItemIndex);
       _order!.cartItems!.insert(oldItemIndex, newItem);
