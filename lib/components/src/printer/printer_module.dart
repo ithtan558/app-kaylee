@@ -103,9 +103,7 @@ class PrinterModule {
         ? '[]'
         : fromSharePref) as List;
     final devices = map.map((e) => PrinterDevice.fromJson(e)).toList();
-    final device = devices.firstWhere(
-      (element) => element.selected,
-    );
+    final device = devices.firstWhere((element) => element.selected);
     return device;
   }
 }
