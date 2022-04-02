@@ -197,6 +197,7 @@ class _CreateNewOrderScreenState extends KayleeState<CreateNewOrderScreen> {
             brandController.value = _order?.brand;
             employeeController.employees = _order?.employees;
             discountController.text = _order?.discount?.toString() ?? '';
+            _cartBloc.updateCart();
           },
           builder: (context, state) {
             return Column(
