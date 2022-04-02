@@ -19,11 +19,11 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "1.0.18"
-      resolved-ref: "15d1c6792f3a0f995e3f623b02f2d203aff2be21"
+      ref: "1.0.19"
+      resolved-ref: "44e8bc3d379c4f48dedb0d4a275fbe155391ac39"
       url: "https://github.com/ithtan558/app-anth-package.git"
     source: git
-    version: "1.0.18"
+    version: "1.0.19"
   app_settings:
     dependency: transitive
     description:
@@ -240,11 +240,11 @@ packages:
     dependency: transitive
     description:
       path: "."
-      ref: "1.0.21"
-      resolved-ref: "19e38054b14923f303947811f814158272e29661"
+      ref: "1.0.22"
+      resolved-ref: "620a28b4bd383337445e022750bf3be26e8adbe3"
       url: "https://github.com/tungpham6195/flutter.core_plugin.git"
     source: git
-    version: "1.0.21"
+    version: "1.0.22"
   coverage:
     dependency: transitive
     description:
