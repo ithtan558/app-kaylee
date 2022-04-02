@@ -61,52 +61,64 @@ class _CartModuleImpl extends CartModule {
             : OrderRequestItem.copyFromProduct(product: e))
         .toList();
 
-    List<OrderRequestItem> notContainItems = [];
+    //variable chưa những item ko còn tồn tại trong cart
+    final notExistingInCartItems = <OrderRequestItem>[];
+    //remove những item ko còn tồn tại trong cart
     if (items is List<Service>) {
-      _order!.cartItems!
-          .where((cartItem) => cartItem.isService)
-          .forEach((cartItem) {
-        try {
-          newItems
-              .firstWhere((newItem) => newItem.serviceId == cartItem.serviceId);
-          notContainItems.add(cartItem);
-        } catch (_) {}
-      });
-      for (var notContainItem in notContainItems) {
+      //tìm những item service ko còn tồn tại
+      for (var cartItem
+          in _order!.cartItems!.where((cartItem) => cartItem.isService)) {
+        //nếu cartItem ko tồn tại, index sẽ = -1
+        final index = newItems
+            .indexWhere((newItem) => newItem.serviceId == cartItem.serviceId);
+        if (index.isNegative) {
+          //cartItem này ko tồn tại => add vào mảng những item ko tồn tại
+          notExistingInCartItems.add(cartItem);
+        }
+      }
+      //từ item ko còn tồn tại đã tìm ở trên, remove nó khỏi cart
+      for (var notContainItem in notExistingInCartItems) {
         _order!.cartItems!.removeWhere((cartItem) =>
             cartItem.isService &&
             cartItem.serviceId == notContainItem.serviceId);
       }
     } else if (items is List<Product>) {
+      //tìm những item product ko còn tồn tại
       for (var cartItem
           in _order!.cartItems!.where((cartItem) => cartItem.isProduct)) {
-        try {
-          newItems.singleWhere(
-              (newItem) => newItem.productId == cartItem.productId);
-          notContainItems.add(cartItem);
-        } catch (_) {}
+        //nếu cartItem ko tồn tại, index sẽ = -1
+        final index = newItems
+            .indexWhere((newItem) => newItem.productId == cartItem.productId);
+        if (index.isNegative) {
+          //cartItem này ko tồn tại => add vào mảng những item ko tồn tại
+          notExistingInCartItems.add(cartItem);
+        }
       }
-
-      for (var notContainItem in notContainItems) {
+      //từ item ko còn tồn tại đã tìm ở trên, remove nó khỏi cart
+      for (var notContainItem in notExistingInCartItems) {
         _order!.cartItems!.removeWhere((cartItem) =>
             cartItem.isProduct &&
             cartItem.productId == notContainItem.productId);
       }
     }
+    //với những item mới
     for (var newItem in newItems) {
+      //thử tìm xem, có item mới nào đã tồn tại ở trong cart hay chưa
       final oldItemIndex = _order!.cartItems!.indexWhere(
         (cartItem) =>
-            (cartItem.serviceId.isNotNull &&
-                newItem.serviceId.isNotNull &&
+            (cartItem.isService &&
+                newItem.isService &&
                 cartItem.serviceId == newItem.serviceId) ||
-            (cartItem.productId.isNotNull &&
-                newItem.productId.isNotNull &&
+            (cartItem.isProduct &&
+                newItem.isProduct &&
                 cartItem.productId == newItem.productId),
       );
-      if (oldItemIndex < 0) {
+      //nếu chưa tồn tại, thì add nó vào cart
+      if (oldItemIndex.isNegative) {
         _order!.cartItems!.add(newItem);
         continue;
       }
+      //nếu duplicated, thì remove nó khỏi cart
       _order!.cartItems!.removeAt(oldItemIndex);
       _order!.cartItems!.insert(oldItemIndex, newItem);
     }
