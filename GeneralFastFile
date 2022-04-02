@@ -49,7 +49,7 @@ lane :uploading_firebase_distribution do
     end
 
     firebase_app_distribution(
-        service_credentials_file: ENV['GOOGLE_APPLICATION_CREDENTIALS']
+        service_credentials_file: '/Users/tung/freelances/anth/deployment-certificates/firebase-distribution-service-key.json'
     )
     firebase_distribution_notification
 end
