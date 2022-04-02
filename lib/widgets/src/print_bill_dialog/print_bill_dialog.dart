@@ -228,9 +228,13 @@ class _PrintBillDialogState extends KayleeState<PrintBillDialog> {
           return getPdfRasterForRoll80(
             data: snapshot.data!.save(),
             onPrint: (data) async {
-              await PrinterModule.connectPrinter(context,
-                  order: _order, image: data);
-              hideLoading();
+              try {
+                await PrinterModule.connectPrinter(context,
+                    order: _order, image: data);
+              } catch (_) {
+              } finally {
+                hideLoading();
+              }
             },
           );
         }
