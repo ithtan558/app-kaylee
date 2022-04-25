@@ -1,1 +1,1 @@
-fix issue: the order item is missing in creating order while selecting from popup
+fix setting up wifi printer

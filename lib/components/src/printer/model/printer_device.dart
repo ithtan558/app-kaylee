@@ -55,9 +55,9 @@ class PrinterDevice {
   factory PrinterDevice.fromJson(json) => PrinterDevice(
         ip: json['ip'] as String,
         port: json['port'] as int,
-        name: json['name'] as String,
-        address: json['address'] as String,
-        type: json['type'] as int,
+        name: json['name'] as String? ?? '',
+        address: json['address'] as String? ?? '',
+        type: json['type'] as int? ?? -1,
         selected: json['selected'] as bool,
       );
 
