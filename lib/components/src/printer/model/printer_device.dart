@@ -14,7 +14,7 @@ class PrinterDevice {
 
   bool selected;
 
-  bool get isBluetooth => address.isNotNull;
+  bool get isBluetooth => address.isNotNullAndEmpty;
 
   String get deviceName => isWifi
       ? '$ip - Wifi'
