@@ -60,6 +60,11 @@ class DeepLinkHelper {
             );
           }
         }
+        if (uri.path == '/account/huong-dan-su-dung') {
+          return PageIntent(
+            screen: GuideScreen,
+          );
+        }
       }
     }
     return null;
