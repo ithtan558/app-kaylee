@@ -10,8 +10,8 @@ end
 
 lane :clean_project do
     Dir.chdir('../..') do
-        sh('flutter', 'clean')
-        sh('flutter', 'packages', 'get')
+        sh('fvm', 'flutter', 'clean')
+        sh('fvm', 'flutter', 'packages', 'get')
     end
 end
 
@@ -22,7 +22,7 @@ end
 
 private_lane :build do
     Dir.chdir('../..') do
-        command = ['flutter', 'build', build_type, '--flavor', flavor , '--target', ENV['TARGET'], '--obfuscate', '--split-debug-info', "#{ENV['SPLIT_DEBUG_INFOPATH']}"]
+        command = ['fvm', 'flutter', 'build', build_type, '--flavor', flavor , '--target', ENV['TARGET'], '--obfuscate', '--split-debug-info', "#{ENV['SPLIT_DEBUG_INFOPATH']}"]
         sh(
             command: command
         )
