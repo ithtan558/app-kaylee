@@ -1,1 +1,1 @@
-- find all product in supplier detail screen when searching
+- scroll to index zero when start searching in supplier detail screen
