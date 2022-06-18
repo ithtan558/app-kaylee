@@ -1,6 +1,7 @@
 import 'package:anth_package/anth_package.dart';
 import 'package:kaylee/apis/apis.dart';
 import 'package:kaylee/models/models.dart';
+import 'package:kaylee/res/res.dart';
 
 class SupplierProdCateListBloc extends Cubit<LoadMoreModel<ProdCate>> {
   ProductApi productService;
@@ -14,8 +15,12 @@ class SupplierProdCateListBloc extends Cubit<LoadMoreModel<ProdCate>> {
     RequestHandler(
       request: productService.getCategories(supplierId: supplier?.id),
       onSuccess: ({message, result}) {
+        final categories = result as List<ProdCate>;
+        if (categories.isNotEmpty) {
+          categories.insert(0, ProdCate(name: Strings.tatCa));
+        }
         emit(LoadMoreModel.copy(state
-          ..items = result
+          ..items = categories
           ..loading = false
           ..code = null
           ..error = null));

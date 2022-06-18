@@ -19,11 +19,11 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "1.0.19"
-      resolved-ref: "44e8bc3d379c4f48dedb0d4a275fbe155391ac39"
+      ref: "1.0.20"
+      resolved-ref: "0020abaf618ce53d6992843b8cf4b1bea570034f"
       url: "https://github.com/ithtan558/app-anth-package.git"
     source: git
-    version: "1.0.19"
+    version: "1.0.20"
   app_settings:
     dependency: transitive
     description:

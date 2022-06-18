@@ -31,14 +31,20 @@ class _SupplierProductListTabState extends State<SupplierProductListTab>
             },
             builder: (context, state) {
               final categories = state.items;
-              return KayleeTabBar(
-                itemCount: categories?.length ?? 0,
-                mapTitle: (index) => categories!.elementAt(index).name,
-                onSelected: (value) {
-                  // context.read<SearchInputFieldController>().clear();
-                  _bloc.changeTab(category: state.items!.elementAt(value));
-                },
-              );
+              return BlocBuilder<SupplierProdListBloc, LoadMoreModel<Product>>(
+                  builder: (context, state) {
+                return KayleeTabBar(
+                  itemCount: categories?.length ?? 0,
+                  mapTitle: (index) => categories!.elementAt(index).name,
+                  onSelected: (value) {
+                    // context.read<SearchInputFieldController>().clear();
+                    _bloc.changeTab(category: categories!.elementAt(value));
+                  },
+                  initialIndex: _bloc.category == null
+                      ? 0
+                      : categories!.indexOf(_bloc.category!),
+                );
+              });
             },
           ),
         ),

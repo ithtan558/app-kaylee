@@ -182,7 +182,9 @@ class _SupplierProdListScreenState extends KayleeState<SupplierProdListScreen> {
         ).copyWith(bottom: Dimens.px4),
         height: Dimens.px44,
         onDoneTyping: (value) {
-          _productListBloc.search(value);
+          if (_categoryBloc.state.items?.isNotEmpty ?? false) {
+            _productListBloc.search(value, _categoryBloc.state.items!.first);
+          }
         },
         onClear: _productListBloc.clear,
       ),

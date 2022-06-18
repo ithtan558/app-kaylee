@@ -63,8 +63,9 @@ class SupplierProdListBloc extends Cubit<LoadMoreModel<Product>>
     );
   }
 
-  void search(String keyword) {
+  void search(String keyword, ProdCate category) {
     this.keyword = keyword;
+    this.category = category;
     reset();
     emit(LoadMoreModel.copy(state
       ..loading = true

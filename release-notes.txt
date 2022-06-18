@@ -1,1 +1,1 @@
-fix printing with wifi but return bluetooth
+- find all product in supplier detail screen when searching
