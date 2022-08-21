@@ -389,6 +389,8 @@ class Strings {
   static const sanPham = 'Sản phẩm';
   static const thongTinShop = 'Thông tin shop';
   static const daThemVaoGio = 'Đã thêm vào giỏ';
+  static const xoaTaiKhoan = 'Xóa tài khoản';
+  static const banCoChacChanHanhDongNay = 'Bạn có chắc chắn hành động này?';
 
   Strings._();
 }

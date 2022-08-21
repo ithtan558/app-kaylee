@@ -96,6 +96,7 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
 
   void _listenUnAuthorStream() {
     _appBlocSub = appBloc.unauthorizedStream.listen((state) {
+      debugPrint('[TUNG] ===> $state ${appBloc.isShowingLoginDialog}');
       if (state is UnauthorizedState && !appBloc.isShowingLoginDialog) {
         if (dialogContext != null) {
           final dialog = ModalRoute.of(dialogContext!);
@@ -114,19 +115,17 @@ abstract class KayleeState<T extends StatefulWidget> extends BaseState<T> {
               KayleeAlertDialogAction(
                 title: Strings.dangNhap,
                 onPressed: () {
-                  pushScreen(PageIntent(
+                  context.pushToFirst(PageIntent(
                       screen: LoginScreen,
                       bundle: Bundle(LoginScreenData(
                         openFrom: LoginScreenOpenFrom.loginDialog,
                       ))));
+                  appBloc.isShowingLoginDialog = false;
                 },
                 isDefaultAction: true,
               )
             ],
           ),
-          onDismiss: () {
-            appBloc.isShowingLoginDialog = false;
-          },
         );
       }
     });

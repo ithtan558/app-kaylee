@@ -6,6 +6,8 @@ part of 'report_api.dart';
 // RetrofitGenerator
 // **************************************************************************
 
+// ignore_for_file: unnecessary_brace_in_string_interps
+
 class _ReportApi implements ReportApi {
   _ReportApi(this._dio, {this.baseUrl});
 
@@ -56,11 +58,12 @@ class _ReportApi implements ReportApi {
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<List<EmployeeRevenue>>.fromJson(
-        _result.data!,
-        (json) => (json as List<dynamic>)
-            .map<EmployeeRevenue>(
-                (i) => EmployeeRevenue.fromJson(i as Map<String, dynamic>))
-            .toList());
+      _result.data!,
+      (json) => (json as List<dynamic>)
+          .map<EmployeeRevenue>(
+              (i) => EmployeeRevenue.fromJson(i as Map<String, dynamic>))
+          .toList(),
+    );
     return value;
   }
 
@@ -83,11 +86,12 @@ class _ReportApi implements ReportApi {
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<List<ServiceRevenue>>.fromJson(
-        _result.data!,
-        (json) => (json as List<dynamic>)
-            .map<ServiceRevenue>(
-                (i) => ServiceRevenue.fromJson(i as Map<String, dynamic>))
-            .toList());
+      _result.data!,
+      (json) => (json as List<dynamic>)
+          .map<ServiceRevenue>(
+              (i) => ServiceRevenue.fromJson(i as Map<String, dynamic>))
+          .toList(),
+    );
     return value;
   }
 
@@ -110,11 +114,12 @@ class _ReportApi implements ReportApi {
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<List<ServiceRevenue>>.fromJson(
-        _result.data!,
-        (json) => (json as List<dynamic>)
-            .map<ServiceRevenue>(
-                (i) => ServiceRevenue.fromJson(i as Map<String, dynamic>))
-            .toList());
+      _result.data!,
+      (json) => (json as List<dynamic>)
+          .map<ServiceRevenue>(
+              (i) => ServiceRevenue.fromJson(i as Map<String, dynamic>))
+          .toList(),
+    );
     return value;
   }
 

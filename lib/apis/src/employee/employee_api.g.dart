@@ -6,6 +6,8 @@ part of 'employee_api.dart';
 // RetrofitGenerator
 // **************************************************************************
 
+// ignore_for_file: unnecessary_brace_in_string_interps
+
 class _EmployeeApi implements EmployeeApi {
   _EmployeeApi(this._dio, {this.baseUrl});
 
@@ -60,10 +62,11 @@ class _EmployeeApi implements EmployeeApi {
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<List<Employee>>.fromJson(
-        _result.data!,
-        (json) => (json as List<dynamic>)
-            .map<Employee>((i) => Employee.fromJson(i as Map<String, dynamic>))
-            .toList());
+      _result.data!,
+      (json) => (json as List<dynamic>)
+          .map<Employee>((i) => Employee.fromJson(i as Map<String, dynamic>))
+          .toList(),
+    );
     return value;
   }
 

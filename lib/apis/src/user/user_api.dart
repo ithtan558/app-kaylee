@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:anth_package/anth_package.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/models/src/request/update_pass/update_pass_body.dart';
+import 'package:kaylee/models/src/request/update_status/update_status.dart';
 
 part 'user_api.g.dart';
 
@@ -51,4 +52,7 @@ abstract class UserApi {
 
   @POST('click-warning')
   Future<ResponseModel> clickWarning();
+
+  @POST('update-status')
+  Future<ResponseModel> updateStatus({@Body() required UpdateStatus status});
 }

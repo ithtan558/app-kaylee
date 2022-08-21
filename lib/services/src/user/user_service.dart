@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:anth_package/anth_package.dart';
 import 'package:kaylee/models/models.dart';
 import 'package:kaylee/models/src/request/update_pass/update_pass_body.dart';
+import 'package:kaylee/models/src/request/update_status/update_status.dart';
 
 abstract class UserService {
   Future<ResponseModel<RegisterResult>> register(RegisterBody body);
@@ -33,4 +34,6 @@ abstract class UserService {
   Future<ResponseModel> checkExpire();
 
   Future<ResponseModel> clickWarning();
+
+  Future<ResponseModel> updateStatus({required UpdateStatus status});
 }

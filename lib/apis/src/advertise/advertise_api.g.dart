@@ -6,6 +6,8 @@ part of 'advertise_api.dart';
 // RetrofitGenerator
 // **************************************************************************
 
+// ignore_for_file: unnecessary_brace_in_string_interps
+
 class _AdvertiseApi implements AdvertiseApi {
   _AdvertiseApi(this._dio, {this.baseUrl});
 
@@ -26,10 +28,11 @@ class _AdvertiseApi implements AdvertiseApi {
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<List<Banner>>.fromJson(
-        _result.data!,
-        (json) => (json as List<dynamic>)
-            .map<Banner>((i) => Banner.fromJson(i as Map<String, dynamic>))
-            .toList());
+      _result.data!,
+      (json) => (json as List<dynamic>)
+          .map<Banner>((i) => Banner.fromJson(i as Map<String, dynamic>))
+          .toList(),
+    );
     return value;
   }
 

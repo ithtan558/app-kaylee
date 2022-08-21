@@ -6,6 +6,8 @@ part of 'role_api.dart';
 // RetrofitGenerator
 // **************************************************************************
 
+// ignore_for_file: unnecessary_brace_in_string_interps
+
 class _RoleApi implements RoleApi {
   _RoleApi(this._dio, {this.baseUrl});
 
@@ -26,10 +28,11 @@ class _RoleApi implements RoleApi {
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResponseModel<List<Role>>.fromJson(
-        _result.data!,
-        (json) => (json as List<dynamic>)
-            .map<Role>((i) => Role.fromJson(i as Map<String, dynamic>))
-            .toList());
+      _result.data!,
+      (json) => (json as List<dynamic>)
+          .map<Role>((i) => Role.fromJson(i as Map<String, dynamic>))
+          .toList(),
+    );
     return value;
   }
 

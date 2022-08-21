@@ -6,6 +6,8 @@ part of 'commission_api.dart';
 // RetrofitGenerator
 // **************************************************************************
 
+// ignore_for_file: unnecessary_brace_in_string_interps
+
 class _CommissionApi implements CommissionApi {
   _CommissionApi(this._dio, {this.baseUrl});
 
